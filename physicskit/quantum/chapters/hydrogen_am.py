@@ -5,9 +5,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
-from scipy.special import genlaguerre, sph_harm_y
+from scipy.special import genlaguerre
 
-from .._compat import trapz
+from .._compat import sph_harm_y, trapz
 
 __all__ = [
     "spherical_harmonic",
