@@ -1,0 +1,120 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "physicskit"
+version = "0.1.0"
+description = "Unified scientific toolkit for computational physics: General Relativity, Quantum Mechanics, Chaos, Random Matrix Theory, Statistical Mechanics, Classical Dynamics, and Condensed Matter."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Charles Poli", email = "cpoli374@gmail.com" }]
+maintainers = [{ name = "Charles Poli", email = "cpoli374@gmail.com" }]
+keywords = [
+    "physics",
+    "condensed-matter",
+    "general-relativity",
+    "quantum-mechanics",
+    "chaos",
+    "random-matrix-theory",
+    "statistical-mechanics",
+    "classical-mechanics",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.6",
+    "numba>=0.58",
+    "plotly>=5.15",
+    "sympy>=1.11",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0", "pytest-cov", "hypothesis>=6.90", "pillow>=9.0"]
+docs = [
+    "sphinx>=7.0",
+    "pydata-sphinx-theme>=0.15",
+    "sphinx-autodoc-typehints>=1.25",
+    "myst-parser>=2.0",
+    "sphinx-gallery>=0.15",
+    "sphinx-design>=0.6",
+]
+dev = ["physicskit[test,docs]", "ruff>=0.6", "mypy>=1.10", "pre-commit>=3.7"]
+
+[project.urls]
+Homepage = "https://github.com/physicskit/physicskit"
+Issues = "https://github.com/physicskit/physicskit/issues"
+Changelog = "https://github.com/physicskit/physicskit/blob/main/CHANGELOG.md"
+Documentation = "https://physicskit.readthedocs.io"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["physicskit*"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "physicskit/astro/tests",
+    "physicskit/chaos/tests",
+    "physicskit/classical/tests",
+    "physicskit/condensed/tests",
+    "physicskit/fields/tests",
+    "physicskit/fluids/tests",
+    "physicskit/integrators/tests",
+    "physicskit/optics/tests",
+    "physicskit/particle/tests",
+    "physicskit/plasma/tests",
+    "physicskit/quantum/tests",
+    "physicskit/relativity/tests",
+    "physicskit/rmt/tests",
+    "physicskit/semiclassical/tests",
+    "physicskit/statphys/tests",
+    "physicskit/tests",
+]
+
+[tool.ruff]
+line-length = 160
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = [
+    "E731", # lambda assignment: used deliberately for short k-space Hamiltonian closures
+    "B023", # loop-variable closures: intentional in model-builder factory functions
+    "E741", # single-letter names t/M/N: standard physics notation throughout this package
+    "SIM108", # if/else vs ternary: kept as if/else for readability around multi-line physics expressions
+    "SIM300", # yoda-condition rewrites: not an improvement for pytest.approx(...) == value assertions
+    "UP045", # X | None vs Optional[X]: keep Optional[] for clarity, it's equally valid under `from __future__ import annotations`
+]
+
+[tool.ruff.lint.per-file-ignores]
+"physicskit/*/tests/*" = ["E501", "E402"] # E402: pytest.importorskip(...) before imports, for optional-dependency tests
+"docs/*" = ["E501", "I001", "E402"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+# The codebase does not fully type-check yet (mostly matplotlib/numpy stub
+# gaps around animation and array-typed arguments); this config exists so
+# type checking can be adopted incrementally rather than skipped entirely.
+# See CONTRIBUTING.md.
+check_untyped_defs = false

@@ -1,0 +1,17 @@
+physicskit.particle
+====================
+
+Relativistic kinematics, two-body decays, Rutherford scattering, and
+nuclear binding energy.
+
+- :doc:`/tutorials/relativistic_two_body_decay`
+- :doc:`/tutorials/nuclear_decay_chains_and_scattering`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   /tutorials/relativistic_two_body_decay
+   /tutorials/nuclear_decay_chains_and_scattering
+
+See the full gallery: :doc:`/api/gallery/particle/index`.

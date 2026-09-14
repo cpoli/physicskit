@@ -1,0 +1,20 @@
+physicskit.condensed
+=====================
+
+Tight-binding models, topological band theory, and superconductivity --
+runnable scripts demonstrating the conceptual breakthroughs behind
+``physicskit.condensed``, from Bloch's band theory through topological
+superconductors -- see :doc:`/history/condensed_breakthroughs` for the full
+chronology each script illustrates.
+
+- :doc:`/tutorials/graphene_and_haldane`
+- :doc:`/tutorials/ssh_topological_edge_states`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   /tutorials/graphene_and_haldane
+   /tutorials/ssh_topological_edge_states
+
+See the full gallery: :doc:`/api/gallery/condensed/index`.

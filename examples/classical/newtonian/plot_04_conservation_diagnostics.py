@@ -1,0 +1,73 @@
+r"""
+Angular momentum: a different conservation law from energy
+================================================================
+
+``physicskit.classical.utils.conservation`` has more than just energy-drift helpers.
+``angular_momentum_2d`` and ``angular_momentum_drift`` track the planar
+angular momentum
+
+.. math::
+
+    L = x p_y - y p_x ,
+
+which is conserved whenever a system's dynamics are rotationally
+symmetric about the origin (a central force, :math:`V = V(r)`) --
+regardless of whether energy-conserving perturbations also happen to
+break other symmetries. This contrasts two systems:
+
+- KeplerSystem, even with a post-Newtonian perturbation that makes the
+  Laplace-Runge-Lenz vector precess (a genuine physical effect: the
+  perturbation breaks the *extra*, non-obvious SO(4) symmetry special
+  to the exact 1/r potential), still exactly conserves angular
+  momentum -- because it is still a central force, and central forces
+  exert no torque about their center regardless of their radial profile.
+- ProjectileMotion, a *uniform* gravitational field, is not a central
+  force from the origin at all: gravity exerts a real torque there, so
+  L changes -- growing steadily as the projectile falls.
+"""
+
+# %%
+import matplotlib.pyplot as plt
+
+from physicskit.classical.systems.newtonian import KeplerSystem, ProjectileMotion
+from physicskit.classical.utils.conservation import angular_momentum_2d, angular_momentum_drift, relative_energy_drift
+
+# %%
+# Kepler, with a precession-causing perturbation: L still conserved
+# ------------------------------------------------------------------------
+
+kepler = KeplerSystem.from_orbital_elements(a=1.0, e=0.5, c_pn=0.02)
+result_k = kepler.integrate((0, 100), dt=1e-3, method="yoshida4")
+L_drift_k = angular_momentum_drift(result_k.q, result_k.p)
+E_drift_k = relative_energy_drift(result_k.energy)
+print(f"perturbed Kepler: max |L(t)-L(0)| = {L_drift_k.max():.2e}, max relative energy drift = {E_drift_k.max():.2e}")
+
+# %%
+# Projectile motion: uniform gravity is not a central force, L drifts
+# --------------------------------------------------------------------------
+
+proj = ProjectileMotion.from_launch(speed=20.0, angle_deg=45.0, g=9.81)
+result_p = proj.integrate((0, 2.9), dt=1e-3, method="yoshida4")
+L_p = angular_momentum_2d(result_p.q, result_p.p)
+print(f"projectile motion: L(0) = {L_p[0]:.3f}, L(end) = {L_p[-1]:.3f} (steadily changing, as expected)")
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4.3))
+axes[0].plot(result_k.t, L_drift_k, color="steelblue")
+axes[0].set_xlabel("t")
+axes[0].set_ylabel(r"$|L(t) - L(0)|$")
+axes[0].set_title("Perturbed KeplerSystem:\nangular momentum exactly conserved")
+
+axes[1].plot(result_p.t, L_p, color="firebrick")
+axes[1].set_xlabel("t")
+axes[1].set_ylabel("L(t)")
+axes[1].set_title("ProjectileMotion:\nnot a central force, so L is not conserved")
+fig.suptitle("Angular momentum conservation depends on rotational symmetry, not on energy conservation", fontsize=12)
+fig.tight_layout(rect=[0, 0, 1, 0.90])
+
+# %%
+# This is the practical content of Noether's theorem: energy
+# conservation comes from time-translation symmetry, angular momentum
+# conservation from rotational symmetry, and the two can be switched on
+# or off independently, as shown here.
+
+plt.show()

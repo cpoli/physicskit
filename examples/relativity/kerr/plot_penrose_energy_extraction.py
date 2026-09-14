@@ -1,0 +1,60 @@
+r"""
+The Penrose process: extracting a black hole's rotational energy
+========================================================================
+
+Roger Penrose realized in 1969 that the ergosphere of a rotating (Kerr)
+black hole -- see :doc:`plot_ergosphere_and_penrose` -- is not just a
+region where no observer can sit still, but a genuine energy resource.
+Inside it, the ``t``-Killing vector associated with time-translation
+symmetry becomes spacelike, so a particle there can have *negative* energy
+as measured by an observer at infinity. If a particle entering the
+ergosphere splits in two, with one negative-energy fragment falling into
+the horizon, energy conservation forces the escaping fragment to carry
+away *more* energy than the original particle had -- extracting
+rotational energy from the black hole itself. The process is capped by
+Hawking's area theorem: the hole's irreducible mass can never decrease,
+limiting the maximum extractable fraction to
+
+.. math::
+
+    \eta_{\max} = 1 - \sqrt{\frac{r_+}{2M}},
+
+which rises from 0 at :math:`a=0` to :math:`1 - 1/\sqrt{2} \approx 29.3\%`
+for a maximally (extremal) spinning hole.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.relativity.chapters.kerr import KerrBlackHole
+
+# %%
+# Maximum extractable energy fraction vs. spin
+# --------------------------------------------------------------------------
+a_values = np.linspace(0.0, 0.9999, 100)
+efficiency = [KerrBlackHole(M=1.0, a=a).max_penrose_efficiency() for a in a_values]
+
+plt.figure(figsize=(6, 4))
+plt.plot(a_values, np.array(efficiency) * 100.0)
+plt.axhline(
+    (1.0 - 1.0 / np.sqrt(2.0)) * 100.0,
+    color="k",
+    linestyle="--",
+    linewidth=1,
+    label="extremal limit, 29.3%",
+)
+plt.xlabel("spin a/M")
+plt.ylabel("max extractable energy (% of M)")
+plt.title("Penrose process efficiency limit")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# %%
+# A single split: the escaping fragment gains energy
+# --------------------------------------------------------------------------
+bh = KerrBlackHole(M=1.0, a=0.9)
+e_out = bh.penrose_energy_gain(initial_energy=1.0, fragment_energy_infalling=-0.1)
+print("Particle falls in with E=1.0, splits inside the ergosphere;")
+print("one fragment falls in with E=-0.1 (negative energy, only possible there);")
+print(f"the escaping fragment carries away E={e_out:.3f} -- more than it started with.")

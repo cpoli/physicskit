@@ -1,0 +1,95 @@
+r"""
+D'Alembert's paradox: zero net drag on a cylinder in inviscid flow
+=====================================================================
+
+Jean le Rond d'Alembert applied the equations of inviscid, irrotational flow
+to steady motion past a closed body and found -- to his own evident
+discomfort -- that the theory predicts exactly zero net drag on the body no
+matter its shape, a flatly unphysical result for anything actually moving
+through a real fluid.
+:func:`~physicskit.fluids.systems.potential_flow.flow_past_cylinder` with
+its default ``circulation=0.0`` builds exactly this symmetric, inviscid flow:
+a uniform stream past a circular cylinder with no circulation added, and
+therefore no front-back (or top-bottom) asymmetry anywhere in the pressure
+field. Integrating the resulting surface pressure coefficient
+
+.. math::
+
+    C_p = 1 - \frac{u^2+v^2}{U_\infty^2}
+
+(:func:`~physicskit.fluids.systems.potential_flow.pressure_coefficient`) all
+the way around the cylinder gives exactly zero net force along the
+free-stream direction, however finely the integral is resolved -- the
+viscosity that would break that symmetry, and finally produce drag, is
+simply absent from the calculation. See the 1902-1906 Kutta-Joukowski entry
+for what happens once circulation is added back in, breaking the same
+front-back symmetry to produce lift instead.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.fluids.systems.potential_flow import flow_past_cylinder
+from physicskit.fluids.visualizers.flow_fields import plot_streamlines
+from physicskit.fluids.visualizers.potential_flow import plot_pressure_coefficient
+
+# %%
+# Build the symmetric, circulation-free flow
+# --------------------------------------------
+# With no circulation, the flow pattern is exactly front-back and top-bottom
+# symmetric about the cylinder -- no mechanism exists here for the pressure
+# to favor pushing the cylinder in any direction at all.
+
+U_inf, R, rho = 1.0, 1.0, 1.0
+flow = flow_past_cylinder(U_inf=U_inf, radius=R, circulation=0.0)
+
+x = np.linspace(-3, 3, 300)
+X, Y = np.meshgrid(x, x, indexing="ij")
+u, v = flow.velocity(X, Y)
+inside = X**2 + Y**2 < R**2
+u[inside] = np.nan
+v[inside] = np.nan
+
+fig, ax = plot_streamlines(X, Y, u, v)
+theta_circle = np.linspace(0, 2 * np.pi, 200)
+ax.plot(R * np.cos(theta_circle), R * np.sin(theta_circle), color="black", lw=1.5)
+ax.set_title("Cylinder with no circulation: front-back symmetric flow")
+fig.tight_layout()
+
+# %%
+# Surface pressure coefficient is symmetric fore and aft
+# ---------------------------------------------------------
+# Two stagnation points (:math:`C_p=1`) sit exactly at the front and back of
+# the cylinder, and the suction peaks on top and bottom are identical in
+# magnitude -- there is no pressure asymmetry anywhere for a net force to
+# come from.
+
+theta = np.linspace(0, 2 * np.pi, 200)
+x_surface, y_surface = R * np.cos(theta), R * np.sin(theta)
+Cp = flow.pressure_coefficient(x_surface, y_surface)
+
+fig, ax = plot_pressure_coefficient(theta, Cp)
+fig.tight_layout()
+
+# %%
+# Integrating the surface pressure gives exactly zero net drag
+# -----------------------------------------------------------------
+# However finely the surface integral is resolved, the drag component
+# (along the free-stream direction) comes out zero to numerical precision --
+# the paradox itself, stated as a direct calculation rather than a symmetry
+# argument.
+
+theta_fine = np.linspace(0, 2 * np.pi, 4000, endpoint=False)
+x_fine, y_fine = R * np.cos(theta_fine), R * np.sin(theta_fine)
+Cp_fine = flow.pressure_coefficient(x_fine, y_fine)
+p_fine = Cp_fine * (0.5 * rho * U_inf**2)
+dtheta = theta_fine[1] - theta_fine[0]
+# Drag is the pressure force resolved along the free-stream (x) direction;
+# the outward normal on a circle of radius R has x-component cos(theta).
+drag_numeric = np.sum(p_fine * np.cos(theta_fine) * R) * dtheta
+lift_numeric = np.sum(p_fine * np.sin(theta_fine) * R) * dtheta
+
+print(f"net drag from the pressure integral:  {drag_numeric:.2e} (theory: exactly 0)")
+print(f"net lift from the pressure integral:  {lift_numeric:.2e} (theory: exactly 0, no circulation)")
+
+plt.show()

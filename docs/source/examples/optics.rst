@@ -1,0 +1,16 @@
+physicskit.optics
+==================
+
+Geometric ray optics, wave optics, Gaussian beams, and quantum optics.
+
+- :doc:`/tutorials/laser_cavity_stability`
+- :doc:`/tutorials/wigner_function_squeezed_states`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   /tutorials/laser_cavity_stability
+   /tutorials/wigner_function_squeezed_states
+
+See the full gallery: :doc:`/api/gallery/optics/index`.

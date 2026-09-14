@@ -1,0 +1,80 @@
+r"""
+The Marchenko-Pastur Law
+========================
+
+The Wishart (Laguerre) ensembles LOE (:math:`\beta=1`), LUE
+(:math:`\beta=2`), and LSE (:math:`\beta=4`) are built from the sample
+covariance matrix :math:`W = X X^\dagger` of an :math:`n \times m`
+Gaussian data matrix :math:`X` (:math:`n` variables, :math:`m` samples,
+:math:`m \geq n`), with real, complex, or quaternionic entries
+respectively. The relevant control parameter is the aspect ratio
+:math:`\gamma = n/m \in (0, 1]`.
+
+As :math:`n, m \to \infty` with :math:`\gamma` fixed, the empirical
+spectral density of :math:`W/m` converges to the Marchenko-Pastur law,
+supported on :math:`[\lambda_-, \lambda_+]` with
+
+.. math::
+
+    \lambda_\pm = \sigma^2\left(1 \pm \sqrt{\gamma}\right)^2,
+
+and density
+
+.. math::
+
+    p(x) = \frac{\sqrt{(\lambda_+ - x)(x - \lambda_-)}}
+    {2\pi\,\gamma\,\sigma^2\, x}, \qquad \lambda_- < x < \lambda_+,
+
+where :math:`\sigma^2` is the entry variance (here :math:`\sigma^2=1`).
+This example reproduces that law for LOE, LUE, and LSE across several
+values of :math:`\gamma`.
+
+Reference:
+V. A. Marchenko, L. A. Pastur, "Distribution of eigenvalues for some
+sets of random matrices", Mat. Sb. 72 (1967) 507.
+
+Run:
+    python examples/paper_replications/marchenko_pastur_demo.py
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+import physicskit.rmt as rmt
+
+N = 600
+N_SAMPLES = 30
+SEED = 2026
+GAMMAS = [0.1, 0.4, 0.9]
+
+fig, axes = plt.subplots(1, len(GAMMAS), figsize=(13, 4), sharey=False)
+
+for ax, gamma in zip(axes, GAMMAS, strict=True):
+    m = int(N / gamma)
+    benchmark = rmt.validation.MarchenkoPastur(gamma=gamma)
+    lo, hi = rmt.stats.mp_support(gamma)
+    x = np.linspace(lo, hi, 400)
+
+    for cls, color in [
+        (rmt.ensembles.LOE, "steelblue"),
+        (rmt.ensembles.LUE, "indianred"),
+        (rmt.ensembles.LSE, "seagreen"),
+    ]:
+        ensemble = cls(n=N, m=m, seed=SEED)
+        spectrum = ensemble.sample(n_samples=N_SAMPLES)
+        centers, counts = rmt.stats.empirical_density(spectrum, bins=60)
+        ax.plot(centers, counts, color=color, alpha=0.7, lw=1.5, label=cls.__name__)
+
+    ax.plot(x, benchmark.theoretical_pdf(x), "k--", lw=2, label="Marchenko-Pastur")
+    ax.set_title(f"gamma = n/m = {gamma}")
+    ax.set_xlabel("eigenvalue")
+    ax.legend(fontsize=8)
+
+axes[0].set_ylabel("density")
+fig.suptitle(
+    f"Marchenko-Pastur law across aspect ratios -- n={N}, {N_SAMPLES} samples per ensemble",
+)
+fig.tight_layout()
+out_path = "marchenko_pastur_replication.png"
+fig.savefig(out_path, dpi=150)
+print(f"Saved {out_path}")
