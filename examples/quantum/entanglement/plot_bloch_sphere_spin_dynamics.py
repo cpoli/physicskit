@@ -121,9 +121,7 @@ print(f"population in |1> at the pi-pulse time: {rabi.excited_state_population(n
 
 detunings = np.linspace(-2.0, 2.0, 121)
 t_chevron = np.linspace(0, 4 * np.pi, 200)
-chevron = np.array(
-    [RabiProblem(omega0=rabi.omega0, omega_d=rabi.omega0 + delta, Omega=rabi.Omega).excited_state_population(t_chevron) for delta in detunings]
-)
+chevron = np.array([RabiProblem(omega0=rabi.omega0, omega_d=rabi.omega0 + delta, Omega=rabi.Omega).excited_state_population(t_chevron) for delta in detunings])
 
 fig_chevron, ax_chevron = plt.subplots(figsize=(7, 4.5))
 im = ax_chevron.pcolormesh(t_chevron, detunings, chevron, shading="auto", cmap="inferno")

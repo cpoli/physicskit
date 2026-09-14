@@ -90,5 +90,5 @@ print(
     "\nRescaled relaxation is essentially N-independent, while the "
     f"root-mean-square late-time fluctuation in n_left/N shrinks with N "
     f"(std over last 20% of run, N={N_values[-1]}): "
-    f"{np.std(scan_history['n_left'][int(0.8 * n_steps):] / N):.4f}"
+    f"{np.std(scan_history['n_left'][int(0.8 * n_steps) :] / N):.4f}"
 )

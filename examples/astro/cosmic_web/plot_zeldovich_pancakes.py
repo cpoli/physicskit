@@ -127,10 +127,7 @@ ax_map.set_title("Collapse-time map, read off the undisplaced grid")
 ax_map.legend(loc="upper right", fontsize=8)
 ax_map.set_aspect("equal")
 fig_map.tight_layout()
-print(
-    f"Collapse-time map: min(D_local) = {D_local[i_min]:.5f} vs analytic D_collapse = {D_collapse:.5f} "
-    f"(should match to grid resolution)"
-)
+print(f"Collapse-time map: min(D_local) = {D_local[i_min]:.5f} vs analytic D_collapse = {D_collapse:.5f} (should match to grid resolution)")
 
 # %%
 # Animation: watching the grid collapse

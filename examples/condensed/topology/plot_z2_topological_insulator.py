@@ -90,6 +90,8 @@ bhz_chern = [spin_up_chern(lambda k1, k2, M=M: bhz_hamiltonian(k1, k2, M=M, B=1.
 
 lambda_so_grid = np.linspace(0.0, 0.15, 18)
 lambda_v_grid = np.linspace(-0.5, 0.5, 18)
+
+
 def _km_z2(ls: float, lv: float) -> int:
     return z2_invariant(lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=ls, lambda_v=lv), grid_size=14)
 

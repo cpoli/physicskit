@@ -42,6 +42,7 @@ for i in range(L):
 # set by the flux per plaquette; the resulting Hermitian hopping matrix is
 # then diagonalized directly.
 
+
 def _spectrum_at_flux(flux: float) -> np.ndarray:
     phased = apply_peierls_phase(positions, bonds, flux_quanta_per_plaquette=flux, area_per_plaquette=1.0)
     Hmat = np.zeros((L * L, L * L), dtype=complex)

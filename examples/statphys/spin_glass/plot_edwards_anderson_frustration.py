@@ -94,9 +94,7 @@ L_values = [16, 24, 32]
 plt.figure(figsize=(6.5, 4.5))
 for L in L_values:
     size_model = EdwardsAndersonSpinGlass2D(L=L, J=1.0, seed=0)
-    q2_L = [
-        size_model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150) for T in temperatures
-    ]
+    q2_L = [size_model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150) for T in temperatures]
     plt.plot(temperatures, q2_L, marker="o", ms=4, label=f"L={L}")
 plt.xlabel("Temperature")
 plt.ylabel(r"$\langle q^2 \rangle$")
