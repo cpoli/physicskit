@@ -1,0 +1,1390 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Statistical Mechanics Deep Dives &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/statphys_deep_dives';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API" href="../api/index.html" />
+    <link rel="prev" title="physicskit.statphys" href="../examples/statphys.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/astro.html">physicskit.astro</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="polytropic_stellar_models.html">Polytropic Stellar Models and the Lane-Emden Equation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nbody_orbits_and_galactic_rotation_curves.html">N-Body Orbits, Hohmann Transfers, and Galactic Rotation Curves</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/chaos.html">physicskit.chaos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/classical.html">physicskit.classical</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/condensed.html">physicskit.condensed</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="graphene_and_haldane.html">Graphene and the Haldane Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssh_topological_edge_states.html">The SSH Model and Topological Edge States</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/fields.html">physicskit.fields</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="fdtd_waveguide_simulation.html">Simulating Wave Propagation with FDTD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bec_vortex_lattice_creation.html">Creating a Quantized Vortex in a Rotating BEC</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/fluids.html">physicskit.fluids</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/optics.html">physicskit.optics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="laser_cavity_stability.html">Laser Cavity Stability and the Fundamental Gaussian Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wigner_function_squeezed_states.html">Wigner Functions and Squeezed Light</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/particle.html">physicskit.particle</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="relativistic_two_body_decay.html">Relativistic Two-Body Decay Kinematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuclear_decay_chains_and_scattering.html">Radioactive Decay Chains, Rutherford Scattering, and Nuclear Binding</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plasma.html">physicskit.plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/quantum.html">physicskit.quantum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/relativity.html">physicskit.relativity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rmt.html">physicskit.rmt</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/semiclassical.html">physicskit.semiclassical</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="semiclassical_wavepacket_propagation.html">Semiclassical Wavepacket Propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gutzwiller_periodic_orbit_spectrum.html">Reconstructing a Spectrum from a Single Periodic Orbit</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../examples/statphys.html">physicskit.statphys</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Statistical Mechanics Deep Dives</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../examples/index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../examples/statphys.html" class="nav-link">physicskit.statphys</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Statistical Mechanics Deep Dives</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="statistical-mechanics-deep-dives">
+<h1>Statistical Mechanics Deep Dives<a class="headerlink" href="#statistical-mechanics-deep-dives" title="Link to this heading">#</a></h1>
+<p>Twenty-one worked examples, one per conceptual breakthrough in
+<a class="reference internal" href="../history/statphys_breakthroughs.html"><span class="doc">Breakthroughs in Statistical Mechanics</span></a>, each pairing a schematic diagram of
+the underlying lattice, chain, or ensemble with a short, runnable
+<code class="docutils literal notranslate"><span class="pre">physicskit.statphys</span></code> script reproducing the phenomenon’s textbook
+observable signature. Every reference here has a verified counterpart in
+the <a class="reference internal" href="../api/gallery/statphys/index.html"><span class="doc">Examples</span></a> example gallery; this page exists to
+put the <em>physics</em> of each breakthrough next to its diagram and its code, in
+one place.</p>
+<nav class="contents local" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#s-boltzmann-s-statistical-entropy-and-the-h-theorem" id="id1">1870s – Boltzmann’s Statistical Entropy and the H-Theorem</a></p></li>
+<li><p><a class="reference internal" href="#gibbs-s-ensemble-formalism" id="id2">1902 – Gibbs’s Ensemble Formalism</a></p></li>
+<li><p><a class="reference internal" href="#einstein-s-explanation-of-brownian-motion" id="id3">1905 – Einstein’s Explanation of Brownian Motion</a></p></li>
+<li><p><a class="reference internal" href="#the-ehrenfest-urn-model" id="id4">1907 – The Ehrenfest Urn Model</a></p></li>
+<li><p><a class="reference internal" href="#the-ising-model-and-onsager-s-exact-solution" id="id5">1920-1944 – The Ising Model and Onsager’s Exact Solution</a></p></li>
+<li><p><a class="reference internal" href="#landau-mean-field-theory" id="id6">1937 – Landau Mean-Field Theory</a></p></li>
+<li><p><a class="reference internal" href="#the-yang-lee-circle-theorem" id="id7">1952 – The Yang-Lee Circle Theorem</a></p></li>
+<li><p><a class="reference internal" href="#bose-einstein-and-fermi-dirac-quantum-statistics" id="id8">1924-1926 – Bose-Einstein and Fermi-Dirac Quantum Statistics</a></p></li>
+<li><p><a class="reference internal" href="#the-potts-model" id="id9">1952 – The Potts Model</a></p></li>
+<li><p><a class="reference internal" href="#the-metropolis-algorithm" id="id10">1953 – The Metropolis Algorithm</a></p></li>
+<li><p><a class="reference internal" href="#molecular-dynamics-simulation" id="id11">1957 – Molecular Dynamics Simulation</a></p></li>
+<li><p><a class="reference internal" href="#percolation-theory" id="id12">1957 – Percolation Theory</a></p></li>
+<li><p><a class="reference internal" href="#kadanoff-wilson-renormalization-group" id="id13">1966-1971 – Kadanoff / Wilson Renormalization Group</a></p></li>
+<li><p><a class="reference internal" href="#vortex-unbinding-in-the-2d-xy-model" id="id14">1973 – Vortex Unbinding in the 2D XY Model</a></p></li>
+<li><p><a class="reference internal" href="#the-edwards-anderson-spin-glass" id="id15">1975 – The Edwards-Anderson Spin Glass</a></p></li>
+<li><p><a class="reference internal" href="#the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking" id="id16">1975-1980 – The Sherrington-Kirkpatrick Model and Parisi’s Replica Symmetry Breaking</a></p></li>
+<li><p><a class="reference internal" href="#the-binder-cumulant-and-finite-size-scaling" id="id17">1981 – The Binder Cumulant and Finite-Size Scaling</a></p></li>
+<li><p><a class="reference internal" href="#the-kardar-parisi-zhang-equation" id="id18">1986 – The Kardar-Parisi-Zhang Equation</a></p></li>
+<li><p><a class="reference internal" href="#self-organized-criticality-and-the-btw-sandpile" id="id19">1987 – Self-Organized Criticality and the BTW Sandpile</a></p></li>
+<li><p><a class="reference internal" href="#the-wolff-cluster-algorithm" id="id20">1989 – The Wolff Cluster Algorithm</a></p></li>
+<li><p><a class="reference internal" href="#the-jarzynski-equality" id="id21">1997 – The Jarzynski Equality</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id22">See Also</a></p></li>
+</ul>
+</nav>
+<section id="s-boltzmann-s-statistical-entropy-and-the-h-theorem">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">1870s – Boltzmann’s Statistical Entropy and the H-Theorem</a><a class="headerlink" href="#s-boltzmann-s-statistical-entropy-and-the-h-theorem" title="Link to this heading">#</a></h2>
+<p>Boltzmann’s <span class="math notranslate nohighlight">\(S = k_B \ln W\)</span> and his H-theorem are two sides of one
+claim: macroscopic irreversibility is nothing but the overwhelmingly
+probable behavior of reversible microscopic collisions. The clearest way to
+<em>see</em> the H-theorem is to watch a real N-body gas relax: start every
+particle with the same speed (about as far from equilibrium as a fixed
+total energy allows) and watch the speed distribution spread into the
+Maxwell-Boltzmann bell curve while <span class="math notranslate nohighlight">\(H = \int f \ln f\, dv\)</span> falls.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Periodic box, N Lennard-Jones particles, all |v| equal at t=0:
+
+  +-------------------------------+
+  |  o-&gt;    o-&gt;   o-&gt;     o-&gt;     |   &lt;- every particle: same speed,
+  |     o-&gt;    o-&gt;    o-&gt;         |      random direction (delta-fn
+  |  o-&gt;   o-&gt;    o-&gt;    o-&gt;      |      speed distribution)
+  |     o-&gt;   o-&gt;     o-&gt;         |
+  +-------------------------------+
+                 |  collisions randomize speeds
+                 v
+  +-------------------------------+
+  |  o^  o&lt;-  o&gt;  ov   o\  o/     |   &lt;- speeds now spread out;
+  |    o&gt;  o\   o^  o&lt;-  o/       |      H(t) has decreased toward
+  |  o&lt;-  o/  ov   o&gt;   o\        |      its Maxwell-Boltzmann minimum
+  +-------------------------------+
+</pre></div>
+</div>
+<p><a class="reference internal" href="../api/statphys.html#physicskit.statphys.LennardJonesGas" title="physicskit.statphys.chapters.molecular_dynamics.LennardJonesGas"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.molecular_dynamics.LennardJonesGas</span></code></a>
+integrates exactly this system with Velocity-Verlet dynamics, and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">h_function()</span></code>
+estimates <span class="math notranslate nohighlight">\(H(t)\)</span> from the instantaneous speed histogram at every
+recorded step.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.molecular_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">LennardJonesGas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.particle_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_velocity_histogram</span>
+
+<span class="c1"># Start every particle with the same speed -- far from Maxwell-Boltzmann.</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">LennardJonesGas</span><span class="p">(</span>
+    <span class="n">n_particles</span><span class="o">=</span><span class="mi">225</span><span class="p">,</span> <span class="n">box_size</span><span class="o">=</span><span class="mf">25.0</span><span class="p">,</span> <span class="n">initial_velocity_distribution</span><span class="o">=</span><span class="s2">"delta"</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">n_steps</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">steps_per_record</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s2">"time"</span><span class="p">],</span> <span class="n">history</span><span class="p">[</span><span class="s2">"H"</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"time"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Boltzmann $H(t) = \int f \ln f\, dv$"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"H-theorem: monotonic relaxation"</span><span class="p">)</span>
+
+<span class="n">plot_velocity_histogram</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">show_theory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Final speed distribution vs. Maxwell-Boltzmann"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="gibbs-s-ensemble-formalism">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">1902 – Gibbs’s Ensemble Formalism</a><a class="headerlink" href="#gibbs-s-ensemble-formalism" title="Link to this heading">#</a></h2>
+<p>The canonical ensemble ties macroscopic response functions directly to
+microscopic fluctuations. Sweeping a lattice model’s temperature and
+measuring the variance of its energy and magnetization at each point
+reproduces the specific heat and susceptibility peaks that every later
+lattice-model chapter in this package relies on.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>      ................
+     :   Heat bath     :  T fixed, energy exchanged freely
+     :   (reservoir)   :
+      ''''''''|''''''''
+               | &lt;- fluctuating energy E
+        +------v------+
+        |  L x L      |   P(configuration) proportional to
+        |  spin       |        exp(-beta * E)
+        |  lattice    |
+        +-------------+
+Var(E) -&gt; C_v ,  Var(M) -&gt; chi   (fluctuation-dissipation)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.lattice_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_thermodynamics</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Ising2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">T_C</span> <span class="o">+</span> <span class="mf">1.2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">T_C</span> <span class="o">-</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run_temperature_sweep</span><span class="p">(</span>
+    <span class="n">temperatures</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span>
+<span class="p">)</span>
+
+<span class="n">plot_thermodynamics</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">T_c</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">T_C</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Canonical-ensemble $C_v$ and $\chi$ from energy/magnetization variance"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="einstein-s-explanation-of-brownian-motion">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">1905 – Einstein’s Explanation of Brownian Motion</a><a class="headerlink" href="#einstein-s-explanation-of-brownian-motion" title="Link to this heading">#</a></h2>
+<p>An ensemble of independent random walkers, each taking many small
+independent kicks, has a mean squared displacement growing linearly in
+time – the diffusion law Einstein derived to explain Brownian motion and
+that Perrin used to measure Avogadro’s number.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Single walker trajectory (2D):        Ensemble MSD(t):
+                                           MSD
+     *  &lt;- start                           |            .  '
+      \                                     |         .'
+       \___                                 |       .'
+           \                                |     .'   slope = 2 d D
+        ____/                               |   .'
+       /                                     | .'
+      *  &lt;- t=1000                           +------------------ t
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.random_walk</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomWalk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.random_walk_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_msd</span><span class="p">,</span> <span class="n">plot_trajectories_2d</span>
+
+<span class="n">walk</span> <span class="o">=</span> <span class="n">RandomWalk</span><span class="p">(</span><span class="n">n_walkers</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"gaussian"</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">walk</span><span class="o">.</span><span class="n">diffusion_coefficient</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Estimated diffusion coefficient D = </span><span class="si">{</span><span class="n">D</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">plot_trajectories_2d</span><span class="p">(</span><span class="n">walk</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_show</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">plot_msd</span><span class="p">(</span><span class="n">walk</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">show_theory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-ehrenfest-urn-model">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">1907 – The Ehrenfest Urn Model</a><a class="headerlink" href="#the-ehrenfest-urn-model" title="Link to this heading">#</a></h2>
+<p>The Ehrenfest urn is exactly reversible and does recur, yet a system
+started far from equilibrium (all <span class="math notranslate nohighlight">\(N\)</span> balls in one box) relaxes to
+near-equal occupancy almost immediately, while the recurrence time is
+astronomically longer than the simulation could ever run.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>t = 0 (maximally non-equilibrium)      t large (near equilibrium)
++-----------+   +-----------+          +-----------+   +-----------+
+|o o o o o o|   |           |          |o o o  o o |   |o  o o  o o|
+|o o o o o o|   |           |   --&gt;    |  o o  o   |   |o  o   o o |
+|o o o o o o|   |           |          |o    o o o |   | o o o    o|
++-----------+   +-----------+          +-----------+   +-----------+
+ n_left = N       n_right = 0           n_left ~ N/2      n_right ~ N/2
+one ball, chosen uniformly at random, crosses over at every time step
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ehrenfest_urn</span><span class="w"> </span><span class="kn">import</span> <span class="n">EhrenfestUrn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.urn_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_ehrenfest_history</span>
+
+<span class="n">urn</span> <span class="o">=</span> <span class="n">EhrenfestUrn</span><span class="p">(</span><span class="n">n_balls</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># all 200 balls start in the left box</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">urn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">n_steps</span><span class="o">=</span><span class="mi">6000</span><span class="p">)</span>
+
+<span class="n">plot_ehrenfest_history</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">n_balls</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">"Reversible dynamics, irreversible-looking relaxation to n_left ~ N/2"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-ising-model-and-onsager-s-exact-solution">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">1920-1944 – The Ising Model and Onsager’s Exact Solution</a><a class="headerlink" href="#the-ising-model-and-onsager-s-exact-solution" title="Link to this heading">#</a></h2>
+<p>Onsager’s exact solution locates the 2D Ising model’s continuous phase
+transition at <span class="math notranslate nohighlight">\(T_C = 2J/(k_B \ln(1+\sqrt2)) \approx 2.269\, J/k_B\)</span>.
+Sweeping temperature across <span class="math notranslate nohighlight">\(T_C\)</span> and snapshotting the lattice below,
+at, and above it makes the transition – from an ordered, mostly-aligned
+phase to a disordered one – directly visible.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>T &lt;&lt; T_C (ordered)      T ~ T_C (critical)       T &gt;&gt; T_C (disordered)
+^ ^ ^ ^ ^ ^ ^ ^          ^ v ^ ^ v v ^ ^           ^ v v ^ v ^ v v
+^ ^ ^ ^ ^ ^ ^ ^          v ^ ^ v v ^ v ^           v ^ v v ^ v ^ ^
+^ ^ ^ ^ ^ ^ ^ ^          ^ ^ v v v ^ ^ ^           v v ^ ^ v ^ v v
+^ ^ ^ ^ ^ ^ ^ ^          v v ^ ^ ^ v v ^           ^ v ^ v v ^ ^ v
+  bulk magnetized          scale-invariant                zero net
+  (spontaneous              domains, all sizes             magnetization
+   symmetry breaking)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.lattice_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_spin_grid</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Onsager T_C = </span><span class="si">{</span><span class="n">Ising2D</span><span class="p">()</span><span class="o">.</span><span class="n">T_C</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> J/kB"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">dT</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Ising2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">T_C</span> <span class="o">+</span> <span class="n">dT</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">T</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">plot_spin_grid</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"T = </span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="landau-mean-field-theory">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">1937 – Landau Mean-Field Theory</a><a class="headerlink" href="#landau-mean-field-theory" title="Link to this heading">#</a></h2>
+<p>Expanding the free energy in powers of an order parameter <span class="math notranslate nohighlight">\(m\)</span>, with
+no microscopic input beyond symmetry, already reproduces spontaneous
+symmetry breaking: one minimum above <span class="math notranslate nohighlight">\(T_C\)</span>, a split double well
+below it.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>F(m)                              F(m)
+ |    \      /                     |  \        /
+ |     \    /      T &gt; T_C         |   \  /\  /      T &lt; T_C
+ |      \  /        (m=0)          |    \/  \/      (m = +-m_eq)
+ |       \/                        |    /\  /\
+ +------------- m                  +------------- m
+          0                            -m_eq  0  +m_eq
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.landau_theory</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">landau_free_energy</span><span class="p">,</span> <span class="n">landau_equilibrium_magnetization</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">Tc</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Tc</span> <span class="o">+</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">Tc</span><span class="p">,</span> <span class="n">Tc</span> <span class="o">-</span> <span class="mf">0.8</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">landau_free_energy</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">Tc</span><span class="o">=</span><span class="n">Tc</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"T=</span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"order parameter m"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"F(m)"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m(T_C - 0.8) = </span><span class="si">{</span><span class="n">landau_equilibrium_magnetization</span><span class="p">(</span><span class="n">Tc</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="n">Tc</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  "</span>
+      <span class="sa">f</span><span class="s2">"(mean-field beta=1/2 power law)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="the-yang-lee-circle-theorem">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">1952 – The Yang-Lee Circle Theorem</a><a class="headerlink" href="#the-yang-lee-circle-theorem" title="Link to this heading">#</a></h2>
+<p>Continuing a finite Ising system’s partition function into the complex
+fugacity plane, every zero of a ferromagnetic system lands exactly on the
+unit circle – and a phase transition, in the infinite-size limit, is
+where these zeros pinch the positive real axis.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  Im(z)
+    |     x  x
+    |   x        x       every zero of Z(z) lies
+----x------+------x---- Re(z)   exactly on |z|=1
+    |   x        x       (ferromagnetic J &gt; 0)
+    |     x  x
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.partition_function</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ising_partition_polynomial</span><span class="p">,</span> <span class="n">yang_lee_zeros</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">ising_partition_polynomial</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">yang_lee_zeros</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max deviation from |z|=1: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">zeros</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">zeros</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Re(z)"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Im(z)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="bose-einstein-and-fermi-dirac-quantum-statistics">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">1924-1926 – Bose-Einstein and Fermi-Dirac Quantum Statistics</a><a class="headerlink" href="#bose-einstein-and-fermi-dirac-quantum-statistics" title="Link to this heading">#</a></h2>
+<p>Bosons pile without limit into a shared ground state below a critical
+temperature; fermions, forbidden by the Pauli exclusion principle from
+ever doubling up, fill states one at a time up to a sharp Fermi level as
+<span class="math notranslate nohighlight">\(T \to 0\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Bosons, T &lt; T_c:                  Fermions, T -&gt; 0:
+energy                            energy
+  |                                 |  (empty states)
+  |          o                      |  ----------------
+  |          o                      |  ---------------- &lt;- Fermi level mu
+  |          o                      |  ================ (filled, 1 per
+  |     o    o   o                  |  ================  state, Pauli-
+  |__ooooooooooooo__ ground state   |__================_ excluded above)
+     macroscopic condensate            hard step at T=0
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.thermodynamics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">bose_einstein_occupation</span><span class="p">,</span> <span class="n">fermi_dirac_occupation</span><span class="p">,</span> <span class="n">bec_condensate_fraction</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">T</span><span class="p">,</span> <span class="n">style</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="s2">":"</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">fermi_dirac_occupation</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">T</span><span class="p">),</span>
+                 <span class="n">style</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"steelblue"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Fermi-Dirac, T=</span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">bose_einstein_occupation</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu</span><span class="o">=-</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">T</span><span class="p">),</span>
+                 <span class="n">style</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"crimson"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Bose-Einstein, T=</span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"energy $\varepsilon$"</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">bec_condensate_fraction</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">critical_temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$T_c$"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$T/T_c$"</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"condensate fraction $N_0/N$"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-potts-model">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">1952 – The Potts Model</a><a class="headerlink" href="#the-potts-model" title="Link to this heading">#</a></h2>
+<p>The q-state Potts model rewards neighboring sites only for matching
+<em>exactly</em>. On the square lattice, watching the order parameter as
+temperature sweeps through <span class="math notranslate nohighlight">\(T_C\)</span> shows the transition sharpen from a
+smooth, continuous drop at small <span class="math notranslate nohighlight">\(q\)</span> into an abrupt jump once
+<span class="math notranslate nohighlight">\(q &gt; 4\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>q = 3 Potts configuration (letters = discrete states, not spin signs):
+
+A B B C A A          H = -J * sum_&lt;i,j&gt; delta(s_i, s_j)
+A A C C B B          (energy lowered only by *exact* neighbor matches,
+C A A B B C           not by a continuous alignment as in Ising/XY)
+B B A A C A
+C C A B B A
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">PottsModel2D</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PottsModel2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">T_C</span> <span class="o">+</span> <span class="mf">0.8</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">T_C</span> <span class="o">-</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run_temperature_sweep</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"T"</span><span class="p">]</span> <span class="o">/</span> <span class="n">model</span><span class="o">.</span><span class="n">T_C</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s2">"m"</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"q=</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$T / T_C(q)$"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Potts order parameter $m$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Transition sharpens from continuous (q &lt;= 4) to first-order (q &gt; 4)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-metropolis-algorithm">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">1953 – The Metropolis Algorithm</a><a class="headerlink" href="#the-metropolis-algorithm" title="Link to this heading">#</a></h2>
+<p>Every lattice chapter in this package is, underneath, the same
+accept/reject rule: propose a local change, accept downhill moves always
+and uphill moves with probability <span class="math notranslate nohighlight">\(e^{-\beta \Delta E}\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>current configuration s
+          |
+          v
+propose s' (flip one randomly chosen spin)
+          |
+          v
+dE = E(s') - E(s)
+     |                     |
+  dE &lt;= 0                dE &gt; 0
+     |                     |
+     v                     v
+always accept       accept with prob. exp(-beta * dE)
+     |                     |
+     +----------+----------+
+                v
+       repeat for every site (one sweep)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Ising2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">model</span><span class="o">.</span><span class="n">T_C</span>
+<span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">energy</span><span class="p">()</span> <span class="o">/</span> <span class="n">model</span><span class="o">.</span><span class="n">n_sites</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"metropolis"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">energy</span><span class="p">()</span> <span class="o">/</span> <span class="n">model</span><span class="o">.</span><span class="n">n_sites</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Metropolis sweep"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"energy per site"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Metropolis relaxation toward equilibrium at $T_C$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="molecular-dynamics-simulation">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">1957 – Molecular Dynamics Simulation</a><a class="headerlink" href="#molecular-dynamics-simulation" title="Link to this heading">#</a></h2>
+<p>Alder and Wainwright integrated Newton’s equations directly for hundreds of
+interacting particles rather than sampling configurations stochastically –
+the direct-simulation complement to Metropolis Monte Carlo.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+-------------------------------+  &lt;- periodic boundary: a particle
+|  o     o        o    o       |     leaving the right edge re-enters
+|     o      o  o    o    o    |     on the left (and similarly top/
+|  o     o    o     o     o    |     bottom)
+|     o    o     o     o     o |
+|  o     o    o    o      o    |     Velocity Verlet: x(t+dt), v(t+dt)
++-------------------------------+     from Lennard-Jones pairwise forces
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.molecular_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">LennardJonesGas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.particle_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_particle_snapshot</span>
+
+<span class="n">gas</span> <span class="o">=</span> <span class="n">LennardJonesGas</span><span class="p">(</span><span class="n">n_particles</span><span class="o">=</span><span class="mi">144</span><span class="p">,</span> <span class="n">box_size</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">E0</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span>
+<span class="n">gas</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">n_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">E1</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Energy drift over 2000 Verlet steps: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">E1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">E0</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">E0</span><span class="p">)</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> (relative)"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_particle_snapshot</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color_by_speed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="percolation-theory">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">1957 – Percolation Theory</a><a class="headerlink" href="#percolation-theory" title="Link to this heading">#</a></h2>
+<p>Below the percolation threshold <span class="math notranslate nohighlight">\(p_c\)</span>, only finite clusters exist;
+above it, an infinite spanning cluster appears with probability one – a
+purely geometric phase transition with a sharp threshold and a power-law
+cluster-size distribution right at <span class="math notranslate nohighlight">\(p_c\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>p &lt; p_c (subcritical)        p = p_c (critical)         p &gt; p_c (spanning)
+. X X . X . X .              X X . X X . X X             X X X X X X X X
+X . X . . X . X              X . X X . X . X             X X X X X X X X
+. X . X X . X .              . X X . X X X .             X X X X X X X X
+X . X . X . X .              X . X X . X X X             X X X X X X X X
+  (small clusters only)        (spans, fractal)          (fully occupied)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.percolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Percolation2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.lattice_render</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">plot_percolation_clusters</span><span class="p">,</span> <span class="n">plot_cluster_size_distribution</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">perc</span> <span class="o">=</span> <span class="n">Percolation2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">p</span><span class="p">,</span> <span class="n">P_span</span> <span class="o">=</span> <span class="n">perc</span><span class="o">.</span><span class="n">spanning_probability</span><span class="p">(</span><span class="n">p_values</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">P_span</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">perc</span><span class="o">.</span><span class="n">p_c</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$p_c$"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"p"</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$P_{\rm span}(p)$"</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">perc</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">perc</span><span class="o">.</span><span class="n">p_c</span><span class="p">)</span>
+<span class="n">plot_percolation_clusters</span><span class="p">(</span><span class="n">perc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plot_cluster_size_distribution</span><span class="p">(</span><span class="n">perc</span><span class="o">.</span><span class="n">cluster_size_distribution</span><span class="p">(),</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="kadanoff-wilson-renormalization-group">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">1966-1971 – Kadanoff / Wilson Renormalization Group</a><a class="headerlink" href="#kadanoff-wilson-renormalization-group" title="Link to this heading">#</a></h2>
+<p>Coarse-graining a critical (<span class="math notranslate nohighlight">\(T = T_C\)</span>) configuration by repeatedly
+replacing <span class="math notranslate nohighlight">\(2 \times 2\)</span> blocks with a single majority-rule spin
+produces a self-similar sequence of lattices; away from <span class="math notranslate nohighlight">\(T_C\)</span>, the
+same procedure flows visibly toward a fully ordered or fully disordered
+fixed point.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Fine lattice L                 2x2 majority rule            Coarse L/2
++ + - -                                                       +   -
++ + - -        each 2x2 block -&gt; sign(sum of block)   -&gt;
+- - + +                                                       -   +
+- - + +
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.renormalization</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlockSpinRG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.rg_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_rg_flow</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[(</span><span class="s2">"T &lt;&lt; T_C"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="s2">"T = T_C"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="s2">"T &gt;&gt; T_C"</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)]):</span>
+    <span class="n">rg</span> <span class="o">=</span> <span class="n">BlockSpinRG</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">grids</span> <span class="o">=</span> <span class="n">rg</span><span class="o">.</span><span class="n">iterate</span><span class="p">()</span>
+    <span class="n">order_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">BlockSpinRG</span><span class="o">.</span><span class="n">order_parameter</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grids</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">order_params</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"coarse-graining step"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"|&lt;s&gt;|"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="vortex-unbinding-in-the-2d-xy-model">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">1973 – Vortex Unbinding in the 2D XY Model</a><a class="headerlink" href="#vortex-unbinding-in-the-2d-xy-model" title="Link to this heading">#</a></h2>
+<p>Below the Kosterlitz-Thouless temperature, vortices remain bound in tight
+pairs of opposite topological charge; above it, thermal fluctuations tear
+these pairs into a free “vortex plasma” – a phase transition organized by
+topology rather than a local order parameter.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Bound vortex-antivortex pair (T &lt; T_KT):
+
+     ^  -&gt;                    charge +1 (vortex): spins wind
+    \    \                    counterclockwise once around the core
+     (+1)  -&gt;
+    /    \                    charge -1 (antivortex): spins wind
+   v   &lt;-  (-1)  &lt;-           clockwise once around the core
+          /   \
+        &lt;-     v              tightly bound below T_KT; unbind into a
+                               free plasma above T_KT
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">XYModel2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.vortex_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_vortices</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">dT</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">XYModel2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">T_KT</span> <span class="o">+</span> <span class="n">dT</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">nv</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">vortex_count</span><span class="p">()</span>
+    <span class="n">plot_vortices</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">theta</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"T = </span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="s1">'below'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">dT</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'above'</span><span class="si">}</span><span class="s2"> $T_</span><span class="se">{{</span><span class="s2">KT</span><span class="se">}}</span><span class="s2">$): "</span>
+                 <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nv</span><span class="si">}</span><span class="s2"> vortices, </span><span class="si">{</span><span class="n">na</span><span class="si">}</span><span class="s2"> antivortices"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-edwards-anderson-spin-glass">
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">1975 – The Edwards-Anderson Spin Glass</a><a class="headerlink" href="#the-edwards-anderson-spin-glass" title="Link to this heading">#</a></h2>
+<p>A generic plaquette with an odd number of antiferromagnetic bonds cannot
+satisfy all four of its bonds at once – it is frustrated. The
+Edwards-Anderson order parameter, the overlap between two replicas sharing
+the same disorder, stays nonzero as long as both replicas freeze into the
+same disorder-selected (if disordered) pattern.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> o --+J-- o --+J-- o        Plaquette bonds (clockwise): +J, -J, +J, -J
+ |        |        |        product of four bonds &lt; 0  ==&gt;  FRUSTRATED:
+-J       +J       -J        no single spin assignment on its four sites
+ |        |        |        satisfies all four bonds simultaneously
+ o --+J-- o --+J-- o
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.spin_glass</span><span class="w"> </span><span class="kn">import</span> <span class="n">EdwardsAndersonSpinGlass2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.lattice_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_spin_grid</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">EdwardsAndersonSpinGlass2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Frustrated plaquette fraction: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">frustration_density</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (expect ~0.5)"</span><span class="p">)</span>
+
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">q2_values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">edwards_anderson_order_parameter</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">temperatures</span>
+<span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">plot_spin_grid</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Frozen configuration, T=0.5 J/kB"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">q2_values</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Temperature"</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\langle q^2 \rangle$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">1975-1980 – The Sherrington-Kirkpatrick Model and Parisi’s Replica Symmetry Breaking</a><a class="headerlink" href="#the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking" title="Link to this heading">#</a></h2>
+<p>Every spin coupled to every other spin by an independent Gaussian bond.
+Parisi’s replica-symmetry-breaking solution predicts the pooled
+replica-overlap distribution P(q) is a single narrow peak above the
+transition, but broad and structured below it.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>P(q)                              P(q)
+ |     ___                         |    __
+ |    /   \      T &gt; T_SG          |  _/  \_       T &lt; T_SG
+ |   /     \      (paramagnetic)   | /      \      (many pure states,
+ +--+---+---+-- q                  +---------+-- q  broad, non-Gaussian)
+   -1   0   1                       -1   0   1
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.spin_glass</span><span class="w"> </span><span class="kn">import</span> <span class="n">SherringtonKirkpatrick</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.spin_glass_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_overlap_distribution</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">beta</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[(</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">"T=3.3 J/kB (paramagnetic)"</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="s2">"T=0.5 J/kB (spin-glass)"</span><span class="p">)]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">SherringtonKirkpatrick</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">overlap_distribution</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">n_disorder</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">plot_overlap_distribution</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-binder-cumulant-and-finite-size-scaling">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">1981 – The Binder Cumulant and Finite-Size Scaling</a><a class="headerlink" href="#the-binder-cumulant-and-finite-size-scaling" title="Link to this heading">#</a></h2>
+<p>The fourth-order cumulant <span class="math notranslate nohighlight">\(U_4 = 1 - \langle M^4\rangle / (3\langle
+M^2\rangle^2)\)</span> is dimensionless, so at <span class="math notranslate nohighlight">\(T_C\)</span> its curves for different
+lattice sizes <span class="math notranslate nohighlight">\(L\)</span> all cross at (very nearly) the same temperature –
+letting <span class="math notranslate nohighlight">\(T_C\)</span> be pinned down without ever simulating an infinite
+system.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>U4
+ |     L=8  \             / L=8
+ |            \    X    /              X marks the common crossing:
+ |              \  |  /                the finite-size-independent
+ |               \ | /                 estimate of T_C
+ |     L=16 /      |      \ L=16
+ |         /       |       \
+ +------------------------------------- T
+                    T_C
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.thermodynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">binder_cumulant</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.finite_size_scaling</span><span class="w"> </span><span class="kn">import</span> <span class="n">binder_cumulant_crossing</span>
+
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">U4_by_L</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">24</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Ising2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">U4</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">T</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># equilibrate</span>
+        <span class="n">mags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">mags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">magnetization</span><span class="p">())</span>
+        <span class="n">U4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binder_cumulant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mags</span><span class="p">)))</span>
+    <span class="n">U4_by_L</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">U4</span><span class="p">)</span>
+
+<span class="n">T_c_estimate</span> <span class="o">=</span> <span class="n">binder_cumulant_crossing</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">U4_by_L</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Binder-cumulant crossing estimate of T_C: </span><span class="si">{</span><span class="n">T_c_estimate</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> "</span>
+      <span class="sa">f</span><span class="s2">"(Onsager: </span><span class="si">{</span><span class="n">Ising2D</span><span class="p">()</span><span class="o">.</span><span class="n">T_C</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">U4</span> <span class="ow">in</span> <span class="n">U4_by_L</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">U4</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">T_c_estimate</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$T_C$ estimate"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"T"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$U_4$"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-kardar-parisi-zhang-equation">
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">1986 – The Kardar-Parisi-Zhang Equation</a><a class="headerlink" href="#the-kardar-parisi-zhang-equation" title="Link to this heading">#</a></h2>
+<p>A local growth rule with no adjustable surface-tension or coupling
+constant at all – the Restricted Solid-On-Solid model – is enough to
+place a growing interface in the KPZ universality class: early-time
+width growth <span class="math notranslate nohighlight">\(w \sim t^{1/3}\)</span> crossing over to a size-limited
+saturation <span class="math notranslate nohighlight">\(w_{\text{sat}} \sim L^{1/2}\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>height                                 log w
+  |        .  .                          |            _________ w_sat ~ L^0.5
+  |     . .  ..  .   rough,               |         _/
+  |   ..        . .  uncorrelated         |       _/    w ~ t^(1/3)
+  |  .            .. noise + local        |     _/
+  +------------------- x                  +---------------------- log t
+     growing interface                       growth then saturation
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.kpz_growth</span><span class="w"> </span><span class="kn">import</span> <span class="n">KPZInterface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.utils.finite_size_scaling</span><span class="w"> </span><span class="kn">import</span> <span class="n">power_law_exponent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.kpz_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_width_growth</span>
+
+<span class="n">interface</span> <span class="o">=</span> <span class="n">KPZInterface</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">times</span><span class="p">,</span> <span class="n">widths</span> <span class="o">=</span> <span class="n">interface</span><span class="o">.</span><span class="n">run_growth_curve</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">beta_fit</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">power_law_exponent</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">widths</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"fitted growth exponent beta = </span><span class="si">{</span><span class="n">beta_fit</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (KPZ theory: 1/3)"</span><span class="p">)</span>
+
+<span class="n">plot_width_growth</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="self-organized-criticality-and-the-btw-sandpile">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">1987 – Self-Organized Criticality and the BTW Sandpile</a><a class="headerlink" href="#self-organized-criticality-and-the-btw-sandpile" title="Link to this heading">#</a></h2>
+<p>Grains added one at a time tune the pile <em>itself</em> to a critical state, with
+no parameter fine-tuning: avalanche sizes follow a power law with no
+characteristic scale, the geometric signature of self-organized
+criticality.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1 2 1 3 2
+2 4*2 1 3    site (1,1) reaches height 4 = threshold -&gt; topples,
+1 3 1 2 1    sending one grain to each of its four neighbors,
+3 2 4 1 2    which may push a neighbor over threshold too --
+2 1 2 3 1    an avalanche, size = total topplings triggered
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.sandpile</span><span class="w"> </span><span class="kn">import</span> <span class="n">BTWSandpile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.sandpile_render</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">plot_sandpile_heights</span><span class="p">,</span> <span class="n">plot_avalanche_size_distribution</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">pile</span> <span class="o">=</span> <span class="n">BTWSandpile</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sizes</span> <span class="o">=</span> <span class="n">pile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">n_grains</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>  <span class="c1"># warmup reaches the SOC state</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">plot_sandpile_heights</span><span class="p">(</span><span class="n">pile</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plot_avalanche_size_distribution</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-wolff-cluster-algorithm">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">1989 – The Wolff Cluster Algorithm</a><a class="headerlink" href="#the-wolff-cluster-algorithm" title="Link to this heading">#</a></h2>
+<p>A Wolff update grows one cluster of same-sign spins from a random seed –
+each bond added independently with probability <span class="math notranslate nohighlight">\(1 - e^{-2\beta J}\)</span> –
+and flips the whole cluster in a single global Monte Carlo move, sidestepping
+the critical slowing down that limits single-spin Metropolis dynamics right
+at <span class="math notranslate nohighlight">\(T_C\)</span>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+ + + + +          + [+ + +]+       cluster grown from a random seed
++ + + + +    --&gt;   +[+ + + +]       (bracketed): each same-sign neighbor
++ - + + +          +[+]- + +        bond joins with prob. 1-exp(-2*beta*J)
++ + + - +          + + + - +        then the entire cluster is flipped
+                                     as ONE Monte Carlo move
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Ising2D</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">model</span><span class="o">.</span><span class="n">T_C</span>  <span class="c1"># right at T_C: hardest regime for single-spin dynamics</span>
+
+<span class="n">cluster_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">300</span><span class="p">)]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cluster_sizes</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">n_sites</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"full lattice"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Wolff update"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"cluster size"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Wolff cluster sizes at $T_C$: a global, not local, Monte Carlo move"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="the-jarzynski-equality">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">1997 – The Jarzynski Equality</a><a class="headerlink" href="#the-jarzynski-equality" title="Link to this heading">#</a></h2>
+<p>Averaging <span class="math notranslate nohighlight">\(e^{-\beta W}\)</span>, not <span class="math notranslate nohighlight">\(W\)</span>, over repeated realizations
+of a nonequilibrium protocol recovers the exact equilibrium free energy
+difference – however fast or dissipative each individual realization is.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>density
+  |        &lt;W&gt;                        &lt;W&gt; sits above the true Delta F
+  |         v                         (second law), but the exponential
+  |    _   _|_                        average of the SAME work samples
+  |   / \_/   \___   Delta F          lands exactly back on Delta F
+  +------|----------- W                (Jensen's inequality, saturated)
+       Delta F
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.nonequilibrium_work</span><span class="w"> </span><span class="kn">import</span> <span class="n">JarzynskiHarmonicTrap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.visualizers.jarzynski_render</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_work_distribution</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">JarzynskiHarmonicTrap</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">work</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run_protocol</span><span class="p">(</span><span class="n">lambda_0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">lambda_1</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="o">=</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">dF_estimate</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">jarzynski_free_energy_estimate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;W&gt; = </span><span class="si">{</span><span class="n">work</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">   Jarzynski dF_estimate = </span><span class="si">{</span><span class="n">dF_estimate</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">   (true dF = 0)"</span><span class="p">)</span>
+
+<span class="n">plot_work_distribution</span><span class="p">(</span><span class="n">work</span><span class="p">,</span> <span class="n">dF_true</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dF_estimate</span><span class="o">=</span><span class="n">dF_estimate</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="see-also">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../history/statphys_breakthroughs.html"><span class="doc">Breakthroughs in Statistical Mechanics</span></a> for the full chronology and the
+historical context behind each entry above.</p></li>
+<li><p><a class="reference internal" href="../api/gallery/statphys/index.html"><span class="doc">Examples</span></a> for the complete, gallery-rendered
+example suite these snippets are drawn from.</p></li>
+<li><p><a class="reference internal" href="../api/statphys.html"><span class="doc">physicskit.statphys</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../examples/statphys.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">physicskit.statphys</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../api/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#s-boltzmann-s-statistical-entropy-and-the-h-theorem">1870s – Boltzmann’s Statistical Entropy and the H-Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gibbs-s-ensemble-formalism">1902 – Gibbs’s Ensemble Formalism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#einstein-s-explanation-of-brownian-motion">1905 – Einstein’s Explanation of Brownian Motion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ehrenfest-urn-model">1907 – The Ehrenfest Urn Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ising-model-and-onsager-s-exact-solution">1920-1944 – The Ising Model and Onsager’s Exact Solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landau-mean-field-theory">1937 – Landau Mean-Field Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-yang-lee-circle-theorem">1952 – The Yang-Lee Circle Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bose-einstein-and-fermi-dirac-quantum-statistics">1924-1926 – Bose-Einstein and Fermi-Dirac Quantum Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-potts-model">1952 – The Potts Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-metropolis-algorithm">1953 – The Metropolis Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-dynamics-simulation">1957 – Molecular Dynamics Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percolation-theory">1957 – Percolation Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kadanoff-wilson-renormalization-group">1966-1971 – Kadanoff / Wilson Renormalization Group</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vortex-unbinding-in-the-2d-xy-model">1973 – Vortex Unbinding in the 2D XY Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-edwards-anderson-spin-glass">1975 – The Edwards-Anderson Spin Glass</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking">1975-1980 – The Sherrington-Kirkpatrick Model and Parisi’s Replica Symmetry Breaking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-binder-cumulant-and-finite-size-scaling">1981 – The Binder Cumulant and Finite-Size Scaling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kardar-parisi-zhang-equation">1986 – The Kardar-Parisi-Zhang Equation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-organized-criticality-and-the-btw-sandpile">1987 – Self-Organized Criticality and the BTW Sandpile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-wolff-cluster-algorithm">1989 – The Wolff Cluster Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-jarzynski-equality">1997 – The Jarzynski Equality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/tutorials/statphys_deep_dives.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

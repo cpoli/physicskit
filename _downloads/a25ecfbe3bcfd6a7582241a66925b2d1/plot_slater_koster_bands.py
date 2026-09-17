@@ -1,0 +1,91 @@
+r"""
+Slater-Koster LCAO: Empirical Multi-Orbital Band Structure
+================================================================
+
+Slater and Koster showed how to build realistic band structures from a
+*minimal* empirical basis: a linear combination of atomic orbitals (LCAO),
+with hopping matrix elements between orbitals treated as fitting
+parameters rather than computed from first principles.
+:class:`~physicskit.condensed.tight_binding.Lattice` and
+:class:`~physicskit.condensed.tight_binding.Hamiltonian` are a direct,
+general-purpose realization of this philosophy: declare orbitals, declare
+empirical hoppings between them, and Bloch-sum the result into a
+multi-band :math:`H(k)`.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.condensed.tight_binding import Hamiltonian, Lattice
+
+# %%
+# Two orbitals per cell with independent empirical hoppings
+# ---------------------------------------------------------------
+# An s-like orbital and a p-like orbital per unit cell, each with its own
+# onsite energy, coupled by three independent Slater-Koster-style hopping
+# parameters: intracell s-p, intercell s-s, and intercell p-p.
+
+lat = Lattice(lattice_vectors=[[1.0]], orbitals=[[0.0], [0.5]], labels=["s", "p"])
+H = Hamiltonian(lat, onsite=[-1.0, 1.0])
+H.add_hopping(0, 1, (0,), 0.4)  # intracell s-p hopping
+H.add_hopping(0, 0, (1,), -0.6)  # s-s hopping between cells
+H.add_hopping(1, 1, (1,), 0.2)  # p-p hopping between cells
+
+# %%
+# Bloch-summing the empirical model across the Brillouin zone
+# -----------------------------------------------------------------
+# Unlike the single-band monatomic chain, the s-p hopping now hybridizes
+# the two orbitals, producing an avoided crossing rather than two
+# independent cosine bands -- exactly the qualitative feature LCAO models
+# are built to capture.
+
+k_grid = np.linspace(0, 2 * np.pi, 300)
+bands = np.array([H.bands([k]) for k in k_grid])
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4))
+
+ax1.plot(k_grid, bands[:, 0], label="lower band")
+ax1.plot(k_grid, bands[:, 1], label="upper band")
+ax1.set_xlabel("k")
+ax1.set_ylabel("Energy")
+ax1.set_title("Two-orbital LCAO band structure")
+ax1.legend()
+
+# %%
+# Orbital character: which band is "s-like", which is "p-like"?
+# ---------------------------------------------------------------------
+# LCAO's whole premise is that a band is a k-dependent mixture of atomic
+# orbitals. Diagonalizing :meth:`Hamiltonian.bloch` directly (rather than
+# just :meth:`bands`) keeps the eigenvectors, whose squared weight on the
+# ``s`` orbital -- component 0 of the two-orbital basis -- is exactly the
+# s-character plotted below as a "fat band": far from the avoided
+# crossing each band is almost pure s or p, and the two characters swap
+# smoothly across the anticrossing itself, the direct signature of orbital
+# hybridization LCAO is built to capture.
+
+s_character = np.empty_like(bands)
+for i, k in enumerate(k_grid):
+    eigvals, eigvecs = np.linalg.eigh(H.bloch([k]))
+    s_character[i] = np.abs(eigvecs[0, :]) ** 2
+
+sc = ax2.scatter(
+    np.tile(k_grid, 2),
+    bands.T.ravel(),
+    c=s_character.T.ravel(),
+    cmap="coolwarm",
+    s=8,
+    vmin=0,
+    vmax=1,
+)
+ax2.set_xlabel("k")
+ax2.set_ylabel("Energy")
+ax2.set_title("Orbital character (fat bands)")
+fig.colorbar(sc, ax=ax2, label="s-orbital weight (0=pure p, 1=pure s)")
+
+fig.suptitle("Two-orbital LCAO band structure from empirical Slater-Koster hoppings")
+fig.tight_layout()
+
+gap = bands[:, 1].min() - bands[:, 0].max()
+print(f"minimum direct gap between the two hybridized bands: {gap:.4f}")
+print(f"s-character at k=0 (lower, upper band): {s_character[0, 0]:.3f}, {s_character[0, 1]:.3f}")
+print(f"s-character at k=pi (lower, upper band): {s_character[len(k_grid) // 2, 0]:.3f}, {s_character[len(k_grid) // 2, 1]:.3f}")

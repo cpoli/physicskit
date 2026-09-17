@@ -1,0 +1,858 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.relativity.chapters.kerr &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/relativity/chapters/kerr';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.relativity.chapters.kerr</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.relativity.chapters.kerr</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""The Kerr black hole: frame dragging, the ergosphere, and the Penrose process.</span>
+
+<span class="sd">Roy Kerr's 1963 exact solution describes a rotating black hole, characterized</span>
+<span class="sd">by mass :math:`M` and spin parameter :math:`a = J/M \\in [0, M)`. Rotation</span>
+<span class="sd">drags spacetime itself around with it (frame dragging / the Lense-Thirring</span>
+<span class="sd">effect), creates a region outside the horizon -- the ergosphere -- where no</span>
+<span class="sd">observer can remain stationary, and permits Penrose's remarkable 1969</span>
+<span class="sd">proposal: a particle that splits inside the ergosphere can send one fragment</span>
+<span class="sd">into the black hole with *negative* energy (as measured at infinity), so the</span>
+<span class="sd">other fragment escapes carrying away more energy than the original particle</span>
+<span class="sd">had -- extracting rotational energy from the black hole itself.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.relativity.core.geodesics</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate_kerr_equatorial_geodesic</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"KerrBlackHole"</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="KerrBlackHole">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KerrBlackHole</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A rotating black hole of mass ``M`` and spin parameter ``a``, in geometrized units.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : float, default=1.0</span>
+<span class="sd">        Mass, in geometrized length units.</span>
+<span class="sd">    a : float, default=0.0</span>
+<span class="sd">        Spin parameter :math:`a = J/M`, with :math:`0 \\le a &lt; M`.</span>
+<span class="sd">        ``a=0`` recovers Schwarzschild.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"spin parameter a must satisfy 0 &lt;= a &lt; M"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">M</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">outer_horizon_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Event horizon radius, :math:`r_+ = M + \\sqrt{M^2 - a^2}`."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner_horizon_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Inner (Cauchy) horizon radius, :math:`r_- = M - \\sqrt{M^2 - a^2}`."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dimensionless_spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Dimensionless spin :math:`a_* = a/M \\in [0, 1)`."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
+
+<div class="viewcode-block" id="KerrBlackHole.ergosphere_radius">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.ergosphere_radius">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ergosphere_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Static-limit (ergosphere outer boundary) radius at polar angle ``theta``.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            r_E(\\theta) = M + \\sqrt{M^2 - a^2\\cos^2\\theta}</span>
+
+<span class="sd">        The ergosphere is the region :math:`r_+ &lt; r &lt; r_E(\\theta)`, where</span>
+<span class="sd">        the ``t``-Killing vector becomes spacelike: no observer can remain</span>
+<span class="sd">        at fixed :math:`(r, \\theta, \\phi)` there, no matter how powerful</span>
+<span class="sd">        their rocket -- they are inevitably dragged around in :math:`\\phi`</span>
+<span class="sd">        by the rotating spacetime itself.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theta : float or array_like</span>
+<span class="sd">            Polar angle (``pi/2`` is the equator, where the ergosphere is</span>
+<span class="sd">            widest, :math:`r_E = 2M`).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.is_inside_ergosphere">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.is_inside_ergosphere">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_inside_ergosphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Whether a point :math:`(r, \\theta)` lies inside the ergosphere.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : float</span>
+<span class="sd">            Radial coordinate.</span>
+<span class="sd">        theta : float</span>
+<span class="sd">            Polar angle.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ergosphere_radius</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.isco_radius">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.isco_radius">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isco_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prograde</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Innermost stable circular equatorial orbit radius (Bardeen-Press-Teukolsky 1972).</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            Z_1 = 1 + (1-a_*^2)^{1/3}\\left[(1+a_*)^{1/3} + (1-a_*)^{1/3}\\right], \\quad</span>
+<span class="sd">            Z_2 = \\sqrt{3a_*^2 + Z_1^2}</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\frac{r_{\\text{ISCO}}}{M} = 3 + Z_2 \\mp</span>
+<span class="sd">                \\sqrt{(3-Z_1)(3+Z_1+2Z_2)}</span>
+
+<span class="sd">        with the :math:`-` sign for a prograde (co-rotating) orbit and</span>
+<span class="sd">        :math:`+` for retrograde. Prograde ISCOs shrink toward the horizon</span>
+<span class="sd">        as spin increases (:math:`r_{\\text{ISCO}} \\to M` as</span>
+<span class="sd">        :math:`a \\to M`); retrograde ISCOs grow toward :math:`9M`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        prograde : bool, default=True</span>
+<span class="sd">            Whether the orbit co-rotates with the black hole.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="n">a_star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensionless_spin</span>
+        <span class="n">Z1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a_star</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">a_star</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a_star</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">))</span>
+        <span class="n">Z2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">a_star</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Z1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">prograde</span> <span class="k">else</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">+</span> <span class="n">Z2</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">3.0</span> <span class="o">-</span> <span class="n">Z1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">+</span> <span class="n">Z1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">Z2</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.frame_dragging_angular_velocity">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.frame_dragging_angular_velocity">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">frame_dragging_angular_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Angular velocity of a zero-angular-momentum observer (ZAMO) in the equatorial plane.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\omega(r) = -\\frac{g_{t\\phi}}{g_{\\phi\\phi}}</span>
+<span class="sd">                       = \\frac{2Ma}{r^3 + a^2 r + 2Ma^2}</span>
+
+<span class="sd">        The rate at which locally non-rotating observers are swept around</span>
+<span class="sd">        in :math:`\\phi` purely by the geometry -- frame dragging. At large</span>
+<span class="sd">        :math:`r` this falls off as :math:`2Ma/r^3`, the classic</span>
+<span class="sd">        Lense-Thirring precession rate; it rises sharply approaching the</span>
+<span class="sd">        ergosphere, where even a photon fired against the rotation is</span>
+<span class="sd">        dragged forward.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : float or array_like</span>
+<span class="sd">            Equatorial radial coordinate, :math:`r &gt; r_+`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.irreducible_mass">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.irreducible_mass">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">irreducible_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Irreducible mass, :math:`M_{\\text{irr}} = \\sqrt{M r_+ / 2}`.</span>
+
+<span class="sd">        The irreducible mass can never decrease in any classical process</span>
+<span class="sd">        (Hawking's area theorem: it is proportional to</span>
+<span class="sd">        :math:`\\sqrt{\\text{horizon area}}`), which is what caps how much</span>
+<span class="sd">        rotational energy the Penrose process can extract.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.max_penrose_efficiency">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.max_penrose_efficiency">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_penrose_efficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Maximum fraction of the black hole's mass extractable via the Penrose process.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\eta_{\\max} = 1 - \\frac{M_{\\text{irr}}}{M}</span>
+<span class="sd">                          = 1 - \\sqrt{\\frac{r_+}{2M}}</span>
+
+<span class="sd">        Rises from 0 at :math:`a=0` to :math:`1 - 1/\\sqrt{2} \\approx</span>
+<span class="sd">        29.3\\%` for an extremal (:math:`a \\to M`) black hole.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreducible_mass</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.penrose_energy_gain">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.penrose_energy_gain">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">penrose_energy_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_energy</span><span class="p">,</span> <span class="n">fragment_energy_infalling</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Energy gained by the escaping fragment in a Penrose-process split.</span>
+
+<span class="sd">        A particle of specific energy ``initial_energy`` (measured at</span>
+<span class="sd">        infinity) splits, inside the ergosphere, into two fragments. If one</span>
+<span class="sd">        fragment falls into the horizon with negative specific energy</span>
+<span class="sd">        ``fragment_energy_infalling`` (possible only inside the ergosphere,</span>
+<span class="sd">        where the ``t``-Killing vector is spacelike), energy conservation at</span>
+<span class="sd">        the split point requires the escaping fragment to carry away</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            E_{\\text{out}} = E_{\\text{in}} - E_{\\text{infalling}} &gt; E_{\\text{in}}</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        initial_energy : float</span>
+<span class="sd">            Specific energy of the infalling particle before it splits.</span>
+<span class="sd">        fragment_energy_infalling : float</span>
+<span class="sd">            Specific energy of the fragment that falls into the horizon;</span>
+<span class="sd">            must be negative for energy to be extracted.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Specific energy of the escaping fragment.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; bh = KerrBlackHole(M=1.0, a=0.9)</span>
+<span class="sd">        &gt;&gt;&gt; e_out = bh.penrose_energy_gain(initial_energy=1.0, fragment_energy_infalling=-0.05)</span>
+<span class="sd">        &gt;&gt;&gt; e_out &gt; 1.0</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">fragment_energy_infalling</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"a Penrose process requires a negative-energy infalling fragment"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">initial_energy</span> <span class="o">-</span> <span class="n">fragment_energy_infalling</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.circular_orbit_conserved_quantities">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.circular_orbit_conserved_quantities">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">circular_orbit_conserved_quantities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">prograde</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Conserved specific energy and angular momentum of a circular equatorial orbit.</span>
+
+<span class="sd">        Standard Bardeen-Press-Teukolsky (1972) result:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            E = \\frac{r^{3/2} - 2Mr^{1/2} + a M^{1/2}}</span>
+<span class="sd">                     {r^{3/4}\\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}, \\qquad</span>
+<span class="sd">            L = \\frac{M^{1/2}\\left(r^2 - 2aM^{1/2}r^{1/2} + a^2\\right)}</span>
+<span class="sd">                     {r^{3/4}\\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}</span>
+
+<span class="sd">        with :math:`a \\to -a` for a retrograde orbit.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r0 : float</span>
+<span class="sd">            Orbital radius; should exceed the appropriate</span>
+<span class="sd">            :meth:`isco_radius` for the orbit to be stable.</span>
+<span class="sd">        prograde : bool, default=True</span>
+<span class="sd">            Whether the orbit co-rotates with the black hole.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        E : float</span>
+<span class="sd">            Specific energy.</span>
+<span class="sd">        L : float</span>
+<span class="sd">            Specific angular momentum.</span>
+<span class="sd">        """</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
+        <span class="n">a_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="k">if</span> <span class="n">prograde</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r0</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">a_eff</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">denom</span>
+        <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.integrate_equatorial_geodesic">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.integrate_equatorial_geodesic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate_equatorial_geodesic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Integrate an equatorial Kerr geodesic of conserved energy ``E`` and momentum ``L``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r0 : float</span>
+<span class="sd">            Initial radius.</span>
+<span class="sd">        E : float</span>
+<span class="sd">            Conserved specific energy.</span>
+<span class="sd">        L : float</span>
+<span class="sd">            Conserved specific angular momentum.</span>
+<span class="sd">        mu2 : float</span>
+<span class="sd">            ``1.0`` for a timelike geodesic, ``0.0`` for a null (photon) geodesic.</span>
+<span class="sd">        dtau : float</span>
+<span class="sd">            Affine-parameter (or proper-time) step size.</span>
+<span class="sd">        n_steps : int</span>
+<span class="sd">            Maximum number of steps.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict of str -&gt; ndarray</span>
+<span class="sd">            Keys ``"t"``, ``"r"``, ``"phi"``, ``"ur"``, plus ``"norm"``: the</span>
+<span class="sd">            four-velocity normalization :math:`g_{\\mu\\nu}u^\\mu u^\\nu`</span>
+<span class="sd">            at every step (should stay close to :math:`-\\mu^2`; its spread</span>
+<span class="sd">            measures integration error).</span>
+<span class="sd">        """</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">Delta0</span> <span class="o">=</span> <span class="n">r0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r0</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">A0</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="p">(</span><span class="n">r0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">L</span> <span class="o">*</span> <span class="n">a</span>
+        <span class="n">ur0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">((</span><span class="n">A0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Delta0</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu2</span> <span class="o">*</span> <span class="n">r0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">E</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">r0</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">ur0</span><span class="p">])</span>
+
+        <span class="n">trajectory</span><span class="p">,</span> <span class="n">n_valid</span> <span class="o">=</span> <span class="n">integrate_kerr_equatorial_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+        <span class="n">trajectory</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[:</span> <span class="n">n_valid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ur</span> <span class="o">=</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">Delta</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">L</span> <span class="o">*</span> <span class="n">a</span>
+        <span class="n">ut</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">E</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">Delta</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">uphi</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">E</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">Delta</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="n">g_tt</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">g_tphi</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">r</span>
+        <span class="n">g_rr</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">Delta</span>
+        <span class="n">g_phiphi</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">g_tt</span> <span class="o">*</span> <span class="n">ut</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">g_tphi</span> <span class="o">*</span> <span class="n">ut</span> <span class="o">*</span> <span class="n">uphi</span> <span class="o">+</span> <span class="n">g_rr</span> <span class="o">*</span> <span class="n">ur</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g_phiphi</span> <span class="o">*</span> <span class="n">uphi</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span> <span class="s2">"ur"</span><span class="p">:</span> <span class="n">ur</span><span class="p">,</span> <span class="s2">"ut"</span><span class="p">:</span> <span class="n">ut</span><span class="p">,</span> <span class="s2">"uphi"</span><span class="p">:</span> <span class="n">uphi</span><span class="p">,</span> <span class="s2">"norm"</span><span class="p">:</span> <span class="n">norm</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.keplerian_angular_velocity">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.keplerian_angular_velocity">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keplerian_angular_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">prograde</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Coordinate angular velocity of a circular equatorial geodesic orbit.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\Omega(r) = \\pm\\frac{\\sqrt{M}}{r^{3/2} \\pm a\\sqrt{M}}</span>
+
+<span class="sd">        with the upper sign for a prograde (co-rotating) orbit. Reduces to</span>
+<span class="sd">        the Keplerian :math:`\\sqrt{M/r^3}` at :math:`a=0`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : float or array_like</span>
+<span class="sd">            Orbital radius.</span>
+<span class="sd">        prograde : bool, default=True</span>
+<span class="sd">            Whether the orbit co-rotates with the black hole.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">prograde</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="k">return</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="KerrBlackHole.disk_redshift_factor">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrBlackHole.disk_redshift_factor">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">disk_redshift_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">,</span> <span class="n">prograde</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Combined gravitational + Doppler redshift factor for a circularly orbiting disk emitter.</span>
+
+<span class="sd">        Same construction as</span>
+<span class="sd">        :meth:`physicskit.relativity.chapters.schwarzschild.SchwarzschildBlackHole.disk_redshift_factor`,</span>
+<span class="sd">        :math:`g = 1/[u^t(1 - b\\Omega)]`, using the Kerr equatorial metric</span>
+<span class="sd">        and :meth:`keplerian_angular_velocity` in place of their</span>
+<span class="sd">        Schwarzschild counterparts.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : float or array_like</span>
+<span class="sd">            Disk radius at emission.</span>
+<span class="sd">        impact_parameter : float or array_like</span>
+<span class="sd">            The received photon's impact parameter :math:`b = L_{\\text{ph}}/E_{\\text{ph}}`.</span>
+<span class="sd">        prograde : bool, default=True</span>
+<span class="sd">            Whether the disk co-rotates with the black hole.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float or ndarray</span>
+<span class="sd">            The redshift factor :math:`g`.</span>
+<span class="sd">        """</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">impact_parameter</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">Omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keplerian_angular_velocity</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">prograde</span><span class="o">=</span><span class="n">prograde</span><span class="p">)</span>
+
+        <span class="n">g_tt</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">g_tphi</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">r</span>
+        <span class="n">g_phiphi</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span>
+        <span class="n">u_t</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">g_tt</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">g_tphi</span> <span class="o">*</span> <span class="n">Omega</span> <span class="o">+</span> <span class="n">g_phiphi</span> <span class="o">*</span> <span class="n">Omega</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">u_t</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">Omega</span><span class="p">))</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+API
+===
+
+The full API reference for every subpackage: every public class and function.
+
+.. grid:: 1 2 3 3
+   :gutter: 2
+
+   .. grid-item-card:: physicskit.condensed
+      :link: /api/condensed
+      :link-type: doc
+
+      Tight-binding models, topological band theory, superconductivity.
+
+   .. grid-item-card:: physicskit.fields
+      :link: /api/fields
+      :link-type: doc
+
+      Electrodynamics (FDTD), solitons, BEC vortex lattices.
+
+   .. grid-item-card:: physicskit.fluids
+      :link: /api/fluids
+      :link-type: doc
+
+      Potential flow, viscous flow, vortex dynamics, instabilities, compressible flow, Navier-Stokes.
+
+   .. grid-item-card:: physicskit.optics
+      :link: /api/optics
+      :link-type: doc
+
+      Ray/wave/Gaussian-beam optics and quantum optics.
+
+   .. grid-item-card:: physicskit.particle
+      :link: /api/particle
+      :link-type: doc
+
+      Relativistic kinematics, decays, scattering, nuclear physics.
+
+   .. grid-item-card:: physicskit.astro
+      :link: /api/astro
+      :link-type: doc
+
+      Stellar structure, N-body dynamics, orbital mechanics, galactic dynamics.
+
+   .. grid-item-card:: physicskit.plasma
+      :link: /api/plasma
+      :link-type: doc
+
+      Single-particle motion, magnetohydrodynamics, cold-plasma waves, kinetic theory.
+
+   .. grid-item-card:: physicskit.chaos
+      :link: /api/chaos
+      :link-type: doc
+
+      Chaotic dynamical systems and 2D quantum billiards.
+
+   .. grid-item-card:: physicskit.classical
+      :link: /api/classical
+      :link-type: doc
+
+      Classical (Newtonian/Lagrangian/Hamiltonian) mechanics.
+
+   .. grid-item-card:: physicskit.quantum
+      :link: /api/quantum
+      :link-type: doc
+
+      Quantum mechanics: wave packets, potentials, entanglement.
+
+   .. grid-item-card:: physicskit.relativity
+      :link: /api/relativity
+      :link-type: doc
+
+      Numerical general relativity: black holes, lensing, gravitational waves.
+
+   .. grid-item-card:: physicskit.rmt
+      :link: /api/rmt
+      :link-type: doc
+
+      Random matrix theory, organized around Dyson's threefold way.
+
+   .. grid-item-card:: physicskit.semiclassical
+      :link: /api/semiclassical
+      :link-type: doc
+
+      WKB/EBK quantization, semiclassical propagators, the Gutzwiller trace formula, and quantum scarring.
+
+   .. grid-item-card:: physicskit.statphys
+      :link: /api/statphys
+      :link-type: doc
+
+      Statistical mechanics: lattice models, molecular dynamics, criticality.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   condensed
+   fields
+   fluids
+   optics
+   particle
+   astro
+   plasma
+   chaos
+   classical
+   quantum
+   relativity
+   rmt
+   semiclassical
+   statphys

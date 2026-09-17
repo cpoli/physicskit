@@ -1,0 +1,475 @@
+:orphan:
+
+Examples
+========
+
+Runnable, self-contained scripts reproducing the key conceptual
+breakthroughs behind ``physicskit.optics`` -- from Huygens' 1690 wave
+construction through Allen et al.'s 1992 discovery of the orbital angular
+momentum of light (see :doc:`/history/optics_breakthroughs` for the full
+chronology).
+
+Each script in this gallery is self-contained and can be run directly with
+``python examples/optics/<section>/<script>.py``. Every script also carries
+an RST module docstring as its title/description and uses ``# %%`` markers to
+split narrative text from code, which is exactly what Sphinx-Gallery renders
+into the pages below -- the script *is* the source of truth for what you see,
+not a copy of it.
+
+Sections
+--------
+
+- **diffraction** -- scalar wave optics from Huygens through Airy: Huygens'
+  wavelet construction, Young's double-slit fringes, Fresnel's near-field
+  diffraction theory and the Poisson/Arago spot, and Airy's circular-aperture
+  pattern and the diffraction limit.
+- **ray_optics** -- paraxial ABCD matrix optics: Gauss's composite-system
+  matrix product, the two-mirror resonator stability behind Maiman's ruby
+  laser cavity, and Kao's graded-index (GRIN) fiber guiding.
+- **gaussian_beams** -- complex-beam-parameter wave optics: Kogelnik and
+  Li's ABCD transformation of a Gaussian beam through a thin lens,
+  Siegman's :math:`M^2` beam-quality factor, and Allen et al.'s
+  Laguerre-Gaussian orbital-angular-momentum vortex.
+- **quantum_optics** -- light in the truncated Fock basis: Wigner's
+  phase-space negativity, Glauber's coherent states, the Jaynes-Cummings
+  model's vacuum Rabi oscillation and collapse-and-revival,
+  Kimble/Dagenais/Mandel's photon antibunching, and Slusher's observation
+  of squeezed light.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Diffraction
+-----------
+
+Scalar wave optics from Huygens through Airy: Huygens' wavelet
+construction as diffractive spreading of a pinhole, Young's double-slit
+interference fringes (including an animated sweep of the near-to-far-field
+wavefront propagation), Fresnel's near-field diffraction theory and the
+Poisson/Arago spot, and Airy's circular-aperture pattern and the
+diffraction limit it implies.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="George Biddell Airy worked out the exact Fraunhofer diffraction pattern of a circular aperture, finding a bright central disk surrounded by faint concentric rings rather than the sharp geometric image predicted by ray optics. Lord Rayleigh turned Airy&#x27;s pattern into a practical resolving-power criterion: two point sources are just resolvable when the central peak of one Airy pattern falls on the first dark ring of the other, giving the diffraction limit \theta_{\min} \approx 1.22\,\lambda/D that bounds every microscope, telescope, and camera lens. circular_aperture and fraunhofer_diffraction reproduce the Airy pattern directly from a numerical Fourier transform -- no closed-form Bessel function is needed -- and its first dark ring lands exactly at the Rayleigh angle computed independently.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/diffraction/images/thumb/sphx_glr_plot_airy_diffraction_limit_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/diffraction/plot_airy_diffraction_limit`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Airy disk and the diffraction limit</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Augustin-Jean Fresnel combined Huygens&#x27; wavelet construction with Young&#x27;s principle of interference into a quantitative near-field diffraction theory. Simeon Poisson pointed out -- intending it as a reductio ad absurdum -- that Fresnel&#x27;s own theory predicted a bright spot at the center of the shadow of a circular obstacle; Francois Arago promptly observed the &quot;Poisson spot&quot; in the laboratory, turning a supposed refutation into the theory&#x27;s most dramatic confirmation.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/diffraction/images/thumb/sphx_glr_plot_fresnel_poisson_spot_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/diffraction/plot_fresnel_poisson_spot`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fresnel diffraction and the Poisson/Arago spot</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Christiaan Huygens&#x27; 1690 construction treats every point of an advancing wavefront as the source of a new spherical secondary wavelet; the envelope of all those wavelets a moment later reconstructs the propagated wavefront. angular_spectrum_propagate realizes exactly this modern form of the picture. The scalar field U_0(x,y) right after the aperture is decomposed into its plane-wave (angular) spectrum by a 2D Fourier transform; each plane-wave component, labeled by transverse spatial frequency (f_x,f_y), is a secondary wavelet that advances rigidly along z picking up phase e^{ik_z z}; re-synthesizing (inverse Fourier transform) sums the interference of all these wavelets at the new plane:">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/diffraction/images/thumb/sphx_glr_plot_huygens_wavelets_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/diffraction/plot_huygens_wavelets`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Huygens' wavelets: diffractive spreading of a pinhole</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Thomas Young argued in his 1801 Bakerian Lecture that light passing through two closely spaced slits produces alternating bright and dark fringes on a distant screen, explicable only if light is a wave capable of constructive and destructive interference. Where the two path lengths from the slits to an observation point differ by an integer number of wavelengths the waves reinforce; where they differ by a half-integer number, they cancel. double_slit_aperture builds exactly this two-slit transmission mask, and fraunhofer_diffraction propagates it to the far field, reproducing Young&#x27;s fringe pattern directly from a computed intensity distribution -- no \sin\theta fringe formula is used, only the wave field itself. Rather than jumping straight to that far-field limit, animate_diffraction_propagation animates the near-field wavefronts developing continuously into the far-field fringe pattern as the propagation distance grows.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/diffraction/images/thumb/sphx_glr_plot_young_double_slit_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/diffraction/plot_young_double_slit`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Young's double-slit fringes</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Gaussian beams
+--------------
+
+Complex-beam-parameter (Gaussian) wave optics: Kogelnik and Li's ABCD
+transformation of the complex beam parameter through a thin lens,
+Siegman's :math:`M^2` beam-quality factor for real, non-diffraction-limited
+beams, and the doughnut intensity and helical phase of an Allen et al.
+Laguerre-Gaussian orbital-angular-momentum vortex.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="After Maiman&#x27;s laser it became clear that real laser beams are neither idealized geometric rays nor infinite plane waves, but Gaussian beams. Kogelnik and Li&#x27;s 1966 paper showed that a Gaussian beam is completely characterized by one complex beam parameter q(z), and, crucially, that q transforms through any sequence of lenses, mirrors, or free-space sections by the same ABCD ray-transfer matrix already used for geometric rays -- unifying ray optics and Gaussian-beam wave optics under one formalism. propagate_q implements q&#x27; = (Aq+B)/(Cq+D), and q_to_beam_params recovers the physical beam radius w(z) at any plane.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/gaussian_beams/images/thumb/sphx_glr_plot_gaussian_beam_through_lens_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/gaussian_beams/plot_gaussian_beam_through_lens`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kogelnik and Li: focusing a Gaussian beam through a thin lens</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Real laser beams are never perfectly diffraction-limited fundamental Gaussian modes: multimode content, aberrations, and gain-medium imperfections all make them diverge faster than an ideal beam of the same waist. Anthony Siegman showed that essentially every real laser beam&#x27;s second-moment width still propagates by the same functional form as an ideal Gaussian beam,">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/gaussian_beams/images/thumb/sphx_glr_plot_m2_beam_quality_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/gaussian_beams/plot_m2_beam_quality`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Siegman's M^2 beam-quality factor</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Les Allen and coworkers showed that Laguerre-Gaussian light modes carrying a helical (spiral) phase front e^{il\phi} possess a well-defined orbital angular momentum of l\hbar per photon -- an intrinsic, mechanical property of light entirely separate from the spin angular momentum carried by polarization. The discovery opened the field of structured light and optical vortices. laguerre_gaussian_mode constructs the \mathrm{LG}_p^l mode amplitude">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/gaussian_beams/images/thumb/sphx_glr_plot_orbital_angular_momentum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/gaussian_beams/plot_orbital_angular_momentum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Allen et al.: orbital angular momentum of a Laguerre-Gaussian vortex</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Quantum optics
+--------------
+
+Light quantized in the truncated Fock basis: Dirac's creation/annihilation
+ladder operators and vacuum fluctuations, Wigner's phase-space
+quasi-probability distribution and the negativity of a single-photon Fock
+state, Glauber's coherent states and their Poissonian photon statistics,
+the Jaynes-Cummings model's vacuum Rabi oscillation and collapse-and-
+revival, Kimble/Dagenais/Mandel's photon antibunching via the Fano factor,
+Hanbury Brown and Twiss's intensity-correlation bunching, and Slusher's
+observation of squeezed, sub-vacuum quadrature noise.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Roy Glauber identified the coherent states |\alpha\rangle -- eigenstates of the annihilation operator, \hat a|\alpha\rangle = \alpha|\alpha\rangle -- as the quantum states that most closely reproduce a classical, stable-amplitude light wave: a positive Gaussian in phase space, displaced away from the origin, whose photon number follows a Poissonian distribution -- the quantum-mechanical signature of what an ideal, shot-noise-limited laser beam actually is. coherent_state constructs this state directly in a truncated Fock basis (dimension cutoff),">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_coherent_state_statistics_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_coherent_state_statistics`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Glauber's coherent states: displaced vacuum, Poissonian statistics</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Hanbury Brown and Twiss measured intensity correlations between two separated detectors and found bunching in thermal starlight -- the second-order correlation function">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_hanbury_brown_twiss_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_hanbury_brown_twiss`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Hanbury Brown-Twiss effect: bunching, coherent, and antibunched light</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Edwin Jaynes and Fred Cummings introduced the minimal fully quantum model of light-matter interaction: a single two-level atom coupled to a single quantized cavity mode. In the rotating-wave approximation, the Hamiltonian JaynesCummingsModel builds is">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_jaynes_cummings_rabi_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_jaynes_cummings_rabi`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Jaynes-Cummings model: vacuum Rabi oscillation and collapse-and-revival</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Dirac gave the first fully quantum treatment of radiation by promoting each field mode to a quantum harmonic oscillator, with non-commuting annihilation and creation operators \hat a,\hat a^\dagger satisfying [\hat a,\hat a^\dagger]=1. Photon number becomes the oscillator&#x27;s excitation number, \hat n=\hat a^\dagger\hat a, with \hat a and \hat a^\dagger respectively removing and adding one field quantum -- exactly the ladder structure Einstein&#x27;s 1905 light quanta had implied but never derived. This example builds \hat a and \hat a^\dagger directly with annihilation_operator and creation_operator, verifies the commutation relation and the ladder action on Fock states, and shows the vacuum-fluctuation fact behind Dirac&#x27;s other major result: even the vacuum \lvert0\rangle is not &quot;nothing&quot; to \hat a^\dagger, which is exactly what makes spontaneous emission unavoidable.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_ladder_operators_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_ladder_operators`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Dirac's quantization of the electromagnetic field: ladder operators</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Kimble, Dagenais, and Mandel measured the first direct evidence that light can arrive one photon at a time, with a vanishing probability of detecting two photons simultaneously -- no classical wave, however dim, can produce sub-Poissonian photon statistics. The Fano factor F = \mathrm{Var}(\hat n)/\langle\hat n\rangle equals 1 for a Poissonian (coherent, classical-limit) source and 0 for a number (Fock) state -- the fully antibunched, sub-Poissonian extreme their photon-counting statistics approached. fock_state and coherent_state give the two limiting photon-number distributions directly, from which the Fano factor is computed as an ordinary first/second moment.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_photon_antibunching_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_photon_antibunching`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kimble, Dagenais, and Mandel: photon antibunching and the Fano factor</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Richard Slusher and coworkers produced the first experimentally observed squeezed state of light. In terms of the dimensionless field quadratures \hat x = (\hat a+\hat a^\dagger)/\sqrt2 and \hat p = (\hat a-\hat a^\dagger)/(i\sqrt2), a coherent state divides the quantum uncertainty of the electromagnetic field equally between the two conjugate quadratures; a squeezed state redistributes that uncertainty unequally, reducing the noise in one quadrature below the vacuum (shot-noise) variance of 1/2 at the unavoidable cost of increasing it in the other, while the uncertainty product itself remains bounded below. squeezed_state constructs the squeeze-then-displace state">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_squeezed_light_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_squeezed_light`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Slusher et al.: squeezed light and sub-vacuum quadrature noise</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Eugene Wigner introduced a quasi-probability distribution W(x,p) that represents a quantum state jointly over the dimensionless quadratures x = (a+a^\dagger)/\sqrt2 and p = (a-a^\dagger)/(i\sqrt2), reproducing the correct marginal probability densities upon integration along either axis, while permitting negative values elsewhere -- a signature with no classical phase-space analogue. compute_wigner_function evaluates W(x,p) = \sum_{n,m}\rho_{nm}K_{nm}(x,p) on a phase-space grid from the density matrix \rho=\lvert\psi\rangle\langle\psi\rvert of an arbitrary Fock-basis state vector; for a number (Fock) state \lvert n\rangle (diagonal \rho) this reduces to the closed form">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/quantum_optics/images/thumb/sphx_glr_plot_wigner_function_fock_state_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/quantum_optics/plot_wigner_function_fock_state`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Wigner's phase-space distribution: negativity of a Fock state</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Ray optics
+----------
+
+Paraxial ray-transfer (ABCD) matrix optics: Gauss's composition rule for a
+compound optical system as a product of elementary matrices, the
+two-mirror resonator stability criterion behind Maiman's ruby laser
+cavity, and the sinusoidal ray confinement of Kao's graded-index (GRIN)
+optical fiber.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Carl Friedrich Gauss showed that any centered optical system, however many lenses and refracting surfaces it contains, can be fully characterized in the paraxial approximation by linear algebra rather than surface-by-surface trigonometry: every elementary optical element is a linear map on the ray state (y, \theta) -- height above the axis and angle to it --">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/ray_optics/images/thumb/sphx_glr_plot_abcd_system_matrix_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/ray_optics/plot_abcd_system_matrix`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Gauss's ABCD formalism: a composite system as a matrix product</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Charles Kao and George Hockham&#x27;s insight that glass fiber could in principle be purified to carry light over kilometers launched the fiber-optic communications industry. The graded-index (GRIN) fiber profile that followed guides light by continuously bending rays back toward the core axis, rather than by a single sharp core-cladding interface: for the standard quadratic radial index profile n(r) = n_0(1 - n_2 r^2/2), paraxial rays oscillate sinusoidally about the axis instead of walking off it. grin_medium builds the ABCD matrix of exactly this profile; chaining it through OpticalSystem and calling trace_ray reproduces the self-confining ray trajectory below, contrasted against the same ray walking away from the axis in a homogeneous medium.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/ray_optics/images/thumb/sphx_glr_plot_grin_fiber_guiding_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/ray_optics/plot_grin_fiber_guiding`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Graded-index fiber guiding (Kao's low-loss optical fiber)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Theodore Maiman&#x27;s 1960 ruby laser used a resonator formed by two mirrors bounding an amplifying medium -- precisely the kind of optical cavity that ray-transfer matrix theory was soon developed to analyze. This package does not model laser gain media, but spherical_mirror and cavity_round_trip_matrix build the ABCD round-trip matrix of a two-mirror resonator like Maiman&#x27;s, and cavity_stability tests whether such a cavity traps light indefinitely (a stable resonator, |A+D| \le 2) or walks rays out of the cavity on successive round trips.">
+
+.. only:: html
+
+  .. image:: /api/gallery/optics/ray_optics/images/thumb/sphx_glr_plot_laser_cavity_stability_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/optics/ray_optics/plot_laser_cavity_stability`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Two-mirror resonator stability (Maiman's ruby laser cavity)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /api/gallery/optics/diffraction/index.rst
+   /api/gallery/optics/gaussian_beams/index.rst
+   /api/gallery/optics/quantum_optics/index.rst
+   /api/gallery/optics/ray_optics/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

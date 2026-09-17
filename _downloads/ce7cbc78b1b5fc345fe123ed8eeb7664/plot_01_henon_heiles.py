@@ -1,0 +1,52 @@
+r"""
+The Henon-Heiles system: Poincare sections and KAM torus breakdown
+========================================================================
+
+:class:`~physicskit.classical.systems.hamiltonian.HenonHeilesSystem`
+is the classic non-integrable 2-DOF Hamiltonian (originally a model of
+stellar orbits in an axisymmetric galactic potential),
+
+.. math::
+
+    H = \frac{p_x^2 + p_y^2}{2} + \frac{x^2 + y^2}{2}
+        + x^2 y - \frac{y^3}{3} ,
+
+evolved here at three fixed energies :math:`E = H`, each with several
+trajectories launched from different starting angles on the
+:math:`y = 0` line. Below :math:`E \approx 1/6` the :math:`(x, p_x)`
+Poincare section at :math:`y = 0,\ p_y > 0` is dominated by smooth
+invariant curves (KAM tori: nearly every trajectory is
+quasi-periodic). As :math:`E` approaches and exceeds :math:`1/6`, more
+and more of those tori break up into a chaotic sea -- one of the
+classic numerical demonstrations of the KAM theorem's limits.
+"""
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.classical.systems.hamiltonian import HenonHeilesSystem
+from physicskit.classical.visualizers.phase_space import plot_poincare_section
+
+energies = [0.05, 0.1167, 0.16]
+fig, axes = plt.subplots(1, 3, figsize=(13, 4.3), sharex=True, sharey=True)
+
+rng = np.random.default_rng(0)
+for ax, E in zip(axes, energies):
+    ax.set_title(f"E = {E:.4f}", fontsize=14)
+    # several trajectories per energy, different starting angles on the y=0 line
+    for x0 in np.linspace(-0.3, 0.3, 6):
+        v2 = 2 * E - x0**2  # from H = 0.5*(px^2+py^2) + 0.5*x^2 at y=0
+        if v2 <= 0:
+            continue
+        px0 = np.sqrt(v2) * rng.choice([-1, 1]) * 0.6
+        py0 = np.sqrt(max(v2 - px0**2, 1e-6))
+        system = HenonHeilesSystem(np.array([x0, 0.0]), np.array([px0, py0]))
+        result = system.integrate((0, 400), dt=0.01, method="yoshida4")
+        plot_poincare_section(result.q[:, 0], result.p[:, 0], result.q[:, 1], result.p[:, 1], value=0.0, direction=1, ax=ax, color="steelblue")
+    ax.set_xlabel("x", fontsize=12)
+axes[0].set_ylabel("px", fontsize=12)
+fig.suptitle("Poincare sections (y=0, py>0): smooth tori give way to chaos as E rises", fontsize=16, fontweight="bold")
+fig.tight_layout(rect=[0, 0, 1, 0.93])
+
+plt.show()

@@ -1,0 +1,1026 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.classical.systems.newtonian &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/classical/systems/newtonian';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.classical.systems.newtonian</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.classical.systems.newtonian</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Newtonian vector-dynamics systems.</span>
+
+<span class="sd">:class:`ProjectileMotion` is the classic "cannonball" problem -- free</span>
+<span class="sd">fall under constant gravity with an oblique (angled) initial velocity,</span>
+<span class="sd">the trajectory-is-a-parabola result at the historical root of</span>
+<span class="sd">Newtonian dynamics -- with an optional quadratic air-drag term.</span>
+
+<span class="sd">:class:`KeplerSystem` integrates a reduced 2-body problem in the</span>
+<span class="sd">center-of-mass frame as a planar, separable Hamiltonian system in</span>
+<span class="sd">Cartesian coordinates q = (x, y), p = (px, py), with::</span>
+
+<span class="sd">    H(q, p) = |p|^2 / (2 mu) + V(r),  r = |q|</span>
+<span class="sd">    V(r) = -k / r + c_eps / r**(1 + eps) + c_pn / r**3</span>
+
+<span class="sd">The ``c_eps`` term is an adjustable power-law perturbation to the pure</span>
+<span class="sd">1/r potential; ``c_pn`` is an effective post-Newtonian correction that</span>
+<span class="sd">reproduces the qualitative apsidal (perihelion) precession General</span>
+<span class="sd">Relativity predicts for Mercury's orbit. Both terms are still purely</span>
+<span class="sd">radial (velocity-independent), so the system remains conservative and</span>
+<span class="sd">separable -- exactly integrable with the symplectic Verlet/Yoshida4</span>
+<span class="sd">backends -- while the Laplace-Runge-Lenz vector, exactly conserved for</span>
+<span class="sd">the pure Kepler problem, slowly precesses once either perturbation is</span>
+<span class="sd">turned on.</span>
+
+<span class="sd">:class:`FoucaultPendulum` is a small-oscillation pendulum viewed from</span>
+<span class="sd">the rotating Earth: Newton's second law in a non-inertial frame picks</span>
+<span class="sd">up a velocity-dependent Coriolis term that precesses the swing plane</span>
+<span class="sd">without doing any work, so energy stays exactly conserved even as the</span>
+<span class="sd">plane of swing rotates -- the effect Leon Foucault used in 1851 to</span>
+<span class="sd">demonstrate Earth's rotation mechanically.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">HamiltonianSystem</span><span class="p">,</span> <span class="n">ODESystem</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"ProjectileMotion"</span><span class="p">,</span> <span class="s2">"KeplerSystem"</span><span class="p">,</span> <span class="s2">"FoucaultPendulum"</span><span class="p">]</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_projectile_force</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">force</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">m</span> <span class="o">*</span> <span class="n">g</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">force</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_projectile_deriv_with_drag</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">drag_coeff</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Full (non-conservative) [dq, dp] derivative including quadratic</span>
+<span class="sd">    air drag, ``F_drag = -drag_coeff * |v| * v``, used by the 'rk4' and</span>
+<span class="sd">    'implicit_midpoint' fallback methods when drag_coeff != 0 (drag</span>
+<span class="sd">    depends on velocity/momentum, so it cannot enter a separable</span>
+<span class="sd">    force(q, t) and is invisible to the Verlet/Yoshida4 backends)."""</span>
+
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deriv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">px</span> <span class="o">/</span> <span class="n">m</span><span class="p">,</span> <span class="n">py</span> <span class="o">/</span> <span class="n">m</span>
+        <span class="n">speed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vx</span> <span class="o">*</span> <span class="n">vx</span> <span class="o">+</span> <span class="n">vy</span> <span class="o">*</span> <span class="n">vy</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">drag_coeff</span> <span class="o">*</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">vx</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">m</span> <span class="o">*</span> <span class="n">g</span> <span class="o">-</span> <span class="n">drag_coeff</span> <span class="o">*</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">vy</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">deriv</span>
+
+
+<div class="viewcode-block" id="ProjectileMotion">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProjectileMotion</span><span class="p">(</span><span class="n">HamiltonianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Free fall under constant gravity with an oblique initial velocity</span>
+<span class="sd">    -- the "cannonball" problem -- with optional quadratic air drag.</span>
+
+<span class="sd">    Without drag this is the separable Hamiltonian</span>
+<span class="sd">    ``H(q, p) = |p|^2/(2m) + m*g*y``, q = (x, y), whose exact solution is</span>
+<span class="sd">    Galileo's parabolic trajectory (see :meth:`analytic_trajectory`);</span>
+<span class="sd">    because the force is constant, the symplectic Verlet/Yoshida4</span>
+<span class="sd">    backends reproduce it to machine precision at any step size.</span>
+
+<span class="sd">    With ``drag_coeff &gt; 0`` a quadratic air-resistance force</span>
+<span class="sd">    ``F = -drag_coeff * |v| * v`` is added. This makes the system</span>
+<span class="sd">    genuinely dissipative (energy decreases monotonically, there is no</span>
+<span class="sd">    closed-form trajectory), so it is only available through the</span>
+<span class="sd">    ``rk4``/``implicit_midpoint`` methods -- ``verlet``/``yoshida4``</span>
+<span class="sd">    would silently ignore it (their force callback only sees the</span>
+<span class="sd">    conservative gravity term) and are therefore refused outright.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, p0 : array-like, shape (2,)</span>
+<span class="sd">        Initial position and momentum, q = (x, y), p = (px, py).</span>
+<span class="sd">    m, g : float</span>
+<span class="sd">        Projectile mass and gravitational acceleration.</span>
+<span class="sd">    drag_coeff : float</span>
+<span class="sd">        Quadratic air-drag coefficient (0 for the vacuum/exact case).</span>
+<span class="sd">    """</span>
+
+    <span class="n">separable</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span> <span class="n">drag_coeff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drag_coeff</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">drag_coeff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mass_inv</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span> <span class="o">=</span> <span class="n">_make_projectile_force</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">drag_coeff</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="n">_make_projectile_deriv_with_drag</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">drag_coeff</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ProjectileMotion.integrate">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.integrate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"yoshida4"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drag_coeff</span> <span class="ow">and</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"verlet"</span><span class="p">,</span> <span class="s2">"yoshida4"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"method='</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' only sees the conservative force and would silently ignore drag_coeff != 0; use method='rk4' or 'implicit_midpoint' instead"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProjectileMotion.kinetic_energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.kinetic_energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kinetic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProjectileMotion.potential_energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.potential_energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">potential_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">*</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ProjectileMotion.from_launch">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.from_launch">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_launch</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span> <span class="n">drag_coeff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Construct a system launched from ``(0, height)`` -- the natural "aim the cannon" entry point.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        speed : float</span>
+<span class="sd">            Launch speed.</span>
+<span class="sd">        angle_deg : float</span>
+<span class="sd">            Launch angle above the horizontal, in degrees.</span>
+<span class="sd">        m, g : float</span>
+<span class="sd">            Projectile mass and gravitational acceleration.</span>
+<span class="sd">        drag_coeff : float</span>
+<span class="sd">            Quadratic air-drag coefficient (0 for the vacuum/exact case).</span>
+<span class="sd">        height : float</span>
+<span class="sd">            Initial height.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ProjectileMotion</span>
+<span class="sd">        """</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
+        <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">])</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">drag_coeff</span><span class="o">=</span><span class="n">drag_coeff</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProjectileMotion.analytic_trajectory">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.analytic_trajectory">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analytic_trajectory</span><span class="p">(</span><span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Exact vacuum trajectory x(t), y(t) -- Galileo's parabola.</span>
+
+<span class="sd">        Used to validate the numerical integration (``drag_coeff=0`` only).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        speed, angle_deg : float</span>
+<span class="sd">            Launch speed and angle above the horizontal, in degrees.</span>
+<span class="sd">        g : float</span>
+<span class="sd">            Gravitational acceleration.</span>
+<span class="sd">        t : array-like</span>
+<span class="sd">            Times at which to evaluate the trajectory.</span>
+<span class="sd">        height : float</span>
+<span class="sd">            Initial height.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x, y : ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">vx0</span><span class="p">,</span> <span class="n">vy0</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">vx0</span> <span class="o">*</span> <span class="n">t</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">+</span> <span class="n">vy0</span> <span class="o">*</span> <span class="n">t</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="ProjectileMotion.range_and_max_height">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ProjectileMotion.range_and_max_height">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">range_and_max_height</span><span class="p">(</span><span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">angle_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Closed-form (vacuum) horizontal range and maximum height.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        speed, angle_deg : float</span>
+<span class="sd">            Launch speed and angle above the horizontal, in degrees.</span>
+<span class="sd">        g : float</span>
+<span class="sd">            Gravitational acceleration.</span>
+<span class="sd">        height : float</span>
+<span class="sd">            Initial height.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        range, max_height : float</span>
+<span class="sd">        """</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
+        <span class="n">vx0</span><span class="p">,</span> <span class="n">vy0</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">t_apex</span> <span class="o">=</span> <span class="n">vy0</span> <span class="o">/</span> <span class="n">g</span>
+        <span class="n">max_height</span> <span class="o">=</span> <span class="n">height</span> <span class="o">+</span> <span class="n">vy0</span> <span class="o">*</span> <span class="n">t_apex</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">t_apex</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">t_flight</span> <span class="o">=</span> <span class="p">(</span><span class="n">vy0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vy0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">height</span><span class="p">))</span> <span class="o">/</span> <span class="n">g</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">vx0</span> <span class="o">*</span> <span class="n">t_flight</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rng</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_height</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_force_njit</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c_eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c_pn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">softening</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">force</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">softening</span> <span class="o">*</span> <span class="n">softening</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+        <span class="c1"># dV/dr for V(r) = -k/r + c_eps * r**(-(1+eps)) + c_pn * r**(-3)</span>
+        <span class="n">dVdr</span> <span class="o">=</span> <span class="n">k</span> <span class="o">/</span> <span class="n">r2</span> <span class="o">-</span> <span class="n">c_eps</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span> <span class="o">-</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">c_pn</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.0</span><span class="p">)</span>
+        <span class="c1"># force = -dV/dq = -dVdr * (q / r)</span>
+        <span class="n">fmag</span> <span class="o">=</span> <span class="o">-</span><span class="n">dVdr</span> <span class="o">/</span> <span class="n">r</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fmag</span> <span class="o">*</span> <span class="n">x</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fmag</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">force</span>
+
+
+<div class="viewcode-block" id="KeplerSystem">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KeplerSystem</span><span class="p">(</span><span class="n">HamiltonianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Planar 2-body Kepler problem with optional non-Newtonian perturbations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, p0 : array-like, shape (2,)</span>
+<span class="sd">        Initial position and (reduced-mass) momentum.</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Gravitational coupling ``G * M * mu`` (standard Kepler strength).</span>
+<span class="sd">    mu : float</span>
+<span class="sd">        Reduced mass (sets kinetic energy ``T = |p|^2 / (2 mu)``).</span>
+<span class="sd">    eps, c_eps : float</span>
+<span class="sd">        Exponent and coefficient of an additional ``c_eps / r**(1+eps)``</span>
+<span class="sd">        perturbing potential (eps=0 reduces to an extra inverse-square term).</span>
+<span class="sd">    c_pn : float</span>
+<span class="sd">        Coefficient of the effective post-Newtonian ``c_pn / r**3``</span>
+<span class="sd">        correction driving perihelion precession.</span>
+<span class="sd">    softening : float</span>
+<span class="sd">        Small Plummer-style softening length to avoid a singular force</span>
+<span class="sd">        at r=0 (0 for the exact point-mass limit).</span>
+<span class="sd">    """</span>
+
+    <span class="n">separable</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">c_eps</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">c_pn</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">softening</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_eps</span> <span class="o">=</span> <span class="n">c_eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_pn</span> <span class="o">=</span> <span class="n">c_pn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">softening</span> <span class="o">=</span> <span class="n">softening</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mass_inv</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">mu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span> <span class="o">=</span> <span class="n">_make_force_njit</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">c_eps</span><span class="p">,</span> <span class="n">c_pn</span><span class="p">,</span> <span class="n">softening</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KeplerSystem.kinetic_energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem.kinetic_energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kinetic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KeplerSystem.potential_energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem.potential_energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">potential_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">softening</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">/</span> <span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_eps</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">))</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_pn</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KeplerSystem.angular_momentum">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem.angular_momentum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angular_momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Out-of-plane angular momentum ``L = x*py - y*px``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q, p : ndarray, optional</span>
+<span class="sd">            State to evaluate; defaults to the current state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">p</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="KeplerSystem.lrl_vector">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem.lrl_vector">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lrl_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Laplace-Runge-Lenz vector ``A = p x L - mu*k*r_hat`` (planar form).</span>
+
+<span class="sd">        Exactly conserved (a fixed vector pointing at perihelion) for the</span>
+<span class="sd">        unperturbed 1/r potential; its slow rotation once ``c_eps`` or</span>
+<span class="sd">        ``c_pn`` is nonzero is the precession signature (e.g. Mercury's</span>
+<span class="sd">        perihelion advance).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q, p : ndarray, optional</span>
+<span class="sd">            State to evaluate; defaults to the current state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray, shape (2,)</span>
+<span class="sd">        """</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">p</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angular_momentum</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="c1"># p x L in 2D (L is the out-of-plane scalar): (py*L, -px*L)</span>
+        <span class="n">px_L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">L</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">L</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">px_L</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">*</span> <span class="n">q</span> <span class="o">/</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="KeplerSystem.from_orbital_elements">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.KeplerSystem.from_orbital_elements">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_orbital_elements</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Construct a system starting at perihelion (pure two-body reference orbit).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Semi-major axis.</span>
+<span class="sd">        e : float</span>
+<span class="sd">            Eccentricity.</span>
+<span class="sd">        k, mu : float</span>
+<span class="sd">            Gravitational coupling and reduced mass, as in ``__init__``.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Forwarded to ``__init__`` (e.g. ``eps``, ``c_eps``, ``c_pn``, ``softening``).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        KeplerSystem</span>
+<span class="sd">        """</span>
+        <span class="n">r_peri</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">v_peri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="n">r_peri</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">a</span><span class="p">))</span>
+        <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r_peri</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">v_peri</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="n">_SIDEREAL_DAY</span> <span class="o">=</span> <span class="mf">86164.0905</span>
+<span class="sd">"""float: Earth's rotation period relative to the stars, in seconds."""</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_foucault_deriv</span><span class="p">(</span><span class="n">omega0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deriv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">omega0</span> <span class="o">*</span> <span class="n">omega0</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">omega_z</span> <span class="o">*</span> <span class="n">vy</span>
+        <span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">omega0</span> <span class="o">*</span> <span class="n">omega0</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">omega_z</span> <span class="o">*</span> <span class="n">vx</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">deriv</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FoucaultPendulum</span><span class="p">(</span><span class="n">ODESystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Small-oscillation pendulum viewed from Earth's rotating frame.</span>
+
+<span class="sd">    Swinging near a fixed vertical, a pendulum's horizontal displacement</span>
+<span class="sd">    q = (x, y) (x = East, y = North) obeys the isotropic harmonic</span>
+<span class="sd">    equation ``qddot = -omega0**2 * q`` in a non-rotating (inertial)</span>
+<span class="sd">    frame. Viewed instead from the surface of the rotating Earth, that</span>
+<span class="sd">    frame itself turns about the local vertical at</span>
+<span class="sd">    ``omega_z = omega_earth * sin(latitude)`` -- the projection of</span>
+<span class="sd">    Earth's angular velocity onto the local vertical -- which adds a</span>
+<span class="sd">    velocity-dependent Coriolis term::</span>
+
+<span class="sd">        xddot = -omega0**2 * x + 2 * omega_z * ydot</span>
+<span class="sd">        yddot = -omega0**2 * y - 2 * omega_z * xdot</span>
+
+<span class="sd">    Because the Coriolis force is always perpendicular to the velocity</span>
+<span class="sd">    it does no work, so the (non-rotating-frame) mechanical energy</span>
+<span class="sd">    ``T + V = |v|**2 / 2 + omega0**2 * |q|**2 / 2`` stays exactly</span>
+<span class="sd">    conserved even as the plane of swing itself steadily precesses --</span>
+<span class="sd">    exactly the effect Leon Foucault used in 1851 to demonstrate</span>
+<span class="sd">    Earth's rotation mechanically, without reference to the sky.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, v0 : array-like, shape (2,)</span>
+<span class="sd">        Initial horizontal displacement (x, y) and velocity (vx, vy) of</span>
+<span class="sd">        the bob relative to the vertical through the pivot.</span>
+<span class="sd">    length, g : float</span>
+<span class="sd">        Pendulum length and gravitational acceleration, setting the</span>
+<span class="sd">        non-rotating swing frequency ``omega0 = sqrt(g / length)``.</span>
+<span class="sd">    latitude_deg : float</span>
+<span class="sd">        Geographic latitude in degrees (default 48.85, the Paris</span>
+<span class="sd">        Pantheon's latitude for Foucault's original 1851 demonstration).</span>
+<span class="sd">    omega_earth : float</span>
+<span class="sd">        Earth's sidereal rotation rate, ``2*pi / 86164.0905`` rad/s by default.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">q0</span><span class="p">,</span>
+        <span class="n">v0</span><span class="p">,</span>
+        <span class="n">length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">67.0</span><span class="p">,</span>
+        <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span>
+        <span class="n">latitude_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">48.85</span><span class="p">,</span>
+        <span class="n">omega_earth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">_SIDEREAL_DAY</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">length</span><span class="p">,</span> <span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">/</span> <span class="n">length</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude_deg</span> <span class="o">=</span> <span class="n">latitude_deg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega_earth</span> <span class="o">=</span> <span class="n">omega_earth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega_z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">omega_earth</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">latitude_deg</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="n">_make_foucault_deriv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_z</span><span class="p">)</span>
+        <span class="n">state0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)])</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">state0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""ndarray, shape (2,): Current horizontal displacement (x, y)."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""ndarray, shape (2,): Current horizontal velocity (vx, vy)."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">vx</span> <span class="o">*</span> <span class="n">vx</span> <span class="o">+</span> <span class="n">vy</span> <span class="o">*</span> <span class="n">vy</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega0</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_deflection</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">angle_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">67.0</span><span class="p">,</span>
+        <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span>
+        <span class="n">latitude_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">48.85</span><span class="p">,</span>
+        <span class="n">omega_earth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">_SIDEREAL_DAY</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Construct a system released from rest at a fixed deflection.</span>
+
+<span class="sd">        This is how a real Foucault pendulum is started: pulled aside</span>
+<span class="sd">        and tied off, then released from rest.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        amplitude : float</span>
+<span class="sd">            Initial horizontal displacement magnitude.</span>
+<span class="sd">        angle_deg : float</span>
+<span class="sd">            Direction of the initial displacement, in degrees</span>
+<span class="sd">            counterclockwise from East.</span>
+<span class="sd">        length, g, latitude_deg, omega_earth : float</span>
+<span class="sd">            As in ``__init__``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        FoucaultPendulum</span>
+<span class="sd">        """</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
+        <span class="n">q0</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">latitude_deg</span><span class="o">=</span><span class="n">latitude_deg</span><span class="p">,</span> <span class="n">omega_earth</span><span class="o">=</span><span class="n">omega_earth</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">precession_period</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Time for the swing plane to complete one full precession.</span>
+
+<span class="sd">        Equal to the sidereal day divided by ``sin(latitude)`` -- a</span>
+<span class="sd">        "Foucault day" -- e.g. about 32 hours at Paris's latitude.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega_z</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analytic_solution</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">omega0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Exact horizontal trajectory x(t), y(t) in the small-oscillation approximation.</span>
+
+<span class="sd">        The complex displacement ``w = x + i*y`` satisfies the linear</span>
+<span class="sd">        equation ``wddot + 2i*omega_z*wdot + omega0**2*w = 0``.</span>
+<span class="sd">        Substituting ``w = exp(-i*omega_z*t) * u(t)`` reduces this to</span>
+<span class="sd">        plain simple harmonic motion for ``u`` at frequency</span>
+<span class="sd">        ``Omega = sqrt(omega0**2 + omega_z**2)``: the solution is an</span>
+<span class="sd">        ordinary (non-rotating) harmonic swing pattern ``u(t)``, rotated</span>
+<span class="sd">        rigidly as a whole at the constant rate ``omega_z`` -- exactly</span>
+<span class="sd">        the precession Foucault observed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q0, v0 : array-like, shape (2,)</span>
+<span class="sd">            Initial displacement and velocity.</span>
+<span class="sd">        omega0, omega_z : float</span>
+<span class="sd">            Non-rotating swing frequency and the local-vertical</span>
+<span class="sd">            component of Earth's angular velocity.</span>
+<span class="sd">        t : array-like</span>
+<span class="sd">            Times at which to evaluate the trajectory.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x, y : ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">Omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">omega0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">omega_z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">w0</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">q0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q0</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">wdot0</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">v0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v0</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">u0</span> <span class="o">=</span> <span class="n">w0</span>
+        <span class="n">udot0</span> <span class="o">=</span> <span class="n">wdot0</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">omega_z</span> <span class="o">*</span> <span class="n">w0</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">Omega</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">udot0</span> <span class="o">/</span> <span class="n">Omega</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">Omega</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">omega_z</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span>
+        <span class="k">return</span> <span class="n">w</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">imag</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_corotating_frame</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">omega_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Rotate (x, y) by ``+omega_z * t``, undoing the precession.</span>
+
+<span class="sd">        In this frame the pendulum swings in a single fixed plane, just</span>
+<span class="sd">        like an ordinary non-rotating pendulum -- the frame in which</span>
+<span class="sd">        Foucault's precession is "unwound".</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x, y : array-like</span>
+<span class="sd">            Trajectory in the lab (ground) frame.</span>
+<span class="sd">        t : array-like</span>
+<span class="sd">            Corresponding times.</span>
+<span class="sd">        omega_z : float</span>
+<span class="sd">            Local-vertical component of Earth's angular velocity.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x_rot, y_rot : ndarray</span>
+<span class="sd">        """</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega_z</span> <span class="o">*</span> <span class="n">t</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega_z</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">x_rot</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="n">y_rot</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">x_rot</span><span class="p">,</span> <span class="n">y_rot</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

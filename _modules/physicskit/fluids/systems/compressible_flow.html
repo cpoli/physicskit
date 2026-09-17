@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.fluids.systems.compressible_flow &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/fluids/systems/compressible_flow';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.fluids.systems.compressible_flow</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.fluids.systems.compressible_flow</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""1D compressible flow: the Euler equations, normal shocks, and the Sod shock tube.</span>
+
+<span class="sd">Where potential and viscous flow assume incompressibility, this module</span>
+<span class="sd">drops that assumption entirely: the 1D Euler equations for an inviscid,</span>
+<span class="sd">compressible, ideal gas support genuinely discontinuous solutions (shocks</span>
+<span class="sd">and contact discontinuities) that no continuous velocity field can produce.</span>
+<span class="sd">:func:`rankine_hugoniot_jump_conditions` and :func:`normal_shock_relations`</span>
+<span class="sd">give the exact algebraic jump a shock must satisfy; :func:`sod_shock_tube`</span>
+<span class="sd">resolves that jump -- alongside a contact discontinuity and an expansion</span>
+<span class="sd">fan -- dynamically, by integrating the full nonlinear equations through a</span>
+<span class="sd">classic Riemann problem.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"rankine_hugoniot_jump_conditions"</span><span class="p">,</span>
+    <span class="s2">"normal_shock_relations"</span><span class="p">,</span>
+    <span class="s2">"sod_shock_tube"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="rankine_hugoniot_jump_conditions">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.rankine_hugoniot_jump_conditions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rankine_hugoniot_jump_conditions</span><span class="p">(</span><span class="n">rho1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Residuals of the Rankine-Hugoniot jump conditions across a stationary discontinuity.</span>
+
+<span class="sd">    A steady discontinuity in a 1D inviscid compressible flow (states 1</span>
+<span class="sd">    upstream, 2 downstream, in the frame where the discontinuity itself is</span>
+<span class="sd">    at rest) must conserve mass, momentum, and energy flux exactly:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\rho_1 u_1 = \\rho_2 u_2, \\qquad</span>
+<span class="sd">        p_1 + \\rho_1 u_1^2 = p_2 + \\rho_2 u_2^2, \\qquad</span>
+<span class="sd">        h_1 + \\tfrac{1}{2}u_1^2 = h_2 + \\tfrac{1}{2}u_2^2,</span>
+
+<span class="sd">    where :math:`h=\\gamma p/((\\gamma-1)\\rho)` is specific enthalpy (an</span>
+<span class="sd">    ideal gas is assumed only for the energy residual). Rankine (1870) first</span>
+<span class="sd">    wrote the mass and momentum conditions; Hugoniot (1887, 1889) added the</span>
+<span class="sd">    energy condition and the resulting relation between the shock's pressure</span>
+<span class="sd">    and density ratios now called the Hugoniot curve. This function returns</span>
+<span class="sd">    each condition's residual, primarily to *verify* a candidate jump (e.g.</span>
+<span class="sd">    the output of :func:`normal_shock_relations`) rather than to solve for</span>
+<span class="sd">    one directly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho1, u1, p1 : float</span>
+<span class="sd">        Upstream density, velocity, and pressure.</span>
+<span class="sd">    rho2, u2, p2 : float</span>
+<span class="sd">        Downstream density, velocity, and pressure.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``{"mass": ..., "momentum": ..., "energy": ...}`` residuals; all</span>
+<span class="sd">        zero for an exactly satisfied jump.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; jump = normal_shock_relations(M1=2.0)</span>
+<span class="sd">    &gt;&gt;&gt; residuals = rankine_hugoniot_jump_conditions(1.0, 2.0, 1.0 / 1.4, jump["rho2_rho1"], 2.0 / jump["rho2_rho1"], jump["p2_p1"] / 1.4)</span>
+<span class="sd">    &gt;&gt;&gt; bool(max(abs(v) for v in residuals.values()) &lt; 1e-10)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.4</span>
+    <span class="n">mass</span> <span class="o">=</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">u1</span> <span class="o">-</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">u2</span>
+    <span class="n">momentum</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">+</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">u1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">p2</span> <span class="o">+</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">u2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">h1</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">/</span> <span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rho1</span><span class="p">)</span>
+    <span class="n">h2</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">p2</span> <span class="o">/</span> <span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rho2</span><span class="p">)</span>
+    <span class="n">energy</span> <span class="o">=</span> <span class="p">(</span><span class="n">h1</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">h2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"mass"</span><span class="p">:</span> <span class="n">mass</span><span class="p">,</span> <span class="s2">"momentum"</span><span class="p">:</span> <span class="n">momentum</span><span class="p">,</span> <span class="s2">"energy"</span><span class="p">:</span> <span class="n">energy</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="normal_shock_relations">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.normal_shock_relations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normal_shock_relations</span><span class="p">(</span><span class="n">M1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Ideal-gas normal shock relations as a function of upstream Mach number.</span>
+
+<span class="sd">    Solving the Rankine-Hugoniot conditions</span>
+<span class="sd">    (:func:`rankine_hugoniot_jump_conditions`) for an ideal gas gives the</span>
+<span class="sd">    downstream state entirely in terms of the upstream Mach number</span>
+<span class="sd">    :math:`M_1 = u_1/c_1`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\frac{p_2}{p_1} = 1 + \\frac{2\\gamma}{\\gamma+1}(M_1^2-1), \\qquad</span>
+<span class="sd">        \\frac{\\rho_2}{\\rho_1} = \\frac{(\\gamma+1)M_1^2}{(\\gamma-1)M_1^2+2}, \\qquad</span>
+<span class="sd">        M_2^2 = \\frac{1+\\tfrac{\\gamma-1}{2}M_1^2}{\\gamma M_1^2-\\tfrac{\\gamma-1}{2}}.</span>
+
+<span class="sd">    Only :math:`M_1 \\geq 1` gives a physically admissible (entropy-increasing)</span>
+<span class="sd">    shock; a supersonic upstream flow needs a mechanism, such as this jump,</span>
+<span class="sd">    to return to subsonic downstream, and no analogous jump exists in reverse.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M1 : float</span>
+<span class="sd">        Upstream Mach number; must be at least 1.</span>
+<span class="sd">    gamma : float, default 1.4</span>
+<span class="sd">        Ratio of specific heats (1.4 for a diatomic ideal gas, e.g. air).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``{"p2_p1": ..., "rho2_rho1": ..., "T2_T1": ..., "M2": ...}``.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    InvalidParameterError</span>
+<span class="sd">        If `M1` is less than 1.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; jump = normal_shock_relations(M1=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; [round(v, 6) for v in (jump["p2_p1"], jump["rho2_rho1"], jump["M2"])]</span>
+<span class="sd">    [1.0, 1.0, 1.0]</span>
+<span class="sd">    &gt;&gt;&gt; jump = normal_shock_relations(M1=2.0)</span>
+<span class="sd">    &gt;&gt;&gt; round(jump["p2_p1"], 3), round(jump["rho2_rho1"], 3), round(jump["M2"], 3)</span>
+<span class="sd">    (4.5, 2.667, 0.577)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">M1</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"M1 must be &gt;= 1 for an admissible (entropy-increasing) shock, got </span><span class="si">{</span><span class="n">M1</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">p2_p1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">M1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">rho2_rho1</span> <span class="o">=</span> <span class="p">((</span><span class="n">gamma</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">M1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">M1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">T2_T1</span> <span class="o">=</span> <span class="n">p2_p1</span> <span class="o">/</span> <span class="n">rho2_rho1</span>
+    <span class="n">M2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">M1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">M1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"p2_p1"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">p2_p1</span><span class="p">),</span> <span class="s2">"rho2_rho1"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">rho2_rho1</span><span class="p">),</span> <span class="s2">"T2_T1"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">T2_T1</span><span class="p">),</span> <span class="s2">"M2"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">M2</span><span class="p">)}</span></div>
+
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_euler_flux</span><span class="p">(</span><span class="n">U</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Physical flux of the 1D Euler equations in conservative variables.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : ndarray of float, shape (3,)</span>
+<span class="sd">        Conservative state ``(rho, rho*u, E)``.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Ratio of specific heats.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (3,)</span>
+<span class="sd">        Flux ``(rho*u, rho*u^2 + p, u*(E + p))``.</span>
+<span class="sd">    """</span>
+    <span class="n">rho</span><span class="p">,</span> <span class="n">mom</span><span class="p">,</span> <span class="n">E</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">U</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">U</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">mom</span> <span class="o">/</span> <span class="n">rho</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">flux</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span>
+    <span class="n">flux</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="n">p</span>
+    <span class="n">flux</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">flux</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_lax_friedrichs_evolve</span><span class="p">(</span><span class="n">U0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Evolve the 1D Euler equations with the Lax-Friedrichs finite-volume scheme.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U0 : ndarray of float, shape (nx, 3)</span>
+<span class="sd">        Initial conservative state at each cell.</span>
+<span class="sd">    dx : float</span>
+<span class="sd">        Cell width.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step (assumed to already satisfy the CFL condition).</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Ratio of specific heats.</span>
+<span class="sd">    steps : int</span>
+<span class="sd">        Number of time steps to advance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (nx, 3)</span>
+<span class="sd">        Conservative state after `steps` steps. The two boundary cells are</span>
+<span class="sd">        held fixed at their initial (far-field) values, approximating an</span>
+<span class="sd">        open/transmissive boundary over the short times these simulations run.</span>
+<span class="sd">    """</span>
+    <span class="n">nx</span> <span class="o">=</span> <span class="n">U0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">U0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">/</span> <span class="n">dx</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">U_new</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">fL</span> <span class="o">=</span> <span class="n">_euler_flux</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">gamma</span><span class="p">)</span>
+            <span class="n">fR</span> <span class="o">=</span> <span class="n">_euler_flux</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">gamma</span><span class="p">)</span>
+            <span class="n">U_new</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">fR</span> <span class="o">-</span> <span class="n">fL</span><span class="p">)</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="n">U_new</span>
+    <span class="k">return</span> <span class="n">U</span>
+
+
+<div class="viewcode-block" id="sod_shock_tube">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.sod_shock_tube">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sod_shock_tube</span><span class="p">(</span><span class="n">nx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">t_final</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="n">cfl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Solve the classic Sod shock-tube problem with a Lax-Friedrichs finite-volume scheme.</span>
+
+<span class="sd">    The Sod (1978) problem is the standard test Riemann problem for a</span>
+<span class="sd">    compressible-flow solver: a diaphragm at `x0` initially separates high</span>
+<span class="sd">    pressure/density gas (left, at rest) from low pressure/density gas</span>
+<span class="sd">    (right, at rest); removing the diaphragm at :math:`t=0` produces, for</span>
+<span class="sd">    :math:`t&gt;0`, exactly three simple waves fanning out from `x0` -- a</span>
+<span class="sd">    left-running rarefaction (expansion) fan, a right-running contact</span>
+<span class="sd">    discontinuity (a density jump with continuous pressure and velocity),</span>
+<span class="sd">    and a right-running shock satisfying</span>
+<span class="sd">    :func:`rankine_hugoniot_jump_conditions` -- against which any</span>
+<span class="sd">    finite-volume scheme's numerical diffusion and shock-capturing behavior</span>
+<span class="sd">    can be judged. The domain is ``[0, 1]``; the classic Sod initial</span>
+<span class="sd">    condition is ``(rho, u, p) = (1, 0, 1)`` for ``x &lt; x0`` and</span>
+<span class="sd">    ``(0.125, 0, 0.1)`` for ``x &gt;= x0``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nx : int, default 400</span>
+<span class="sd">        Number of finite-volume cells.</span>
+<span class="sd">    x0 : float, default 0.5</span>
+<span class="sd">        Initial diaphragm location.</span>
+<span class="sd">    t_final : float, default 0.2</span>
+<span class="sd">        Time to integrate to.</span>
+<span class="sd">    gamma : float, default 1.4</span>
+<span class="sd">        Ratio of specific heats.</span>
+<span class="sd">    cfl : float, default 0.5</span>
+<span class="sd">        Courant number; the time step is chosen adaptively each macro-chunk</span>
+<span class="sd">        of the integration as ``cfl * dx / max(|u| + c)``, and must satisfy</span>
+<span class="sd">        ``0 &lt; cfl &lt;= 1`` for the explicit scheme to be stable.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``{"x": ..., "rho": ..., "u": ..., "p": ...}`` at `t_final`, each an</span>
+<span class="sd">        array of length `nx`.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    InvalidParameterError</span>
+<span class="sd">        If `nx` is smaller than 4, `t_final` is not positive, or `cfl` is</span>
+<span class="sd">        not in ``(0, 1]``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; result = sod_shock_tube(nx=200, t_final=0.15)</span>
+<span class="sd">    &gt;&gt;&gt; result["rho"].shape</span>
+<span class="sd">    (200,)</span>
+<span class="sd">    &gt;&gt;&gt; bool(result["rho"][0] &gt; result["rho"][-1] &gt; 0)  # left state denser than right</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nx must be at least 4, got </span><span class="si">{</span><span class="n">nx</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t_final</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"t_final must be positive, got </span><span class="si">{</span><span class="n">t_final</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">cfl</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cfl must be in (0, 1], got </span><span class="si">{</span><span class="n">cfl</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">nx</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rho</span>
+    <span class="n">U</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">u</span>
+    <span class="n">U</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_final</span><span class="p">:</span>
+        <span class="n">rho_now</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">u_now</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">rho_now</span>
+        <span class="n">p_now</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho_now</span> <span class="o">*</span> <span class="n">u_now</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">c_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">p_now</span> <span class="o">/</span> <span class="n">rho_now</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">cfl</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_now</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_now</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">t_final</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">chunk_steps</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="n">_lax_friedrichs_evolve</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">chunk_steps</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">rho</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">"rho"</span><span class="p">:</span> <span class="n">rho</span><span class="p">,</span> <span class="s2">"u"</span><span class="p">:</span> <span class="n">u</span><span class="p">,</span> <span class="s2">"p"</span><span class="p">:</span> <span class="n">p</span><span class="p">}</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

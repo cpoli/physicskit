@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.classical.systems.lagrangian &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/classical/systems/lagrangian';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.classical.systems.lagrangian</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.classical.systems.lagrangian</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Lagrangian-mechanics systems, derived symbolically via</span>
+<span class="sd">:class:`physicskit.classical.utils.symbolic.LagrangianEngine`.</span>
+
+<span class="sd">Each system here writes down L(q, qdot) with SymPy, hands it to the</span>
+<span class="sd">engine to auto-derive the Euler-Lagrange accelerations and the</span>
+<span class="sd">Legendre-transformed Hamiltonian, and exposes the resulting JIT</span>
+<span class="sd">equations of motion through :class:`physicskit.classical.core.base_system.LagrangianSystem`.</span>
+<span class="sd">Because the Hamiltonian form is derived even when the mass matrix M(q)</span>
+<span class="sd">is configuration-dependent (i.e. the system is non-separable), the</span>
+<span class="sd">default integration method is ``implicit_midpoint`` -- the general</span>
+<span class="sd">symplectic integrator from :mod:`physicskit.classical.core.integrators`.</span>
+
+<span class="sd">Deriving equations of motion (SymPy differentiation, matrix inversion,</span>
+<span class="sd">simplification, then Numba compilation) costs on the order of a second</span>
+<span class="sd">even for a 2-DOF system -- so each system's engine-building step is</span>
+<span class="sd">wrapped in ``functools.lru_cache``, keyed on the physical parameters</span>
+<span class="sd">(masses, lengths, ...). Constructing many instances of the *same*</span>
+<span class="sd">physical system (e.g. an ensemble of initial conditions to show</span>
+<span class="sd">sensitivity to initial conditions, as in the chaos example) reuses the</span>
+<span class="sd">cached engine instead of re-deriving and re-compiling from scratch.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">LagrangianSystem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.utils.symbolic</span><span class="w"> </span><span class="kn">import</span> <span class="n">LagrangianEngine</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"DoublePendulum"</span><span class="p">,</span> <span class="s2">"BeadOnRotatingHoop"</span><span class="p">,</span> <span class="s2">"CoupledOscillators"</span><span class="p">,</span> <span class="s2">"ElasticPendulum"</span><span class="p">]</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_double_pendulum_engine</span><span class="p">(</span><span class="n">m1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LagrangianEngine</span><span class="p">:</span>
+    <span class="n">th1</span><span class="p">,</span> <span class="n">th2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"th1 th2 w1 w2"</span><span class="p">)</span>
+    <span class="n">m1s</span><span class="p">,</span> <span class="n">m2s</span><span class="p">,</span> <span class="n">l1s</span><span class="p">,</span> <span class="n">l2s</span><span class="p">,</span> <span class="n">gs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"m1 m2 l1 l2 g"</span><span class="p">)</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">l1s</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th1</span><span class="p">)</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="o">-</span><span class="n">l1s</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th1</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">l2s</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th2</span><span class="p">)</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">l2s</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th2</span><span class="p">)</span>
+    <span class="n">x1d</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">th1</span><span class="p">)</span> <span class="o">*</span> <span class="n">w1</span>
+    <span class="n">y1d</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">th1</span><span class="p">)</span> <span class="o">*</span> <span class="n">w1</span>
+    <span class="n">x2d</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">th1</span><span class="p">)</span> <span class="o">*</span> <span class="n">w1</span> <span class="o">+</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">th2</span><span class="p">)</span> <span class="o">*</span> <span class="n">w2</span>
+    <span class="n">y2d</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span> <span class="n">th1</span><span class="p">)</span> <span class="o">*</span> <span class="n">w1</span> <span class="o">+</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span> <span class="n">th2</span><span class="p">)</span> <span class="o">*</span> <span class="n">w2</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">m1s</span> <span class="o">*</span> <span class="p">(</span><span class="n">x1d</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y1d</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">m2s</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2d</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y2d</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">m1s</span> <span class="o">*</span> <span class="n">gs</span> <span class="o">*</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">m2s</span> <span class="o">*</span> <span class="n">gs</span> <span class="o">*</span> <span class="n">y2</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">V</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">m1s</span><span class="p">:</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2s</span><span class="p">:</span> <span class="n">m2</span><span class="p">,</span> <span class="n">l1s</span><span class="p">:</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2s</span><span class="p">:</span> <span class="n">l2</span><span class="p">,</span> <span class="n">gs</span><span class="p">:</span> <span class="n">g</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">LagrangianEngine</span><span class="p">([</span><span class="n">th1</span><span class="p">,</span> <span class="n">th2</span><span class="p">],</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">],</span> <span class="n">L</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DoublePendulum">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DoublePendulum">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DoublePendulum</span><span class="p">(</span><span class="n">LagrangianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Planar double pendulum: two point masses on massless rods.</span>
+
+<span class="sd">    Generalized coordinates: q = (theta1, theta2), angles from the</span>
+<span class="sd">    downward vertical. A classic showcase of deterministic chaos and of</span>
+<span class="sd">    the non-separable-Hamiltonian case for symplectic integration (the</span>
+<span class="sd">    mass matrix depends on ``theta2 - theta1``).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta0, thetadot0 : array-like, shape (2,)</span>
+<span class="sd">        Initial angles and angular velocities.</span>
+<span class="sd">    m1, m2 : float</span>
+<span class="sd">        Bob masses.</span>
+<span class="sd">    l1, l2 : float</span>
+<span class="sd">        Rod lengths.</span>
+<span class="sd">    g : float</span>
+<span class="sd">        Gravitational acceleration.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">thetadot0</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">_double_pendulum_engine</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accel_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">acceleration_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">momentum_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">canonical_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">velocity_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">full_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">hamiltonian_njit</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">theta0</span><span class="p">,</span> <span class="n">thetadot0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DoublePendulum.positions">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DoublePendulum.positions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Cartesian (x1, y1, x2, y2) bob positions for a given (theta1, theta2).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q : ndarray, optional</span>
+<span class="sd">            ``(theta1, theta2)``; defaults to the current state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray, shape (4,)</span>
+<span class="sd">            ``(x1, y1, x2, y2)``.</span>
+<span class="sd">        """</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
+        <span class="n">th1</span><span class="p">,</span> <span class="n">th2</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th1</span><span class="p">)</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th1</span><span class="p">)</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th2</span><span class="p">)</span>
+        <span class="n">y2</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="DoublePendulum.energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DoublePendulum.energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
+        <span class="n">q</span><span class="p">,</span> <span class="n">qdot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span></div>
+</div>
+
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_bead_on_hoop_engine</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LagrangianEngine</span><span class="p">:</span>
+    <span class="n">th</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"th w"</span><span class="p">)</span>
+    <span class="n">Rs</span><span class="p">,</span> <span class="n">Om</span><span class="p">,</span> <span class="n">gs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"R Omega g"</span><span class="p">)</span>
+
+    <span class="n">L</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">Rs</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Om</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">gs</span> <span class="o">*</span> <span class="n">Rs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">))</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">Rs</span><span class="p">:</span> <span class="n">R</span><span class="p">,</span> <span class="n">Om</span><span class="p">:</span> <span class="n">omega</span><span class="p">,</span> <span class="n">gs</span><span class="p">:</span> <span class="n">g</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">LagrangianEngine</span><span class="p">([</span><span class="n">th</span><span class="p">],</span> <span class="p">[</span><span class="n">w</span><span class="p">],</span> <span class="n">L</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BeadOnRotatingHoop">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.BeadOnRotatingHoop">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BeadOnRotatingHoop</span><span class="p">(</span><span class="n">LagrangianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A bead sliding without friction on a hoop of radius R rotating at</span>
+<span class="sd">    fixed angular speed Omega about the vertical diameter.</span>
+
+<span class="sd">    Generalized coordinate: q = (theta,), the bead's polar angle on the</span>
+<span class="sd">    hoop. In the rotating frame the effective Lagrangian is autonomous</span>
+<span class="sd">    (no explicit time dependence), so the system is a genuine 1-DOF</span>
+<span class="sd">    conservative Hamiltonian; above the critical speed</span>
+<span class="sd">    ``Omega_c = sqrt(g / R)`` the theta=0 equilibrium becomes unstable</span>
+<span class="sd">    and two symmetric stable equilibria appear (a pitchfork bifurcation).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta0, thetadot0 : float</span>
+<span class="sd">        Initial angle and angular velocity.</span>
+<span class="sd">    R : float</span>
+<span class="sd">        Hoop radius.</span>
+<span class="sd">    omega : float</span>
+<span class="sd">        Fixed rotation rate ``Omega`` about the vertical diameter.</span>
+<span class="sd">    g : float</span>
+<span class="sd">        Gravitational acceleration.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">thetadot0</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">R</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">_bead_on_hoop_engine</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accel_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">acceleration_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">momentum_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">canonical_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">velocity_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">full_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">hamiltonian_njit</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">theta0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">thetadot0</span><span class="p">))</span>
+
+<div class="viewcode-block" id="BeadOnRotatingHoop.energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.BeadOnRotatingHoop.energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
+        <span class="n">q</span><span class="p">,</span> <span class="n">qdot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span></div>
+</div>
+
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_elastic_pendulum_engine</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">L0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LagrangianEngine</span><span class="p">:</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">wd</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"s th sd wd"</span><span class="p">)</span>
+    <span class="n">ms</span><span class="p">,</span> <span class="n">ks</span><span class="p">,</span> <span class="n">L0s</span><span class="p">,</span> <span class="n">gs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"m k L0 g"</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">L0s</span> <span class="o">+</span> <span class="n">s</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ms</span> <span class="o">*</span> <span class="p">(</span><span class="n">sd</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">wd</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ks</span> <span class="o">*</span> <span class="n">s</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">ms</span> <span class="o">*</span> <span class="n">gs</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">V</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">ms</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="n">ks</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="n">L0s</span><span class="p">:</span> <span class="n">L0</span><span class="p">,</span> <span class="n">gs</span><span class="p">:</span> <span class="n">g</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">LagrangianEngine</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">th</span><span class="p">],</span> <span class="p">[</span><span class="n">sd</span><span class="p">,</span> <span class="n">wd</span><span class="p">],</span> <span class="n">L</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ElasticPendulum</span><span class="p">(</span><span class="n">LagrangianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Spring pendulum: a mass on a Hookean spring that both stretches and</span>
+<span class="sd">    swings, in 2 DOF.</span>
+
+<span class="sd">    Generalized coordinates q = (s, theta): `s` is the spring's stretch</span>
+<span class="sd">    beyond its natural length `L0` (so the pivot-to-mass distance is</span>
+<span class="sd">    ``r = L0 + s``), `theta` is the swing angle from the downward</span>
+<span class="sd">    vertical. Lagrangian:</span>
+
+<span class="sd">        L = (m/2)(sdot^2 + (L0+s)^2 thetadot^2)</span>
+<span class="sd">            - (k/2) s^2 + m g (L0+s) cos(theta)</span>
+
+<span class="sd">    The ``r^2 thetadot^2`` term is what couples the (otherwise linear)</span>
+<span class="sd">    stretch and swing motions: whenever the mass swings, its varying</span>
+<span class="sd">    distance from the pivot pumps the spring, and vice versa. The coupling</span>
+<span class="sd">    is strongest, and famously resonant, in *1:2 autoparametric resonance*</span>
+<span class="sd">    -- when the natural stretch frequency ``omega_s = sqrt(k/m)`` is twice</span>
+<span class="sd">    the natural swing frequency ``omega_theta = sqrt(g/L0)`` -- where</span>
+<span class="sd">    energy started as pure vertical stretching oscillation periodically</span>
+<span class="sd">    leaks into, and back out of, swinging. The default parameters below</span>
+<span class="sd">    satisfy that condition exactly (``k = 4*m*g/L0``).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, qdot0 : array-like, shape (2,)</span>
+<span class="sd">        Initial ``(s, theta)`` and ``(sdot, thetadot)``.</span>
+<span class="sd">    m : float, default 1.0</span>
+<span class="sd">        Mass.</span>
+<span class="sd">    k : float, default 39.24</span>
+<span class="sd">        Spring constant; the default is ``4*m*g/L0`` for the default</span>
+<span class="sd">        `m`, `g`, `L0`, i.e. the 1:2 autoparametric resonance condition.</span>
+<span class="sd">    L0 : float, default 1.0</span>
+<span class="sd">        Spring natural length.</span>
+<span class="sd">    g : float, default 9.81</span>
+<span class="sd">        Gravitational acceleration.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">39.24</span><span class="p">,</span> <span class="n">L0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">_elastic_pendulum_engine</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accel_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">acceleration_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">momentum_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">canonical_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">velocity_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">full_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">hamiltonian_njit</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Cartesian (x, y) mass position for a given (s, theta).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        q : ndarray, optional</span>
+<span class="sd">            ``(s, theta)``; defaults to the current state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray, shape (2,)</span>
+<span class="sd">            ``(x, y)``.</span>
+<span class="sd">        """</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
+        <span class="n">s</span><span class="p">,</span> <span class="n">th</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L0</span> <span class="o">+</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
+        <span class="n">q</span><span class="p">,</span> <span class="n">qdot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_coupled_oscillators_engine</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LagrangianEngine</span><span class="p">:</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="sa">f</span><span class="s2">"q0:</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="sa">f</span><span class="s2">"w0:</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">ms</span><span class="p">,</span> <span class="n">ks</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"m k"</span><span class="p">)</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ms</span> <span class="o">*</span> <span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">ws</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">+</span> <span class="n">qs</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">ks</span> <span class="o">*</span> <span class="p">(</span><span class="n">chain</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">chain</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="n">V</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">ms</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="n">ks</span><span class="p">:</span> <span class="n">k</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">LagrangianEngine</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">qs</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">ws</span><span class="p">),</span> <span class="n">L</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CoupledOscillators">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.CoupledOscillators">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CoupledOscillators</span><span class="p">(</span><span class="n">LagrangianSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A chain of N masses connected by linear springs, both ends fixed</span>
+<span class="sd">    to immovable walls -- the small-N, harmonic prototype of the larger</span>
+<span class="sd">    lattice chains in :mod:`physicskit.classical.systems.chains`.</span>
+
+<span class="sd">    Generalized coordinates: q_i = displacement of mass i from</span>
+<span class="sd">    equilibrium, i = 1..N.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, qdot0 : array-like, shape (n,)</span>
+<span class="sd">        Initial displacements and velocities.</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of masses.</span>
+<span class="sd">    m, k : float</span>
+<span class="sd">        Mass and spring constant (uniform across the chain).</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_masses</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">_coupled_oscillators_engine</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accel_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">acceleration_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">momentum_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">canonical_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">velocity_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">full_deriv_njit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">hamiltonian_njit</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CoupledOscillators.energy">
+<a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.CoupledOscillators.energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
+        <span class="n">q</span><span class="p">,</span> <span class="n">qdot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hamiltonian_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

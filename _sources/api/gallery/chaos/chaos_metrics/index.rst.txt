@@ -1,0 +1,199 @@
+
+
+.. _sphx_glr_api_gallery_chaos_chaos_metrics:
+
+Chaos Metrics
+=============
+
+Examples illustrating the quantitative chaos-diagnostic tools in :mod:`physicskit.chaos.utils` and their
+companion visualizers: trajectory-divergence-based and QR (Benettin)-based Lyapunov exponent
+estimation, integrator energy drift, phase-space volume contraction, Poincare recurrence / Kac's
+lemma, fractal (box-counting and correlation) dimension estimation, bifurcation diagrams for
+periodically-forced continuous flows (see :doc:`/api/gallery/chaos/maps/plot_logistic_map` for the
+discrete-map case), and Pomeau-Manneville intermittency near a tangent bifurcation.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Bifurcation diagrams aren&#x27;t only for discrete maps -- they&#x27;re just as useful for continuous, periodically-forced flows, via a stroboscopic Poincare section: sampling the state once per forcing period turns the continuous flow into an effective discrete map. The flow swept here is the forced, damped Duffing oscillator,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_bifurcation_diagram_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_bifurcation_diagram`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Bifurcation Diagrams for Continuous Flows: the Duffing Oscillator</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="physicskit.chaos.utils.metrics.energy_drift measures how well a numerical integrator conserves a system&#x27;s total energy. The system here is the planar double pendulum -- point masses m_1, m_2 on massless rods of length l_1, l_2, hanging under gravity g -- whose total mechanical energy in terms of the rod angles \theta_1, \theta_2 and angular velocities \omega_1, \omega_2 is">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_energy_drift_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_energy_drift`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Energy Drift vs. Integration Step Size</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Strange attractors are fractals: their box-counting (capacity) dimension D_0 and correlation dimension D_2 are non-integers, quantifying how densely (or sparsely) the attractor fills the space it lives in. Covering the attractor with boxes of side \epsilon and counting the occupied boxes N(\epsilon),">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_fractal_dimension_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_fractal_dimension`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fractal Dimension: Box-Counting and Correlation Dimension</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Pomeau and Manneville (1980) identified a third route to chaos, distinct from period-doubling and quasi-periodicity: near a tangent (saddle-node) bifurcation, a trajectory spends increasingly long, apparently regular &quot;laminar&quot; episodes near the fixed point about to vanish, each interrupted by a short chaotic burst, with the mean laminar length diverging as a power law as the tangency is approached. LogisticMap&#x27;s period-three window is born at exactly such a tangent bifurcation, at r\approx3.8284; this example iterates the map at values of r just below that threshold and shows both halves of the phenomenon directly: the laminar-then-burst time series itself, and the mean laminar length growing as r approaches the tangency.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_intermittency_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_intermittency`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Pomeau-Manneville intermittency: laminar phases and chaotic bursts</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="physicskit.chaos.visualizers.divergence.plot_lyapunov_divergence integrates two trajectories starting an infinitesimal distance \delta_0 apart and tracks \ln(\delta_t / \delta_0) over time, where \delta_t is their separation at time t. For chaotic motion this separation grows exponentially, \delta_t \sim \delta_0 e^{\lambda_{\max} t}, so a straight, positively-sloped line (its slope the largest Lyapunov exponent \lambda_{\max} &gt; 0) is the signature of chaos; a system that is not chaotic instead shows the separation shrinking (:math:`\lambda_{\max} &lt; 0`) as both trajectories relax toward the same attracting state. Two systems are contrasted below: the chaotic Lorenz attractor, \dot{x}=\sigma(y-x), \dot{y}=x(\rho-z)-y, \dot{z}=xy-\beta z; and the Duffing oscillator, \ddot{x}+\delta_D \dot{x}+\alpha x+\beta_D x^3=\gamma\cos(\omega t), with its cubic term and forcing switched off (\beta_D=\gamma=0, \alpha=1 &gt; 0), which reduces it to a plain damped linear oscillator, \ddot{x}+\delta_D \dot{x}+x=0: every trajectory relaxes to the same fixed point, so nearby trajectories converge rather than diverge.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_lyapunov_divergence_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_lyapunov_divergence`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Lyapunov Divergence: Chaotic vs. Non-Chaotic</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="While physicskit.chaos.visualizers.divergence.plot_lyapunov_divergence estimates only the largest Lyapunov exponent from a single pair of trajectories, physicskit.chaos.utils.metrics.benettin_lyapunov_spectrum estimates the full spectrum by co-evolving an orthonormal frame Y under the linearized (variational) dynamics \dot{Y} = J(x(t)) Y, where J is the system&#x27;s Jacobian, and periodically re-orthonormalizing it with a QR decomposition, accumulating the log-growth of each axis. It is applied below to the Lorenz and Rossler flows,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_lyapunov_spectrum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_lyapunov_spectrum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Full Lyapunov Spectrum (Benettin QR Method)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The flow studied here is the Lorenz system,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_phase_volume_expansion_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_phase_volume_expansion`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Phase-Space Volume Contraction (Liouville's Theorem)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Poincare recurrence theorem guarantees that, for a measure-preserving system, almost every trajectory returns arbitrarily close to its starting point infinitely often. A trajectory&#x27;s recurrence structure is captured by the pairwise recurrence matrix">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_recurrence_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_recurrence`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Poincare Recurrence and Kac's Lemma</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Every other chaos-diagnostic tool in this gallery works on a DynamicalSystem with known equations of motion. Real experimental data doesn&#x27;t come with equations attached -- this example instead analyzes a single scalar time series, x(t), treating its true source -- here the Lorenz system, \dot{x}=\sigma(y-x), \dot{y}=x(\rho-z)-y, \dot{z}=xy-\beta z -- as unknown, and using only x(t) itself. It reconstructs an equivalent phase-space attractor by delay-coordinate (Takens) embedding,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_timeseries_analysis_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_timeseries_analysis`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Analyzing a Raw Time Series (No Equations Required)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /api/gallery/chaos/chaos_metrics/plot_bifurcation_diagram
+   /api/gallery/chaos/chaos_metrics/plot_energy_drift
+   /api/gallery/chaos/chaos_metrics/plot_fractal_dimension
+   /api/gallery/chaos/chaos_metrics/plot_intermittency
+   /api/gallery/chaos/chaos_metrics/plot_lyapunov_divergence
+   /api/gallery/chaos/chaos_metrics/plot_lyapunov_spectrum
+   /api/gallery/chaos/chaos_metrics/plot_phase_volume_expansion
+   /api/gallery/chaos/chaos_metrics/plot_recurrence
+   /api/gallery/chaos/chaos_metrics/plot_timeseries_analysis
+

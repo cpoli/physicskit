@@ -1,0 +1,8 @@
+physicskit.rmt
+================
+
+Paper-replication scripts for ``physicskit.rmt``, organized around Dyson's
+threefold way: each script reproduces a classic random matrix theory result
+to numerical precision against its published closed-form law or reference.
+
+See the full gallery: :doc:`/api/gallery/rmt/index`.

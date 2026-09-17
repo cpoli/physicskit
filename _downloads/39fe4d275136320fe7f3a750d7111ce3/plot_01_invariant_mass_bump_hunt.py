@@ -1,0 +1,102 @@
+r"""
+The invariant-mass bump hunt: J/psi, the W/Z, the top quark, and Higgs
+============================================================================
+
+Four of this chronology's landmark discoveries -- the J/psi (1974), the W
+and Z bosons (1983), the top quark (1995), and the Higgs boson (2012) --
+were all found the same way: reconstruct the invariant mass of a
+candidate particle's decay products event by event, histogram it over
+many collisions, and look for a resonance peak standing above a smooth
+combinatorial background. This example builds exactly that "bump hunt"
+with :func:`~physicskit.particle.kinematics.invariant_mass`: a
+population of true resonance decays (fixed parent mass, isotropic decay
+angles) is buried inside a much larger population of random,
+uncorrelated background pairs, and the resonance peak is recovered
+directly from the histogram alone -- the generic technique behind every
+one of these four discoveries, applied here to a single representative
+example resonance.
+"""
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.particle.decays import two_body_decay
+from physicskit.particle.kinematics import FourVector, boost_generic, invariant_mass
+
+# %%
+# Signal: many decays of a resonance with a fixed mass
+# ------------------------------------------------------------
+# A J/psi-like resonance decaying to two leptons (m1=m2=0, ultrarelativistic),
+# each event's parent given a random boost (a real resonance is produced
+# with some spread of momenta, not created at rest every time).
+rng = np.random.default_rng(0)
+M_resonance = 3.10  # GeV, close to the real J/psi mass
+n_signal = 3000
+
+reconstructed_signal = np.empty(n_signal)
+for i in range(n_signal):
+    cos_theta, phi = rng.uniform(-1.0, 1.0), rng.uniform(0.0, 2.0 * np.pi)
+    p1_rest, p2_rest = two_body_decay(M_resonance, 0.0, 0.0, cos_theta, phi)
+    beta = rng.uniform(0.0, 0.3, size=3)  # a modest production boost, random direction/magnitude capped < c
+    beta = beta * rng.choice([-1.0, 1.0], size=3)
+    if np.linalg.norm(beta) >= 1.0:
+        beta = beta / (np.linalg.norm(beta) * 1.5)
+    p1 = boost_generic(p1_rest, beta)
+    p2 = boost_generic(p2_rest, beta)
+    reconstructed_signal[i] = invariant_mass([p1, p2])
+
+print(f"true resonance mass: {M_resonance} GeV")
+print(f"reconstructed signal mass: mean={reconstructed_signal.mean():.6f}, std={reconstructed_signal.std():.2e} GeV")
+print("(the small spread here comes only from floating-point-level boost/reconstruction round trips --")
+print(" a real detector's finite momentum resolution is what actually smears the peak in a genuine measurement)")
+
+# %%
+# Background: uncorrelated lepton pairs with no common parent
+# --------------------------------------------------------------------
+# Random combinations of leptons from unrelated processes -- the
+# combinatorial background that must be separated from the genuine
+# resonance in any real bump hunt.
+n_background = 30000
+bg_masses = np.empty(n_background)
+for i in range(n_background):
+    E1, E2 = rng.uniform(0.5, 4.0, 2)
+    dir1 = rng.normal(size=3)
+    dir1 /= np.linalg.norm(dir1)
+    dir2 = rng.normal(size=3)
+    dir2 /= np.linalg.norm(dir2)
+    p1 = FourVector(E1, *(E1 * dir1))
+    p2 = FourVector(E2, *(E2 * dir2))
+    bg_masses[i] = invariant_mass([p1, p2])
+
+# %%
+# The bump hunt: signal buried in background, recovered by histogram
+# --------------------------------------------------------------------------
+all_masses = np.concatenate([reconstructed_signal, bg_masses])
+bins = np.linspace(0.0, 8.0, 100)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
+ax1.hist(bg_masses, bins=bins, color="0.7", label=f"background only (N={n_background})")
+ax1.set_xlabel("invariant mass (GeV)")
+ax1.set_ylabel("events")
+ax1.set_title("Background alone: smooth, no structure")
+ax1.legend(fontsize=8)
+
+ax2.hist(all_masses, bins=bins, color="steelblue", label=f"signal + background (N={len(all_masses)})")
+ax2.axvline(M_resonance, color="firebrick", ls="--", label=f"true mass = {M_resonance} GeV")
+ax2.set_xlabel("invariant mass (GeV)")
+ax2.set_ylabel("events")
+ax2.set_title("Signal + background: a resonance peak stands out")
+ax2.legend(fontsize=8)
+fig.tight_layout()
+
+peak_bin = np.argmax(np.histogram(all_masses, bins=bins)[0])
+peak_mass = 0.5 * (bins[peak_bin] + bins[peak_bin + 1])
+print(f"\nhistogram peak located at approximately {peak_mass:.2f} GeV (true mass {M_resonance} GeV)")
+print("\nthe same technique, applied to different final states and mass ranges, is exactly how each of")
+print("these discoveries was made: J/psi (e+e-/mu+mu-, ~3.1 GeV), the Z (e+e-/mu+mu-, ~91 GeV),")
+print("the top quark (via its W+b decay products, ~173 GeV), and the Higgs (e.g. two photons, ~125 GeV).")
+print("The W boson is the one exception -- its neutrino escapes undetected, so its discovery used the")
+print("transverse mass built from missing transverse energy instead of a clean invariant-mass peak.")
+
+plt.show()

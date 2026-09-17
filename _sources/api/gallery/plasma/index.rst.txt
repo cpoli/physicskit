@@ -1,0 +1,562 @@
+:orphan:
+
+Examples
+========
+
+This gallery walks through every public feature of ``physicskit.plasma``:
+single-particle motion in electromagnetic fields, magnetohydrodynamics,
+cold-plasma waves, particle-in-cell kinetic theory, drift-wave
+turbulence, and particle acceleration in a plasma wakefield.
+
+Each script in this gallery is self-contained and can be run directly with
+``python examples/plasma/<section>/<script>.py``. Every script also
+carries an RST module docstring as its title/description and uses ``# %%``
+markers to split narrative text from code, which is exactly what
+Sphinx-Gallery renders into the pages below -- the script *is* the source of
+truth for what you see, not a copy of it.
+
+Sections
+--------
+
+- **single_particle** -- charged-particle motion in electromagnetic fields:
+  the guiding-center drifts (E-cross-B, grad-B, curvature) and magnetic
+  mirror bounce motion of the adiabatic-invariant picture, the
+  energy-conserving Boris particle pusher, and the exact gyro-orbit
+  recovering the guiding-center E-cross-B drift on time-average -- the
+  single-particle foundation gyrokinetic turbulence theory builds on.
+- **mhd** -- the plasma as a single conducting fluid: Alfven and
+  magnetosonic wave speeds (including an animated Alfven pulse splitting
+  and propagating along the field), the Grad-Shafranov equilibrium behind
+  every tokamak's nested flux surfaces and safety-factor profile, and the
+  Sweet-Parker vs. Petschek models of magnetic reconnection, with a
+  time-evolving X-point reconnection simulation animated alongside the
+  Sweet-Parker scaling laws.
+- **waves** -- cold-plasma wave theory: Langmuir's plasma frequency across
+  astrophysical and laboratory densities, Stix's dielectric tensor with
+  the Clemmow-Mullaly-Allis (CMA) diagram organizing every cold-plasma wave
+  mode, and the ion-acoustic soliton propagating without change of shape
+  under the Washimi-Taniuti KdV reduction.
+- **kinetic** -- particle-in-cell (PIC) kinetic theory: Landau damping
+  reproduced from first principles with no collision term anywhere in the
+  equations, the two-stream instability as its mirror-image kinetic growth
+  mechanism (now with an animated phase-space vortex), the Weibel/filamentation
+  instability growing current filaments from temperature anisotropy, and
+  a Langmuir wave ringing at the plasma frequency instead of damping away.
+- **turbulence** -- the reduced Hasegawa-Mima model for magnetized-plasma
+  drift-wave turbulence: small-amplitude potential noise self-organizing
+  into long-lived coherent vortices.
+- **acceleration** -- a test charge surfing a prescribed traveling plasma
+  wakefield, the qualitative picture behind Tajima and Dawson's laser
+  wakefield accelerator proposal.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Particle acceleration
+==========================
+
+A test charge surfing a prescribed traveling plasma wakefield
+(:func:`~physicskit.plasma.acceleration.wakefield_e_field`), integrated
+with the same energy-conserving Boris pusher used for gyro-orbits
+elsewhere in this package
+(:func:`~physicskit.plasma.acceleration.simulate_wakefield_acceleration`)
+-- the qualitative "surfing" picture of plasma-wakefield acceleration,
+without the driver's own self-consistent field generation.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Toshiki Tajima and John Dawson (1979) proposed firing an intense, short laser pulse into a plasma to excite a large-amplitude plasma wave in its wake, then injecting electrons to &quot;surf&quot; that wake&#x27;s electric field. Because a plasma wave&#x27;s field is not limited by material breakdown the way a copper accelerating cavity&#x27;s is, the resulting accelerating gradient can exceed conventional radio-frequency accelerators&#x27; by three to four orders of magnitude -- the proposal that launched the field of laser and beam-driven plasma wakefield acceleration.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/acceleration/images/thumb/sphx_glr_plot_01_wakefield_acceleration_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/acceleration/plot_01_wakefield_acceleration`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plasma wakefield acceleration: a test charge surfing a traveling wave</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Kinetic theory (particle-in-cell)
+======================================
+
+An electrostatic particle-in-cell (PIC) solution of the 1D1V
+Vlasov-Poisson system: particles stream along exact single-particle
+orbits and the self-consistent field is recovered by depositing their
+charge onto a grid and solving Poisson's equation each step
+(:func:`~physicskit.plasma.kinetic.pic_simulate`). The same
+deposit-solve-gather-push pipeline reproduces collisionless Landau
+damping (:func:`~physicskit.plasma.kinetic.landau_damping_ic`,
+:func:`~physicskit.plasma.kinetic.landau_damping_rate`), its
+mirror-image growth mechanism, the two-stream instability
+(:func:`~physicskit.plasma.kinetic.two_stream_ic`), and a Langmuir wave
+ringing in place at the plasma frequency
+(:func:`~physicskit.plasma.kinetic.langmuir_wave_ic`), all without ever
+assuming a collision operator. The Weibel/filamentation instability
+(:func:`~physicskit.plasma.instabilities.weibel_growth_rate`,
+:func:`~physicskit.plasma.instabilities.simulate_weibel_filamentation`)
+is treated as a reduced quasi-linear model of the same current-driven
+physics, at the opposite (temperature-anisotropy) end of the kinetic
+spectrum from a beam-driven instability.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In 1946, Lev Landau solved the linearized Vlasov equation for a wave on a Maxwellian plasma and found something that seemed to violate reversible mechanics: the wave damps, exponentially, with no collisions or dissipation anywhere in the equations. Particles moving at very nearly the wave&#x27;s phase velocity &quot;surf&quot; it, and because a thermal distribution always has slightly more slightly slower particles being accelerated than slightly faster particles being decelerated, the net exchange drains the wave.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/kinetic/images/thumb/sphx_glr_plot_01_landau_damping_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/kinetic/plot_01_landau_damping`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Landau damping from first principles with particle-in-cell</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Studying velocity-modulated electron beams for microwave tubes, Andrew Haeff (1948) and John Pierce (1948) independently found that a beam of electrons streaming through a background plasma spontaneously breaks up into density bunches that grow exponentially. David Bohm and Eugene Gross (1949) showed the instability is the mirror image of Landau damping (plot_01_landau_damping): two counter-streaming beams create a region of positive velocity-space slope between their peaks, and it is precisely that positive slope -- formalized a decade later as the Penrose criterion -- that pumps energy from the particles into the wave instead of draining it.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/kinetic/images/thumb/sphx_glr_plot_02_two_stream_instability_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/kinetic/plot_02_two_stream_instability`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The two-stream instability: exponential growth and phase-space vortices</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Erich Weibel (1959) found that a plasma whose velocity distribution is anisotropic (:math:`T_\perp&gt;T_\parallel`, no bulk streaming at all) is unstable to a purely growing transverse electromagnetic mode -- no beam, density gradient, or external field required. Burton Fried, the same year, supplied the physical mechanism: a random transverse magnetic fluctuation curves particle orbits enough to bunch them into current channels, and the growing channel current reinforces exactly the fluctuation that curved the orbits into existence -- a self-sustaining feedback loop with no threshold.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/kinetic/images/thumb/sphx_glr_plot_03_weibel_filamentation_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/kinetic/plot_03_weibel_filamentation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Weibel filamentation: growing current filaments from temperature anisotropy</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Irving Langmuir (1928) discovered that a plasma&#x27;s electron gas resonates at a sharply defined natural frequency: displace the electrons and their own restoring electric field snaps them back, overshoots, and rings, exactly like a mass on a spring built from nothing but the plasma&#x27;s own charge density. Both the density displacement and the electron fluid velocity linear cold-fluid theory predicts for a wave oscillating at the electron plasma frequency \omega_{pe} are built into the particles directly:">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/kinetic/images/thumb/sphx_glr_plot_04_langmuir_wave_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/kinetic/plot_04_langmuir_wave`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Langmuir waves: electron density ringing at the plasma frequency</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Magnetohydrodynamics
+========================
+
+Treats the plasma as a single conducting fluid rather than a collection of
+orbiting particles: the characteristic Alfven and magnetosonic wave speeds
+(:func:`~physicskit.plasma.mhd.alfven_speed`,
+:func:`~physicskit.plasma.mhd.magnetosonic_speeds`); static toroidal
+equilibrium via the Grad-Shafranov equation
+(:func:`~physicskit.plasma.mhd.solve_grad_shafranov`,
+:func:`~physicskit.plasma.mhd.safety_factor_large_aspect_ratio`); and
+resistive magnetic reconnection, comparing the classic Sweet-Parker model
+against Petschek's faster X-point revision
+(:func:`~physicskit.plasma.mhd.sweet_parker_rate`,
+:func:`~physicskit.plasma.mhd.petschek_rate`).
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In 1942, Hannes Alfven proposed that a magnetized, highly conducting fluid should support a wave nobody had previously imagined: magnetic field lines, frozen into the plasma by its high conductivity, behave like strings under tension B^2/\mu_0, plucked sideways by the fluid&#x27;s own inertia. The result -- the Alfven wave -- travels at v_A = B/\sqrt{\mu_0\rho}, purely transverse and non-compressive, and founded magnetohydrodynamics (MHD) as a discipline treating the plasma as a single conducting fluid.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/mhd/images/thumb/sphx_glr_plot_01_alfven_and_magnetosonic_waves_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/mhd/plot_01_alfven_and_magnetosonic_waves`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Alfven waves and the magnetosonic wave-speed diagram</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Peter Sweet and Eugene Parker (1957-1958) proposed the first quantitative model of magnetic reconnection: oppositely directed field lines are driven together into a long, thin resistive current sheet of length L, where finite conductivity \eta finally lets them break and reconnect. The relevant dimensionless control parameter is the Lundquist number S=Lv_A/\eta, the ratio of the resistive diffusion time L^2/\eta to the Alfven crossing time L/v_A. Mass conservation through the sheet&#x27;s narrow exit throttles the whole process to">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/mhd/images/thumb/sphx_glr_plot_02_sweet_parker_reconnection_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/mhd/plot_02_sweet_parker_reconnection`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Sweet-Parker reconnection-rate bottleneck</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Harold Grad and Hanan Rubin, and independently Vitalii Shafranov, derived (1958) the equation governing any static, axisymmetric magnetized-plasma equilibrium: force balance between the pressure gradient and the \mathbf{J}\times\mathbf{B} force reduces, in toroidal geometry, to a single nonlinear elliptic PDE for the poloidal flux function \psi(R,Z),">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/mhd/images/thumb/sphx_glr_plot_03_grad_shafranov_equilibrium_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/mhd/plot_03_grad_shafranov_equilibrium`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Solving the Grad-Shafranov equation for nested flux surfaces</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Harry Petschek (1964) proposed a resolution to the Sweet-Parker rate problem (plot_02_sweet_parker_reconnection): if the resistive diffusion region shrinks to a small X-point rather than extending the full length of the current sheet, four standing slow-mode shocks radiating from that X-point can carry away most of the inflowing magnetic flux and energy. The resulting reconnection rate falls only logarithmically with the Lundquist number, v_{in}/v_A\approx\pi/(8\ln S), fast enough to plausibly explain solar flare and magnetospheric substorm energy-release timescales that Sweet-Parker reconnection could not.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/mhd/images/thumb/sphx_glr_plot_04_petschek_reconnection_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/mhd/plot_04_petschek_reconnection`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Petschek vs. Sweet-Parker reconnection</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Single-particle motion
+==========================
+
+Charged-particle motion in electromagnetic fields, in two complementary
+pictures: the exact Lorentz-force orbit integrated with the
+energy-conserving Boris pusher
+(:func:`~physicskit.plasma.single_particle.boris_integrate`), and the
+guiding-center picture that averages over the fast gyration to track only
+the slow drift of the orbit's center
+(:func:`~physicskit.plasma.single_particle.exb_drift`,
+:func:`~physicskit.plasma.single_particle.grad_b_drift`,
+:func:`~physicskit.plasma.single_particle.curvature_drift`) and the
+adiabatic invariant responsible for magnetic mirror confinement
+(:func:`~physicskit.plasma.single_particle.magnetic_moment`,
+:func:`~physicskit.plasma.single_particle.magnetic_mirror_bounce`).
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rather than integrate every fast gyration of a charged particle around a field line, plasma theorists of the 1950s (with foundational contributions from Alfven and later systematized by Northrop) showed that the orbit separates cleanly into a rapid gyration plus a slow drift of the gyration&#x27;s center -- the guiding center -- driven by any force or field gradient perpendicular to \mathbf{B}. The gyration itself conserves an adiabatic invariant, the magnetic moment \mu=mv_\perp^2/2B, to very high accuracy whenever the field changes slowly compared to the gyration period; as a particle&#x27;s guiding center drifts into stronger field, \mu conservation forces v_\perp to grow at the expense of v_\parallel. That conversion is the reaction of a parallel mirror force,">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/single_particle/images/thumb/sphx_glr_plot_01_guiding_center_drifts_and_mirror_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/single_particle/plot_01_guiding_center_drifts_and_mirror`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Guiding-center drifts and magnetic mirror confinement</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Jay Boris, developing early particle-in-cell plasma codes, needed a numerical integrator for the Lorentz force m\dot{\mathbf{v}}=q(\mathbf{E}+\mathbf{v}\times\mathbf{B}) that would not spuriously heat or cool a particle over millions of simulated gyro-orbits. His 1970 scheme splits each leapfrog step into an electric half-kick, an exact rotation about \mathbf{B} computed without any trigonometry (the &quot;Boris rotation&quot; trick), and a second electric half-kick; the rotation step conserves speed to machine precision in a pure magnetic field, regardless of step size.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/single_particle/images/thumb/sphx_glr_plot_02_boris_pusher_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/single_particle/plot_02_boris_pusher`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Energy-conserving gyration with the Boris pusher</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Modern magnetic-confinement fusion research is dominated by gyrokinetic theory: rather than track a particle&#x27;s full gyration (as the Boris pusher does, plot_02_boris_pusher) or reduce all the way to a fluid (as MHD does), gyrokinetics analytically averages the Vlasov equation over the fast gyro-angle while retaining the finite-Larmor-radius physics needed for turbulence. This closes the gap between the guiding-center drift theory of the 1950s (plot_01_guiding_center_drifts_and_mirror) and full kinetic simulation, and is the theoretical foundation of every modern turbulent-transport code (GENE, GYRO, GS2) used to predict a fusion reactor&#x27;s confinement performance.">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/single_particle/images/thumb/sphx_glr_plot_03_exb_drift_gyroaverage_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/single_particle/plot_03_exb_drift_gyroaverage`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Recovering the ExB drift as a time-average of the full orbit</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Drift-wave turbulence
+==========================
+
+The reduced Hasegawa-Mima model for magnetized-plasma drift-wave
+turbulence: small-amplitude potential noise
+(:func:`~physicskit.plasma.turbulence.drift_wave_noise_ic`) nonlinearly
+self-organizes under :math:`\mathbf{E}\times\mathbf{B}` advection of
+potential vorticity (:func:`~physicskit.plasma.turbulence.simulate_hasegawa_mima`)
+into long-lived coherent vortices -- the same phenomenology that governs
+cross-field transport in a magnetic-confinement fusion device.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Akira Hasegawa and Kunioki Mima (1977-1978) reduced the full gyrokinetic turbulence problem to a single scalar equation for the normalized electrostatic potential \phi,">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/turbulence/images/thumb/sphx_glr_plot_01_drift_wave_turbulence_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/turbulence/plot_01_drift_wave_turbulence`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Hasegawa-Mima drift-wave turbulence: noise self-organizing into vortices</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Cold-plasma waves
+=====================
+
+Linearizes the multi-fluid cold-plasma equations around a uniform
+background to get the plasma frequency
+(:func:`~physicskit.plasma.waves.plasma_frequency`) and the Stix
+dielectric tensor components :math:`S`, :math:`D`, :math:`P`
+(:func:`~physicskit.plasma.waves.stix_parameters`), from which every
+named cold-plasma wave mode follows as one quartic equation in the
+refractive index (:func:`~physicskit.plasma.waves.cold_plasma_dispersion`),
+organized by the Clemmow-Mullaly-Allis (CMA) diagram
+(:func:`~physicskit.plasma.waves.cma_coordinates`). Beyond this linear,
+dispersion-relation picture, the ion-acoustic soliton
+(:func:`~physicskit.plasma.waves.ion_acoustic_soliton_profile`,
+:func:`~physicskit.plasma.waves.ion_acoustic_soliton_evolve`) is a
+genuinely nonlinear traveling wave, propagating without change of shape
+under the Washimi-Taniuti Korteweg-de Vries reduction.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In 1928, Irving Langmuir found that the electron gas in an ionized discharge tube rings at a sharply defined natural frequency: displace the electrons from the (fixed) ion background and their own restoring electric field snaps them back, overshoots, and rings, exactly like a mass on a spring built from nothing but the plasma&#x27;s own charge density,">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/waves/images/thumb/sphx_glr_plot_01_plasma_frequency_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/waves/plot_01_plasma_frequency`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Langmuir's plasma frequency</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Thomas Stix&#x27;s 1962 The Theory of Plasma Waves organized the zoo of magnetized cold-plasma wave modes -- Alfven waves, whistlers, cyclotron waves, the ordinary and extraordinary radio-propagation modes -- into a single 3x3 dielectric tensor built from each species&#x27; plasma and cyclotron frequencies,">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/waves/images/thumb/sphx_glr_plot_02_cma_diagram_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/waves/plot_02_cma_diagram`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Stix's cold-plasma dielectric tensor and the CMA diagram</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Haruichi Washimi and Tosiya Taniuti (1966) applied the &quot;reductive perturbation&quot; method to the coupled cold-ion-fluid/Boltzmann-electron equations in the weakly nonlinear, weakly dispersive limit and showed the ion-acoustic wave problem reduces exactly to the Korteweg-de Vries (KdV) equation, in its canonical stretched-coordinate form for the normalized density (or potential) perturbation u(\xi, t) in a frame moving at the ion-sound speed:">
+
+.. only:: html
+
+  .. image:: /api/gallery/plasma/waves/images/thumb/sphx_glr_plot_03_ion_acoustic_soliton_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/plasma/waves/plot_03_ion_acoustic_soliton`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ion-acoustic solitons: a KdV pulse that never changes shape</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /api/gallery/plasma/acceleration/index.rst
+   /api/gallery/plasma/kinetic/index.rst
+   /api/gallery/plasma/mhd/index.rst
+   /api/gallery/plasma/single_particle/index.rst
+   /api/gallery/plasma/turbulence/index.rst
+   /api/gallery/plasma/waves/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

@@ -1,0 +1,958 @@
+:orphan:
+
+Examples
+========
+
+This gallery walks through every public feature of ``physicskit.chaos``: five
+families of 2D billiards, discrete chaotic maps, continuous chaotic flows,
+their quantum-mechanical analogues, the diagnostics used to quantify chaos
+(Lyapunov exponents, fractal dimension, Poincare recurrence, phase-space
+volume), and the interactive/animated visualizers built on top of them.
+
+Each script in this gallery is self-contained and can be run directly with
+``python examples/chaos/<section>/<script>.py``. Every script also carries
+an RST module docstring as its title/description and uses ``# %%`` markers
+to split narrative text from code, which is exactly what Sphinx-Gallery
+renders into the pages below -- the script *is* the source of truth for what
+you see, not a copy of it.
+
+Sections
+--------
+
+- **billiards** -- trajectories and Poincare (boundary phase-space) sections
+  for the Circle, Ellipse, Rectangle, Sinai, Bunimovich Stadium, and
+  Truncated Circle billiards, a side-by-side comparison of all five
+  canonical geometries, and a demonstration of extreme sensitivity to
+  initial conditions in a barely-perturbed circle.
+- **maps** -- discrete-time chaos: the period-doubling route to chaos in the
+  Logistic Map, the area-preserving Chirikov-Taylor Standard Map, the
+  stretch-cut-and-stack Baker's Map, and the Henon Map.
+- **continuous_systems** -- classic flows: the Lorenz and Rossler attractors,
+  Chua's Circuit (the double-scroll attractor), the driven Duffing
+  oscillator, the double pendulum, the Magnetic Pendulum's fractal basins of
+  attraction, and the restricted three-body problem that first led Poincare
+  to chaos.
+- **quantum_chaos** -- what becomes of these systems under quantization: the
+  Quantum Baker's Map, eigenstates of a quantum billiard, and the Quantum
+  Kicked Rotor.
+- **chaos_metrics** -- quantifying chaos rather than just plotting it:
+  Lyapunov divergence and the full Lyapunov spectrum (Benettin's QR method),
+  fractal (box-counting and correlation) dimension, bifurcation diagrams,
+  energy drift, phase-space volume contraction (Liouville's theorem),
+  Poincare recurrence and Kac's lemma, and extracting chaos diagnostics from
+  a raw time series with no equations at all.
+- **interactive_and_animation** -- a live Matplotlib animation, trajectory
+  color-coding, and interactive Plotly figures.
+- **advanced** -- working below the ``System`` abstraction: building a custom
+  dynamical system directly from the low-level Numba integrators, comparing
+  symplectic against non-symplectic integrators over long time horizons,
+  saving and loading results, and interactive 3D viewing with PyVista.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Advanced: Building Custom Systems
+===================================
+
+An example showing how to use the low-level, Numba-accelerated integrators
+in :mod:`physicskit.chaos.core.integrators` directly -- either by subclassing
+:class:`physicskit.chaos.core.base_system.DynamicalSystem` the same way the built-in
+systems in :mod:`physicskit.chaos.systems.continuous` do, or by calling the
+integrators on a hand-written right-hand-side function with no wrapper class
+at all.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Every built-in continuous system in physicskit.chaos.systems.continuous follows the same recipe: a module-level Numba @njit right-hand-side function with signature rhs(state, t, params) -&gt; ndarray, wrapped by a physicskit.chaos.core.base_system.DynamicalSystem subclass whose trajectory() method calls physicskit.chaos.core.integrators.rk4_integrate. This example follows that same recipe to add a new system -- the Van der Pol oscillator -- that is not one of the built-ins, and then shows the even more low-level path of calling an integrator directly on a bare right-hand-side function with no wrapper class at all.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/advanced/images/thumb/sphx_glr_plot_custom_system_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/advanced/plot_custom_system`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Building a Custom System with the Low-Level Integrators</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Matplotlib&#x27;s mplot3d axes project a 3D scene onto a 2D canvas with only an approximation of real depth (and no interactive rotation once a figure is saved as a static image). physicskit.chaos.visualizers.viewer3d.pyvista_trajectory renders the same kind of trajectory -- here, the Rossler attractor,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/advanced/images/thumb/sphx_glr_plot_pyvista_3d_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/advanced/plot_pyvista_3d`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Interactive 3D Viewing with PyVista</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Long simulations (a fine basin-of-attraction grid, a long Lyapunov-spectrum integration, a large parameter sweep) are worth keeping around instead of recomputing. physicskit.chaos.utils.io provides two small, generic building blocks for this: save_system_config / load_system_config round-trip a system&#x27;s class and constructor parameters through JSON (using the same __init__ introspection that already powers every system&#x27;s repr()), and save_arrays / load_arrays save any named arrays (a trajectory, a basin grid, a Poincare section) to a plain .npz archive. The system used to demonstrate this is the Lorenz attractor,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/advanced/images/thumb/sphx_glr_plot_serialization_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/advanced/plot_serialization`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Saving and Loading Results</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="For conservative (Hamiltonian) systems, the choice of integrator matters far more over long integration horizons than local per-step accuracy suggests. This example integrates a simple, exactly-solvable Kepler orbit with three integrators from physicskit.chaos.core.integrators -- RK4, the 2nd-order symplectic leapfrog, and the 4th-order symplectic Yoshida scheme -- and compares how their energy-conservation error behaves as the integration horizon grows. RK4&#x27;s error grows secularly (roughly proportional to integration time), while the symplectic integrators&#x27; error stays bounded regardless of how long you integrate, because they exactly preserve phase-space volume at every step: over a handful of orbits RK4 actually has the smallest error of the three, but by a few dozen orbits it has already grown past Yoshida4&#x27;s, and keeps growing indefinitely from there. A second figure makes the abstract &quot;energy drift&quot; number concrete: since a Kepler orbit&#x27;s specific energy fixes its semi-major axis, tracking the aphelion distance orbit by orbit shows RK4&#x27;s secular energy error directly shrinking the orbit over time, while Yoshida4&#x27;s bounded error keeps it flat.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/advanced/images/thumb/sphx_glr_plot_symplectic_integrators_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/advanced/plot_symplectic_integrators`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Symplectic vs. Non-Symplectic Integrators: Long-Horizon Energy Drift</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Billiards
+=========
+
+Examples illustrating the five 2D billiard geometries in
+:mod:`physicskit.chaos.systems.billiards`: a trajectory bouncing inside each shape,
+and the boundary phase-space (Poincare) section that distinguishes
+integrable geometries (Circle, Rectangle) from chaotic, defocusing ones
+(Sinai, Bunimovich Stadium, Truncated Circle).
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line at constant speed inside a closed boundary and undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n}, whenever it strikes the boundary. The Bunimovich stadium&#x27;s boundary is two straight edges, y = \pm r for |x| \le a, joined by two semicircular caps of radius r centered at (\pm a, 0), where 2a is the straight-edge length. It is chaotic despite having no concave scatterer: the focusing semicircular caps defocus nearby trajectories after they refocus and diverge past the caps&#x27; centers of curvature (unlike a full circle, whose focusing never gets interrupted by a flat stretch). This example plots a single trajectory and the resulting Poincare section.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_bunimovich_stadium_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_bunimovich_stadium`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Bunimovich Stadium (Chaotic)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard is a point particle moving in a straight line at constant speed inside a closed boundary, until it strikes the boundary and undergoes specular reflection -- the outgoing velocity \mathbf{v}&#x27; obtained from the incoming velocity \mathbf{v} and the local unit normal \mathbf{n} by">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_circle_billiard_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_circle_billiard`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Circle Billiard (Integrable)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line at constant speed inside a closed boundary and undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n}, whenever it strikes the boundary. Here the boundary is the ellipse">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_ellipse_billiard_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_ellipse_billiard`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ellipse Billiard (Integrable, with Caustics)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line and reflects specularly off its boundary, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n}) \,\mathbf{n}. The circular billiard (boundary x^2+y^2=r^2) is exactly integrable: \sin\phi -- the sine of the angle of incidence at each bounce -- is conserved forever, so two rays launched a hair&#x27;s breadth apart stay a hair&#x27;s breadth apart forever too. Slicing off even a tiny flat chord (turning it into a TruncatedCircleBilliard of boundary parameter cut) destroys this completely. This example launches two rays 10^{-8} radians apart into a circle truncated by a chord just 5% of the radius deep -- barely different from a perfect circle by eye -- and watches them track each other indistinguishably for dozens of bounces before a single grazing hit near the chord sends them down completely different paths.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_extreme_sensitivity_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_extreme_sensitivity`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Extreme Sensitivity: a Slightly Truncated Circle</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Every billiard here is a point particle moving in a straight line at constant speed inside a closed boundary, undergoing specular reflection">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_poincare_comparison_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_poincare_comparison`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Comparing All Five Billiards</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line at constant speed inside a closed boundary and undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n}, whenever it strikes the boundary. Here the boundary is the rectangle |x| \le w/2,\ |y| \le h/2 of width w and height h, whose walls are all axis-aligned, so \mathbf{n} is always \pm\hat{x} or \pm\hat{y} -- reflections off the horizontal and vertical walls therefore only ever flip the sign of one velocity component. The rectangular billiard is integrable: each individual ray only ever visits a handful of discrete \sin\phi values (the sine of the angle between the outgoing velocity and the local boundary tangent). This example plots a single trajectory and a Poincare section built from several rays launched at different angles.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_rectangle_billiard_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_rectangle_billiard`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rectangle Billiard (Integrable)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line at constant speed inside a closed boundary and undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n}, whenever it strikes the boundary. The Sinai billiard&#x27;s boundary is a square cell, |x| \le L/2,\ |y| \le L/2, with a circular scatterer of radius r_s &lt; L/2 removed from its center, x^2 + y^2 = r_s^2. It is a classic example of a defocusing chaotic billiard: because the scatterer is convex as seen from inside the cell, it disperses nearby trajectories exponentially fast (unlike the flat walls of a Rectangle billiard, which neither focus nor defocus). This example plots a single trajectory and the resulting Poincare section, which fills densely with points rather than tracing out smooth curves.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_sinai_billiard_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_sinai_billiard`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sinai Billiard (Chaotic)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A billiard particle moves in a straight line at constant speed inside a closed boundary and undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n}, whenever it strikes the boundary. This billiard&#x27;s boundary keeps the major arc of a circle of radius r, x^2+y^2=r^2, and closes it off with a straight chord at x = r - c, where c (``cut``) is how far the chord is cut in from the circle&#x27;s edge. Slicing this flat chord off a circular billiard breaks integrability without making the system fully chaotic: depending on how large c is, the Poincare section shows a mix of regular invariant curves (surviving islands near the untouched part of the circle) and a chaotic sea near the chord. This &quot;mixed&quot; behavior sits between the fully integrable Circle/Rectangle billiards and the fully chaotic Sinai/Stadium billiards.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/billiards/images/thumb/sphx_glr_plot_truncated_circle_billiard_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/billiards/plot_truncated_circle_billiard`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Truncated Circle Billiard (Mixed Phase Space)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Chaos Metrics
+=============
+
+Examples illustrating the quantitative chaos-diagnostic tools in :mod:`physicskit.chaos.utils` and their
+companion visualizers: trajectory-divergence-based and QR (Benettin)-based Lyapunov exponent
+estimation, integrator energy drift, phase-space volume contraction, Poincare recurrence / Kac's
+lemma, fractal (box-counting and correlation) dimension estimation, bifurcation diagrams for
+periodically-forced continuous flows (see :doc:`/api/gallery/chaos/maps/plot_logistic_map` for the
+discrete-map case), and Pomeau-Manneville intermittency near a tangent bifurcation.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Bifurcation diagrams aren&#x27;t only for discrete maps -- they&#x27;re just as useful for continuous, periodically-forced flows, via a stroboscopic Poincare section: sampling the state once per forcing period turns the continuous flow into an effective discrete map. The flow swept here is the forced, damped Duffing oscillator,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_bifurcation_diagram_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_bifurcation_diagram`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Bifurcation Diagrams for Continuous Flows: the Duffing Oscillator</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="physicskit.chaos.utils.metrics.energy_drift measures how well a numerical integrator conserves a system&#x27;s total energy. The system here is the planar double pendulum -- point masses m_1, m_2 on massless rods of length l_1, l_2, hanging under gravity g -- whose total mechanical energy in terms of the rod angles \theta_1, \theta_2 and angular velocities \omega_1, \omega_2 is">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_energy_drift_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_energy_drift`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Energy Drift vs. Integration Step Size</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Strange attractors are fractals: their box-counting (capacity) dimension D_0 and correlation dimension D_2 are non-integers, quantifying how densely (or sparsely) the attractor fills the space it lives in. Covering the attractor with boxes of side \epsilon and counting the occupied boxes N(\epsilon),">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_fractal_dimension_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_fractal_dimension`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fractal Dimension: Box-Counting and Correlation Dimension</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Pomeau and Manneville (1980) identified a third route to chaos, distinct from period-doubling and quasi-periodicity: near a tangent (saddle-node) bifurcation, a trajectory spends increasingly long, apparently regular &quot;laminar&quot; episodes near the fixed point about to vanish, each interrupted by a short chaotic burst, with the mean laminar length diverging as a power law as the tangency is approached. LogisticMap&#x27;s period-three window is born at exactly such a tangent bifurcation, at r\approx3.8284; this example iterates the map at values of r just below that threshold and shows both halves of the phenomenon directly: the laminar-then-burst time series itself, and the mean laminar length growing as r approaches the tangency.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_intermittency_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_intermittency`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Pomeau-Manneville intermittency: laminar phases and chaotic bursts</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="physicskit.chaos.visualizers.divergence.plot_lyapunov_divergence integrates two trajectories starting an infinitesimal distance \delta_0 apart and tracks \ln(\delta_t / \delta_0) over time, where \delta_t is their separation at time t. For chaotic motion this separation grows exponentially, \delta_t \sim \delta_0 e^{\lambda_{\max} t}, so a straight, positively-sloped line (its slope the largest Lyapunov exponent \lambda_{\max} &gt; 0) is the signature of chaos; a system that is not chaotic instead shows the separation shrinking (:math:`\lambda_{\max} &lt; 0`) as both trajectories relax toward the same attracting state. Two systems are contrasted below: the chaotic Lorenz attractor, \dot{x}=\sigma(y-x), \dot{y}=x(\rho-z)-y, \dot{z}=xy-\beta z; and the Duffing oscillator, \ddot{x}+\delta_D \dot{x}+\alpha x+\beta_D x^3=\gamma\cos(\omega t), with its cubic term and forcing switched off (\beta_D=\gamma=0, \alpha=1 &gt; 0), which reduces it to a plain damped linear oscillator, \ddot{x}+\delta_D \dot{x}+x=0: every trajectory relaxes to the same fixed point, so nearby trajectories converge rather than diverge.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_lyapunov_divergence_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_lyapunov_divergence`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Lyapunov Divergence: Chaotic vs. Non-Chaotic</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="While physicskit.chaos.visualizers.divergence.plot_lyapunov_divergence estimates only the largest Lyapunov exponent from a single pair of trajectories, physicskit.chaos.utils.metrics.benettin_lyapunov_spectrum estimates the full spectrum by co-evolving an orthonormal frame Y under the linearized (variational) dynamics \dot{Y} = J(x(t)) Y, where J is the system&#x27;s Jacobian, and periodically re-orthonormalizing it with a QR decomposition, accumulating the log-growth of each axis. It is applied below to the Lorenz and Rossler flows,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_lyapunov_spectrum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_lyapunov_spectrum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Full Lyapunov Spectrum (Benettin QR Method)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The flow studied here is the Lorenz system,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_phase_volume_expansion_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_phase_volume_expansion`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Phase-Space Volume Contraction (Liouville's Theorem)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Poincare recurrence theorem guarantees that, for a measure-preserving system, almost every trajectory returns arbitrarily close to its starting point infinitely often. A trajectory&#x27;s recurrence structure is captured by the pairwise recurrence matrix">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_recurrence_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_recurrence`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Poincare Recurrence and Kac's Lemma</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Every other chaos-diagnostic tool in this gallery works on a DynamicalSystem with known equations of motion. Real experimental data doesn&#x27;t come with equations attached -- this example instead analyzes a single scalar time series, x(t), treating its true source -- here the Lorenz system, \dot{x}=\sigma(y-x), \dot{y}=x(\rho-z)-y, \dot{z}=xy-\beta z -- as unknown, and using only x(t) itself. It reconstructs an equivalent phase-space attractor by delay-coordinate (Takens) embedding,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/chaos_metrics/images/thumb/sphx_glr_plot_timeseries_analysis_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/chaos_metrics/plot_timeseries_analysis`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Analyzing a Raw Time Series (No Equations Required)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Continuous Systems
+==================
+
+Examples illustrating the continuous-time chaotic flows in
+:mod:`physicskit.chaos.systems.continuous`: the Lorenz and Rossler attractors, the double pendulum, the
+forced/damped Duffing oscillator, Chua's circuit (the double-scroll attractor), the restricted
+three-body problem (with its five Lagrange points marked), the magnetic pendulum (fractal basins of
+attraction), and the sinusoidally driven, damped pendulum (the period-doubling route to chaos). Each is
+integrated with the Numba-accelerated RK4 integrator from :mod:`physicskit.chaos.core.integrators` via the
+system's ``.trajectory()`` method.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Chua&#x27;s circuit is built from just a handful of standard electronic components -- two capacitors, one inductor, one resistor, and a single piecewise-linear nonlinear resistor (the &quot;Chua diode&quot;) -- yet it is chaotic. In dimensionless variables (x, y, z) (proportional to the two capacitor voltages and the inductor current), its dynamics are">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_chua_circuit_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_chua_circuit`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Chua's Circuit: the Double-Scroll Attractor</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The double pendulum is a simple mechanical system -- two point masses m_1, m_2 on massless rigid rods of length l_1, l_2, hanging from a fixed pivot under gravity g, with no friction -- whose motion is nonetheless chaotic for large enough swings. In terms of the two rod angles \theta_1, \theta_2 from vertical and their angular velocities \omega_1 = \dot\theta_1, \omega_2 = \dot\theta_2, the equations of motion are">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_double_pendulum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_double_pendulum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Double Pendulum</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The sinusoidally forced, damped pendulum obeys">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_driven_pendulum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_driven_pendulum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Driven Pendulum: the Period-Doubling Route to Chaos</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The forced, damped Duffing oscillator models a particle in a double-well potential driven by a periodic force,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_duffing_oscillator_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_duffing_oscillator`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Duffing Oscillator</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Lorenz system is the archetypal chaotic flow: three coupled nonlinear autonomous ODEs, originally derived as a drastic truncation of the equations for atmospheric (Rayleigh-Benard) convection,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_lorenz_attractor_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_lorenz_attractor`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Lorenz Attractor</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The magnetic pendulum is a damped bob, modeled in the small-swing (flat, 2D) limit at position (x, y), pulled toward the origin by a linear restoring force and toward each of N fixed magnets at (m_{x,k}, m_{y,k}) by a softened inverse-square force:">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_magnetic_pendulum_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_magnetic_pendulum`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Magnetic Pendulum: Fractal Basins of Attraction</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The planar circular restricted three-body problem (CR3BP) places a massless third body under the gravity of two massive primaries -- masses 1-\mu and \mu in normalized units -- that are themselves in a fixed circular orbit about their common center of mass. In the rotating frame co-precessing with the primaries (which then sit fixed at (-\mu, 0) and (1-\mu, 0)), the third body&#x27;s position (x, y) obeys">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_restricted_three_body_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_restricted_three_body`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Restricted Three-Body Problem: Poincare's Original Chaos</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Rossler system is three coupled nonlinear autonomous ODEs, deliberately designed to be simpler than Lorenz while still chaotic:">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/continuous_systems/images/thumb/sphx_glr_plot_rossler_attractor_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/continuous_systems/plot_rossler_attractor`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rossler Attractor</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Interactive and Animated Visualizers
+=====================================
+
+Examples illustrating the dynamic visualizers in
+:mod:`physicskit.chaos.visualizers.dynamic_plots`: a live Matplotlib animation of a
+billiard trajectory alongside its growing Poincare section, interactive
+Plotly figures (2D and 3D), and trajectory color-coding.
+
+.. note::
+   Run directly (``python examples/.../plot_x.py``), the Matplotlib animation
+   opens an interactive window and the Plotly figures open in a browser tab.
+   In the built documentation, the animation is instead embedded as inline
+   HTML5 video (via Sphinx-Gallery's
+   `animation scraper <https://sphinx-gallery.github.io/stable/configuration.html#animations>`_,
+   enabled by ``matplotlib_animations: True`` in ``docs/source/conf.py``) and
+   the Plotly figures as interactive embedded charts (via
+   ``plotly.io._sg_scraper.plotly_sg_scraper``, Plotly's own Sphinx-Gallery
+   scraper).
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The billiard animated here is the Bunimovich stadium: two straight edges, y=\pm r for |x|\le a, joined by semicircular caps of radius r centered at (\pm a, 0). A billiard particle moves in a straight line at constant speed and undergoes specular reflection off this boundary,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/interactive_and_animation/images/thumb/sphx_glr_plot_billiard_animation_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/interactive_and_animation/plot_billiard_animation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Animated Billiard Trajectory</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Coloring a trajectory by a per-point scalar -- rather than drawing it in a single flat color -- can make a plot&#x27;s structure much easier to read: which parts of a billiard came early or late, or where a continuous trajectory is moving fast versus slow. Two systems are colored below: the Bunimovich stadium billiard (two straight edges joined by semicircular caps of radius r, with specular reflection \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})\,\mathbf{n} at the boundary), and the Lorenz attractor,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/interactive_and_animation/images/thumb/sphx_glr_plot_colored_trajectories_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/interactive_and_animation/plot_colored_trajectories`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Trajectory Color-Coding</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Alongside the Matplotlib helpers, physicskit.chaos.visualizers.dynamic_plots provides interactive Plotly figures: a trajectory you can pan and zoom, and an interactive Poincare section you can hover over to inspect individual bounce points. The billiard used here is the Sinai billiard: a square cell, |x|\le L/2,\ |y|\le L/2, with a circular scatterer of radius r_s removed from its center, x^2+y^2=r_s^2, off of which the particle undergoes specular reflection, \mathbf{v}&#x27; = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n}) \,\mathbf{n}, whenever it strikes the boundary.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/interactive_and_animation/images/thumb/sphx_glr_plot_plotly_trajectory_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/interactive_and_animation/plot_plotly_trajectory`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Interactive Plotly Figures</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Discrete Maps
+=============
+
+Examples illustrating the two discrete chaotic maps in
+:mod:`physicskit.chaos.systems.maps`: the Chirikov-Taylor Standard Map and the Henon
+Map.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The (generalized) baker&#x27;s map cuts the unit square [0,1) \times [0,1) at x=\alpha, stretches each piece horizontally back to unit width (contracting it vertically to match), and stacks the two pieces:">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/maps/images/thumb/sphx_glr_plot_bakers_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/maps/plot_bakers_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Baker's Map: Stretch, Cut, and Stack</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Henon map is a simple 2D quadratic map,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/maps/images/thumb/sphx_glr_plot_henon_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/maps/plot_henon_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Henon Map</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The logistic map,">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/maps/images/thumb/sphx_glr_plot_logistic_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/maps/plot_logistic_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Logistic Map: the Period-Doubling Route to Chaos</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Chirikov-Taylor standard map is an area-preserving (symplectic) map on the cylinder (\theta, p) \in [0, 2\pi) \times [0, 2\pi), obtained by kicking a free rotor once per period with a torque k \sin\theta:">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/maps/images/thumb/sphx_glr_plot_standard_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/maps/plot_standard_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Standard Map</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Quantum Chaos
+=============
+
+Examples illustrating :mod:`physicskit.chaos.quantum`: quantized versions of physicskit.chaos's
+own classical :class:`~physicskit.chaos.systems.maps.StandardMap` and
+:class:`~physicskit.chaos.systems.maps.BakersMap`, plus the eigenstates of a quantum
+particle confined to any of physicskit.chaos's classical billiard shapes.
+
+.. note::
+   Spectral *statistics* (level-spacing distributions, spectral rigidity, and
+   the like) are intentionally not covered here -- that analysis belongs to
+   the separate ``physicskit.rmt`` package, which can consume the eigenphases and
+   wavenumbers these examples compute directly.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The quantum baker&#x27;s map is the quantization of physicskit.chaos&#x27;s classical BakersMap, T(x,y)=(x/\alpha,\ \alpha y) for x&lt;\alpha and T(x,y)=((x-\alpha)/(1-\alpha),\ \alpha+(1-\alpha)y) for x\ge\alpha. It is built (following Balazs-Voros/Saraceno) as a one-period unitary Floquet operator that applies the discrete Fourier transform separately to the q &lt; \alpha and q \ge \alpha halves of the (finite, dim-dimensional) position-basis Hilbert space, then transforms the result back to the full position representation -- the quantum-mechanical echo of the classical map&#x27;s &quot;stretch, cut, and stack&quot; mechanism. It is one of the simplest exactly-solvable models of quantum chaos: the underlying classical map is uniformly hyperbolic everywhere (see /api/gallery/chaos/maps/plot_bakers_map), with none of the mixed regular/chaotic phase space the kicked rotor has.">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/quantum_chaos/images/thumb/sphx_glr_plot_quantum_bakers_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/quantum_chaos/plot_quantum_bakers_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Quantum Baker's Map</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A quantum particle confined to a 2D billiard -- &quot;particle in a box&quot; with a chaotic (or not) box shape -- is the other classic playground of quantum chaos, alongside quantized maps like the quantum kicked rotor &lt;plot_quantum_kicked_rotor&gt;. In units where \hbar^2/2m=1, its stationary states solve the Dirichlet Helmholtz eigenproblem">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/quantum_chaos/images/thumb/sphx_glr_plot_quantum_billiard_eigenstates_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/quantum_chaos/plot_quantum_billiard_eigenstates`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Quantum Billiard Eigenstates</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The quantum kicked rotor is the quantization of physicskit.chaos&#x27;s classical StandardMap, p_{n+1} = p_n + k\sin\theta_n \pmod{2\pi}, \theta_{n+1} = \theta_n + p_{n+1} \pmod{2\pi}: a particle on a ring, kicked periodically by a potential k\cos\theta. Its one-period evolution is the unitary Floquet operator">
+
+.. only:: html
+
+  .. image:: /api/gallery/chaos/quantum_chaos/images/thumb/sphx_glr_plot_quantum_kicked_rotor_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/chaos/quantum_chaos/plot_quantum_kicked_rotor`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Quantum Kicked Rotor</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /api/gallery/chaos/advanced/index.rst
+   /api/gallery/chaos/billiards/index.rst
+   /api/gallery/chaos/chaos_metrics/index.rst
+   /api/gallery/chaos/continuous_systems/index.rst
+   /api/gallery/chaos/interactive_and_animation/index.rst
+   /api/gallery/chaos/maps/index.rst
+   /api/gallery/chaos/quantum_chaos/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

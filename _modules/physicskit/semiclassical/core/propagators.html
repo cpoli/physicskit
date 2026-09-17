@@ -1,0 +1,1054 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.semiclassical.core.propagators &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/semiclassical/core/propagators';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.semiclassical.core.propagators</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.semiclassical.core.propagators</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">"""Semiclassical propagators: the Van Vleck-Morette determinant and Herman-Kluk frozen Gaussians.</span>
+
+<span class="sd">Both propagators here reconstruct the quantum time-evolution operator</span>
+<span class="sd">from *classical* trajectories alone. Van Vleck-Morette theory</span>
+<span class="sd">(:func:`van_vleck_propagator_1d`) uses a single trajectory connecting a</span>
+<span class="sd">fixed start and end point, dressed with a stability prefactor built from</span>
+<span class="sd">its **monodromy matrix** -- the linearized map</span>
+<span class="sd">:math:`(\delta q_0,\delta p_0)\mapsto(\delta q_t,\delta p_t)` obtained by</span>
+<span class="sd">propagating small deviations alongside the trajectory</span>
+<span class="sd">(:func:`propagate_trajectory_monodromy_action`). Herman and Kluk's 1984</span>
+<span class="sd">frozen-Gaussian method (:func:`herman_kluk_propagate_wavepacket`) instead</span>
+<span class="sd">sums the contributions of *many* such trajectories, one launched from</span>
+<span class="sd">each point of a phase-space grid under the initial wavepacket, each one</span>
+<span class="sd">carrying its own rigid (frozen-width) Gaussian, monodromy-built</span>
+<span class="sd">prefactor, and classical action phase.</span>
+
+<span class="sd">Right-hand-side functions passed to the trajectory/monodromy integrator</span>
+<span class="sd">must be module-level ``@njit`` functions with signature</span>
+<span class="sd">``dVdx(q, params) -&gt; float`` / ``d2Vdx2(q, params) -&gt; float`` /</span>
+<span class="sd">``V(q, params) -&gt; float``, with ``params`` a ``float64`` array -- the</span>
+<span class="sd">same convention used throughout this package's Numba-accelerated</span>
+<span class="sd">integrators, letting a single compiled kernel serve any potential.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"propagate_trajectory_monodromy_action"</span><span class="p">,</span>
+    <span class="s2">"van_vleck_prefactor"</span><span class="p">,</span>
+    <span class="s2">"count_caustics"</span><span class="p">,</span>
+    <span class="s2">"van_vleck_propagator_1d"</span><span class="p">,</span>
+    <span class="s2">"frozen_gaussian_1d"</span><span class="p">,</span>
+    <span class="s2">"coherent_state_overlap"</span><span class="p">,</span>
+    <span class="s2">"herman_kluk_prefactor"</span><span class="p">,</span>
+    <span class="s2">"herman_kluk_propagate_wavepacket"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M00</span><span class="p">,</span> <span class="n">M01</span><span class="p">,</span> <span class="n">M10</span><span class="p">,</span> <span class="n">M11</span><span class="p">,</span> <span class="n">_S</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">d2V</span> <span class="o">=</span> <span class="n">d2Vdx2</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">dVdx</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">M10</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">M11</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">d2V</span> <span class="o">*</span> <span class="n">M00</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">d2V</span> <span class="o">*</span> <span class="n">M01</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">V</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_rk4_step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">k3</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k2</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">k4</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">state</span> <span class="o">+</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_integrate</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">Mqp_hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">Mqp_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">_rk4_step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">Mqp_hist</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">Mqp_hist</span>
+
+
+<div class="viewcode-block" id="propagate_trajectory_monodromy_action">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.propagate_trajectory_monodromy_action">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">propagate_trajectory_monodromy_action</span><span class="p">(</span><span class="n">q0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Integrate a classical trajectory together with its monodromy matrix and Hamilton principal function.</span>
+
+<span class="sd">    Advances the Hamilton equations :math:`\dot q=p/m,\ \dot p=-V'(q)`</span>
+<span class="sd">    together with the variational (tangent) equations for small</span>
+<span class="sd">    deviations, :math:`\dot{\delta q}=\delta p/m,\ \dot{\delta p}</span>
+<span class="sd">    =-V''(q)\delta q`, whose solution operator is the monodromy matrix</span>
+<span class="sd">    :math:`M(t)=\begin{pmatrix}\partial q_t/\partial q_0 &amp;</span>
+<span class="sd">    \partial q_t/\partial p_0\\ \partial p_t/\partial q_0 &amp;</span>
+<span class="sd">    \partial p_t/\partial p_0\end{pmatrix}`, and accumulates the</span>
+<span class="sd">    classical action (Hamilton's principal function)</span>
+<span class="sd">    :math:`S(t)=\int_0^t\left[\tfrac{p^2}{2m}-V(q)\right]dt'` along the</span>
+<span class="sd">    way -- everything :func:`van_vleck_propagator_1d` and</span>
+<span class="sd">    :func:`herman_kluk_propagate_wavepacket` need from one trajectory,</span>
+<span class="sd">    computed in a single RK4 pass.</span>
+
+<span class="sd">    Because the flow is Hamiltonian, :math:`\det M(t)=1` exactly for all</span>
+<span class="sd">    :math:`t` (Liouville's theorem); this is a good numerical sanity</span>
+<span class="sd">    check on any trajectory this function returns.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, p0 : float</span>
+<span class="sd">        Initial position and momentum.</span>
+<span class="sd">    dVdx : callable</span>
+<span class="sd">        Numba-jitted force law ``dVdx(q, params) -&gt; float``, :math:`V'(q)`.</span>
+<span class="sd">    d2Vdx2 : callable</span>
+<span class="sd">        Numba-jitted curvature ``d2Vdx2(q, params) -&gt; float``, :math:`V''(q)`.</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        Numba-jitted potential ``V(q, params) -&gt; float``.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step.</span>
+<span class="sd">    steps : int</span>
+<span class="sd">        Number of RK4 steps (total propagation time is ``dt * steps``).</span>
+<span class="sd">    params : ndarray, optional</span>
+<span class="sd">        Parameter vector passed through to ``dVdx``/``d2Vdx2``/``V``.</span>
+<span class="sd">        Defaults to an empty array.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    q_t, p_t : float</span>
+<span class="sd">        Final position and momentum.</span>
+<span class="sd">    M : ndarray, shape (2, 2)</span>
+<span class="sd">        Monodromy matrix at time ``t = dt * steps``.</span>
+<span class="sd">    S : float</span>
+<span class="sd">        Classical action accumulated along the trajectory.</span>
+<span class="sd">    Mqp_history : ndarray, shape (steps + 1,)</span>
+<span class="sd">        :math:`\partial q_t/\partial p_0` at every step, for</span>
+<span class="sd">        :func:`count_caustics`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    van_vleck_prefactor : Turns ``M`` into a propagator amplitude.</span>
+<span class="sd">    count_caustics : Turns ``Mqp_history`` into a Maslov index.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    For the harmonic oscillator, the monodromy matrix has the exact</span>
+<span class="sd">    closed form :math:`\begin{pmatrix}\cos\omega t &amp; \sin(\omega</span>
+<span class="sd">    t)/(m\omega)\\ -m\omega\sin\omega t &amp; \cos\omega t\end{pmatrix}`:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from numba import njit</span>
+<span class="sd">    &gt;&gt;&gt; m, omega = 1.0, 1.0</span>
+<span class="sd">    &gt;&gt;&gt; params = np.array([m * omega ** 2])</span>
+<span class="sd">    &gt;&gt;&gt; dVdx = njit(lambda q, params: params[0] * q, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; d2Vdx2 = njit(lambda q, params: params[0], cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; V = njit(lambda q, params: 0.5 * params[0] * q ** 2, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; t = 1.3</span>
+<span class="sd">    &gt;&gt;&gt; q_t, p_t, M, S, _ = propagate_trajectory_monodromy_action(1.0, 0.3, dVdx, d2Vdx2, V, m, dt=t / 4000, steps=4000, params=params)</span>
+<span class="sd">    &gt;&gt;&gt; M_exact = np.array([[np.cos(t), np.sin(t)], [-np.sin(t), np.cos(t)]])</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(M - M_exact)) &lt; 1e-6)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; round(float(np.linalg.det(M)), 8)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">state</span><span class="p">,</span> <span class="n">Mqp_hist</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">q0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps</span><span class="p">),</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">q_t</span><span class="p">,</span> <span class="n">p_t</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">5</span><span class="p">]]])</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">q_t</span><span class="p">,</span> <span class="n">p_t</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Mqp_hist</span></div>
+
+
+
+<div class="viewcode-block" id="van_vleck_prefactor">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.van_vleck_prefactor">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">van_vleck_prefactor</span><span class="p">(</span><span class="n">Mqp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Van Vleck-Morette amplitude :math:`\sqrt{1/(2\pi\hbar\,|\partial q_t/\partial p_0|)}`.</span>
+
+<span class="sd">    The prefactor is the square root of (minus) the mixed second</span>
+<span class="sd">    derivative of the classical action,</span>
+<span class="sd">    :math:`\left|\partial^2S/\partial q_0\partial q_t\right| =</span>
+<span class="sd">    1/|\partial q_t/\partial p_0|` -- large where nearby trajectories</span>
+<span class="sd">    stay close together (many classical paths reinforce the same</span>
+<span class="sd">    endpoint) and formally divergent at a focal point</span>
+<span class="sd">    (:math:`\partial q_t/\partial p_0=0`, where infinitesimally</span>
+<span class="sd">    different initial momenta all reconverge on the same final position).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Mqp : float</span>
+<span class="sd">        The :math:`(0,1)` element of the monodromy matrix,</span>
+<span class="sd">        :math:`\partial q_t/\partial p_0`, from</span>
+<span class="sd">        :func:`propagate_trajectory_monodromy_action`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The (real, non-negative) prefactor amplitude.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; round(van_vleck_prefactor(Mqp=1.0, hbar=1.0), 6)</span>
+<span class="sd">    0.398942</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Mqp</span><span class="p">))))</span></div>
+
+
+
+<div class="viewcode-block" id="count_caustics">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.count_caustics">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">count_caustics</span><span class="p">(</span><span class="n">Mqp_history</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Count sign changes of :math:`\partial q_t/\partial p_0` along a trajectory -- the Maslov index.</span>
+
+<span class="sd">    Each time :math:`\partial q_t/\partial p_0` passes through zero, the</span>
+<span class="sd">    trajectory crosses a focal point (conjugate point / caustic), and the</span>
+<span class="sd">    semiclassical propagator picks up an extra phase of :math:`-\pi/2`</span>
+<span class="sd">    (Gutzwiller 1967; see also the :math:`-\pi/4` phase at a single WKB</span>
+<span class="sd">    turning point in :func:`physicskit.semiclassical.core.wkb.wkb_wavefunction`,</span>
+<span class="sd">    which is this same phenomenon in the time-independent picture).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Mqp_history : ndarray</span>
+<span class="sd">        :math:`\partial q_t/\partial p_0` sampled along the trajectory,</span>
+<span class="sd">        from :func:`propagate_trajectory_monodromy_action`; the first</span>
+<span class="sd">        entry (always 0, at :math:`t=0`) is ignored.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        The Maslov index :math:`\mu`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    van_vleck_propagator_1d : Uses this to fix the propagator's overall phase.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; count_caustics(np.array([0.0, 1.0, 0.5, -0.3, -0.8, 0.2]))</span>
+<span class="sd">    2</span>
+<span class="sd">    """</span>
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="n">Mqp_history</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="n">nonzero</span><span class="p">[</span><span class="n">nonzero</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">nonzero</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="van_vleck_propagator_1d">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.van_vleck_propagator_1d">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">van_vleck_propagator_1d</span><span class="p">(</span><span class="n">q0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Semiclassical (Van Vleck-Morette) propagator amplitude along one classical trajectory.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       K(q_t,t;q_0,0) \approx \sqrt{\frac{1}{2\pi\hbar\,|\partial q_t/\partial p_0|}}\,</span>
+<span class="sd">       \exp\!\left[\frac{i}{\hbar}S(t) - i\frac{\pi}{4} - i\mu\frac{\pi}{2}\right],</span>
+
+<span class="sd">    the leading-order (:math:`\hbar\to0`) approximation to the quantum</span>
+<span class="sd">    propagator, exact whenever the potential is at most quadratic (the</span>
+<span class="sd">    free particle and the harmonic oscillator), since then the WKB</span>
+<span class="sd">    expansion this formula comes from truncates exactly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q0, p0 : float</span>
+<span class="sd">        Initial position and momentum. ``p0`` fixes which trajectory</span>
+<span class="sd">        (and hence which final position ``q_t``) is used; this function</span>
+<span class="sd">        does not solve the two-point boundary-value problem of finding</span>
+<span class="sd">        the ``p0`` that reaches a *prescribed* ``q_t``.</span>
+<span class="sd">    dVdx, d2Vdx2, V : callable</span>
+<span class="sd">        Numba-jitted potential derivatives and the potential itself, as</span>
+<span class="sd">        in :func:`propagate_trajectory_monodromy_action`.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step.</span>
+<span class="sd">    steps : int</span>
+<span class="sd">        Number of RK4 steps.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+<span class="sd">    params : ndarray, optional</span>
+<span class="sd">        Parameter vector passed through to ``dVdx``/``d2Vdx2``/``V``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    q_t : float</span>
+<span class="sd">        The trajectory's final position.</span>
+<span class="sd">    K : complex</span>
+<span class="sd">        The semiclassical propagator amplitude :math:`K(q_t,t;q_0,0)`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    propagate_trajectory_monodromy_action : Supplies the trajectory, monodromy, and action.</span>
+<span class="sd">    herman_kluk_propagate_wavepacket : Sums many such trajectories into a full wavepacket propagator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A free particle's semiclassical propagator matches the exact quantum</span>
+<span class="sd">    propagator :math:`\sqrt{m/(2\pi i\hbar t)}\exp[im(q_t-q_0)^2/(2\hbar t)]` exactly:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from numba import njit</span>
+<span class="sd">    &gt;&gt;&gt; zero = njit(lambda q, params: 0.0, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; q_t, K = van_vleck_propagator_1d(q0=0.0, p0=1.0, dVdx=zero, d2Vdx2=zero, V=zero, m=1.0, dt=1.0 / 2000, steps=2000)</span>
+<span class="sd">    &gt;&gt;&gt; K_exact = np.sqrt(1.0 / (2j * np.pi * 1.0)) * np.exp(1j * (q_t - 0.0) ** 2 / 2.0)</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(K - K_exact) &lt; 1e-6)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    A harmonic-oscillator trajectory that has not yet crossed a focal</span>
+<span class="sd">    point (:math:`t&lt;\pi/\omega`) matches the exact Van Vleck (Mehler)</span>
+<span class="sd">    propagator just as closely:</span>
+
+<span class="sd">    &gt;&gt;&gt; m, omega = 1.0, 1.0</span>
+<span class="sd">    &gt;&gt;&gt; params = np.array([m * omega ** 2])</span>
+<span class="sd">    &gt;&gt;&gt; dVdx = njit(lambda q, params: params[0] * q, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; d2Vdx2 = njit(lambda q, params: params[0], cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; V = njit(lambda q, params: 0.5 * params[0] * q ** 2, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; q0, p0, t = 1.0, 0.3, 1.3</span>
+<span class="sd">    &gt;&gt;&gt; q_t, K = van_vleck_propagator_1d(q0, p0, dVdx, d2Vdx2, V, m, dt=t / 4000, steps=4000, params=params)</span>
+<span class="sd">    &gt;&gt;&gt; K_exact = (np.sqrt(m * omega / (2j * np.pi * np.sin(omega * t)))</span>
+<span class="sd">    ...            * np.exp(1j * m * omega / (2 * np.sin(omega * t)) * ((q_t ** 2 + q0 ** 2) * np.cos(omega * t) - 2 * q_t * q0)))</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(K - K_exact) &lt; 1e-5)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">q_t</span><span class="p">,</span> <span class="n">_p_t</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Mqp_hist</span> <span class="o">=</span> <span class="n">propagate_trajectory_monodromy_action</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">count_caustics</span><span class="p">(</span><span class="n">Mqp_hist</span><span class="p">)</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="n">van_vleck_prefactor</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">hbar</span><span class="p">)</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">S</span> <span class="o">/</span> <span class="n">hbar</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">4.0</span> <span class="o">-</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">prefactor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phase</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q_t</span><span class="p">,</span> <span class="n">K</span></div>
+
+
+
+<div class="viewcode-block" id="frozen_gaussian_1d">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.frozen_gaussian_1d">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">frozen_gaussian_1d</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">qc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""A normalized, fixed-width ("frozen") Gaussian wavepacket (coherent state).</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       g_{q_c,p_c}(x) = \left(\frac{2\gamma}{\pi}\right)^{1/4}</span>
+<span class="sd">       \exp\!\left[-\gamma(x-q_c)^2 + \frac{i}{\hbar}p_c(x-q_c)\right].</span>
+
+<span class="sd">    The building block of the Herman-Kluk method: every trajectory</span>
+<span class="sd">    carries one of these, always at the fixed width set by :math:`\gamma`</span>
+<span class="sd">    (hence "frozen"), riding on top of its classical phase-space point</span>
+<span class="sd">    :math:`(q_c,p_c)`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : ndarray</span>
+<span class="sd">        Positions at which to evaluate the wavepacket.</span>
+<span class="sd">    qc, pc : float</span>
+<span class="sd">        Center of the Gaussian in position and momentum.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Width parameter (inverse squared length); larger :math:`\gamma`</span>
+<span class="sd">        means a narrower, more position-localized packet.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of complex</span>
+<span class="sd">        :math:`g_{q_c,p_c}(x)`, same shape as ``x``.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    coherent_state_overlap : The closed-form overlap of two such Gaussians.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-20, 20, 4000)</span>
+<span class="sd">    &gt;&gt;&gt; psi = frozen_gaussian_1d(x, qc=1.0, pc=2.0, gamma=0.5)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(np.trapezoid(np.abs(psi) ** 2, x)), 8)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.25</span>
+    <span class="k">return</span> <span class="n">norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">qc</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">pc</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">qc</span><span class="p">)</span> <span class="o">/</span> <span class="n">hbar</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="coherent_state_overlap">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.coherent_state_overlap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">coherent_state_overlap</span><span class="p">(</span><span class="n">q1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Closed-form overlap :math:`\langle g_{q_1,p_1}|g_{q_2,p_2}\rangle` of two equal-width frozen Gaussians.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       \langle g_1|g_2\rangle = \exp\!\left[-\frac{\gamma}{2}(q_1-q_2)^2</span>
+<span class="sd">       - \frac{(p_1-p_2)^2}{8\gamma\hbar^2}</span>
+<span class="sd">       + \frac{i}{2\hbar}(q_1-q_2)(p_1+p_2)\right].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q1, p1 : float</span>
+<span class="sd">        Phase-space center of the bra state.</span>
+<span class="sd">    q2, p2 : float</span>
+<span class="sd">        Phase-space center of the ket state.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Shared width parameter, as in :func:`frozen_gaussian_1d`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    complex</span>
+<span class="sd">        The overlap :math:`\langle g_1|g_2\rangle`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    frozen_gaussian_1d : The states being overlapped.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Matches direct numerical integration of the two wavepackets:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-40, 40, 20000)</span>
+<span class="sd">    &gt;&gt;&gt; gamma = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; psi1 = frozen_gaussian_1d(x, qc=0.3, pc=0.7, gamma=gamma)</span>
+<span class="sd">    &gt;&gt;&gt; psi2 = frozen_gaussian_1d(x, qc=-0.2, pc=1.1, gamma=gamma)</span>
+<span class="sd">    &gt;&gt;&gt; numeric = np.trapezoid(np.conj(psi1) * psi2, x)</span>
+<span class="sd">    &gt;&gt;&gt; closed_form = coherent_state_overlap(0.3, 0.7, -0.2, 1.1, gamma)</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(numeric - closed_form) &lt; 1e-6)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    A state's overlap with itself is 1:</span>
+
+<span class="sd">    &gt;&gt;&gt; round(float(abs(coherent_state_overlap(1.0, 2.0, 1.0, 2.0, gamma=0.8))), 8)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span> <span class="o">-</span> <span class="n">q2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span> <span class="o">-</span> <span class="n">q2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">hbar</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="herman_kluk_prefactor">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.herman_kluk_prefactor">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">herman_kluk_prefactor</span><span class="p">(</span><span class="n">M</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Herman-Kluk prefactor :math:`C_t(q_0,p_0)` built from the monodromy matrix.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       C_t = \sqrt{\frac{1}{2}\left(M_{qq} + M_{pp}</span>
+<span class="sd">       - i\hbar\gamma M_{qp} + \frac{i}{\hbar\gamma}M_{pq}\right)},</span>
+
+<span class="sd">    which reduces to :math:`C_t=1` at :math:`t=0` (:math:`M=\mathbb{1}`),</span>
+<span class="sd">    consistent with the frozen Gaussian basis's resolution of the</span>
+<span class="sd">    identity, :math:`\int \tfrac{dq\,dp}{2\pi\hbar}\,|g_{q,p}\rangle\langle</span>
+<span class="sd">    g_{q,p}| = \hat{1}`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : ndarray, shape (2, 2)</span>
+<span class="sd">        Monodromy matrix from :func:`propagate_trajectory_monodromy_action`.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Frozen-Gaussian width parameter, as in :func:`frozen_gaussian_1d`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    complex</span>
+<span class="sd">        The prefactor :math:`C_t`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; complex(herman_kluk_prefactor(np.eye(2), gamma=1.0))</span>
+<span class="sd">    (1+0j)</span>
+<span class="sd">    """</span>
+    <span class="n">Mqq</span><span class="p">,</span> <span class="n">Mqp</span><span class="p">,</span> <span class="n">Mpq</span><span class="p">,</span> <span class="n">Mpp</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Mqq</span> <span class="o">+</span> <span class="n">Mpp</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">Mqp</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">Mpq</span> <span class="o">/</span> <span class="p">(</span><span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="herman_kluk_propagate_wavepacket">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.herman_kluk_propagate_wavepacket">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">herman_kluk_propagate_wavepacket</span><span class="p">(</span>
+    <span class="n">qc0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">pc0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dVdx</span><span class="p">,</span>
+    <span class="n">d2Vdx2</span><span class="p">,</span>
+    <span class="n">V</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">x_eval</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">n_grid</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">41</span><span class="p">,</span>
+    <span class="n">n_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">6.0</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Propagate an initial frozen-Gaussian wavepacket with the multi-trajectory Herman-Kluk method.</span>
+
+<span class="sd">    Launches one classical trajectory from every point of a regular grid</span>
+<span class="sd">    covering the initial coherent state's phase-space support, and sums</span>
+<span class="sd">    their frozen-Gaussian contributions</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       \psi(x,t) \approx \int\!\frac{dq_0\,dp_0}{2\pi\hbar}\,</span>
+<span class="sd">       C_t(q_0,p_0)\,e^{iS(t)/\hbar}\,</span>
+<span class="sd">       \langle g_{q_0,p_0}|\psi_0\rangle\, g_{q_t,p_t}(x),</span>
+
+<span class="sd">    approximating the integral over initial conditions by a Riemann sum</span>
+<span class="sd">    on a grid spanning :math:`\pm n_\sigma` standard deviations of the</span>
+<span class="sd">    initial coherent state's own phase-space Gaussian</span>
+<span class="sd">    (:math:`\sigma_q=1/(2\sqrt\gamma)`, :math:`\sigma_p=\hbar\sqrt\gamma`).</span>
+<span class="sd">    The per-trajectory classical propagation</span>
+<span class="sd">    (:func:`propagate_trajectory_monodromy_action`) is Numba-compiled,</span>
+<span class="sd">    since it is called once per grid point -- the dominant cost for any</span>
+<span class="sd">    reasonably fine grid.</span>
+
+<span class="sd">    In the :math:`t\to0` limit this reduces to the frozen-Gaussian</span>
+<span class="sd">    resolution of the identity and reconstructs the initial wavepacket</span>
+<span class="sd">    essentially exactly; away from that limit, this quadrature-grid</span>
+<span class="sd">    evaluation of the Herman-Kluk integral does not exactly conserve</span>
+<span class="sd">    :math:`\int|\psi|^2\,dx` (the true continuous phase-space integral</span>
+<span class="sd">    does, for at-most-quadratic potentials) -- convergence in ``n_grid``,</span>
+<span class="sd">    ``n_sigma``, and ``gamma`` should be checked for any serious use.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    qc0, pc0 : float</span>
+<span class="sd">        Center of the initial frozen-Gaussian wavepacket.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Width parameter shared by the initial state and every frozen</span>
+<span class="sd">        Gaussian in the propagation.</span>
+<span class="sd">    dVdx, d2Vdx2, V : callable</span>
+<span class="sd">        Numba-jitted potential derivatives and the potential itself, as</span>
+<span class="sd">        in :func:`propagate_trajectory_monodromy_action`.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step for each trajectory's RK4 integration.</span>
+<span class="sd">    steps : int</span>
+<span class="sd">        Number of RK4 steps (propagation time is ``dt * steps``).</span>
+<span class="sd">    x_eval : ndarray</span>
+<span class="sd">        Positions at which to evaluate the propagated wavepacket.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+<span class="sd">    n_grid : int, default=41</span>
+<span class="sd">        Number of grid points along each of the :math:`q_0`, :math:`p_0` axes.</span>
+<span class="sd">    n_sigma : float, default=6.0</span>
+<span class="sd">        Half-width of the sampling grid, in standard deviations of the</span>
+<span class="sd">        initial state's phase-space Gaussian.</span>
+<span class="sd">    params : ndarray, optional</span>
+<span class="sd">        Parameter vector passed through to ``dVdx``/``d2Vdx2``/``V``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of complex, shape matching ``x_eval``</span>
+<span class="sd">        The propagated wavepacket :math:`\psi(x,t)`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    van_vleck_propagator_1d : The single-trajectory propagator this sums many copies of.</span>
+<span class="sd">    frozen_gaussian_1d : The initial state and the basis each trajectory carries.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    At very short times the sum reduces to the frozen-Gaussian</span>
+<span class="sd">    resolution of the identity and reproduces the (unpropagated) initial</span>
+<span class="sd">    coherent state to high accuracy:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from numba import njit</span>
+<span class="sd">    &gt;&gt;&gt; m, omega = 1.0, 1.0</span>
+<span class="sd">    &gt;&gt;&gt; params = np.array([m * omega ** 2])</span>
+<span class="sd">    &gt;&gt;&gt; dVdx = njit(lambda q, params: params[0] * q, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; d2Vdx2 = njit(lambda q, params: params[0], cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; V = njit(lambda q, params: 0.5 * params[0] * q ** 2, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-6, 6, 400)</span>
+<span class="sd">    &gt;&gt;&gt; psi = herman_kluk_propagate_wavepacket(</span>
+<span class="sd">    ...     1.0, 0.0, gamma=1.0, dVdx=dVdx, d2Vdx2=d2Vdx2, V=V, m=m, dt=1e-6, steps=1, x_eval=x, n_grid=61, n_sigma=7.0, params=params</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; psi0 = frozen_gaussian_1d(x, qc=1.0, pc=0.0, gamma=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; fidelity = abs(np.trapezoid(np.conj(psi0) * psi, x)) ** 2</span>
+<span class="sd">    &gt;&gt;&gt; bool(fidelity &gt; 0.999)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">sigma_q</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">))</span>
+    <span class="n">sigma_p</span> <span class="o">=</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">q0_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">qc0</span> <span class="o">-</span> <span class="n">n_sigma</span> <span class="o">*</span> <span class="n">sigma_q</span><span class="p">,</span> <span class="n">qc0</span> <span class="o">+</span> <span class="n">n_sigma</span> <span class="o">*</span> <span class="n">sigma_q</span><span class="p">,</span> <span class="n">n_grid</span><span class="p">)</span>
+    <span class="n">p0_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">pc0</span> <span class="o">-</span> <span class="n">n_sigma</span> <span class="o">*</span> <span class="n">sigma_p</span><span class="p">,</span> <span class="n">pc0</span> <span class="o">+</span> <span class="n">n_sigma</span> <span class="o">*</span> <span class="n">sigma_p</span><span class="p">,</span> <span class="n">n_grid</span><span class="p">)</span>
+    <span class="n">dq0</span> <span class="o">=</span> <span class="n">q0_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">q0_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dp0</span> <span class="o">=</span> <span class="n">p0_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">p0_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">measure</span> <span class="o">=</span> <span class="n">dq0</span> <span class="o">*</span> <span class="n">dp0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">hbar</span><span class="p">)</span>
+
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">q0</span> <span class="ow">in</span> <span class="n">q0_grid</span><span class="p">:</span>
+        <span class="c1"># pragma: no cover on the inner loop below -- coverage.py mismeasures</span>
+        <span class="c1"># this whole clause as unreached even though it demonstrably runs</span>
+        <span class="c1"># (verified by direct print-instrumentation), under</span>
+        <span class="c1"># test_herman_kluk_reconstructs_initial_state_at_short_time and</span>
+        <span class="c1"># test_herman_kluk_defaults_params_to_an_empty_array_when_unused.</span>
+        <span class="k">for</span> <span class="n">p0</span> <span class="ow">in</span> <span class="n">p0_grid</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="n">q_t</span><span class="p">,</span> <span class="n">p_t</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">propagate_trajectory_monodromy_action</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+            <span class="n">C</span> <span class="o">=</span> <span class="n">herman_kluk_prefactor</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
+            <span class="n">ov</span> <span class="o">=</span> <span class="n">coherent_state_overlap</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">qc0</span><span class="p">,</span> <span class="n">pc0</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
+            <span class="n">psi</span> <span class="o">+=</span> <span class="n">measure</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="n">hbar</span><span class="p">)</span> <span class="o">*</span> <span class="n">ov</span> <span class="o">*</span> <span class="n">frozen_gaussian_1d</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">q_t</span><span class="p">,</span> <span class="n">p_t</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">psi</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

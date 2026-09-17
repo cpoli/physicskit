@@ -1,0 +1,670 @@
+:orphan:
+
+Examples
+========
+
+Runnable scripts demonstrating the conceptual breakthroughs behind
+``physicskit.condensed``, from Bloch's band theory through topological
+superconductors -- see :doc:`/history/condensed_breakthroughs` for the full
+chronology each script illustrates.
+
+Each script in this gallery is self-contained and can be run directly with
+``python examples/condensed/<section>/<script>.py``. Every script also
+carries an RST module docstring as its title/description and uses ``# %%``
+markers to split narrative text from code, which is exactly what
+Sphinx-Gallery renders into the pages below -- the script *is* the source
+of truth for what you see, not a copy of it.
+
+Sections
+--------
+
+- **tight_binding** -- the generic Bloch-Hamiltonian machinery: recovering
+  the exact tight-binding dispersion from a real-space chain, a
+  Hofstadter-like spectrum from Peierls-substituted Landau levels, and a
+  two-orbital Slater-Koster LCAO band structure.
+- **correlated** -- interacting-electron models: the BCS/Bogoliubov-de
+  Gennes quasiparticle gap, Mott suppression of itinerant motion in the 1D
+  Hubbard model, and the short-range antiferromagnetic spin correlations
+  that model develops at half filling and strong coupling -- the arena any
+  theory of cuprate superconductivity has to live in.
+- **laughlin** -- the fractional quantum Hall effect: Metropolis-sampling
+  Laughlin's trial wavefunction directly via its plasma analogy, and the
+  correlation hole and incompressible-droplet density profile that result.
+- **topology** -- topological band theory: SSH edge states and the Zak
+  phase, exactly quantized Chern numbers (TKNN) on both the Haldane model
+  and the lattice (Harper-Hofstadter) route to the integer quantum Hall
+  effect, the Haldane model's zero-net-flux Chern insulator and its chiral
+  edge states, unpaired Majorana zero modes in the Kitaev chain, graphene's
+  massless Dirac cone, the Kane-Mele/BHZ :math:`\mathbb{Z}_2` topological
+  insulators, Weyl semimetal Fermi arcs, and the tenfold-way classification
+  tying the Chern, :math:`\mathbb{Z}_2`, and Majorana invariants together.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Anderson Localization
+======================
+
+The 1958 discovery that disorder alone, with no interactions, can halt
+diffusion: exponentially localized eigenstates on a disordered 1D chain,
+diagnosed by the inverse participation ratio and localization length.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Philip Anderson showed that random onsite disorder, at any nonzero strength, exponentially localizes every eigenstate of a 1D tight-binding chain (~physicskit.condensed.anderson_localization.anderson_chain_hamiltonian). The inverse participation ratio (~physicskit.condensed.anderson_localization.inverse_participation_ratio) distinguishes extended states (\text{IPR}\sim 1/N) from localized ones (\text{IPR}=O(1)), and localization_length extracts the decay length \xi directly from an eigenstate&#x27;s envelope.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/anderson_localization/images/thumb/sphx_glr_plot_anderson_localization_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/anderson_localization/plot_anderson_localization`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Anderson Localization: Disorder Halts Diffusion</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Correlated Electrons
+====================
+
+Interacting-electron models: the BCS/Bogoliubov-de Gennes quasiparticle gap,
+and Mott suppression of itinerant motion in the 1D Hubbard model.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Bardeen, Cooper, and Schrieffer explained superconductivity as a condensate of Cooper pairs bound by an effective attraction, however weak. Pairing opens a gap \Delta in the single-particle excitation spectrum: unlike the normal-state band |\xi(k)|, which touches zero at the Fermi points, the BCS quasiparticle band E(k) = \sqrt{\xi(k)^2 + |\Delta(k)|^2} never does. bdg_bcs_hamiltonian builds the Bogoliubov-de Gennes Hamiltonian in Nambu (particle-hole) space, and bdg_spectrum diagonalizes it across the Brillouin zone.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/correlated/images/thumb/sphx_glr_plot_bcs_gap_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/correlated/plot_bcs_gap`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">BCS Theory: The Superconducting Quasiparticle Gap</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Bednorz and Muller&#x27;s 1986 discovery of superconductivity above 30 K in La-Ba-Cu-O launched the search for the cuprate superconductors, whose undoped parent compounds are not metals at all but antiferromagnetic Mott insulators -- exactly the strong-coupling (U/t \gg 1), half-filled regime of the Hubbard model already implemented in hubbard_1d_exact_diagonalization. No dedicated cuprate (multi-band Emery, or t-J) model is implemented here, but the same single-band Hubbard Hamiltonian used for the 1963 Mott-transition example, pushed to half filling and strong coupling, already reproduces the qualitative signature: short-range Neel (antiferromagnetic) spin order, the arena any theory of cuprate pairing has to live in. hubbard_spin_correlations extracts \langle S_i^z S_j^z\rangle directly from the many-body ground state, using that S^z is diagonal in the occupation-number basis the exact-diagonalization solver already works in.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/correlated/images/thumb/sphx_glr_plot_cuprate_afm_correlations_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/correlated/plot_cuprate_afm_correlations`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Cuprate Physics: Antiferromagnetism from the Strong-Coupling Hubbard Model</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The Hubbard model is the minimal model of interacting electrons on a lattice: band electrons that hop with amplitude t, penalized by an onsite Coulomb repulsion U whenever two opposite-spin electrons share a site. As U/t \to \infty at half filling, double occupancy is suppressed entirely and the itinerant metal is driven into a Mott insulator of localized moments. hubbard_1d_exact_diagonalization builds and diagonalizes the full Fock-space Hamiltonian in a fixed (n_\uparrow, n_\downarrow) sector for small clusters, exposing this crossover directly in the ground-state energy.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/correlated/images/thumb/sphx_glr_plot_hubbard_mott_transition_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/correlated/plot_hubbard_mott_transition`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Hubbard Model: Mott Suppression of Itinerant Motion</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Ginzburg-Landau Theory
+======================
+
+The 1950 phenomenological free-energy theory of superconductivity: the
+equilibrium order parameter, the coherence length and penetration depth it
+sets, the Ginzburg-Landau parameter that separates Type I from Type II
+superconductors, and the exact order-parameter healing profile at a
+boundary.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Ginzburg and Landau described superconductivity with a free-energy functional of a complex order parameter alone, no microscopic pairing mechanism required. Minimizing it gives an equilibrium condensate density |\psi_0|^2=-a/b (~physicskit.condensed.ginzburg_landau.gl_equilibrium_order_parameter) below the transition, and two length scales -- the coherence length \xi (~physicskit.condensed.ginzburg_landau.gl_coherence_length) and the penetration depth \lambda (~physicskit.condensed.ginzburg_landau.gl_penetration_depth) -- whose ratio, the Ginzburg-Landau parameter \kappa (~physicskit.condensed.ginzburg_landau.ginzburg_landau_parameter), alone decides Type I vs Type II behavior.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/ginzburg_landau/images/thumb/sphx_glr_plot_ginzburg_landau_healing_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/ginzburg_landau/plot_ginzburg_landau_healing`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ginzburg-Landau Theory: Healing Length and Type I vs Type II</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Landau Levels
+=============
+
+The continuum quantization of a charged particle in a uniform magnetic
+field: equally spaced Landau levels, their macroscopic per-area
+degeneracy, and the disorder-broadened density of states whose filling
+factor sets the quantum Hall effect's plateau sequence.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Lev Landau solved the quantum mechanics of a charged particle in a uniform magnetic field B directly, with no lattice involved: the classically continuous cyclotron motion collapses into equally spaced, macroscopically degenerate levels E_n = \hbar\omega_c(n+1/2), landau_level_energies. Each level holds n_B states per unit area, landau_degeneracy, growing linearly with B -- the origin of Landau diamagnetism, and the reason a 2D electron gas&#x27;s Landau-level filling factor \nu=n_e/n_B (~physicskit.condensed.landau_levels.filling_factor) is the natural variable of the quantum Hall effect.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/landau_levels/images/thumb/sphx_glr_plot_landau_levels_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/landau_levels/plot_landau_levels`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Landau's 1930 Solution: Discrete Levels from a Continuous Field</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Laughlin's Wavefunction and the Fractional Quantum Hall Effect
+================================================================
+
+The 1982-1983 discovery of fractional quantum Hall plateaus and Laughlin's
+many-body trial wavefunction that explains them: sampling
+:math:`|\Psi_m|^2` directly by Metropolis Monte Carlo via its "plasma
+analogy," and extracting the correlation hole and incompressible-droplet
+density profile that are its defining signatures.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Tsui, Stormer, and Gossard&#x27;s 1982 discovery of a Hall plateau at filling \nu=1/3 -- a fraction the single-particle Landau-level picture behind the integer effect cannot explain, since a partially filled Landau level is gapless without interactions -- was explained the following year by Laughlin&#x27;s many-body trial wavefunction,">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/laughlin/images/thumb/sphx_glr_plot_laughlin_correlation_hole_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/laughlin/plot_laughlin_correlation_hole`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Fractional Quantum Hall Effect: Laughlin's Correlation Hole</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Tight-Binding
+=============
+
+The generic Bloch-Hamiltonian machinery: recovering the exact tight-binding
+dispersion from a real-space chain, a Hofstadter-like spectrum from
+Peierls-substituted Landau levels, and a two-orbital Slater-Koster LCAO band
+structure.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Felix Bloch&#x27;s theorem turns the Schrodinger equation for an electron in an infinite periodic crystal into a finite eigenvalue problem H(k) u_{nk} = E_n(k) u_{nk} at each crystal momentum k, periodic on the Brillouin zone. Hamiltonian builds H(k) by Bloch-summing real-space hoppings, and bands diagonalizes it -- reproducing the monatomic chain&#x27;s exact dispersion E(k) = -2t\cos k with no continuum limit or approximation involved.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/tight_binding/images/thumb/sphx_glr_plot_bloch_bands_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/tight_binding/plot_bloch_bands`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Bloch's Theorem: From an Infinite Chain to H(k)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Lev Landau showed that a charged particle in a uniform magnetic field has a kinetic-energy spectrum that collapses into discrete, macroscopically degenerate levels E_n = \hbar\omega_c(n + 1/2). On a lattice, the same continuum physics is reached through the Peierls substitution: each bond acquires a phase proportional to the flux threading the plaquettes it borders. apply_peierls_phase implements exactly this, turning a uniform flux into a Hofstadter-like spectrum whose low-energy states bunch into near-degenerate groups -- the lattice remnant of the continuum Landau tower.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/tight_binding/images/thumb/sphx_glr_plot_peierls_landau_levels_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/tight_binding/plot_peierls_landau_levels`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Peierls Substitution: A Hofstadter-Like Spectrum from Landau's Physics</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Slater and Koster showed how to build realistic band structures from a minimal empirical basis: a linear combination of atomic orbitals (LCAO), with hopping matrix elements between orbitals treated as fitting parameters rather than computed from first principles. Lattice and Hamiltonian are a direct, general-purpose realization of this philosophy: declare orbitals, declare empirical hoppings between them, and Bloch-sum the result into a multi-band H(k).">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/tight_binding/images/thumb/sphx_glr_plot_slater_koster_bands_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/tight_binding/plot_slater_koster_bands`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Slater-Koster LCAO: Empirical Multi-Orbital Band Structure</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Topology
+========
+
+Topological band theory: SSH edge states and the Zak phase, exactly
+quantized Chern numbers (TKNN), the Haldane model's zero-net-flux Chern
+insulator and its chiral edge states, unpaired Majorana zero modes in the
+Kitaev chain, graphene's massless Dirac cone, and the Kane-Mele/BHZ
+:math:`\mathbb{Z}_2` topological insulators.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Fu, Kane, and Mele&#x27;s 2007 extension of the 2D Z2 classification to three dimensions predicted a bulk insulator whose surface hosts a single, gapless Dirac cone, protected by time-reversal symmetry alone -- confirmed directly by ARPES on Bi2Se3 and Bi2Te3 in 2008-2009. topological_insulator_3d_slab_hamiltonian opens the minimal 4-band lattice model along one direction, exposing exactly this surface state: pinned to zero energy at the surface Brillouin zone center, localized on a single outer layer, and dispersing linearly away from it.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_3d_ti_surface_states_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_3d_ti_surface_states`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The 3D Topological Insulator: A Single Surface Dirac Cone</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Thouless, Kohmoto, Nightingale, and den Nijs showed that the quantized Hall conductance is a topological invariant: the integral of the Berry curvature of the occupied Bloch bands over the Brillouin zone, now called the (first) Chern number C. Because C can only change when a bulk gap closes, it is exact and disorder-independent -- the moment band theory became topological band theory. compute_berry_curvature and compute_chern_number implement the Fukui-Hatsugai-Suzuki lattice discretization of this integral, returning exactly quantized integers for any gapped Bloch Hamiltonian.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_chern_number_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_chern_number`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The TKNN Invariant: Exactly Quantized Chern Numbers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Geim and Novoselov&#x27;s isolation of a single atomic layer of graphite produced the first genuinely 2D crystal -- and its low-energy quasiparticles obey a massless relativistic (Dirac) equation rather than the ordinary Schrodinger equation, turning a tabletop material into a laboratory for relativistic quantum phenomena. graphene_hamiltonian reproduces this linear dispersion near the honeycomb lattice&#x27;s Brillouin zone corners.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_graphene_dirac_cone_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_graphene_dirac_cone`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Graphene: A Massless Dirac Cone on a Honeycomb Lattice</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="plot_graphene_dirac_cone looks at graphene&#x27;s bulk Bloch spectrum -- a linear Dirac cone with no gap. Cutting a finite flake out of the honeycomb lattice along its two primitive-lattice directions produces the classic &quot;zigzag&quot; edge termination, and with it a macroscopically degenerate band of zero-energy states with no bulk counterpart, localized entirely on the flake&#x27;s boundary and almost entirely on a single sublattice. Unlike the SSH or Haldane edge states elsewhere in this gallery, these zero modes are not protected by a bulk topological invariant -- they are a purely geometric consequence of the zigzag edge cut, and vanish under an armchair termination instead.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_graphene_zigzag_flake_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_graphene_zigzag_flake`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Graphene: Zero-Energy Edge States on a Zigzag-Terminated Flake</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="plot_haldane_phase_transition exposes the Haldane model&#x27;s chiral edge states on a ribbon -- periodic in-plane, open along one crystallographic direction. That is the easiest cut to compute, but it leaves open whether the edge state depends on cutting along a lattice direction the way graphene&#x27;s zigzag zero modes do (plot_graphene_zigzag_flake). It does not: a nonzero Chern number guarantees a chiral state on any boundary of the sample, however it is shaped. This example carves a circular disk out of the infinite lattice -- a boundary with no crystallographic meaning at all -- using build_finite_cluster&#x27;s keep predicate, and shows the in-gap states still hug that boundary in the topological phase, and fail to in the trivial one.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_haldane_edge_state_map_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_haldane_edge_state_map`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Haldane Model: a Chiral Edge State on an Arbitrary Boundary</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Duncan Haldane showed that the integer quantum Hall effect does not require a net magnetic field at all. Threading complex second-neighbor hopping t_2 e^{i\phi} through a honeycomb lattice, in a pattern with zero net flux per unit cell but nonzero local (loop) curvature, produces a Chern insulator with C=\pm1 -- the first quantum anomalous Hall model, and the direct template for the \mathbb{Z}_2 topological insulators discovered two decades later. haldane_model gives the Bloch Hamiltonian used to track the bulk Chern number across the phase transition, and haldane_lattice_hamiltonian builds the same model in real space to expose the chiral edge states that bulk-boundary correspondence predicts.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_haldane_phase_transition_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_haldane_phase_transition`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Haldane Model: A Chern Insulator with Zero Net Flux</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Von Klitzing, Dorda, and Pepper&#x27;s 1980 discovery -- a two-dimensional electron gas in a strong magnetic field develops a Hall conductance quantized to extraordinary precision, \sigma_{xy} = \nu\,e^2/h with \nu an exact integer -- is reproduced here on its lattice (Bloch) incarnation, the Harper-Hofstadter model (~physicskit.condensed.models.harper_hofstadter_hamiltonian): a square lattice threaded by a uniform flux p/q per plaquette. At flux 1/3 the spectrum splits into three magnetic sub-bands; feeding each one, in turn, into compute_chern_number (the same TKNN machinery used for the Haldane model) gives the exact integer Chern number of that band, and summing the Chern numbers of every filled band below a gap gives that gap&#x27;s quantized Hall conductance directly -- the numerical content of the TKNN formula that explains why von Klitzing&#x27;s measurement came out an integer at all.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_iqhe_hall_conductance_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_iqhe_hall_conductance`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Integer Quantum Hall Effect: Quantized Hall Conductance from Chern Numbers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="plot_z2_topological_insulator computes the bulk \mathbb{Z}_2 invariant of the Kane-Mele model directly from its Bloch Hamiltonian. This example instead looks at what that invariant predicts on a finite sample. Whenever the Rashba term vanishes, s_z is conserved and kane_mele_hamiltonian is exactly block-diagonal in spin -- two independent Haldane models with opposite next-nearest-neighbor phase, \phi and -\phi. Building each spin&#x27;s finite flake separately with build_finite_cluster (the same disk-shaped cut used in plot_haldane_edge_state_map) shows both spins independently host a boundary-hugging state at the same real-space locations -- a Kramers pair -- while a momentum-resolved ribbon dispersion shows the two spins cross the gap with opposite group velocity, the helical counter-propagation that makes the quantum spin Hall edge robust against time-reversal-preserving disorder.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_kane_mele_edge_flake_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_kane_mele_edge_flake`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kane-Mele: Helical Edge States from Two Time-Reversed Haldane Copies</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Alexei Kitaev showed that a 1D spinless p-wave superconductor hosts unpaired Majorana zero modes -- particles that are their own antiparticles -- localized at the two ends of an open chain, whenever the chemical potential satisfies |\mu| &lt; 2t. A pair of spatially separated Majoranas encodes one nonlocal fermionic degree of freedom immune to local perturbations, making the Kitaev chain the founding proposal for topologically protected quantum computation. kitaev_chain_hamiltonian gives the bulk (periodic) BdG Bloch Hamiltonian used to confirm the bulk gap stays open, and kitaev_chain_bdg_real_space builds the open chain that exposes the Majorana end modes directly in the spectrum -- plotted below as a real-space structure so the two end modes are visible directly on the chain rather than as an abstract site index.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_kitaev_majorana_modes_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_kitaev_majorana_modes`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Kitaev Chain: Unpaired Majorana Zero Modes</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Konig, Molenkamp, and coworkers measured a quantized two-terminal conductance of 2e^2/h in HgTe/CdTe quantum wells in 2007 -- the first experimentally realized topological insulator, and the direct confirmation of the band-inverted BHZ model. Opening the BHZ ribbon along one direction with bhz_ribbon_hamiltonian exposes exactly the pair of helical, counter-propagating edge states carrying that dissipationless conductance: gapless at k_x=0, spin-locked, and immune to backscattering by nonmagnetic disorder.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_qsh_edge_states_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_qsh_edge_states`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Quantum Spin Hall Effect: Konig et al.'s Helical Edge States</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Su, Schrieffer, and Heeger showed that a dimerized chain -- alternating intracell hopping v and intercell hopping w -- is topologically nontrivial whenever v &lt; w: the bulk Zak phase is quantized to \pi, and cutting the chain open exposes a pair of protected, exponentially localized zero-energy states, one at each end. This is the earliest example of the bulk-boundary correspondence. ssh_hamiltonian gives the closed-form Bloch Hamiltonian, zak_phase computes the bulk invariant from it, and ssh_lattice_hamiltonian together with build_finite_cluster exposes the boundary modes on a finite, open chain -- and lets us plot the chain&#x27;s actual real-space structure rather than an abstract site-index axis.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_ssh_edge_states_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_ssh_edge_states`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The SSH Model: Zak Phase and Protected Edge States</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Schnyder, Ryu, Furusaki, and Ludwig, and independently Kitaev, showed that every noninteracting Bloch or Bogoliubov-de Gennes Hamiltonian falls into one of just ten symmetry classes, fixed by whether time-reversal and particle-hole symmetry are present, the sign each squares to, and whether their product enforces a chiral symmetry -- and that the allowed topological invariant (\mathbb{Z}, \mathbb{Z}_2, or none) in a given spatial dimension depends only on which of the ten classes a Hamiltonian belongs to. Three of this package&#x27;s own topological models, already built for their own separate breakthroughs, are three different rows of that table:">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_tenfold_way_classification_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_tenfold_way_classification`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Tenfold Way: Three Topological Invariants, One Classification Scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Wan, Turner, Vishwanath, and Savrasov predicted that breaking inversion or time-reversal symmetry in a 3D Dirac material splits each doubly-degenerate Dirac point into a pair of nondegenerate Weyl nodes -- momentum-space sources and sinks of Berry curvature carrying opposite chirality, the direct 3D generalization of the 2D TKNN invariant. A surface hosts open, non-closed &quot;Fermi arcs&quot; of surface states connecting the surface projections of opposite-chirality bulk nodes, later confirmed by ARPES on TaAs. weyl_semimetal_hamiltonian implements the minimal two-band cubic-lattice model with this physics,">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_weyl_semimetal_fermi_arcs_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_weyl_semimetal_fermi_arcs`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Weyl Semimetals: Momentum-Space Monopoles and Fermi Arcs</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Kane and Mele showed that adding intrinsic spin-orbit coupling to graphene -- two time-reversed copies of Haldane&#x27;s model, one per spin -- produces a time-reversal-symmetric insulator with a new, \mathbb{Z}_2-valued topological invariant protecting helical, counter-propagating edge states: the quantum spin Hall effect. Bernevig, Hughes, and Zhang then predicted the same physics in HgTe/CdTe quantum wells (the BHZ model), later observed experimentally -- the first realized topological insulator. kane_mele_hamiltonian and bhz_hamiltonian provide both microscopic realizations, and z2_invariant extracts the \mathbb{Z}_2 invariant from each via the spin-Chern-number reduction valid whenever s_z is conserved.">
+
+.. only:: html
+
+  .. image:: /api/gallery/condensed/topology/images/thumb/sphx_glr_plot_z2_topological_insulator_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/condensed/topology/plot_z2_topological_insulator`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kane-Mele and BHZ: Z2 Topological Insulators</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /api/gallery/condensed/anderson_localization/index.rst
+   /api/gallery/condensed/correlated/index.rst
+   /api/gallery/condensed/ginzburg_landau/index.rst
+   /api/gallery/condensed/landau_levels/index.rst
+   /api/gallery/condensed/laughlin/index.rst
+   /api/gallery/condensed/tight_binding/index.rst
+   /api/gallery/condensed/topology/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

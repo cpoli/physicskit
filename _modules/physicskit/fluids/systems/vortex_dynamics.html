@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.fluids.systems.vortex_dynamics &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/fluids/systems/vortex_dynamics';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.fluids.systems.vortex_dynamics</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.fluids.systems.vortex_dynamics</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Point-vortex N-body dynamics: the Biot-Savart law and the von Karman vortex street.</span>
+
+<span class="sd">Concentrating all of a 2D flow's vorticity into a finite set of</span>
+<span class="sd">infinitesimal points turns the vorticity-transport PDE into a system of</span>
+<span class="sd">ordinary differential equations: each point vortex simply advects with the</span>
+<span class="sd">velocity field induced by every *other* point vortex (a vortex induces no</span>
+<span class="sd">velocity on itself), via the 2D Biot-Savart law. This is an exact solution</span>
+<span class="sd">of the incompressible Euler equations for a singular vorticity distribution,</span>
+<span class="sd">not merely a discretization of the continuous vorticity-transport equation</span>
+<span class="sd">solved by :mod:`physicskit.fluids.systems.navier_stokes` -- and it is the</span>
+<span class="sd">setting in which Theodore von Karman analyzed the staggered, alternating</span>
+<span class="sd">vortex street shed behind a bluff body.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"point_vortex_velocities"</span><span class="p">,</span>
+    <span class="s2">"PointVortexSystem"</span><span class="p">,</span>
+    <span class="s2">"von_karman_vortex_street"</span><span class="p">,</span>
+    <span class="s2">"VON_KARMAN_SPACING_RATIO"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1">#: Theodore von Karman's spacing ratio ``h/l`` (row separation over</span>
+<span class="c1">#: along-row spacing) at which a doubly-infinite staggered vortex row is</span>
+<span class="c1">#: linearly stable to vortex-row perturbations (von Karman &amp; Rubach, 1912).</span>
+<span class="n">VON_KARMAN_SPACING_RATIO</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2805</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Biot-Savart velocity induced on each point vortex by every other one.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    positions : ndarray of float, shape (n, 2)</span>
+<span class="sd">        Vortex positions ``(x, y)``.</span>
+<span class="sd">    circulations : ndarray of float, shape (n,)</span>
+<span class="sd">        Vortex circulations :math:`\\Gamma_i`.</span>
+<span class="sd">    core : float</span>
+<span class="sd">        Regularization (Rankine core) radius; keeps the induced velocity</span>
+<span class="sd">        finite if two vortices coincide.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (n, 2)</span>
+<span class="sd">        Velocity at each vortex's own position.</span>
+<span class="sd">    """</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">velocities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">core2</span> <span class="o">=</span> <span class="n">core</span> <span class="o">*</span> <span class="n">core</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">yi</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">core2</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">circulations</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r2</span><span class="p">)</span>
+            <span class="n">vx</span> <span class="o">-=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">dy</span>
+            <span class="n">vy</span> <span class="o">+=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">dx</span>
+        <span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>
+        <span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>
+    <span class="k">return</span> <span class="n">velocities</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_point_vortex_rk4_integrate</span><span class="p">(</span>
+    <span class="n">positions0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Integrate the point-vortex system with RK4.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    positions0 : ndarray of float, shape (n, 2)</span>
+<span class="sd">        Initial vortex positions.</span>
+<span class="sd">    circulations : ndarray of float, shape (n,)</span>
+<span class="sd">        Vortex circulations.</span>
+<span class="sd">    core : float</span>
+<span class="sd">        Regularization core radius.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step.</span>
+<span class="sd">    n_steps : int</span>
+<span class="sd">        Number of steps to advance.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (n_steps + 1, n, 2)</span>
+<span class="sd">        Vortex positions at each step, including the initial positions.</span>
+<span class="sd">    """</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">positions0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">trajectory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">trajectory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions0</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">positions0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+        <span class="n">k1</span> <span class="o">=</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span>
+        <span class="n">k2</span> <span class="o">=</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span>
+        <span class="n">k3</span> <span class="o">=</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k2</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span>
+        <span class="n">k4</span> <span class="o">=</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span> <span class="o">+</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
+        <span class="n">trajectory</span><span class="p">[</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span>
+    <span class="k">return</span> <span class="n">trajectory</span>
+
+
+<div class="viewcode-block" id="point_vortex_velocities">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.point_vortex_velocities">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Velocity induced on each point vortex by every other vortex (Biot-Savart law).</span>
+
+<span class="sd">    The 2D Biot-Savart law: an isolated point vortex of circulation</span>
+<span class="sd">    :math:`\\Gamma_j` at :math:`\\mathbf{r}_j` induces a purely azimuthal</span>
+<span class="sd">    velocity :math:`\\Gamma_j/(2\\pi r)` at distance `r`, and a system of `n`</span>
+<span class="sd">    vortices simply superposes these fields (Laplace's equation is linear,</span>
+<span class="sd">    just as in :mod:`physicskit.fluids.systems.potential_flow` -- indeed a</span>
+<span class="sd">    point vortex here *is* :func:`~physicskit.fluids.systems.potential_flow.point_vortex_potential`,</span>
+<span class="sd">    evaluated at every other vortex's location rather than on a field grid).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    positions : array_like of float, shape (n, 2)</span>
+<span class="sd">        Vortex positions ``(x, y)``.</span>
+<span class="sd">    circulations : array_like of float, shape (n,)</span>
+<span class="sd">        Vortex circulations :math:`\\Gamma_i` (positive counterclockwise).</span>
+<span class="sd">    core : float, default 1e-6</span>
+<span class="sd">        Regularization (Rankine core) radius, keeping the induced velocity</span>
+<span class="sd">        finite if two vortex cores coincide; negligible for any pair</span>
+<span class="sd">        separated by much more than `core`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (n, 2)</span>
+<span class="sd">        Velocity at each vortex's own position, induced by all the others.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A pair of counter-rotating vortices separated by distance `d` induces</span>
+<span class="sd">    equal and opposite velocities of magnitude :math:`\\Gamma/(2\\pi d)` on</span>
+<span class="sd">    each other, translating the pair sideways rather than rotating it:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; Gamma, d = 1.0, 2.0</span>
+<span class="sd">    &gt;&gt;&gt; positions = np.array([[0.0, d / 2], [0.0, -d / 2]])</span>
+<span class="sd">    &gt;&gt;&gt; circulations = np.array([Gamma, -Gamma])</span>
+<span class="sd">    &gt;&gt;&gt; vel = point_vortex_velocities(positions, circulations)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(vel[0], vel[1]))  # both translate together</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; round(float(vel[0, 0]), 6) == round(Gamma / (2 * np.pi * d), 6)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">circulations</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">circulations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"positions and circulations must have the same number of vortices"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PointVortexSystem">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PointVortexSystem</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A system of interacting 2D point vortices, advected by their mutual Biot-Savart field.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    positions : array_like of float, shape (n, 2)</span>
+<span class="sd">        Initial vortex positions ``(x, y)``.</span>
+<span class="sd">    circulations : array_like of float, shape (n,)</span>
+<span class="sd">        Vortex circulations :math:`\\Gamma_i`; fixed for the system's lifetime</span>
+<span class="sd">        (point vortices carry their circulation with them unchanged).</span>
+<span class="sd">    core : float, default 1e-6</span>
+<span class="sd">        Regularization core radius (see :func:`point_vortex_velocities`).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    positions : ndarray of float, shape (n, 2)</span>
+<span class="sd">        Current vortex positions.</span>
+<span class="sd">    circulations : ndarray of float, shape (n,)</span>
+<span class="sd">        Vortex circulations.</span>
+<span class="sd">    core : float</span>
+<span class="sd">        Regularization core radius.</span>
+<span class="sd">    n_vortices : int</span>
+<span class="sd">        Number of vortices, `n`.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    InvalidParameterError</span>
+<span class="sd">        If `positions` and `circulations` have inconsistent lengths.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; system = PointVortexSystem(positions=[[1.0, 0.0], [-1.0, 0.0]], circulations=[1.0, 1.0])</span>
+<span class="sd">    &gt;&gt;&gt; t, trajectory = system.trajectory(dt=0.01, n_steps=10)</span>
+<span class="sd">    &gt;&gt;&gt; trajectory.shape</span>
+<span class="sd">    (11, 2, 2)</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">):</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">circulations</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">circulations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"positions and circulations must have the same number of vortices"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span> <span class="o">=</span> <span class="n">circulations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">core</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_vortices</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="PointVortexSystem.velocities">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem.velocities">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">velocities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Velocity currently induced on each vortex.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (n, 2)</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">core</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PointVortexSystem.trajectory">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem.trajectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Integrate the vortex trajectories forward with RK4.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dt : float, default 0.01</span>
+<span class="sd">            Time step.</span>
+<span class="sd">        n_steps : int, default 1000</span>
+<span class="sd">            Number of steps to advance.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
+<span class="sd">        positions : ndarray of float, shape (n_steps + 1, n, 2)</span>
+<span class="sd">            Vortex positions at each step, including the current positions.</span>
+<span class="sd">        """</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+        <span class="n">trajectory</span> <span class="o">=</span> <span class="n">_point_vortex_rk4_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">core</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">trajectory</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"PointVortexSystem(n_vortices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_vortices</span><span class="si">}</span><span class="s2">, circulations=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="si">!r}</span><span class="s2">)"</span></div>
+
+
+
+<div class="viewcode-block" id="von_karman_vortex_street">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.von_karman_vortex_street">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">von_karman_vortex_street</span><span class="p">(</span>
+    <span class="n">n_pairs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">spacing_l</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">spacing_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">VON_KARMAN_SPACING_RATIO</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Build a finite, doubly staggered von Karman vortex street.</span>
+
+<span class="sd">    Two parallel rows of point vortices, offset from each other by half the</span>
+<span class="sd">    along-row spacing `spacing_l` and by a row separation</span>
+<span class="sd">    ``h = spacing_ratio * spacing_l``, with alternating-sign circulation</span>
+<span class="sd">    within each row so that adjacent vortices across the two rows always</span>
+<span class="sd">    have *opposite* sign -- the staggered, alternating pattern observed in</span>
+<span class="sd">    the wake behind a bluff body. Von Karman showed that a doubly *infinite*</span>
+<span class="sd">    row of this form is linearly stable to vortex-row perturbations at</span>
+<span class="sd">    exactly one spacing ratio, :data:`VON_KARMAN_SPACING_RATIO`; any other</span>
+<span class="sd">    ratio (or any symmetric, unstaggered arrangement) grows unstable, which</span>
+<span class="sd">    is why the observed spacing behind real bluff bodies clusters so</span>
+<span class="sd">    consistently near this value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_pairs : int</span>
+<span class="sd">        Number of vortex pairs (one from each row) to construct; must be at</span>
+<span class="sd">        least 2 to form a discernible street.</span>
+<span class="sd">    spacing_l : float</span>
+<span class="sd">        Spacing between same-row, same-sign vortices along the street.</span>
+<span class="sd">    spacing_ratio : float, default :data:`VON_KARMAN_SPACING_RATIO`</span>
+<span class="sd">        Row separation over along-row spacing, ``h / spacing_l``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    positions : ndarray of float, shape (2*n_pairs, 2)</span>
+<span class="sd">        Vortex positions.</span>
+<span class="sd">    circulations : ndarray of float, shape (2*n_pairs,)</span>
+<span class="sd">        Vortex circulations, alternating in sign.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    InvalidParameterError</span>
+<span class="sd">        If `n_pairs` is smaller than 2 or `spacing_l` is not positive.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; positions, circulations = von_karman_vortex_street(n_pairs=6, spacing_l=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; positions.shape</span>
+<span class="sd">    (12, 2)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isclose(circulations.sum(), 0.0))  # equal and opposite in each row</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">n_pairs</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"n_pairs must be at least 2, got </span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spacing_l</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"spacing_l must be positive, got </span><span class="si">{</span><span class="n">spacing_l</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">spacing_ratio</span> <span class="o">*</span> <span class="n">spacing_l</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_pairs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_pairs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_pairs</span><span class="p">):</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">positions</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">spacing_l</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">]</span>
+        <span class="n">circulations</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign</span>
+        <span class="n">positions</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">spacing_l</span><span class="p">,</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">]</span>
+        <span class="n">circulations</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sign</span>
+    <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">circulations</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

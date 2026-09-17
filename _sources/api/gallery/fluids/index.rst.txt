@@ -1,0 +1,550 @@
+:orphan:
+
+Examples
+========
+
+This gallery walks through every physical regime in ``physicskit.fluids``:
+inviscid potential flow, classic viscous exact solutions, point-vortex
+N-body dynamics, the Kelvin-Helmholtz and Rayleigh-Taylor instabilities,
+1D compressible shocks, and the 2D incompressible Navier-Stokes solver that
+underlies the instability and turbulence-spectrum tools. Each script
+reproduces the signature observable of a specific breakthrough in
+:doc:`/history/fluid_breakthroughs`.
+
+Each script in this gallery is self-contained and can be run directly with
+``python examples/fluids/<section>/<script>.py``. Every script also carries
+an RST module docstring as its title/description and uses ``# %%`` markers
+to split narrative text from code, which is exactly what Sphinx-Gallery
+renders into the pages below -- the script *is* the source of truth for what
+you see, not a copy of it.
+
+Sections
+--------
+
+- **potential_flow** -- inviscid, irrotational flow built by superposing
+  elementary solutions: source, sink, and doublet streamline patterns,
+  d'Alembert's zero-drag paradox for a circulation-free cylinder, and the
+  classic lifting-cylinder problem with the Kutta-Joukowski lift compared
+  against a direct pressure-integral calculation.
+- **viscous_flow** -- classic exact viscous solutions: Couette and
+  Poiseuille flow profiles side by side, Stokes drag on a settling sphere,
+  the Reynolds number as the single dimensionless ratio governing flow
+  regime regardless of size or fluid, and the Blasius boundary layer solved
+  by shooting.
+- **vortex_dynamics** -- point-vortex N-body dynamics via the Biot-Savart
+  law: a co-rotating vortex pair versus a translating vortex dipole, and a
+  von Karman vortex street holding its staggered shape at the stable
+  spacing ratio.
+- **instabilities** -- the Kelvin-Helmholtz shear instability rolling a
+  rippled interface into vortex cores, and the Rayleigh-Taylor instability
+  growing a heavy-over-light interface into mushroom plumes, each checked
+  against its linear growth-rate law.
+- **compressible_flow** -- the 1D Euler equations: normal shock relations
+  across a range of Mach numbers, and the classic Sod shock tube resolving
+  a rarefaction fan, contact discontinuity, and shock in one Riemann problem.
+- **navier_stokes** -- the 2D incompressible vorticity-streamfunction
+  solver: viscous decay of a periodic vortex patch, and a decaying
+  turbulence simulation whose energy spectrum is checked against
+  Kolmogorov's -5/3 law.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Compressible Flow
+==================
+
+Once a flow moves fast enough that the fluid can no longer get out of its
+own way, incompressible potential and viscous flow stop applying entirely:
+the 1D Euler equations support genuinely discontinuous solutions that no
+smooth velocity field can produce. The normal-shock example sweeps the
+upstream Mach number through the exact Rankine-Hugoniot jump relations,
+showing a supersonic flow is always driven back to subsonic on the other
+side of a shock, at the cost of a sharp pressure and density jump. The Sod
+shock tube then resolves that same jump dynamically, from a simple burst
+initial condition, alongside the two other waves -- a rarefaction fan and a
+contact discontinuity -- that a general compressible flow problem produces
+alongside a shock. Watch, in the shock-tube profiles, how a first-order
+finite-volume scheme smears the shock over several cells even as it gets
+its speed and downstream state right.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A normal shock is a stationary discontinuity, perpendicular to the flow, in an otherwise steady 1D inviscid compressible flow of an ideal gas: state 1 (upstream) and state 2 (downstream) must conserve mass, momentum, and energy flux across it exactly (the Rankine-Hugoniot conditions, rankine_hugoniot_jump_conditions). Solved for an ideal gas, these give the downstream state entirely as a function of the upstream Mach number M_1=u_1/c_1:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/compressible_flow/images/thumb/sphx_glr_plot_normal_shock_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/compressible_flow/plot_normal_shock`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Normal shock relations across a range of Mach numbers</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Sod&#x27;s (1978) shock-tube problem is the standard test Riemann problem for a compressible-flow solver: a diaphragm at x_0 initially separates high-pressure, high-density gas at rest from low-pressure, low-density gas at rest,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/compressible_flow/images/thumb/sphx_glr_plot_sod_shock_tube_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/compressible_flow/plot_sod_shock_tube`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Sod shock tube</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Instabilities
+==============
+
+Some flows are unstable to *any* perturbation, no matter how small: the
+smallest ripple grows exponentially until it reorganizes the whole flow.
+Kelvin-Helmholtz instability needs nothing but shear -- two layers sliding
+past each other supply their own energy to grow a ripple into a row of
+rolled-up vortex cores, the mechanism behind everything from billow clouds
+to a flapping flag. Rayleigh-Taylor instability needs nothing but an
+unstable density stratification -- heavy fluid sitting on light fluid under
+gravity -- and grows a rippled interface into the mushroom-shaped plumes
+seen in everything from a lava lamp to a supernova remnant. Both examples
+below compare the simulated early-time growth against the exact linear
+growth-rate law for that instability, then run well past the point where
+that linear theory stops applying, into the fully rolled-up nonlinear state.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Helmholtz (1868) and Kelvin (1871) showed that any interface between two fluid layers sliding past each other is unconditionally unstable: the shear itself supplies the energy to grow a small ripple, with no velocity threshold required. kelvin_helmholtz_ic seeds exactly this thin, rippled shear layer as a vorticity field on a doubly periodic domain, and NavierStokes2D evolves it by integrating the 2D incompressible vorticity-transport equation">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/instabilities/images/thumb/sphx_glr_plot_kelvin_helmholtz_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/instabilities/plot_kelvin_helmholtz`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Roll-up of a shear layer into vortex cores</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A denser fluid layer sits atop a lighter one -- exactly the unstable arrangement -- separated by an interface with a small sinusoidal ripple. The two layers are represented not as a sharp density jump but through the Boussinesq approximation: a dimensionless buoyancy field b=-\delta\rho/\rho_0 (positive where the fluid is locally lighter than the reference density), advected and diffused like vorticity but also exerting a baroclinic torque g\,\partial_x b on it wherever the density gradient is non-vertical:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/instabilities/images/thumb/sphx_glr_plot_rayleigh_taylor_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/instabilities/plot_rayleigh_taylor`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rayleigh-Taylor plumes from a heavy-over-light interface</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Navier-Stokes and Turbulence
+==============================
+
+The general-purpose engine behind this package's instability simulations:
+a doubly periodic, pseudo-spectral solver for the full 2D incompressible
+vorticity-transport equation, exact up to machine precision and aliasing in
+space and 4th-order accurate in time. The first example shows its most basic
+signature -- a vortex patch's peak vorticity bleeding away under viscous
+diffusion, at a rate no inviscid simulation could reproduce. The second
+pushes the same solver into a genuinely turbulent regime: many vortices of
+mixed sign interacting nonlinearly, cascading kinetic energy from the large
+scales they were seeded at down to small scales where viscosity finally
+dissipates it. Watch, in the energy spectrum plot, how a real inertial range
+lines up with Kolmogorov's predicted -5/3 power law over more than a decade
+of wavenumber -- one of the most-tested predictions in classical physics,
+reproduced here from nothing but the bare incompressible equations.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Navier (1822) and Stokes (1845) added a viscous friction term to Euler&#x27;s inviscid equations of motion, giving the equation that still governs essentially all of fluid dynamics today,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/navier_stokes/images/thumb/sphx_glr_plot_decaying_vortex_patch_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/navier_stokes/plot_decaying_vortex_patch`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Viscous decay under the Navier-Stokes equations</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="NavierStokes2D integrates the 2D incompressible vorticity-transport equation \partial_t \omega + (\mathbf{u}\cdot\nabla)\omega = \nu \nabla^2 \omega pseudo-spectrally on a doubly periodic domain, with no external forcing: once set going, the flow&#x27;s kinetic energy only decays, redistributed across scales by the nonlinear advection term before viscosity ultimately dissipates it. Kolmogorov&#x27;s 1941 (K41) theory predicts that, in the &quot;inertial range&quot; of scales between where the flow was initially seeded and where viscosity dissipates it, the kinetic energy spectrum follows a universal power law,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/navier_stokes/images/thumb/sphx_glr_plot_turbulent_cascade_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/navier_stokes/plot_turbulent_cascade`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Kolmogorov -5/3 cascade in decaying 2D turbulence</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Potential Flow
+===============
+
+Away from any boundary layer or wake, a great deal of real aerodynamics is
+governed by a flow with no vorticity at all: a velocity potential obeying
+Laplace's equation, which is linear, so entire flow fields can be built by
+just adding together a handful of elementary solutions. The examples below
+build up from a bare source/sink/doublet, through d'Alembert's paradox of
+exactly zero drag on a circulation-free cylinder, to the textbook result
+that made potential theory indispensable to early aerodynamics -- a
+spinning cylinder, or by extension a cambered airfoil, generates lift in
+direct proportion to its bound circulation, with no viscosity anywhere in
+the calculation. Watch, in the streamline plots, how a source and sink
+merge into a doublet as they're brought together, and how adding
+circulation to a symmetric cylinder flow breaks its front-back symmetry and
+shifts its stagnation points -- the geometric signature of lift.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Superposing a uniform stream of speed U_\infty with a doublet of strength \kappa = 2\pi U_\infty R^2 places a circular streamline of radius R exactly at the origin -- a solid cylinder, in potential-flow terms. Adding a point vortex of circulation \Gamma at the same location keeps that circle intact (a vortex centered on the circle induces purely tangential velocity there) while breaking its front-back symmetry, generating lift with no viscosity anywhere in the calculation. This example builds that flow with flow_past_cylinder, plots its surface pressure coefficient">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/potential_flow/images/thumb/sphx_glr_plot_cylinder_with_lift_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/potential_flow/plot_cylinder_with_lift`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flow past a lifting cylinder</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Jean le Rond d&#x27;Alembert applied the equations of inviscid, irrotational flow to steady motion past a closed body and found -- to his own evident discomfort -- that the theory predicts exactly zero net drag on the body no matter its shape, a flatly unphysical result for anything actually moving through a real fluid. flow_past_cylinder with its default circulation=0.0 builds exactly this symmetric, inviscid flow: a uniform stream past a circular cylinder with no circulation added, and therefore no front-back (or top-bottom) asymmetry anywhere in the pressure field. Integrating the resulting surface pressure coefficient">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/potential_flow/images/thumb/sphx_glr_plot_dalembert_paradox_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/potential_flow/plot_dalembert_paradox`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">D'Alembert's paradox: zero net drag on a cylinder in inviscid flow</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="For a 2D flow with no vorticity (\nabla\times\mathbf{u}=0), the velocity is the gradient of a scalar potential, \mathbf{u}=\nabla\phi, and incompressibility (\nabla\cdot\mathbf{u}=0) then makes \phi satisfy Laplace&#x27;s equation,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/potential_flow/images/thumb/sphx_glr_plot_source_sink_doublet_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/potential_flow/plot_source_sink_doublet`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Source, sink, and doublet: building blocks of potential flow</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Viscous Flow
+=============
+
+Viscosity is what potential flow leaves out, and these are the handful of
+problems simple enough that adding it back in still yields an exact,
+closed-form answer. Couette and Poiseuille flow show how the same viscous
+term produces a straight-line profile under a moving wall but a parabola
+under a pressure gradient; Stokes drag captures the opposite extreme, where
+viscosity so dominates inertia that a settling sphere never notices its own
+momentum; the Reynolds number sweep shows that same Stokes-drag physics
+recast to make a different point -- that a single dimensionless ratio, not
+the sphere's size or the fluid's identity separately, decides the flow
+regime; and the Blasius boundary layer shows what happens in between -- a
+thin viscous layer clinging to a wall in an otherwise fast, nearly inviscid
+stream, thickening as the square root of downstream distance. Watch how
+thin that layer stays even at a middling free-stream speed, and how the
+wall shear stress it predicts falls off as the flow moves downstream.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Ludwig Prandtl&#x27;s 1904 boundary-layer theory reduced the full Navier-Stokes equations, in the thin-layer limit next to a wall, to a much simpler boundary-layer approximation; Paul Blasius then found, for steady, incompressible flow over a flat plate with zero streamwise pressure gradient, that the similarity substitution \eta = y\sqrt{U_\infty/(\nu x)}, f(\eta) the dimensionless streamfunction, collapses even that approximation to a single third-order ordinary differential equation:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/viscous_flow/images/thumb/sphx_glr_plot_blasius_boundary_layer_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/viscous_flow/plot_blasius_boundary_layer`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Blasius laminar boundary layer</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Both flows are steady, unidirectional shear flow between two infinite parallel plates separated by a gap h, for which the full nonlinear Navier-Stokes equations collapse to a single linear ordinary differential equation for u(y):">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/viscous_flow/images/thumb/sphx_glr_plot_couette_poiseuille_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/viscous_flow/plot_couette_poiseuille`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette versus Poiseuille flow</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Osborne Reynolds injected a thread of dye into water flowing through a glass pipe and found that a single dimensionless ratio,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/viscous_flow/images/thumb/sphx_glr_plot_reynolds_number_scaling_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/viscous_flow/plot_reynolds_number_scaling`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Reynolds number: one ratio, regardless of size or fluid</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In the creeping-flow limit Re = 2R|v|/\nu \ll 1, the nonlinear advection term in the Navier-Stokes equations is negligible next to viscous diffusion, leaving the linear Stokes equations \mu\nabla^2\mathbf{u}=\nabla p -- George Stokes&#x27; 1851 exact solution for uniform flow past a sphere of radius R, giving a drag force">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/viscous_flow/images/thumb/sphx_glr_plot_stokes_drag_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/viscous_flow/plot_stokes_drag`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Stokes drag and the terminal velocity of a settling sphere</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Vortex Dynamics
+================
+
+Concentrate all of a flow's vorticity into a handful of points and the
+Navier-Stokes equations collapse to ordinary differential equations: each
+point vortex simply drifts in the velocity field induced by every other one.
+The examples below show how differently two vortices behave depending only
+on the relative sign of their circulation -- a rigid, orbiting pair if the
+signs match, a self-propelling dipole that runs off in a straight line if
+they don't -- and then scale that same Biot-Savart mechanics up to a full
+von Karman street, the staggered double row shed behind every bluff body
+from a chimney to a violin string in the wind. Watch how the street holds
+its staggered spacing intact at von Karman's stable ratio, in stark contrast
+to the pairwise dynamics of the first example.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Concentrating a 2D flow&#x27;s vorticity into point vortices turns the vorticity-transport PDE into an N-body system: each vortex simply advects with the velocity induced by every other vortex through the 2D Biot-Savart law,">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/vortex_dynamics/images/thumb/sphx_glr_plot_von_karman_street_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/vortex_dynamics/plot_von_karman_street`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">A von Karman vortex street holds its shape</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="An isolated point vortex of circulation \Gamma induces a purely azimuthal velocity of magnitude \Gamma/(2\pi r) at distance r (the 2D Biot-Savart law); for two vortices separated by distance d, this is exactly the speed each one advects with, carried by the field of the other. What the pair then does depends only on the relative sign of their circulation. Equal circulations \Gamma each orbit the common midpoint at radius d/2, so their induced speed \Gamma/(2\pi d) translates into a rigid-body angular velocity">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/vortex_dynamics/images/thumb/sphx_glr_plot_vortex_pair_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/vortex_dynamics/plot_vortex_pair`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Co-rotating pair versus translating dipole</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /api/gallery/fluids/compressible_flow/index.rst
+   /api/gallery/fluids/instabilities/index.rst
+   /api/gallery/fluids/navier_stokes/index.rst
+   /api/gallery/fluids/potential_flow/index.rst
+   /api/gallery/fluids/viscous_flow/index.rst
+   /api/gallery/fluids/vortex_dynamics/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

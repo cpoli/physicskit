@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.semiclassical.core.gutzwiller &#8212; physicskit 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=90e40fae" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/semiclassical/core/gutzwiller';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/physicskit/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.semiclassical.core.gutzwiller</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.semiclassical.core.gutzwiller</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">"""The Gutzwiller trace formula: reconstructing a spectrum from classical periodic orbits alone.</span>
+
+<span class="sd">Gutzwiller's (1971) trace formula expresses the density of states</span>
+<span class="sd">:math:`g(E)=\sum_n\delta(E-E_n)` as a sum over every classical periodic</span>
+<span class="sd">orbit of the system, with no reference to quantum eigenstates at all --</span>
+<span class="sd">each orbit contributes an oscillatory term whose frequency (in</span>
+<span class="sd">:math:`E`) is set by its classical action and whose amplitude is set by</span>
+<span class="sd">its linear stability. For a bound, one-dimensional system this is not</span>
+<span class="sd">merely an approximation: the single family of periodic orbits (one per</span>
+<span class="sd">energy, since :math:`f=1` degree of freedom always has exactly one</span>
+<span class="sd">oscillation) has an *exact* trace formula, obtained by Poisson-summing</span>
+<span class="sd">the discrete Einstein-Brillouin-Keller (EBK) spectrum of</span>
+<span class="sd">:mod:`physicskit.semiclassical.core.wkb` --</span>
+<span class="sd">:func:`gutzwiller_density_of_states` implements exactly that sum,</span>
+<span class="sd">reconstructing delta-function peaks at the Bohr-Sommerfeld energies</span>
+<span class="sd">purely from the classical action :math:`S(E)` and period</span>
+<span class="sd">:math:`T(E)=dS/dE`.</span>
+
+<span class="sd">The general Gutzwiller formula (for a system with genuinely *isolated*,</span>
+<span class="sd">unstable periodic orbits, as in chaotic scattering or 2D/3D billiards)</span>
+<span class="sd">instead weights each orbit by :math:`1/\sqrt{|2-\operatorname{tr}M|}`,</span>
+<span class="sd">its monodromy matrix's instability -- :func:`gutzwiller_amplitude_from_monodromy`</span>
+<span class="sd">implements that general ingredient, for use with orbits found in</span>
+<span class="sd">higher-dimensional chaotic systems (the stadium billiard scars analyzed</span>
+<span class="sd">in :mod:`physicskit.semiclassical.systems.scarring` live on exactly this</span>
+<span class="sd">kind of isolated unstable orbit).</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.wkb</span><span class="w"> </span><span class="kn">import</span> <span class="n">turning_points</span><span class="p">,</span> <span class="n">wkb_action</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"classical_period"</span><span class="p">,</span>
+    <span class="s2">"gutzwiller_density_of_states"</span><span class="p">,</span>
+    <span class="s2">"gutzwiller_amplitude_from_monodromy"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="classical_period">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.classical_period">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">classical_period</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dE</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Classical (round-trip) oscillation period :math:`T(E)=2\,dS/dE` of a 1D bound orbit.</span>
+
+<span class="sd">    The action :math:`S(E)` (:func:`~physicskit.semiclassical.core.wkb.wkb_action`)</span>
+<span class="sd">    is the one-way traversal action, so its energy derivative :math:`dS/dE`</span>
+<span class="sd">    is the time to cross the classically allowed region once; the full</span>
+<span class="sd">    period (there and back) is twice that -- differentiated numerically</span>
+<span class="sd">    here via a central difference.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E : float</span>
+<span class="sd">        Energy at which to evaluate the period.</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        Potential energy function ``V(x)``.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    x_min, x_max : float</span>
+<span class="sd">        Search domain for :func:`~physicskit.semiclassical.core.wkb.turning_points`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use (unused by the classical period</span>
+<span class="sd">        itself; kept for a uniform signature with the rest of this module).</span>
+<span class="sd">    dE : float, default=1e-4</span>
+<span class="sd">        Step size for the central-difference derivative.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The classical period :math:`T(E)`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    gutzwiller_density_of_states : Uses this as the trace formula's smooth prefactor.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The harmonic oscillator's period is famously independent of energy,</span>
+<span class="sd">    :math:`T=2\pi/\omega`:</span>
+
+<span class="sd">    &gt;&gt;&gt; V = lambda x: 0.5 * x ** 2</span>
+<span class="sd">    &gt;&gt;&gt; round(classical_period(E=3.0, V=V, m=1.0, x_min=-20, x_max=20), 4)</span>
+<span class="sd">    6.2832</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="n">E_</span><span class="p">):</span>
+        <span class="n">tp</span> <span class="o">=</span> <span class="n">turning_points</span><span class="p">(</span><span class="n">E_</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wkb_action</span><span class="p">(</span><span class="n">E_</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">hbar</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">E</span> <span class="o">+</span> <span class="n">dE</span><span class="p">)</span> <span class="o">-</span> <span class="n">S</span><span class="p">(</span><span class="n">E</span> <span class="o">-</span> <span class="n">dE</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">dE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="gutzwiller_density_of_states">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.gutzwiller_density_of_states">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gutzwiller_density_of_states</span><span class="p">(</span>
+    <span class="n">E_grid</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">V</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">x_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">x_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">r_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">broadening</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Exact 1D trace-formula density of states, summed over repetitions of the single periodic orbit.</span>
+
+<span class="sd">    For a bound one-dimensional system, EBK quantization places levels</span>
+<span class="sd">    exactly where :math:`S(E_n)/\hbar=(n+\tfrac12)\pi`. Poisson-summing</span>
+<span class="sd">    the resulting delta comb :math:`g(E)=\sum_n\delta(E-E_n)` over the</span>
+<span class="sd">    integer :math:`n` converts it into a sum over an integer :math:`r`</span>
+<span class="sd">    -- physically, the :math:`r`-fold repetition of the single primitive</span>
+<span class="sd">    periodic orbit at each energy -- giving the *exact* identity</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       g(E) = \frac{T(E)/2}{\pi\hbar}\left[1 + 2\sum_{r=1}^{\infty}</span>
+<span class="sd">       \cos\!\left(\frac{2rS(E)}{\hbar} - r\pi\right)\right],</span>
+
+<span class="sd">    the one-dimensional Gutzwiller trace formula: the :math:`r=0` term is</span>
+<span class="sd">    the smooth Weyl density of states, and each :math:`r\ge1` term is one</span>
+<span class="sd">    repetition of the orbit, carrying the Maslov phase :math:`-r\pi`</span>
+<span class="sd">    (:math:`\sigma=2` soft turning points per traversal, repeated</span>
+<span class="sd">    :math:`r` times). Truncating the sum at finite ``r_max`` with a</span>
+<span class="sd">    convergence factor ``exp(-r*broadening)`` turns each delta function</span>
+<span class="sd">    into a finite (Lorentzian-like) peak, suitable for numerical peak-finding.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E_grid : ndarray</span>
+<span class="sd">        Energies at which to evaluate the density of states.</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        Potential energy function ``V(x)``.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    x_min, x_max : float</span>
+<span class="sd">        Search domain for :func:`~physicskit.semiclassical.core.wkb.turning_points`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+<span class="sd">    r_max : int, default=40</span>
+<span class="sd">        Number of orbit repetitions to sum.</span>
+<span class="sd">    broadening : float, default=0.05</span>
+<span class="sd">        Per-repetition convergence factor; larger values broaden (and</span>
+<span class="sd">        damp) each reconstructed peak.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        :math:`g(E)`, same shape as ``E_grid``.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    classical_period : Supplies :math:`T(E)`.</span>
+<span class="sd">    physicskit.semiclassical.core.wkb.bohr_sommerfeld_energies :</span>
+<span class="sd">        The exact peak locations this reconstructs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The reconstructed peaks land exactly on the harmonic oscillator's</span>
+<span class="sd">    Bohr-Sommerfeld spectrum:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from scipy.signal import find_peaks</span>
+<span class="sd">    &gt;&gt;&gt; V = lambda x: 0.5 * x ** 2</span>
+<span class="sd">    &gt;&gt;&gt; E_grid = np.linspace(0.2, 4.5, 600)</span>
+<span class="sd">    &gt;&gt;&gt; dos = gutzwiller_density_of_states(E_grid, V, m=1.0, x_min=-20, x_max=20)</span>
+<span class="sd">    &gt;&gt;&gt; peak_idx, _ = find_peaks(dos, height=0.3 * dos.max())</span>
+<span class="sd">    &gt;&gt;&gt; np.round(E_grid[peak_idx], 1)</span>
+<span class="sd">    array([0.5, 1.5, 2.5, 3.5])</span>
+<span class="sd">    """</span>
+    <span class="n">E_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">E_grid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">dos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">E_grid</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">r_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">envelope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">broadening</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">E</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">E_grid</span><span class="p">):</span>
+        <span class="n">tp</span> <span class="o">=</span> <span class="n">turning_points</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">tp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">wkb_action</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
+        <span class="n">T_one_way</span> <span class="o">=</span> <span class="n">classical_period</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">oscillating</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">envelope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="n">hbar</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+        <span class="n">dos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">T_one_way</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">hbar</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">oscillating</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dos</span></div>
+
+
+
+<div class="viewcode-block" id="gutzwiller_amplitude_from_monodromy">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.gutzwiller_amplitude_from_monodromy">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gutzwiller_amplitude_from_monodromy</span><span class="p">(</span><span class="n">M</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Gutzwiller stability amplitude :math:`1/\sqrt{|2-\operatorname{tr}M|}` for an isolated periodic orbit.</span>
+
+<span class="sd">    In the full (multi-dimensional, generically chaotic) Gutzwiller trace</span>
+<span class="sd">    formula, each isolated periodic orbit contributes with an amplitude</span>
+<span class="sd">    set by how strongly nearby trajectories diverge from it over one</span>
+<span class="sd">    period: an unstable (hyperbolic) orbit with monodromy eigenvalues</span>
+<span class="sd">    :math:`\lambda,1/\lambda` (:math:`|\lambda|&gt;1`) has</span>
+<span class="sd">    :math:`\operatorname{tr}M=\lambda+1/\lambda`, so</span>
+<span class="sd">    :math:`|2-\operatorname{tr}M|` grows with the instability and the</span>
+<span class="sd">    orbit's contribution to the trace formula shrinks -- highly unstable</span>
+<span class="sd">    orbits matter less for the exact spectrum, but (as in</span>
+<span class="sd">    :mod:`physicskit.semiclassical.systems.scarring`) can still leave a</span>
+<span class="sd">    visible imprint on individual eigenstates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : ndarray, shape (2, 2)</span>
+<span class="sd">        Monodromy matrix of one period of the orbit, e.g. from</span>
+<span class="sd">        :func:`physicskit.semiclassical.core.propagators.propagate_trajectory_monodromy_action`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The stability amplitude.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; M = np.array([[2.0, 0.0], [0.0, 0.5]])</span>
+<span class="sd">    &gt;&gt;&gt; round(gutzwiller_amplitude_from_monodromy(M), 6)</span>
+<span class="sd">    1.414214</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">M</span><span class="p">))))</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
