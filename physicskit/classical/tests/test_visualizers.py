@@ -117,7 +117,7 @@ def test_animate_elastic_pendulum_saves_gif(tmp_path):
     system = ElasticPendulum([0.1, 0.05], [0.0, 0.0])
     # short: animate_elastic_pendulum has no stride and renders one frame
     # per sample, so this only needs enough samples for a valid animation
-    result = system.integrate((0, 0.2), dt=1e-3, method="implicit_midpoint")
+    result = system.integrate((0, 0.1), dt=1e-3, method="implicit_midpoint")
     anim = animate_elastic_pendulum(system, result)
     out = tmp_path / "elastic_pendulum.gif"
     anim.save(out, writer=PillowWriter(fps=10))
@@ -126,7 +126,7 @@ def test_animate_elastic_pendulum_saves_gif(tmp_path):
 
 def test_animate_rigid_body_tumble_saves_gif(tmp_path):
     top = EulerTop([0.01, 1.0, 0.01], I1=1.0, I2=2.0, I3=3.0)
-    result = top.integrate((0, 5.0), dt=1e-3, method="implicit_midpoint")
+    result = top.integrate((0, 2.0), dt=1e-3, method="implicit_midpoint")
     anim = animate_rigid_body_tumble(top, result, stride=20)
     out = tmp_path / "rigid_body_tumble.gif"
     anim.save(out, writer=PillowWriter(fps=10))
@@ -137,7 +137,7 @@ def test_animate_eulers_disk_saves_gif(tmp_path):
     disk = EulersDisk(0.5, decay_rate=0.02, precession_const=1.0)
     # short: animate_eulers_disk has no stride and renders one frame per
     # sample (collapse time here is t_f=6.25, so 0.3 stays far from it)
-    result = disk.integrate((0.0, 0.3), dt=1e-3, method="rk4")
+    result = disk.integrate((0.0, 0.15), dt=1e-3, method="rk4")
     anim = animate_eulers_disk(disk, result)
     out = tmp_path / "eulers_disk.gif"
     anim.save(out, writer=PillowWriter(fps=10))
@@ -146,7 +146,7 @@ def test_animate_eulers_disk_saves_gif(tmp_path):
 
 def test_animate_rattleback_saves_gif(tmp_path):
     system = Rattleback([0.01, 0.01, 3.0])
-    result = system.integrate((0.0, 20.0), dt=5e-3, method="rk4")
+    result = system.integrate((0.0, 8.0), dt=5e-3, method="rk4")
     anim = animate_rattleback(system, result, stride=20)
     out = tmp_path / "rattleback.gif"
     anim.save(out, writer=PillowWriter(fps=10))

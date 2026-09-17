@@ -253,7 +253,7 @@ def test_animate_bakers_map_uses_square_markers():
 
 def test_animate_restricted_three_body_saves_gif(tmp_path):
     system = RestrictedThreeBody()
-    anim = animate_restricted_three_body(system, dt=0.001, n_steps=2000, skip=20)
+    anim = animate_restricted_three_body(system, dt=0.001, n_steps=800, skip=20)
     out = tmp_path / "cr3bp.gif"
     anim.save(out, writer=PillowWriter(fps=10))
     assert out.exists() and out.stat().st_size > 0
@@ -261,7 +261,7 @@ def test_animate_restricted_three_body_saves_gif(tmp_path):
 
 def test_animate_driven_pendulum_saves_gif(tmp_path):
     system = DrivenPendulum()
-    anim = animate_driven_pendulum(system, dt=0.02, n_steps=200)
+    anim = animate_driven_pendulum(system, dt=0.02, n_steps=60)
     out = tmp_path / "driven_pendulum.gif"
     anim.save(out, writer=PillowWriter(fps=10))
     assert out.exists() and out.stat().st_size > 0

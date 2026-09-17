@@ -67,7 +67,9 @@ def test_animate_string_breaking_saves_gif(tmp_path):
 
 
 def test_animate_higgs_rollover_saves_gif(tmp_path):
-    t = np.linspace(0, 40, 150)
+    # short: animate_higgs_rollover has no stride and renders one frame per
+    # sample, so this only needs enough samples for a valid animation
+    t = np.linspace(0, 40, 50)
     phi, _ = higgs_field_rollover(1e-3, 0.0, a=1.0, b=1.0, t_eval=t, damping=0.06)
     anim = animate_higgs_rollover(phi, a=1.0, b=1.0)
     _save(anim, tmp_path, "higgs_rollover.gif")
