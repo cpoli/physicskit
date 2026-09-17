@@ -18,8 +18,9 @@ pre-commit install
 ruff check .
 ruff format .
 
-# unit tests -- everything, or a single subpackage / file / test
-MPLBACKEND=Agg pytest -q
+# unit tests -- everything (parallelized across cores via pytest-xdist,
+# ~75s vs ~250s serial on a 10-core machine), or a single subpackage / file / test
+MPLBACKEND=Agg pytest -q -n auto
 pytest physicskit/rmt/tests
 pytest physicskit/classical/tests/test_conservation.py::test_energy_conserved -q
 

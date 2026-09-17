@@ -34,7 +34,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: pip install -e ".[test]"
-      - run: MPLBACKEND=Agg pytest -q
+      - run: MPLBACKEND=Agg pytest -q -n auto
       - run: MPLBACKEND=Agg pytest --doctest-modules physicskit --ignore-glob="*/tests/*" --ignore=physicskit/chaos/visualizers/viewer3d.py -q
 
   typecheck:
