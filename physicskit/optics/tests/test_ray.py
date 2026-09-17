@@ -69,6 +69,11 @@ def test_grin_medium_reduces_to_free_space_as_n2_coeff_vanishes():
     assert np.allclose(M_grin, M_free, atol=1e-6)
 
 
+def test_grin_medium_zero_n2_coeff_is_exactly_homogeneous_propagation():
+    n0, d = 1.3, 2.5
+    assert np.array_equal(grin_medium(n0=n0, n2_coeff=0.0, d=d), np.array([[1.0, d / n0], [0.0, 1.0]]))
+
+
 def test_grin_medium_matches_closed_form_for_finite_gradient():
     n0, n2_coeff, d = 1.5, 4.0, 0.3
     M = grin_medium(n0, n2_coeff, d)

@@ -81,6 +81,15 @@ def test_radius_of_curvature_far_from_waist_approaches_z_minus_z0():
     assert beam.radius_of_curvature(z) == pytest.approx(z, rel=1e-3)
 
 
+def test_radius_of_curvature_accepts_an_array_of_positions():
+    beam = GaussianBeam(wavelength=1.0e-3, w0=0.2, z0=1.5)
+    z = np.array([1.5, 1.0e6])
+    R = beam.radius_of_curvature(z)
+    assert isinstance(R, np.ndarray)
+    assert R[0] == np.inf
+    assert R[1] == pytest.approx(z[1], rel=1e-3)
+
+
 def test_divergence_angle_matches_far_field_waist_slope():
     beam = GaussianBeam(wavelength=1.0e-3, w0=0.02, z0=0.0)
     z_far = 1000.0 * beam.rayleigh_range
