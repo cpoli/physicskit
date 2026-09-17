@@ -7,7 +7,7 @@ name = "physicskit"
 version = "0.1.0"
 description = "Unified scientific toolkit for computational physics: General Relativity, Quantum Mechanics, Chaos, Random Matrix Theory, Statistical Mechanics, Classical Dynamics, and Condensed Matter."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Charles Poli", email = "cpoli374@gmail.com" }]
 maintainers = [{ name = "Charles Poli", email = "cpoli374@gmail.com" }]
@@ -26,7 +26,6 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -85,10 +84,13 @@ testpaths = [
     "physicskit/statphys/tests",
     "physicskit/tests",
 ]
+markers = [
+    "slow: real file I/O (anim.save() GIF writes) or otherwise inherently unable to run in a few ms; excluded from the fast dev loop via `-m \"not slow\"` but always included in the full/CI run",
+]
 
 [tool.ruff]
 line-length = 160
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
@@ -99,6 +101,7 @@ ignore = [
     "SIM108", # if/else vs ternary: kept as if/else for readability around multi-line physics expressions
     "SIM300", # yoda-condition rewrites: not an improvement for pytest.approx(...) == value assertions
     "UP045", # X | None vs Optional[X]: keep Optional[] for clarity, it's equally valid under `from __future__ import annotations`
+    "B905", # zip() without strict=: only enforceable once target-version >= py310 (dropped py3.9); ~80 pre-existing call sites need a dedicated per-site strict=True/False audit, not a blanket fix
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -109,7 +112,11 @@ ignore = [
 line-ending = "lf"
 
 [tool.mypy]
-python_version = "3.9"
+# Not a statement about the package's supported Python versions (that's
+# requires-python = ">=3.10" above) -- current mypy no longer accepts a
+# python_version below 3.10 at all, and numpy's own .pyi stubs now use
+# PEP 695 `type` aliases that mypy can only parse when targeting 3.12+.
+python_version = "3.12"
 ignore_missing_imports = true
 warn_redundant_casts = true
 warn_unused_ignores = true

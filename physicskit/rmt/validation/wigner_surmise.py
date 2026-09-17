@@ -8,6 +8,8 @@ raw Spectrum -- unfolding and edge-trimming choices belong to the caller,
 not baked into the benchmark.
 """
 
+from __future__ import annotations
+
 import numpy as np
 from scipy.stats import kstest, wasserstein_distance
 

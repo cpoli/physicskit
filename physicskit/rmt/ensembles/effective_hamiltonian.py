@@ -69,6 +69,8 @@ Only the n distinct values are returned (one representative per
 degenerate pair), mirroring :class:`~physicskit.rmt.ensembles.circular.CSE`.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

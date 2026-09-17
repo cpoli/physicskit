@@ -29,7 +29,7 @@ adapting to this one.
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 from numba import njit

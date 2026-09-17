@@ -6,6 +6,8 @@ see ``physicskit.rmt.ensembles.single_ring`` for the full construction and
 precision notes.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..spectrum import Spectrum

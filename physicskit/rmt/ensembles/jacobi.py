@@ -49,6 +49,8 @@ n distinct values are returned (one representative per pair), mirroring
 those other beta=4 ensembles.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

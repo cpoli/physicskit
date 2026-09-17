@@ -1,9 +1,9 @@
 """Small compatibility shims.
 
-numpy>=2.0 renamed trapz to trapezoid; scipy>=1.15 (Python>=3.10 only) added
-sph_harm_y and deprecated the older sph_harm, so on scipy<1.15 (the only
-option under the still-supported Python 3.9) we fall back to sph_harm with
-its swapped argument order and angle convention.
+numpy>=2.0 renamed trapz to trapezoid; scipy>=1.15 added sph_harm_y and
+deprecated the older sph_harm, so on an installed scipy<1.15 (dependencies
+only require scipy>=1.10) we fall back to sph_harm with its swapped
+argument order and angle convention.
 """
 
 import numpy as np

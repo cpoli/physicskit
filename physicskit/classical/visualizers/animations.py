@@ -13,7 +13,8 @@ ready-made convenience wrappers for the two most common cases.
 
 from __future__ import annotations
 
-from typing import Callable, Optional
+from collections.abc import Callable
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np

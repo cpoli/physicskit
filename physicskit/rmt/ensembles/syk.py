@@ -65,6 +65,8 @@ fixed by their construction -- a genuinely interesting further structure
 this module does not classify or assert.
 """
 
+from __future__ import annotations
+
 import math
 from itertools import combinations
 

@@ -41,6 +41,8 @@ the *exact* joint eigenvalue density matches a beta-ensemble formula
 therefore left ``None`` for both, inherited from the base class.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

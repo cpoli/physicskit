@@ -71,6 +71,8 @@ factors), matching the precedent set by
 extension not implemented here.
 """
 
+from __future__ import annotations
+
 from math import comb
 
 import numpy as np

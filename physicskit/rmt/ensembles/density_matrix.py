@@ -80,6 +80,8 @@ range, summing to 1 (a genuine probability distribution) --
 ``natural_scale`` is 1.0 throughout, no rescaling needed.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..utils.haar import haar_unitary

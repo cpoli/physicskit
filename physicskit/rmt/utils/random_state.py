@@ -1,6 +1,8 @@
 """Centralized RNG handling so every ensemble and benchmark in physicskit.rmt
 is exactly reproducible from a seed."""
 
+from __future__ import annotations
+
 import numpy as np
 
 

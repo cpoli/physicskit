@@ -36,6 +36,8 @@ has an exact, graph-independent bound (eigenvalues in [0, 2]), so no
 rescaling is needed there either, for the opposite reason.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

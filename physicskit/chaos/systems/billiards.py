@@ -14,7 +14,7 @@ and is instead approximated as a fine closed polygon of straight segments.
 
 from __future__ import annotations
 
-from typing import Any, Union
+from typing import Any
 
 import numpy as np
 from numba import njit, prange
@@ -30,7 +30,7 @@ _NO_HIT: float = 1e18
 #: A boundary wall specification consumed by ``_finalize_boundary``: either
 #: ``("seg", (x1, y1, x2, y2))`` or ``("arc", (cx, cy, r, theta1, theta2),
 #: is_full_circle)``.
-WallSpec = Union[tuple[str, tuple[float, ...]], tuple[str, tuple[float, ...], bool]]
+WallSpec = tuple[str, tuple[float, ...]] | tuple[str, tuple[float, ...], bool]
 
 # ---------------------------------------------------------------------------
 # Low-level Numba kernels

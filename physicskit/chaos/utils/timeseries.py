@@ -11,7 +11,7 @@ exponent, and IAAFT surrogate-data significance testing.
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray

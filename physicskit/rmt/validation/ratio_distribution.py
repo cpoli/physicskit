@@ -10,6 +10,8 @@ unfolding artifacts as the explanation for agreement with the
 (unfolding-dependent) spacing distribution.
 """
 
+from __future__ import annotations
+
 import numpy as np
 from scipy.stats import kstest, wasserstein_distance
 

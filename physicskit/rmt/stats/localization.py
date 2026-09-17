@@ -37,6 +37,8 @@ three beta, and independently against the Dirichlet-moment formula's own
 derivation, before being trusted -- see ``tests/test_localization.py``).
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

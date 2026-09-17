@@ -3,6 +3,8 @@
 Reference: J. Ginibre, J. Math. Phys. 6 (1965) 440.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

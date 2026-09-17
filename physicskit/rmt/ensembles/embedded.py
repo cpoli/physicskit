@@ -79,6 +79,8 @@ through a nontrivial combinatorial moment formula -- see Mon-French
 1975 -- not implemented here).
 """
 
+from __future__ import annotations
+
 from itertools import combinations
 
 import numpy as np

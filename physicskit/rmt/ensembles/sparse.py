@@ -42,6 +42,8 @@ Two constructions, deliberately different in character:
   not merely asserted from the universality literature.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

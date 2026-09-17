@@ -32,6 +32,8 @@ validated here; only the support radius (edge of the eigenvalue
 distribution) is implemented and checked.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..utils.haar import haar_unitary

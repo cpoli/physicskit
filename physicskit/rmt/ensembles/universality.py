@@ -18,6 +18,8 @@ at beta=1 and beta=2 (KS statistic < 0.001 at n=1500, pooled over 10
 samples) -- see ``tests/test_universality.py``.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

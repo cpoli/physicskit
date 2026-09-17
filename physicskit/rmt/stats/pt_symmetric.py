@@ -20,6 +20,8 @@ non-diagonalizable there -- see ``eigenvector_condition_number`` and
 ``tests/test_pt_symmetric.py``.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..ensembles.pt_symmetric import PTSymmetricEnsemble

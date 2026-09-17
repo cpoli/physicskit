@@ -54,6 +54,8 @@ KS test, rather than taken from a half-remembered formula. See the
 design/development notes and ``tests/test_tracy_widom.py``.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 import numpy as np

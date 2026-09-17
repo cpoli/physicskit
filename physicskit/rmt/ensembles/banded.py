@@ -36,6 +36,8 @@ does not affect the localization physics, which is governed entirely by
 the off-diagonal decay profile.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

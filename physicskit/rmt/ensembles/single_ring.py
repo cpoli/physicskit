@@ -63,6 +63,8 @@ r_in ~ 0 (a filled disk), consistent with Ginibre's ordinary circular
 law.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

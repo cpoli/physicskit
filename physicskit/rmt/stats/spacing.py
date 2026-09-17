@@ -21,6 +21,8 @@ but not exact approximation to the true N-level spacing distribution --
 which is why it is validated here as a benchmark rather than assumed.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

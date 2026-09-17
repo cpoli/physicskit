@@ -10,6 +10,8 @@ metric across a sequence of N values and expects it to *shrink* as N grows
 convergence.
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from collections.abc import Callable
 from dataclasses import dataclass

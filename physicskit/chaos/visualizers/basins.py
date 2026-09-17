@@ -18,7 +18,8 @@ integration itself is a Numba-jitted, parallelized loop rather than the
 
 from __future__ import annotations
 
-from typing import Callable, cast
+from collections.abc import Callable
+from typing import cast
 
 import matplotlib.pyplot as plt
 import numpy as np

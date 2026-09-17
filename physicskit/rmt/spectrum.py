@@ -1,6 +1,8 @@
 """The result of sampling an ensemble: eigenvalues plus the metadata needed
 to compare them against theory."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 import numpy as np

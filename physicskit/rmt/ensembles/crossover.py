@@ -38,6 +38,8 @@ consistent with the well-known finite-size scaling of this crossover
 specific scaling law itself is not derived or asserted exactly here.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble

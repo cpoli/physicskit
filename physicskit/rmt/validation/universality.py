@@ -12,6 +12,8 @@ theoretical curve is needed here, since universality means the SAME
 curve applies regardless of entry distribution.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from dataclasses import dataclass, field
 

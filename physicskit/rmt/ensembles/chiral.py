@@ -110,6 +110,8 @@ convention matches what papers in that literature actually plot
 caller having to remember to do the rotation themselves.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..utils.tridiagonal import sample_laguerre_beta_eigenvalues

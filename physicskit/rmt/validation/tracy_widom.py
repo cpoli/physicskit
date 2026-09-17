@@ -4,6 +4,8 @@ References: C. A. Tracy, H. Widom, Commun. Math. Phys. 159 (1994) 151;
 Commun. Math. Phys. 177 (1996) 727.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

@@ -20,8 +20,9 @@ value), so it works equally well for:
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any, Callable, cast
+from typing import Any, cast
 
 import matplotlib.pyplot as plt
 import numpy as np

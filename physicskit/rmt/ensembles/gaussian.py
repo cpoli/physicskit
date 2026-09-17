@@ -9,6 +9,8 @@ M. L. Mehta, "Random Matrices" (3rd ed.), Academic Press, 2004.
 I. Dumitriu, A. Edelman, J. Math. Phys. 43, 5830 (2002).
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from ..utils.tridiagonal import sample_hermite_beta_eigenvalues

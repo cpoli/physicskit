@@ -53,6 +53,8 @@ direct, formula-free estimator valid for any point process) and
 inheriting the same beta=2-exact / beta=1,4-asymptotic precision).
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 import numpy as np

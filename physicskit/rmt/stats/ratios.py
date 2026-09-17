@@ -15,6 +15,8 @@ both the (unfolding-dependent) spacing distribution and the
 unfolding artifacts can be ruled out as the source of agreement.
 """
 
+from __future__ import annotations
+
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
 from scipy.interpolate import interp1d

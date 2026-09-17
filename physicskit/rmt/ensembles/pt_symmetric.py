@@ -43,6 +43,8 @@ breaking transition. See ``physicskit.rmt.stats.pt_symmetric`` for the fraction-
 of-real-eigenvalues statistic that tracks this transition.
 """
 
+from __future__ import annotations
+
 import numpy as np
 
 from .base import MatrixEnsemble
