@@ -64,5 +64,5 @@ Extensive Sphinx documentation, including a per-subpackage chronology of
 the field's foundational breakthroughs (`docs/source/history/`) linked to
 the corresponding implementation.
 
-[Unreleased]: https://github.com/physicskit/physicskit/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/physicskit/physicskit/releases/tag/v0.1.0
+[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/cpoli/physicskit/releases/tag/v0.1.0

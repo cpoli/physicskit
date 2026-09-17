@@ -2,6 +2,7 @@
 
 import os
 import sys
+from importlib.metadata import version as _pkg_version
 
 import matplotlib
 
@@ -22,7 +23,8 @@ def _raise_animation_embed_limit(gallery_conf, fname):
 project = "physicskit"
 copyright = "2026, physicskit contributors"
 author = "physicskit team"
-release = "1.0.0"
+version = _pkg_version("physicskit")
+release = version
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -123,8 +125,9 @@ suppress_warnings = ["ref.python", "config.cache"]
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/images/physicskit_logo_transparent.png"
 html_theme_options = {
-    "github_url": "https://github.com/physicskit/physicskit",
+    "github_url": "https://github.com/cpoli/physicskit",
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "default_mode": "dark",
     "show_toc_level": 2,
     "navigation_with_keys": True,
     "navigation_depth": 2,

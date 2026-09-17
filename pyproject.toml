@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "physicskit"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Unified scientific toolkit for computational physics: General Relativity, Quantum Mechanics, Chaos, Random Matrix Theory, Statistical Mechanics, Classical Dynamics, and Condensed Matter."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -56,14 +56,17 @@ docs = [
 dev = ["physicskit[test,docs]", "ruff>=0.6", "mypy>=1.10", "pre-commit>=3.7"]
 
 [project.urls]
-Homepage = "https://github.com/physicskit/physicskit"
-Issues = "https://github.com/physicskit/physicskit/issues"
-Changelog = "https://github.com/physicskit/physicskit/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/cpoli/physicskit"
+Issues = "https://github.com/cpoli/physicskit/issues"
+Changelog = "https://github.com/cpoli/physicskit/blob/main/CHANGELOG.md"
 Documentation = "https://physicskit.readthedocs.io"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["physicskit*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "physicskit.__version__" }
 
 [tool.pytest.ini_options]
 testpaths = [
