@@ -115,7 +115,9 @@ def test_side_by_side_animator_pendulum_and_orbit(tmp_path):
 
 def test_animate_elastic_pendulum_saves_gif(tmp_path):
     system = ElasticPendulum([0.1, 0.05], [0.0, 0.0])
-    result = system.integrate((0, 2.0), dt=1e-3, method="implicit_midpoint")
+    # short: animate_elastic_pendulum has no stride and renders one frame
+    # per sample, so this only needs enough samples for a valid animation
+    result = system.integrate((0, 0.2), dt=1e-3, method="implicit_midpoint")
     anim = animate_elastic_pendulum(system, result)
     out = tmp_path / "elastic_pendulum.gif"
     anim.save(out, writer=PillowWriter(fps=10))
@@ -133,7 +135,9 @@ def test_animate_rigid_body_tumble_saves_gif(tmp_path):
 
 def test_animate_eulers_disk_saves_gif(tmp_path):
     disk = EulersDisk(0.5, decay_rate=0.02, precession_const=1.0)
-    result = disk.integrate((0.0, 3.0), dt=1e-3, method="rk4")
+    # short: animate_eulers_disk has no stride and renders one frame per
+    # sample (collapse time here is t_f=6.25, so 0.3 stays far from it)
+    result = disk.integrate((0.0, 0.3), dt=1e-3, method="rk4")
     anim = animate_eulers_disk(disk, result)
     out = tmp_path / "eulers_disk.gif"
     anim.save(out, writer=PillowWriter(fps=10))
