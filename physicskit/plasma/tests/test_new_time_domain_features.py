@@ -81,6 +81,9 @@ class TestWeibelFilamentation:
         assert k0 == 0.0
         assert gamma_max == pytest.approx(np.sqrt(3.0))
 
+    def test_fastest_growing_mode_is_zero_for_isotropic_temperature(self):
+        assert weibel_fastest_growing_mode(wpe=1.0, temperature_anisotropy=1.0) == (0.0, 0.0)
+
     def test_current_filaments_grow_in_time(self):
         x = np.linspace(0, 20.0, 256, endpoint=False)
         t = np.array([0.0, 5.0])

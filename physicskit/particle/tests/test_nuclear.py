@@ -31,6 +31,14 @@ def test_pairing_term_sign():
     assert even_even > odd_odd
 
 
+def test_pairing_term_is_zero_for_odd_mass_number():
+    # A odd (mixed Z/N parity) takes the "no pairing correction" branch,
+    # unlike the even-even/odd-odd cases above.
+    N15 = semf_binding_energy(7, 15)  # Z=7 odd, N=8 even
+    O15 = semf_binding_energy(8, 15)  # Z=8 even, N=7 odd
+    assert N15 > 0 and O15 > 0
+
+
 def test_q_value_positive_for_dt_fusion():
     Q = q_value([2.014102, 3.016049], [4.002602, 1.008665])
     assert Q == pytest.approx(0.018884, abs=1e-6)

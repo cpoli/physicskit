@@ -12,6 +12,13 @@ from physicskit.particle.collider import (
 from physicskit.particle.kinematics import FourVector
 
 
+def test_simple_shower_stops_immediately_when_daughter_masses_would_exceed_parent():
+    # daughter_fraction >= 0.5 means m1 + m2 >= m_parent for every split, so
+    # the shower must stop at the root without ever branching.
+    root = simple_shower(50.0, daughter_fraction=0.6, E_threshold=1.0, rng=np.random.default_rng(0))
+    assert root.is_leaf
+
+
 def test_simple_shower_conserves_energy_momentum_at_every_vertex():
     rng = np.random.default_rng(0)
     root = simple_shower(100.0, E_threshold=5.0, rng=rng)

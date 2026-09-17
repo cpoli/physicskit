@@ -67,6 +67,24 @@ def test_gamma_raises_for_massless_vector():
         _ = p.gamma
 
 
+def test_gamma_equals_energy_over_mass_for_massive_vector():
+    p = FourVector(2.0, 0.0, 0.0, 1.0)
+    assert p.gamma == pytest.approx(p.E / p.mass)
+
+
+def test_four_vector_repr_shows_components():
+    p = FourVector(1.0, 2.0, 3.0, 4.0)
+    assert repr(p) == "FourVector(E=1, px=2, py=3, pz=4)"
+
+
+def test_boost_rejects_invalid_beta_and_axis():
+    p = FourVector(1.0, 0.0, 0.0, 0.0)
+    with pytest.raises(ValueError, match="beta"):
+        boost(p, 1.5)
+    with pytest.raises(ValueError, match="axis"):
+        boost(p, 0.5, axis="w")
+
+
 def test_boost_generic_matches_axis_boost_when_aligned():
     p = FourVector(3.0, 0.5, -0.2, 1.1)
     beta = 0.45
