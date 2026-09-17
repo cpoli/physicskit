@@ -70,6 +70,24 @@ def test_rayleigh_taylor_growth_rate_rejects_invalid_atwood_number():
         rayleigh_taylor_growth_rate(k=1.0, atwood_number=1.5, g=1.0)
 
 
+def test_rayleigh_taylor_growth_rate_rejects_negative_k():
+    with pytest.raises(InvalidParameterError):
+        rayleigh_taylor_growth_rate(k=-1.0, atwood_number=0.3, g=1.0)
+
+
+def test_rayleigh_taylor_ic_rejects_invalid_atwood_number():
+    with pytest.raises(InvalidParameterError):
+        rayleigh_taylor_ic(32, 2 * np.pi, atwood_number=1.5)
+
+
+def test_simulate_rayleigh_taylor_rejects_nonpositive_kappa_and_g():
+    omega0, buoyancy0 = rayleigh_taylor_ic(32, 2 * np.pi, atwood_number=0.2)
+    with pytest.raises(InvalidParameterError):
+        simulate_rayleigh_taylor(omega0, buoyancy0, nu=0.001, kappa=0.0, g=1.0, dt=0.01, steps=1, length=2 * np.pi)
+    with pytest.raises(InvalidParameterError):
+        simulate_rayleigh_taylor(omega0, buoyancy0, nu=0.001, kappa=0.001, g=0.0, dt=0.01, steps=1, length=2 * np.pi)
+
+
 def test_rayleigh_taylor_ic_starts_at_rest_with_heavy_fluid_on_top():
     omega0, buoyancy0 = rayleigh_taylor_ic(64, 2 * np.pi, atwood_number=0.3)
     assert np.all(omega0 == 0.0)

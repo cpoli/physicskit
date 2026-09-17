@@ -21,6 +21,33 @@ def test_reynolds_number_rejects_nonpositive_viscosity():
         reynolds_number(velocity=1.0, length=1.0, nu=0.0)
 
 
+def test_reynolds_number_rejects_nonpositive_length():
+    with pytest.raises(InvalidParameterError):
+        reynolds_number(velocity=1.0, length=0.0, nu=1.0)
+
+
+def test_froude_number_rejects_nonpositive_length_and_g():
+    with pytest.raises(InvalidParameterError):
+        froude_number(velocity=1.0, length=0.0, g=9.81)
+    with pytest.raises(InvalidParameterError):
+        froude_number(velocity=1.0, length=1.0, g=0.0)
+
+
+def test_mach_number_rejects_nonpositive_speed_of_sound():
+    with pytest.raises(InvalidParameterError):
+        mach_number(velocity=100.0, speed_of_sound=0.0)
+
+
+def test_strouhal_number_rejects_nonpositive_velocity():
+    with pytest.raises(InvalidParameterError):
+        strouhal_number(frequency=5.0, length=0.02, velocity=0.0)
+
+
+def test_weber_number_rejects_nonpositive_surface_tension():
+    with pytest.raises(InvalidParameterError):
+        weber_number(rho=1000.0, velocity=1.0, length=0.001, surface_tension=0.0)
+
+
 def test_froude_number_formula():
     U, L, g = 4.0, 2.0, 9.81
     assert froude_number(U, L, g) == pytest.approx(U / np.sqrt(g * L))
@@ -55,6 +82,11 @@ def test_energy_spectrum_is_isotropic_for_a_radially_symmetric_field():
 def test_energy_spectrum_rejects_mismatched_shapes():
     with pytest.raises(InvalidParameterError):
         energy_spectrum(np.zeros((16, 16)), np.zeros((8, 8)), length=1.0)
+
+
+def test_energy_spectrum_rejects_non_square_arrays():
+    with pytest.raises(InvalidParameterError):
+        energy_spectrum(np.zeros((8, 16)), np.zeros((8, 16)), length=1.0)
 
 
 def test_kolmogorov_reference_slope_matches_power_law():

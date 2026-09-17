@@ -59,9 +59,26 @@ def test_flow_past_cylinder_rejects_nonpositive_radius():
         flow_past_cylinder(U_inf=1.0, radius=0.0)
 
 
+def test_flow_past_cylinder_rejects_nonpositive_u_inf():
+    with pytest.raises(InvalidParameterError):
+        flow_past_cylinder(U_inf=0.0, radius=1.0)
+
+
 def test_pressure_coefficient_is_one_at_stagnation():
     """Cp = 1 exactly where the local speed vanishes (a stagnation point)."""
     assert pressure_coefficient(u=0.0, v=0.0, U_inf=1.0) == 1.0
+
+
+def test_pressure_coefficient_rejects_nonpositive_u_inf():
+    with pytest.raises(InvalidParameterError):
+        pressure_coefficient(u=0.0, v=0.0, U_inf=0.0)
+
+
+def test_kutta_joukowski_lift_rejects_nonpositive_rho_and_u_inf():
+    with pytest.raises(InvalidParameterError):
+        kutta_joukowski_lift(rho=0.0, U_inf=1.0, circulation=1.0)
+    with pytest.raises(InvalidParameterError):
+        kutta_joukowski_lift(rho=1.2, U_inf=0.0, circulation=1.0)
 
 
 def test_source_and_sink_pair_has_zero_net_streamfunction_far_away():

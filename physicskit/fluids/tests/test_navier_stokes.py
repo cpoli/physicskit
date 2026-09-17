@@ -46,3 +46,13 @@ def test_navier_stokes_rejects_nonpositive_viscosity():
 def test_spectral_grid_rejects_too_coarse_resolution():
     with pytest.raises(InvalidParameterError):
         spectral_grid(n=4, length=1.0)
+
+
+def test_spectral_grid_rejects_nonpositive_length():
+    with pytest.raises(InvalidParameterError):
+        spectral_grid(n=32, length=0.0)
+
+
+def test_navier_stokes_2d_repr():
+    solver = NavierStokes2D(n=32, length=2 * np.pi, nu=0.05)
+    assert repr(solver) == "NavierStokes2D(n=32, length=6.283185307179586, nu=0.05)"

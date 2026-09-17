@@ -70,3 +70,41 @@ def test_viscous_flow_rejects_nonpositive_parameters():
         stokes_drag(mu=-1.0, radius=1.0, velocity=1.0)
     with pytest.raises(InvalidParameterError):
         blasius_boundary_layer_thickness(x=-1.0, U_inf=1.0, nu=1e-4)
+
+
+def test_poiseuille_flow_velocity_rejects_nonpositive_mu_and_h():
+    with pytest.raises(InvalidParameterError):
+        poiseuille_flow_velocity(y=0.5, dpdx=-1.0, mu=0.0, h=1.0)
+    with pytest.raises(InvalidParameterError):
+        poiseuille_flow_velocity(y=0.5, dpdx=-1.0, mu=1.0, h=0.0)
+
+
+def test_poiseuille_flow_rate_rejects_nonpositive_mu_and_h():
+    with pytest.raises(InvalidParameterError):
+        poiseuille_flow_rate(dpdx=-1.0, mu=0.0, h=1.0)
+    with pytest.raises(InvalidParameterError):
+        poiseuille_flow_rate(dpdx=-1.0, mu=1.0, h=0.0)
+
+
+def test_stokes_drag_rejects_nonpositive_radius():
+    with pytest.raises(InvalidParameterError):
+        stokes_drag(mu=1.0, radius=0.0, velocity=1.0)
+
+
+def test_blasius_boundary_layer_thickness_rejects_nonpositive_u_inf_and_nu():
+    with pytest.raises(InvalidParameterError):
+        blasius_boundary_layer_thickness(x=1.0, U_inf=0.0, nu=1e-4)
+    with pytest.raises(InvalidParameterError):
+        blasius_boundary_layer_thickness(x=1.0, U_inf=1.0, nu=0.0)
+
+
+def test_blasius_skin_friction_coefficient_rejects_nonpositive_reynolds():
+    with pytest.raises(InvalidParameterError):
+        blasius_skin_friction_coefficient(reynolds_x=np.array([1e4, -1.0]))
+
+
+def test_blasius_solve_expands_bracket_when_default_guess_undershoots():
+    # eta_max=1.0 is too short for fpp0=1.0's shooting guess to reach f'=1,
+    # forcing the initial bracket-expansion loop before bisection.
+    result = blasius_solve(eta_max=1.0, n_points=50)
+    assert result["fp"][-1] == pytest.approx(1.0, abs=1e-6)

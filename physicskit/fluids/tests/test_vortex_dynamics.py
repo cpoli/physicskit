@@ -47,6 +47,28 @@ def test_point_vortex_velocities_rejects_mismatched_lengths():
         point_vortex_velocities(positions=[[0.0, 0.0], [1.0, 0.0]], circulations=[1.0])
 
 
+def test_point_vortex_system_rejects_mismatched_lengths():
+    with pytest.raises(InvalidParameterError):
+        PointVortexSystem(positions=[[0.0, 0.0], [1.0, 0.0]], circulations=[1.0])
+
+
+def test_point_vortex_system_velocities_matches_module_function():
+    positions = [[0.0, 0.0], [1.0, 0.0]]
+    circulations = [1.0, -1.0]
+    system = PointVortexSystem(positions=positions, circulations=circulations)
+    np.testing.assert_allclose(system.velocities(), point_vortex_velocities(positions, circulations))
+
+
+def test_point_vortex_system_repr():
+    system = PointVortexSystem(positions=[[0.0, 0.0]], circulations=[2.0])
+    assert repr(system) == "PointVortexSystem(n_vortices=1, circulations=array([2.]))"
+
+
+def test_von_karman_street_rejects_nonpositive_spacing():
+    with pytest.raises(InvalidParameterError):
+        von_karman_vortex_street(n_pairs=3, spacing_l=0.0)
+
+
 def test_von_karman_street_alternates_sign_across_rows():
     positions, circulations = von_karman_vortex_street(n_pairs=4, spacing_l=1.0)
     top_row = circulations[0::2]

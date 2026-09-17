@@ -57,3 +57,10 @@ def test_sod_shock_tube_density_is_monotonically_decreasing_left_to_right():
 def test_sod_shock_tube_rejects_invalid_cfl():
     with pytest.raises(InvalidParameterError):
         sod_shock_tube(nx=100, cfl=1.5)
+
+
+def test_sod_shock_tube_rejects_too_few_cells_and_nonpositive_t_final():
+    with pytest.raises(InvalidParameterError):
+        sod_shock_tube(nx=3)
+    with pytest.raises(InvalidParameterError):
+        sod_shock_tube(nx=100, t_final=0.0)
