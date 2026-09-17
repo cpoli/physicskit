@@ -125,3 +125,14 @@ warn_unused_ignores = true
 # type checking can be adopted incrementally rather than skipped entirely.
 # See CONTRIBUTING.md.
 check_untyped_defs = false
+
+[tool.coverage.report]
+# coverage.py cannot trace into @njit-compiled function bodies at all --
+# numba compiles them to native machine code, bypassing the trace hooks
+# line coverage relies on -- so they always show as "missing" even when
+# a passing test exercises them behaviorally. Excluding the decorator
+# line excludes coverage.py's whole decorated function (documented
+# behavior), which is the honest way to report this: ~1300 of the ~3660
+# lines otherwise reported missing across this codebase are inside such
+# functions.
+exclude_also = ["^\\s*@njit(\\(.*\\))?\\s*$"]

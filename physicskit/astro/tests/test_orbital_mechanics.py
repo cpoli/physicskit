@@ -34,6 +34,9 @@ ELEMENT_CASES = [
     (1.0, 0.3, 0.5, 1.0, 0.7, 1.2),
     (2.0, 0.1, 1.2, 2.5, 0.3, 4.0),
     (1.5, 0.5, 0.9, 0.2, 2.1, 0.5),
+    (1.5, 0.4, 0.8, 4.0, 4.0, 1.0),  # n_vec[1]<0 and e_vec[2]<0 branches of raan/argp
+    (1.5, 0.4, 0.0, 0.0, 0.0, 1.0),  # equatorial (n<=1e-12): raan, argp forced to 0
+    (1.5, 0.0, 0.8, 1.0, 0.0, 0.0),  # circular (e<=1e-12): argp, nu forced to 0
 ]
 
 
