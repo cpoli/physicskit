@@ -58,6 +58,18 @@ class TestFDTDWaveSpeed:
         measured_speed = (peak - x0) * dx / (steps * dt)
         assert measured_speed == pytest.approx(C0, rel=0.01)
 
+    def test_1d_lossy_medium_damps_the_pulse_more_than_lossless(self):
+        N, dx = 200, 1e-3
+        dt = 0.99 * courant_limit_1d(dx)
+        x0, sigma_pulse = 60, 15
+        Ez0 = np.exp(-((np.arange(N) - x0) ** 2) / (2 * sigma_pulse**2))
+        Hy0 = np.zeros(N - 1)
+        eps_r, mu_r = np.ones(N), np.ones(N)
+        steps = 100
+        Ez_lossless, _ = fdtd_1d(Ez0, Hy0, eps_r, mu_r, steps=steps, dt=dt, dx=dx)
+        Ez_lossy, _ = fdtd_1d(Ez0, Hy0, eps_r, mu_r, steps=steps, dt=dt, dx=dx, sigma=np.full(N, 5.0))
+        assert np.max(np.abs(Ez_lossy)) < np.max(np.abs(Ez_lossless))
+
     def test_2d_tmz_runs_and_conserves_shape(self):
         Nx, Ny = 40, 40
         Ez0 = np.zeros((Nx, Ny))
@@ -145,6 +157,16 @@ class TestGPEVortexLattice:
         below = E0["total"] - 0.5 * omega_c * E0["angular_momentum"] < E1["total"] - 0.5 * omega_c * E1["angular_momentum"]
         above = E1["total"] - 1.5 * omega_c * E1["angular_momentum"] < E0["total"] - 1.5 * omega_c * E0["angular_momentum"]
         assert below and above
+
+    def test_relax_with_nonzero_omega_stays_normalized(self):
+        n, length, g = 24, 10.0, 1.0
+        X, Y, _, _, K2 = harmonic_trap_grid(n, length)
+        V = 0.5 * (X**2 + Y**2)
+        psi0 = np.exp(-0.5 * (X**2 + Y**2)).astype(complex)
+        psi = gpe_relax(psi0, V, g, dtau=5e-4, steps=5, X=X, Y=Y, K2=K2, Omega=0.5)
+        dx = X[1, 0] - X[0, 0]
+        norm = np.sum(np.abs(psi) ** 2) * dx * dx
+        assert norm == pytest.approx(1.0, rel=1e-6)
 
 
 class TestNLSSolitons:
