@@ -19,6 +19,12 @@ def _front_position(q: np.ndarray) -> float:
     return float(np.interp(np.pi, q, np.arange(len(q))))
 
 
+def test_sine_gordon_chain_defaults_to_zero_state_when_q0_p0_omitted():
+    system = SineGordonChain(n=10)
+    np.testing.assert_allclose(system.q, np.zeros(10))
+    np.testing.assert_allclose(system.p, np.zeros(10))
+
+
 def test_kink_moves_in_the_requested_direction():
     n = 200
     q_right, p_right = SineGordonChain.kink(n, center=80, width=1.0, velocity=0.4, polarity=1)

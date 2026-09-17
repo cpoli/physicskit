@@ -11,6 +11,7 @@ import pytest
 
 from physicskit.classical.systems.rotations import (
     EulersDisk,
+    EulerTop,
     HeavySymmetricTop,
     Rattleback,
     eulers_disk_theta_analytic,
@@ -39,6 +40,39 @@ def test_theta_equilibrium_is_a_true_minimum_of_effective_potential():
     v_at_eq = effective_potential_symmetric_top(theta_eq, p_phi, p_psi, I1, I3, Mgl)
     for delta in (-0.05, 0.05):
         assert effective_potential_symmetric_top(theta_eq + delta, p_phi, p_psi, I1, I3, Mgl) > v_at_eq
+
+
+def test_nutation_frequency_without_explicit_theta_eq_matches_passing_it_explicitly():
+    """theta_eq is optional and, if omitted, is located internally via
+    find_theta_equilibrium -- check that path gives the same answer as
+    passing the same equilibrium explicitly."""
+    I1, I3, Mgl = 1.0, 0.5, 9.81
+    p_phi, p_psi = 8.78, 10.0
+    theta_eq = find_theta_equilibrium(p_phi, p_psi, I1, I3, Mgl)
+    explicit = nutation_frequency(p_phi, p_psi, I1, I3, Mgl, theta_eq=theta_eq)
+    implicit = nutation_frequency(p_phi, p_psi, I1, I3, Mgl)
+    assert implicit == pytest.approx(explicit)
+
+
+def test_heavy_symmetric_top_precession_nutation_rate_matches_qdot():
+    top = HeavySymmetricTop([0.0, 0.5, 0.0], [0.2, -0.1, 0.3], I1=1.0, I3=0.5, M=1.0, l=1.0, g=9.81)
+    phidot, thetadot = top.precession_nutation_rate()
+    assert phidot == pytest.approx(top.qdot[0])
+    assert thetadot == pytest.approx(top.qdot[1])
+
+
+def test_euler_top_omega_and_quaternion_properties_match_state():
+    omega0 = [0.01, 1.0, 0.01]
+    quat0 = [1.0, 0.0, 0.0, 0.0]
+    top = EulerTop(omega0, I1=1.0, I2=2.0, I3=3.0, quat0=quat0)
+    np.testing.assert_allclose(top.omega, omega0)
+    np.testing.assert_allclose(top.quaternion, quat0)
+
+
+def test_eulers_disk_theta_and_phi_properties_match_state():
+    disk = EulersDisk(0.5, phi0=1.2, decay_rate=0.02, precession_const=1.0)
+    assert disk.theta == pytest.approx(0.5)
+    assert disk.phi == pytest.approx(1.2)
 
 
 @pytest.mark.slow
