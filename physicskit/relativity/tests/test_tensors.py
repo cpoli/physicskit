@@ -51,6 +51,15 @@ def test_flrw_metric_flat_matter_dominated():
     assert g[1, 1] == pytest.approx(a_func(0.0) ** 2)
 
 
+def test_flrw_metric_closed_and_open_use_sin_and_sinh_of_chi():
+    a_func = lambda t: 1.0
+    coords = np.array([0.0, 0.5, np.pi / 2.0, 0.0])
+    g_closed = flrw_metric(coords, a_func, k=1.0)
+    g_open = flrw_metric(coords, a_func, k=-1.0)
+    assert g_closed[2, 2] == pytest.approx(a_func(0.0) ** 2 * np.sin(0.5) ** 2)
+    assert g_open[2, 2] == pytest.approx(a_func(0.0) ** 2 * np.sinh(0.5) ** 2)
+
+
 def test_alcubierre_metric_is_flat_far_from_the_bubble():
     coords = np.array([0.0, 1000.0, 1000.0, 1000.0])
     g = alcubierre_metric(coords, v_s=2.0, sigma=8.0, R=1.0)

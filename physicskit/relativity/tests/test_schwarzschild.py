@@ -50,6 +50,14 @@ def test_light_escape_above_critical_impact_parameter():
     assert traj["r"][-1] > traj["r"].min()
 
 
+def test_perihelion_precession_is_empty_for_too_short_a_trajectory():
+    bh = SchwarzschildBlackHole(M=1.0)
+    y0 = bh.eccentric_orbit_initial_state(r0=100.0, eccentricity_boost=0.03)
+    traj = bh.integrate_geodesic(y0, dtau=0.05, n_steps=50)  # fewer than 2 periapsis passages
+    prec = bh.perihelion_precession(traj)
+    assert prec.shape == (0,)
+
+
 def test_weak_field_precession_converges_for_wide_low_eccentricity_orbit():
     bh = SchwarzschildBlackHole(M=1.0)
     y0 = bh.eccentric_orbit_initial_state(r0=100.0, eccentricity_boost=0.03)

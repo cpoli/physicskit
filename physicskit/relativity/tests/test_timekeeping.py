@@ -15,6 +15,12 @@ def test_earth_mass_geometrized_is_a_few_millimeters():
     assert pytest.approx(0.004435, abs=0.0002) == M
 
 
+def test_clock_rate_factor_defaults_m_to_earth_mass_geometrized():
+    rate_default = clock_rate_factor(EARTH_RADIUS_M, angular_velocity_si=0.0)
+    rate_explicit = clock_rate_factor(EARTH_RADIUS_M, angular_velocity_si=0.0, M=earth_mass_geometrized())
+    assert rate_default == pytest.approx(rate_explicit)
+
+
 def test_clock_rate_factor_static_is_pure_gravitational_redshift():
     M = earth_mass_geometrized()
     rate = clock_rate_factor(EARTH_RADIUS_M, angular_velocity_si=0.0, M=M)
