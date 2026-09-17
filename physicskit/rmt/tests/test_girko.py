@@ -26,6 +26,15 @@ def test_iid_ensemble_beta_is_none():
     assert ens.beta is None
 
 
+def test_iid_ensemble_real_entries_branch_produces_finite_eigenvalues():
+    # A fresh (uncached) direct .sample() call, to actually exercise the
+    # complex_entries=False code path rather than risk a disk-cache hit
+    # from a previous run with these same parameters.
+    ens = rmt.ensembles.IIDEnsemble(n=8, entry_sampler=rmt.ensembles.rademacher, complex_entries=False, seed=99)
+    spectrum = ens.sample(n_samples=2)
+    assert np.all(np.isfinite(spectrum.eigenvalues))
+
+
 @pytest.mark.parametrize(
     "name,entry_sampler,complex_entries",
     [

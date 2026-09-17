@@ -110,6 +110,10 @@ def test_matrix_construction_hermiticity_and_type_directly():
     assert np.abs(h_diii - h_diii.conj().T).max() < 1e-10
     assert np.abs(h_diii.real).max() == 0.0  # exactly purely-imaginary entries
 
+    a_real = _dense_hermitian(n, rng, complex_entries=False)
+    assert np.abs(a_real.imag).max() == 0.0  # exactly real
+    assert np.abs(a_real - a_real.T).max() < 1e-10
+
 
 def test_all_four_classes_are_structurally_distinct():
     # Sanity check that the four classes don't accidentally collapse to

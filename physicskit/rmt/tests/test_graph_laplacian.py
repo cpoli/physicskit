@@ -20,6 +20,15 @@ def test_invalid_p_rejected():
         rmt.ensembles.GraphLaplacianEnsemble(n=10, p=1.5, seed=0)
 
 
+def test_normalized_laplacian_fresh_sample_produces_finite_eigenvalues():
+    # A fresh (uncached) direct .sample() call, to actually exercise the
+    # normalized=True code path rather than risk a disk-cache hit from a
+    # previous run with these same parameters.
+    ens = rmt.ensembles.GraphLaplacianEnsemble(n=15, p=0.5, normalized=True, seed=123)
+    spectrum = ens.sample(n_samples=2)
+    assert np.all(np.isfinite(spectrum.eigenvalues))
+
+
 def test_reproducibility():
     ens_a = rmt.ensembles.GraphLaplacianEnsemble(n=40, p=0.2, seed=42)
     ens_b = rmt.ensembles.GraphLaplacianEnsemble(n=40, p=0.2, seed=42)

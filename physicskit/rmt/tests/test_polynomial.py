@@ -23,6 +23,12 @@ def test_default_num_factors_is_two():
     assert ens.num_factors == 2
 
 
+def test_beta_1_real_factors_produce_finite_eigenvalues():
+    ens = rmt.ensembles.PolynomialEnsemble(n=8, num_factors=2, beta=1, seed=7)
+    spectrum = ens.sample(n_samples=2)
+    assert np.all(np.isfinite(spectrum.eigenvalues))
+
+
 def test_eigenvalues_are_nonnegative():
     ens = rmt.ensembles.PolynomialEnsemble(n=50, num_factors=3, seed=1)
     spectrum = cached_sample(ens, n_samples=5)

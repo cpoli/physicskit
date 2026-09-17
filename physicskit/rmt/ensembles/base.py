@@ -54,7 +54,9 @@ class MatrixEnsemble(ABC):
         -------
         numpy.ndarray, shape (n,)
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover -- unreachable: ABC blocks
+        # instantiating any subclass that doesn't override this abstract method,
+        # so this body can never actually run.
 
     def _sample_eigenvalues_and_vectors(self, rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
         """Draw one realization's eigenvalues AND eigenvectors (columns).

@@ -152,6 +152,15 @@ def test_eigenvalues_are_real():
     assert np.all(np.isfinite(spectrum.eigenvalues))
 
 
+def test_beta_2_fresh_sample_is_real_and_finite():
+    # A fresh (uncached) direct .sample() call, to actually exercise the
+    # complex-construction (beta != 1) branch rather than risk a cache hit.
+    ens = rmt.ensembles.TwoBodyRandomEnsemble(n_particles=2, n_levels=4, beta=2, seed=777)
+    spectrum = ens.sample(n_samples=2)
+    assert not np.iscomplexobj(spectrum.eigenvalues)
+    assert np.all(np.isfinite(spectrum.eigenvalues))
+
+
 def test_reproducibility():
     ens_a = rmt.ensembles.TwoBodyRandomEnsemble(n_particles=3, n_levels=6, seed=42)
     ens_b = rmt.ensembles.TwoBodyRandomEnsemble(n_particles=3, n_levels=6, seed=42)

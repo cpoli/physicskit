@@ -182,6 +182,14 @@ def test_mass_exponent_is_exactly_zero_at_q_1():
     assert r_squared == 1.0
 
 
+def test_multifractal_dimension_rejects_q_1():
+    def factory(n, seed):
+        return rmt.ensembles.PowerLawBandedEnsemble(n=n, b=1.0, alpha=1.0, seed=seed)
+
+    with pytest.raises(ValueError):
+        rmt.stats.multifractal_dimension(factory, n_values=[100, 200], q=1.0, n_samples=5, seed=0)
+
+
 @pytest.mark.slow
 def test_mass_exponent_matches_multifractal_dimension_relation():
     def factory(n, seed):

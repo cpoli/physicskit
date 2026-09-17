@@ -71,6 +71,13 @@ def test_edge_scale_beta4_has_extra_factor_of_two():
     assert scale_4 != pytest.approx(scale_1)  # the easy-to-miss distinction
 
 
+def test_edge_scale_and_rvs_reject_unsupported_beta():
+    with pytest.raises(ValueError):
+        rmt.stats.tracy_widom_edge_scale(100, beta=3)
+    with pytest.raises(ValueError):
+        rmt.stats.tracy_widom_rvs(5, beta=3, rng=np.random.default_rng(0))
+
+
 GAUSSIAN_TW = [
     ("GOE", rmt.ensembles.GOE, 1),
     ("GUE", rmt.ensembles.GUE, 2),

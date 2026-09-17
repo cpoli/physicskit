@@ -53,12 +53,12 @@ class Benchmark(ABC):
     @abstractmethod
     def theoretical_cdf(self, x: np.ndarray) -> np.ndarray:
         """Exact theoretical CDF, vectorized over x."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover -- unreachable, see MatrixEnsemble._sample_eigenvalues
 
     @abstractmethod
     def reference_samples(self, size: int, rng: np.random.Generator) -> np.ndarray:
         """Draw ``size`` i.i.d. samples from the theoretical distribution."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover -- unreachable, see MatrixEnsemble._sample_eigenvalues
 
     #: Reference-sample size used for the Wasserstein comparison. Kept
     #: large and fixed (rather than tied to len(data)) so the reference

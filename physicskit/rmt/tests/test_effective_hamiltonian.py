@@ -114,3 +114,27 @@ def test_zero_coupling_is_equivalent_to_zero_channels():
     ens = rmt.ensembles.EffGUE(n=25, m=6, coupling=0.0, seed=7)
     spectrum = cached_sample(ens, n_samples=5)
     assert np.abs(spectrum.eigenvalues.imag).max() < 1e-9
+
+
+def test_zero_channels_fresh_sample_recovers_hermitian_limit():
+    # A fresh (uncached) direct .sample() call, so the m=0 -> Gamma=0
+    # branch is actually exercised rather than risking a disk-cache hit.
+    ens = rmt.ensembles.EffGOE(n=6, m=0, seed=555)
+    spectrum = ens.sample(n_samples=2)
+    assert np.abs(spectrum.eigenvalues.imag).max() < 1e-9
+
+
+def test_sample_hamiltonian_and_coupling_reject_invalid_beta():
+    from physicskit.rmt.ensembles.effective_hamiltonian import _sample_coupling, _sample_hamiltonian
+
+    with pytest.raises(ValueError):
+        _sample_hamiltonian(5, np.random.default_rng(0), beta=3)
+    with pytest.raises(ValueError):
+        _sample_coupling(5, 3, np.random.default_rng(0), beta=3)
+
+
+def test_effective_hamiltonian_ensemble_rejects_invalid_beta_and_negative_m():
+    with pytest.raises(ValueError):
+        rmt.ensembles.EffectiveHamiltonianEnsemble(n=5, m=1, beta=3, seed=0)
+    with pytest.raises(ValueError):
+        rmt.ensembles.EffectiveHamiltonianEnsemble(n=5, m=-1, beta=2, seed=0)

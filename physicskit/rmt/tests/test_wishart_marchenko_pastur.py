@@ -108,3 +108,13 @@ def test_invalid_parameters_rejected():
         rmt.validation.MarchenkoPastur(gamma=1.5)  # only (0, 1] supported
     with pytest.raises(ValueError):
         rmt.validation.MarchenkoPastur(gamma=0.0)
+
+
+def test_mp_cdf_is_zero_below_and_one_above_support_and_monotonic():
+    gamma = 0.5
+    lo, hi = rmt.stats.mp_support(gamma)
+    x = np.linspace(lo - 0.5, hi + 0.5, 20)
+    cdf = rmt.stats.mp_cdf(x, gamma)
+    assert cdf[0] == 0.0
+    assert cdf[-1] == 1.0
+    assert np.all(np.diff(cdf) >= -1e-12)

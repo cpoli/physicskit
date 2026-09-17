@@ -264,3 +264,10 @@ def test_qcd_dirac_reproducibility(name, cls, ch_cls, beta):
     spec_a = ens_a.sample(n_samples=3)
     spec_b = ens_b.sample(n_samples=3)
     np.testing.assert_allclose(spec_a.eigenvalues, spec_b.eigenvalues)
+
+
+def test_sample_block_rejects_invalid_beta():
+    from physicskit.rmt.ensembles.chiral import _sample_block
+
+    with pytest.raises(ValueError):
+        _sample_block(5, 6, np.random.default_rng(0), beta=3)

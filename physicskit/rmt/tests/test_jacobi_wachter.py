@@ -112,3 +112,13 @@ def test_wachter_pdf_zero_outside_support():
     lo, hi = rmt.stats.wachter_support(a, b)
     assert rmt.stats.wachter_pdf(np.array([lo - 0.1, hi + 0.1]), a, b)[0] == 0.0
     assert rmt.stats.wachter_pdf(np.array([lo - 0.1, hi + 0.1]), a, b)[1] == 0.0
+
+
+def test_wachter_cdf_is_zero_below_and_one_above_support_and_monotonic():
+    a, b = 2.0, 3.0
+    lo, hi = rmt.stats.wachter_support(a, b)
+    x = np.linspace(lo - 0.1, hi + 0.1, 20)
+    cdf = rmt.stats.wachter_cdf(x, a, b)
+    assert cdf[0] == 0.0
+    assert cdf[-1] == 1.0
+    assert np.all(np.diff(cdf) >= -1e-12)

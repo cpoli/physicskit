@@ -111,3 +111,8 @@ def test_haar_orthogonal_ensemble_has_real_eigenvalues_unlike_coe():
     coe_eigs = np.exp(1j * coe_spectrum.eigenvalues)
     coe_real_fraction = np.mean(np.abs(coe_eigs.imag) < 1e-8)
     assert coe_real_fraction < 0.01
+
+
+def test_symplectic_form_rejects_odd_dimension():
+    with pytest.raises(ValueError):
+        symplectic_form(3)

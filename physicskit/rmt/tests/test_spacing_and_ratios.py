@@ -108,3 +108,15 @@ def test_spacing_and_ratio_agree_independently(name, cls, beta):
 
     assert spacing_result.ks_statistic < 0.02
     assert ratio_result.ks_statistic < 0.02
+
+
+def test_ratio_statistics_and_spacings_skip_rows_too_short_after_edge_trim():
+    # edge_trim=0.5 on a small n leaves fewer than the required minimum
+    # eigenvalues per row, so every row is skipped (the "continue" guard)
+    # and pooling across zero surviving rows raises downstream.
+    ens = rmt.ensembles.GOE(n=5, seed=0)
+    spectrum = ens.sample(n_samples=3)
+    with pytest.raises(ValueError):
+        rmt.stats.ratio_statistics(spectrum, edge_trim=0.5)
+    with pytest.raises(ValueError):
+        rmt.stats.nearest_neighbor_spacings(spectrum, rmt.stats.semicircle_cdf, edge_trim=0.5)

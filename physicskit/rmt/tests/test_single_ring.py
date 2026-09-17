@@ -35,6 +35,14 @@ def test_wishart_moment_identities():
     assert np.mean(1.0 / eigs) == pytest.approx(1.0 / (1.0 - gamma), rel=0.02)
 
 
+def test_single_ring_radii_from_uniform_singular_values():
+    # Constant singular values s=1 for everything -> a genuine circle
+    # (r_in = r_out = 1), the trivial sanity check of the raw formula.
+    r_in, r_out = rmt.stats.single_ring_radii(np.ones(50))
+    assert r_in == pytest.approx(1.0)
+    assert r_out == pytest.approx(1.0)
+
+
 def test_single_ring_radii_matches_wishart_theory():
     gamma = 0.4
     r_in, r_out = rmt.stats.single_ring_radii_wishart_theory(gamma)
@@ -52,6 +60,25 @@ def test_single_ring_radii_rejects_invalid_gamma():
 def test_nonhermitian_wishart_rejects_gamma_geq_1():
     with pytest.raises(ValueError):
         rmt.ensembles.NonHermitianWishartEnsemble(n=100, m=100, seed=0)
+
+
+def test_nonhermitian_wishart_rejects_nonpositive_beta():
+    with pytest.raises(ValueError):
+        rmt.ensembles.NonHermitianWishartEnsemble(n=10, m=20, beta=0.0, seed=0)
+
+
+def test_single_ring_ensemble_and_nonhermitian_wishart_fresh_samples_are_finite():
+    # Fresh (uncached) direct .sample() calls, to actually exercise
+    # _sample_eigenvalues/natural_scale rather than risk a cache hit.
+    ens1 = rmt.ensembles.SingleRingEnsemble(n=6, singular_value_sampler=lambda rng, n: np.ones(n), seed=321)
+    spectrum1 = ens1.sample(n_samples=2)
+    assert np.all(np.isfinite(spectrum1.eigenvalues))
+    assert ens1.natural_scale() == 1.0
+
+    ens2 = rmt.ensembles.NonHermitianWishartEnsemble(n=6, m=12, seed=321)
+    spectrum2 = ens2.sample(n_samples=2)
+    assert np.all(np.isfinite(spectrum2.eigenvalues))
+    assert ens2.natural_scale() == 1.0
 
 
 def test_nonhermitian_wishart_eigenvalue_radii_stay_within_ring_edges():
