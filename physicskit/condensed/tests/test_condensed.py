@@ -37,7 +37,7 @@ from physicskit.condensed.models import (
     kitaev_chain_bdg_real_space,
     ssh_lattice_hamiltonian,
 )
-from physicskit.condensed.tight_binding import Lattice, build_finite_cluster, build_ribbon
+from physicskit.condensed.tight_binding import Hamiltonian, Lattice, build_finite_cluster, build_ribbon
 from physicskit.condensed.topological_insulator_3d import (
     topological_insulator_3d_hamiltonian,
     topological_insulator_3d_slab_hamiltonian,
@@ -137,6 +137,14 @@ class TestBuildFiniteCluster:
         # of near-zero-energy edge states with no bulk counterpart.
         eigs = np.linalg.eigvalsh(H)
         assert np.sum(np.abs(eigs) < 0.2) > 5
+
+    def test_scalar_n_cells_broadcasts_to_every_dimension(self):
+        """A single int n_cells for a 2D lattice means the same cell count
+        along both dimensions, equivalent to passing the explicit tuple."""
+        H_scalar, positions_scalar, _ = build_finite_cluster(graphene_lattice_hamiltonian(t=1.0), n_cells=4)
+        H_tuple, positions_tuple, _ = build_finite_cluster(graphene_lattice_hamiltonian(t=1.0), n_cells=(4, 4))
+        assert H_scalar.shape == H_tuple.shape
+        assert np.allclose(positions_scalar, positions_tuple)
 
     def test_keep_predicate_carves_a_disk(self):
         lat = Lattice.honeycomb()
@@ -299,6 +307,12 @@ class TestAndersonLocalization:
         xi = localization_length(mid_state)
         assert 0 < xi < 300
 
+    def test_flat_density_has_infinite_localization_length(self):
+        """A uniform |psi|^2 has neither a growing left flank nor a decaying
+        right flank around its (arbitrary) peak, so neither slope condition
+        is met and the function reports infinite localization length."""
+        assert localization_length(np.ones(200)) == float("inf")
+
 
 class TestBHZEdgeStates:
     def test_helical_edge_states_in_topological_regime(self):
@@ -423,6 +437,19 @@ class TestLaughlin:
         samples = np.array([laughlin_metropolis_sweep(z, m=m, step=1.0).copy() for _ in range(150)])
         r, density = laughlin_radial_density(samples, r_max=2 * R0, n_bins=20)
         assert density[-1] < density[2]
+
+
+class TestLatticeFactories:
+    def test_triangular_kagome_and_cubic_have_expected_orbital_counts(self):
+        assert Lattice.triangular().n_orbitals == 1
+        assert Lattice.kagome().n_orbitals == 3
+        assert Lattice.cubic().dim == 3
+
+
+def test_add_hopping_rejects_diagonal_onsite_term():
+    H = Hamiltonian(Lattice.chain())
+    with pytest.raises(ValueError, match="onsite"):
+        H.add_hopping(0, 0, (0,), 1.0)
 
 
 def test_public_api_exposed_via_pk_condensed():
