@@ -3,13 +3,53 @@ import pytest
 
 from physicskit.chaos.systems.continuous import (
     Chua,
+    DoublePendulum,
     DrivenPendulum,
+    Duffing,
     MagneticPendulum,
     RestrictedThreeBody,
+    Rossler,
     effective_potential,
     lagrange_points,
 )
 from physicskit.chaos.utils.metrics import energy_drift
+
+
+def test_rossler_attractor_trajectory_is_finite_and_matches_rhs():
+    system = Rossler(a=0.2, b=0.2, c=5.7)
+    assert system.initial_state().tolist() == [1.0, 1.0, 1.0]
+    t, states = system.trajectory(n_steps=2000, dt=0.01)
+    assert np.all(np.isfinite(states))
+    assert t.shape == (2001,)
+
+    deriv = system.rhs(states[0], t[0])
+    assert deriv.shape == (3,)
+    assert np.allclose(deriv, [-states[0, 1] - states[0, 2], states[0, 0] + 0.2 * states[0, 1], 0.2 + states[0, 2] * (states[0, 0] - 5.7)])
+
+
+def test_double_pendulum_and_magnetic_pendulum_rhs_match_trajectory():
+    dp = DoublePendulum()
+    state0 = dp.initial_state()
+    d = dp.rhs(state0, 0.0)
+    assert d.shape == state0.shape
+    assert np.all(np.isfinite(d))
+
+    mp = MagneticPendulum()
+    state0_mp = mp.initial_state()
+    d_mp = mp.rhs(state0_mp, 0.0)
+    assert d_mp.shape == state0_mp.shape
+    assert np.all(np.isfinite(d_mp))
+
+
+def test_duffing_initial_state_and_rhs():
+    system = Duffing(delta=0.3, alpha=-1.0, beta=1.0, gamma=0.3, omega=1.2)
+    state0 = system.initial_state()
+    assert state0.shape == (2,)
+    d = system.rhs(state0, 0.0)
+    assert d.shape == (2,)
+    assert np.all(np.isfinite(d))
+    _, states = system.trajectory(state0=state0, n_steps=100, dt=0.01)
+    assert np.all(np.isfinite(states))
 
 
 def test_chua_trajectory_is_finite_and_bounded():

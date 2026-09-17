@@ -32,6 +32,29 @@ def test_average_log_divergence_returns_matching_shapes():
     assert steps.size > 0
 
 
+def test_average_log_divergence_stops_early_once_no_pairs_remain_in_range():
+    """With max_iter set far beyond what the series length can support, the
+    forward-evolution loop must break out early (rather than index out of
+    bounds) once every candidate pair's forward offset runs past the end of
+    the series."""
+    series = np.sin(np.linspace(0, 20, 60))
+    steps, log_div = average_log_divergence(series, dim=2, tau=1, max_iter=1000)
+    assert steps.shape == log_div.shape
+    assert steps.size > 0
+    assert steps[-1] < 1000 - 1
+
+
+def test_average_log_divergence_skips_steps_with_only_exact_zero_distances():
+    """A constant series makes every embedded point identical, so its
+    nearest-neighbor distance is exactly zero at every forward step; those
+    steps must be skipped (not averaged as log(0) = -inf), leaving no valid
+    steps at all here."""
+    series = np.full(50, 3.0)
+    steps, log_div = average_log_divergence(series, dim=2, tau=1, max_iter=5)
+    assert steps.shape == (0,)
+    assert log_div.shape == (0,)
+
+
 @pytest.mark.slow
 def test_rosenstein_lyapunov_matches_known_lorenz_exponent():
     """The Lorenz system's largest Lyapunov exponent is well known to be

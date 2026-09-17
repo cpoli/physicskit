@@ -61,6 +61,18 @@ def test_bakers_map_rejects_invalid_alpha():
         BakersMap(alpha=1.5)
 
 
+def test_logistic_map_step_matches_trajectory_first_iteration():
+    """LogisticMap.trajectory() uses a fast, standalone numba loop rather
+    than calling .step() itself; check .step() directly gives the same
+    first iteration as trajectory() does, so the two paths can't diverge."""
+    system = LogisticMap(r=3.9)
+    state0 = np.array([0.37])
+    stepped = system.step(state0)
+    traj = system.trajectory(state0, n_iter=1)
+    assert stepped.shape == (1,)
+    np.testing.assert_allclose(stepped, traj[1])
+
+
 def test_logistic_map_state_stays_in_unit_interval():
     system = LogisticMap(r=3.9)
     traj = system.trajectory(np.array([0.37]), n_iter=2000)
