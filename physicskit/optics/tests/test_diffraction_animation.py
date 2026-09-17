@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from matplotlib.animation import PillowWriter
 
 from physicskit.optics.visualizers import animate_diffraction_propagation
 from physicskit.optics.wave import angular_spectrum_propagate, double_slit_aperture, intensity
 
 
+@pytest.mark.slow
 def test_diffraction_propagation_animation(tmp_path):
     dx = 1e-3
     ap = double_slit_aperture((64, 64), dx=dx, width=2e-3, separation=1e-2).astype(complex)

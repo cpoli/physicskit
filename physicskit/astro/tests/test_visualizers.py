@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 from matplotlib.animation import PillowWriter
 from matplotlib.collections import LineCollection
 
@@ -6,6 +7,7 @@ from physicskit.astro.nbody import NBodySystem, figure_eight_initial_conditions
 from physicskit.astro.visualizers import animate_nbody_trajectories
 
 
+@pytest.mark.slow
 def test_animate_nbody_trajectories_figure_eight_saves_gif(tmp_path):
     positions, velocities, masses = figure_eight_initial_conditions()
     system = NBodySystem(positions, velocities, masses)

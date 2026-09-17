@@ -53,12 +53,13 @@ def test_kicked_rotor_coherent_state_husimi_peaks_at_its_own_center():
     assert p_grid[idx] == pytest.approx(p0, abs=0.1)
 
 
+@pytest.mark.slow
 def test_kicked_rotor_husimi_peak_tracks_classical_orbit_at_weak_kick():
     """At small k the classical map is near-integrable, so a narrow wavepacket's
     Husimi peak should closely track the classical StandardMap orbit for a
     handful of iterations, before it has a chance to spread appreciably."""
     k = 0.3
-    dim = 500
+    dim = 200
     theta0, p0 = 1.0, 1.0
     qkr = QuantumKickedRotor(k=k, dim=dim)
     psi = qkr.coherent_state(theta0, p0)
@@ -67,7 +68,7 @@ def test_kicked_rotor_husimi_peak_tracks_classical_orbit_at_weak_kick():
     classical = StandardMap(k=k).trajectory(np.array([theta0, p0]), n_iter=4)
 
     for i in range(5):
-        theta_grid, p_grid, husimi = qkr.husimi(states[i], resolution=150)
+        theta_grid, p_grid, husimi = qkr.husimi(states[i], resolution=80)
         idx = np.unravel_index(np.argmax(husimi), husimi.shape)
         assert theta_grid[idx] == pytest.approx(classical[i, 0], abs=0.15)
         assert p_grid[idx] == pytest.approx(classical[i, 1], abs=0.15)

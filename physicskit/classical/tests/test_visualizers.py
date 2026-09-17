@@ -9,6 +9,7 @@ that a figure object came back.
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from matplotlib.animation import PillowWriter
 
 from physicskit.classical.systems.chains import FPUTChain
@@ -81,6 +82,7 @@ def test_plot_so3_momentum_sphere():
     assert ax is not None
 
 
+@pytest.mark.slow
 def test_modal_energy_bars_and_animation(tmp_path):
     chain = FPUTChain(n=16, beta=0.5, mode=1, amplitude=0.5)
     result = chain.integrate((0, 5), dt=0.05, method="yoshida4")  # short: this only needs a few frames
@@ -94,6 +96,7 @@ def test_modal_energy_bars_and_animation(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_side_by_side_animator_pendulum_and_orbit(tmp_path):
     dp = DoublePendulum([2.0, 1.0], [0.5, -0.3])
     result = dp.integrate((0, 0.02), dt=1e-4, method="implicit_midpoint")  # short: just needs a few frames
@@ -113,6 +116,7 @@ def test_side_by_side_animator_pendulum_and_orbit(tmp_path):
     assert out2.exists() and out2.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_elastic_pendulum_saves_gif(tmp_path):
     system = ElasticPendulum([0.1, 0.05], [0.0, 0.0])
     # short: animate_elastic_pendulum has no stride and renders one frame
@@ -124,6 +128,7 @@ def test_animate_elastic_pendulum_saves_gif(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_rigid_body_tumble_saves_gif(tmp_path):
     top = EulerTop([0.01, 1.0, 0.01], I1=1.0, I2=2.0, I3=3.0)
     result = top.integrate((0, 2.0), dt=1e-3, method="implicit_midpoint")
@@ -133,6 +138,7 @@ def test_animate_rigid_body_tumble_saves_gif(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_eulers_disk_saves_gif(tmp_path):
     disk = EulersDisk(0.5, decay_rate=0.02, precession_const=1.0)
     # short: animate_eulers_disk has no stride and renders one frame per
@@ -144,6 +150,7 @@ def test_animate_eulers_disk_saves_gif(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_rattleback_saves_gif(tmp_path):
     system = Rattleback([0.01, 0.01, 3.0])
     result = system.integrate((0.0, 8.0), dt=5e-3, method="rk4")

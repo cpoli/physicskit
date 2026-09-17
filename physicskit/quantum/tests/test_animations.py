@@ -4,6 +4,7 @@ known behavior (spreading, tunneling, splitting, entanglement growth, ...).
 """
 
 import numpy as np
+import pytest
 from matplotlib.animation import FuncAnimation, PillowWriter
 
 from physicskit.quantum._compat import trapz
@@ -26,6 +27,7 @@ def _save_and_check(anim: FuncAnimation, tmp_path, name: str):
 
 
 # 1. Double-slit: genuine 2D time propagation through a two-gap wall.
+@pytest.mark.slow
 def test_double_slit_propagation_animates(tmp_path):
     x = np.linspace(-15, 15, 96)
     y = np.linspace(-12, 12, 96)
@@ -52,6 +54,7 @@ def test_double_slit_propagation_animates(tmp_path):
 
 # 2. Quantum tunnelling: a wavepacket incident on a barrier splits into
 # reflected + transmitted pieces.
+@pytest.mark.slow
 def test_barrier_tunnelling_animates(tmp_path):
     barrier = FiniteSquareWell(V0=-6.0, width=1.0)
     x, frames, times = barrier.wavepacket_scattering(
@@ -100,6 +103,7 @@ def test_hydrogen_orbital_beating_animates():
 
 
 # 4. Harmonic-oscillator eigenstate superposition: plumbing onto animate_density.
+@pytest.mark.slow
 def test_harmonic_superposition_animates(tmp_path):
     ho = HarmonicOscillator()
     x = np.linspace(-10, 10, 400)
@@ -114,6 +118,7 @@ def test_harmonic_superposition_animates(tmp_path):
 
 
 # 5. Free wave-packet dispersion: plumbing onto animate_density.
+@pytest.mark.slow
 def test_wave_packet_dispersion_animates(tmp_path):
     gd = GaussianDispersion(x0=0.0, sigma0=1.0, k0=3.0)
     x = np.linspace(-30, 30, 600)
@@ -129,6 +134,7 @@ def test_wave_packet_dispersion_animates(tmp_path):
 
 # 6. Scattering off a finite well: resonance/reflection dynamics, sharing
 # FiniteSquareWell.wavepacket_scattering with the barrier case above.
+@pytest.mark.slow
 def test_well_scattering_animates(tmp_path):
     well = FiniteSquareWell(V0=20.0, width=2.0)
     x, frames, times = well.wavepacket_scattering(
@@ -148,6 +154,7 @@ def test_well_scattering_animates(tmp_path):
 
 
 # 7. Stern-Gerlach: the joint spatial density splits into two lobes.
+@pytest.mark.slow
 def test_stern_gerlach_splitting_animates(tmp_path):
     sg = SternGerlach(mu=2.0, grad_B=1.0, sigma0=1.0, sigma_x=2.0, k0=4.0)
     x = np.linspace(-15, 15, 60)
@@ -169,6 +176,7 @@ def test_stern_gerlach_splitting_animates(tmp_path):
 
 
 # 8. Rabi oscillations on the Bloch sphere.
+@pytest.mark.slow
 def test_rabi_bloch_sphere_animates(tmp_path):
     rabi = RabiProblem(omega0=1.0, omega_d=1.0, Omega=0.5)  # on resonance
     t_pi = np.pi / rabi.Omega  # a resonant pi-pulse fully inverts the population
@@ -186,6 +194,7 @@ def test_rabi_bloch_sphere_animates(tmp_path):
 
 
 # 9. Entangling Ising coupling: concurrence grows from 0 toward 1.
+@pytest.mark.slow
 def test_entanglement_growth_animates(tmp_path):
     ising = IsingEntangler(J=1.0)
     assert abs(ising.concurrence(ising.initial_state())) < 1e-12  # starts unentangled
@@ -200,6 +209,7 @@ def test_entanglement_growth_animates(tmp_path):
 
 
 # 10. Double-well tunneling oscillation: almost pure plumbing onto animate_density.
+@pytest.mark.slow
 def test_double_well_tunneling_animates(tmp_path):
     dw = DoubleWellSimulator(lam=0.3, a=1.5)
     result = dw.solve(n_states=2)

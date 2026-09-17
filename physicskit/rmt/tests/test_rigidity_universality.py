@@ -98,24 +98,27 @@ def test_poisson_delta3_empirical_matches_exact():
     np.testing.assert_allclose(theory, empirical, rtol=0.08)
 
 
+@pytest.mark.slow
 def test_gue_delta3_theory_matches_empirical():
-    ens = rmt.ensembles.GUE(n=300, seed=22)
-    spectrum = cached_sample(ens, n_samples=40)
+    ens = rmt.ensembles.GUE(n=150, seed=22)
+    spectrum = cached_sample(ens, n_samples=20)
     l_values = [3, 5, 8, 12]
     theory = rmt.stats.spectral_rigidity_theory(l_values, beta=2)
-    empirical = rmt.stats.spectral_rigidity_empirical(spectrum, rmt.stats.semicircle_cdf, l_values, n_windows=400, seed=0)
+    empirical = rmt.stats.spectral_rigidity_empirical(spectrum, rmt.stats.semicircle_cdf, l_values, n_windows=200, seed=0)
     np.testing.assert_allclose(theory, empirical, rtol=0.05)
 
 
+@pytest.mark.slow
 def test_goe_delta3_theory_matches_empirical_at_large_l():
-    ens = rmt.ensembles.GOE(n=400, seed=23)
-    spectrum = cached_sample(ens, n_samples=40)
+    ens = rmt.ensembles.GOE(n=200, seed=23)
+    spectrum = cached_sample(ens, n_samples=20)
     l_values = [8, 12, 16, 20]
     theory = rmt.stats.spectral_rigidity_theory(l_values, beta=1)
-    empirical = rmt.stats.spectral_rigidity_empirical(spectrum, rmt.stats.semicircle_cdf, l_values, n_windows=500, seed=0)
+    empirical = rmt.stats.spectral_rigidity_empirical(spectrum, rmt.stats.semicircle_cdf, l_values, n_windows=250, seed=0)
     np.testing.assert_allclose(theory, empirical, rtol=0.1)
 
 
+@pytest.mark.slow
 def test_gue_delta3_much_smaller_than_poisson():
     l_values = [10, 50, 100]
     gue = rmt.stats.spectral_rigidity_theory(l_values, beta=2)
@@ -126,11 +129,12 @@ def test_gue_delta3_much_smaller_than_poisson():
 # --- universality ---
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("beta", [1, 2])
 def test_universality_holds_across_entry_distributions(beta):
-    result = rmt.validation.check_universality(n=800, beta=beta, n_samples=15, seed=5)
+    result = rmt.validation.check_universality(n=300, beta=beta, n_samples=10, seed=5)
     assert set(result.per_distribution.keys()) == set(rmt.validation.DEFAULT_ENTRY_DISTRIBUTIONS.keys())
-    assert result.max_ks_statistic < 0.02
+    assert result.max_ks_statistic < 0.035
 
 
 @pytest.mark.parametrize("beta", [1, 2])

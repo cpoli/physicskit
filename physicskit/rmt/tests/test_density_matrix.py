@@ -102,6 +102,7 @@ def test_induced_measure_mean_purity_matches_exact_formula(n, k):
 # density (not merely against a remembered matrix-model recipe) ---
 
 
+@pytest.mark.slow
 def test_bures_hall_matches_exact_n2_marginal_density():
     # For n=2, the exact Bures-Hall joint density on the simplex
     # lambda1+lambda2=1 gives a closed-form 1-D density for the smaller
@@ -121,13 +122,17 @@ def test_bures_hall_matches_exact_n2_marginal_density():
         return np.clip(2.0 * np.vectorize(cdf_full)(np.clip(x, 0, 0.5)), 0.0, 1.0)
 
     ens = rmt.ensembles.BuresHallEnsemble(n=2, seed=4)
-    spectrum = cached_sample(ens, n_samples=50000)
+    spectrum = cached_sample(ens, n_samples=5000)
     smaller_eigs = spectrum.eigenvalues[:, 0]  # eigvalsh ascending -> smaller first
 
     from scipy.stats import kstest
 
+    # kstest's per-sample smaller_eig_cdf evaluation (a scipy.integrate.quad
+    # call each) dominates runtime, hence the smaller n_samples here vs. the
+    # 50000 used elsewhere in this file; the KS threshold is loosened by the
+    # matching ~sqrt(10) factor for the noisier statistic at this sample size.
     ks = kstest(smaller_eigs, smaller_eig_cdf)
-    assert ks.statistic < 0.02
+    assert ks.statistic < 0.06
 
 
 def test_bures_hall_matches_exact_n3_mean_purity_via_joint_density_integration():

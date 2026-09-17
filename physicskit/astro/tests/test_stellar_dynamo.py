@@ -123,14 +123,15 @@ def test_dominant_mode_growth_rate_recovers_known_slope():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("seed", [0, 1])
 def test_convection_grows_and_stays_finite(seed):
     """Small random noise should grow into sustained convective motion
     (kinetic energy at the end of the run meaningfully larger than at the
     start) without ever producing NaN/Inf, for at least two random seeds."""
-    nx = ny = 48
+    nx = ny = 32
     Lx = Ly = 2 * np.pi
-    times, omega_snapshots, T_snapshots = simulate_stellar_convection(nx, ny, Lx, Ly, seed=seed)
+    times, omega_snapshots, T_snapshots = simulate_stellar_convection(nx, ny, Lx, Ly, n_steps=2000, seed=seed)
 
     assert np.all(np.isfinite(omega_snapshots))
     assert np.all(np.isfinite(T_snapshots))

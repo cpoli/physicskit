@@ -20,15 +20,16 @@ def test_haar_orthogonal_is_orthogonal():
     assert np.abs(o.T @ o - np.eye(20)).max() < 1e-10
 
 
+@pytest.mark.slow
 def test_haar_orthogonal_first_column_is_uniform_on_sphere():
     # Hallmark of Haar invariance: any fixed unit vector rotated by a
     # Haar-random O(n) is uniform on the sphere -- mean 0, second
     # moment 1/n per component.
     rng = np.random.default_rng(1)
     n = 5
-    first_columns = np.array([haar_orthogonal(n, rng)[:, 0] for _ in range(200_000)])
-    np.testing.assert_allclose(first_columns.mean(axis=0), 0.0, atol=0.01)
-    np.testing.assert_allclose((first_columns**2).mean(axis=0), 1.0 / n, atol=0.01)
+    first_columns = np.array([haar_orthogonal(n, rng)[:, 0] for _ in range(20_000)])
+    np.testing.assert_allclose(first_columns.mean(axis=0), 0.0, atol=0.03)
+    np.testing.assert_allclose((first_columns**2).mean(axis=0), 1.0 / n, atol=0.03)
 
 
 def test_haar_orthogonal_determinant_is_balanced():

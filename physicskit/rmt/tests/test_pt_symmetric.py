@@ -100,13 +100,14 @@ def test_eigenvector_condition_number_spikes_near_exceptional_point():
     assert cond_near > 2 * cond_far
 
 
+@pytest.mark.slow
 def test_mean_exceptional_point_count_grows_with_system_size():
     # Ensemble-level statistic: mean EP count over many independent
     # realizations should grow with system size, roughly linearly in
     # min(p, q) -- verified during development (p=q=4,8,12 gave ~4.2,
     # 8.7, 13.1 over g in [0, 2]).
-    mean_small, err_small = rmt.stats.mean_exceptional_point_count(p=4, q=4, beta=2, g_max=2.0, n_realizations=15, seed=0)
-    mean_large, err_large = rmt.stats.mean_exceptional_point_count(p=12, q=12, beta=2, g_max=2.0, n_realizations=15, seed=1)
+    mean_small, err_small = rmt.stats.mean_exceptional_point_count(p=4, q=4, beta=2, g_max=2.0, n_realizations=8, n_grid=500, seed=0)
+    mean_large, err_large = rmt.stats.mean_exceptional_point_count(p=12, q=12, beta=2, g_max=2.0, n_realizations=8, n_grid=500, seed=1)
     assert mean_small > 0
     assert mean_large > 2 * mean_small
     assert err_small >= 0 and err_large >= 0

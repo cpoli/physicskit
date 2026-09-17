@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from scipy.signal import find_peaks
 
 from physicskit.semiclassical.core.gutzwiller import (
@@ -13,9 +14,10 @@ from physicskit.semiclassical.core.gutzwiller import (
 from physicskit.semiclassical.core.wkb import bohr_sommerfeld_energies
 
 
+@pytest.mark.slow
 def test_gutzwiller_trace_formula_peaks_match_bohr_sommerfeld_spectrum():
     V = lambda x: 0.5 * x**2
-    E_grid = np.linspace(0.2, 4.5, 600)
+    E_grid = np.linspace(0.2, 4.5, 200)
     dos = gutzwiller_density_of_states(E_grid, V, m=1.0, x_min=-20, x_max=20)
     peak_idx, _ = find_peaks(dos, height=0.3 * dos.max())
     exact = bohr_sommerfeld_energies(V, m=1.0, x_min=-20, x_max=20, n_max=4)

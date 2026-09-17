@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from physicskit.chaos.systems.continuous import DrivenPendulum, Duffing
 from physicskit.chaos.systems.maps import LogisticMap
@@ -101,6 +102,7 @@ def test_stroboscopic_bifurcation_sampler_shows_fixed_point_for_weak_forcing():
     assert np.ptp(samples) < 1e-3
 
 
+@pytest.mark.slow
 def test_driven_pendulum_stroboscopic_sampler_shows_period_doubling_amplitude_dependence():
     """The driven pendulum's forcing-amplitude sweep is the classic
     period-doubling demo: a weak forcing amplitude should settle to a
@@ -117,8 +119,8 @@ def test_driven_pendulum_stroboscopic_sampler_shows_period_doubling_amplitude_de
         make_system,
         state0=np.array([0.2, 0.0]),
         sample_period=period,
-        n_transient_periods=100,
-        n_keep_periods=20,
+        n_transient_periods=50,
+        n_keep_periods=15,
         component=0,
         dt=0.02,
     )

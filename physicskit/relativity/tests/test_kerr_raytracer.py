@@ -40,13 +40,14 @@ def test_central_ray_is_captured():
     assert outcomes[1, 1] == 1
 
 
+@pytest.mark.slow
 def test_shadow_area_shrinks_and_shifts_with_spin():
     fractions = []
     shifts = []
     for a in [0.0, 0.5, 0.9]:
         outcomes, _ = render_kerr_shadow_image(
-            ny=100,
-            nx=100,
+            ny=70,
+            nx=70,
             screen_half_width=15.0,
             screen_half_height=15.0,
             r_observer=200.0,

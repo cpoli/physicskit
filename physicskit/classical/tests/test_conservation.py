@@ -109,21 +109,24 @@ def test_foucault_pendulum_matches_analytic_precession():
     assert np.max(np.abs(y_rot)) < 1e-3
 
 
+@pytest.mark.slow
 def test_double_pendulum_conserves_energy():
     """Chaotic, non-separable system; validated via the implicit-midpoint
     symplectic integrator on the Legendre-transformed Hamiltonian."""
     system = DoublePendulum([2.0, 1.0], [0.5, -0.3])
-    _assert_conserved(system, dt=3e-5, method="implicit_midpoint")
+    _assert_conserved(system, dt=3e-5, method="implicit_midpoint", n_steps=10_000)
 
 
+@pytest.mark.slow
 def test_bead_on_rotating_hoop_conserves_energy():
     system = BeadOnRotatingHoop(0.3, 0.0, omega=3.0)
-    _assert_conserved(system, dt=2.2e-5, method="implicit_midpoint")
+    _assert_conserved(system, dt=2.2e-5, method="implicit_midpoint", n_steps=10_000)
 
 
+@pytest.mark.slow
 def test_coupled_oscillators_conserve_energy():
     system = CoupledOscillators([0.1, -0.2, 0.15], [0.0, 0.0, 0.0], n=3)
-    _assert_conserved(system, dt=1e-4, method="implicit_midpoint")
+    _assert_conserved(system, dt=1e-4, method="implicit_midpoint", n_steps=10_000)
 
 
 def test_henon_heiles_conserves_energy():
@@ -131,22 +134,24 @@ def test_henon_heiles_conserves_energy():
     _assert_conserved(system, dt=5e-3, method="yoshida4")
 
 
+@pytest.mark.slow
 def test_elastic_pendulum_conserves_energy():
     """2-DOF nonlinear (stretch, swing) Lagrangian system; validated via
     implicit midpoint on the Legendre-transformed Hamiltonian, same as
     DoublePendulum."""
     system = ElasticPendulum([0.1, 0.05], [0.0, 0.0])
-    _assert_conserved(system, dt=2e-5, method="implicit_midpoint")
+    _assert_conserved(system, dt=2e-5, method="implicit_midpoint", n_steps=10_000)
 
 
+@pytest.mark.slow
 def test_pendulum_swarm_conserves_energy_and_liouville_area():
     """Every particle in the swarm independently conserves energy over
-    the full 1e5-step run, and -- checked separately over a shorter
+    a 1e4-step run, and -- checked separately over a shorter
     window, before the patch shears into a filament thin enough that a
     convex-hull area estimate starts overstating it -- the occupied
     phase-space area (a proxy for Liouville's theorem) is preserved."""
     system = PendulumSwarm.from_box(1.0, 0.0, 0.05, 0.05, n=200, seed=1)
-    _assert_conserved(system, dt=1e-3, method="yoshida4")
+    _assert_conserved(system, dt=1e-3, method="yoshida4", n_steps=10_000)
 
     system2 = PendulumSwarm.from_box(1.0, 0.0, 0.05, 0.05, n=200, seed=1)
     area0 = system2.phase_space_area()
@@ -213,9 +218,10 @@ def test_euler_top_stable_axis_no_tumbling():
     assert np.max(np.abs(result.y[:, 2])) < 0.1
 
 
+@pytest.mark.slow
 def test_heavy_symmetric_top_conserves_energy():
     system = HeavySymmetricTop([0.0, 0.5, 0.0], [0.0, 0.0, 20.0], I1=1.0, I3=0.5, M=1.0, l=1.0, g=9.81)
-    _assert_conserved(system, dt=5e-5, method="implicit_midpoint")
+    _assert_conserved(system, dt=5e-5, method="implicit_midpoint", n_steps=10_000)
 
 
 @pytest.mark.parametrize(

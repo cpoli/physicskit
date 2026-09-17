@@ -7,12 +7,14 @@ animations build and save correctly.
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from matplotlib.animation import PillowWriter
 
 from physicskit.fluids.systems.instabilities import kelvin_helmholtz_ic, rayleigh_taylor_ic
 from physicskit.fluids.visualizers.flow_fields import animate_kelvin_helmholtz, animate_rayleigh_taylor
 
 
+@pytest.mark.slow
 def test_animate_kelvin_helmholtz_saves_to_gif(tmp_path):
     n, length = 64, 2 * np.pi
     omega0 = kelvin_helmholtz_ic(n, length, shear_width=0.1, perturbation_amplitude=0.05)
@@ -22,6 +24,7 @@ def test_animate_kelvin_helmholtz_saves_to_gif(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_rayleigh_taylor_saves_to_gif(tmp_path):
     n, length = 64, 2 * np.pi
     omega0, buoyancy0 = rayleigh_taylor_ic(n, length, atwood_number=0.3, perturbation_amplitude=0.01)

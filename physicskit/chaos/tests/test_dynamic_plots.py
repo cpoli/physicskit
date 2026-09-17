@@ -251,6 +251,7 @@ def test_animate_bakers_map_uses_square_markers():
     assert len(paths[0].vertices) in (4, 5)
 
 
+@pytest.mark.slow
 def test_animate_restricted_three_body_saves_gif(tmp_path):
     system = RestrictedThreeBody()
     anim = animate_restricted_three_body(system, dt=0.001, n_steps=800, skip=20)
@@ -259,6 +260,7 @@ def test_animate_restricted_three_body_saves_gif(tmp_path):
     assert out.exists() and out.stat().st_size > 0
 
 
+@pytest.mark.slow
 def test_animate_driven_pendulum_saves_gif(tmp_path):
     system = DrivenPendulum()
     anim = animate_driven_pendulum(system, dt=0.02, n_steps=60)

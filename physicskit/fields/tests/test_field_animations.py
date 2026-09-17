@@ -4,6 +4,7 @@ to a GIF, following the pattern in physicskit/classical/tests/test_visualizers.p
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from matplotlib.animation import PillowWriter
 
 from physicskit.fields.electrodynamics import (
@@ -38,6 +39,7 @@ def _save(anim, tmp_path, name):
 
 
 class TestSolitonAnimations:
+    @pytest.mark.slow
     def test_kdv_animation(self, tmp_path):
         x = np.linspace(-30, 30, 200, endpoint=False)
         u0 = kdv_soliton(x, c=4.0, x0=-15)
@@ -45,6 +47,7 @@ class TestSolitonAnimations:
         anim = animate_field_1d(x, frames, times, ylabel="u(x, t)")
         _save(anim, tmp_path, "kdv.gif")
 
+    @pytest.mark.slow
     def test_nls_animation(self, tmp_path):
         x = np.linspace(-40, 40, 256, endpoint=False)
         psi0 = nls_bright_soliton(x, t=0.0, A=1.0)
@@ -52,6 +55,7 @@ class TestSolitonAnimations:
         anim = animate_field_1d(x, frames, times, ylabel=r"$|\psi|$")
         _save(anim, tmp_path, "nls.gif")
 
+    @pytest.mark.slow
     def test_sine_gordon_animation(self, tmp_path):
         x = np.linspace(-50, 50, 400)
         dt = 0.4 * (x[1] - x[0])
@@ -63,6 +67,7 @@ class TestSolitonAnimations:
 
 
 class TestFDTDAnimations:
+    @pytest.mark.slow
     def test_dipole_radiation_animation(self, tmp_path):
         N = 40
         dx = dy = 2e-3
@@ -77,6 +82,7 @@ class TestFDTDAnimations:
         anim = animate_field_2d(X, Y, frames, times)
         _save(anim, tmp_path, "dipole.gif")
 
+    @pytest.mark.slow
     def test_dielectric_slab_animation(self, tmp_path):
         Nx, Ny = 60, 30
         dx = dy = 1e-3
@@ -95,6 +101,7 @@ class TestFDTDAnimations:
         # the wave should have visibly entered the slab region, not just reflected away
         assert np.max(np.abs(frames[:, 35:50, :])) > 0.0
 
+    @pytest.mark.slow
     def test_cavity_mode_animation(self, tmp_path):
         N = 25
         dx = dy = 1e-3
@@ -111,6 +118,7 @@ class TestFDTDAnimations:
 
 
 class TestGPEAnimations:
+    @pytest.mark.slow
     def test_vortex_precession_animation(self, tmp_path):
         n, length, g = 40, 12.0, 4.0
         X, Y, _, _, K2 = harmonic_trap_grid(n, length)
@@ -122,6 +130,7 @@ class TestGPEAnimations:
         anim = animate_density_2d(frames, extent=extent, times=times)
         _save(anim, tmp_path, "vortex.gif")
 
+    @pytest.mark.slow
     def test_self_focusing_animation(self, tmp_path):
         n, length = 64, 16.0
         X, Y, _, _, K2 = harmonic_trap_grid(n, length)
@@ -134,10 +143,12 @@ class TestGPEAnimations:
 
 
 class TestFluxTubeAndCasimirAnimations:
+    @pytest.mark.slow
     def test_flux_tube_animation(self, tmp_path):
         anim = animate_flux_tube((80, 20), dx=0.25, dy=0.25, separations=np.linspace(4.0, 16.0, 5))
         _save(anim, tmp_path, "flux_tube.gif")
 
+    @pytest.mark.slow
     def test_casimir_animation(self, tmp_path):
         anim = animate_casimir_modes(np.linspace(1.0, 5.0, 5))
         _save(anim, tmp_path, "casimir.gif")

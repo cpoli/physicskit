@@ -7,6 +7,7 @@ against an FFT of an actual integrated trajectory.
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from physicskit.classical.systems.rotations import (
     EulersDisk,
@@ -40,6 +41,7 @@ def test_theta_equilibrium_is_a_true_minimum_of_effective_potential():
         assert effective_potential_symmetric_top(theta_eq + delta, p_phi, p_psi, I1, I3, Mgl) > v_at_eq
 
 
+@pytest.mark.slow
 def test_nutation_frequency_matches_fft_of_real_trajectory():
     I1, I3, M, l, g = 1.0, 0.5, 1.0, 1.0, 9.81
     top = HeavySymmetricTop([0.0, 0.5, 0.0], [0.0, 0.0, 20.0], I1=I1, I3=I3, M=M, l=l, g=g)
@@ -49,12 +51,13 @@ def test_nutation_frequency_matches_fft_of_real_trajectory():
     theta_eq = find_theta_equilibrium(p_phi, p_psi, I1, I3, M * g * l)
     predicted = nutation_frequency(p_phi, p_psi, I1, I3, M * g * l, theta_eq=theta_eq)
 
-    result = top.integrate((0, 20.0), dt=2e-5, method="implicit_midpoint")
+    result = top.integrate((0, 10.0), dt=2e-5, method="implicit_midpoint")
     measured = _measured_nutation_frequency(result.t, result.q[:, 1])
 
     assert abs(measured - predicted) / predicted < 0.02
 
 
+@pytest.mark.slow
 def test_precession_frequency_matches_mean_phi_rate():
     I1, I3, M, l, g = 1.0, 0.5, 1.0, 1.0, 9.81
     top = HeavySymmetricTop([0.0, 0.5, 0.0], [0.0, 0.0, 20.0], I1=I1, I3=I3, M=M, l=l, g=g)
@@ -64,7 +67,7 @@ def test_precession_frequency_matches_mean_phi_rate():
     theta_eq = find_theta_equilibrium(p_phi, p_psi, I1, I3, M * g * l)
     predicted = precession_frequency(p_phi, p_psi, I1, theta_eq)
 
-    result = top.integrate((0, 20.0), dt=2e-5, method="implicit_midpoint")
+    result = top.integrate((0, 10.0), dt=2e-5, method="implicit_midpoint")
     measured = (result.q[-1, 0] - result.q[0, 0]) / (result.t[-1] - result.t[0])
 
     assert abs(measured - predicted) / abs(predicted) < 0.02

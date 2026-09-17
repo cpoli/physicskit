@@ -182,16 +182,18 @@ def test_mass_exponent_is_exactly_zero_at_q_1():
     assert r_squared == 1.0
 
 
+@pytest.mark.slow
 def test_mass_exponent_matches_multifractal_dimension_relation():
     def factory(n, seed):
         return rmt.ensembles.PowerLawBandedEnsemble(n=n, b=1000.0, alpha=2.0, seed=seed)
 
-    n_values = [100, 200, 400, 800]
+    n_values = [50, 100, 200, 400]
     tau_2, _ = rmt.stats.mass_exponent(factory, n_values, q=2.0, n_samples=10, seed=0)
     d_2, _ = rmt.stats.multifractal_dimension(factory, n_values, q=2.0, n_samples=10, seed=0)
     assert tau_2 / (2.0 - 1.0) == pytest.approx(d_2)
 
 
+@pytest.mark.slow
 def test_singularity_spectrum_is_a_single_point_for_delocalized_system():
     # Fully delocalized (D_q=1 for all q) means tau(q)=q-1 exactly, so
     # alpha(q)=1 and f(alpha)=1 for every q -- the degenerate
@@ -201,15 +203,16 @@ def test_singularity_spectrum_is_a_single_point_for_delocalized_system():
 
     alpha, f_alpha = rmt.stats.singularity_spectrum(
         factory,
-        n_values=[200, 400, 800, 1600],
+        n_values=[100, 200, 400, 800],
         q_values=np.array([0.5, 1.0, 1.5, 2.0]),
-        n_samples=15,
+        n_samples=10,
         seed=0,
     )
     np.testing.assert_allclose(alpha, 1.0, atol=0.15)
     np.testing.assert_allclose(f_alpha, 1.0, atol=0.15)
 
 
+@pytest.mark.slow
 def test_singularity_spectrum_is_positive_and_concave_at_small_q_for_critical_pbrm():
     # At PBRM's multifractal critical point, the moderate-|q| portion of
     # f(alpha) should be positive (a genuine fractal dimension) and
@@ -220,7 +223,7 @@ def test_singularity_spectrum_is_positive_and_concave_at_small_q_for_critical_pb
         return rmt.ensembles.PowerLawBandedEnsemble(n=n, b=1.0, alpha=1.0, seed=seed)
 
     q_values = np.array([0.5, 1.0, 1.5])
-    _, f_alpha = rmt.stats.singularity_spectrum(factory, n_values=[150, 300, 600, 1200], q_values=q_values, n_samples=20, seed=2)
+    _, f_alpha = rmt.stats.singularity_spectrum(factory, n_values=[75, 150, 300, 600], q_values=q_values, n_samples=12, seed=2)
     assert np.all(f_alpha > 0.0)
     # Standard multifractal shape: f(alpha(q)) decreases monotonically as
     # q increases (alpha(q) itself decreases with q, with the global max

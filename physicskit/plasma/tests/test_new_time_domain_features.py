@@ -56,6 +56,7 @@ class TestReconnection:
         e_high = magnetic_energy(r_high["psi"])
         assert e_high < e_low < e0
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         psi0 = reconnection_harris_ic(32, 32, Lx=20.0, Ly=20.0, sheet_width=1.0, perturbation_amplitude=0.2)
         anim = animate_reconnection(psi0, eta=0.02, v0=0.05, dt=0.02, steps_per_frame=5, n_frames=5, Lx=20.0, Ly=20.0)
@@ -86,6 +87,7 @@ class TestWeibelFilamentation:
         J = simulate_weibel_filamentation(x, t, wpe=1.0, temperature_anisotropy=4.0, n_modes=8, seed=0)
         assert np.std(J[1]) > 100 * np.std(J[0])
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         x = np.linspace(0, 20.0, 128, endpoint=False)
         t = np.linspace(0, 5.0, 6)
@@ -106,6 +108,7 @@ class TestLangmuirWave:
         peak_heights = field_energy[peaks]
         assert peak_heights[-1] > 0.5 * peak_heights[0]
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         k, L = 2 * np.pi / 4.0, 4.0
         x0, v0 = langmuir_wave_ic(4000, L=L, k_mode=k, alpha=0.05, v_th=0.05, seed=0)
@@ -116,6 +119,7 @@ class TestLangmuirWave:
 
 
 class TestTwoStreamAnimation:
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         x0, v0 = two_stream_ic(2000, L=10.0, v_drift=3.0, v_th=0.5, seed=0)
         anim = animate_two_stream_phase_space(x0, v0, L=10.0, ng=32, dt=0.05, steps_per_frame=5, n_frames=5)
@@ -137,6 +141,7 @@ class TestIonAcousticSoliton:
         assert shift == pytest.approx(4.0 * steps * dt, abs=0.5)
         assert u.max() == pytest.approx(u0.max(), abs=0.05)
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         x = np.linspace(-30, 30, 256, endpoint=False)
         u0 = ion_acoustic_soliton_profile(x, speed=4.0, x0=-15.0)
@@ -163,6 +168,7 @@ class TestAlfvenWave:
         assert peak_right == pytest.approx(expected_shift, abs=1.0)
         assert peak_left == pytest.approx(-expected_shift, abs=1.0)
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         x = np.linspace(-20, 20, 128, endpoint=False)
         By0, vy0 = alfven_wave_pulse_ic(x, x0=0.0, width=1.0, amplitude=0.1)
@@ -184,6 +190,7 @@ class TestDriftWaveTurbulence:
         assert np.isfinite(rms_low) and np.isfinite(rms_high)
         assert rms_high < rms_low
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         phi0 = drift_wave_noise_ic(48, 2 * np.pi, amplitude=0.05, seed=0)
         anim = animate_drift_wave_turbulence(phi0, dt=0.02, steps_per_frame=10, n_frames=5, length=2 * np.pi)
@@ -204,6 +211,7 @@ class TestWakefieldAcceleration:
         work = np.sum(wakefield_e_field(x[:-1], t[:-1], 0.05, 1.0, 1.0) * v[:-1] * dt)
         assert (ke[-1] - ke[0]) == pytest.approx(work, rel=0.1)
 
+    @pytest.mark.slow
     def test_animation_saves_to_gif(self, tmp_path):
         anim = animate_wakefield_acceleration(x0=0.0, v0=0.9, q=1.0, m=1.0, E0=0.05, k=1.0, v_phase=1.0, dt=0.01, steps=400, frame_stride=40)
         out = tmp_path / "wakefield.gif"

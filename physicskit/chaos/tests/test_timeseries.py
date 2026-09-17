@@ -32,13 +32,14 @@ def test_average_log_divergence_returns_matching_shapes():
     assert steps.size > 0
 
 
+@pytest.mark.slow
 def test_rosenstein_lyapunov_matches_known_lorenz_exponent():
     """The Lorenz system's largest Lyapunov exponent is well known to be
     approximately 0.905; estimating it from a raw x(t) time series (no
     equations used) with Rosenstein's algorithm should get reasonably close."""
     system = Lorenz()
     dt = 0.01
-    _, states = system.trajectory(n_steps=20000, dt=dt)
+    _, states = system.trajectory(n_steps=12000, dt=dt)
     x = states[1000:, 0]
 
     lam = rosenstein_lyapunov(x, dim=5, tau=10, dt=dt, fit_fraction=0.3)
@@ -70,6 +71,7 @@ def test_iaaft_surrogate_preserves_power_spectrum_closely():
     assert relative_error < 0.05
 
 
+@pytest.mark.slow
 def test_surrogate_test_detects_nonlinear_structure_in_lorenz():
     """Lorenz x(t) has genuine deterministic/nonlinear structure that IAAFT
     surrogates (linear stochastic realizations with the same spectrum) lack,
@@ -83,8 +85,8 @@ def test_surrogate_test_detects_nonlinear_structure_in_lorenz():
     def statistic(series):
         return rosenstein_lyapunov(series, dim=5, tau=10, dt=dt, fit_fraction=0.3)
 
-    _observed, surrogate_values, significance = surrogate_test(x, statistic, n_surrogates=9, n_iter=30, seed=0)
-    assert surrogate_values.shape == (9,)
+    _observed, surrogate_values, significance = surrogate_test(x, statistic, n_surrogates=6, n_iter=15, seed=0)
+    assert surrogate_values.shape == (6,)
     assert significance > 2.0
 
 

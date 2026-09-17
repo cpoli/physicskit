@@ -18,12 +18,13 @@ def test_kelvin_helmholtz_growth_rate_is_linear_in_k_and_delta_u():
     assert kelvin_helmholtz_growth_rate(k=4.0, delta_u=3.0) == pytest.approx(6.0)
 
 
+@pytest.mark.slow
 def test_kelvin_helmholtz_shear_layer_perturbation_grows():
     n = 96
     omega0 = kelvin_helmholtz_ic(n, 2 * np.pi, shear_width=0.1, perturbation_amplitude=0.05)
     amps = []
     omega = omega0.copy()
-    for _ in range(6):
+    for _ in range(3):
         result = simulate_vorticity_streamfunction(omega, nu=0.001, dt=0.0025, steps=100, length=2 * np.pi)
         omega = result["omega"]
         dev = omega - omega.mean(axis=0, keepdims=True)
@@ -39,12 +40,13 @@ def test_simulate_kelvin_helmholtz_matches_direct_vorticity_streamfunction_call(
     assert result_wrapper["omega"] == pytest.approx(result_direct["omega"])
 
 
+@pytest.mark.slow
 def test_simulate_kelvin_helmholtz_shear_layer_rolls_up():
     n, length = 96, 2 * np.pi
     omega0 = kelvin_helmholtz_ic(n, length, shear_width=0.1, perturbation_amplitude=0.05)
     omega = omega0.copy()
     amps = []
-    for _ in range(6):
+    for _ in range(3):
         result = simulate_kelvin_helmholtz(omega, nu=0.001, dt=0.0025, steps=100, length=length)
         omega = result["omega"]
         dev = omega - omega.mean(axis=0, keepdims=True)

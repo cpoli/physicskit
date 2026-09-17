@@ -9,6 +9,7 @@ adaptive Dormand-Prince integrator.
 """
 
 import numpy as np
+import pytest
 from numba import njit
 
 from physicskit.integrators import (
@@ -46,6 +47,7 @@ def test_velocity_verlet_is_an_alias_for_leapfrog():
     assert velocity_verlet_step is leapfrog_step
 
 
+@pytest.mark.slow
 def test_dopri5_matches_analytic_harmonic_oscillator():
     omega = 2.0
     params = np.array([omega])
