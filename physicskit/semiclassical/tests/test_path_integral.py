@@ -136,3 +136,59 @@ def test_phasor_sum_concentrates_near_classical_path_as_hbar_shrinks():
     frac_small = frac_from_closest_10_percent(small_hbar, seed)
 
     assert frac_small > frac_large
+
+
+def test_free_particle_functions_reject_nonpositive_t_and_bad_n_slices():
+    with pytest.raises(ValueError):
+        free_particle_classical_path(x0=0.0, xf=1.0, T=0.0, m=1.0, n_slices=4)
+    with pytest.raises(ValueError):
+        free_particle_classical_path(x0=0.0, xf=1.0, T=1.0, m=1.0, n_slices=0)
+    with pytest.raises(ValueError):
+        free_particle_classical_action(x0=0.0, xf=1.0, T=0.0, m=1.0)
+
+
+def test_harmonic_oscillator_functions_reject_nonpositive_t_and_bad_n_slices():
+    with pytest.raises(ValueError):
+        harmonic_oscillator_classical_path(x0=0.0, xf=1.0, T=0.0, m=1.0, omega=1.0, n_slices=4)
+    with pytest.raises(ValueError):
+        harmonic_oscillator_classical_path(x0=0.0, xf=1.0, T=1.0, m=1.0, omega=1.0, n_slices=0)
+    with pytest.raises(ValueError):
+        harmonic_oscillator_classical_action(x0=0.0, xf=1.0, T=0.0, m=1.0, omega=1.0)
+
+
+def test_sample_random_paths_rejects_nonpositive_t_and_bad_counts():
+    with pytest.raises(ValueError):
+        sample_random_paths(x0=0.0, xf=1.0, T=0.0, n_slices=4, n_paths=2, sigma=0.1, seed=0)
+    with pytest.raises(ValueError):
+        sample_random_paths(x0=0.0, xf=1.0, T=1.0, n_slices=0, n_paths=2, sigma=0.1, seed=0)
+    with pytest.raises(ValueError):
+        sample_random_paths(x0=0.0, xf=1.0, T=1.0, n_slices=4, n_paths=0, sigma=0.1, seed=0)
+
+
+def test_feynman_phasor_partial_sums_rejects_empty_actions_and_zero_hbar():
+    with pytest.raises(ValueError):
+        feynman_phasor_partial_sums(paths=np.empty((0, 1)), actions=np.array([]), hbar=0.5)
+    with pytest.raises(ValueError):
+        feynman_phasor_partial_sums(paths=np.zeros((2, 1)), actions=np.array([0.1, 0.2]), hbar=0.0)
+
+
+def test_build_phasor_diagram_harmonic_potential_matches_classical_path_and_action():
+    omega = 1.5
+    paths, actions, x_cl, S_cl, partial = build_phasor_diagram(
+        x0=0.0, xf=1.0, T=1.0, m=1.0, hbar=0.1, potential="harmonic", omega=omega, n_slices=10, n_paths=5, sigma=0.1, seed=0
+    )
+    expected_path = harmonic_oscillator_classical_path(x0=0.0, xf=1.0, T=1.0, m=1.0, omega=omega, n_slices=10)[1]
+    expected_action = harmonic_oscillator_classical_action(x0=0.0, xf=1.0, T=1.0, m=1.0, omega=omega)
+    assert np.allclose(x_cl, expected_path)
+    assert S_cl == pytest.approx(expected_action)
+    assert paths.shape[0] == actions.shape[0] == 6
+    assert partial.shape == (7,)
+
+
+def test_build_phasor_diagram_rejects_nonpositive_t_missing_omega_and_bad_potential():
+    with pytest.raises(ValueError):
+        build_phasor_diagram(x0=0.0, xf=1.0, T=0.0, m=1.0, hbar=0.1, potential="free", n_slices=10, n_paths=5, sigma=0.1, seed=0)
+    with pytest.raises(ValueError):
+        build_phasor_diagram(x0=0.0, xf=1.0, T=1.0, m=1.0, hbar=0.1, potential="harmonic", n_slices=10, n_paths=5, sigma=0.1, seed=0)
+    with pytest.raises(ValueError):
+        build_phasor_diagram(x0=0.0, xf=1.0, T=1.0, m=1.0, hbar=0.1, potential="quartic", n_slices=10, n_paths=5, sigma=0.1, seed=0)

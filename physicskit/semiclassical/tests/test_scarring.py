@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from physicskit.semiclassical.systems.scarring import bouncing_ball_energies, scar_enhancement
+from physicskit.semiclassical.systems.scarring import bouncing_ball_energies, husimi_projection_1d, scar_enhancement
 
 
 def test_bouncing_ball_energies_match_infinite_well_of_width_2R():
@@ -32,3 +32,12 @@ def test_scar_enhancement_detects_concentrated_ridge():
     density = np.exp(-((X - 0.3) ** 2) / (2 * 0.05**2))
     eta = scar_enhancement(density, X, Y, mask, x0=0.3, half_width=0.15)
     assert eta > 5.0
+
+
+def test_husimi_projection_1d_default_sigma_and_ranges_peaks_near_source():
+    s = np.linspace(-10, 10, 500)
+    s0_true, p0_true, w = 2.0, 3.0, 1.0
+    psi = np.exp(-((s - s0_true) ** 2) / (2 * w**2)) * np.exp(1j * p0_true * s / 1.0)
+    S0, P0, H = husimi_projection_1d(psi, s, hbar=1.0, resolution=30)
+    i, j = np.unravel_index(np.argmax(H), H.shape)
+    assert abs(S0[i, j] - s0_true) < 1.0

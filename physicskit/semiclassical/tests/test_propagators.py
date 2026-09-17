@@ -66,3 +66,17 @@ def test_herman_kluk_reconstructs_initial_state_at_short_time():
     psi0 = frozen_gaussian_1d(x, qc=1.0, pc=0.0, gamma=1.0)
     fidelity = abs(np.trapezoid(np.conj(psi0) * psi, x)) ** 2
     assert fidelity > 0.999
+
+
+def test_herman_kluk_defaults_params_to_an_empty_array_when_unused():
+    # dVdx/d2Vdx2/V here never index into params, so params=None (->
+    # np.empty(0) internally) is fine and should behave like the
+    # explicit-params harmonic oscillator above (m=omega=1).
+    dVdx = njit(lambda q, params: q, cache=False)
+    d2Vdx2 = njit(lambda q, params: 1.0, cache=False)
+    V = njit(lambda q, params: 0.5 * q**2, cache=False)
+    x = np.linspace(-6, 6, 400)
+    psi = herman_kluk_propagate_wavepacket(1.0, 0.0, gamma=1.0, dVdx=dVdx, d2Vdx2=d2Vdx2, V=V, m=1.0, dt=1e-6, steps=1, x_eval=x, n_grid=61, n_sigma=7.0)
+    psi0 = frozen_gaussian_1d(x, qc=1.0, pc=0.0, gamma=1.0)
+    fidelity = abs(np.trapezoid(np.conj(psi0) * psi, x)) ** 2
+    assert fidelity > 0.999
