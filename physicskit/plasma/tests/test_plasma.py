@@ -16,10 +16,15 @@ from physicskit.plasma.kinetic import (
 )
 from physicskit.plasma.mhd import (
     alfven_speed,
+    grad_shafranov_rhs_solovev,
+    lundquist_number,
     magnetosonic_speeds,
     petschek_rate,
+    resistive_diffusion_time,
     solovev_particular_solution,
     solve_grad_shafranov,
+    sound_speed,
+    sweet_parker_layer_width,
     sweet_parker_rate,
 )
 from physicskit.plasma.single_particle import (
@@ -35,7 +40,7 @@ from physicskit.plasma.single_particle import (
     magnetic_mirror_bounce,
     magnetic_moment,
 )
-from physicskit.plasma.waves import cold_plasma_dispersion, rl_parameters, stix_parameters
+from physicskit.plasma.waves import EPS0, cold_plasma_dispersion, plasma_frequency, rl_parameters, stix_parameters, whistler_dispersion
 
 
 class TestBorisPusher:
@@ -152,6 +157,21 @@ class TestColdPlasmaWaves:
         n2_plus, n2_minus = cold_plasma_dispersion(theta=np.pi / 2, S=S, D=D, P=P)
         assert sorted([n2_plus, n2_minus]) == pytest.approx(sorted([P, R * L / S]))
 
+    def test_plasma_frequency_matches_formula(self):
+        n = 1e19
+        assert plasma_frequency(n, q=QE, m=ME) == pytest.approx(np.sqrt(n * QE**2 / (EPS0 * ME)))
+
+    def test_whistler_dispersion_matches_electron_only_r_wave_root(self):
+        """See the docstring's own worked example: for omega << wce, the
+        whistler approximation should closely match the exact electron-only
+        R-wave root of cold_plasma_dispersion."""
+        wpe, wce = 1.784e11, 1.759e11
+        omega = 0.001 * wce
+        S, D, P = stix_parameters(omega, B=1.0, species=[(wpe**2 * EPS0 * ME / QE**2, -QE, ME)])
+        R, _ = rl_parameters(S, D)
+        n2_approx = whistler_dispersion(omega, wpe, wce)
+        assert n2_approx == pytest.approx(R, rel=0.01)
+
 
 class TestKineticPIC:
     def test_cic_deposit_conserves_total_charge(self):
@@ -188,3 +208,25 @@ class TestKineticPIC:
         gamma_fit = 0.5 * np.polyfit(t_peaks, np.log(e_peaks), 1)[0]
         gamma_analytic = landau_damping_rate(k, v_th)
         assert gamma_fit == pytest.approx(gamma_analytic, rel=0.5)
+
+
+def test_sound_speed_matches_formula():
+    assert sound_speed(gamma=5 / 3, p=1.0, rho=1e-6) == pytest.approx(np.sqrt(5 / 3 * 1.0 / 1e-6))
+
+
+def test_grad_shafranov_rhs_solovev_matches_formula():
+    R = np.array([1.0, 2.0])
+    np.testing.assert_allclose(grad_shafranov_rhs_solovev(R, c1=1.0, c2=-2.0), 1.0 * R**2 - 2.0)
+
+
+def test_lundquist_number_matches_formula():
+    assert lundquist_number(L=1.0, vA=1e6, eta=1.0) == pytest.approx(1e6)
+
+
+def test_resistive_diffusion_time_matches_formula():
+    assert resistive_diffusion_time(L=1.0, eta=1.0) == pytest.approx(1.0)
+    assert resistive_diffusion_time(L=2.0, eta=1.0) == pytest.approx(4.0)
+
+
+def test_sweet_parker_layer_width_matches_formula():
+    assert sweet_parker_layer_width(L=1e7, S=1e6) == pytest.approx(1e7 / np.sqrt(1e6))

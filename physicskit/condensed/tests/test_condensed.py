@@ -11,7 +11,7 @@ from physicskit.condensed.anderson_localization import (
     inverse_participation_ratio,
     localization_length,
 )
-from physicskit.condensed.correlated import bdg_bcs_hamiltonian, hubbard_1d_exact_diagonalization, hubbard_spin_correlations
+from physicskit.condensed.correlated import bdg_bcs_hamiltonian, bdg_spectrum, hubbard_1d_exact_diagonalization, hubbard_spin_correlations
 from physicskit.condensed.ginzburg_landau import (
     ginzburg_landau_parameter,
     gl_coherence_length,
@@ -22,6 +22,7 @@ from physicskit.condensed.ginzburg_landau import (
 from physicskit.condensed.landau_levels import (
     filling_factor,
     landau_degeneracy,
+    landau_density_of_states,
     landau_level_energies,
 )
 from physicskit.condensed.laughlin import laughlin_metropolis_sweep, laughlin_pair_correlation, laughlin_radial_density
@@ -35,10 +36,12 @@ from physicskit.condensed.models import (
     harper_hofstadter_hamiltonian,
     kane_mele_hamiltonian,
     kitaev_chain_bdg_real_space,
+    kitaev_chain_hamiltonian,
     ssh_lattice_hamiltonian,
 )
-from physicskit.condensed.tight_binding import Hamiltonian, Lattice, build_finite_cluster, build_ribbon
+from physicskit.condensed.tight_binding import Hamiltonian, Lattice, apply_peierls_phase, build_finite_cluster, build_ribbon
 from physicskit.condensed.topological_insulator_3d import (
+    surface_dirac_hamiltonian,
     topological_insulator_3d_hamiltonian,
     topological_insulator_3d_slab_hamiltonian,
 )
@@ -450,6 +453,55 @@ def test_add_hopping_rejects_diagonal_onsite_term():
     H = Hamiltonian(Lattice.chain())
     with pytest.raises(ValueError, match="onsite"):
         H.add_hopping(0, 0, (0,), 1.0)
+
+
+def test_lattice_square_has_two_orthogonal_orbital_lattice_vectors():
+    lat = Lattice.square(a=2.0)
+    assert lat.n_orbitals == 1
+    np.testing.assert_allclose(lat.lattice_vectors, [[2.0, 0.0], [0.0, 2.0]])
+
+
+def test_reciprocal_vectors_of_square_lattice():
+    lat = Lattice.square(a=1.0)
+    np.testing.assert_allclose(lat.reciprocal_vectors(), 2 * np.pi * np.eye(2))
+
+
+def test_hamiltonian_bands_matches_bloch_eigenvalues():
+    H = Hamiltonian(Lattice.chain())
+    H.add_hopping(0, 0, (1,), 1.0)
+    np.testing.assert_allclose(H.bands([np.pi]), [-2.0])
+
+
+def test_apply_peierls_phase_matches_docstring_example():
+    positions = np.array([[0.0, 0.0], [1.0, 0.0]])
+    bonds = [(0, 1, 1.0)]
+    out = apply_peierls_phase(positions, bonds, flux_quanta_per_plaquette=0.25, area_per_plaquette=1.0)
+    assert len(out) == 1
+    i, j, amp = out[0]
+    assert (i, j) == (0, 1)
+    assert abs(amp) == pytest.approx(1.0)
+
+
+def test_bdg_spectrum_minimum_energy_equals_pairing_gap():
+    k, E = bdg_spectrum(mu=0.0, t=1.0, delta=0.5, n_k=400)
+    assert k.shape == E.shape
+    assert E.min() == pytest.approx(0.5, abs=1e-3)
+    assert np.all(E >= 0.0)
+
+
+def test_landau_density_of_states_matches_docstring_value():
+    dos = landau_density_of_states([0.5], B=1.0, n_max=0, broadening=0.1)
+    assert dos[0] == pytest.approx(0.6349, abs=1e-4)
+
+
+def test_kitaev_chain_hamiltonian_matches_docstring_eigenvalues():
+    H = kitaev_chain_hamiltonian(k=np.pi / 2, mu=0.0, t=1.0, delta=1.0)
+    np.testing.assert_allclose(np.sort(np.linalg.eigvalsh(H)), [-2.0, 2.0])
+
+
+def test_surface_dirac_hamiltonian_matches_docstring_eigenvalues():
+    H = surface_dirac_hamiltonian(0.3, -0.4, v_f=2.0)
+    np.testing.assert_allclose(np.sort(np.linalg.eigvalsh(H)), [-1.0, 1.0])
 
 
 def test_public_api_exposed_via_pk_condensed():

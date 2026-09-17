@@ -28,6 +28,11 @@ def test_coherent_state_is_normalized():
     assert np.linalg.norm(psi) == pytest.approx(1.0, rel=1e-6)
 
 
+def test_coherent_state_of_zero_amplitude_is_the_vacuum_fock_state():
+    psi = coherent_state(0.0, cutoff=8)
+    np.testing.assert_allclose(psi, fock_state(0, 8))
+
+
 def test_coherent_state_mean_photon_number_matches_alpha_squared():
     alpha = 1.2
     cutoff = 40

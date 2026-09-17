@@ -17,6 +17,7 @@ from physicskit.fields.electrodynamics import (
     flux_tube_field_1d,
     oscillating_dipole_source,
     pml_conductivity_profile_2d,
+    poynting_vector_tmz,
     tmz_cavity_mode,
 )
 from physicskit.fields.quantum_fields import (
@@ -34,6 +35,7 @@ from physicskit.fields.solitons import (
     kdv_evolve_frames,
     kdv_soliton,
     nls_bright_soliton,
+    nls_dark_soliton,
     nls_evolve,
     nls_evolve_frames,
     sine_gordon_evolve,
@@ -184,6 +186,27 @@ class TestNLSSolitons:
         psi0 = nls_bright_soliton(x, t=0.0, A=1.0)
         psi = nls_evolve(psi0, x, dt=0.001, steps=2000, g=1.0)
         assert np.sum(np.abs(psi) ** 2) * dx == pytest.approx(np.sum(np.abs(psi0) ** 2) * dx, rel=1e-9)
+
+
+def test_poynting_vector_tmz_matches_cross_product_formula():
+    # S = E x H with E=(0,0,Ez), H=(Hx,Hy,0) gives (-Ez*Hy, Ez*Hx, 0).
+    Ez = np.array([[2.0]])
+    Hx = np.array([[3.0]])
+    Hy = np.array([[5.0]])
+    Sx, Sy = poynting_vector_tmz(Ez, Hx, Hy)
+    np.testing.assert_allclose(Sx, [[-10.0]])
+    np.testing.assert_allclose(Sy, [[6.0]])
+
+
+class TestNLSDarkSoliton:
+    def test_density_vanishes_at_center(self):
+        x = np.array([0.0])
+        assert abs(nls_dark_soliton(x, t=0.0, rho0=1.0))[0] == pytest.approx(0.0, abs=1e-12)
+
+    def test_density_approaches_background_far_from_center(self):
+        rho0 = 2.0
+        x = np.array([50.0, -50.0])
+        np.testing.assert_allclose(np.abs(nls_dark_soliton(x, t=0.0, rho0=rho0)), np.sqrt(rho0), atol=1e-6)
 
 
 class TestSineGordonKink:

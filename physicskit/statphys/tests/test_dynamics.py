@@ -46,3 +46,21 @@ def test_integrated_autocorrelation_time_larger_for_correlated_series():
     tau_correlated = integrated_autocorrelation_time(x)
     tau_independent = integrated_autocorrelation_time(rng.normal(size=n))
     assert tau_correlated > tau_independent
+
+
+def test_integrated_autocorrelation_time_falls_back_when_window_never_closes():
+    # A strongly autocorrelated AR(1) series (tau grows large), restricted
+    # to a small max_lag: the automatic-windowing condition c*tau <= M is
+    # never satisfied within that short lag range, so the function should
+    # fall back to the full-sum estimate instead of raising or looping
+    # forever.
+    rng = np.random.default_rng(4)
+    n = 5000
+    x = np.empty(n)
+    x[0] = rng.normal()
+    phi = 0.95
+    for i in range(1, n):
+        x[i] = phi * x[i - 1] + rng.normal()
+
+    tau = integrated_autocorrelation_time(x, max_lag=3)
+    assert tau > 0.0

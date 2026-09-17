@@ -114,6 +114,18 @@ def test_wachter_pdf_zero_outside_support():
     assert rmt.stats.wachter_pdf(np.array([lo - 0.1, hi + 0.1]), a, b)[1] == 0.0
 
 
+def test_wachter_pdf_scalar_integrand_is_zero_outside_support():
+    """quad() integrates _wachter_pdf_scalar directly (not the vectorized
+    wachter_pdf above) to build wachter_cdf; it needs the same
+    zero-outside-support guard."""
+    from physicskit.rmt.stats.wachter import _wachter_pdf_scalar
+
+    a, b = 2.0, 3.0
+    lo, hi = rmt.stats.wachter_support(a, b)
+    assert _wachter_pdf_scalar(lo - 0.1, a, b, lo, hi) == 0.0
+    assert _wachter_pdf_scalar(hi + 0.1, a, b, lo, hi) == 0.0
+
+
 def test_wachter_cdf_is_zero_below_and_one_above_support_and_monotonic():
     a, b = 2.0, 3.0
     lo, hi = rmt.stats.wachter_support(a, b)

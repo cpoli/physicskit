@@ -65,6 +65,14 @@ def test_maxwell_boltzmann_speed_pdf_invalid_dim_raises():
         maxwell_boltzmann_speed_pdf(np.array([1.0]), temperature=1.0, dim=4)
 
 
+@pytest.mark.parametrize("dim", [1, 3])
+def test_maxwell_boltzmann_speed_pdf_normalizes_to_one_in_1d_and_3d(dim):
+    v = np.linspace(0, 20, 200_000)
+    pdf = maxwell_boltzmann_speed_pdf(v, temperature=2.0, mass=1.0, dim=dim)
+    integral = trapezoid(pdf, v)
+    assert integral == pytest.approx(1.0, abs=1e-3)
+
+
 def test_maxwell_boltzmann_component_pdf_is_gaussian():
     vx = np.linspace(-10, 10, 200_000)
     pdf = maxwell_boltzmann_component_pdf(vx, temperature=1.5, mass=1.0)

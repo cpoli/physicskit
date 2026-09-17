@@ -174,7 +174,10 @@ def airy_wavefunction(x: np.ndarray, alpha: float = 1.0, n: int = 0, hbar: float
     a_zeros, _, _, _ = ai_zeros(n + 1)
     a_n = a_zeros[n]
     length = (hbar**2 / (2 * m * alpha)) ** (1 / 3)
-    Ai, _, _, _ = airy(x / length - a_n)
+    # z(x) = x/length + a_n, so that z(0) = a_n (a zero of Ai), satisfying
+    # the psi(0)=0 hard-floor boundary condition; x/length - a_n would put
+    # z(0) = -a_n > 0, the wrong (decaying) branch, and psi(0) != 0.
+    Ai, _, _, _ = airy(x / length + a_n)
     psi = np.where(x >= 0, Ai, 0.0)
     norm = np.sqrt(trapz(psi**2, x))
     return psi / norm

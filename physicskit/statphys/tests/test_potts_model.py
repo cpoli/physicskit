@@ -33,3 +33,14 @@ def test_sweep_reduces_energy_at_low_temperature():
     model.sweep(beta=20.0, n_sweeps=50)
     E1 = model.energy()
     assert E1 <= E0
+
+
+def test_run_temperature_sweep_returns_expected_keys_and_shapes():
+    model = PottsModel2D(L=8, q=3, seed=4)
+    temperatures = np.array([0.5, model.T_C, 2.0])
+    result = model.run_temperature_sweep(temperatures, n_equil=5, n_measure=5, measure_every=1)
+    assert set(result.keys()) == {"T", "E", "m", "C_v"}
+    for key in result:
+        assert result[key].shape == temperatures.shape
+    np.testing.assert_allclose(result["T"], temperatures)
+    assert np.all((result["m"] >= 0.0) & (result["m"] <= 1.0 + 1e-9))

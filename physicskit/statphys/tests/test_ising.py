@@ -34,6 +34,15 @@ def test_zero_temperature_ground_state_is_uniform():
     assert abs(model.magnetization()) >= 0.9 * model.n_sites
 
 
+def test_default_reset_draws_random_disordered_configuration():
+    model = Ising2D(L=20, seed=4)
+    model.reset(ordered=True)
+    model.reset()  # default ordered=False
+    assert set(np.unique(model.spins)) <= {-1, 1}
+    # a T=infinity draw on a 20x20 lattice should not be uniform
+    assert not np.all(model.spins == model.spins.flat[0])
+
+
 def test_wolff_cluster_flip_reports_positive_size():
     model = Ising2D(L=16, seed=3)
     size = model.sweep(beta=1.0 / model.T_C, algorithm="wolff", n_sweeps=1)

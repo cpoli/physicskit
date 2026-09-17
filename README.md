@@ -86,6 +86,36 @@ Both commands, plus `ruff check`/`ruff format --check`, run in CI on
 every PR (`.github/workflows/ci.yml`) across Python 3.10-3.12 on Linux and
 macOS. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
 
+### Coverage
+
+```bash
+MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=term
+```
+
+1,720 tests, 96% line coverage overall. Per-subpackage coverage:
+
+| Subpackage | Coverage | | Subpackage | Coverage |
+|:--|--:|---|:--|--:|
+| `astro` | 100% | | `plasma` | 99% |
+| `chaos` | 87% | | `quantum` | 96% |
+| `classical` | 100% | | `relativity` | 99% |
+| `condensed` | 100% | | `rmt` | 100% |
+| `fields` | 100% | | `semiclassical` | 99% |
+| `fluids` | 100% | | `statphys` | 86% |
+| `integrators` | 100% | | `constants` | 100% |
+| `optics` | 100% | | | |
+| `particle` | 100% | | | |
+
+Every subpackage is at 100% coverage outside `visualizers/` modules (99.9%
+in aggregate — six rare bootstrap-loop edge cases remain uncovered across
+`statphys.chapters.percolation` and `rmt.stats`). `chaos`, `quantum`, and
+`statphys` still sit lower overall because their `visualizers/` modules
+are smoke-tested only (correct return type/shape, or that `anim.save()`
+succeeds) rather than covered line-by-line, per the testing convention in
+[CLAUDE.md](CLAUDE.md). `@njit`-compiled lines are excluded from coverage
+entirely (`pyproject.toml`, `[tool.coverage.report]`) since
+`coverage.py` cannot trace into numba-compiled native code.
+
 ## Docs
 
 Built docs are hosted at <https://physicskit.readthedocs.io>. To build

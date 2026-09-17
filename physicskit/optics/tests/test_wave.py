@@ -7,6 +7,7 @@ from physicskit.optics.wave import (
     double_slit_aperture,
     field_grid,
     fraunhofer_diffraction,
+    fresnel_diffraction,
     intensity,
     single_slit_aperture,
 )
@@ -84,6 +85,34 @@ def test_angular_spectrum_propagate_matches_input_grid_shape():
     U = angular_spectrum_propagate(ap, wavelength=0.6e-3, z=1.0, dx=1.0e-3)
     assert U.shape == ap.shape
     assert np.iscomplexobj(U)
+
+
+def test_fresnel_diffraction_matches_input_grid_shape():
+    ap = circular_aperture((64, 64), dx=0.01, radius=0.05)
+    U = fresnel_diffraction(ap, wavelength=0.5e-3, z=5.0, dx=0.01)
+    assert U.shape == ap.shape
+    assert np.iscomplexobj(U)
+
+
+def test_fresnel_diffraction_conserves_power_over_short_distance():
+    # The single-FFT Fresnel method resamples onto an output grid with a
+    # different pixel spacing (dx_out = wavelength*z/(N*dx_in)), so total
+    # power must be compared as intensity-sum times each grid's own pixel
+    # area, not a bare intensity-sum comparison (which implicitly assumes
+    # equal pixel areas, valid for angular_spectrum_propagate but not here).
+    wavelength = 0.5e-3
+    dx = 0.2e-3
+    N = 256
+    radius = 20 * dx
+    z = 2.0
+
+    aperture = circular_aperture((N, N), dx, radius)
+    U_out = fresnel_diffraction(aperture, wavelength, z, dx)
+    dx_out = wavelength * z / (N * dx)
+
+    power_in = intensity(aperture).sum() * dx**2
+    power_out = intensity(U_out).sum() * dx_out**2
+    assert power_out == pytest.approx(power_in, rel=0.05)
 
 
 def test_fraunhofer_single_slit_first_minimum_matches_analytic_formula():

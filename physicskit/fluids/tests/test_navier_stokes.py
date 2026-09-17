@@ -1,9 +1,18 @@
 import numpy as np
 import pytest
 
-from physicskit.fluids.core.grid import spectral_grid
+from physicskit.fluids.core.grid import spectral_grid, vorticity_from_velocity
 from physicskit.fluids.exceptions import InvalidParameterError
 from physicskit.fluids.systems.navier_stokes import NavierStokes2D, simulate_vorticity_streamfunction
+
+
+def test_vorticity_from_velocity_matches_analytic_curl():
+    n, length = 48, 2 * np.pi
+    X, Y, KX, KY, K2 = spectral_grid(n, length)
+    u, v = np.sin(Y), np.zeros_like(X)
+    # omega = dv/dx - du/dy = 0 - cos(Y) = -cos(Y)
+    omega = vorticity_from_velocity(u, v, KX, KY)
+    np.testing.assert_allclose(omega, -np.cos(Y), atol=1e-10)
 
 
 def test_viscous_decay_reduces_peak_vorticity():

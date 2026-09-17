@@ -15,6 +15,16 @@ def test_zero_net_momentum_initially():
     assert np.allclose(gas.velocities.mean(axis=0), 0.0, atol=1e-9)
 
 
+def test_maxwell_boltzmann_initial_velocity_distribution_has_zero_net_momentum():
+    gas = LennardJonesGas(n_particles=50, box_size=15.0, initial_velocity_distribution="maxwell_boltzmann", seed=7)
+    assert np.allclose(gas.velocities.mean(axis=0), 0.0, atol=1e-9)
+
+
+def test_invalid_initial_velocity_distribution_raises():
+    with pytest.raises(ValueError):
+        LennardJonesGas(n_particles=10, box_size=10.0, initial_velocity_distribution="bogus", seed=0)
+
+
 def test_step_advances_time_and_keeps_particles_in_box():
     gas = LennardJonesGas(n_particles=36, box_size=12.0, dt=0.005, seed=2)
     gas.step(n_steps=20)
