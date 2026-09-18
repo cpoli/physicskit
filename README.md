@@ -3,7 +3,7 @@
 | | |
 |:--|:-:|
 | Package | [![PyPI version](https://img.shields.io/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![Python versions](https://img.shields.io/pypi/pyversions/physicskit)](https://pypi.org/project/physicskit/) |
-| Quality | [![License](https://img.shields.io/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://img.shields.io/codecov/c/github/cpoli/physicskit)](https://codecov.io/gh/cpoli/physicskit) |
+| Quality | [![License](https://img.shields.io/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://img.shields.io/codecov/c/github/cpoli/physicskit)](https://codecov.io/gh/cpoli/physicskit) [![Coverage (manual)](https://img.shields.io/badge/coverage-96%25-brightgreen)](#coverage) |
 | Documentation | [![Docs](https://readthedocs.org/projects/physicskit/badge/?version=latest)](https://physicskit.readthedocs.io) |
 | Code style | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) |
 | Downloads | [![Downloads](https://static.pepy.tech/badge/physicskit)](https://pepy.tech/project/physicskit) [![Downloads/Month](https://static.pepy.tech/badge/physicskit/month)](https://pepy.tech/project/physicskit) |
