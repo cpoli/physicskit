@@ -1,3 +1,5 @@
+:orphan:
+
 N-Body Orbits, Hohmann Transfers, and Galactic Rotation Curves
 ====================================================================
 

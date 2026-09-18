@@ -1,3 +1,5 @@
+:orphan:
+
 Relativistic Two-Body Decay Kinematics
 ==========================================
 

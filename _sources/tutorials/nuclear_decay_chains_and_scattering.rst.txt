@@ -1,3 +1,5 @@
+:orphan:
+
 Radioactive Decay Chains, Rutherford Scattering, and Nuclear Binding
 =========================================================================
 
