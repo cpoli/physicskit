@@ -1,0 +1,189 @@
+
+
+Examples using ``physicskit.HamiltonianSystem.from_orbital_elements``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. start-sphx-glr-thumbnails
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="All three integrators here advance the same eccentric two-body Kepler orbit (~physicskit.classical.systems.newtonian.KeplerSystem, semi-major axis a=1, eccentricity e=0.6), i.e. the same Hamiltonian H(q,p) and the same Hamilton&#x27;s equations \dot q = \partial H/\partial p,\ \dot p = -\partial H/\partial q; only the numerical scheme used to step them forward differs. Velocity Verlet updates the separable H = T(p) + V(q) by">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/integrators/images/thumb/sphx_glr_plot_01_symplectic_vs_rk4_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/integrators/plot_01_symplectic_vs_rk4`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Why symplectic integration: RK4 leaks energy, Yoshida4 does not</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/integrators/plot_01_symplectic_vs_rk4`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="None of physicskit.classical&#x27;s integrators are adaptive: each takes a fixed step \Delta t for the whole run, so choosing \Delta t is normally a manual &quot;integrate, check drift, halve or double, repeat&quot; search -- exactly what estimate_dt automates, by searching for the largest \Delta t whose relative energy drift |H(t) - H(0)| / |H(0)| stays below a given tolerance over the full run. This runs it on two very different conservative systems: a quasi-periodic Kepler orbit (~physicskit.classical.systems.newtonian.KeplerSystem, semi-major axis a=1, eccentricity e=0.5, governed by the inverse-square gravitational Hamiltonian), where a short probe already predicts the right \Delta t, and a chaotic double pendulum (~physicskit.classical.systems.lagrangian.DoublePendulum, governed by its coupled Euler-Lagrange equations), where estimate_dt&#x27;s own verification stage has to catch and shrink a fast-probe estimate that would otherwise fail once actually run for the full step count.">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/integrators/images/thumb/sphx_glr_plot_02_estimate_dt_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/integrators/plot_02_estimate_dt`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Automated timestep selection with estimate_dt</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/integrators/plot_02_estimate_dt`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="KeplerSystem is the planar, reduced 2-body problem in the center-of-mass frame, a separable Hamiltonian in Cartesian coordinates q=(x,y), p=(p_x,p_y),">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/newtonian/images/thumb/sphx_glr_plot_02_kepler_precession_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/newtonian/plot_02_kepler_precession`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kepler orbits and perihelion precession</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/newtonian/plot_02_kepler_precession`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="plot_02_kepler_precession shows apsidal precession from the effective post-Newtonian c_\mathrm{pn}/r^3 correction. KeplerSystem has a second, independent perturbation family added to its radial potential:">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/newtonian/images/thumb/sphx_glr_plot_03_kepler_perturbations_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/newtonian/plot_03_kepler_perturbations`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">KeplerSystem's other perturbation: the power-law term</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/newtonian/plot_03_kepler_perturbations`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="physicskit.classical.utils.conservation has more than just energy-drift helpers. angular_momentum_2d and angular_momentum_drift track the planar angular momentum">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/newtonian/images/thumb/sphx_glr_plot_04_conservation_diagnostics_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/newtonian/plot_04_conservation_diagnostics`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Angular momentum: a different conservation law from energy</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/newtonian/plot_04_conservation_diagnostics`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Emmy Noether&#x27;s theorem ties each continuous symmetry of a system&#x27;s action to an exactly conserved quantity built from it: time-translation symmetry gives energy, rotational symmetry gives angular momentum. The Kepler problem carries a third, less obvious conserved quantity, the Laplace-Runge-Lenz vector">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/newtonian/images/thumb/sphx_glr_plot_05_noether_hidden_symmetry_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/newtonian/plot_05_noether_hidden_symmetry`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Noether's Theorem and the Kepler Problem's Hidden Symmetry</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/newtonian/plot_05_noether_hidden_symmetry`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The three animation helpers in physicskit.classical.visualizers.animations and physicskit.classical.visualizers.modal_analysis, applied to three already-familiar conservative systems, each paired with a live diagnostic of its own governing physics: a double pendulum (~physicskit.classical.systems.lagrangian.DoublePendulum, governed by its Euler-Lagrange equations of motion) shown with its physical rods next to a growing (\theta_1, \dot\theta_1) phase trace; a precessing Kepler orbit (~physicskit.classical.systems.newtonian.KeplerSystem, whose post-Newtonian term c_\mathrm{pn}/r^3 in V(r) drives the precession) shown with its orbital path next to a growing energy trace; and a non-linear lattice chain (~physicskit.classical.systems.chains.FPUTChain) shown via its live modal-energy bar chart E_k(t).">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/visualizers/images/thumb/sphx_glr_plot_01_side_by_side_animation_thumb.gif
+    :alt:
+
+  :doc:`/api/gallery/classical/visualizers/plot_01_side_by_side_animation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">SideBySideAnimator: physical space + phase/energy diagnostics, live</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/visualizers/plot_01_side_by_side_animation`
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Unlike the static Matplotlib plots elsewhere in physicskit.classical.visualizers, these are draggable/zoomable in a live Python session or a browser -- useful for directly inspecting how close a rigid-body trajectory passes to the unstable intermediate-axis pole, or for zooming into a precessing orbit&#x27;s perihelion. The two systems are governed by the equations already introduced elsewhere in the gallery: EulerTop&#x27;s torque-free Euler equations, I_i\dot\omega_i = (I_j - I_k)\,\omega_j\omega_k (cyclic in i,j,k) for the body-frame angular velocity (see /api/gallery/classical/rotations/plot_01_dzhanibekov), and KeplerSystem&#x27;s separable Hamiltonian H = |p|^2/(2\mu) + V(r) with the post-Newtonian perturbation c_\mathrm{pn}/r^3 in V(r) that drives the perihelion precession (see /api/gallery/classical/newtonian/plot_02_kepler_precession).">
+
+.. only:: html
+
+  .. image:: /api/gallery/classical/visualizers/images/thumb/sphx_glr_plot_02_interactive_plotly_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/classical/visualizers/plot_02_interactive_plotly`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Interactive Plotly visualizers: SO(3) momentum sphere and orbit</div>
+    </div>
+
+
+.. only:: not html
+
+ * :doc:`/api/gallery/classical/visualizers/plot_02_interactive_plotly`
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
