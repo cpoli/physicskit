@@ -54,5 +54,6 @@ def test_animate_diffraction_propagation_log_scale_and_given_ax_builds_and_draws
     fig, ax = plt.subplots()
     anim = animate_diffraction_propagation(ap, wavelength=0.5e-3, z_values=z_values, dx=dx, log_scale=True, ax=ax)
     assert anim._fig is fig
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
     anim._draw_frame(1)
     assert ax.get_title() == f"z = {z_values[1]:.4g}"

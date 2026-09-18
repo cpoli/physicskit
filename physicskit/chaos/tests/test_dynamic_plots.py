@@ -101,6 +101,7 @@ def test_animate_phase_volume_contraction_shrinks_the_cloud():
         warmup_steps=200,
         seed=0,
     )
+    anim._draw_was_started = True  # frames drawn directly below, not via save()/show()
     volumes = [_cloud_volume(anim, i) for i in range(10)]
     assert all(v2 < v1 for v1, v2 in zip(volumes, volumes[1:]))
 
@@ -109,6 +110,7 @@ def test_animate_phase_volume_contraction_respects_explicit_center_state():
     system = Lorenz(sigma=10.0, rho=28.0, beta=8.0 / 3.0)
     center = np.array([1.0, 1.0, 1.0])
     anim = animate_phase_volume_contraction(system, center_state=center, ball_radius=0.5, n_points=50, t_max=1.0, n_frames=5)
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
     anim._draw_frame(0)
     x, y, z = anim._fig.axes[0].collections[0]._offsets3d
     points0 = np.column_stack([x, y, z])
@@ -126,6 +128,7 @@ def test_animate_multi_orbit_map_grows_every_orbit_together_not_one_at_a_time():
     rng = np.random.default_rng(0)
     orbits = [rng.uniform(size=(50, 2)) for _ in range(5)]
     anim = animate_multi_orbit_map(orbits, n_frames=20)
+    anim._draw_was_started = True  # frames drawn directly below, not via save()/show()
 
     anim._draw_frame(0)
     counts = [_n_points_drawn(anim)]
@@ -144,6 +147,7 @@ def test_animate_multi_orbit_map_grows_every_orbit_together_not_one_at_a_time():
 def test_animate_multi_orbit_map_reaches_full_length_on_last_frame():
     orbits = [np.column_stack([np.arange(30), np.arange(30)]) for _ in range(3)]
     anim = animate_multi_orbit_map(orbits, n_frames=10)
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
     anim._draw_frame(9)
     assert _n_points_drawn(anim) == 30 * 3
 
@@ -151,6 +155,7 @@ def test_animate_multi_orbit_map_reaches_full_length_on_last_frame():
 def test_animate_multi_orbit_map_handles_orbits_of_different_lengths():
     orbits = [np.zeros((10, 2)), np.zeros((30, 2))]
     anim = animate_multi_orbit_map(orbits, n_frames=5)
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
     anim._draw_frame(4)
     lengths = [len(line.get_xdata()) for line in anim._fig.axes[0].lines]
     assert lengths == [10, 30]
@@ -172,6 +177,7 @@ def test_animate_bakers_map_colors_left_and_right_half_differently():
         stripe_colors=("tab:blue", "tab:red"),
         seed=seed,
     )
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
 
     # Reconstruct the same jittered starting grid `animate_bakers_map` builds
     # internally, to know each marker's *original* x -- by frame 0 the
@@ -204,6 +210,7 @@ def test_animate_bakers_map_stretch_phase_extends_past_unit_square():
     rather than snapping straight to its final (folded-back) position."""
     system = BakersMap(alpha=0.5)
     anim = animate_bakers_map(system, n_points=400, n_iterations=1, frames_per_iteration=9)
+    anim._draw_was_started = True  # frames drawn directly below, not via save()/show()
     for i in range(4):  # sequentially through frame 3 (mid-stretch, before the cut/pause frame)
         anim._draw_frame(i)
     x = _bakers_scatter(anim).get_offsets()[:, 0]
@@ -219,6 +226,7 @@ def test_animate_bakers_map_returns_to_unit_square_after_full_iteration():
     n_points = 100
     seed = 0
     anim = animate_bakers_map(system, n_points=n_points, n_iterations=1, frames_per_iteration=6, seed=seed)
+    anim._draw_was_started = True  # frames drawn directly below, not via save()/show()
 
     # Reconstruct the same jittered starting grid `animate_bakers_map` builds
     # internally (a perfectly regular grid sits at exact dyadic rationals,
@@ -245,6 +253,7 @@ def test_animate_bakers_map_returns_to_unit_square_after_full_iteration():
 def test_animate_bakers_map_uses_square_markers():
     system = BakersMap(alpha=0.5)
     anim = animate_bakers_map(system, n_points=100, n_iterations=1, frames_per_iteration=6)
+    anim._draw_was_started = True  # never drawn (only its static setup is inspected), not via save()/show()
     paths = _bakers_scatter(anim).get_paths()
     assert len(paths) == 1  # scatter shares one path (the marker shape) across all points
     # A square marker path has 4 (or 5, if closed) vertices.

@@ -62,6 +62,7 @@ def test_plot_billiard_divergence_estimates_positive_exponent_for_chaotic_billia
 def test_animate_billiard_divergence_runs():
     billiard = TruncatedCircleBilliard(radius=1.0, cut=0.05)
     anim = animate_billiard_divergence(billiard, pos=billiard.sample_interior_point(), vel=(0.2, 1.0), n_bounces=30, trail=10)
+    anim._draw_was_started = True  # frame drawn directly below, not via save()/show()
     anim._draw_frame(20)
 
 

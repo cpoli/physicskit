@@ -641,6 +641,19 @@ def animate_map_orbit(
     return anim
 
 
+def _nonsingular_lim(lo: float, hi: float) -> tuple[float, float]:
+    """Pad a degenerate ``(lo, hi)`` axis range so it isn't singular.
+
+    Mirrors what Matplotlib's own autoscaling does for a zero-width range,
+    but ahead of time, so ``ax.set_xlim``/``set_ylim`` never has to fall
+    back to its (warning-emitting) auto-expansion.
+    """
+    if lo == hi:
+        pad = abs(lo) * 0.05 or 0.5
+        return lo - pad, hi + pad
+    return lo, hi
+
+
 def animate_multi_orbit_map(
     trajectories: list[ArrayLike],
     interval: int = 60,
@@ -697,8 +710,8 @@ def animate_multi_orbit_map(
         all_pts = np.concatenate(traj_arrays, axis=0)
         xlim = xlim or (float(all_pts[:, 0].min()), float(all_pts[:, 0].max()))
         ylim = ylim or (float(all_pts[:, 1].min()), float(all_pts[:, 1].max()))
-    ax.set_xlim(*xlim)
-    ax.set_ylim(*ylim)
+    ax.set_xlim(*_nonsingular_lim(*xlim))
+    ax.set_ylim(*_nonsingular_lim(*ylim))
     ax.set_xlabel(labels[0])
     ax.set_ylabel(labels[1])
 
