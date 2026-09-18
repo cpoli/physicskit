@@ -1,6 +1,9 @@
 Breakthroughs in Random Matrix Theory
 =====================================
 
+
+.. include:: /_generated/nav/rmt.rst
+
 .. epigraph::
 
    "The miracle of the appropriateness of the language of mathematics for

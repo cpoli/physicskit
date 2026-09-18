@@ -1,6 +1,9 @@
 Breakthroughs in Semiclassical Physics
 =========================================
 
+
+.. include:: /_generated/nav/semiclassical.rst
+
 .. epigraph::
 
    "The most important application of the quantum theory... is that in

@@ -1,6 +1,9 @@
 physicskit.condensed
 =====================
 
+
+.. include:: /_generated/nav/condensed.rst
+
 .. automodule:: physicskit.condensed
 
 .. automodule:: physicskit.condensed.tight_binding

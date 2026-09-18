@@ -1,6 +1,9 @@
 physicskit.plasma
 ==================
 
+
+.. include:: /_generated/nav/plasma.rst
+
 .. automodule:: physicskit.plasma
 
 .. automodule:: physicskit.plasma.single_particle

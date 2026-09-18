@@ -1,6 +1,9 @@
 Breakthroughs in Particle and Nuclear Physics
 =============================================
 
+
+.. include:: /_generated/nav/particle.rst
+
 .. epigraph::
 
    "It was quite the most incredible event that has ever happened to me in

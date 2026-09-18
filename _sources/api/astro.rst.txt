@@ -1,6 +1,9 @@
 physicskit.astro
 =================
 
+
+.. include:: /_generated/nav/astro.rst
+
 .. automodule:: physicskit.astro
 
 .. automodule:: physicskit.astro.stellar_structure

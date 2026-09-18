@@ -1,6 +1,9 @@
 Breakthroughs in Statistical Mechanics
 ======================================
 
+
+.. include:: /_generated/nav/statphys.rst
+
 .. epigraph::
 
    "The true logic of this world is the calculus of probabilities."

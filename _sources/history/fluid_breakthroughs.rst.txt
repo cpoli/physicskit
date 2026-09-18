@@ -1,6 +1,9 @@
 Breakthroughs in Fluid Dynamics
 =================================
 
+
+.. include:: /_generated/nav/fluids.rst
+
 .. epigraph::
 
    "The internal motion of water assumes one or other of two broadly
