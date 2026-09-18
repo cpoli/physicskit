@@ -1,3 +1,5 @@
+:orphan:
+
 Polytropic Stellar Models and the Lane-Emden Equation
 ==========================================================
 

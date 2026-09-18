@@ -1,5 +1,5 @@
 Topology
-========
+--------
 
 Topological band theory: SSH edge states and the Zak phase, exactly
 quantized Chern numbers (TKNN), the Haldane model's zero-net-flux Chern

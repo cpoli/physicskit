@@ -1,5 +1,5 @@
 Advanced: Building Custom Systems
-===================================
+---------------------------------
 
 An example showing how to use the low-level, Numba-accelerated integrators
 in :mod:`physicskit.chaos.core.integrators` directly -- either by subclassing

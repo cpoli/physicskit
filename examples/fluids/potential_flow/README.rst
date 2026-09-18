@@ -1,5 +1,5 @@
 Potential Flow
-===============
+--------------
 
 Away from any boundary layer or wake, a great deal of real aerodynamics is
 governed by a flow with no vorticity at all: a velocity potential obeying

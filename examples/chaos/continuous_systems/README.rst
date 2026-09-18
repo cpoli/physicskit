@@ -1,5 +1,5 @@
 Continuous Systems
-==================
+------------------
 
 Examples illustrating the continuous-time chaotic flows in
 :mod:`physicskit.chaos.systems.continuous`: the Lorenz and Rossler attractors, the double pendulum, the

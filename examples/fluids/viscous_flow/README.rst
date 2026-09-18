@@ -1,5 +1,5 @@
 Viscous Flow
-=============
+------------
 
 Viscosity is what potential flow leaves out, and these are the handful of
 problems simple enough that adding it back in still yields an exact,

@@ -1,6 +1,9 @@
 Breakthroughs in Condensed Matter Physics
 ============================================
 
+
+.. include:: /_generated/nav/condensed.rst
+
 .. epigraph::
 
    "More is different." -- P. W. Anderson, *Science*, 1972

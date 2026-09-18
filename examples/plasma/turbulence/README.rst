@@ -1,5 +1,5 @@
 Drift-wave turbulence
-==========================
+---------------------
 
 The reduced Hasegawa-Mima model for magnetized-plasma drift-wave
 turbulence: small-amplitude potential noise

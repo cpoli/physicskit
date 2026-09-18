@@ -1,6 +1,9 @@
 Breakthroughs in General Relativity
 ===================================
 
+
+.. include:: /_generated/nav/relativity.rst
+
 .. epigraph::
 
    "Spacetime tells matter how to move; matter tells spacetime how to curve."

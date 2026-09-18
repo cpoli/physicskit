@@ -1,6 +1,9 @@
 physicskit.semiclassical
 ==========================
 
+
+.. include:: /_generated/nav/semiclassical.rst
+
 .. automodule:: physicskit.semiclassical
 
 .. automodule:: physicskit.semiclassical.core.wkb

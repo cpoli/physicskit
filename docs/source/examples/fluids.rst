@@ -1,8 +1,0 @@
-physicskit.fluids
-===================
-
-Potential flow, viscous exact solutions, point-vortex dynamics, the
-Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks, and
-the 2D incompressible Navier-Stokes solver underlying them.
-
-See the full gallery: :doc:`/api/gallery/fluids/index`.

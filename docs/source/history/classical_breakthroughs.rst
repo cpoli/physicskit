@@ -1,6 +1,9 @@
 Breakthroughs in Classical Mechanics
 ====================================
 
+
+.. include:: /_generated/nav/classical.rst
+
 .. epigraph::
 
    "We may regard the present state of the universe as the effect of its

@@ -1,5 +1,5 @@
 Vortex Dynamics
-================
+---------------
 
 Concentrate all of a flow's vorticity into a handful of points and the
 Navier-Stokes equations collapse to ordinary differential equations: each

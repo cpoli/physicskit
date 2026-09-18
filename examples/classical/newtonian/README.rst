@@ -1,5 +1,5 @@
 Newtonian mechanics
-=======================
+-------------------
 
 Vector dynamics under a force: free fall with an oblique launch
 velocity (:class:`~physicskit.classical.systems.newtonian.ProjectileMotion`) and the

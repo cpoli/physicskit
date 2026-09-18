@@ -1,6 +1,9 @@
 physicskit.fields
 ==================
 
+
+.. include:: /_generated/nav/fields.rst
+
 .. automodule:: physicskit.fields
 
 .. automodule:: physicskit.fields.electrodynamics

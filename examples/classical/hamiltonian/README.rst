@@ -1,5 +1,5 @@
 Hamiltonian phase space
-===========================
+-----------------------
 
 Phase-space structure: KAM torus breakdown in the non-integrable
 Henon-Heiles system, Liouville's theorem via a sheared swarm of

@@ -1,5 +1,5 @@
 Ginzburg-Landau Theory
-======================
+----------------------
 
 The 1950 phenomenological free-energy theory of superconductivity: the
 equilibrium order parameter, the coherence length and penetration depth it

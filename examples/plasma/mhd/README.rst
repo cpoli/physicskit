@@ -1,5 +1,5 @@
 Magnetohydrodynamics
-========================
+--------------------
 
 Treats the plasma as a single conducting fluid rather than a collection of
 orbiting particles: the characteristic Alfven and magnetosonic wave speeds

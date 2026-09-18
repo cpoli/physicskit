@@ -1,5 +1,5 @@
 Single-particle motion
-==========================
+----------------------
 
 Charged-particle motion in electromagnetic fields, in two complementary
 pictures: the exact Lorentz-force orbit integrated with the

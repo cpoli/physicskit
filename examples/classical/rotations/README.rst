@@ -1,5 +1,5 @@
 Rigid-body rotations
-=======================
+--------------------
 
 Free and torqued rigid bodies: the intermediate axis theorem
 (Dzhanibekov effect) for a torque-free top, rendered both abstractly

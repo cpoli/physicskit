@@ -1,6 +1,9 @@
 Breakthroughs in Chaos Theory and Dynamical Systems
 ===================================================
 
+
+.. include:: /_generated/nav/chaos.rst
+
 .. epigraph::
 
    "One meteorologist remarked that if the theory were correct, one flap

@@ -1,5 +1,5 @@
 Compressible Flow
-==================
+-----------------
 
 Once a flow moves fast enough that the fluid can no longer get out of its
 own way, incompressible potential and viscous flow stop applying entirely:

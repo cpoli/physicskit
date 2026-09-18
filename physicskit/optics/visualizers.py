@@ -65,6 +65,20 @@ def plot_ray_trace(system, y0, theta0, ax=None):
     else:
         fig = ax.figure
     ax.plot(positions, trace[:, 0], marker="o")
+    for pos, el in zip(positions[:-1], system.elements):
+        if el.length == 0.0 and el.name:
+            ax.axvline(pos, color="gray", linewidth=0.8, linestyle=":")
+            ax.annotate(
+                el.name,
+                (pos, 1.0),
+                xycoords=("data", "axes fraction"),
+                xytext=(2, -10),
+                textcoords="offset points",
+                fontsize=8,
+                color="gray",
+                rotation=90,
+                va="top",
+            )
     ax.set_xlabel("position")
     ax.set_ylabel("ray height y")
     ax.axhline(0.0, color="k", linewidth=0.5)

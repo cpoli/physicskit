@@ -1,6 +1,9 @@
 Breakthroughs in Quantum Mechanics
 ==================================
 
+
+.. include:: /_generated/nav/quantum.rst
+
 .. epigraph::
 
    "I think I can safely say that nobody understands quantum mechanics."

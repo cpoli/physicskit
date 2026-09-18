@@ -5,6 +5,10 @@ Runnable demonstrations of the central results in each
 ``physicskit.statphys`` chapter: lattice phase transitions, molecular
 dynamics, random walks, and self-organized criticality.
 
+See also the narrative tutorial:
+
+- :doc:`/tutorials/statphys_deep_dives`
+
 Each script in this gallery is self-contained and can be run directly with
 ``python examples/statphys/<section>/<script>.py``. Every script also carries
 an RST module docstring as its title/description and uses ``# %%`` markers to

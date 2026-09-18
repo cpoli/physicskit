@@ -1,6 +1,9 @@
 Breakthroughs in Optics
 =======================
 
+
+.. include:: /_generated/nav/optics.rst
+
 .. epigraph::
 
    "Each little region of a luminous body, such as the Sun, a candle, or a

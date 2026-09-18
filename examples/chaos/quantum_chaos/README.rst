@@ -1,5 +1,5 @@
 Quantum Chaos
-=============
+-------------
 
 Examples illustrating :mod:`physicskit.chaos.quantum`: quantized versions of physicskit.chaos's
 own classical :class:`~physicskit.chaos.systems.maps.StandardMap` and

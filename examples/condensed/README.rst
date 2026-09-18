@@ -6,6 +6,11 @@ Runnable scripts demonstrating the conceptual breakthroughs behind
 superconductors -- see :doc:`/history/condensed_breakthroughs` for the full
 chronology each script illustrates.
 
+See also the narrative tutorials:
+
+- :doc:`/tutorials/graphene_and_haldane`
+- :doc:`/tutorials/ssh_topological_edge_states`
+
 Each script in this gallery is self-contained and can be run directly with
 ``python examples/condensed/<section>/<script>.py``. Every script also
 carries an RST module docstring as its title/description and uses ``# %%``

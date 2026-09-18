@@ -1,6 +1,9 @@
 Breakthroughs in Plasma Physics and Magnetohydrodynamics
 ============================================================
 
+
+.. include:: /_generated/nav/plasma.rst
+
 .. epigraph::
 
    It is not too much to say that we now live in a plasma era: the state

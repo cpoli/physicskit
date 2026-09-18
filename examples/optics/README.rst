@@ -7,6 +7,11 @@ construction through Allen et al.'s 1992 discovery of the orbital angular
 momentum of light (see :doc:`/history/optics_breakthroughs` for the full
 chronology).
 
+See also the narrative tutorials:
+
+- :doc:`/tutorials/laser_cavity_stability`
+- :doc:`/tutorials/wigner_function_squeezed_states`
+
 Each script in this gallery is self-contained and can be run directly with
 ``python examples/optics/<section>/<script>.py``. Every script also carries
 an RST module docstring as its title/description and uses ``# %%`` markers to

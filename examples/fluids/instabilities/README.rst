@@ -1,5 +1,5 @@
 Instabilities
-==============
+-------------
 
 Some flows are unstable to *any* perturbation, no matter how small: the
 smallest ripple grows exponentially until it reorganizes the whole flow.

@@ -1,6 +1,9 @@
 physicskit.optics
 ==================
 
+
+.. include:: /_generated/nav/optics.rst
+
 .. automodule:: physicskit.optics
 
 .. automodule:: physicskit.optics.ray

@@ -1,5 +1,5 @@
 Cold-plasma waves
-=====================
+-----------------
 
 Linearizes the multi-fluid cold-plasma equations around a uniform
 background to get the plasma frequency

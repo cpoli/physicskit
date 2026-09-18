@@ -1,5 +1,5 @@
 Particle acceleration
-==========================
+---------------------
 
 A test charge surfing a prescribed traveling plasma wakefield
 (:func:`~physicskit.plasma.acceleration.wakefield_e_field`), integrated

@@ -1,5 +1,5 @@
 Interactive and Animated Visualizers
-=====================================
+------------------------------------
 
 Examples illustrating the dynamic visualizers in
 :mod:`physicskit.chaos.visualizers.dynamic_plots`: a live Matplotlib animation of a

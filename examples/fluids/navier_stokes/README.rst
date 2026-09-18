@@ -1,5 +1,5 @@
 Navier-Stokes and Turbulence
-==============================
+----------------------------
 
 The general-purpose engine behind this package's instability simulations:
 a doubly periodic, pseudo-spectral solver for the full 2D incompressible

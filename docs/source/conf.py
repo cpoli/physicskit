@@ -3,6 +3,7 @@
 import os
 import sys
 from importlib.metadata import version as _pkg_version
+from pathlib import Path
 
 import matplotlib
 
@@ -72,23 +73,103 @@ source_suffix = {
     ".md": "markdown",
 }
 
-# Subpackages with a sphinx-gallery-formatted examples/<name>/ directory.
-_GALLERY_SUBPACKAGES = [
-    "astro",
-    "chaos",
-    "classical",
-    "condensed",
-    "fields",
-    "fluids",
-    "optics",
-    "particle",
-    "plasma",
-    "quantum",
-    "relativity",
-    "rmt",
-    "semiclassical",
-    "statphys",
+# Single source of truth for the 14 physics subpackages. Every card grid
+# (homepage, api/index, examples/index, history/index, and the per-subpackage
+# hub pages) and the cross-link strip atop each api/examples/history page is
+# generated from this table by _generate_subpackage_docs() below, instead of
+# being hand-duplicated across five-plus RST files that used to drift out of
+# sync with each other (different card ordering, stale blurbs, etc.).
+SUBPACKAGES = [
+    {
+        "name": "astro",
+        "category": "Mechanics & Dynamics",
+        "blurb": "Stellar structure, N-body dynamics, orbital mechanics, galactic dynamics.",
+    },
+    {
+        "name": "chaos",
+        "category": "Mechanics & Dynamics",
+        "blurb": "Chaotic dynamical systems and 2D quantum billiards.",
+    },
+    {
+        "name": "classical",
+        "category": "Mechanics & Dynamics",
+        "blurb": "Classical (Newtonian/Lagrangian/Hamiltonian) mechanics.",
+    },
+    {
+        "name": "condensed",
+        "category": "Quantum & Statistical",
+        "blurb": "Tight-binding models, topological band theory, superconductivity.",
+    },
+    {
+        "name": "fields",
+        "category": "Waves & Fields",
+        "blurb": "Electrodynamics (FDTD), solitons, BEC vortex lattices.",
+    },
+    {
+        "name": "fluids",
+        "category": "Fluids",
+        # Predates the "<name>_breakthroughs" naming convention used by every
+        # other subpackage's history page.
+        "history_doc": "fluid_breakthroughs",
+        "blurb": "Potential flow, viscous flow, vortex dynamics, instabilities, compressible flow, Navier-Stokes.",
+    },
+    {
+        "name": "optics",
+        "category": "Waves & Fields",
+        "blurb": "Ray/wave/Gaussian-beam optics and quantum optics.",
+    },
+    {
+        "name": "particle",
+        "category": "Mechanics & Dynamics",
+        "blurb": "Relativistic kinematics, decays, scattering, nuclear physics.",
+    },
+    {
+        "name": "plasma",
+        "category": "Waves & Fields",
+        "blurb": "Single-particle motion, magnetohydrodynamics, cold-plasma waves, kinetic theory.",
+    },
+    {
+        "name": "quantum",
+        "category": "Quantum & Statistical",
+        "blurb": "Quantum mechanics: wave packets, potentials, entanglement.",
+    },
+    {
+        "name": "relativity",
+        "category": "Mechanics & Dynamics",
+        "blurb": "Numerical general relativity: black holes, lensing, gravitational waves.",
+    },
+    {
+        "name": "rmt",
+        "category": "Quantum & Statistical",
+        "blurb": "Random matrix theory, organized around Dyson's threefold way.",
+    },
+    {
+        "name": "semiclassical",
+        "category": "Quantum & Statistical",
+        "blurb": "WKB/EBK quantization, semiclassical propagators, the Gutzwiller trace formula, and quantum scarring.",
+    },
+    {
+        "name": "statphys",
+        "category": "Quantum & Statistical",
+        "blurb": "Statistical mechanics: lattice models, molecular dynamics, criticality.",
+    },
 ]
+
+for _s in SUBPACKAGES:
+    _s.setdefault("history_doc", f"{_s['name']}_breakthroughs")
+    # Every subpackage's "Examples" link goes straight to its sphinx-gallery
+    # index (:orphan: like every such index -- meant to be linked to
+    # directly rather than placed in a toctree). Where a narrative tutorial
+    # also exists, that gallery's examples/<name>/README.rst header links
+    # out to it, so there's no separate examples/<name>.rst stub page whose
+    # only job is forwarding to one or the other.
+    _s["examples_doc"] = f"api/gallery/{_s['name']}/index"
+del _s
+
+_CATEGORY_ORDER = ["Mechanics & Dynamics", "Waves & Fields", "Quantum & Statistical", "Fluids"]
+
+# Subpackages with a sphinx-gallery-formatted examples/<name>/ directory.
+_GALLERY_SUBPACKAGES = [s["name"] for s in SUBPACKAGES]
 
 sphinx_gallery_conf = {
     "examples_dirs": [f"../../examples/{name}" for name in _GALLERY_SUBPACKAGES],
@@ -137,3 +218,123 @@ html_theme_options = {
 }
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
+
+
+def _card(link, blurb, link_title):
+    """One sphinx-design grid-item-card, indented for direct concatenation into a ``.. grid::`` block."""
+    return (
+        f"   .. grid-item-card:: {link_title}\n"
+        f"      :link: {link}\n"
+        f"      :link-type: doc\n"
+        f"\n"
+        f"      {blurb}\n"
+        f"\n"
+    )
+
+
+def _grid(cards):
+    return ".. grid:: 1 2 3 3\n   :gutter: 2\n\n" + "".join(cards)
+
+
+def _grouped_grid(link_fn):
+    """A ``.. grid::`` per category (in _CATEGORY_ORDER), each preceded by a
+    rubric heading, with ``link_fn(subpackage)`` giving each card's target.
+    Shared by the homepage hub grid and the api/examples/history grids so
+    they show the same Mechanics & Dynamics / Waves & Fields / Quantum &
+    Statistical / Fluids grouping instead of a flat alphabetical list.
+    """
+    parts = []
+    for category in _CATEGORY_ORDER:
+        members = [s for s in SUBPACKAGES if s["category"] == category]
+        if not members:
+            continue
+        parts.append(f".. rubric:: {category}\n\n")
+        parts.append(_grid([_card(link_fn(s), s["blurb"], f"physicskit.{s['name']}") for s in members]))
+        parts.append("\n")
+    return "".join(parts)
+
+
+def _write(path: Path, text: str):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+
+
+def _generate_subpackage_docs(app):
+    """Generate the card grids, per-subpackage hub pages, and cross-link
+    strips derived from SUBPACKAGES.
+
+    Runs at "builder-inited", the same point sphinx-gallery uses to write
+    its own generated RST, so the output exists before Sphinx reads any
+    source file that ``.. include::``/``.. toctree::``\\ s it. Everything
+    lands under _generated/ (gitignored, like api/gallery/) rather than
+    being committed, since it's entirely derived from SUBPACKAGES above --
+    there's nothing hand-authored in it to keep in version control.
+    """
+    out = Path(app.srcdir) / "_generated"
+
+    # RST substitutions for numbers/facts derived from SUBPACKAGES, so prose
+    # elsewhere (e.g. the homepage's "N domains" pitch) doesn't hardcode a
+    # count that silently goes stale the next time a subpackage is added.
+    _write(out / "vars.rst", f".. |num_subpackages| replace:: {len(SUBPACKAGES)}\n")
+
+    # Category-grouped grids (Mechanics & Dynamics / Waves & Fields / Quantum
+    # & Statistical / Fluids) reused by index.rst, api/index.rst,
+    # examples/index.rst, and history/index.rst, so those five-plus listings
+    # of the same 14 subpackages -- and their grouping -- come from one
+    # place instead of being hand-copied (and drifting) independently.
+    _write(out / "grid_api.rst", _grouped_grid(lambda s: f"/api/{s['name']}"))
+    _write(out / "grid_examples.rst", _grouped_grid(lambda s: f"/{s['examples_doc']}"))
+    _write(out / "grid_history.rst", _grouped_grid(lambda s: f"/history/{s['history_doc']}"))
+
+    # Domain-first homepage grid: same grouping, linking to each
+    # subpackage's own hub page rather than straight into a single
+    # History/Examples/API silo.
+    _write(out / "grid_hub.rst", _grouped_grid(lambda s: f"/_generated/subpackages/{s['name']}"))
+
+    # Per-subpackage hub page: History, Examples, and API reference as
+    # three equally-weighted doors into the same domain, so a reader who
+    # wants "everything about optics" doesn't have to browse three
+    # separate site-wide sections to find optics in each of them.
+    hub_dir = out / "subpackages"
+    for s in SUBPACKAGES:
+        name = s["name"]
+        title = f"physicskit.{name}"
+        cards = _grid(
+            [
+                _card(
+                    f"/history/{s['history_doc']}",
+                    "The foundational breakthroughs behind this subpackage, linked to the implementation.",
+                    "History",
+                ),
+                _card(
+                    f"/{s['examples_doc']}",
+                    "Runnable tutorials and the full example gallery.",
+                    "Examples",
+                ),
+                _card(
+                    f"/api/{name}",
+                    "Every public class and function.",
+                    "API reference",
+                ),
+            ]
+        )
+        _write(hub_dir / f"{name}.rst", f"{title}\n{'=' * len(title)}\n\n{s['blurb']}\n\n{cards}")
+
+    # Cross-link strip included atop each hand-authored api/<name>.rst,
+    # examples/<name>.rst, and history/<name>_breakthroughs.rst page, so a
+    # reader who lands on just one of the three (e.g. from a search
+    # engine) can discover the other two for the same subpackage.
+    nav_dir = out / "nav"
+    for s in SUBPACKAGES:
+        name = s["name"]
+        links = [
+            f":doc:`physicskit.{name} hub </_generated/subpackages/{name}>`",
+            f":doc:`History </history/{s['history_doc']}>`",
+            f":doc:`Examples </{s['examples_doc']}>`",
+            f":doc:`API reference </api/{name}>`",
+        ]
+        _write(nav_dir / f"{name}.rst", f".. container:: subpkg-nav\n\n   {' · '.join(links)}\n")
+
+
+def setup(app):
+    app.connect("builder-inited", _generate_subpackage_docs)

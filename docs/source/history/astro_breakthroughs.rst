@@ -1,6 +1,9 @@
 Breakthroughs in Astrophysics
 =============================
 
+
+.. include:: /_generated/nav/astro.rst
+
 .. epigraph::
 
    "I feel carried away and possessed by an unutterable rapture over the

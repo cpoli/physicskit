@@ -8,6 +8,11 @@ observable of a specific breakthrough in :doc:`/history/fields_breakthroughs`.
 Fluid dynamics has since moved to its own package and gallery; see
 :mod:`physicskit.fluids` and :doc:`/history/fluid_breakthroughs`.
 
+See also the narrative tutorials:
+
+- :doc:`/tutorials/fdtd_waveguide_simulation`
+- :doc:`/tutorials/bec_vortex_lattice_creation`
+
 Each script in this gallery is self-contained and can be run directly with
 ``python examples/fields/<section>/<script>.py``. Every script also
 carries an RST module docstring as its title/description and uses ``# %%``

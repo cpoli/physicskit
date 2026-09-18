@@ -1,5 +1,5 @@
 Paper replications
-=====================
+------------------
 
 Classic random matrix theory results, organized around Dyson's threefold way
 and its non-Hermitian/chiral/Bogoliubov-de Gennes extensions: Wishart's

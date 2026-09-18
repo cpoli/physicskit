@@ -1,5 +1,5 @@
 Landau Levels
-=============
+-------------
 
 The continuum quantization of a charged particle in a uniform magnetic
 field: equally spaced Landau levels, their macroscopic per-area

@@ -1,5 +1,5 @@
 Kinetic theory (particle-in-cell)
-======================================
+---------------------------------
 
 An electrostatic particle-in-cell (PIC) solution of the 1D1V
 Vlasov-Poisson system: particles stream along exact single-particle

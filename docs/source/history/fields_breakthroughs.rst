@@ -1,6 +1,9 @@
 Breakthroughs in Classical and Quantum Field Theory
 ======================================================
 
+
+.. include:: /_generated/nav/fields.rst
+
 .. epigraph::
 
    "For the great glory of research into that most excellent gift, light."

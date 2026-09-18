@@ -1,5 +1,5 @@
 Lagrangian mechanics
-=======================
+--------------------
 
 Systems whose equations of motion are derived symbolically from a
 Lagrangian :math:`L(q, \dot q, t)` via

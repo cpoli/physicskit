@@ -1,5 +1,5 @@
 Chaos Metrics
-=============
+-------------
 
 Examples illustrating the quantitative chaos-diagnostic tools in :mod:`physicskit.chaos.utils` and their
 companion visualizers: trajectory-divergence-based and QR (Benettin)-based Lyapunov exponent

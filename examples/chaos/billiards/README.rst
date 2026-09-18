@@ -1,5 +1,5 @@
 Billiards
-=========
+---------
 
 Examples illustrating the five 2D billiard geometries in
 :mod:`physicskit.chaos.systems.billiards`: a trajectory bouncing inside each shape,

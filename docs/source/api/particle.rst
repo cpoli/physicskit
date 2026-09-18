@@ -1,6 +1,9 @@
 physicskit.particle
 ====================
 
+
+.. include:: /_generated/nav/particle.rst
+
 .. automodule:: physicskit.particle
 
 .. automodule:: physicskit.particle.kinematics
