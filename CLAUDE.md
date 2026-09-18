@@ -63,3 +63,9 @@ Where subpackages share base classes (`classical`, and similarly-shaped subpacka
 - Tests prefer closed-form/analytically-verifiable assertions (`pytest.approx` against a known formula) over snapshot-testing plot output; a visualizer needs only a smoke test (right return type/shape; for animations, that `anim.save()` to a temp file succeeds).
 - `mypy` is configured but not yet fully clean (mostly matplotlib/numpy stub gaps around animation objects and array-typed arguments) and runs advisory/non-blocking in CI. New code should type-check where practical; fixing unrelated pre-existing errors is not required.
 - `docs/source/history/` documents each subpackage's foundational physics breakthroughs linked to the corresponding implementation — worth checking when adding a major new model to understand the expected historical framing.
+
+# Output Guidelines
+- **Be Concise:** Provide direct code and answers first. Omit setup text, fluff, and conversational responses.
+- **Code Generation:** Output only updated code blocks, functions, or unified diffs. Never output full files unless instructed.
+- **Explanations:** Limit inline code comments. Explain high-level logic in 1–2 bullet points after the code block.
+- **Format:** Use bulleted lists and tables for comparisons instead of paragraph blocks.
