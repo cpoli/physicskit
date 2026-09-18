@@ -4,7 +4,7 @@
 |:--|:-:|
 | Package | [![PyPI version](https://img.shields.io/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![Python versions](https://img.shields.io/pypi/pyversions/physicskit)](https://pypi.org/project/physicskit/) |
 | Quality | [![License](https://img.shields.io/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://img.shields.io/codecov/c/github/cpoli/physicskit)](https://codecov.io/gh/cpoli/physicskit) [![Coverage (manual)](https://img.shields.io/badge/coverage-96%25-brightgreen)](#coverage) |
-| Documentation | [![Docs](https://readthedocs.org/projects/physicskit/badge/?version=latest)](https://physicskit.readthedocs.io) |
+| Documentation | [![Docs](https://img.shields.io/badge/docs-cpoli.github.io%2Fphysicskit-blue)](https://cpoli.github.io/physicskit/) |
 | Code style | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) |
 | Downloads | [![Downloads](https://static.pepy.tech/badge/physicskit)](https://pepy.tech/project/physicskit) [![Downloads/Month](https://static.pepy.tech/badge/physicskit/month)](https://pepy.tech/project/physicskit) |
 | Community | [![GitHub Stars](https://img.shields.io/github/stars/cpoli/physicskit?style=social)](https://github.com/cpoli/physicskit) [![GitHub Forks](https://img.shields.io/github/forks/cpoli/physicskit?style=social)](https://github.com/cpoli/physicskit) [![Contributors](https://img.shields.io/github/contributors/cpoli/physicskit)](https://github.com/cpoli/physicskit/graphs/contributors) [![Last Commit](https://img.shields.io/github/last-commit/cpoli/physicskit)](https://github.com/cpoli/physicskit/commits/main) |
@@ -40,26 +40,26 @@ print(chern_numbers)  # [1, -1]
 
 Every subpackage below links to its worked examples; see
 [Subpackages](#subpackages) for the full list, or browse the docs at
-<https://physicskit.readthedocs.io>.
+<https://cpoli.github.io/physicskit/>.
 
 ## Subpackages
 
 Domain subpackages, each with runnable examples linked below:
 
-- [`physicskit.astro`](https://physicskit.readthedocs.io/en/latest/examples/astro.html) -- stellar structure (Tolman-Oppenheimer-Volkoff, polytropes), N-body dynamics, orbital mechanics, galactic rotation curves, stellar convection and the magnetic dynamo.
-- [`physicskit.chaos`](https://physicskit.readthedocs.io/en/latest/examples/chaos.html) -- chaotic dynamical systems and 2D quantum billiards.
-- [`physicskit.classical`](https://physicskit.readthedocs.io/en/latest/examples/classical.html) -- classical mechanics: Newtonian, Lagrangian, Hamiltonian, lattice, and rigid-body dynamics.
-- [`physicskit.condensed`](https://physicskit.readthedocs.io/en/latest/examples/condensed.html) -- tight-binding models, topological band theory (Chern numbers, edge states), correlated-electron superconductivity.
-- [`physicskit.fields`](https://physicskit.readthedocs.io/en/latest/examples/fields.html) -- FDTD electrodynamics, KdV/NLS/Sine-Gordon solitons, BEC vortex lattices.
-- [`physicskit.fluids`](https://physicskit.readthedocs.io/en/latest/examples/fluids.html) -- potential flow, viscous exact solutions, point-vortex dynamics, Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks, and the 2D incompressible Navier-Stokes solver underlying them.
-- [`physicskit.optics`](https://physicskit.readthedocs.io/en/latest/examples/optics.html) -- ray, wave, and Gaussian-beam optics; quantum optics (squeezed states, Wigner functions).
-- [`physicskit.particle`](https://physicskit.readthedocs.io/en/latest/examples/particle.html) -- relativistic kinematics, particle decays and scattering, nuclear physics.
-- [`physicskit.plasma`](https://physicskit.readthedocs.io/en/latest/examples/plasma.html) -- Boris-pusher single-particle motion, guiding-center drifts, Grad-Shafranov MHD equilibrium, magnetic reconnection, cold-plasma wave dispersion, particle-in-cell Vlasov-Poisson kinetics.
-- [`physicskit.quantum`](https://physicskit.readthedocs.io/en/latest/examples/quantum.html) -- quantum mechanics: wave packets, potentials, hydrogen, entanglement, measurement.
-- [`physicskit.relativity`](https://physicskit.readthedocs.io/en/latest/examples/relativity.html) -- numerical general relativity: black holes, lensing, gravitational waves, cosmology.
-- [`physicskit.rmt`](https://physicskit.readthedocs.io/en/latest/examples/rmt.html) -- random matrix theory, organized around Dyson's threefold way.
-- [`physicskit.semiclassical`](https://physicskit.readthedocs.io/en/latest/examples/semiclassical.html) -- WKB/EBK quantization, Van Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace formula, and quantum scarring.
-- [`physicskit.statphys`](https://physicskit.readthedocs.io/en/latest/examples/statphys.html) -- statistical mechanics: lattice models, molecular dynamics, criticality, disordered systems.
+- [`physicskit.astro`](https://cpoli.github.io/physicskit/api/gallery/astro/) -- stellar structure (Tolman-Oppenheimer-Volkoff, polytropes), N-body dynamics, orbital mechanics, galactic rotation curves, stellar convection and the magnetic dynamo.
+- [`physicskit.chaos`](https://cpoli.github.io/physicskit/api/gallery/chaos/) -- chaotic dynamical systems and 2D quantum billiards.
+- [`physicskit.classical`](https://cpoli.github.io/physicskit/api/gallery/classical/) -- classical mechanics: Newtonian, Lagrangian, Hamiltonian, lattice, and rigid-body dynamics.
+- [`physicskit.condensed`](https://cpoli.github.io/physicskit/api/gallery/condensed/) -- tight-binding models, topological band theory (Chern numbers, edge states), correlated-electron superconductivity.
+- [`physicskit.fields`](https://cpoli.github.io/physicskit/api/gallery/fields/) -- FDTD electrodynamics, KdV/NLS/Sine-Gordon solitons, BEC vortex lattices.
+- [`physicskit.fluids`](https://cpoli.github.io/physicskit/api/gallery/fluids/) -- potential flow, viscous exact solutions, point-vortex dynamics, Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks, and the 2D incompressible Navier-Stokes solver underlying them.
+- [`physicskit.optics`](https://cpoli.github.io/physicskit/api/gallery/optics/) -- ray, wave, and Gaussian-beam optics; quantum optics (squeezed states, Wigner functions).
+- [`physicskit.particle`](https://cpoli.github.io/physicskit/api/gallery/particle/) -- relativistic kinematics, particle decays and scattering, nuclear physics.
+- [`physicskit.plasma`](https://cpoli.github.io/physicskit/api/gallery/plasma/) -- Boris-pusher single-particle motion, guiding-center drifts, Grad-Shafranov MHD equilibrium, magnetic reconnection, cold-plasma wave dispersion, particle-in-cell Vlasov-Poisson kinetics.
+- [`physicskit.quantum`](https://cpoli.github.io/physicskit/api/gallery/quantum/) -- quantum mechanics: wave packets, potentials, hydrogen, entanglement, measurement.
+- [`physicskit.relativity`](https://cpoli.github.io/physicskit/api/gallery/relativity/) -- numerical general relativity: black holes, lensing, gravitational waves, cosmology.
+- [`physicskit.rmt`](https://cpoli.github.io/physicskit/api/gallery/rmt/) -- random matrix theory, organized around Dyson's threefold way.
+- [`physicskit.semiclassical`](https://cpoli.github.io/physicskit/api/gallery/semiclassical/) -- WKB/EBK quantization, Van Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace formula, and quantum scarring.
+- [`physicskit.statphys`](https://cpoli.github.io/physicskit/api/gallery/statphys/) -- statistical mechanics: lattice models, molecular dynamics, criticality, disordered systems.
 
 Shared infrastructure, used across the subpackages above rather than
 standalone toolkits:
@@ -118,8 +118,8 @@ entirely (`pyproject.toml`, `[tool.coverage.report]`) since
 
 ## Docs
 
-Built docs are hosted at <https://physicskit.readthedocs.io>. To build
-locally:
+Built docs are hosted at <https://cpoli.github.io/physicskit/>, served from
+the `gh-pages` branch. To build locally:
 
 ```bash
 pip install -e ".[docs]"
