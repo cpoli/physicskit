@@ -24,7 +24,6 @@ from physicskit.quantum.chapters.potentials import (
     gravitational_bouncer_states,
 )
 
-
 # --- Asymmetric step well -----------------------------------------------------
 
 

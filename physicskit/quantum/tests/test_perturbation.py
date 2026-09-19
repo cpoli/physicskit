@@ -12,11 +12,10 @@ from physicskit.quantum.chapters.perturbation import (
     FloquetDrivenBox,
     linear_stark_shift,
     stark_n2_quartet,
-    zeeman_splitting,
     zeeman_spectrum,
+    zeeman_splitting,
 )
 from physicskit.quantum.core.solvers import SplitOperatorSolver1D
-
 
 # --- Zeeman -------------------------------------------------------------
 

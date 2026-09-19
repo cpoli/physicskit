@@ -18,7 +18,6 @@ from physicskit.quantum.chapters.entanglement import (
     bell_state,
 )
 
-
 # --- Bell states -------------------------------------------------------------
 
 

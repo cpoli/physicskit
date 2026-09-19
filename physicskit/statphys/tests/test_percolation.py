@@ -114,3 +114,32 @@ def test_fractal_dimension_is_a_positive_finite_estimate():
     perc = Percolation2D(L=60, mode="site", seed=9)
     d_f = perc.fractal_dimension(n_trials=15)
     assert 0.0 < d_f < 5.0
+
+
+def test_fractal_dimension_skips_a_trial_with_no_occupied_sites():
+    # A small lattice occasionally realizes with zero occupied sites even
+    # at p_c; that trial must be skipped (not crash on log(0)/empty-array
+    # stats), and with no other trials to average, the result is nan.
+    # Verified on a separate, freshly-seeded instance so that inspecting
+    # the realization doesn't consume the RNG draw fractal_dimension()
+    # itself needs to reproduce it.
+    probe = Percolation2D(L=2, mode="site", seed=0)
+    probe.generate(probe.p_c)  # the same call fractal_dimension() makes internally
+    assert probe._real_labels()[probe._real_labels() != 0].size == 0
+
+    perc = Percolation2D(L=2, mode="site", seed=0)
+    assert np.isnan(perc.fractal_dimension(n_trials=1))
+
+
+def test_fractal_dimension_skips_a_trial_whose_largest_cluster_is_too_small():
+    # The mass-radius estimator needs a handful of sites to give a
+    # meaningful radius of gyration; a trial whose largest cluster has
+    # fewer than 4 sites must be skipped rather than included. Verified
+    # on a separate, freshly-seeded instance (see previous test).
+    probe = Percolation2D(L=4, mode="site", seed=9)
+    probe.generate(probe.p_c)
+    sizes = probe.cluster_size_distribution()
+    assert 0 < sizes.max() < 4
+
+    perc = Percolation2D(L=4, mode="site", seed=9)
+    assert np.isnan(perc.fractal_dimension(n_trials=1))
