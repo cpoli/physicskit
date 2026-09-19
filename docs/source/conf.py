@@ -207,6 +207,14 @@ html_theme = "pydata_sphinx_theme"
 html_logo = "_static/images/physicskit_logo_transparent.png"
 html_theme_options = {
     "github_url": "https://github.com/cpoli/physicskit",
+    "icon_links": [
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/physicskit/",
+            "icon": "fa-brands fa-python",
+            "type": "fontawesome",
+        },
+    ],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "default_mode": "dark",
     "show_toc_level": 2,
