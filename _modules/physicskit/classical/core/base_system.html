@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.classical.core.base_system</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Abstract base classes for ODE, Lagrangian, and Hamiltonian systems.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Abstract base classes for ODE, Lagrangian, and Hamiltonian systems.</span>
 
 <span class="sd">These classes define the common interface that every physical system in</span>
 <span class="sd">:mod:`physicskit.classical.systems` implements, and wire each system up to the</span>
@@ -424,15 +424,15 @@
 <span class="sd">The step/loop functions in :mod:`physicskit.classical.core.integrators` are themselves</span>
 <span class="sd">``@njit``-compiled and call the supplied ``force_func``/``deriv_func``</span>
 <span class="sd">*from inside nopython code*. Numba can only do this when that callback</span>
-<span class="sd">is itself a genuine ``@njit`` dispatcher (numba's "first-class function"</span>
+<span class="sd">is itself a genuine ``@njit`` dispatcher (numba&#39;s &quot;first-class function&quot;</span>
 <span class="sd">support) -- a plain bound Python method (e.g. ``self.derivatives``)</span>
 <span class="sd">cannot be typed and would fail. Every concrete system therefore builds</span>
 <span class="sd">its own standalone njit callbacks (conventionally stored as</span>
 <span class="sd">``self._force_njit`` and/or ``self._deriv_njit``, produced by a</span>
-<span class="sd">module-level factory function that closes over the system's numeric</span>
+<span class="sd">module-level factory function that closes over the system&#39;s numeric</span>
 <span class="sd">parameters) and the base classes below always integrate using *those*</span>
 <span class="sd">attributes, never a bound method.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -445,11 +445,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrators</span> <span class="k">as</span> <span class="n">intg</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"SimulationResult"</span><span class="p">,</span>
-    <span class="s2">"DynamicalSystem"</span><span class="p">,</span>
-    <span class="s2">"ODESystem"</span><span class="p">,</span>
-    <span class="s2">"HamiltonianSystem"</span><span class="p">,</span>
-    <span class="s2">"LagrangianSystem"</span><span class="p">,</span>
+    <span class="s2">&quot;SimulationResult&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DynamicalSystem&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ODESystem&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HamiltonianSystem&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LagrangianSystem&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -457,40 +457,40 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.SimulationResult">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">SimulationResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Container for the output of a system's ``integrate`` call."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for the output of a system&#39;s ``integrate`` call.&quot;&quot;&quot;</span>
 
     <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sd">"""ndarray, shape (n_steps + 1,): Time samples."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray, shape (n_steps + 1,): Time samples.&quot;&quot;&quot;</span>
 
     <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sd">"""ndarray, shape (n_steps + 1, state_dim): The raw stacked-state</span>
-<span class="sd">    trajectory, in whatever layout the producing system uses internally."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray, shape (n_steps + 1, state_dim): The raw stacked-state</span>
+<span class="sd">    trajectory, in whatever layout the producing system uses internally.&quot;&quot;&quot;</span>
 
     <span class="n">q</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""ndarray, shape (n_steps + 1, ndof), optional: Generalized positions,</span>
-<span class="sd">    for Hamiltonian/Lagrangian systems."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray, shape (n_steps + 1, ndof), optional: Generalized positions,</span>
+<span class="sd">    for Hamiltonian/Lagrangian systems.&quot;&quot;&quot;</span>
 
     <span class="n">p</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""ndarray, shape (n_steps + 1, ndof), optional: Canonical momenta for</span>
-<span class="sd">    Hamiltonian systems, or qdot for Lagrangian systems."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray, shape (n_steps + 1, ndof), optional: Canonical momenta for</span>
+<span class="sd">    Hamiltonian systems, or qdot for Lagrangian systems.&quot;&quot;&quot;</span>
 
     <span class="n">energy</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""ndarray, shape (n_steps + 1,), optional: Total mechanical energy</span>
-<span class="sd">    H(t) (or T+V) at each sample."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray, shape (n_steps + 1,), optional: Total mechanical energy</span>
+<span class="sd">    H(t) (or T+V) at each sample.&quot;&quot;&quot;</span>
 
-    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
-<span class="w">    </span><span class="sd">"""str: Name of the integrator used (e.g. ``"yoshida4"``)."""</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Name of the integrator used (e.g. ``&quot;yoshida4&quot;``).&quot;&quot;&quot;</span>
 
     <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">"""dict: Free-form slot for any additional diagnostics a system</span>
-<span class="sd">    chooses to attach."""</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;dict: Free-form slot for any additional diagnostics a system</span>
+<span class="sd">    chooses to attach.&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="DynamicalSystem">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DynamicalSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DynamicalSystem</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Common base for any system with a state vector evolving in time."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Common base for any system with a state vector evolving in time.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -500,7 +500,7 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DynamicalSystem.derivatives">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">derivatives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return dstate/dt at ``(t, state)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return dstate/dt at ``(t, state)``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -513,14 +513,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray</span>
 <span class="sd">            Time derivative of ``state``.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="DynamicalSystem.energy">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DynamicalSystem.energy">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return the total mechanical energy of ``state``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the total mechanical energy of ``state``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -531,13 +531,13 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Total mechanical energy.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="DynamicalSystem.reset">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DynamicalSystem.reset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Reset the system's state and clock.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the system&#39;s state and clock.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -550,7 +550,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray</span>
 <span class="sd">            The (possibly updated) current state.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
@@ -560,8 +560,8 @@
 <div class="viewcode-block" id="DynamicalSystem.integrate">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.DynamicalSystem.integrate">[docs]</a>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"rk4"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Integrate the system forward in time.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rk4&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the system forward in time.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -576,7 +576,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        SimulationResult</span>
 <span class="sd">            The full trajectory and diagnostics.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 </div>
 
 
@@ -584,7 +584,7 @@
 <div class="viewcode-block" id="ODESystem">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ODESystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ODESystem</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""A general (possibly non-conservative) first-order ODE system.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A general (possibly non-conservative) first-order ODE system.</span>
 
 <span class="sd">    Concrete subclasses must set ``self._deriv_njit`` (an ``@njit``</span>
 <span class="sd">    dispatcher with signature ``(t, state) -&gt; dstate``) in ``__init__``.</span>
@@ -592,7 +592,7 @@
 <span class="sd">    e.g. central-force problems with drag, or rigid-body Euler equations</span>
 <span class="sd">    (whose implicit-midpoint flow exactly conserves the quadratic energy</span>
 <span class="sd">    and angular-momentum-squared invariants).</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -604,8 +604,8 @@
 
 <div class="viewcode-block" id="ODESystem.integrate">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ODESystem.integrate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"implicit_midpoint"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Integrate the system forward in time.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the system forward in time.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -613,22 +613,22 @@
 <span class="sd">            ``(t0, t1)``, start and end time.</span>
 <span class="sd">        dt : float</span>
 <span class="sd">            Fixed step size.</span>
-<span class="sd">        method : {"implicit_midpoint", "rk4"}</span>
+<span class="sd">        method : {&quot;implicit_midpoint&quot;, &quot;rk4&quot;}</span>
 <span class="sd">            Integrator to use.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        SimulationResult</span>
 <span class="sd">            The full trajectory and energy diagnostics.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">t_span</span>
         <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"rk4"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rk4&quot;</span><span class="p">:</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"implicit_midpoint"</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">:</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown method '</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' for ODESystem"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown method &#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39; for ODESystem&quot;</span><span class="p">)</span>
         <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -640,7 +640,7 @@
 <div class="viewcode-block" id="HamiltonianSystem">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HamiltonianSystem</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Base class for canonical Hamiltonian systems H(q, p, t).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for canonical Hamiltonian systems H(q, p, t).</span>
 
 <span class="sd">    Subclasses set ``ndof``, ``separable``, and ``mass_inv``, and build</span>
 <span class="sd">    ``self._force_njit(q, t) -&gt; array`` (required when ``separable`` is</span>
@@ -657,16 +657,16 @@
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    ``state`` is stored flattened as ``[q_1..q_n, p_1..p_n]``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ndof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="w">    </span><span class="sd">"""int: Number of degrees of freedom, inferred from ``q0``."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int: Number of degrees of freedom, inferred from ``q0``.&quot;&quot;&quot;</span>
 
     <span class="n">separable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="w">    </span><span class="sd">"""bool: Whether ``H = T(p) + V(q)``, enabling the Verlet/Yoshida4 integrators."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;bool: Whether ``H = T(p) + V(q)``, enabling the Verlet/Yoshida4 integrators.&quot;&quot;&quot;</span>
 
     <span class="n">mass_inv</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="w">    </span><span class="sd">"""float or ndarray: 1/m per coordinate; ``dq/dt = mass_inv * p``."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;float or ndarray: 1/m per coordinate; ``dq/dt = mass_inv * p``.&quot;&quot;&quot;</span>
 
     <span class="n">_force_njit</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>
@@ -679,19 +679,19 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">q</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""ndarray: Generalized positions (the first ``ndof`` entries of ``state``)."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: Generalized positions (the first ``ndof`` entries of ``state``).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""ndarray: Canonical momenta (the last ``ndof`` entries of ``state``)."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: Canonical momenta (the last ``ndof`` entries of ``state``).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
 
 <div class="viewcode-block" id="HamiltonianSystem.split">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem.split">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ndof</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Split a stacked ``[q, p]`` state vector into its two halves.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split a stacked ``[q, p]`` state vector into its two halves.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -701,7 +701,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        q, p : ndarray, shape (ndof,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">state</span><span class="p">[:</span><span class="n">ndof</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">ndof</span><span class="p">:]</span></div>
 
 
@@ -709,7 +709,7 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem.kinetic_energy">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">kinetic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return T(p).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return T(p).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -719,7 +719,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
 
@@ -727,7 +727,7 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem.potential_energy">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">potential_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return V(q).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return V(q).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -737,14 +737,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
 
 <div class="viewcode-block" id="HamiltonianSystem.force">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem.force">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return -dV/dq (only defined for separable systems).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return -dV/dq (only defined for separable systems).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -761,16 +761,16 @@
 <span class="sd">        ------</span>
 <span class="sd">        NotImplementedError</span>
 <span class="sd">            If the system is non-separable (no ``_force_njit`` set).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"This system has no separable force() (non-separable Hamiltonian)"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;This system has no separable force() (non-separable Hamiltonian)&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_deriv_njit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">separable</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Non-separable systems must provide self._deriv_njit"</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Non-separable systems must provide self._deriv_njit&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">make_separable_derivatives</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_inv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span>
 
@@ -790,8 +790,8 @@
 
 <div class="viewcode-block" id="HamiltonianSystem.integrate">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HamiltonianSystem.integrate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"yoshida4"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Integrate the system forward in time.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;yoshida4&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the system forward in time.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -799,31 +799,31 @@
 <span class="sd">            ``(t0, t1)``, start and end time.</span>
 <span class="sd">        dt : float</span>
 <span class="sd">            Fixed step size.</span>
-<span class="sd">        method : {"yoshida4", "verlet", "implicit_midpoint", "rk4"}</span>
-<span class="sd">            Integrator to use. ``"yoshida4"``/``"verlet"`` require</span>
+<span class="sd">        method : {&quot;yoshida4&quot;, &quot;verlet&quot;, &quot;implicit_midpoint&quot;, &quot;rk4&quot;}</span>
+<span class="sd">            Integrator to use. ``&quot;yoshida4&quot;``/``&quot;verlet&quot;`` require</span>
 <span class="sd">            ``self.separable``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        SimulationResult</span>
 <span class="sd">            The full ``(q, p)`` trajectory and energy diagnostics.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">t_span</span>
         <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span><span class="p">))</span>
         <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"verlet"</span><span class="p">,</span> <span class="s2">"yoshida4"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;verlet&quot;</span><span class="p">,</span> <span class="s2">&quot;yoshida4&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">separable</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"method='</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' requires a separable Hamiltonian"</span><span class="p">)</span>
-            <span class="n">integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">velocity_verlet_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"verlet"</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">yoshida4_integrate</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;method=&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39; requires a separable Hamiltonian&quot;</span><span class="p">)</span>
+            <span class="n">integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">velocity_verlet_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;verlet&quot;</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">yoshida4_integrate</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">integ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_force_njit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_inv</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"implicit_midpoint"</span><span class="p">,</span> <span class="s2">"rk4"</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">,</span> <span class="s2">&quot;rk4&quot;</span><span class="p">):</span>
             <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">])</span>
             <span class="n">deriv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_deriv_njit</span><span class="p">()</span>
-            <span class="n">integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"implicit_midpoint"</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span>
+            <span class="n">integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;implicit_midpoint&quot;</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">integ</span><span class="p">(</span><span class="n">deriv</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
             <span class="n">qs</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:,</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">],</span> <span class="n">ys</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown method '</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' for HamiltonianSystem"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown method &#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39; for HamiltonianSystem&quot;</span><span class="p">)</span>
         <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">kinetic_energy</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential_energy</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">qs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -835,7 +835,7 @@
 <div class="viewcode-block" id="LagrangianSystem">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.LagrangianSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LagrangianSystem</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Base class for systems defined via a Lagrangian L(q, qdot, t).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for systems defined via a Lagrangian L(q, qdot, t).</span>
 
 <span class="sd">    Subclasses typically obtain their equations of motion from</span>
 <span class="sd">    :class:`physicskit.classical.utils.symbolic.LagrangianEngine`, which derives both a</span>
@@ -854,16 +854,16 @@
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    ``state`` is stored flattened as ``[q_1..q_n, qdot_1..qdot_n]``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ndof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="w">    </span><span class="sd">"""int: Number of degrees of freedom, inferred from ``q0``."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int: Number of degrees of freedom, inferred from ``q0``.&quot;&quot;&quot;</span>
 
     <span class="n">_accel_njit</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_momentum_njit</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,p]) -&gt; [dq, dp] = [dH/dp, -dH/dq]</span>
     <span class="n">_velocity_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (q, p) -&gt; qdot = dH/dp, used to report qdot after integration</span>
-    <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,qdot]) -&gt; [qdot, qddot], used only by method='rk4'</span>
+    <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,qdot]) -&gt; [qdot, qddot], used only by method=&#39;rk4&#39;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">):</span>
         <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -873,19 +873,19 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">q</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""ndarray: Generalized positions (the first ``ndof`` entries of ``state``)."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: Generalized positions (the first ``ndof`` entries of ``state``).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">qdot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""ndarray: Generalized velocities (the last ``ndof`` entries of ``state``)."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;ndarray: Generalized velocities (the last ``ndof`` entries of ``state``).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
 
 <div class="viewcode-block" id="LagrangianSystem.split">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.LagrangianSystem.split">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ndof</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Split a stacked ``[q, qdot]`` state vector into its two halves.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split a stacked ``[q, qdot]`` state vector into its two halves.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -895,14 +895,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        q, qdot : ndarray, shape (ndof,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">state</span><span class="p">[:</span><span class="n">ndof</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">ndof</span><span class="p">:]</span></div>
 
 
 <div class="viewcode-block" id="LagrangianSystem.acceleration">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.LagrangianSystem.acceleration">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">acceleration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">qdot</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return qddot at ``(q, qdot, t)`` via the Euler-Lagrange equations.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return qddot at ``(q, qdot, t)`` via the Euler-Lagrange equations.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -912,14 +912,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accel_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LagrangianSystem.momentum">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.LagrangianSystem.momentum">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">qdot</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Return the canonical momentum p = dL/dqdot at ``(q, qdot)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the canonical momentum p = dL/dqdot at ``(q, qdot)``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -928,7 +928,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_momentum_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qdot</span><span class="p">)</span></div>
 
 
@@ -947,8 +947,8 @@
 
 <div class="viewcode-block" id="LagrangianSystem.integrate">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.LagrangianSystem.integrate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"implicit_midpoint"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Integrate the system forward in time.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimulationResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the system forward in time.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -956,10 +956,10 @@
 <span class="sd">            ``(t0, t1)``, start and end time.</span>
 <span class="sd">        dt : float</span>
 <span class="sd">            Fixed step size.</span>
-<span class="sd">        method : {"implicit_midpoint", "rk4"}</span>
-<span class="sd">            Integrator to use. ``"implicit_midpoint"`` (the default) is</span>
+<span class="sd">        method : {&quot;implicit_midpoint&quot;, &quot;rk4&quot;}</span>
+<span class="sd">            Integrator to use. ``&quot;implicit_midpoint&quot;`` (the default) is</span>
 <span class="sd">            symplectic even for non-separable systems, via the</span>
-<span class="sd">            Legendre-transformed canonical form; ``"rk4"`` integrates</span>
+<span class="sd">            Legendre-transformed canonical form; ``&quot;rk4&quot;`` integrates</span>
 <span class="sd">            the direct ``(q, qdot)`` acceleration form and is not</span>
 <span class="sd">            symplectic.</span>
 
@@ -968,11 +968,11 @@
 <span class="sd">        SimulationResult</span>
 <span class="sd">            The full ``(q, qdot)`` trajectory and energy diagnostics</span>
 <span class="sd">            (with ``result.p`` holding qdot, not a canonical momentum).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">t_span</span>
         <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span><span class="p">))</span>
         <span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">qdot</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"implicit_midpoint"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">:</span>
             <span class="n">p0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">)</span>
             <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">])</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_canonical_deriv_njit</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
@@ -980,13 +980,13 @@
             <span class="n">ps</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
             <span class="n">qdots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_velocity_njit</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">ps</span><span class="p">)])</span>
             <span class="n">ys_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">qs</span><span class="p">,</span> <span class="n">qdots</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"rk4"</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rk4&quot;</span><span class="p">:</span>
             <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">])</span>
             <span class="n">ts</span><span class="p">,</span> <span class="n">ys_out</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deriv_njit</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
             <span class="n">qs</span> <span class="o">=</span> <span class="n">ys_out</span><span class="p">[:,</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">]</span>
             <span class="n">qdots</span> <span class="o">=</span> <span class="n">ys_out</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown method '</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' for LagrangianSystem"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown method &#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39; for LagrangianSystem&quot;</span><span class="p">)</span>
         <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">q</span><span class="p">,</span> <span class="n">qd</span><span class="p">]))</span> <span class="k">for</span> <span class="n">q</span><span class="p">,</span> <span class="n">qd</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">qdots</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">ys_out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>

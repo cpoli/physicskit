@@ -411,18 +411,18 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.renormalization</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Real-space renormalization group: Kadanoff block-spin coarse-graining.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Real-space renormalization group: Kadanoff block-spin coarse-graining.</span>
 
-<span class="sd">Kadanoff's block-spin construction groups an Ising lattice into</span>
+<span class="sd">Kadanoff&#39;s block-spin construction groups an Ising lattice into</span>
 <span class="sd">:math:`b \\times b` blocks and replaces each block by a single effective spin</span>
 <span class="sd">(here, majority rule with ``b = 2``), producing a new, smaller lattice at the</span>
 <span class="sd">same nominal temperature. Iterating this map is a real-space renormalization</span>
 <span class="sd">group transformation: starting configurations flow toward one of the</span>
-<span class="sd">theory's fixed points -- a fully ordered state at :math:`T \\ll T_c`, a fully</span>
+<span class="sd">theory&#39;s fixed points -- a fully ordered state at :math:`T \\ll T_c`, a fully</span>
 <span class="sd">disordered state at :math:`T \\gg T_c`, and a self-similar, scale-invariant</span>
 <span class="sd">critical configuration at :math:`T = T_c`, where the coarse-grained lattice</span>
 <span class="sd">looks statistically identical to the original.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -430,13 +430,13 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters.ising_lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"BlockSpinRG"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BlockSpinRG&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="BlockSpinRG">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BlockSpinRG">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BlockSpinRG</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Iterated 2x2 majority-rule block-spin coarse-graining of an Ising configuration.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterated 2x2 majority-rule block-spin coarse-graining of an Ising configuration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -463,7 +463,7 @@
 <span class="sd">    initial_spins : ndarray of shape (L, L)</span>
 <span class="sd">        The equilibrated fine-grained configuration coarse-graining starts</span>
 <span class="sd">        from.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_equil_sweeps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span>
@@ -477,16 +477,16 @@
             <span class="c1"># Wolff cluster updates equilibrate far more reliably than single-spin</span>
             <span class="c1"># Metropolis: at low T, Metropolis dynamics from a random start undergoes</span>
             <span class="c1"># slow domain-wall coarsening that a modest sweep budget cannot outrun.</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"wolff"</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="n">n_equil_sweeps</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;wolff&quot;</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="n">n_equil_sweeps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_spins</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">spins</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <div class="viewcode-block" id="BlockSpinRG.coarse_grain_step">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BlockSpinRG.coarse_grain_step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">coarse_grain_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spins</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Apply one 2x2 majority-rule block-spin transformation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply one 2x2 majority-rule block-spin transformation.</span>
 
 <span class="sd">        Each non-overlapping :math:`2 \\times 2` block of the input is</span>
-<span class="sd">        replaced by a single spin equal to the sign of the block's sum; an</span>
+<span class="sd">        replaced by a single spin equal to the sign of the block&#39;s sum; an</span>
 <span class="sd">        exact tie (sum of zero) is broken by an independent fair coin flip.</span>
 
 <span class="sd">        Parameters</span>
@@ -498,10 +498,10 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of shape (L // 2, L // 2)</span>
 <span class="sd">            Coarse-grained spin configuration.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">spins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">L</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"lattice size must be even to block by 2x2"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;lattice size must be even to block by 2x2&quot;</span><span class="p">)</span>
         <span class="n">blocks</span> <span class="o">=</span> <span class="n">spins</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">L</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">L</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="n">new_spins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
         <span class="n">ties</span> <span class="o">=</span> <span class="n">new_spins</span> <span class="o">==</span> <span class="mi">0</span>
@@ -514,7 +514,7 @@
 <div class="viewcode-block" id="BlockSpinRG.iterate">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BlockSpinRG.iterate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">iterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Repeatedly coarse-grain the initial configuration.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Repeatedly coarse-grain the initial configuration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -536,7 +536,7 @@
 <span class="sd">        &gt;&gt;&gt; grids = rg.iterate(n_steps=3)</span>
 <span class="sd">        &gt;&gt;&gt; [g.shape[0] for g in grids]</span>
 <span class="sd">        [16, 8, 4, 2]</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">n_steps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)))</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">grids</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_spins</span><span class="p">]</span>
@@ -551,7 +551,7 @@
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BlockSpinRG.order_parameter">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">order_parameter</span><span class="p">(</span><span class="n">spins</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Magnitude of the mean magnetization per site, :math:`|\\langle s \\rangle|`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Magnitude of the mean magnetization per site, :math:`|\\langle s \\rangle|`.</span>
 
 <span class="sd">        A convenient scalar summary of a grid in the RG flow: it drifts to</span>
 <span class="sd">        ``1`` under iteration when the starting temperature is below</span>
@@ -567,7 +567,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spins</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span></div>
 </div>
 

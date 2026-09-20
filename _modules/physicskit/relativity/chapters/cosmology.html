@@ -411,19 +411,19 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.relativity.chapters.cosmology</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""FLRW cosmology: the Friedmann equations, cosmic expansion, and redshift.</span>
+<span></span><span class="sd">&quot;&quot;&quot;FLRW cosmology: the Friedmann equations, cosmic expansion, and redshift.</span>
 
 <span class="sd">The Friedmann-Lemaitre-Robertson-Walker (FLRW) metric is the unique</span>
 <span class="sd">spacetime describing a homogeneous, isotropic universe -- an excellent</span>
-<span class="sd">approximation to our own on large scales. Plugging it into Einstein's field</span>
-<span class="sd">equations yields the Friedmann equation, which governs how the universe's</span>
+<span class="sd">approximation to our own on large scales. Plugging it into Einstein&#39;s field</span>
+<span class="sd">equations yields the Friedmann equation, which governs how the universe&#39;s</span>
 <span class="sd">scale factor :math:`a(t)` evolves under the combined gravity of radiation,</span>
 <span class="sd">matter, curvature, and dark energy (:math:`\\Lambda`). This single equation</span>
-<span class="sd">explains Hubble's 1929 discovery of cosmic expansion, predicts the</span>
-<span class="sd">universe's age, and -- through the distance-redshift relation -- underlies</span>
+<span class="sd">explains Hubble&#39;s 1929 discovery of cosmic expansion, predicts the</span>
+<span class="sd">universe&#39;s age, and -- through the distance-redshift relation -- underlies</span>
 <span class="sd">the 1998 discovery (via observations of distant supernovae) that this</span>
 <span class="sd">expansion is accelerating.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -432,7 +432,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.relativity.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">C_SI</span><span class="p">,</span> <span class="n">PARSEC_M</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"FLRWCosmology"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FLRWCosmology&quot;</span><span class="p">]</span>
 
 <span class="n">_MPC_M</span> <span class="o">=</span> <span class="n">PARSEC_M</span> <span class="o">*</span> <span class="mf">1.0e6</span>
 <span class="n">_GYR_S</span> <span class="o">=</span> <span class="mf">365.25</span> <span class="o">*</span> <span class="mf">24.0</span> <span class="o">*</span> <span class="mf">3600.0</span> <span class="o">*</span> <span class="mf">1.0e9</span>
@@ -441,7 +441,7 @@
 <div class="viewcode-block" id="FLRWCosmology">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FLRWCosmology</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A flat or curved FLRW universe with radiation, matter, curvature, and dark energy.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A flat or curved FLRW universe with radiation, matter, curvature, and dark energy.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -460,7 +460,7 @@
 <span class="sd">        Curvature density parameter, :math:`1 - \\Omega_m - \\Omega_r - \\Omega_\\Lambda`</span>
 <span class="sd">        (computed so all density parameters sum to 1, as required by the</span>
 <span class="sd">        Friedmann equation at :math:`a=1`).</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H0</span><span class="o">=</span><span class="mf">70.0</span><span class="p">,</span> <span class="n">Omega_m</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">Omega_r</span><span class="o">=</span><span class="mf">1.0e-4</span><span class="p">,</span> <span class="n">Omega_Lambda</span><span class="o">=</span><span class="mf">0.7</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="n">H0</span>
@@ -475,7 +475,7 @@
 <div class="viewcode-block" id="FLRWCosmology.E">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.E">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">E</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Dimensionless expansion rate :math:`E(a) = H(a)/H_0`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dimensionless expansion rate :math:`E(a) = H(a)/H_0`.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -489,7 +489,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Omega_r</span> <span class="o">*</span> <span class="n">a</span><span class="o">**-</span><span class="mi">4</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Omega_m</span> <span class="o">*</span> <span class="n">a</span><span class="o">**-</span><span class="mi">3</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Omega_k</span> <span class="o">*</span> <span class="n">a</span><span class="o">**-</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Omega_Lambda</span><span class="p">)</span></div>
 
@@ -497,7 +497,7 @@
 <div class="viewcode-block" id="FLRWCosmology.hubble_parameter">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.hubble_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">hubble_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Hubble parameter :math:`H(a) = H_0 E(a)`, in km/s/Mpc.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hubble parameter :math:`H(a) = H_0 E(a)`, in km/s/Mpc.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -507,32 +507,32 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FLRWCosmology.redshift_to_scale_factor">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.redshift_to_scale_factor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">redshift_to_scale_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Convert redshift to scale factor, :math:`a = 1/(1+z)`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert redshift to scale factor, :math:`a = 1/(1+z)`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="FLRWCosmology.scale_factor_to_redshift">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.scale_factor_to_redshift">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">scale_factor_to_redshift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Convert scale factor to redshift, :math:`z = 1/a - 1`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert scale factor to redshift, :math:`z = 1/a - 1`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span></div>
 
 
 <div class="viewcode-block" id="FLRWCosmology.comoving_distance_mpc">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.comoving_distance_mpc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">comoving_distance_mpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Comoving distance to redshift ``z``, in Mpc.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Comoving distance to redshift ``z``, in Mpc.</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            D_C(z) = c \\int_0^z \\frac{dz'}{H(z')}</span>
+<span class="sd">            D_C(z) = c \\int_0^z \\frac{dz&#39;}{H(z&#39;)}</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -542,7 +542,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">H0_si</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_H0_si</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">integrand</span><span class="p">(</span><span class="n">zp</span><span class="p">):</span>
@@ -556,7 +556,7 @@
 <div class="viewcode-block" id="FLRWCosmology.luminosity_distance_mpc">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.luminosity_distance_mpc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">luminosity_distance_mpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Luminosity distance to redshift ``z``, in Mpc, :math:`D_L = (1+z) D_C` (flat-sky FLRW).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Luminosity distance to redshift ``z``, in Mpc, :math:`D_L = (1+z) D_C` (flat-sky FLRW).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -566,18 +566,18 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">comoving_distance_mpc</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FLRWCosmology.age_gyr">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.age_gyr">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">age_gyr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Cosmic age at scale factor ``a``, in Gyr.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cosmic age at scale factor ``a``, in Gyr.</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            t(a) = \\int_0^a \\frac{da'}{a' H(a')}</span>
+<span class="sd">            t(a) = \\int_0^a \\frac{da&#39;}{a&#39; H(a&#39;)}</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -594,7 +594,7 @@
 <span class="sd">        &gt;&gt;&gt; cosmo = FLRWCosmology(H0=70.0, Omega_m=0.3, Omega_r=0.0, Omega_Lambda=0.7)</span>
 <span class="sd">        &gt;&gt;&gt; 12.0 &lt; cosmo.age_gyr() &lt; 15.0</span>
 <span class="sd">        True</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">H0_si</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_H0_si</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">integrand</span><span class="p">(</span><span class="n">ap</span><span class="p">):</span>
@@ -607,7 +607,7 @@
 <div class="viewcode-block" id="FLRWCosmology.scale_factor_history">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.FLRWCosmology.scale_factor_history">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">scale_factor_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">a_min</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span> <span class="n">a_max</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Tabulate the age of the universe at a range of scale factors, for plotting :math:`a(t)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tabulate the age of the universe at a range of scale factors, for plotting :math:`a(t)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -622,7 +622,7 @@
 <span class="sd">            Cosmic age at each scale factor, in Gyr.</span>
 <span class="sd">        a : ndarray of shape (n_points,)</span>
 <span class="sd">            The scale factor grid.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">a_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a_min</span><span class="p">,</span> <span class="n">a_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
         <span class="n">t_gyr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">age_gyr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">a_grid</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">t_gyr</span><span class="p">,</span> <span class="n">a_grid</span></div>

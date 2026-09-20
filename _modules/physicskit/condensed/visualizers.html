@@ -411,13 +411,13 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.visualizers</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Plotting helpers: band structures, Berry curvature heatmaps, edge-state densities, Fermi surfaces.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Plotting helpers: band structures, Berry curvature heatmaps, edge-state densities, Fermi surfaces.</span>
 
 <span class="sd">Matplotlib is used for 2D plots (band structures, Berry-curvature heatmaps,</span>
 <span class="sd">real-space wavefunction density), and Plotly for interactive 3D Fermi-surface</span>
 <span class="sd">isosurfaces. Every function returns its figure object rather than calling</span>
 <span class="sd">``show()``, so it composes cleanly into larger figures or headless pipelines.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -426,18 +426,18 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"plot_band_structure"</span><span class="p">,</span>
-    <span class="s2">"plot_berry_curvature"</span><span class="p">,</span>
-    <span class="s2">"plot_edge_state_density"</span><span class="p">,</span>
-    <span class="s2">"plot_lattice_structure"</span><span class="p">,</span>
-    <span class="s2">"plot_fermi_surface_3d"</span><span class="p">,</span>
+    <span class="s2">&quot;plot_band_structure&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plot_berry_curvature&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plot_edge_state_density&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plot_lattice_structure&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plot_fermi_surface_3d&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="plot_band_structure">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.plot_band_structure">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_band_structure</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">path_points</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_per_segment</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot bands along a piecewise-linear path through the Brillouin zone.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot bands along a piecewise-linear path through the Brillouin zone.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -463,12 +463,12 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; from physicskit.condensed.models import graphene_hamiltonian</span>
 <span class="sd">    &gt;&gt;&gt; path = [(0, 0), (2 * np.pi / 3, 4 * np.pi / 3), (2 * np.pi / 3, 2 * np.pi / 3), (0, 0)]</span>
-<span class="sd">    &gt;&gt;&gt; fig, ax = plot_band_structure(lambda k1, k2: graphene_hamiltonian(k1, k2), path, labels=["G", "K", "M", "G"])</span>
+<span class="sd">    &gt;&gt;&gt; fig, ax = plot_band_structure(lambda k1, k2: graphene_hamiltonian(k1, k2), path, labels=[&quot;G&quot;, &quot;K&quot;, &quot;M&quot;, &quot;G&quot;])</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &gt;&gt;&gt; sum(1 for line in ax.lines if line.get_color() == "C0")</span>
+<span class="sd">    &gt;&gt;&gt; sum(1 for line in ax.lines if line.get_color() == &quot;C0&quot;)</span>
 <span class="sd">    2</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">path_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path_points</span><span class="p">]</span>
     <span class="n">ks</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">path_points</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">path_points</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -490,13 +490,13 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">energies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">energies</span><span class="p">[:,</span> <span class="n">band</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C0"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">energies</span><span class="p">[:,</span> <span class="n">band</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ticks</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Energy"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -504,7 +504,7 @@
 <div class="viewcode-block" id="plot_berry_curvature">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.plot_berry_curvature">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_berry_curvature</span><span class="p">(</span><span class="n">curvature</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot a Berry-curvature field over the Brillouin zone as a heatmap.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a Berry-curvature field over the Brillouin zone as a heatmap.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -529,15 +529,15 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_berry_curvature(F)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">curvature</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">"lower"</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Berry curvature"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$k_1$"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$k_2$"</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">curvature</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Berry curvature&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$k_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$k_2$&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -545,7 +545,7 @@
 <div class="viewcode-block" id="plot_edge_state_density">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.plot_edge_state_density">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_edge_state_density</span><span class="p">(</span><span class="n">ribbon_hamiltonian_func</span><span class="p">,</span> <span class="n">k_parallel</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot the real-space density of the mid-gap eigenstate closest to zero energy.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the real-space density of the mid-gap eigenstate closest to zero energy.</span>
 
 <span class="sd">    Useful for visualizing the exponential localization</span>
 <span class="sd">    :math:`|\\psi(x)|^2 \\sim e^{-2x/\\xi}` of topological edge states exposed</span>
@@ -578,7 +578,7 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax, density = plot_edge_state_density(H_wire, k_parallel=[])</span>
 <span class="sd">    &gt;&gt;&gt; bool(density[0] &gt; density[len(density) // 2])</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">ribbon_hamiltonian_func</span><span class="p">(</span><span class="n">k_parallel</span><span class="p">)</span>
     <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)))</span>
@@ -589,23 +589,23 @@
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)),</span> <span class="n">density</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Site index"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$|\psi(x)|^2$"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Closest-to-zero eigenstate, E=</span><span class="si">{</span><span class="n">eigenvalues</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">density</span><span class="p">)),</span> <span class="n">density</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Site index&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$|\psi(x)|^2$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Closest-to-zero eigenstate, E=</span><span class="si">{</span><span class="n">eigenvalues</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">density</span></div>
 
 
 
 <div class="viewcode-block" id="plot_lattice_structure">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.plot_lattice_structure">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_lattice_structure</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"viridis"</span><span class="p">,</span> <span class="n">bond_linewidth_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Draw a finite tight-binding cluster's real-space structure: atoms and bonds.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_lattice_structure</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">bond_linewidth_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draw a finite tight-binding cluster&#39;s real-space structure: atoms and bonds.</span>
 
 <span class="sd">    Renders the actual geometry of a finite lattice -- e.g. the output of</span>
 <span class="sd">    :func:`physicskit.condensed.tight_binding.build_finite_cluster` -- rather</span>
 <span class="sd">    than an abstract site-index plot: bonds as line segments (linewidth</span>
-<span class="sd">    proportional to hopping strength, so e.g. SSH's alternating strong/weak</span>
+<span class="sd">    proportional to hopping strength, so e.g. SSH&#39;s alternating strong/weak</span>
 <span class="sd">    dimerization is directly visible), atoms as markers optionally colored</span>
 <span class="sd">    and sized by a per-site weight such as edge-state probability density.</span>
 
@@ -620,7 +620,7 @@
 <span class="sd">        size. Defaults to uniform, unweighted markers.</span>
 <span class="sd">    ax : matplotlib.axes.Axes, optional</span>
 <span class="sd">        Axes to draw into; a new figure is created if omitted.</span>
-<span class="sd">    cmap : str, default="viridis"</span>
+<span class="sd">    cmap : str, default=&quot;viridis&quot;</span>
 <span class="sd">        Colormap used when ``weights`` is given.</span>
 <span class="sd">    bond_linewidth_scale : float, default=3.0</span>
 <span class="sd">        Bonds are drawn with linewidth ``bond_linewidth_scale * |amplitude|</span>
@@ -642,7 +642,7 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_lattice_structure(positions, bonds, weights=density)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">))</span>
@@ -656,20 +656,20 @@
     <span class="n">max_amp</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">if</span> <span class="n">amplitudes</span><span class="o">.</span><span class="n">size</span> <span class="k">else</span> <span class="mf">1.0</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">_amp</span><span class="p">),</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">lw</span> <span class="o">=</span> <span class="n">bond_linewidth_scale</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">max_amp</span> <span class="k">if</span> <span class="n">max_amp</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">bond_linewidth_scale</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]],</span> <span class="n">y</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">"round"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]],</span> <span class="n">y</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C0"</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="n">max_w</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="n">sizes</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">+</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">max_w</span> <span class="k">if</span> <span class="n">max_w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">)</span>
-        <span class="n">sc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sizes</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"weight"</span><span class="p">)</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sizes</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -677,7 +677,7 @@
 <div class="viewcode-block" id="plot_fermi_surface_3d">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.plot_fermi_surface_3d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_fermi_surface_3d</span><span class="p">(</span><span class="n">dispersion_func</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="n">k_range</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Render a 3D Fermi-surface isosurface :math:`\\varepsilon(\\mathbf{k}) = \\mu`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render a 3D Fermi-surface isosurface :math:`\\varepsilon(\\mathbf{k}) = \\mu`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -701,10 +701,10 @@
 <span class="sd">    &gt;&gt;&gt; eps = lambda kx, ky, kz: -2 * (np.cos(kx) + np.cos(ky) + np.cos(kz))</span>
 <span class="sd">    &gt;&gt;&gt; fig = plot_fermi_surface_3d(eps, mu=0.0, grid_size=20)</span>
 <span class="sd">    &gt;&gt;&gt; fig.data[0].type</span>
-<span class="sd">    'isosurface'</span>
-<span class="sd">    """</span>
+<span class="sd">    &#39;isosurface&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">k_range</span><span class="p">,</span> <span class="n">k_range</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
-    <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">dispersion_func</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">)</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span>
         <span class="n">data</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Isosurface</span><span class="p">(</span>
@@ -715,11 +715,11 @@
             <span class="n">isomin</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span>
             <span class="n">isomax</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span>
             <span class="n">surface_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">colorscale</span><span class="o">=</span><span class="s2">"Viridis"</span><span class="p">,</span>
+            <span class="n">colorscale</span><span class="o">=</span><span class="s2">&quot;Viridis&quot;</span><span class="p">,</span>
             <span class="n">showscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">scene</span><span class="o">=</span><span class="p">{</span><span class="s2">"xaxis_title"</span><span class="p">:</span> <span class="s2">"kx"</span><span class="p">,</span> <span class="s2">"yaxis_title"</span><span class="p">:</span> <span class="s2">"ky"</span><span class="p">,</span> <span class="s2">"zaxis_title"</span><span class="p">:</span> <span class="s2">"kz"</span><span class="p">})</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">scene</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;xaxis_title&quot;</span><span class="p">:</span> <span class="s2">&quot;kx&quot;</span><span class="p">,</span> <span class="s2">&quot;yaxis_title&quot;</span><span class="p">:</span> <span class="s2">&quot;ky&quot;</span><span class="p">,</span> <span class="s2">&quot;zaxis_title&quot;</span><span class="p">:</span> <span class="s2">&quot;kz&quot;</span><span class="p">})</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 
 </pre></div>

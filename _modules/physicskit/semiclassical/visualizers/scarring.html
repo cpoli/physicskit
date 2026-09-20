@@ -411,12 +411,12 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.semiclassical.visualizers.scarring</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Plotting helpers for quantum scars: eigenstate density maps and Husimi phase-space projections.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Plotting helpers for quantum scars: eigenstate density maps and Husimi phase-space projections.</span>
 
 <span class="sd">:func:`plot_scar_map_interactive` returns a Plotly figure for pan/zoom</span>
 <span class="sd">exploration of a scarred eigenstate density; the rest return a</span>
 <span class="sd">Matplotlib figure and axes rather than calling ``show()``.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -424,7 +424,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"plot_scar_map"</span><span class="p">,</span> <span class="s2">"plot_husimi_1d"</span><span class="p">,</span> <span class="s2">"plot_scar_map_interactive"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;plot_scar_map&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_husimi_1d&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_scar_map_interactive&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="plot_scar_map">
@@ -438,7 +438,7 @@
     <span class="n">orbit_y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Heatmap an eigenstate density with a classical periodic orbit overlaid.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Heatmap an eigenstate density with a classical periodic orbit overlaid.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -465,26 +465,26 @@
 <span class="sd">    &gt;&gt;&gt; from physicskit.semiclassical.systems.scarring import bouncing_ball_orbit_points</span>
 <span class="sd">    &gt;&gt;&gt; x = np.linspace(-2, 2, 100)</span>
 <span class="sd">    &gt;&gt;&gt; y = np.linspace(-1, 1, 60)</span>
-<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(x, y, indexing="ij")</span>
+<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(x, y, indexing=&quot;ij&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; density = np.exp(-(X - 0.3) ** 2 / (2 * 0.2 ** 2))</span>
 <span class="sd">    &gt;&gt;&gt; orbit_x, orbit_y = bouncing_ball_orbit_points(x0=0.3, R=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_scar_map(X, Y, density, orbit_x=orbit_x, orbit_y=orbit_y)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">plot_density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">density</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">plot_density</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"inferno"</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$|\psi|^2$"</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">plot_density</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$|\psi|^2$&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">orbit_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit_x</span><span class="p">,</span> <span class="n">orbit_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"c"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"classical orbit"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit_x</span><span class="p">,</span> <span class="n">orbit_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;classical orbit&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -492,7 +492,7 @@
 <div class="viewcode-block" id="plot_husimi_1d">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.plot_husimi_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_husimi_1d</span><span class="p">(</span><span class="n">S0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">P0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">husimi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Contour-plot a 1D Husimi phase-space projection.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Contour-plot a 1D Husimi phase-space projection.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -518,15 +518,15 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_husimi_1d(S0, P0, H)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">husimi</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"viridis"</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Husimi (peak-normalized)"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"s"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"p"</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">husimi</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Husimi (peak-normalized)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -534,7 +534,7 @@
 <div class="viewcode-block" id="plot_scar_map_interactive">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.plot_scar_map_interactive">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_scar_map_interactive</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">density</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Interactive Plotly heatmap of an eigenstate density, for zooming into scarred structure.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Interactive Plotly heatmap of an eigenstate density, for zooming into scarred structure.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -556,14 +556,14 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; x = np.linspace(-2, 2, 60)</span>
 <span class="sd">    &gt;&gt;&gt; y = np.linspace(-1, 1, 40)</span>
-<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(x, y, indexing="ij")</span>
+<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(x, y, indexing=&quot;ij&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; density = np.exp(-(X - 0.3) ** 2 / (2 * 0.2 ** 2))</span>
 <span class="sd">    &gt;&gt;&gt; fig = plot_scar_map_interactive(X, Y, density)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, go.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Heatmap</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">z</span><span class="o">=</span><span class="n">density</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">colorscale</span><span class="o">=</span><span class="s2">"Inferno"</span><span class="p">))</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">"y"</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Heatmap</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">z</span><span class="o">=</span><span class="n">density</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">colorscale</span><span class="o">=</span><span class="s2">&quot;Inferno&quot;</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 
 </pre></div>

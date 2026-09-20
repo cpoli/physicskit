@@ -411,18 +411,18 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.classical.systems.hamiltonian</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Hamiltonian phase-space systems illustrating Liouville mechanics.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Hamiltonian phase-space systems illustrating Liouville mechanics.</span>
 
 <span class="sd">:class:`HenonHeilesSystem` is the classic 2-DOF non-linear oscillator</span>
 <span class="sd">whose Poincare sections show the breakdown of KAM tori as energy</span>
 <span class="sd">increases. :class:`PendulumSwarm` evolves an ensemble of independent</span>
 <span class="sd">phase points under identical 1-DOF pendulum dynamics to visually</span>
-<span class="sd">demonstrate Liouville's theorem (phase-space volume/area is conserved</span>
+<span class="sd">demonstrate Liouville&#39;s theorem (phase-space volume/area is conserved</span>
 <span class="sd">by Hamiltonian flow, even though the occupied region shears and</span>
 <span class="sd">filaments). :func:`pendulum_action_angle` computes the action J(E) and</span>
 <span class="sd">period of a simple pendulum via elliptic integrals, the archetypal</span>
 <span class="sd">worked example of action-angle variables.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -434,7 +434,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">HamiltonianSystem</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"HenonHeilesSystem"</span><span class="p">,</span> <span class="s2">"PendulumSwarm"</span><span class="p">,</span> <span class="s2">"pendulum_action_angle"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;HenonHeilesSystem&quot;</span><span class="p">,</span> <span class="s2">&quot;PendulumSwarm&quot;</span><span class="p">,</span> <span class="s2">&quot;pendulum_action_angle&quot;</span><span class="p">]</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -449,7 +449,7 @@
 <div class="viewcode-block" id="HenonHeilesSystem">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HenonHeilesSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HenonHeilesSystem</span><span class="p">(</span><span class="n">HamiltonianSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""H = (px^2 + py^2)/2 + (x^2 + y^2)/2 + x^2*y - y^3/3.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;H = (px^2 + py^2)/2 + (x^2 + y^2)/2 + x^2*y - y^3/3.</span>
 
 <span class="sd">    A non-integrable 2-DOF oscillator (originally a model of stellar</span>
 <span class="sd">    orbits in an axisymmetric galactic potential). Below E ~ 1/6 the</span>
@@ -461,7 +461,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    q0, p0 : array-like, shape (2,)</span>
 <span class="sd">        Initial position ``(x, y)`` and momentum ``(px, py)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">separable</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">mass_inv</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -497,7 +497,7 @@
 <div class="viewcode-block" id="PendulumSwarm">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.PendulumSwarm">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PendulumSwarm</span><span class="p">(</span><span class="n">HamiltonianSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""An ensemble of N independent, identical simple pendulums,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An ensemble of N independent, identical simple pendulums,</span>
 <span class="sd">    H_i = p_i^2 / 2 - (g/l) cos(q_i) for each i = 1..N.</span>
 
 <span class="sd">    The pendulums are mutually decoupled (each is its own 1-DOF</span>
@@ -506,7 +506,7 @@
 <span class="sd">    single Yoshida4/Verlet call. Seeding N points inside a small</span>
 <span class="sd">    (dq, dp) box and watching the occupied phase-space patch shear</span>
 <span class="sd">    over time -- its area invariant even as its shape stretches into a</span>
-<span class="sd">    filament -- is the standard visual proof of Liouville's theorem.</span>
+<span class="sd">    filament -- is the standard visual proof of Liouville&#39;s theorem.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -514,7 +514,7 @@
 <span class="sd">        Initial angles and momenta, one pair per pendulum in the ensemble.</span>
 <span class="sd">    g_over_l : float</span>
 <span class="sd">        Ratio g/l shared by every pendulum.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">separable</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -528,7 +528,7 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.PendulumSwarm.from_box">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_box</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">q_center</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p_center</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dq</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">g_over_l</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Seed N phase points uniformly inside a (dq x dp) box centered at (q_center, p_center).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Seed N phase points uniformly inside a (dq x dp) box centered at (q_center, p_center).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -546,7 +546,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        PendulumSwarm</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">q0</span> <span class="o">=</span> <span class="n">q_center</span> <span class="o">+</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">dq</span>
         <span class="n">p0</span> <span class="o">=</span> <span class="n">p_center</span> <span class="o">+</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">dp</span>
@@ -568,7 +568,7 @@
 <div class="viewcode-block" id="PendulumSwarm.per_particle_energy">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.PendulumSwarm.per_particle_energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">per_particle_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Energy of each individual pendulum, used to color/track the swarm.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Energy of each individual pendulum, used to color/track the swarm.</span>
 
 <span class="sd">        Conserved per-particle since the ensemble is decoupled.</span>
 
@@ -580,7 +580,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray, shape (n,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">p</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_over_l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">q</span><span class="p">)</span></div>
@@ -589,7 +589,7 @@
 <div class="viewcode-block" id="PendulumSwarm.phase_space_area">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.PendulumSwarm.phase_space_area">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">phase_space_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Convex-hull area of the current swarm's (q, p) point cloud.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convex-hull area of the current swarm&#39;s (q, p) point cloud.</span>
 
 <span class="sd">        A practical proxy for the occupied phase-space volume.</span>
 
@@ -601,13 +601,13 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvexHull</span>
 
         <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">p</span>
         <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">ConvexHull</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>  <span class="c1"># 'volume' is the 2D area for a 2D hull</span></div>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">ConvexHull</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>  <span class="c1"># &#39;volume&#39; is the 2D area for a 2D hull</span></div>
 </div>
 
 
@@ -615,7 +615,7 @@
 <div class="viewcode-block" id="pendulum_action_angle">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.pendulum_action_angle">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pendulum_action_angle</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g_over_l</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Action J(E) and period T(E) for a simple pendulum H = p^2/2 - (g/l)cos(q).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Action J(E) and period T(E) for a simple pendulum H = p^2/2 - (g/l)cos(q).</span>
 
 <span class="sd">    For librating orbits (-g/l &lt; E &lt; g/l), uses the standard elliptic-integral</span>
 <span class="sd">    closed form: with k^2 = (E + g/l) / (2 g/l),</span>
@@ -624,7 +624,7 @@
 <span class="sd">        T(E) = 4 * K_ellip(k) / sqrt(g/l)</span>
 
 <span class="sd">    where K, E are the complete elliptic integrals of the first/second</span>
-<span class="sd">    kind (SciPy's ``special.ellipk``/``ellipe`` take the parameter</span>
+<span class="sd">    kind (SciPy&#39;s ``special.ellipk``/``ellipe`` take the parameter</span>
 <span class="sd">    m = k^2, not the modulus k).</span>
 
 <span class="sd">    Parameters</span>
@@ -645,10 +645,10 @@
 <span class="sd">    ------</span>
 <span class="sd">    ValueError</span>
 <span class="sd">        If ``E`` is outside the librating range.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g_over_l</span><span class="p">)</span>
     <span class="k">if</span> <span class="o">-</span><span class="n">g_over_l</span> <span class="o">&gt;=</span> <span class="n">E</span> <span class="ow">or</span> <span class="n">g_over_l</span> <span class="o">&lt;=</span> <span class="n">E</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"pendulum_action_angle only supports librating orbits (-g/l &lt; E &lt; g/l)"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;pendulum_action_angle only supports librating orbits (-g/l &lt; E &lt; g/l)&quot;</span><span class="p">)</span>
     <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">+</span> <span class="n">g_over_l</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">g_over_l</span><span class="p">)</span>  <span class="c1"># = k^2</span>
     <span class="n">K</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">ellipk</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
     <span class="n">Eei</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">ellipe</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>

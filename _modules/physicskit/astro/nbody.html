@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.astro.nbody</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Direct-summation N-body gravitational dynamics.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Direct-summation N-body gravitational dynamics.</span>
 
 <span class="sd">Uses **gravitational units with** :math:`G=1` by default -- every function</span>
 <span class="sd">accepts ``G`` as a keyword argument, the same convention</span>
@@ -421,7 +421,7 @@
 <span class="sd">- :func:`leapfrog_step` -- one symplectic kick-drift-kick integration step.</span>
 <span class="sd">- :class:`NBodySystem` -- a stateful N-body simulation with energy and</span>
 <span class="sd">  angular-momentum diagnostics.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -430,7 +430,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.integrators.fixed_step</span><span class="w"> </span><span class="kn">import</span> <span class="n">leapfrog_step</span> <span class="k">as</span> <span class="n">_leapfrog_step</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"gravitational_acceleration"</span><span class="p">,</span> <span class="s2">"leapfrog_step"</span><span class="p">,</span> <span class="s2">"NBodySystem"</span><span class="p">,</span> <span class="s2">"figure_eight_initial_conditions"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;gravitational_acceleration&quot;</span><span class="p">,</span> <span class="s2">&quot;leapfrog_step&quot;</span><span class="p">,</span> <span class="s2">&quot;NBodySystem&quot;</span><span class="p">,</span> <span class="s2">&quot;figure_eight_initial_conditions&quot;</span><span class="p">]</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -461,7 +461,7 @@
 <div class="viewcode-block" id="gravitational_acceleration">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.gravitational_acceleration">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gravitational_acceleration</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">masses</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">softening</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Pairwise Plummer-softened gravitational acceleration.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pairwise Plummer-softened gravitational acceleration.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -488,7 +488,7 @@
 <span class="sd">    &gt;&gt;&gt; acc = gravitational_acceleration(pos, m)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(acc[0, 0]), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_pairwise_acceleration</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">masses</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">softening</span><span class="p">))</span></div>
@@ -497,11 +497,11 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_nbody_accel</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Adapt :func:`_pairwise_acceleration` to the shared ``force(pos, t,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adapt :func:`_pairwise_acceleration` to the shared ``force(pos, t,</span>
 <span class="sd">    params) -&gt; acc`` convention, packing ``masses``, ``G`` and ``softening``</span>
 <span class="sd">    into a single ``params`` vector (``masses`` followed by ``[G,</span>
 <span class="sd">    softening]``) so it can be passed as a first-class function into</span>
-<span class="sd">    :func:`physicskit.integrators.leapfrog_step`."""</span>
+<span class="sd">    :func:`physicskit.integrators.leapfrog_step`.&quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">masses</span> <span class="o">=</span> <span class="n">params</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
     <span class="n">G</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
@@ -512,7 +512,7 @@
 <div class="viewcode-block" id="leapfrog_step">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.leapfrog_step">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">leapfrog_step</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">masses</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">softening</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""One kick-drift-kick leapfrog (symplectic) integration step.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One kick-drift-kick leapfrog (symplectic) integration step.</span>
 
 <span class="sd">    Delegates to the shared :func:`physicskit.integrators.leapfrog_step`.</span>
 
@@ -529,7 +529,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    new_positions, new_velocities : ndarray of shape (N, 3)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">velocities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">velocities</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">masses</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -541,7 +541,7 @@
 <div class="viewcode-block" id="NBodySystem">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.NBodySystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NBodySystem</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A stateful direct-summation N-body gravitational simulation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A stateful direct-summation N-body gravitational simulation.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -550,7 +550,7 @@
 <span class="sd">    masses : ndarray of shape (N,)</span>
 <span class="sd">    G : float, default=1.0</span>
 <span class="sd">    softening : float, default=0.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">masses</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">softening</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -562,19 +562,19 @@
 <div class="viewcode-block" id="NBodySystem.step">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.NBodySystem.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Advance the system's stored state by one leapfrog step, in place."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the system&#39;s stored state by one leapfrog step, in place.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocities</span> <span class="o">=</span> <span class="n">leapfrog_step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">masses</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">softening</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NBodySystem.simulate">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.NBodySystem.simulate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Advance ``n_steps`` steps, returning the position history.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``n_steps`` steps, returning the position history.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of shape (n_steps + 1, N, 3)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="n">history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span>
@@ -587,7 +587,7 @@
 <div class="viewcode-block" id="NBodySystem.total_energy">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.NBodySystem.total_energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">total_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Kinetic plus (softened) gravitational potential energy, at the current state."""</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Kinetic plus (softened) gravitational potential energy, at the current state.&quot;&quot;&quot;</span>
         <span class="n">kinetic</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">masses</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">potential</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -602,7 +602,7 @@
 <div class="viewcode-block" id="NBodySystem.total_angular_momentum">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.NBodySystem.total_angular_momentum">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">total_angular_momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Total angular momentum, :math:`\vec L=\sum_im_i\,\vec r_i\times\vec v_i`."""</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Total angular momentum, :math:`\vec L=\sum_im_i\,\vec r_i\times\vec v_i`.&quot;&quot;&quot;</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">masses</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">L</span></div>
 </div>
@@ -612,7 +612,7 @@
 <div class="viewcode-block" id="figure_eight_initial_conditions">
 <a class="viewcode-back" href="../../../api/astro.html#physicskit.astro.figure_eight_initial_conditions">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">figure_eight_initial_conditions</span><span class="p">():</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Initial conditions for the equal-mass planar figure-eight three-body choreography.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initial conditions for the equal-mass planar figure-eight three-body choreography.</span>
 
 <span class="sd">    Three equal masses, in :math:`G=1` units, chase each other forever</span>
 <span class="sd">    around a single figure-eight-shaped curve -- a periodic solution</span>
@@ -635,7 +635,7 @@
 <span class="sd">    &gt;&gt;&gt; history = system.simulate(dt=0.001, n_steps=100)</span>
 <span class="sd">    &gt;&gt;&gt; history.shape</span>
 <span class="sd">    (101, 3, 3)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9700436</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.24308753</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="n">v3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.93240737</span><span class="p">,</span> <span class="mf">0.86473146</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r1</span><span class="p">,</span> <span class="o">-</span><span class="n">r1</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>

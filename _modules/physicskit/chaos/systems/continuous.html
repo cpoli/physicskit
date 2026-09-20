@@ -411,14 +411,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.chaos.systems.continuous</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, Chua.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, Chua.</span>
 
 <span class="sd">Each system exposes a plain-Python :meth:`rhs` (for interactive use / plotting)</span>
 <span class="sd">plus a module-level Numba ``@njit`` right-hand-side function with the signature</span>
 <span class="sd">``rhs(state, t, params) -&gt; ndarray`` compatible with</span>
 <span class="sd">:func:`physicskit.chaos.core.integrators.rk4_integrate`, and a convenience</span>
 <span class="sd">:meth:`trajectory` method that drives that integrator.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -437,7 +437,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_lorenz_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Lorenz vector field ``dx/dt = f(x, t; sigma, rho, beta)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lorenz vector field ``dx/dt = f(x, t; sigma, rho, beta)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -452,7 +452,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (3,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sigma</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -465,7 +465,7 @@
 <div class="viewcode-block" id="Lorenz">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Lorenz">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Lorenz</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The Lorenz attractor.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Lorenz attractor.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -480,7 +480,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    sigma, rho, beta : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 3.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
@@ -492,18 +492,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(sigma, rho, beta)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(sigma, rho, beta)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Lorenz.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Lorenz.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the Lorenz vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the Lorenz vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -516,19 +516,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_lorenz_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Lorenz.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Lorenz.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition ``(1, 1, 1)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(1, 1, 1)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span></div>
 
 
@@ -541,7 +541,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -558,7 +558,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 3)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_lorenz_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 </div>
@@ -572,7 +572,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_rossler_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Rossler vector field ``dx/dt = f(x, t; a, b, c)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rossler vector field ``dx/dt = f(x, t; a, b, c)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -587,7 +587,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (3,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -600,7 +600,7 @@
 <div class="viewcode-block" id="Rossler">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Rossler">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Rossler</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The Rossler attractor.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Rossler attractor.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -615,7 +615,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    a, b, c : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 3.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
@@ -627,18 +627,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(a, b, c)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(a, b, c)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Rossler.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Rossler.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the Rossler vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the Rossler vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -651,19 +651,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_rossler_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Rossler.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Rossler.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition ``(1, 1, 1)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(1, 1, 1)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span></div>
 
 
@@ -676,7 +676,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -693,7 +693,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 3)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_rossler_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 </div>
@@ -707,7 +707,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_double_pendulum_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Double-pendulum vector field ``dx/dt = f(x, t; m1, m2, l1, l2, g)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Double-pendulum vector field ``dx/dt = f(x, t; m1, m2, l1, l2, g)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -722,7 +722,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (4,)</span>
 <span class="sd">        Time derivative ``(dtheta1/dt, dtheta2/dt, domega1/dt, domega2/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
     <span class="n">th1</span><span class="p">,</span> <span class="n">th2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="n">th1</span> <span class="o">-</span> <span class="n">th2</span>
@@ -745,7 +745,7 @@
 <div class="viewcode-block" id="DoublePendulum">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DoublePendulum">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DoublePendulum</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Planar double pendulum: point masses on massless rods.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Planar double pendulum: point masses on massless rods.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -764,7 +764,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    m1, m2, l1, l2, g : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 4. State is ``(theta1, theta2, omega1, omega2)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">4</span>
@@ -780,18 +780,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(m1, m2, l1, l2, g)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(m1, m2, l1, l2, g)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (5,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">m1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">])</span>
 
 <div class="viewcode-block" id="DoublePendulum.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DoublePendulum.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the double-pendulum vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the double-pendulum vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -804,19 +804,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
 <span class="sd">            Time derivative ``(dtheta1/dt, dtheta2/dt, domega1/dt, domega2/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_double_pendulum_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="DoublePendulum.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DoublePendulum.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition: both rods horizontal, at rest.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition: both rods horizontal, at rest.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
 
 
@@ -829,7 +829,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -846,7 +846,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 4)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_double_pendulum_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 
@@ -854,7 +854,7 @@
 <div class="viewcode-block" id="DoublePendulum.energy">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DoublePendulum.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Total mechanical energy, useful for checking integrator drift.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total mechanical energy, useful for checking integrator drift.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -865,7 +865,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Total (kinetic + potential) mechanical energy.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">th1</span><span class="p">,</span> <span class="n">th2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">state</span>
         <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">m1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span>
         <span class="n">kinetic</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">m1</span> <span class="o">*</span> <span class="p">(</span><span class="n">l1</span> <span class="o">*</span> <span class="n">w1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">m2</span> <span class="o">*</span> <span class="p">((</span><span class="n">l1</span> <span class="o">*</span> <span class="n">w1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">l2</span> <span class="o">*</span> <span class="n">w2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">l1</span> <span class="o">*</span> <span class="n">l2</span> <span class="o">*</span> <span class="n">w1</span> <span class="o">*</span> <span class="n">w2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th1</span> <span class="o">-</span> <span class="n">th2</span><span class="p">))</span>
@@ -882,7 +882,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_duffing_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Duffing vector field ``dx/dt = f(x, t; delta, alpha, beta, gamma, omega)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Duffing vector field ``dx/dt = f(x, t; delta, alpha, beta, gamma, omega)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -897,7 +897,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (2,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dv/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">delta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -909,9 +909,9 @@
 <div class="viewcode-block" id="Duffing">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Duffing">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Duffing</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The forced, damped Duffing oscillator.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The forced, damped Duffing oscillator.</span>
 
-<span class="sd">    Governed by ``x'' + delta*x' + alpha*x + beta*x^3 = gamma*cos(omega*t)``.</span>
+<span class="sd">    Governed by ``x&#39;&#39; + delta*x&#39; + alpha*x + beta*x^3 = gamma*cos(omega*t)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -930,7 +930,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    delta, alpha, beta, gamma, omega : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 2. State is ``(x, v)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
@@ -953,18 +953,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(delta, alpha, beta, gamma, omega)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(delta, alpha, beta, gamma, omega)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (5,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Duffing.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Duffing.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the Duffing vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the Duffing vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -977,19 +977,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dv/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_duffing_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Duffing.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Duffing.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition ``(1, 0)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(1, 0)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
 
 
@@ -1002,7 +1002,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1019,7 +1019,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 2)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_duffing_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 </div>
@@ -1027,13 +1027,13 @@
 
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Chua's circuit</span>
+<span class="c1"># Chua&#39;s circuit</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_chua_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Chua's circuit vector field ``dx/dt = f(x, t; alpha, beta, m0, m1)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Chua&#39;s circuit vector field ``dx/dt = f(x, t; alpha, beta, m0, m1)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1048,7 +1048,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (3,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">m0</span><span class="p">,</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">m0</span> <span class="o">-</span> <span class="n">m1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span>
@@ -1062,10 +1062,10 @@
 <div class="viewcode-block" id="Chua">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Chua">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Chua</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Chua's circuit: a simple chaotic electronic oscillator.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Chua&#39;s circuit: a simple chaotic electronic oscillator.</span>
 
 <span class="sd">    Built from just a resistor, two capacitors, an inductor, and one</span>
-<span class="sd">    piecewise-linear nonlinear resistor (the "Chua diode", ``h`` below), this</span>
+<span class="sd">    piecewise-linear nonlinear resistor (the &quot;Chua diode&quot;, ``h`` below), this</span>
 <span class="sd">    is one of the simplest physical systems known to be chaotic, and the</span>
 <span class="sd">    first to have its chaos confirmed experimentally in real hardware. For</span>
 <span class="sd">    the classic parameters below it produces the famous *double-scroll*</span>
@@ -1086,17 +1086,17 @@
 <span class="sd">    beta : float, default 28.0</span>
 <span class="sd">        Ratio involving the inductance and second capacitance.</span>
 <span class="sd">    m0 : float, default -8/7</span>
-<span class="sd">        Inner (small-``|x|``) slope of the Chua diode's piecewise-linear</span>
+<span class="sd">        Inner (small-``|x|``) slope of the Chua diode&#39;s piecewise-linear</span>
 <span class="sd">        characteristic.</span>
 <span class="sd">    m1 : float, default -5/7</span>
-<span class="sd">        Outer (large-``|x|``) slope of the Chua diode's piecewise-linear</span>
+<span class="sd">        Outer (large-``|x|``) slope of the Chua diode&#39;s piecewise-linear</span>
 <span class="sd">        characteristic.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    alpha, beta, m0, m1 : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 3.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
@@ -1115,18 +1115,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(alpha, beta, m0, m1)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(alpha, beta, m0, m1)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m1</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Chua.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Chua.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate Chua's circuit vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate Chua&#39;s circuit vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1139,19 +1139,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dy/dt, dz/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_chua_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Chua.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.Chua.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition, slightly off the unstable origin.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition, slightly off the unstable origin.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (3,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
 
 
@@ -1164,7 +1164,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1181,7 +1181,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 3)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_chua_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 </div>
@@ -1195,7 +1195,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_restricted_three_body_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""CR3BP vector field (planar, rotating frame) ``dx/dt = f(x, t; mu)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;CR3BP vector field (planar, rotating frame) ``dx/dt = f(x, t; mu)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1210,7 +1210,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (4,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dy/dt, dvx/dt, dvy/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
@@ -1226,13 +1226,13 @@
 <div class="viewcode-block" id="RestrictedThreeBody">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.RestrictedThreeBody">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RestrictedThreeBody</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The planar circular restricted three-body problem (CR3BP).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The planar circular restricted three-body problem (CR3BP).</span>
 
 <span class="sd">    A massless third body moves under the gravity of two massive primaries</span>
 <span class="sd">    (masses ``1 - mu`` and ``mu``, in normalized units) that are themselves in</span>
 <span class="sd">    a fixed circular orbit about their common center of mass. In the</span>
 <span class="sd">    rotating (co-precessing) reference frame, the primaries sit fixed at</span>
-<span class="sd">    ``(-mu, 0)`` and ``(1 - mu, 0)``, and the third body's motion picks up</span>
+<span class="sd">    ``(-mu, 0)`` and ``(1 - mu, 0)``, and the third body&#39;s motion picks up</span>
 <span class="sd">    centrifugal and Coriolis terms alongside the two gravitational pulls.</span>
 
 <span class="sd">    This system is what led Poincare to the first discovery of deterministic</span>
@@ -1246,7 +1246,7 @@
 <span class="sd">    nearby, only slightly perturbed initial condition that is chaotic instead.</span>
 
 <span class="sd">    Because of the velocity-dependent Coriolis terms, this system is *not* a</span>
-<span class="sd">    separable Hamiltonian of the form ``pos'' = force(pos, t)``, so it must</span>
+<span class="sd">    separable Hamiltonian of the form ``pos&#39;&#39; = force(pos, t)``, so it must</span>
 <span class="sd">    be integrated with :func:`physicskit.chaos.core.integrators.rk4_integrate`</span>
 <span class="sd">    (the symplectic :func:`~physicskit.chaos.core.integrators.leapfrog_integrate` /</span>
 <span class="sd">    :func:`~physicskit.chaos.core.integrators.yoshida4_integrate` do not apply).</span>
@@ -1262,7 +1262,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    mu : float</span>
 <span class="sd">        Mass parameter.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 4. State is ``(x, y, vx, vy)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">4</span>
@@ -1272,18 +1272,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(mu,)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(mu,)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (1,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">])</span>
 
 <div class="viewcode-block" id="RestrictedThreeBody.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.RestrictedThreeBody.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the CR3BP vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the CR3BP vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1297,19 +1297,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dy/dt, dvx/dt, dvy/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_restricted_three_body_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="RestrictedThreeBody.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.RestrictedThreeBody.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""The classic Arenstorf periodic-orbit initial condition.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The classic Arenstorf periodic-orbit initial condition.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.994</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.00158510637908252240537862224</span><span class="p">])</span></div>
 
 
@@ -1322,7 +1322,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0005</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1331,7 +1331,7 @@
 <span class="sd">        t0 : float, default 0.0</span>
 <span class="sd">            Initial time.</span>
 <span class="sd">        dt : float, default 0.0005</span>
-<span class="sd">            Integration step size (small, since the Arenstorf orbit's default</span>
+<span class="sd">            Integration step size (small, since the Arenstorf orbit&#39;s default</span>
 <span class="sd">            initial condition passes very close to the smaller primary).</span>
 <span class="sd">        n_steps : int, default 40000</span>
 <span class="sd">            Number of integration steps.</span>
@@ -1340,7 +1340,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 4)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_restricted_three_body_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 
@@ -1348,7 +1348,7 @@
 <div class="viewcode-block" id="RestrictedThreeBody.jacobi_constant">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.RestrictedThreeBody.jacobi_constant">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">jacobi_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""The Jacobi constant: the CR3BP's conserved rotating-frame energy analog.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The Jacobi constant: the CR3BP&#39;s conserved rotating-frame energy analog.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1363,7 +1363,7 @@
 <span class="sd">            potential. Conserved along any trajectory; useful for checking</span>
 <span class="sd">            integrator fidelity (e.g. with</span>
 <span class="sd">            :func:`physicskit.chaos.utils.metrics.energy_drift`).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span>
         <span class="n">omega</span> <span class="o">=</span> <span class="n">effective_potential</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
@@ -1373,16 +1373,16 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">effective_potential</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The CR3BP's effective (gravitational + centrifugal) potential ``Omega(x, y)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The CR3BP&#39;s effective (gravitational + centrifugal) potential ``Omega(x, y)``.</span>
 
 <span class="sd">    Vectorized over `x`/`y` (works directly on ``np.meshgrid`` output), so it</span>
 <span class="sd">    is the building block for both</span>
-<span class="sd">    :meth:`RestrictedThreeBody.jacobi_constant` and that orbit's *zero-velocity</span>
+<span class="sd">    :meth:`RestrictedThreeBody.jacobi_constant` and that orbit&#39;s *zero-velocity</span>
 <span class="sd">    curve*: since ``C = 2*Omega(x, y) - speed**2``, a trajectory with Jacobi</span>
 <span class="sd">    constant `C` can only reach points where ``Omega(x, y) &gt;= C / 2`` (speed</span>
 <span class="sd">    would otherwise be imaginary) -- the boundary ``Omega(x, y) == C / 2`` is</span>
 <span class="sd">    a curve the body can never cross, carving the plane into allowed and</span>
-<span class="sd">    forbidden ("Hill") regions.</span>
+<span class="sd">    forbidden (&quot;Hill&quot;) regions.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1395,7 +1395,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float</span>
 <span class="sd">        ``Omega(x, y) = 0.5*(x^2 + y^2) + (1 - mu)/r1 + mu/r2``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
@@ -1404,13 +1404,13 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">lagrange_points</span><span class="p">(</span><span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The five Lagrange (libration) equilibrium points of the CR3BP, in</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The five Lagrange (libration) equilibrium points of the CR3BP, in</span>
 <span class="sd">    the rotating frame, for mass parameter `mu`.</span>
 
 <span class="sd">    L1, L2, L3 are the collinear equilibria on the ``y = 0`` axis: points</span>
 <span class="sd">    where a body held at rest (``vx = vy = 0``) in the rotating frame feels</span>
 <span class="sd">    zero net acceleration, found here by root-finding</span>
-<span class="sd">    :func:`_restricted_three_body_rhs`'s ``ax`` output directly (rather</span>
+<span class="sd">    :func:`_restricted_three_body_rhs`&#39;s ``ax`` output directly (rather</span>
 <span class="sd">    than re-deriving the quintic equations by hand) in the three intervals</span>
 <span class="sd">    it is known to have exactly one root each: between the primaries</span>
 <span class="sd">    (L1), beyond the smaller primary (L2), and beyond the larger primary,</span>
@@ -1427,7 +1427,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (5, 2)</span>
 <span class="sd">        ``(x, y)`` of L1 through L5, in that order.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">ax_residual</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
@@ -1455,7 +1455,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">magnetic_pendulum_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Magnetic pendulum vector field ``dx/dt = f(x, t; params)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Magnetic pendulum vector field ``dx/dt = f(x, t; params)``.</span>
 
 <span class="sd">    Public (not underscore-prefixed) so it can be passed directly to the</span>
 <span class="sd">    low-level, Numba-accelerated integrators in</span>
@@ -1477,7 +1477,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (4,)</span>
 <span class="sd">        Time derivative ``(dx/dt, dy/dt, dvx/dt, dvy/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">friction</span><span class="p">,</span> <span class="n">spring</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">strength</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">n_magnets</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
@@ -1504,14 +1504,14 @@
 <div class="viewcode-block" id="MagneticPendulum">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.MagneticPendulum">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MagneticPendulum</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""A pendulum bob swinging over several fixed magnets: a multistable, chaotic system.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A pendulum bob swinging over several fixed magnets: a multistable, chaotic system.</span>
 
 <span class="sd">    A damped pendulum bob, modeled in the small-swing (flat, 2D) limit, is</span>
 <span class="sd">    pulled down toward the origin by a linear restoring force and attracted</span>
 <span class="sd">    toward each of several fixed magnets by an inverse-square-like force</span>
-<span class="sd">    (softened by a "height" offset `height`, the bob's height above the</span>
+<span class="sd">    (softened by a &quot;height&quot; offset `height`, the bob&#39;s height above the</span>
 <span class="sd">    magnet plane, which avoids a force singularity directly above a magnet).</span>
-<span class="sd">    Friction eventually settles the bob at rest near whichever magnet "won" --</span>
+<span class="sd">    Friction eventually settles the bob at rest near whichever magnet &quot;won&quot; --</span>
 <span class="sd">    but *which* magnet wins depends on the starting position with famously</span>
 <span class="sd">    fractal sensitivity, making this the classic system for visualizing</span>
 <span class="sd">    fractal basin boundaries; see</span>
@@ -1528,7 +1528,7 @@
 <span class="sd">        Linear restoring-force coefficient (pulling the bob back toward the</span>
 <span class="sd">        origin, as in the small-swing limit of gravity).</span>
 <span class="sd">    height : float, default 0.2</span>
-<span class="sd">        The bob's height above the magnet plane; softens the force near a</span>
+<span class="sd">        The bob&#39;s height above the magnet plane; softens the force near a</span>
 <span class="sd">        magnet (larger values give a gentler, less singular pull).</span>
 <span class="sd">    strength : float, default 1.0</span>
 <span class="sd">        Magnet attraction strength.</span>
@@ -1539,7 +1539,7 @@
 <span class="sd">        Magnet positions.</span>
 <span class="sd">    friction, spring, height, strength : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 4. State is ``(x, y, vx, vy)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">4</span>
@@ -1563,12 +1563,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(friction, spring, height, strength, mx_0, my_0, ...)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(friction, spring, height, strength, mx_0, my_0, ...)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4 + 2*n_magnets,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
             <span class="p">[</span>
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">friction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spring</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strength</span><span class="p">],</span>
@@ -1579,7 +1579,7 @@
 <div class="viewcode-block" id="MagneticPendulum.rhs">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.MagneticPendulum.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the magnetic pendulum vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the magnetic pendulum vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1592,19 +1592,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
 <span class="sd">            Time derivative ``(dx/dt, dy/dt, dvx/dt, dvy/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">magnetic_pendulum_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="MagneticPendulum.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.MagneticPendulum.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition: released from rest, off-center.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition: released from rest, off-center.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
 
 
@@ -1617,7 +1617,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1634,7 +1634,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 4)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">magnetic_pendulum_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 </div>
@@ -1648,7 +1648,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_driven_pendulum_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Driven-pendulum vector field ``dx/dt = f(x, t; damping, g_over_l, A, omega_d)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Driven-pendulum vector field ``dx/dt = f(x, t; damping, g_over_l, A, omega_d)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1663,7 +1663,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (2,)</span>
 <span class="sd">        Time derivative ``(dtheta/dt, domega/dt)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">damping</span><span class="p">,</span> <span class="n">g_over_l</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega_d</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">theta</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1673,9 +1673,9 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DrivenPendulum</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The damped, sinusoidally forced pendulum.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The damped, sinusoidally forced pendulum.</span>
 
-<span class="sd">    Governed by ``theta'' + damping*theta' + (g/l)*sin(theta) = A*cos(omega_d*t)``</span>
+<span class="sd">    Governed by ``theta&#39;&#39; + damping*theta&#39; + (g/l)*sin(theta) = A*cos(omega_d*t)``</span>
 <span class="sd">    -- the classic mechanical system for the period-doubling route to chaos</span>
 <span class="sd">    (Baker &amp; Gollub, *Chaotic Dynamics: An Introduction*): for fixed</span>
 <span class="sd">    damping and forcing frequency, sweeping the forcing amplitude `A`</span>
@@ -1691,7 +1691,7 @@
 <span class="sd">    damping : float, default 0.5</span>
 <span class="sd">        Viscous damping coefficient.</span>
 <span class="sd">    g_over_l : float, default 1.0</span>
-<span class="sd">        ``g/l``, the undamped/undriven pendulum's small-angle frequency</span>
+<span class="sd">        ``g/l``, the undamped/undriven pendulum&#39;s small-angle frequency</span>
 <span class="sd">        squared.</span>
 <span class="sd">    A : float, default 1.5</span>
 <span class="sd">        Forcing torque amplitude; the default, with the other defaults</span>
@@ -1703,7 +1703,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    damping, g_over_l, A, omega_d : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: State dimension, always 2. State is ``(theta, omega)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
@@ -1716,16 +1716,16 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Parameter vector ``(damping, g_over_l, A, omega_d)``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parameter vector ``(damping, g_over_l, A, omega_d)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (4,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">damping</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_over_l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_d</span><span class="p">])</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the driven-pendulum vector field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the driven-pendulum vector field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1738,16 +1738,16 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            Time derivative ``(dtheta/dt, domega/dt)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_driven_pendulum_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Default initial condition: small angle, at rest.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition: small angle, at rest.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span>
@@ -1757,7 +1757,7 @@
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
         <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1774,7 +1774,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        states : ndarray of float, shape (n_steps + 1, 2)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_driven_pendulum_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
 </pre></div>

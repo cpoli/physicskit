@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.particle.confinement</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Toy quark confinement and QCD string breaking.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Toy quark confinement and QCD string breaking.</span>
 
 <span class="sd">Uses the same natural-unit convention (:math:`\hbar=c=1`) as</span>
 <span class="sd">:mod:`physicskit.particle.kinematics`.</span>
@@ -421,7 +421,7 @@
 <span class="sd">confirmed by lattice QCD, with :math:`\kappa` the string tension,</span>
 <span class="sd">:math:`\kappa\approx0.9\ {\rm GeV/fm}\approx0.18\ {\rm GeV}^2` for real</span>
 <span class="sd">QCD) is receding at a prescribed constant speed. The color flux tube</span>
-<span class="sd">("string") connecting them stores energy :math:`\kappa r(t)`; once that</span>
+<span class="sd">(&quot;string&quot;) connecting them stores energy :math:`\kappa r(t)`; once that</span>
 <span class="sd">exceeds the threshold to pair-produce a light :math:`q\bar q` pair from</span>
 <span class="sd">the vacuum, the string breaks.</span>
 
@@ -439,19 +439,19 @@
 <span class="sd">current segments must independently store enough energy to pair-produce</span>
 <span class="sd">its own light quark pair) -- individual momentum conservation for the</span>
 <span class="sd">produced pairs, and their own subsequent dynamics, are not tracked.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"string_tension_energy"</span><span class="p">,</span> <span class="s2">"string_break_chain"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;string_tension_energy&quot;</span><span class="p">,</span> <span class="s2">&quot;string_break_chain&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="string_tension_energy">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.string_tension_energy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">string_tension_energy</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">kappa</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Energy stored in a confining linear-potential string, :math:`V(r)=\kappa r`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Energy stored in a confining linear-potential string, :math:`V(r)=\kappa r`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -468,7 +468,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; float(string_tension_energy(2.0, 0.9))</span>
 <span class="sd">    1.8</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span></div>
 
 
@@ -476,7 +476,7 @@
 <div class="viewcode-block" id="string_break_chain">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.string_break_chain">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">string_break_chain</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">m_q</span><span class="p">,</span> <span class="n">r0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">n_breaks</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Sequence of string-breaking events as a receding quark pair separates.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sequence of string-breaking events as a receding quark pair separates.</span>
 
 <span class="sd">    The original quark pair separates at the prescribed constant speed</span>
 <span class="sd">    ``v``, :math:`r(t)=r_0+vt`. The ``k``-th break occurs when the total</span>
@@ -518,28 +518,28 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; sim = string_break_chain(np.linspace(0, 10, 5), v=0.5, kappa=1.0, m_q=1.0, n_breaks=2)</span>
-<span class="sd">    &gt;&gt;&gt; sim["break_times"]</span>
+<span class="sd">    &gt;&gt;&gt; sim[&quot;break_times&quot;]</span>
 <span class="sd">    array([4., 8.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"v=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2"> must satisfy 0 &lt; v &lt; 1 (a sub-luminal recession speed)."</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2"> must satisfy 0 &lt; v &lt; 1 (a sub-luminal recession speed).&quot;</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">+</span> <span class="n">v</span> <span class="o">*</span> <span class="n">t</span>
     <span class="n">energy_total</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">r</span>
     <span class="n">break_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">m_q</span> <span class="o">*</span> <span class="n">k</span> <span class="o">/</span> <span class="n">kappa</span> <span class="o">-</span> <span class="n">r0</span><span class="p">)</span> <span class="o">/</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_breaks</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
     <span class="n">break_times</span> <span class="o">=</span> <span class="n">break_times</span><span class="p">[</span><span class="n">break_times</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">]</span>
-    <span class="n">n_segments</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">break_times</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">"right"</span><span class="p">)</span>
+    <span class="n">n_segments</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">break_times</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
     <span class="n">energy_per_segment</span> <span class="o">=</span> <span class="n">energy_total</span> <span class="o">/</span> <span class="n">n_segments</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
-        <span class="s2">"r"</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
-        <span class="s2">"energy_total"</span><span class="p">:</span> <span class="n">energy_total</span><span class="p">,</span>
-        <span class="s2">"n_segments"</span><span class="p">:</span> <span class="n">n_segments</span><span class="p">,</span>
-        <span class="s2">"energy_per_segment"</span><span class="p">:</span> <span class="n">energy_per_segment</span><span class="p">,</span>
-        <span class="s2">"break_times"</span><span class="p">:</span> <span class="n">break_times</span><span class="p">,</span>
-        <span class="s2">"r_break_unit"</span><span class="p">:</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">m_q</span> <span class="o">/</span> <span class="n">kappa</span><span class="p">,</span>
-        <span class="s2">"kappa"</span><span class="p">:</span> <span class="n">kappa</span><span class="p">,</span>
-        <span class="s2">"m_q"</span><span class="p">:</span> <span class="n">m_q</span><span class="p">,</span>
+        <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+        <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+        <span class="s2">&quot;energy_total&quot;</span><span class="p">:</span> <span class="n">energy_total</span><span class="p">,</span>
+        <span class="s2">&quot;n_segments&quot;</span><span class="p">:</span> <span class="n">n_segments</span><span class="p">,</span>
+        <span class="s2">&quot;energy_per_segment&quot;</span><span class="p">:</span> <span class="n">energy_per_segment</span><span class="p">,</span>
+        <span class="s2">&quot;break_times&quot;</span><span class="p">:</span> <span class="n">break_times</span><span class="p">,</span>
+        <span class="s2">&quot;r_break_unit&quot;</span><span class="p">:</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">m_q</span> <span class="o">/</span> <span class="n">kappa</span><span class="p">,</span>
+        <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="n">kappa</span><span class="p">,</span>
+        <span class="s2">&quot;m_q&quot;</span><span class="p">:</span> <span class="n">m_q</span><span class="p">,</span>
     <span class="p">}</span></div>
 
 </pre></div>

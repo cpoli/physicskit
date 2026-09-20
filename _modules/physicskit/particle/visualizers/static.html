@@ -411,25 +411,25 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.particle.visualizers.static</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Static plotting helpers: decay chain populations and differential cross sections.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Static plotting helpers: decay chain populations and differential cross sections.</span>
 
 <span class="sd">Matplotlib is used throughout. Every function returns its figure object</span>
 <span class="sd">rather than calling ``show()``, so it composes cleanly into larger</span>
 <span class="sd">figures or headless pipelines.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"plot_decay_chain"</span><span class="p">,</span> <span class="s2">"plot_differential_cross_section"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;plot_decay_chain&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_differential_cross_section&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="plot_decay_chain">
 <a class="viewcode-back" href="../../../../api/particle.html#physicskit.particle.plot_decay_chain">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_decay_chain</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">populations</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot each species' population over time in a radioactive decay chain.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot each species&#39; population over time in a radioactive decay chain.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -439,7 +439,7 @@
 <span class="sd">        Population of each species over time, e.g. from</span>
 <span class="sd">        :func:`physicskit.particle.decays.bateman_decay_chain`.</span>
 <span class="sd">    labels : sequence of str, optional</span>
-<span class="sd">        Label for each species; defaults to ``"species 1"``, ``"species 2"``, ...</span>
+<span class="sd">        Label for each species; defaults to ``&quot;species 1&quot;``, ``&quot;species 2&quot;``, ...</span>
 <span class="sd">    ax : matplotlib.axes.Axes, optional</span>
 <span class="sd">        Axes to draw into; a new figure is created if omitted.</span>
 
@@ -454,21 +454,21 @@
 <span class="sd">    &gt;&gt;&gt; from physicskit.particle.decays import bateman_decay_chain</span>
 <span class="sd">    &gt;&gt;&gt; t = np.linspace(0, 10, 50)</span>
 <span class="sd">    &gt;&gt;&gt; N = bateman_decay_chain(1000.0, [0.5, 0.2], t)</span>
-<span class="sd">    &gt;&gt;&gt; fig, ax = plot_decay_chain(t, N, labels=["Parent", "Daughter"])</span>
+<span class="sd">    &gt;&gt;&gt; fig, ax = plot_decay_chain(t, N, labels=[&quot;Parent&quot;, &quot;Daughter&quot;])</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">populations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">populations</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"species </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">populations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;species </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">populations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">populations</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"t"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"population"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
@@ -477,7 +477,7 @@
 <div class="viewcode-block" id="plot_differential_cross_section">
 <a class="viewcode-back" href="../../../../api/particle.html#physicskit.particle.plot_differential_cross_section">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_differential_cross_section</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dsigma_domega</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Plot a differential cross section :math:`d\\sigma/d\\Omega` vs. scattering angle.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a differential cross section :math:`d\\sigma/d\\Omega` vs. scattering angle.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -490,7 +490,7 @@
 <span class="sd">        Axes to draw into; a new figure is created if omitted.</span>
 <span class="sd">    log_scale : bool, default=True</span>
 <span class="sd">        Plot the cross section on a log y-axis, appropriate for the</span>
-<span class="sd">        Rutherford formula's steep small-angle divergence.</span>
+<span class="sd">        Rutherford formula&#39;s steep small-angle divergence.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -506,16 +506,16 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_differential_cross_section(theta, vals)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dsigma_domega</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">log_scale</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\theta$"</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$d\sigma/d\Omega$"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$d\sigma/d\Omega$&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 </pre></div>

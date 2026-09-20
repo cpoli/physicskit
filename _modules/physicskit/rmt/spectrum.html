@@ -411,8 +411,8 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.rmt.spectrum</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""The result of sampling an ensemble: eigenvalues plus the metadata needed</span>
-<span class="sd">to compare them against theory."""</span>
+<span></span><span class="sd">&quot;&quot;&quot;The result of sampling an ensemble: eigenvalues plus the metadata needed</span>
+<span class="sd">to compare them against theory.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -425,53 +425,53 @@
 <a class="viewcode-back" href="../../../api/rmt.html#physicskit.rmt.Spectrum">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Spectrum</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Eigenvalues drawn from a :class:`~physicskit.rmt.ensembles.base.MatrixEnsemble`."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Eigenvalues drawn from a :class:`~physicskit.rmt.ensembles.base.MatrixEnsemble`.&quot;&quot;&quot;</span>
 
     <span class="n">eigenvalues</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sd">"""numpy.ndarray, shape (n_samples, n): Raw (unnormalized) eigenvalues,</span>
-<span class="sd">    one row per independent draw."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;numpy.ndarray, shape (n_samples, n): Raw (unnormalized) eigenvalues,</span>
+<span class="sd">    one row per independent draw.&quot;&quot;&quot;</span>
 
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span>
-<span class="w">    </span><span class="sd">"""int: Matrix dimension used to generate this spectrum."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int: Matrix dimension used to generate this spectrum.&quot;&quot;&quot;</span>
 
     <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""float or None: Dyson index of the ensemble that produced this</span>
-<span class="sd">    spectrum, or None for ensembles outside Dyson's threefold way (e.g.</span>
-<span class="sd">    ``BuresHallEnsemble``, ``GraphLaplacianEnsemble``)."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;float or None: Dyson index of the ensemble that produced this</span>
+<span class="sd">    spectrum, or None for ensembles outside Dyson&#39;s threefold way (e.g.</span>
+<span class="sd">    ``BuresHallEnsemble``, ``GraphLaplacianEnsemble``).&quot;&quot;&quot;</span>
 
     <span class="n">ensemble</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">"""str: Name of the ensemble class, for provenance/repr purposes."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;str: Name of the ensemble class, for provenance/repr purposes.&quot;&quot;&quot;</span>
 
     <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="w">    </span><span class="sd">"""float: Factor by which ``eigenvalues`` should be divided to reach</span>
-<span class="sd">    the ensemble's standard asymptotic normalization (e.g. semicircle</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;float: Factor by which ``eigenvalues`` should be divided to reach</span>
+<span class="sd">    the ensemble&#39;s standard asymptotic normalization (e.g. semicircle</span>
 <span class="sd">    support [-2, 2] for the Gaussian ensembles). Set by the ensemble via</span>
-<span class="sd">    ``natural_scale()``."""</span>
+<span class="sd">    ``natural_scale()``.&quot;&quot;&quot;</span>
 
     <span class="n">eigenvectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">"""numpy.ndarray, shape (n_samples, m, n), or None: Eigenvectors as</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;numpy.ndarray, shape (n_samples, m, n), or None: Eigenvectors as</span>
 <span class="sd">    columns, matching ``eigenvalues`` column-for-column</span>
 <span class="sd">    (``eigenvectors[s][:, i]`` is the eigenvector for</span>
 <span class="sd">    ``eigenvalues[s, i]``). Only present when the ensemble was sampled</span>
 <span class="sd">    with ``sample(return_eigenvectors=True)``; None otherwise. ``m`` is</span>
 <span class="sd">    usually ``n`` but can differ for ensembles whose eigenvalue count</span>
-<span class="sd">    isn't exactly ``n`` (see ``n_samples`` elsewhere in this package for</span>
-<span class="sd">    the analogous eigenvalue-count caveat)."""</span>
+<span class="sd">    isn&#39;t exactly ``n`` (see ``n_samples`` elsewhere in this package for</span>
+<span class="sd">    the analogous eigenvalue-count caveat).&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">flat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""All eigenvalues from all samples, raveled into one 1-D array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;All eigenvalues from all samples, raveled into one 1-D array.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            1-D array of all eigenvalues, shape ``(n_samples * eigenvalues.shape[1],)``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rescaled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Eigenvalues divided by ``scale``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Eigenvalues divided by ``scale``.</span>
 
 <span class="sd">        This is the array to compare against a theoretical limiting</span>
 <span class="sd">        distribution.</span>
@@ -480,21 +480,21 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Same shape as ``eigenvalues``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">n_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Number of independent realizations drawn.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of independent realizations drawn.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        int</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvalues</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Spectrum(ensemble=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ensemble</span><span class="si">!r}</span><span class="s2">, n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, beta=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="si">}</span><span class="s2">, n_samples=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="si">}</span><span class="s2">)"</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Spectrum(ensemble=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ensemble</span><span class="si">!r}</span><span class="s2">, n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, beta=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="si">}</span><span class="s2">, n_samples=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 </pre></div>
 

@@ -411,13 +411,13 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.systems.potential_flow</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Inviscid, irrotational 2D potential flow: superposition of elementary solutions.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Inviscid, irrotational 2D potential flow: superposition of elementary solutions.</span>
 
 <span class="sd">Where the flow has no vorticity (:math:`\\nabla\\times\\mathbf{u}=0`) the</span>
 <span class="sd">velocity is the gradient of a scalar velocity potential,</span>
 <span class="sd">:math:`\\mathbf{u}=\\nabla\\phi`, and incompressibility</span>
 <span class="sd">(:math:`\\nabla\\cdot\\mathbf{u}=0`) then makes :math:`\\phi` harmonic:</span>
-<span class="sd">:math:`\\nabla^2\\phi=0`. Laplace's equation is linear, so any sum of</span>
+<span class="sd">:math:`\\nabla^2\\phi=0`. Laplace&#39;s equation is linear, so any sum of</span>
 <span class="sd">solutions is itself a solution -- the entire content of this module is that</span>
 <span class="sd">observation, applied to four elementary flows (a uniform stream, a</span>
 <span class="sd">source/sink, a doublet, and a point vortex) whose superpositions reproduce</span>
@@ -430,7 +430,7 @@
 <span class="sd">compact way to write the solution and, via the Cauchy-Riemann equations, an</span>
 <span class="sd">automatic guarantee that :math:`\\phi` and its harmonic conjugate</span>
 <span class="sd">(streamfunction) :math:`\\psi` are consistent: :math:`u - iv = dW/dz`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -440,14 +440,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"uniform_flow_potential"</span><span class="p">,</span>
-    <span class="s2">"source_potential"</span><span class="p">,</span>
-    <span class="s2">"doublet_potential"</span><span class="p">,</span>
-    <span class="s2">"point_vortex_potential"</span><span class="p">,</span>
-    <span class="s2">"PotentialFlow"</span><span class="p">,</span>
-    <span class="s2">"flow_past_cylinder"</span><span class="p">,</span>
-    <span class="s2">"pressure_coefficient"</span><span class="p">,</span>
-    <span class="s2">"kutta_joukowski_lift"</span><span class="p">,</span>
+    <span class="s2">&quot;uniform_flow_potential&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_potential&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;doublet_potential&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;point_vortex_potential&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PotentialFlow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;flow_past_cylinder&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pressure_coefficient&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kutta_joukowski_lift&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -458,7 +458,7 @@
 <div class="viewcode-block" id="uniform_flow_potential">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.uniform_flow_potential">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">uniform_flow_potential</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Complex potential of a uniform stream.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Complex potential of a uniform stream.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -473,7 +473,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of complex</span>
 <span class="sd">        Complex potential :math:`W(z) = U_\\infty e^{-i\\alpha} z`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">_complex_z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">U_inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span></div>
 
@@ -482,7 +482,7 @@
 <div class="viewcode-block" id="source_potential">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.source_potential">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">source_potential</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Complex potential of a point source (or, for negative `strength`, a sink).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Complex potential of a point source (or, for negative `strength`, a sink).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -497,9 +497,9 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of complex</span>
 <span class="sd">        Complex potential :math:`W(z) = \\frac{m}{2\\pi}\\ln(z - z_0)`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">_complex_z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">y0</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">strength</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
 
 
@@ -507,7 +507,7 @@
 <div class="viewcode-block" id="doublet_potential">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.doublet_potential">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">doublet_potential</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Complex potential of a doublet (a source-sink pair in the zero-separation limit).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Complex potential of a doublet (a source-sink pair in the zero-separation limit).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -525,9 +525,9 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of complex</span>
 <span class="sd">        Complex potential :math:`W(z) = \\frac{\\kappa e^{-i\\alpha}}{2\\pi (z-z_0)}`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">_complex_z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">y0</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">strength</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span></div>
 
 
@@ -535,7 +535,7 @@
 <div class="viewcode-block" id="point_vortex_potential">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.point_vortex_potential">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">point_vortex_potential</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">circulation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Complex potential of an isolated point vortex.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Complex potential of an isolated point vortex.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -550,9 +550,9 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of complex</span>
 <span class="sd">        Complex potential :math:`W(z) = \\frac{-i\\Gamma}{2\\pi}\\ln(z - z_0)`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">_complex_z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">y0</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">circulation</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
 
 
@@ -560,9 +560,9 @@
 <div class="viewcode-block" id="PotentialFlow">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PotentialFlow</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A superposition of elementary potential-flow solutions.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A superposition of elementary potential-flow solutions.</span>
 
-<span class="sd">    Because Laplace's equation is linear, the complex potential of any</span>
+<span class="sd">    Because Laplace&#39;s equation is linear, the complex potential of any</span>
 <span class="sd">    combination of uniform flow, sources/sinks, doublets, and point vortices</span>
 <span class="sd">    is simply the sum of their individual complex potentials -- exactly what</span>
 <span class="sd">    this class accumulates. Call :meth:`add_source`, :meth:`add_doublet`, or</span>
@@ -592,7 +592,7 @@
 <span class="sd">    &gt;&gt;&gt; u, v = flow.velocity(X, Y)</span>
 <span class="sd">    &gt;&gt;&gt; u.shape</span>
 <span class="sd">    (5, 5)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">U_inf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">U_inf</span><span class="p">)</span>
@@ -602,7 +602,7 @@
 <div class="viewcode-block" id="PotentialFlow.add_source">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.add_source">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Add a point source (or sink, for negative `strength`).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a point source (or sink, for negative `strength`).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -610,14 +610,14 @@
 <span class="sd">            Source strength; negative for a sink.</span>
 <span class="sd">        x0, y0 : float, default 0.0</span>
 <span class="sd">            Source location.</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"source"</span><span class="p">,</span> <span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)))</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="PotentialFlow.add_doublet">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.add_doublet">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_doublet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Add a doublet.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a doublet.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -627,14 +627,14 @@
 <span class="sd">            Doublet location.</span>
 <span class="sd">        alpha : float, default 0.0</span>
 <span class="sd">            Orientation angle (radians).</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"doublet"</span><span class="p">,</span> <span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)))</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;doublet&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">strength</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="PotentialFlow.add_vortex">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.add_vortex">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_vortex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circulation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Add a point vortex.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a point vortex.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -642,14 +642,14 @@
 <span class="sd">            Circulation :math:`\\Gamma`; positive is counterclockwise.</span>
 <span class="sd">        x0, y0 : float, default 0.0</span>
 <span class="sd">            Vortex location.</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"vortex"</span><span class="p">,</span> <span class="p">(</span><span class="n">circulation</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)))</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;vortex&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">circulation</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="PotentialFlow.complex_potential">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.complex_potential">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">complex_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the total complex potential :math:`W(z)=\\phi+i\\psi`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the total complex potential :math:`W(z)=\\phi+i\\psi`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -660,15 +660,15 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of complex</span>
 <span class="sd">            Complex potential at each point.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">W</span> <span class="o">=</span> <span class="n">uniform_flow_potential</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">U_inf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">kind</span><span class="p">,</span> <span class="n">args</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"source"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span>
                 <span class="n">W</span> <span class="o">=</span> <span class="n">W</span> <span class="o">+</span> <span class="n">source_potential</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"doublet"</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;doublet&quot;</span><span class="p">:</span>
                 <span class="n">W</span> <span class="o">=</span> <span class="n">W</span> <span class="o">+</span> <span class="n">doublet_potential</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"vortex"</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;vortex&quot;</span><span class="p">:</span>
                 <span class="n">W</span> <span class="o">=</span> <span class="n">W</span> <span class="o">+</span> <span class="n">point_vortex_potential</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">W</span></div>
 
@@ -676,7 +676,7 @@
 <div class="viewcode-block" id="PotentialFlow.streamfunction">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.streamfunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">streamfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the streamfunction :math:`\\psi = \\mathrm{Im}(W)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the streamfunction :math:`\\psi = \\mathrm{Im}(W)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -687,14 +687,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float</span>
 <span class="sd">            Streamfunction values.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">complex_potential</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="PotentialFlow.velocity">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.velocity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the velocity field :math:`u - iv = dW/dz`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the velocity field :math:`u - iv = dW/dz`.</span>
 
 <span class="sd">        Differentiates the complex potential with a central difference in</span>
 <span class="sd">        `X` (equivalent, by the Cauchy-Riemann equations, to differentiating</span>
@@ -712,7 +712,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        u, v : ndarray of float</span>
 <span class="sd">            Velocity components.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">dW</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">complex_potential</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="n">delta</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">complex_potential</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">delta</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">dW</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">dW</span><span class="p">)</span></div>
@@ -721,7 +721,7 @@
 <div class="viewcode-block" id="PotentialFlow.pressure_coefficient">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PotentialFlow.pressure_coefficient">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pressure_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the Bernoulli pressure coefficient :math:`C_p = 1 - (u^2+v^2)/U_\\infty^2`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the Bernoulli pressure coefficient :math:`C_p = 1 - (u^2+v^2)/U_\\infty^2`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -732,7 +732,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float</span>
 <span class="sd">            Pressure coefficient at each point.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pressure_coefficient</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">U_inf</span><span class="p">)</span></div>
 </div>
 
@@ -741,9 +741,9 @@
 <div class="viewcode-block" id="pressure_coefficient">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.pressure_coefficient">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pressure_coefficient</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Bernoulli's pressure coefficient for steady, incompressible potential flow.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bernoulli&#39;s pressure coefficient for steady, incompressible potential flow.</span>
 
-<span class="sd">    Along a streamline of a steady, incompressible, inviscid flow, Bernoulli's</span>
+<span class="sd">    Along a streamline of a steady, incompressible, inviscid flow, Bernoulli&#39;s</span>
 <span class="sd">    equation :math:`p + \\tfrac{1}{2}\\rho|\\mathbf{u}|^2 = \\mathrm{const}`</span>
 <span class="sd">    gives the dimensionless pressure coefficient</span>
 
@@ -774,9 +774,9 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.isclose(pressure_coefficient(u=1.0, v=0.0, U_inf=1.0), 0.0))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">U_inf</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">U_inf</span><span class="o">**</span><span class="mi">2</span></div>
@@ -786,7 +786,7 @@
 <div class="viewcode-block" id="flow_past_cylinder">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.flow_past_cylinder">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">flow_past_cylinder</span><span class="p">(</span><span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">circulation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PotentialFlow</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Build the classic potential flow past a circular cylinder, with optional lift.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the classic potential flow past a circular cylinder, with optional lift.</span>
 
 <span class="sd">    Superposing a uniform stream with a doublet of strength</span>
 <span class="sd">    :math:`\\kappa = 2\\pi U_\\infty R^2` places a circular streamline of</span>
@@ -797,7 +797,7 @@
 <span class="sd">    penetration). Adding a point vortex at the same location keeps the</span>
 <span class="sd">    circular streamline intact (a vortex centered on the circle induces</span>
 <span class="sd">    purely tangential velocity on it) while breaking front-back symmetry,</span>
-<span class="sd">    which is exactly what a real cylinder's boundary layer does when it</span>
+<span class="sd">    which is exactly what a real cylinder&#39;s boundary layer does when it</span>
 <span class="sd">    separates asymmetrically -- e.g. from a spinning cylinder (the Magnus</span>
 <span class="sd">    effect).</span>
 
@@ -834,11 +834,11 @@
 <span class="sd">    &gt;&gt;&gt; psi = flow.streamfunction(X, Y)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(psi - psi[0])) &lt; 1e-8)  # the cylinder surface is one streamline</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">U_inf</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"radius must be positive, got </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;radius must be positive, got </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">flow</span> <span class="o">=</span> <span class="n">PotentialFlow</span><span class="p">(</span><span class="n">U_inf</span><span class="o">=</span><span class="n">U_inf</span><span class="p">)</span>
     <span class="n">flow</span><span class="o">.</span><span class="n">add_doublet</span><span class="p">(</span><span class="n">strength</span><span class="o">=</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">U_inf</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">circulation</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
@@ -850,16 +850,16 @@
 <div class="viewcode-block" id="kutta_joukowski_lift">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.kutta_joukowski_lift">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kutta_joukowski_lift</span><span class="p">(</span><span class="n">rho</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">circulation</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Kutta-Joukowski lift theorem: lift per unit span from bound circulation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Kutta-Joukowski lift theorem: lift per unit span from bound circulation.</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        L' = \\rho\\,U_\\infty\\,\\Gamma</span>
+<span class="sd">        L&#39; = \\rho\\,U_\\infty\\,\\Gamma</span>
 
 <span class="sd">    Any 2D body generating a net circulation :math:`\\Gamma` around itself in</span>
 <span class="sd">    a stream of speed :math:`U_\\infty` experiences a lift force per unit</span>
 <span class="sd">    span of exactly this magnitude, directed perpendicular to the free</span>
-<span class="sd">    stream -- true regardless of the body's shape, a remarkable consequence</span>
+<span class="sd">    stream -- true regardless of the body&#39;s shape, a remarkable consequence</span>
 <span class="sd">    of potential theory (Kutta 1902, Zhukovsky 1906) that underlies all of</span>
 <span class="sd">    classical airfoil theory. Real airfoils select `circulation` via the</span>
 <span class="sd">    Kutta condition (smooth flow off a sharp trailing edge); the cylinder</span>
@@ -878,7 +878,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">        Lift force per unit span, :math:`L'`.</span>
+<span class="sd">        Lift force per unit span, :math:`L&#39;`.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -889,11 +889,11 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(kutta_joukowski_lift(rho=1.2, U_inf=10.0, circulation=5.0), 1)</span>
 <span class="sd">    60.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">rho</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho must be positive, got </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rho must be positive, got </span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">U_inf</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">U_inf</span> <span class="o">*</span> <span class="n">circulation</span></div>
 
 </pre></div>

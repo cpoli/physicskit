@@ -411,9 +411,9 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.systems.vortex_dynamics</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Point-vortex N-body dynamics: the Biot-Savart law and the von Karman vortex street.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Point-vortex N-body dynamics: the Biot-Savart law and the von Karman vortex street.</span>
 
-<span class="sd">Concentrating all of a 2D flow's vorticity into a finite set of</span>
+<span class="sd">Concentrating all of a 2D flow&#39;s vorticity into a finite set of</span>
 <span class="sd">infinitesimal points turns the vorticity-transport PDE into a system of</span>
 <span class="sd">ordinary differential equations: each point vortex simply advects with the</span>
 <span class="sd">velocity field induced by every *other* point vortex (a vortex induces no</span>
@@ -423,7 +423,7 @@
 <span class="sd">solved by :mod:`physicskit.fluids.systems.navier_stokes` -- and it is the</span>
 <span class="sd">setting in which Theodore von Karman analyzed the staggered, alternating</span>
 <span class="sd">vortex street shed behind a bluff body.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -434,13 +434,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"point_vortex_velocities"</span><span class="p">,</span>
-    <span class="s2">"PointVortexSystem"</span><span class="p">,</span>
-    <span class="s2">"von_karman_vortex_street"</span><span class="p">,</span>
-    <span class="s2">"VON_KARMAN_SPACING_RATIO"</span><span class="p">,</span>
+    <span class="s2">&quot;point_vortex_velocities&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PointVortexSystem&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;von_karman_vortex_street&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VON_KARMAN_SPACING_RATIO&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="c1">#: Theodore von Karman's spacing ratio ``h/l`` (row separation over</span>
+<span class="c1">#: Theodore von Karman&#39;s spacing ratio ``h/l`` (row separation over</span>
 <span class="c1">#: along-row spacing) at which a doubly-infinite staggered vortex row is</span>
 <span class="c1">#: linearly stable to vortex-row perturbations (von Karman &amp; Rubach, 1912).</span>
 <span class="n">VON_KARMAN_SPACING_RATIO</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2805</span>
@@ -448,7 +448,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Biot-Savart velocity induced on each point vortex by every other one.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Biot-Savart velocity induced on each point vortex by every other one.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -463,8 +463,8 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (n, 2)</span>
-<span class="sd">        Velocity at each vortex's own position.</span>
-<span class="sd">    """</span>
+<span class="sd">        Velocity at each vortex&#39;s own position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">velocities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">core2</span> <span class="o">=</span> <span class="n">core</span> <span class="o">*</span> <span class="n">core</span>
@@ -489,7 +489,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">_point_vortex_rk4_integrate</span><span class="p">(</span>
     <span class="n">positions0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Integrate the point-vortex system with RK4.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integrate the point-vortex system with RK4.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -508,7 +508,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (n_steps + 1, n, 2)</span>
 <span class="sd">        Vortex positions at each step, including the initial positions.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">positions0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">trajectory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">trajectory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions0</span>
@@ -526,15 +526,15 @@
 <div class="viewcode-block" id="point_vortex_velocities">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.point_vortex_velocities">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Velocity induced on each point vortex by every other vortex (Biot-Savart law).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Velocity induced on each point vortex by every other vortex (Biot-Savart law).</span>
 
 <span class="sd">    The 2D Biot-Savart law: an isolated point vortex of circulation</span>
 <span class="sd">    :math:`\\Gamma_j` at :math:`\\mathbf{r}_j` induces a purely azimuthal</span>
 <span class="sd">    velocity :math:`\\Gamma_j/(2\\pi r)` at distance `r`, and a system of `n`</span>
-<span class="sd">    vortices simply superposes these fields (Laplace's equation is linear,</span>
+<span class="sd">    vortices simply superposes these fields (Laplace&#39;s equation is linear,</span>
 <span class="sd">    just as in :mod:`physicskit.fluids.systems.potential_flow` -- indeed a</span>
 <span class="sd">    point vortex here *is* :func:`~physicskit.fluids.systems.potential_flow.point_vortex_potential`,</span>
-<span class="sd">    evaluated at every other vortex's location rather than on a field grid).</span>
+<span class="sd">    evaluated at every other vortex&#39;s location rather than on a field grid).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -550,7 +550,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (n, 2)</span>
-<span class="sd">        Velocity at each vortex's own position, induced by all the others.</span>
+<span class="sd">        Velocity at each vortex&#39;s own position, induced by all the others.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -567,11 +567,11 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; round(float(vel[0, 0]), 6) == round(Gamma / (2 * np.pi * d), 6)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">circulations</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">circulations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"positions and circulations must have the same number of vortices"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;positions and circulations must have the same number of vortices&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">circulations</span><span class="p">,</span> <span class="n">core</span><span class="p">)</span></div>
 
 
@@ -579,14 +579,14 @@
 <div class="viewcode-block" id="PointVortexSystem">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PointVortexSystem</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A system of interacting 2D point vortices, advected by their mutual Biot-Savart field.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A system of interacting 2D point vortices, advected by their mutual Biot-Savart field.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    positions : array_like of float, shape (n, 2)</span>
 <span class="sd">        Initial vortex positions ``(x, y)``.</span>
 <span class="sd">    circulations : array_like of float, shape (n,)</span>
-<span class="sd">        Vortex circulations :math:`\\Gamma_i`; fixed for the system's lifetime</span>
+<span class="sd">        Vortex circulations :math:`\\Gamma_i`; fixed for the system&#39;s lifetime</span>
 <span class="sd">        (point vortices carry their circulation with them unchanged).</span>
 <span class="sd">    core : float, default 1e-6</span>
 <span class="sd">        Regularization core radius (see :func:`point_vortex_velocities`).</span>
@@ -614,13 +614,13 @@
 <span class="sd">    &gt;&gt;&gt; t, trajectory = system.trajectory(dt=0.01, n_steps=10)</span>
 <span class="sd">    &gt;&gt;&gt; trajectory.shape</span>
 <span class="sd">    (11, 2, 2)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">circulations</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">core</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">):</span>
         <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">circulations</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">circulations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"positions and circulations must have the same number of vortices"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;positions and circulations must have the same number of vortices&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span> <span class="o">=</span> <span class="n">circulations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">core</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
@@ -629,19 +629,19 @@
 <div class="viewcode-block" id="PointVortexSystem.velocities">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem.velocities">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">velocities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Velocity currently induced on each vortex.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Velocity currently induced on each vortex.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n, 2)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_point_vortex_velocities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">core</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PointVortexSystem.trajectory">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PointVortexSystem.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Integrate the vortex trajectories forward with RK4.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the vortex trajectories forward with RK4.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -655,14 +655,14 @@
 <span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
 <span class="sd">        positions : ndarray of float, shape (n_steps + 1, n, 2)</span>
 <span class="sd">            Vortex positions at each step, including the current positions.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
         <span class="n">trajectory</span> <span class="o">=</span> <span class="n">_point_vortex_rk4_integrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">core</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">trajectory</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"PointVortexSystem(n_vortices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_vortices</span><span class="si">}</span><span class="s2">, circulations=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="si">!r}</span><span class="s2">)"</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PointVortexSystem(n_vortices=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_vortices</span><span class="si">}</span><span class="s2">, circulations=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">circulations</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
 
 
@@ -671,7 +671,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">von_karman_vortex_street</span><span class="p">(</span>
     <span class="n">n_pairs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">spacing_l</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">spacing_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">VON_KARMAN_SPACING_RATIO</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">"""Build a finite, doubly staggered von Karman vortex street.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a finite, doubly staggered von Karman vortex street.</span>
 
 <span class="sd">    Two parallel rows of point vortices, offset from each other by half the</span>
 <span class="sd">    along-row spacing `spacing_l` and by a row separation</span>
@@ -714,11 +714,11 @@
 <span class="sd">    (12, 2)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.isclose(circulations.sum(), 0.0))  # equal and opposite in each row</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">n_pairs</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"n_pairs must be at least 2, got </span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n_pairs must be at least 2, got </span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">spacing_l</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"spacing_l must be positive, got </span><span class="si">{</span><span class="n">spacing_l</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;spacing_l must be positive, got </span><span class="si">{</span><span class="n">spacing_l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">spacing_ratio</span> <span class="o">*</span> <span class="n">spacing_l</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_pairs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">circulations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_pairs</span><span class="p">)</span>

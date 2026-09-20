@@ -411,21 +411,21 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.classical.systems.rotations</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Rigid-body rotation systems: free tops and heavy symmetric tops.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Rigid-body rotation systems: free tops and heavy symmetric tops.</span>
 
-<span class="sd">:class:`EulerTop` integrates the torque-free rigid body (Euler's</span>
+<span class="sd">:class:`EulerTop` integrates the torque-free rigid body (Euler&#39;s</span>
 <span class="sd">equations for the body-frame angular velocity) together with the</span>
 <span class="sd">orientation quaternion, and demonstrates the Intermediate Axis Theorem</span>
-<span class="sd">(the "Dzhanibekov effect" / tennis-racket effect): rotation about the</span>
+<span class="sd">(the &quot;Dzhanibekov effect&quot; / tennis-racket effect): rotation about the</span>
 <span class="sd">axis of intermediate moment of inertia is unstable, while rotation</span>
 <span class="sd">about the axes of largest and smallest moment is stable.</span>
 
 <span class="sd">:class:`HeavySymmetricTop` is a symmetric top with one point fixed,</span>
 <span class="sd">spinning under gravity -- derived symbolically (like the Lagrangian</span>
 <span class="sd">systems) in the three Euler angles (phi, theta, psi), since its</span>
-<span class="sd">Hamiltonian is intrinsically non-separable (the kinetic term's</span>
+<span class="sd">Hamiltonian is intrinsically non-separable (the kinetic term&#39;s</span>
 <span class="sd">coefficients depend on theta).</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -440,15 +440,15 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.utils.symbolic</span><span class="w"> </span><span class="kn">import</span> <span class="n">LagrangianEngine</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"EulerTop"</span><span class="p">,</span>
-    <span class="s2">"HeavySymmetricTop"</span><span class="p">,</span>
-    <span class="s2">"EulersDisk"</span><span class="p">,</span>
-    <span class="s2">"Rattleback"</span><span class="p">,</span>
-    <span class="s2">"effective_potential_symmetric_top"</span><span class="p">,</span>
-    <span class="s2">"find_theta_equilibrium"</span><span class="p">,</span>
-    <span class="s2">"nutation_frequency"</span><span class="p">,</span>
-    <span class="s2">"precession_frequency"</span><span class="p">,</span>
-    <span class="s2">"eulers_disk_theta_analytic"</span><span class="p">,</span>
+    <span class="s2">&quot;EulerTop&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HeavySymmetricTop&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EulersDisk&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Rattleback&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;effective_potential_symmetric_top&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;find_theta_equilibrium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nutation_frequency&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;precession_frequency&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eulers_disk_theta_analytic&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -485,7 +485,7 @@
 <div class="viewcode-block" id="EulerTop">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.EulerTop">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EulerTop</span><span class="p">(</span><span class="n">ODESystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Torque-free rigid body: Euler's equations for omega = (w1, w2, w3)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Torque-free rigid body: Euler&#39;s equations for omega = (w1, w2, w3)</span>
 <span class="sd">    in the body frame, coupled to the orientation quaternion (qw, qx, qy, qz).</span>
 
 <span class="sd">    State: ``[w1, w2, w3, qw, qx, qy, qz]``. The default integrator,</span>
@@ -508,7 +508,7 @@
 <span class="sd">    quat0 : array-like, shape (4,), optional</span>
 <span class="sd">        Initial orientation quaternion ``(w, x, y, z)``; defaults to</span>
 <span class="sd">        the identity orientation. Normalized automatically.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omega0</span><span class="p">,</span> <span class="n">I1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">I2</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">I3</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">quat0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I3</span> <span class="o">=</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span>
@@ -529,7 +529,7 @@
 <div class="viewcode-block" id="EulerTop.energy">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.EulerTop.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Rotational kinetic energy.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotational kinetic energy.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -539,7 +539,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">w3</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I1</span> <span class="o">*</span> <span class="n">w1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span> <span class="o">*</span> <span class="n">w2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">I3</span> <span class="o">*</span> <span class="n">w3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
@@ -548,7 +548,7 @@
 <div class="viewcode-block" id="EulerTop.angular_momentum_squared">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.EulerTop.angular_momentum_squared">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">angular_momentum_squared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""``|L|^2`` in the body frame.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;``|L|^2`` in the body frame.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -558,7 +558,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">w3</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I1</span> <span class="o">*</span> <span class="n">w1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I2</span> <span class="o">*</span> <span class="n">w2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I3</span> <span class="o">*</span> <span class="n">w3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
@@ -567,7 +567,7 @@
 <div class="viewcode-block" id="EulerTop.rotation_matrix">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.EulerTop.rotation_matrix">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""3x3 body-to-world rotation matrix from the current quaternion.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;3x3 body-to-world rotation matrix from the current quaternion.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -577,7 +577,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray, shape (3, 3)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -598,8 +598,8 @@
 
 <span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_heavy_symmetric_top_engine</span><span class="p">(</span><span class="n">I1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LagrangianEngine</span><span class="p">:</span>
-    <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">phid</span><span class="p">,</span> <span class="n">thd</span><span class="p">,</span> <span class="n">psid</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"phi theta psi phid thd psid"</span><span class="p">)</span>
-    <span class="n">I1s</span><span class="p">,</span> <span class="n">I3s</span><span class="p">,</span> <span class="n">Ms</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">gs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">"I1 I3 M l g"</span><span class="p">)</span>
+    <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">phid</span><span class="p">,</span> <span class="n">thd</span><span class="p">,</span> <span class="n">psid</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;phi theta psi phid thd psid&quot;</span><span class="p">)</span>
+    <span class="n">I1s</span><span class="p">,</span> <span class="n">I3s</span><span class="p">,</span> <span class="n">Ms</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">gs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;I1 I3 M l g&quot;</span><span class="p">)</span>
 
     <span class="n">L</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">sp</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">I1s</span> <span class="o">*</span> <span class="p">(</span><span class="n">thd</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">phid</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
@@ -613,7 +613,7 @@
 <div class="viewcode-block" id="HeavySymmetricTop">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HeavySymmetricTop">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HeavySymmetricTop</span><span class="p">(</span><span class="n">LagrangianSystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Symmetric top with one point fixed, spinning under gravity.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Symmetric top with one point fixed, spinning under gravity.</span>
 
 <span class="sd">    Generalized coordinates q = (phi, theta, psi) -- the standard</span>
 <span class="sd">    z-x-z Euler angles (precession, nutation, spin). Lagrangian:</span>
@@ -642,7 +642,7 @@
 <span class="sd">        Distance from the pivot to the center of mass.</span>
 <span class="sd">    g : float</span>
 <span class="sd">        Gravitational acceleration.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles0</span><span class="p">,</span> <span class="n">angledots0</span><span class="p">,</span> <span class="n">I1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">I3</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I3</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">g</span>
@@ -668,7 +668,7 @@
 <div class="viewcode-block" id="HeavySymmetricTop.precession_nutation_rate">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HeavySymmetricTop.precession_nutation_rate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">precession_nutation_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Instantaneous (phidot, thetadot) -- precession and nutation rates.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantaneous (phidot, thetadot) -- precession and nutation rates.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -678,7 +678,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        phidot, thetadot : float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">qdot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">qdot</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">qdot</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
@@ -689,7 +689,7 @@
 <div class="viewcode-block" id="effective_potential_symmetric_top">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.effective_potential_symmetric_top">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">effective_potential_symmetric_top</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">p_phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""V_eff(theta) for the heavy symmetric top, given the two conserved</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;V_eff(theta) for the heavy symmetric top, given the two conserved</span>
 <span class="sd">    (cyclic-coordinate) momenta p_phi and p_psi:</span>
 
 <span class="sd">        V_eff(theta) = (p_phi - p_psi cos(theta))^2 / (2 I1 sin^2(theta))</span>
@@ -712,7 +712,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">p_phi</span> <span class="o">-</span> <span class="n">p_psi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">I1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">p_psi</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">I3</span><span class="p">)</span> <span class="o">+</span> <span class="n">Mgl</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span></div>
 
@@ -721,10 +721,10 @@
 <div class="viewcode-block" id="find_theta_equilibrium">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.find_theta_equilibrium">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">find_theta_equilibrium</span><span class="p">(</span><span class="n">p_phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">-</span> <span class="mf">1e-3</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The nutation angle theta_eq at which V_eff(theta) is minimized.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The nutation angle theta_eq at which V_eff(theta) is minimized.</span>
 
 <span class="sd">    The angle steady (non-nutating) precession would hold at, and the</span>
-<span class="sd">    center about which a real top's nutation oscillates.</span>
+<span class="sd">    center about which a real top&#39;s nutation oscillates.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -740,11 +740,11 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">th</span><span class="p">:</span> <span class="n">effective_potential_symmetric_top</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="n">p_phi</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">,</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I3</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">),</span>
         <span class="n">bounds</span><span class="o">=</span><span class="n">bracket</span><span class="p">,</span>
-        <span class="n">method</span><span class="o">=</span><span class="s2">"bounded"</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;bounded&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span></div>
 
@@ -753,12 +753,12 @@
 <div class="viewcode-block" id="nutation_frequency">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.nutation_frequency">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nutation_frequency</span><span class="p">(</span><span class="n">p_phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I3</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta_eq</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dtheta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Small-oscillation nutation frequency about ``theta_eq``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Small-oscillation nutation frequency about ``theta_eq``.</span>
 
-<span class="sd">    Treating theta as a 1-DOF particle of "mass" I1 moving in the</span>
+<span class="sd">    Treating theta as a 1-DOF particle of &quot;mass&quot; I1 moving in the</span>
 <span class="sd">    effective potential V_eff (see :func:`effective_potential_symmetric_top`),</span>
 <span class="sd">    the harmonic-approximation frequency about its minimum is</span>
-<span class="sd">    ``sqrt(V_eff''(theta_eq) / I1)``, found here by a central finite</span>
+<span class="sd">    ``sqrt(V_eff&#39;&#39;(theta_eq) / I1)``, found here by a central finite</span>
 <span class="sd">    difference. If ``theta_eq`` is not supplied it is located with</span>
 <span class="sd">    :func:`find_theta_equilibrium`.</span>
 
@@ -779,7 +779,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">theta_eq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">theta_eq</span> <span class="o">=</span> <span class="n">find_theta_equilibrium</span><span class="p">(</span><span class="n">p_phi</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">,</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I3</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">)</span>
     <span class="n">V</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">th</span><span class="p">:</span> <span class="n">effective_potential_symmetric_top</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="n">p_phi</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">,</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I3</span><span class="p">,</span> <span class="n">Mgl</span><span class="p">)</span>  <span class="c1"># noqa: E731</span>
@@ -789,7 +789,7 @@
 
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Euler's disk: a rolling, spinning disk running down to a finite-time stop</span>
+<span class="c1"># Euler&#39;s disk: a rolling, spinning disk running down to a finite-time stop</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
 
 
@@ -808,14 +808,14 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">EulersDisk</span><span class="p">(</span><span class="n">ODESystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Simplified rolling-disk-with-dissipation model of "Euler's disk".</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simplified rolling-disk-with-dissipation model of &quot;Euler&#39;s disk&quot;.</span>
 
 <span class="sd">    A coin or disk spun and set rolling on a table settles into a</span>
 <span class="sd">    near-steady state described, at each instant, by just its inclination</span>
 <span class="sd">    angle ``theta`` (between the disk plane and the table) and a precession</span>
 <span class="sd">    angle ``phi`` (the azimuthal angle of the rolling contact point around</span>
-<span class="sd">    the disk's resting position). As real Euler's-disk demonstrations</span>
-<span class="sd">    strikingly show, the contact point's precession visibly speeds up</span>
+<span class="sd">    the disk&#39;s resting position). As real Euler&#39;s-disk demonstrations</span>
+<span class="sd">    strikingly show, the contact point&#39;s precession visibly speeds up</span>
 <span class="sd">    (and the characteristic rattling sound rises in pitch) right up until</span>
 <span class="sd">    the disk suddenly stops -- a *finite-time singularity*, famously</span>
 <span class="sd">    analyzed by Moffatt (2000, Nature 404, 833) for an idealized</span>
@@ -849,7 +849,7 @@
 <span class="sd">    theta0 : float</span>
 <span class="sd">        Initial inclination angle (radians), measured from horizontal</span>
 <span class="sd">        (``theta = pi/2`` would be an upright, unspun disk; realistic</span>
-<span class="sd">        "rattling" motion is at small `theta0`, e.g. 0.2-0.6 rad).</span>
+<span class="sd">        &quot;rattling&quot; motion is at small `theta0`, e.g. 0.2-0.6 rad).</span>
 <span class="sd">    phi0 : float, default 0.0</span>
 <span class="sd">        Initial precession angle.</span>
 <span class="sd">    decay_rate : float, default 0.05</span>
@@ -864,7 +864,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    decay_rate, precession_const, theta_floor : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">phi0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">decay_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">precession_const</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">theta_floor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decay_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precession_const</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_floor</span> <span class="o">=</span> <span class="n">decay_rate</span><span class="p">,</span> <span class="n">precession_const</span><span class="p">,</span> <span class="n">theta_floor</span>
@@ -880,9 +880,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Not a true conserved energy -- the whole point of this model is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Not a true conserved energy -- the whole point of this model is</span>
 <span class="sd">        dissipation. Returns `theta` itself, a monotonically decreasing</span>
-<span class="sd">        proxy that (like the disk's actual energy) vanishes at the</span>
+<span class="sd">        proxy that (like the disk&#39;s actual energy) vanishes at the</span>
 <span class="sd">        finite-time collapse, just so this fits the common ``energy()``</span>
 <span class="sd">        diagnostic slot shared by every :class:`~physicskit.classical.core.base_system.ODESystem`.</span>
 
@@ -894,13 +894,13 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">eulers_disk_theta_analytic</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">theta0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">decay_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Closed-form ``theta(t)`` for :class:`EulersDisk`, ignoring the</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Closed-form ``theta(t)`` for :class:`EulersDisk`, ignoring the</span>
 <span class="sd">    regularizing floor: solves ``dtheta/dt = -decay_rate/theta`` exactly as</span>
 <span class="sd">    ``theta(t) = sqrt(theta0**2 - 2*decay_rate*t)``, valid up to the finite</span>
 <span class="sd">    collapse time ``t_f = theta0**2 / (2*decay_rate)`` (clipped to 0</span>
@@ -918,7 +918,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">theta0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">decay_rate</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
 
@@ -944,7 +944,7 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Rattleback</span><span class="p">(</span><span class="n">ODESystem</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Toy reduced model of rattleback (Celt stone) spin reversal.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Toy reduced model of rattleback (Celt stone) spin reversal.</span>
 
 <span class="sd">    A rattleback -- a boat-shaped top whose principal axes of inertia are</span>
 <span class="sd">    slightly misaligned from its geometric (contact-ellipsoid) axes --</span>
@@ -952,16 +952,16 @@
 <span class="sd">    wobbles with growing amplitude until it stops and reverses into the</span>
 <span class="sd">    stable sense. The true mechanism is the nonholonomic rolling-without-</span>
 <span class="sd">    slipping contact-point dynamics of a rigid ellipsoidal body on a plane</span>
-<span class="sd">    (see Garcia &amp; Hubbard, "Spin reversal of the rattleback: theory and</span>
-<span class="sd">    experiment," Proc. R. Soc. Lond. A 418, 1988), which requires tracking</span>
-<span class="sd">    the body's full orientation, the moving contact point, and the no-slip</span>
+<span class="sd">    (see Garcia &amp; Hubbard, &quot;Spin reversal of the rattleback: theory and</span>
+<span class="sd">    experiment,&quot; Proc. R. Soc. Lond. A 418, 1988), which requires tracking</span>
+<span class="sd">    the body&#39;s full orientation, the moving contact point, and the no-slip</span>
 <span class="sd">    constraint.</span>
 
 <span class="sd">    **This class does not do that.** It is a deliberately simplified toy</span>
-<span class="sd">    model built directly on :class:`EulerTop`'s free-rigid-body equations</span>
+<span class="sd">    model built directly on :class:`EulerTop`&#39;s free-rigid-body equations</span>
 <span class="sd">    for reduced state variables ``(n1, n2, n3)`` -- ``n3`` playing the role</span>
 <span class="sd">    of spin about the (roughly vertical) axis, ``n1, n2`` the two</span>
-<span class="sd">    "rocking"/tipping-mode rates -- with two modifications standing in for</span>
+<span class="sd">    &quot;rocking&quot;/tipping-mode rates -- with two modifications standing in for</span>
 <span class="sd">    the real contact-point physics:</span>
 
 <span class="sd">    1. A term ``gamma * n3**2``, added to the ``n1`` equation only. The</span>
@@ -1007,7 +1007,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    I1, I2, I3, gamma, mu, eta : float</span>
 <span class="sd">        System parameters.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n0</span><span class="p">,</span> <span class="n">I1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">I2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">I3</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I3</span> <span class="o">=</span> <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span>
@@ -1016,7 +1016,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">n0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""``0.5*(I1*n1^2 + I2*n2^2 + I3*n3^2)``: not conserved (this</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;``0.5*(I1*n1^2 + I2*n2^2 + I3*n3^2)``: not conserved (this</span>
 <span class="sd">        system is dissipative and, transiently, unstable by construction),</span>
 <span class="sd">        but the natural quadratic diagnostic for watching the overall</span>
 <span class="sd">        motion decay toward rest.</span>
@@ -1029,7 +1029,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state</span>
         <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">n3</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I1</span> <span class="o">*</span> <span class="n">n1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span> <span class="o">*</span> <span class="n">n2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">I3</span> <span class="o">*</span> <span class="n">n3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -1038,7 +1038,7 @@
 <div class="viewcode-block" id="precession_frequency">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.precession_frequency">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">precession_frequency</span><span class="p">(</span><span class="n">p_phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p_psi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta_eq</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Mean precession rate phidot at nutation angle ``theta_eq``:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mean precession rate phidot at nutation angle ``theta_eq``:</span>
 <span class="sd">    ``(p_phi - p_psi*cos(theta_eq)) / (I1*sin(theta_eq)**2)`` -- the</span>
 <span class="sd">    standard steady-precession-rate approximation, exact when the top</span>
 <span class="sd">    is not nutating at all (theta held fixed at theta_eq).</span>
@@ -1055,7 +1055,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">((</span><span class="n">p_phi</span> <span class="o">-</span> <span class="n">p_psi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_eq</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">I1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_eq</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></div>
 
 </pre></div>

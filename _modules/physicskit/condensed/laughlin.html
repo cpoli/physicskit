@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.laughlin</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""The fractional quantum Hall effect (1982-1983): Laughlin's wavefunction.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The fractional quantum Hall effect (1982-1983): Laughlin&#39;s wavefunction.</span>
 
 <span class="sd">Tsui, Stormer, and Gossard found that an ultraclean 2D electron gas in a</span>
 <span class="sd">strong magnetic field develops Hall plateaus at simple fractional fillings,</span>
@@ -429,27 +429,27 @@
 <span class="sd">   \exp\!\left(-\sum_i \frac{|z_i|^2}{4\ell_B^2}\right), \qquad m \text{ odd},</span>
 
 <span class="sd">with :math:`z_j=x_j+iy_j` (magnetic length :math:`\ell_B=1` throughout this</span>
-<span class="sd">module) and filling :math:`\nu=1/m`. The prefactor's zeroes at coincident</span>
+<span class="sd">module) and filling :math:`\nu=1/m`. The prefactor&#39;s zeroes at coincident</span>
 <span class="sd">particle positions are exactly what strong Coulomb repulsion demands, and</span>
 <span class="sd">:math:`|\Psi_m|^2` doubles as the Boltzmann weight of a classical 2D</span>
-<span class="sd">one-component plasma at an effective temperature set by :math:`m` (Laughlin's</span>
-<span class="sd">"plasma analogy"), letting ordinary Metropolis Monte Carlo sample it</span>
+<span class="sd">one-component plasma at an effective temperature set by :math:`m` (Laughlin&#39;s</span>
+<span class="sd">&quot;plasma analogy&quot;), letting ordinary Metropolis Monte Carlo sample it</span>
 <span class="sd">directly with no diagonalization of any kind.</span>
 
 <span class="sd">The pair correlation function :math:`g(r)` extracted from those samples</span>
-<span class="sd">shows the wavefunction's defining feature directly: a "correlation hole"</span>
+<span class="sd">shows the wavefunction&#39;s defining feature directly: a &quot;correlation hole&quot;</span>
 <span class="sd">that drives :math:`g(r) \to 0` as :math:`r \to 0` -- particles actively</span>
 <span class="sd">avoid each other far more strongly than Pauli exclusion alone would</span>
 <span class="sd">enforce -- rising to the uncorrelated value :math:`g \approx 1` over a</span>
 <span class="sd">few magnetic lengths.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"laughlin_metropolis_sweep"</span><span class="p">,</span> <span class="s2">"laughlin_pair_correlation"</span><span class="p">,</span> <span class="s2">"laughlin_radial_density"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;laughlin_metropolis_sweep&quot;</span><span class="p">,</span> <span class="s2">&quot;laughlin_pair_correlation&quot;</span><span class="p">,</span> <span class="s2">&quot;laughlin_radial_density&quot;</span><span class="p">]</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -468,11 +468,11 @@
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.laughlin_metropolis_sweep">[docs]</a>
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">laughlin_metropolis_sweep</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Perform one Metropolis sweep sampling :math:`|\Psi_m|^2`, in place.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Perform one Metropolis sweep sampling :math:`|\Psi_m|^2`, in place.</span>
 
 <span class="sd">    Proposes a small random displacement of one particle at a time and</span>
 <span class="sd">    accepts or rejects it with the exact Metropolis ratio of</span>
-<span class="sd">    :math:`|\Psi_m|^2` -- Laughlin's "plasma analogy" Boltzmann weight,</span>
+<span class="sd">    :math:`|\Psi_m|^2` -- Laughlin&#39;s &quot;plasma analogy&quot; Boltzmann weight,</span>
 <span class="sd">    :math:`\prod_{i&lt;j}|z_i-z_j|^{2m}\,e^{-\sum_i|z_i|^2/2}` -- with no</span>
 <span class="sd">    explicit normalization needed since only the ratio between</span>
 <span class="sd">    configurations ever enters.</span>
@@ -494,7 +494,7 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    A two-particle system's Metropolis chain never proposes an *exactly*</span>
+<span class="sd">    A two-particle system&#39;s Metropolis chain never proposes an *exactly*</span>
 <span class="sd">    coincident configuration acceptable (:math:`|\Psi_m|^2 = 0` there), so</span>
 <span class="sd">    repeated sweeps keep the two particles strictly apart:</span>
 
@@ -505,7 +505,7 @@
 <span class="sd">    ...     _ = laughlin_metropolis_sweep(z, m=3, step=0.5)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.abs(z[0] - z[1]) &gt; 1e-3)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
@@ -534,11 +534,11 @@
 <div class="viewcode-block" id="laughlin_pair_correlation">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.laughlin_pair_correlation">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">laughlin_pair_correlation</span><span class="p">(</span><span class="n">z_samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Pair correlation function :math:`g(r)` from sampled Laughlin configurations.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pair correlation function :math:`g(r)` from sampled Laughlin configurations.</span>
 
 <span class="sd">    Bins every pairwise separation across a stack of equilibrium samples</span>
 <span class="sd">    (drawn with :func:`laughlin_metropolis_sweep`) and normalizes by the</span>
-<span class="sd">    Laughlin state's exact bulk density :math:`\rho=1/(2\pi m \ell_B^2)`,</span>
+<span class="sd">    Laughlin state&#39;s exact bulk density :math:`\rho=1/(2\pi m \ell_B^2)`,</span>
 <span class="sd">    so that :math:`g(r) \to 1` far from any correlation the wavefunction</span>
 <span class="sd">    itself imposes.</span>
 
@@ -581,7 +581,7 @@
 <span class="sd">    &gt;&gt;&gt; r, g = laughlin_pair_correlation(samples, m=m, r_max=6.0, n_bins=30)</span>
 <span class="sd">    &gt;&gt;&gt; bool(g[0] &lt; 0.1)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">z_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">rho</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span>
     <span class="n">all_dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">_pair_distances</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">z_samples</span><span class="p">])</span>
@@ -598,7 +598,7 @@
 <div class="viewcode-block" id="laughlin_radial_density">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.laughlin_radial_density">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">laughlin_radial_density</span><span class="p">(</span><span class="n">z_samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Radially averaged particle density profile from sampled Laughlin configurations.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Radially averaged particle density profile from sampled Laughlin configurations.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -639,7 +639,7 @@
 <span class="sd">    &gt;&gt;&gt; r, density = laughlin_radial_density(samples, r_max=2 * R0, n_bins=20)</span>
 <span class="sd">    &gt;&gt;&gt; bool(density[-1] &lt; density[2])</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">all_radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z_samples</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
     <span class="n">hist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">all_radii</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">r_edges</span><span class="p">)</span>

@@ -411,16 +411,16 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.molecular_dynamics</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""N-body Lennard-Jones gas: Velocity Verlet dynamics and Boltzmann's H-theorem.</span>
+<span></span><span class="sd">&quot;&quot;&quot;N-body Lennard-Jones gas: Velocity Verlet dynamics and Boltzmann&#39;s H-theorem.</span>
 
 <span class="sd">:class:`LennardJonesGas` simulates a 2D periodic gas of Lennard-Jones</span>
 <span class="sd">particles and lets it relax toward equilibrium from an arbitrary initial</span>
-<span class="sd">velocity distribution. Along the way it tracks Boltzmann's H-function, whose</span>
+<span class="sd">velocity distribution. Along the way it tracks Boltzmann&#39;s H-function, whose</span>
 <span class="sd">monotonic decrease is the classic microscopic demonstration that</span>
 <span class="sd">time-reversible molecular dynamics nonetheless produces macroscopic</span>
 <span class="sd">irreversibility (an arrow of time) as the velocity distribution relaxes to</span>
 <span class="sd">the Maxwell-Boltzmann form.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -428,13 +428,13 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.core.md_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">lj_forces</span><span class="p">,</span> <span class="n">velocity_verlet_step</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"LennardJonesGas"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LennardJonesGas&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="LennardJonesGas">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LennardJonesGas</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A 2D N-particle Lennard-Jones gas in a periodic square box.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A 2D N-particle Lennard-Jones gas in a periodic square box.</span>
 
 <span class="sd">    Particles are initialized on a lattice (to avoid the divergent</span>
 <span class="sd">    Lennard-Jones repulsion of random overlapping placements) and given</span>
@@ -463,11 +463,11 @@
 <span class="sd">        Lennard-Jones length scale.</span>
 <span class="sd">    cutoff : float, default=2.5</span>
 <span class="sd">        Interaction cutoff radius.</span>
-<span class="sd">    initial_velocity_distribution : {"maxwell_boltzmann", "uniform", "delta"}, default="uniform"</span>
+<span class="sd">    initial_velocity_distribution : {&quot;maxwell_boltzmann&quot;, &quot;uniform&quot;, &quot;delta&quot;}, default=&quot;uniform&quot;</span>
 <span class="sd">        Shape of the initial (generally non-equilibrium) velocity</span>
-<span class="sd">        distribution. ``"uniform"`` and ``"delta"`` are useful starting</span>
+<span class="sd">        distribution. ``&quot;uniform&quot;`` and ``&quot;delta&quot;`` are useful starting</span>
 <span class="sd">        points for watching relaxation toward Maxwell-Boltzmann via the</span>
-<span class="sd">        H-theorem; ``"maxwell_boltzmann"`` starts already at equilibrium.</span>
+<span class="sd">        H-theorem; ``&quot;maxwell_boltzmann&quot;`` starts already at equilibrium.</span>
 <span class="sd">    kB : float, default=1.0</span>
 <span class="sd">        Boltzmann constant.</span>
 <span class="sd">    seed : int, optional</span>
@@ -482,7 +482,7 @@
 <span class="sd">        :meth:`step` so each step costs one force evaluation.</span>
 <span class="sd">    time : float</span>
 <span class="sd">        Elapsed simulation time.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -494,7 +494,7 @@
         <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">cutoff</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
-        <span class="n">initial_velocity_distribution</span><span class="o">=</span><span class="s2">"uniform"</span><span class="p">,</span>
+        <span class="n">initial_velocity_distribution</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span>
         <span class="n">kB</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -525,30 +525,30 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_initial_velocities</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">kB</span><span class="p">,</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
         <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kB</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">/</span> <span class="n">mass</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">"maxwell_boltzmann"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">&quot;maxwell_boltzmann&quot;</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">"uniform"</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
             <span class="n">limit</span> <span class="o">=</span> <span class="n">std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">limit</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">"delta"</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s2">&quot;delta&quot;</span><span class="p">:</span>
             <span class="n">speed</span> <span class="o">=</span> <span class="n">std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
             <span class="n">angles</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_particles</span><span class="p">)</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"initial_velocity_distribution must be 'maxwell_boltzmann', 'uniform', or 'delta'"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;initial_velocity_distribution must be &#39;maxwell_boltzmann&#39;, &#39;uniform&#39;, or &#39;delta&#39;&quot;</span><span class="p">)</span>
         <span class="n">v</span> <span class="o">-=</span> <span class="n">v</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span>
 
 <div class="viewcode-block" id="LennardJonesGas.step">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Advance the simulation by ``n_steps`` Velocity Verlet integration steps.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the simulation by ``n_steps`` Velocity Verlet integration steps.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        n_steps : int, default=1</span>
 <span class="sd">            Number of integration steps to perform.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_potential_energy</span> <span class="o">=</span> <span class="n">velocity_verlet_step</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span>
@@ -567,32 +567,32 @@
 <div class="viewcode-block" id="LennardJonesGas.kinetic_energy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.kinetic_energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">kinetic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Total kinetic energy :math:`\\sum_i \\frac{1}{2} m v_i^2`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total kinetic energy :math:`\\sum_i \\frac{1}{2} m v_i^2`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LennardJonesGas.potential_energy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.potential_energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">potential_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Total Lennard-Jones potential energy at the current configuration."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total Lennard-Jones potential energy at the current configuration.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_potential_energy</span></div>
 
 
 <div class="viewcode-block" id="LennardJonesGas.total_energy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.total_energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">total_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Total (kinetic + potential) energy, conserved up to integration error."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total (kinetic + potential) energy, conserved up to integration error.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinetic_energy</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential_energy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="LennardJonesGas.temperature">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.temperature">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Instantaneous kinetic temperature from equipartition, :math:`T = \\langle m v^2 \\rangle / (d\\, k_B)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantaneous kinetic temperature from equipartition, :math:`T = \\langle m v^2 \\rangle / (d\\, k_B)`.</span>
 
 <span class="sd">        With :math:`d=2` spatial dimensions and 2 degrees of freedom removed</span>
 <span class="sd">        for the fixed center-of-mass momentum.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dof</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particles</span> <span class="o">-</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinetic_energy</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">dof</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">kB</span><span class="p">)</span></div>
 
@@ -600,14 +600,14 @@
 <div class="viewcode-block" id="LennardJonesGas.speeds">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.speeds">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">speeds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Instantaneous particle speeds :math:`|v_i|`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantaneous particle speeds :math:`|v_i|`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LennardJonesGas.h_function">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.h_function">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">h_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">v_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Estimate Boltzmann's H-function from the instantaneous speed histogram.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimate Boltzmann&#39;s H-function from the instantaneous speed histogram.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -631,7 +631,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            The estimated value of :math:`H(t)`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">speeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speeds</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">v_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">v_max</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">speeds</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">if</span> <span class="n">speeds</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
@@ -644,7 +644,7 @@
 <div class="viewcode-block" id="LennardJonesGas.run">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.LennardJonesGas.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">steps_per_record</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Integrate forward while recording a time series of thermodynamic observables.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate forward while recording a time series of thermodynamic observables.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -658,8 +658,8 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict of str -&gt; ndarray</span>
-<span class="sd">            Keys ``"time"``, ``"H"``, ``"temperature"``, ``"kinetic_energy"``,</span>
-<span class="sd">            ``"potential_energy"``, ``"total_energy"``, each a 1D array</span>
+<span class="sd">            Keys ``&quot;time&quot;``, ``&quot;H&quot;``, ``&quot;temperature&quot;``, ``&quot;kinetic_energy&quot;``,</span>
+<span class="sd">            ``&quot;potential_energy&quot;``, ``&quot;total_energy&quot;``, each a 1D array</span>
 <span class="sd">            sampled every ``steps_per_record`` steps (including the initial</span>
 <span class="sd">            state).</span>
 
@@ -667,26 +667,26 @@
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; gas = LennardJonesGas(n_particles=64, box_size=15.0, seed=0)</span>
 <span class="sd">        &gt;&gt;&gt; history = gas.run(n_steps=200, steps_per_record=50)</span>
-<span class="sd">        &gt;&gt;&gt; history["H"].shape[0]</span>
+<span class="sd">        &gt;&gt;&gt; history[&quot;H&quot;].shape[0]</span>
 <span class="sd">        5</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_records</span> <span class="o">=</span> <span class="n">n_steps</span> <span class="o">//</span> <span class="n">steps_per_record</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">history</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"time"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
-            <span class="s2">"H"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
-            <span class="s2">"temperature"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
-            <span class="s2">"kinetic_energy"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
-            <span class="s2">"potential_energy"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
-            <span class="s2">"total_energy"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;kinetic_energy&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;potential_energy&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
+            <span class="s2">&quot;total_energy&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_records</span><span class="p">),</span>
         <span class="p">}</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_record</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"time"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"H"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_function</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"kinetic_energy"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinetic_energy</span><span class="p">()</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"potential_energy"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential_energy</span><span class="p">()</span>
-            <span class="n">history</span><span class="p">[</span><span class="s2">"total_energy"</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_function</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;kinetic_energy&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinetic_energy</span><span class="p">()</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;potential_energy&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential_energy</span><span class="p">()</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;total_energy&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span>
 
         <span class="n">_record</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_records</span><span class="p">):</span>

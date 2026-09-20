@@ -411,30 +411,30 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.relativity.chapters.gw_merger</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Binary black hole mergers: the inspiral chirp, plunge, and ringdown.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Binary black hole mergers: the inspiral chirp, plunge, and ringdown.</span>
 
 <span class="sd">Two orbiting masses radiate gravitational waves, losing orbital energy and</span>
 <span class="sd">spiraling closer together, which raises the orbital frequency, which</span>
-<span class="sd">radiates more strongly still -- a runaway "chirp" that sweeps up in</span>
+<span class="sd">radiates more strongly still -- a runaway &quot;chirp&quot; that sweeps up in</span>
 <span class="sd">frequency and amplitude right up until merger. This module implements the</span>
 <span class="sd">leading-order (Newtonian quadrupole / restricted post-Newtonian) inspiral</span>
 <span class="sd">waveform -- exactly what let LIGO recognize GW150914 in 2015, the first</span>
 <span class="sd">direct detection of gravitational waves -- followed by a damped-sinusoid</span>
 <span class="sd">ringdown as the merged remnant settles down by radiating away its</span>
 <span class="sd">distortion in a superposition of quasinormal modes.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"BinaryMerger"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BinaryMerger&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="BinaryMerger">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BinaryMerger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A compact binary and its leading-order inspiral-merger-ringdown (IMR) waveform.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A compact binary and its leading-order inspiral-merger-ringdown (IMR) waveform.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -445,11 +445,11 @@
 <span class="sd">        or :class:`~physicskit.relativity.chapters.kerr.KerrBlackHole`, there is</span>
 <span class="sd">        no normalized ``M=1`` convention available here: the radiated</span>
 <span class="sd">        strain genuinely depends on the absolute physical scale, so an</span>
-<span class="sd">        unconverted mass doesn't just rescale the answer -- it silently</span>
+<span class="sd">        unconverted mass doesn&#39;t just rescale the answer -- it silently</span>
 <span class="sd">        produces a wrong waveform. This constructor does *not* itself warn</span>
 <span class="sd">        on an implausible value (many legitimate uses -- unit tests of a</span>
-<span class="sd">        formula's mathematical properties, mainly -- pass small</span>
-<span class="sd">        "toy" numbers on purpose, with no claim of physical realism); use</span>
+<span class="sd">        formula&#39;s mathematical properties, mainly -- pass small</span>
+<span class="sd">        &quot;toy&quot; numbers on purpose, with no claim of physical realism); use</span>
 <span class="sd">        :func:`~physicskit.relativity.utils.constants.check_geometrized_mass`</span>
 <span class="sd">        explicitly wherever real-world realism is actually the point (as</span>
 <span class="sd">        the visualizers in :mod:`physicskit.relativity.visualizers.wave_plots` do).</span>
@@ -459,7 +459,7 @@
 <span class="sd">    inclination : float, default=0.0</span>
 <span class="sd">        Inclination angle between the orbital angular momentum and the</span>
 <span class="sd">        line of sight, in radians (``0`` = face-on, ``pi/2`` = edge-on).</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">inclination</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">=</span> <span class="n">m1</span>
@@ -469,23 +469,23 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">total_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Total mass, :math:`M = m_1 + m_2`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total mass, :math:`M = m_1 + m_2`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">symmetric_mass_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Symmetric mass ratio, :math:`\\eta = m_1 m_2 / M^2`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Symmetric mass ratio, :math:`\\eta = m_1 m_2 / M^2`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span><span class="o">**</span><span class="mi">2</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">chirp_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Chirp mass, :math:`\\mathcal{M} = (m_1 m_2)^{3/5} / (m_1+m_2)^{1/5}`."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Chirp mass, :math:`\\mathcal{M} = (m_1 m_2)^{3/5} / (m_1+m_2)^{1/5}`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.6</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span><span class="o">**</span><span class="mf">0.2</span>
 
 <div class="viewcode-block" id="BinaryMerger.inspiral_frequency">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.inspiral_frequency">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">inspiral_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Gravitational-wave frequency during the inspiral, at leading (Newtonian quadrupole) order.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gravitational-wave frequency during the inspiral, at leading (Newtonian quadrupole) order.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -503,7 +503,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
 <span class="sd">            GW frequency (twice the orbital frequency).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tau</span> <span class="o">=</span> <span class="n">t_merger</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">256.0</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.375</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">chirp_mass</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">8.0</span><span class="p">)</span></div>
 
@@ -511,7 +511,7 @@
 <div class="viewcode-block" id="BinaryMerger.inspiral_phase">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.inspiral_phase">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">inspiral_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">,</span> <span class="n">phase_ref</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Gravitational-wave phase during the inspiral.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gravitational-wave phase during the inspiral.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -533,7 +533,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tau</span> <span class="o">=</span> <span class="n">t_merger</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">phase_ref</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">tau</span> <span class="o">/</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">chirp_mass</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="mf">5.0</span> <span class="o">/</span> <span class="mf">8.0</span><span class="p">)</span></div>
 
@@ -541,7 +541,7 @@
 <div class="viewcode-block" id="BinaryMerger.inspiral_strain">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.inspiral_strain">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">inspiral_strain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">,</span> <span class="n">phase_ref</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Plus and cross gravitational-wave strain during the inspiral.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plus and cross gravitational-wave strain during the inspiral.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -571,7 +571,7 @@
 <span class="sd">        &gt;&gt;&gt; hp, hc = merger.inspiral_strain(t, t_merger=0.0)</span>
 <span class="sd">        &gt;&gt;&gt; hp.shape</span>
 <span class="sd">        (100,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspiral_frequency</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">)</span>
         <span class="n">phase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspiral_phase</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">,</span> <span class="n">phase_ref</span><span class="o">=</span><span class="n">phase_ref</span><span class="p">)</span>
@@ -584,7 +584,7 @@
 <div class="viewcode-block" id="BinaryMerger.remnant_estimate">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.remnant_estimate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remnant_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""A simple, illustrative estimate of the merger remnant's mass and spin.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A simple, illustrative estimate of the merger remnant&#39;s mass and spin.</span>
 
 <span class="sd">        Not a precision numerical-relativity surrogate: it linearly</span>
 <span class="sd">        interpolates between the extreme-mass-ratio limit (negligible</span>
@@ -600,7 +600,7 @@
 <span class="sd">            Estimated remnant mass.</span>
 <span class="sd">        a_f : float</span>
 <span class="sd">            Estimated remnant spin parameter.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">eta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symmetric_mass_ratio</span>
         <span class="n">M_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">eta</span><span class="p">))</span>
         <span class="n">a_f</span> <span class="o">=</span> <span class="mf">0.69</span> <span class="o">*</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">eta</span><span class="p">)</span> <span class="o">*</span> <span class="n">M_f</span>
@@ -610,7 +610,7 @@
 <div class="viewcode-block" id="BinaryMerger.qnm_frequency_damping">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.qnm_frequency_damping">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">qnm_frequency_damping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a_f</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Dominant (l=2, m=2, n=0) quasinormal mode frequency and damping time.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dominant (l=2, m=2, n=0) quasinormal mode frequency and damping time.</span>
 
 <span class="sd">        Fitting formulas of Berti, Cardoso &amp; Will (2006):</span>
 
@@ -638,7 +638,7 @@
 <span class="sd">            Ringdown frequency.</span>
 <span class="sd">        tau_damp : float</span>
 <span class="sd">            Damping time.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">M_f</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">a_f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">M_f</span><span class="p">,</span> <span class="n">a_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remnant_estimate</span><span class="p">()</span>
         <span class="n">a_star</span> <span class="o">=</span> <span class="n">a_f</span> <span class="o">/</span> <span class="n">M_f</span>
@@ -651,7 +651,7 @@
 <div class="viewcode-block" id="BinaryMerger.ringdown_strain">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.ringdown_strain">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">ringdown_strain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">M_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">phase_ref</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Damped-sinusoid ringdown strain for :math:`t \\ge t_{\\text{merger}}`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Damped-sinusoid ringdown strain for :math:`t \\ge t_{\\text{merger}}`.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -681,7 +681,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        h_plus : ndarray</span>
 <span class="sd">        h_cross : ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">f_qnm</span><span class="p">,</span> <span class="n">tau_damp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qnm_frequency_damping</span><span class="p">(</span><span class="n">M_f</span><span class="o">=</span><span class="n">M_f</span><span class="p">,</span> <span class="n">a_f</span><span class="o">=</span><span class="n">a_f</span><span class="p">)</span>
         <span class="n">dt</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">t_merger</span>
@@ -695,7 +695,7 @@
 <div class="viewcode-block" id="BinaryMerger.full_waveform">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.full_waveform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">full_waveform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t_merger</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""A continuous inspiral-merger-ringdown toy waveform over an arbitrary time array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A continuous inspiral-merger-ringdown toy waveform over an arbitrary time array.</span>
 
 <span class="sd">        Uses :meth:`inspiral_strain` for ``t &lt; t_merger`` and</span>
 <span class="sd">        :meth:`ringdown_strain` for ``t &gt;= t_merger``, with the ringdown</span>
@@ -723,7 +723,7 @@
 <span class="sd">        &gt;&gt;&gt; hp, hc = merger.full_waveform(t, t_merger=0.0)</span>
 <span class="sd">        &gt;&gt;&gt; hp.shape</span>
 <span class="sd">        (500,)</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">h_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">h_cross</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
@@ -751,13 +751,13 @@
 <div class="viewcode-block" id="BinaryMerger.orbital_period">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.orbital_period">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">orbital_period</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">semi_major_axis</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Newtonian (Keplerian) orbital period at a given semi-major axis.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Newtonian (Keplerian) orbital period at a given semi-major axis.</span>
 
 <span class="sd">        .. math::</span>
 
 <span class="sd">            P = 2\\pi \\sqrt{\\frac{a^3}{M}}</span>
 
-<span class="sd">        Valid for the wide, slowly-decaying orbits this method's</span>
+<span class="sd">        Valid for the wide, slowly-decaying orbits this method&#39;s</span>
 <span class="sd">        counterparts describe (unlike :meth:`inspiral_frequency`, which</span>
 <span class="sd">        covers the final relativistic plunge).</span>
 
@@ -769,14 +769,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">semi_major_axis</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BinaryMerger.semi_major_axis_decay_rate">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.semi_major_axis_decay_rate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">semi_major_axis_decay_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">semi_major_axis</span><span class="p">,</span> <span class="n">eccentricity</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Rate of orbital shrinkage from gravitational-wave emission (Peters 1964).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rate of orbital shrinkage from gravitational-wave emission (Peters 1964).</span>
 
 <span class="sd">        .. math::</span>
 
@@ -784,7 +784,7 @@
 <span class="sd">                \\frac{1 + \\frac{73}{24}e^2 + \\frac{37}{96}e^4}{(1-e^2)^{7/2}}</span>
 
 <span class="sd">        This is the formula behind the first (indirect) detection of</span>
-<span class="sd">        gravitational waves: Hulse and Taylor's 1974 discovery of the</span>
+<span class="sd">        gravitational waves: Hulse and Taylor&#39;s 1974 discovery of the</span>
 <span class="sd">        binary pulsar PSR B1913+16, whose orbital period was found to</span>
 <span class="sd">        decay at precisely the rate this equation predicts (1993 Nobel</span>
 <span class="sd">        Prize in Physics).</span>
@@ -800,7 +800,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            :math:`da/dt` (negative: the orbit shrinks).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">e</span> <span class="o">=</span> <span class="n">eccentricity</span>
         <span class="n">enhancement</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">73.0</span> <span class="o">/</span> <span class="mf">24.0</span> <span class="o">*</span> <span class="n">e</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">37.0</span> <span class="o">/</span> <span class="mf">96.0</span> <span class="o">*</span> <span class="n">e</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">e</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">3.5</span>
         <span class="k">return</span> <span class="o">-</span><span class="mf">64.0</span> <span class="o">/</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span> <span class="o">/</span> <span class="n">semi_major_axis</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">enhancement</span></div>
@@ -809,10 +809,10 @@
 <div class="viewcode-block" id="BinaryMerger.period_decay_rate">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.BinaryMerger.period_decay_rate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">period_decay_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">semi_major_axis</span><span class="p">,</span> <span class="n">eccentricity</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Rate of orbital period decay, :math:`dP/dt`, from gravitational-wave emission.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rate of orbital period decay, :math:`dP/dt`, from gravitational-wave emission.</span>
 
 <span class="sd">        Obtained from :meth:`semi_major_axis_decay_rate` via the chain rule</span>
-<span class="sd">        through Kepler's third law, :math:`dP/dt = (dP/da)(da/dt)` with</span>
+<span class="sd">        through Kepler&#39;s third law, :math:`dP/dt = (dP/da)(da/dt)` with</span>
 <span class="sd">        :math:`dP/da = 3\\pi\\sqrt{a/M}`.</span>
 
 <span class="sd">        Parameters</span>
@@ -838,7 +838,7 @@
 <span class="sd">        &gt;&gt;&gt; dPdt = psr_b1913.period_decay_rate(a, eccentricity=0.6171338)</span>
 <span class="sd">        &gt;&gt;&gt; bool(-3e-12 &lt; dPdt &lt; -2e-12)  # observed: -2.4e-12 (dimensionless)</span>
 <span class="sd">        True</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dP_da</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">semi_major_axis</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_mass</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dP_da</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">semi_major_axis_decay_rate</span><span class="p">(</span><span class="n">semi_major_axis</span><span class="p">,</span> <span class="n">eccentricity</span><span class="p">)</span></div>
 </div>

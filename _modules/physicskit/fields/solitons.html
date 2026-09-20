@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fields.solitons</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Soliton-bearing nonlinear field equations: KdV, the nonlinear Schrodinger equation, and Sine-Gordon.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Soliton-bearing nonlinear field equations: KdV, the nonlinear Schrodinger equation, and Sine-Gordon.</span>
 
 <span class="sd">Each equation is integrated with a scheme suited to its structure:</span>
 
@@ -421,24 +421,24 @@
 <span class="sd">- **Nonlinear Schrodinger** -- split-step Fourier: exact for the linear</span>
 <span class="sd">  (kinetic) part and exact for the nonlinear (pointwise phase-rotation) part.</span>
 <span class="sd">- **Sine-Gordon** -- explicit leapfrog finite differences on the wave equation.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"kdv_soliton"</span><span class="p">,</span>
-    <span class="s2">"kdv_step"</span><span class="p">,</span>
-    <span class="s2">"kdv_evolve"</span><span class="p">,</span>
-    <span class="s2">"kdv_evolve_frames"</span><span class="p">,</span>
-    <span class="s2">"nls_bright_soliton"</span><span class="p">,</span>
-    <span class="s2">"nls_dark_soliton"</span><span class="p">,</span>
-    <span class="s2">"nls_evolve"</span><span class="p">,</span>
-    <span class="s2">"nls_evolve_frames"</span><span class="p">,</span>
-    <span class="s2">"sine_gordon_kink"</span><span class="p">,</span>
-    <span class="s2">"sine_gordon_evolve"</span><span class="p">,</span>
-    <span class="s2">"sine_gordon_evolve_frames"</span><span class="p">,</span>
+    <span class="s2">&quot;kdv_soliton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kdv_step&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kdv_evolve&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kdv_evolve_frames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nls_bright_soliton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nls_dark_soliton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nls_evolve&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nls_evolve_frames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sine_gordon_kink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sine_gordon_evolve&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sine_gordon_evolve_frames&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -448,7 +448,7 @@
 <div class="viewcode-block" id="kdv_soliton">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.kdv_soliton">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kdv_soliton</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Exact single-soliton solution of :math:`u_t + 6uu_x + u_{xxx} = 0` at :math:`t=0`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact single-soliton solution of :math:`u_t + 6uu_x + u_{xxx} = 0` at :math:`t=0`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -473,7 +473,7 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; round(float(kdv_soliton(0.0, c=4.0)), 6)</span>
 <span class="sd">    2.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)))</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 
@@ -481,7 +481,7 @@
 <div class="viewcode-block" id="kdv_step">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.kdv_step">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kdv_step</span><span class="p">(</span><span class="n">u_hat</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Advance the KdV equation in Fourier space by one Strang-split step.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Advance the KdV equation in Fourier space by one Strang-split step.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -496,7 +496,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray</span>
 <span class="sd">        Fourier coefficients after one step of size ``dt``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ik3</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k</span><span class="o">**</span><span class="mi">3</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">nonlinear_rhs</span><span class="p">(</span><span class="n">uh</span><span class="p">):</span>
@@ -517,7 +517,7 @@
 <div class="viewcode-block" id="kdv_evolve">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.kdv_evolve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kdv_evolve</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve a KdV initial condition forward in time on a periodic domain.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a KdV initial condition forward in time on a periodic domain.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -558,7 +558,7 @@
 <span class="sd">    &gt;&gt;&gt; heights = sorted(u[peaks])</span>
 <span class="sd">    &gt;&gt;&gt; [round(float(h), 1) for h in heights]</span>
 <span class="sd">    [2.0, 4.5]</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">u_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
@@ -570,11 +570,11 @@
 <div class="viewcode-block" id="kdv_evolve_frames">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.kdv_evolve_frames">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kdv_evolve_frames</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve a KdV field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a KdV field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
 
 <span class="sd">    A thin looping wrapper around :func:`kdv_evolve` -- no new physics, just</span>
-<span class="sd">    repeated short calls with each chunk's output fed back in as the next</span>
-<span class="sd">    chunk's initial condition (valid since :func:`kdv_evolve` is a</span>
+<span class="sd">    repeated short calls with each chunk&#39;s output fed back in as the next</span>
+<span class="sd">    chunk&#39;s initial condition (valid since :func:`kdv_evolve` is a</span>
 <span class="sd">    deterministic one-step-at-a-time integrator), so the trajectory can be</span>
 <span class="sd">    animated frame by frame.</span>
 
@@ -609,7 +609,7 @@
 <span class="sd">    &gt;&gt;&gt; frames, times = kdv_evolve_frames(u0, x, dt=0.001, steps_per_frame=200, n_frames=5)</span>
 <span class="sd">    &gt;&gt;&gt; frames.shape</span>
 <span class="sd">    (6, 256)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
@@ -627,7 +627,7 @@
 <div class="viewcode-block" id="nls_bright_soliton">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.nls_bright_soliton">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nls_bright_soliton</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Exact bright-soliton solution of the focusing NLS equation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact bright-soliton solution of the focusing NLS equation.</span>
 
 <span class="sd">    Solves :math:`i\\psi_t + \\tfrac{1}{2}\\psi_{xx} + |\\psi|^2\\psi = 0`.</span>
 
@@ -660,7 +660,7 @@
 <span class="sd">    &gt;&gt;&gt; x = np.array([0.0])</span>
 <span class="sd">    &gt;&gt;&gt; abs(nls_bright_soliton(x, t=0.0, A=1.0))</span>
 <span class="sd">    array([1.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">envelope</span> <span class="o">=</span> <span class="n">A</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">v</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
     <span class="n">phase</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">A</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span>
     <span class="k">return</span> <span class="n">envelope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phase</span><span class="p">)</span></div>
@@ -670,7 +670,7 @@
 <div class="viewcode-block" id="nls_dark_soliton">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.nls_dark_soliton">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nls_dark_soliton</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Exact stationary dark (black) soliton solution of the defocusing NLS equation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact stationary dark (black) soliton solution of the defocusing NLS equation.</span>
 
 <span class="sd">    Solves :math:`i\\psi_t + \\tfrac{1}{2}\\psi_{xx} - |\\psi|^2\\psi = 0`: a</span>
 <span class="sd">    density notch that vanishes at its center, sitting on a uniform</span>
@@ -703,7 +703,7 @@
 <span class="sd">    &gt;&gt;&gt; x = np.array([0.0])</span>
 <span class="sd">    &gt;&gt;&gt; abs(nls_dark_soliton(x, t=0.0, rho0=1.0))</span>
 <span class="sd">    array([0.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">envelope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rho0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rho0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">envelope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span></div>
 
@@ -712,7 +712,7 @@
 <div class="viewcode-block" id="nls_evolve">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.nls_evolve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nls_evolve</span><span class="p">(</span><span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve a nonlinear Schrodinger initial condition via split-step Fourier.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a nonlinear Schrodinger initial condition via split-step Fourier.</span>
 
 <span class="sd">    Solves :math:`i\\psi_t + \\tfrac{1}{2}\\psi_{xx} + g|\\psi|^2\\psi = 0`</span>
 <span class="sd">    on a periodic domain: ``g &gt; 0`` is focusing (bright solitons),</span>
@@ -749,7 +749,7 @@
 <span class="sd">    &gt;&gt;&gt; shape_error = np.max(np.abs(np.abs(psi) - np.abs(psi0)))</span>
 <span class="sd">    &gt;&gt;&gt; bool(shape_error &lt; 1e-3)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">lin_prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -765,7 +765,7 @@
 <div class="viewcode-block" id="nls_evolve_frames">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.nls_evolve_frames">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">nls_evolve_frames</span><span class="p">(</span><span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve an NLS field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve an NLS field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
 
 <span class="sd">    A thin looping wrapper around :func:`nls_evolve`, analogous to</span>
 <span class="sd">    :func:`kdv_evolve_frames`: no new physics, just repeated chunked calls</span>
@@ -804,7 +804,7 @@
 <span class="sd">    &gt;&gt;&gt; frames, times = nls_evolve_frames(psi0, x, dt=0.001, steps_per_frame=200, n_frames=5, g=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; frames.shape</span>
 <span class="sd">    (6, 512)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">psi</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
@@ -822,7 +822,7 @@
 <div class="viewcode-block" id="sine_gordon_kink">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.sine_gordon_kink">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sine_gordon_kink</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">polarity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Exact kink (or antikink) solution of the Sine-Gordon equation :math:`u_{tt} - u_{xx} + \\sin u = 0`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact kink (or antikink) solution of the Sine-Gordon equation :math:`u_{tt} - u_{xx} + \\sin u = 0`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -852,7 +852,7 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; round(float(sine_gordon_kink(0.0, t=0.0)), 6)</span>
 <span class="sd">    3.141593</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">polarity</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">v</span> <span class="o">*</span> <span class="n">t</span><span class="p">)))</span></div>
 
@@ -861,7 +861,7 @@
 <div class="viewcode-block" id="sine_gordon_evolve">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.sine_gordon_evolve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sine_gordon_evolve</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">u0_prev</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve the Sine-Gordon equation with explicit leapfrog finite differences.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve the Sine-Gordon equation with explicit leapfrog finite differences.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -901,7 +901,7 @@
 <span class="sd">    &gt;&gt;&gt; expected = sine_gordon_kink(x, steps * dt, v, x0)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(u - expected)) &lt; 0.01)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">u_prev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u0_prev</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -919,7 +919,7 @@
 <div class="viewcode-block" id="sine_gordon_evolve_frames">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.sine_gordon_evolve_frames">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sine_gordon_evolve_frames</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">u0_prev</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Evolve a Sine-Gordon field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a Sine-Gordon field and record a snapshot every ``steps_per_frame`` steps, for animation.</span>
 
 <span class="sd">    A thin looping wrapper around :func:`sine_gordon_evolve`, analogous to</span>
 <span class="sd">    :func:`kdv_evolve_frames`: the ``(u, u_prev)`` leapfrog pair is carried</span>
@@ -960,7 +960,7 @@
 <span class="sd">    &gt;&gt;&gt; frames, times = sine_gordon_evolve_frames(u0, u_prev, x, dt, steps_per_frame=100, n_frames=4)</span>
 <span class="sd">    &gt;&gt;&gt; frames.shape</span>
 <span class="sd">    (5, 800)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">u_prev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u0_prev</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>

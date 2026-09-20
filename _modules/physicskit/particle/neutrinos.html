@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.particle.neutrinos</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Two-flavor vacuum neutrino oscillations.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Two-flavor vacuum neutrino oscillations.</span>
 
 <span class="sd">- :func:`oscillation_probability` -- the standard two-flavor</span>
 <span class="sd">  :math:`\nu_e\to\nu_\mu` vacuum oscillation probability.</span>
@@ -424,21 +424,21 @@
 <span class="sd">leading-order approximation whenever a single mass-squared splitting</span>
 <span class="sd">dominates (as :math:`\Delta m^2_{21}` or :math:`\Delta m^2_{31}}` each</span>
 <span class="sd">individually do in different regimes), and is the textbook starting</span>
-<span class="sd">point for any oscillation demonstration (see the Particle Data Group's</span>
-<span class="sd">"Neutrino Mixing" review).</span>
-<span class="sd">"""</span>
+<span class="sd">point for any oscillation demonstration (see the Particle Data Group&#39;s</span>
+<span class="sd">&quot;Neutrino Mixing&quot; review).</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"oscillation_probability"</span><span class="p">,</span> <span class="s2">"survival_probability"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;oscillation_probability&quot;</span><span class="p">,</span> <span class="s2">&quot;survival_probability&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="oscillation_probability">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.oscillation_probability">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">oscillation_probability</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">delta_m2</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Two-flavor vacuum oscillation probability :math:`P(\nu_e\to\nu_\mu)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Two-flavor vacuum oscillation probability :math:`P(\nu_e\to\nu_\mu)`.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -448,7 +448,7 @@
 <span class="sd">    the standard PDG form in practical units: :math:`L` in km, :math:`E`</span>
 <span class="sd">    in GeV, :math:`\Delta m^2` in :math:`{\rm eV}^2` (the numerical</span>
 <span class="sd">    constant 1.267 absorbs :math:`\hbar,c` and the unit conversion; see</span>
-<span class="sd">    the Particle Data Group's "Neutrino Mixing" review).</span>
+<span class="sd">    the Particle Data Group&#39;s &quot;Neutrino Mixing&quot; review).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -473,7 +473,7 @@
 <span class="sd">    &gt;&gt;&gt; L_E = np.pi / 2 / (1.267 * 2.5e-3)  # argument = pi/2 -&gt; sin^2 = 1</span>
 <span class="sd">    &gt;&gt;&gt; round(float(oscillation_probability(L_E, 1.0, theta, 2.5e-3)), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">1.267</span> <span class="o">*</span> <span class="n">delta_m2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="n">E</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
@@ -483,7 +483,7 @@
 <div class="viewcode-block" id="survival_probability">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.survival_probability">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">survival_probability</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">delta_m2</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Two-flavor vacuum survival probability, :math:`P(\nu_e\to\nu_e)=1-P(\nu_e\to\nu_\mu)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Two-flavor vacuum survival probability, :math:`P(\nu_e\to\nu_e)=1-P(\nu_e\to\nu_\mu)`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -498,7 +498,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(survival_probability(0.0, 1.0, 0.5, 2.5e-3)), 10)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">oscillation_probability</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">delta_m2</span><span class="p">)</span></div>
 
 </pre></div>

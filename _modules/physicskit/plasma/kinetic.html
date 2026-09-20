@@ -411,14 +411,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.kinetic</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Electrostatic particle-in-cell (PIC) solution of the 1D1V Vlasov-Poisson system.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Electrostatic particle-in-cell (PIC) solution of the 1D1V Vlasov-Poisson system.</span>
 
 <span class="sd">Rather than discretizing the distribution function :math:`f(x, v, t)` on a</span>
 <span class="sd">phase-space grid, a PIC code samples it with a finite set of</span>
-<span class="sd">computational "super-particles" and lets them stream along exact</span>
+<span class="sd">computational &quot;super-particles&quot; and lets them stream along exact</span>
 <span class="sd">single-particle orbits, recovering the self-consistent field by depositing</span>
-<span class="sd">their charge onto a spatial grid and solving Poisson's equation there each</span>
-<span class="sd">step. This is Vlasov's collisionless equation</span>
+<span class="sd">their charge onto a spatial grid and solving Poisson&#39;s equation there each</span>
+<span class="sd">step. This is Vlasov&#39;s collisionless equation</span>
 <span class="sd">:math:`\\partial_t f + v\\,\\partial_x f - (e/m)E\\,\\partial_v f = 0` solved</span>
 <span class="sd">by the method of characteristics: each particle *is* one characteristic.</span>
 <span class="sd">The whole pipeline -- :func:`deposit_number_density`,</span>
@@ -437,7 +437,7 @@
 <span class="sd">The charge-deposit and field-interpolation kernels -- called once per</span>
 <span class="sd">particle per step -- are compiled with Numba, since they dominate the</span>
 <span class="sd">cost of every PIC time step.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -445,23 +445,23 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"maxwellian_velocities"</span><span class="p">,</span>
-    <span class="s2">"landau_damping_ic"</span><span class="p">,</span>
-    <span class="s2">"langmuir_wave_ic"</span><span class="p">,</span>
-    <span class="s2">"two_stream_ic"</span><span class="p">,</span>
-    <span class="s2">"deposit_number_density"</span><span class="p">,</span>
-    <span class="s2">"interpolate_field"</span><span class="p">,</span>
-    <span class="s2">"solve_poisson_1d"</span><span class="p">,</span>
-    <span class="s2">"pic_step"</span><span class="p">,</span>
-    <span class="s2">"pic_simulate"</span><span class="p">,</span>
-    <span class="s2">"landau_damping_rate"</span><span class="p">,</span>
+    <span class="s2">&quot;maxwellian_velocities&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;landau_damping_ic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;langmuir_wave_ic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;two_stream_ic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deposit_number_density&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;interpolate_field&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;solve_poisson_1d&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pic_step&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pic_simulate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;landau_damping_rate&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="maxwellian_velocities">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.maxwellian_velocities">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">maxwellian_velocities</span><span class="p">(</span><span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Sample particle velocities from a Maxwellian (Gaussian) distribution.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sample particle velocities from a Maxwellian (Gaussian) distribution.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -484,7 +484,7 @@
 <span class="sd">    &gt;&gt;&gt; v = maxwellian_velocities(4, v_th=1.0, seed=0)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.allclose(v, [0.12573022, -0.13210486, 0.64042265, 0.10490012]))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v_th</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">)</span></div>
 
@@ -493,11 +493,11 @@
 <div class="viewcode-block" id="landau_damping_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.landau_damping_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">landau_damping_ic</span><span class="p">(</span><span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_mode</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Quiet-start initial condition seeding a single-mode density perturbation for a Landau damping test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quiet-start initial condition seeding a single-mode density perturbation for a Landau damping test.</span>
 
 <span class="sd">    Displaces an otherwise uniform particle load by</span>
 <span class="sd">    :math:`\\delta x = (\\alpha/k)\\sin(kx_0)`, which -- since particle</span>
-<span class="sd">    number is conserved through the displacement's Jacobian -- produces</span>
+<span class="sd">    number is conserved through the displacement&#39;s Jacobian -- produces</span>
 <span class="sd">    exactly the density perturbation :math:`n(x) \\approx n_0(1 -</span>
 <span class="sd">    \\alpha\\cos(kx))` used in the classic linear Landau damping test</span>
 <span class="sd">    problem, without the sampling noise a random density draw would add</span>
@@ -537,7 +537,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; x.shape, v.shape</span>
 <span class="sd">    ((4,), (4,))</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">k_mode</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">k_mode</span> <span class="o">*</span> <span class="n">x0</span><span class="p">),</span> <span class="n">L</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">maxwellian_velocities</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">v_th</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
@@ -548,7 +548,7 @@
 <div class="viewcode-block" id="langmuir_wave_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.langmuir_wave_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">langmuir_wave_ic</span><span class="p">(</span><span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_mode</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Small-amplitude single-mode initial condition for a driven Langmuir (electron plasma) wave.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Small-amplitude single-mode initial condition for a driven Langmuir (electron plasma) wave.</span>
 
 <span class="sd">    Identical in construction to :func:`landau_damping_ic` -- the same</span>
 <span class="sd">    quiet-start displacement :math:`\\delta x=(\\alpha/k)\\sin(kx_0)` seeds</span>
@@ -604,7 +604,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; x.shape, v.shape</span>
 <span class="sd">    ((4,), (4,))</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">k_mode</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">k_mode</span> <span class="o">*</span> <span class="n">x0</span><span class="p">),</span> <span class="n">L</span><span class="p">)</span>
     <span class="n">omega_pe</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -617,7 +617,7 @@
 <div class="viewcode-block" id="two_stream_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.two_stream_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">two_stream_ic</span><span class="p">(</span><span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_drift</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Initial condition for the two-stream instability: two counter-streaming Maxwellian beams.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initial condition for the two-stream instability: two counter-streaming Maxwellian beams.</span>
 
 <span class="sd">    Splits the particles into two equal populations drifting at</span>
 <span class="sd">    :math:`\\pm v_{drift}`, each with thermal spread :math:`v_{th}`, and</span>
@@ -658,7 +658,7 @@
 <span class="sd">    ((1000,), (1000,))</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.mean(v) &lt; 0.5)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">half</span> <span class="o">=</span> <span class="n">n_particles</span> <span class="o">//</span> <span class="mi">2</span>
     <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -710,9 +710,9 @@
 <div class="viewcode-block" id="deposit_number_density">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.deposit_number_density">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">deposit_number_density</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ng</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Deposit particle positions onto a grid as a number density, via cloud-in-cell (CIC) weighting.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deposit particle positions onto a grid as a number density, via cloud-in-cell (CIC) weighting.</span>
 
-<span class="sd">    Each particle represents a "cloud" of physical charge spanning one</span>
+<span class="sd">    Each particle represents a &quot;cloud&quot; of physical charge spanning one</span>
 <span class="sd">    grid cell, split linearly between its two nearest grid points -- the</span>
 <span class="sd">    standard first-order PIC weighting scheme, chosen because it is exact</span>
 <span class="sd">    for a uniform density and (unlike nearest-grid-point deposit)</span>
@@ -728,7 +728,7 @@
 <span class="sd">    ng : int</span>
 <span class="sd">        Number of grid points.</span>
 <span class="sd">    n0 : float, default=1.0</span>
-<span class="sd">        Equilibrium number density (sets each particle's statistical weight,</span>
+<span class="sd">        Equilibrium number density (sets each particle&#39;s statistical weight,</span>
 <span class="sd">        :math:`n_0 L / n_{particles}`).</span>
 
 <span class="sd">    Returns</span>
@@ -751,7 +751,7 @@
 <span class="sd">    &gt;&gt;&gt; dx = 10.0 / 20</span>
 <span class="sd">    &gt;&gt;&gt; round(float(np.sum(rho) * dx), 8)</span>
 <span class="sd">    20.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_particles</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">weight</span> <span class="o">=</span> <span class="n">n0</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="n">n_particles</span>
     <span class="k">return</span> <span class="n">_deposit_cic_kernel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">weight</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">ng</span><span class="p">))</span></div>
@@ -761,7 +761,7 @@
 <div class="viewcode-block" id="interpolate_field">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.interpolate_field">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">interpolate_field</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">field_grid</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Interpolate a grid-defined field to particle positions, via cloud-in-cell (CIC) weighting.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolate a grid-defined field to particle positions, via cloud-in-cell (CIC) weighting.</span>
 
 <span class="sd">    The gather step dual to :func:`deposit_number_density`: using the</span>
 <span class="sd">    same linear weights for both deposit and gather is what makes the</span>
@@ -779,11 +779,11 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray, shape (n_particles,)</span>
-<span class="sd">        Field value at each particle's position.</span>
+<span class="sd">        Field value at each particle&#39;s position.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    A particle sitting exactly on a grid node picks up that node's value:</span>
+<span class="sd">    A particle sitting exactly on a grid node picks up that node&#39;s value:</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; ng = 8</span>
@@ -791,7 +791,7 @@
 <span class="sd">    &gt;&gt;&gt; x = np.array([2 * (10.0 / ng)])</span>
 <span class="sd">    &gt;&gt;&gt; interpolate_field(x, field_grid, L=10.0)</span>
 <span class="sd">    array([3.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ng</span> <span class="o">=</span> <span class="n">field_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">_interpolate_cic_kernel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">field_grid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">ng</span><span class="p">))</span></div>
 
@@ -800,7 +800,7 @@
 <div class="viewcode-block" id="solve_poisson_1d">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.solve_poisson_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">solve_poisson_1d</span><span class="p">(</span><span class="n">rho</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Solve the 1D periodic Poisson equation :math:`dE/dx = \\rho` (normalized :math:`\\varepsilon_0=1`) via FFT.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve the 1D periodic Poisson equation :math:`dE/dx = \\rho` (normalized :math:`\\varepsilon_0=1`) via FFT.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -833,7 +833,7 @@
 <span class="sd">    &gt;&gt;&gt; E_exact = -np.cos(x_grid)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(E - E_exact)) &lt; 1e-10)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ng</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">ng</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">L</span> <span class="o">/</span> <span class="n">ng</span><span class="p">)</span>
     <span class="n">rho_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rho</span><span class="p">))</span>
@@ -847,7 +847,7 @@
 <div class="viewcode-block" id="pic_step">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.pic_step">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pic_step</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ng</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">qm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Advance the electrostatic PIC system one leapfrog step.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Advance the electrostatic PIC system one leapfrog step.</span>
 
 <span class="sd">    Deposits the electron density, solves for the self-consistent field</span>
 <span class="sd">    against a uniform neutralizing ion background, gathers the field back</span>
@@ -880,7 +880,7 @@
 <span class="sd">    x_new, v_new : ndarray</span>
 <span class="sd">        Updated positions and velocities.</span>
 <span class="sd">    field_energy : float</span>
-<span class="sd">        :math:`\\int E^2/2\\,dx`, evaluated at the field used for this step's kick.</span>
+<span class="sd">        :math:`\\int E^2/2\\,dx`, evaluated at the field used for this step&#39;s kick.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -896,7 +896,7 @@
 <span class="sd">    ((50,), (50,))</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.isfinite(fe))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_e</span> <span class="o">=</span> <span class="n">deposit_number_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">n0</span><span class="p">)</span>
     <span class="n">rho</span> <span class="o">=</span> <span class="n">n0</span> <span class="o">-</span> <span class="n">n_e</span>
     <span class="n">E</span> <span class="o">=</span> <span class="n">solve_poisson_1d</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
@@ -910,7 +910,7 @@
 <div class="viewcode-block" id="pic_simulate">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.pic_simulate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pic_simulate</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ng</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">qm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Run an electrostatic PIC simulation forward in time, recording the field-energy history.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run an electrostatic PIC simulation forward in time, recording the field-energy history.</span>
 
 <span class="sd">    Correctly initializes the leapfrog velocity offset (staggering</span>
 <span class="sd">    ``v0`` back by half a step using the field at ``x0``) before</span>
@@ -938,8 +938,8 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{"t": ndarray of shape (steps,), "field_energy": ndarray of shape (steps,),</span>
-<span class="sd">        "x": final positions, "v": final velocities}``.</span>
+<span class="sd">        ``{&quot;t&quot;: ndarray of shape (steps,), &quot;field_energy&quot;: ndarray of shape (steps,),</span>
+<span class="sd">        &quot;x&quot;: final positions, &quot;v&quot;: final velocities}``.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -951,11 +951,11 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; x0, v0 = landau_damping_ic(2000, L=4 * np.pi, k_mode=0.5, alpha=0.01, v_th=1.0, seed=0)</span>
 <span class="sd">    &gt;&gt;&gt; result = pic_simulate(x0, v0, L=4 * np.pi, ng=32, dt=0.1, steps=20)</span>
-<span class="sd">    &gt;&gt;&gt; result["field_energy"].shape</span>
+<span class="sd">    &gt;&gt;&gt; result[&quot;field_energy&quot;].shape</span>
 <span class="sd">    (20,)</span>
-<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result["field_energy"])))</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result[&quot;field_energy&quot;])))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">n_e</span> <span class="o">=</span> <span class="n">deposit_number_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">n0</span><span class="p">)</span>
@@ -968,14 +968,14 @@
         <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">pic_step</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">qm</span><span class="p">,</span> <span class="n">n0</span><span class="p">)</span>
         <span class="n">field_energy</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">fe</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s2">"field_energy"</span><span class="p">:</span> <span class="n">field_energy</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s2">&quot;field_energy&quot;</span><span class="p">:</span> <span class="n">field_energy</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span></div>
 
 
 
 <div class="viewcode-block" id="landau_damping_rate">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.landau_damping_rate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">landau_damping_rate</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega_pe</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Analytic linear Landau damping rate for a Maxwellian electron plasma.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analytic linear Landau damping rate for a Maxwellian electron plasma.</span>
 
 <span class="sd">    The classic weak-damping result (Landau, 1946) for a wave of</span>
 <span class="sd">    wavenumber :math:`k` on a Maxwellian of thermal speed :math:`v_{th}`,</span>
@@ -987,7 +987,7 @@
 <span class="sd">       \\frac{1}{(k\\lambda_D)^3}\\,</span>
 <span class="sd">       \\exp\\!\\left(-\\frac{1}{2(k\\lambda_D)^2} - \\frac{3}{2}\\right).</span>
 
-<span class="sd">    Electrons resonant with the wave's phase velocity</span>
+<span class="sd">    Electrons resonant with the wave&#39;s phase velocity</span>
 <span class="sd">    (:math:`v = \\omega/k`) surf it, extracting energy from the field on</span>
 <span class="sd">    net because the Maxwellian has slightly more slower particles being</span>
 <span class="sd">    accelerated than faster particles being decelerated -- a purely</span>
@@ -1024,7 +1024,7 @@
 
 <span class="sd">    &gt;&gt;&gt; round(float(landau_damping_rate(k=0.5, v_th=1.0)), 4)</span>
 <span class="sd">    -0.1514</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lambda_D</span> <span class="o">=</span> <span class="n">v_th</span> <span class="o">/</span> <span class="n">omega_pe</span>
     <span class="n">klD</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">lambda_D</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">omega_pe</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">8.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">klD</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">klD</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">)</span></div>

@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.particle.collider</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Toy branching cascades (particle showers, parton showers) and a</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Toy branching cascades (particle showers, parton showers) and a</span>
 <span class="sd">schematic detector geometry for displaying their final states.</span>
 
 <span class="sd">Uses the same natural-unit convention (:math:`\hbar=c=1`) as</span>
@@ -424,23 +424,23 @@
 <span class="sd">  quark/gluon flavor bookkeeping.</span>
 <span class="sd">- :func:`flatten_shower`, :func:`shower_leaves` -- tree-traversal helpers.</span>
 <span class="sd">- :func:`cluster_into_jets` -- group final-state momenta into jets by angle.</span>
-<span class="sd">- :func:`charged_track_points` -- a charged (or neutral) particle's 2D</span>
+<span class="sd">- :func:`charged_track_points` -- a charged (or neutral) particle&#39;s 2D</span>
 <span class="sd">  trajectory in a uniform axial magnetic field, for a schematic detector</span>
 <span class="sd">  event display.</span>
 
 <span class="sd">**Shared branching model** (:func:`simple_shower` and</span>
-<span class="sd">:func:`parton_shower`): each particle carries a "virtuality" mass (its</span>
+<span class="sd">:func:`parton_shower`): each particle carries a &quot;virtuality&quot; mass (its</span>
 <span class="sd">:class:`~physicskit.particle.kinematics.FourVector` invariant mass,</span>
 <span class="sd">standing in for how far off its true mass shell it is); a branching is</span>
 <span class="sd">computed as an *exact* two-body decay (reusing</span>
-<span class="sd">:func:`~physicskit.particle.decays.two_body_decay`) in the parent's own</span>
+<span class="sd">:func:`~physicskit.particle.decays.two_body_decay`) in the parent&#39;s own</span>
 <span class="sd">rest frame with an isotropically sampled angle, then boosted back to the</span>
 <span class="sd">lab frame with :func:`~physicskit.particle.kinematics.boost_generic` --</span>
 <span class="sd">so energy-momentum is conserved at every vertex to machine precision,</span>
 <span class="sd">for free, by reusing already-tested kinematics building blocks. Daughter</span>
 <span class="sd">virtualities shrink by a fixed fraction each generation, and branching</span>
 <span class="sd">stops once either the energy or the virtuality falls below a cutoff</span>
-<span class="sd">(the shower's "hadronization scale"). This is a deliberately simplified</span>
+<span class="sd">(the shower&#39;s &quot;hadronization scale&quot;). This is a deliberately simplified</span>
 <span class="sd">stand-in for a real fragmentation function / DGLAP splitting kernel</span>
 <span class="sd">(which would sample an energy-sharing fraction ``z`` and an evolution</span>
 <span class="sd">variable from Sudakov form factors) -- but the isotropic rest-frame</span>
@@ -448,7 +448,7 @@
 <span class="sd">genuinely collimated, energy-ordered cascade (small opening angles for</span>
 <span class="sd">high-energy branches), a real physical consequence of the boost rather</span>
 <span class="sd">than something imposed by hand.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -461,13 +461,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.particle.kinematics</span><span class="w"> </span><span class="kn">import</span> <span class="n">FourVector</span><span class="p">,</span> <span class="n">boost_generic</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"ShowerParticle"</span><span class="p">,</span>
-    <span class="s2">"simple_shower"</span><span class="p">,</span>
-    <span class="s2">"parton_shower"</span><span class="p">,</span>
-    <span class="s2">"flatten_shower"</span><span class="p">,</span>
-    <span class="s2">"shower_leaves"</span><span class="p">,</span>
-    <span class="s2">"cluster_into_jets"</span><span class="p">,</span>
-    <span class="s2">"charged_track_points"</span><span class="p">,</span>
+    <span class="s2">&quot;ShowerParticle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;simple_shower&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parton_shower&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;flatten_shower&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;shower_leaves&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cluster_into_jets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;charged_track_points&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -475,40 +475,40 @@
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.ShowerParticle">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ShowerParticle</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""One node of a branching-cascade tree.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One node of a branching-cascade tree.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    four_vector : FourVector</span>
-<span class="sd">        This particle's lab-frame four-momentum.</span>
+<span class="sd">        This particle&#39;s lab-frame four-momentum.</span>
 <span class="sd">    generation : int</span>
 <span class="sd">        Branching depth (0 for the initial/primary particle).</span>
-<span class="sd">    flavor : str, default=""</span>
-<span class="sd">        Parton flavor label (``"q"``, ``"qbar"``, ``"g"``); unused (left</span>
+<span class="sd">    flavor : str, default=&quot;&quot;</span>
+<span class="sd">        Parton flavor label (``&quot;q&quot;``, ``&quot;qbar&quot;``, ``&quot;g&quot;``); unused (left</span>
 <span class="sd">        empty) by :func:`simple_shower`.</span>
 <span class="sd">    parent : ShowerParticle, optional</span>
 <span class="sd">        The particle this one was produced from (``None`` for the root).</span>
 <span class="sd">    children : list of ShowerParticle</span>
 <span class="sd">        The two daughters, if this particle branched further (empty for</span>
 <span class="sd">        a final-state / leaf particle).</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">four_vector</span><span class="p">:</span> <span class="n">FourVector</span>
     <span class="n">generation</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">flavor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="n">flavor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ShowerParticle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">children</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Whether this particle is final-state (did not branch further)."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether this particle is final-state (did not branch further).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_split_isotropic</span><span class="p">(</span><span class="n">parent_four_vector</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Exact two-body split of ``parent_four_vector`` (in its own rest frame,</span>
-<span class="sd">    isotropic angle), boosted back to the lab frame."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact two-body split of ``parent_four_vector`` (in its own rest frame,</span>
+<span class="sd">    isotropic angle), boosted back to the lab frame.&quot;&quot;&quot;</span>
     <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
     <span class="n">p1_rest</span><span class="p">,</span> <span class="n">p2_rest</span> <span class="o">=</span> <span class="n">two_body_decay</span><span class="p">(</span><span class="n">parent_four_vector</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">cos_theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
@@ -516,7 +516,7 @@
     <span class="k">return</span> <span class="n">boost_generic</span><span class="p">(</span><span class="n">p1_rest</span><span class="p">,</span> <span class="n">beta_vec</span><span class="p">),</span> <span class="n">boost_generic</span><span class="p">(</span><span class="n">p2_rest</span><span class="p">,</span> <span class="n">beta_vec</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_build_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="p">,</span> <span class="n">E_threshold</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">flavor_rule</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flavor0</span><span class="o">=</span><span class="s2">""</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="p">,</span> <span class="n">E_threshold</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">flavor_rule</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flavor0</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="n">m0</span> <span class="o">=</span> <span class="n">m0_fraction</span> <span class="o">*</span> <span class="n">E0</span>
     <span class="n">p0</span> <span class="o">=</span> <span class="n">FourVector</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">E0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">m0</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))))</span>
     <span class="n">root</span> <span class="o">=</span> <span class="n">ShowerParticle</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">generation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">flavor0</span><span class="p">)</span>
@@ -529,7 +529,7 @@
         <span class="k">if</span> <span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span> <span class="o">&gt;=</span> <span class="n">m_parent</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">_split_isotropic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">four_vector</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
-        <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">flavor_rule</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">flavor</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span> <span class="k">if</span> <span class="n">flavor_rule</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+        <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">flavor_rule</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">flavor</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span> <span class="k">if</span> <span class="n">flavor_rule</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="n">c1</span> <span class="o">=</span> <span class="n">ShowerParticle</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">generation</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">f1</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
         <span class="n">c2</span> <span class="o">=</span> <span class="n">ShowerParticle</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">generation</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">f2</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">]</span>
@@ -543,14 +543,14 @@
 <div class="viewcode-block" id="simple_shower">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.simple_shower">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simple_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="o">=</span><span class="mf">0.42</span><span class="p">,</span> <span class="n">E_threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_generations</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""A toy branching cascade: a single high-energy particle splitting</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A toy branching cascade: a single high-energy particle splitting</span>
 <span class="sd">    repeatedly until its descendants fall below an energy threshold.</span>
 
 <span class="sd">    Each split is an exact 1-to-2 branching (see the module docstring</span>
 <span class="sd">    for the shared construction); the initial particle is given a toy</span>
-<span class="sd">    "virtuality" :math:`m_0=` ``m0_fraction`` :math:`{}\times E_0`</span>
+<span class="sd">    &quot;virtuality&quot; :math:`m_0=` ``m0_fraction`` :math:`{}\times E_0`</span>
 <span class="sd">    representing how far off-shell it is when it enters the cascade,</span>
-<span class="sd">    and each generation's daughters inherit a virtuality shrunk by</span>
+<span class="sd">    and each generation&#39;s daughters inherit a virtuality shrunk by</span>
 <span class="sd">    ``daughter_fraction`` (&lt; 0.5, so it always halves-or-better,</span>
 <span class="sd">    guaranteeing the branching stays kinematically allowed).</span>
 
@@ -561,7 +561,7 @@
 <span class="sd">    m0_fraction : float, default=0.3</span>
 <span class="sd">        Initial virtuality as a fraction of ``E0``.</span>
 <span class="sd">    daughter_fraction : float, default=0.42</span>
-<span class="sd">        Fraction of the parent's virtuality inherited by each daughter.</span>
+<span class="sd">        Fraction of the parent&#39;s virtuality inherited by each daughter.</span>
 <span class="sd">    E_threshold : float, default=1.0</span>
 <span class="sd">        Energy below which a particle is treated as final-state (stops branching).</span>
 <span class="sd">    max_generations : int, default=8</span>
@@ -583,7 +583,7 @@
 <span class="sd">    &gt;&gt;&gt; from physicskit.particle.kinematics import invariant_mass</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(invariant_mass([leaf.four_vector for leaf in leaves]) - root.four_vector.mass) &lt; 1e-6)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rng</span>
     <span class="k">return</span> <span class="n">_build_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="p">,</span> <span class="n">E_threshold</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></div>
 
@@ -591,8 +591,8 @@
 
 <div class="viewcode-block" id="parton_shower">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.parton_shower">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">parton_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">flavor0</span><span class="o">=</span><span class="s2">"q"</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="o">=</span><span class="mf">0.42</span><span class="p">,</span> <span class="n">E_threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gluon_splitting_prob</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">max_generations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""A toy DGLAP-flavored parton shower: quarks radiate gluons, gluons</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parton_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">flavor0</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="o">=</span><span class="mf">0.42</span><span class="p">,</span> <span class="n">E_threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gluon_splitting_prob</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">max_generations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A toy DGLAP-flavored parton shower: quarks radiate gluons, gluons</span>
 <span class="sd">    split into gluon pairs or quark-antiquark pairs.</span>
 
 <span class="sd">    Uses the same exact-two-body-split-and-boost construction as</span>
@@ -611,8 +611,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    E0 : float</span>
 <span class="sd">        Energy of the initial parton.</span>
-<span class="sd">    flavor0 : str, default="q"</span>
-<span class="sd">        Flavor of the initial parton (``"q"``, ``"qbar"``, or ``"g"``).</span>
+<span class="sd">    flavor0 : str, default=&quot;q&quot;</span>
+<span class="sd">        Flavor of the initial parton (``&quot;q&quot;``, ``&quot;qbar&quot;``, or ``&quot;g&quot;``).</span>
 <span class="sd">    m0_fraction, daughter_fraction, E_threshold, max_generations, rng</span>
 <span class="sd">        See :func:`simple_shower`.</span>
 <span class="sd">    gluon_splitting_prob : float, default=0.2</span>
@@ -632,15 +632,15 @@
 <span class="sd">    &gt;&gt;&gt; from physicskit.particle.kinematics import invariant_mass</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(invariant_mass([leaf.four_vector for leaf in leaves]) - root.four_vector.mass) &lt; 1e-6)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rng</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">flavor_rule</span><span class="p">(</span><span class="n">flavor</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="s2">"g"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">flavor</span> <span class="o">==</span> <span class="s2">&quot;g&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">gluon_splitting_prob</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s2">"q"</span><span class="p">,</span> <span class="s2">"qbar"</span>
-            <span class="k">return</span> <span class="s2">"g"</span><span class="p">,</span> <span class="s2">"g"</span>
-        <span class="k">return</span> <span class="n">flavor</span><span class="p">,</span> <span class="s2">"g"</span>
+                <span class="k">return</span> <span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="s2">&quot;qbar&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span>
+        <span class="k">return</span> <span class="n">flavor</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span>
 
     <span class="k">return</span> <span class="n">_build_shower</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">m0_fraction</span><span class="p">,</span> <span class="n">daughter_fraction</span><span class="p">,</span> <span class="n">E_threshold</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">flavor_rule</span><span class="o">=</span><span class="n">flavor_rule</span><span class="p">,</span> <span class="n">flavor0</span><span class="o">=</span><span class="n">flavor0</span><span class="p">)</span></div>
 
@@ -649,7 +649,7 @@
 <div class="viewcode-block" id="flatten_shower">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.flatten_shower">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">flatten_shower</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""All nodes of a shower tree (root included), in no particular order.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;All nodes of a shower tree (root included), in no particular order.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -658,7 +658,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    list of ShowerParticle</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
     <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
@@ -672,7 +672,7 @@
 <div class="viewcode-block" id="shower_leaves">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.shower_leaves">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">shower_leaves</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""The final-state (non-branching) particles of a shower tree.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The final-state (non-branching) particles of a shower tree.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -681,7 +681,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    list of ShowerParticle</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">flatten_shower</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">]</span></div>
 
 
@@ -689,12 +689,12 @@
 <div class="viewcode-block" id="cluster_into_jets">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.cluster_into_jets">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cluster_into_jets</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">n_jets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Group final-state shower particles into jets by momentum direction.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Group final-state shower particles into jets by momentum direction.</span>
 
 <span class="sd">    A minimal, dependency-free k-means clustering on the unit momentum</span>
 <span class="sd">    directions (i.e. by angular proximity) -- a schematic stand-in for a</span>
 <span class="sd">    real sequential jet algorithm (:math:`k_T`, anti-:math:`k_T`, ...),</span>
-<span class="sd">    adequate for visually grouping a toy shower's final state into a</span>
+<span class="sd">    adequate for visually grouping a toy shower&#39;s final state into a</span>
 <span class="sd">    couple of back-to-back jet cones.</span>
 
 <span class="sd">    Parameters</span>
@@ -720,7 +720,7 @@
 <span class="sd">    &gt;&gt;&gt; jets = cluster_into_jets(shower_leaves(root), n_jets=2)</span>
 <span class="sd">    &gt;&gt;&gt; len(jets) == 2</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">directions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">leaf</span><span class="o">.</span><span class="n">four_vector</span><span class="o">.</span><span class="n">px</span><span class="p">,</span> <span class="n">leaf</span><span class="o">.</span><span class="n">four_vector</span><span class="o">.</span><span class="n">py</span><span class="p">,</span> <span class="n">leaf</span><span class="o">.</span><span class="n">four_vector</span><span class="o">.</span><span class="n">pz</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">])</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">directions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">norm</span><span class="p">[</span><span class="n">norm</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -745,7 +745,7 @@
 <div class="viewcode-block" id="charged_track_points">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.charged_track_points">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">charged_track_points</span><span class="p">(</span><span class="n">four_vector</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">vertex</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">path_length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""2D transverse-plane trajectory of a particle in a uniform axial magnetic field.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;2D transverse-plane trajectory of a particle in a uniform axial magnetic field.</span>
 
 <span class="sd">    A charged particle with transverse momentum :math:`p_T` follows a</span>
 <span class="sd">    circular arc of radius</span>
@@ -755,10 +755,10 @@
 <span class="sd">        r = \frac{p_T}{qB}</span>
 
 <span class="sd">    the standard relation for the curvature of a charged track in a</span>
-<span class="sd">    uniform axial field (see e.g. the Particle Data Group's "Passage of</span>
-<span class="sd">    particles through matter" review); here in schematic natural units</span>
+<span class="sd">    uniform axial field (see e.g. the Particle Data Group&#39;s &quot;Passage of</span>
+<span class="sd">    particles through matter&quot; review); here in schematic natural units</span>
 <span class="sd">    where :math:`q` is in units of the elementary charge and :math:`B`</span>
-<span class="sd">    is scaled so that :math:`r` comes out directly in the detector's</span>
+<span class="sd">    is scaled so that :math:`r` comes out directly in the detector&#39;s</span>
 <span class="sd">    length unit (the familiar practical-unit form is :math:`r[{\rm m}]</span>
 <span class="sd">    =p_T[{\rm GeV}/c]/(0.3\,B[{\rm T}]\,q[e])`). A neutral particle</span>
 <span class="sd">    (``charge=0``) instead follows a straight line.</span>
@@ -766,7 +766,7 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    four_vector : FourVector</span>
-<span class="sd">        The particle's four-momentum.</span>
+<span class="sd">        The particle&#39;s four-momentum.</span>
 <span class="sd">    charge : float</span>
 <span class="sd">        Charge, in units of the elementary charge (0 for neutral).</span>
 <span class="sd">    B : float</span>
@@ -785,7 +785,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of shape (n_points, 2)</span>
 <span class="sd">        Points along the trajectory, starting at ``vertex`` and moving</span>
-<span class="sd">        off in ``four_vector``'s initial transverse direction.</span>
+<span class="sd">        off in ``four_vector``&#39;s initial transverse direction.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -794,7 +794,7 @@
 <span class="sd">    &gt;&gt;&gt; pts = charged_track_points(p, charge=0.0, B=1.0, path_length=2.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.allclose(pts[0], [0.0, 0.0]) and np.allclose(pts[-1], [2.0, 0.0])</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">vertex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="o">=</span> <span class="n">four_vector</span><span class="o">.</span><span class="n">px</span><span class="p">,</span> <span class="n">four_vector</span><span class="o">.</span><span class="n">py</span>
     <span class="n">pT</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">))</span>

@@ -411,14 +411,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.quantum.chapters.harmonic_spin</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""The harmonic oscillator suite: Fock states, Glauber coherent states,</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The harmonic oscillator suite: Fock states, Glauber coherent states,</span>
 <span class="sd">squeezed states, and thermal (mixed) states.</span>
 
 <span class="sd">Wavefunctions are built from the numerically stable three-term recurrence</span>
 <span class="sd">for normalized Hermite-Gaussian functions, which avoids the overflow of</span>
 <span class="sd">evaluating raw Hermite polynomials :math:`H_n(x)` and :math:`n!` separately</span>
 <span class="sd">at large :math:`n`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -429,18 +429,18 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.._compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapz</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"HarmonicOscillator"</span><span class="p">,</span> <span class="s2">"ThermalState"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;HarmonicOscillator&quot;</span><span class="p">,</span> <span class="s2">&quot;ThermalState&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_eigenfunctions_up_to</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Normalized :math:`\psi_n(\xi)` for :math:`n=0..n_\text{max}` on the</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalized :math:`\psi_n(\xi)` for :math:`n=0..n_\text{max}` on the</span>
 <span class="sd">    dimensionless coordinate :math:`\xi = \sqrt{m\omega/\hbar}\,x`, via the</span>
 <span class="sd">    stable recurrence</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        \psi_n = \sqrt{2/n}\,\xi\,\psi_{n-1} - \sqrt{(n-1)/n}\,\psi_{n-2}.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">xi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
     <span class="n">psi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">n_max</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
@@ -454,7 +454,7 @@
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">HarmonicOscillator</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""The 1D quantum harmonic oscillator,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The 1D quantum harmonic oscillator,</span>
 
 <span class="sd">    .. math::</span>
 
@@ -468,7 +468,7 @@
 <span class="sd">        Angular frequency :math:`\omega`.</span>
 <span class="sd">    hbar : float, default=1.0</span>
 <span class="sd">        Value of :math:`\hbar` to use.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -476,13 +476,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">x0</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""float: Natural length scale :math:`\sqrt{\hbar/(m\omega)}`."""</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;float: Natural length scale :math:`\sqrt{\hbar/(m\omega)}`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">))</span>
 
 <div class="viewcode-block" id="HarmonicOscillator.energy">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Eigenenergy :math:`E_n = \hbar\omega(n+1/2)`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Eigenenergy :math:`E_n = \hbar\omega(n+1/2)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -492,7 +492,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span></div>
 
@@ -503,7 +503,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.eigenfunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.eigenfunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eigenfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""The Fock (energy) eigenstate :math:`\phi_n(x)`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The Fock (energy) eigenstate :math:`\phi_n(x)`.</span>
 
 <span class="sd">        Normalized so that :math:`\int \lvert\phi_n\rvert^2\,dx = 1`.</span>
 
@@ -517,7 +517,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">_eigenfunctions_up_to</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">xi</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">psi</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span></div>
@@ -526,7 +526,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.eigenfunctions">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.eigenfunctions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eigenfunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Stack of eigenstates :math:`\phi_0, \dots, \phi_{n_\text{max}}(x)`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Stack of eigenstates :math:`\phi_0, \dots, \phi_{n_\text{max}}(x)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -539,7 +539,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Shape ``(n_max+1, len(x))``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_eigenfunctions_up_to</span><span class="p">(</span><span class="n">n_max</span><span class="p">,</span> <span class="n">xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">)</span></div>
 
@@ -547,7 +547,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.eigenfunction_t">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.eigenfunction_t">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eigenfunction_t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""The time-evolved stationary state</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The time-evolved stationary state</span>
 <span class="sd">        :math:`\psi_n(x,t) = \phi_n(x)\, e^{-i E_n t/\hbar}`.</span>
 
 <span class="sd">        A pure phase-rotating stationary state:</span>
@@ -566,7 +566,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued :math:`\psi_n(x,t)`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenfunction</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span> <span class="o">*</span> <span class="n">phase</span></div>
 
@@ -574,7 +574,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.superposition_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.superposition_wavefunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">superposition_wavefunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_values</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""A general time-evolved superposition of Fock eigenstates.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A general time-evolved superposition of Fock eigenstates.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -583,7 +583,7 @@
 <span class="sd">        with beats at every pairwise frequency :math:`(E_{n_k}-E_{n_j})/\hbar`</span>
 <span class="sd">        -- unlike a single stationary state (:meth:`eigenfunction_t`) or a</span>
 <span class="sd">        coherent state (:meth:`coherent_wavefunction`, a rigidly oscillating</span>
-<span class="sd">        Gaussian), a generic superposition's density genuinely reshapes over</span>
+<span class="sd">        Gaussian), a generic superposition&#39;s density genuinely reshapes over</span>
 <span class="sd">        time.</span>
 
 <span class="sd">        Parameters</span>
@@ -602,7 +602,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued :math:`\psi(x,t)`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">n_values</span><span class="p">)</span>
         <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
         <span class="n">coeffs</span> <span class="o">=</span> <span class="n">coeffs</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
@@ -614,7 +614,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.superposition_trajectory">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.superposition_trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">superposition_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_values</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Stack of :meth:`superposition_wavefunction` snapshots over a time grid.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stack of :meth:`superposition_wavefunction` snapshots over a time grid.</span>
 
 <span class="sd">        Shaped for :func:`~physicskit.quantum.visualizers.wavefunctions.animate_density`.</span>
 
@@ -633,7 +633,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued, shape ``(len(t_values), len(x))``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">superposition_wavefunction</span><span class="p">(</span><span class="n">n_values</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_values</span><span class="p">])</span></div>
 
 
@@ -648,7 +648,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.coherent_n_max">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.coherent_n_max">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">coherent_n_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Fock-basis truncation order for a coherent state :math:`\lvert\alpha\rangle`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fock-basis truncation order for a coherent state :math:`\lvert\alpha\rangle`.</span>
 
 <span class="sd">        Captures the Poisson-distributed photon number</span>
 <span class="sd">        :math:`n \sim \lvert\alpha\rvert^2` out to several standard</span>
@@ -664,7 +664,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        int</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nbar</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">nbar</span> <span class="o">+</span> <span class="n">margin</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nbar</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span><span class="p">)</span></div>
 
@@ -672,7 +672,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.coherent_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.coherent_wavefunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">coherent_wavefunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""The Glauber coherent state :math:`\lvert\alpha\rangle` in position space.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The Glauber coherent state :math:`\lvert\alpha\rangle` in position space.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -698,7 +698,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued :math:`\psi_\alpha(x,t)`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">n_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">n_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coherent_n_max</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coherent_coefficients</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n_max</span><span class="p">)</span>
@@ -710,7 +710,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.coherent_trajectory">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.coherent_trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">coherent_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Classical mean position/momentum of a coherent state.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Classical mean position/momentum of a coherent state.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -728,7 +728,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        x_t, p_t : numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">a_t</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
         <span class="n">x_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">a_t</span><span class="o">.</span><span class="n">real</span>
@@ -741,7 +741,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.squeezed_vacuum_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.squeezed_vacuum_wavefunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">squeezed_vacuum_wavefunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Position-space squeezed vacuum :math:`\lvert r,\phi\rangle`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Position-space squeezed vacuum :math:`\lvert r,\phi\rangle`.</span>
 
 <span class="sd">        A Gaussian with quadrature variance</span>
 
@@ -766,7 +766,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued (real when ``phi=0``) squeezed-vacuum wavefunction.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">var_x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">var_x</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.25</span>
@@ -780,7 +780,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.squeezed_uncertainties">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.squeezed_uncertainties">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">squeezed_uncertainties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Position/momentum uncertainties of the :math:`r`-squeezed vacuum</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Position/momentum uncertainties of the :math:`r`-squeezed vacuum</span>
 <span class="sd">        (:math:`\phi=0` axis).</span>
 
 <span class="sd">        Parameters</span>
@@ -793,7 +793,7 @@
 <span class="sd">        dx, dp : float</span>
 <span class="sd">            :math:`\Delta x`, :math:`\Delta p`; their product stays at the</span>
 <span class="sd">            minimum :math:`\hbar/2` for all :math:`r`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span>
         <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dp</span></div>
@@ -802,14 +802,14 @@
 <div class="viewcode-block" id="HarmonicOscillator.zero_point_uncertainties">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.zero_point_uncertainties">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">zero_point_uncertainties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Position/momentum uncertainties of the ordinary ground state.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position/momentum uncertainties of the ordinary ground state.</span>
 
 <span class="sd">        Equivalent to ``squeezed_uncertainties(r=0)``, provided for comparison.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dx, dp : float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">squeezed_uncertainties</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></div>
 
 
@@ -818,7 +818,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.thermal_populations">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.thermal_populations">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">thermal_populations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k_B</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Diagonal Boltzmann populations of the thermal density matrix.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Diagonal Boltzmann populations of the thermal density matrix.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -840,7 +840,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Populations :math:`\rho_{nn}`, shape ``(n_max+1,)``, summing to 1.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">T</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -854,7 +854,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.thermal_position_distribution">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.thermal_position_distribution">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">thermal_position_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">T</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_B</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""The (temperature-broadened) position-space probability density.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The (temperature-broadened) position-space probability density.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -874,7 +874,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thermal_populations</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">n_max</span><span class="p">,</span> <span class="n">k_B</span><span class="p">)</span>
         <span class="n">phis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenfunctions</span><span class="p">(</span><span class="n">n_max</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pops</span> <span class="o">@</span> <span class="p">(</span><span class="n">phis</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
@@ -883,7 +883,7 @@
 <div class="viewcode-block" id="HarmonicOscillator.thermal_position_variance_analytic">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.thermal_position_variance_analytic">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">thermal_position_variance_analytic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_B</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Closed-form position variance of the thermal state.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Closed-form position variance of the thermal state.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -903,7 +903,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">T</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
@@ -916,7 +916,7 @@
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.ThermalState">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ThermalState</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Convenience wrapper bundling an oscillator with a fixed temperature.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience wrapper bundling an oscillator with a fixed temperature.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -928,7 +928,7 @@
 <span class="sd">        Boltzmann constant.</span>
 <span class="sd">    n_max : int, default=200</span>
 <span class="sd">        Fock-basis truncation order used for the thermal sum.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">oscillator</span><span class="p">:</span> <span class="n">HarmonicOscillator</span>
     <span class="n">T</span><span class="p">:</span> <span class="nb">float</span>
@@ -938,19 +938,19 @@
 <div class="viewcode-block" id="ThermalState.populations">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.ThermalState.populations">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">populations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""See :meth:`HarmonicOscillator.thermal_populations`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;See :meth:`HarmonicOscillator.thermal_populations`.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oscillator</span><span class="o">.</span><span class="n">thermal_populations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_B</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ThermalState.position_distribution">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.ThermalState.position_distribution">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">position_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""See :meth:`HarmonicOscillator.thermal_position_distribution`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;See :meth:`HarmonicOscillator.thermal_position_distribution`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -959,26 +959,26 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oscillator</span><span class="o">.</span><span class="n">thermal_position_distribution</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_max</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ThermalState.variance">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.ThermalState.variance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""See :meth:`HarmonicOscillator.thermal_position_variance_analytic`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;See :meth:`HarmonicOscillator.thermal_position_variance_analytic`.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">oscillator</span><span class="o">.</span><span class="n">thermal_position_variance_analytic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_B</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ThermalState.check_normalization">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.ThermalState.check_normalization">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">check_normalization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Integrate :meth:`position_distribution` over ``x`` (should be 1).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate :meth:`position_distribution` over ``x`` (should be 1).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -987,7 +987,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">trapz</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_distribution</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span></div>
 </div>
 

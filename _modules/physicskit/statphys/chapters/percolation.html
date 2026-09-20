@@ -411,31 +411,31 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.percolation</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Site and bond percolation on the square lattice, via Hoshen-Kopelman cluster labeling.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Site and bond percolation on the square lattice, via Hoshen-Kopelman cluster labeling.</span>
 
 <span class="sd">Percolation theory studies the sudden, geometric phase transition that</span>
-<span class="sd">appears when a fraction ``p`` of a lattice's sites (or bonds) are randomly</span>
+<span class="sd">appears when a fraction ``p`` of a lattice&#39;s sites (or bonds) are randomly</span>
 <span class="sd">occupied: below a critical threshold :math:`p_c` only small, finite clusters</span>
 <span class="sd">exist, while above it a single cluster spans the entire system. The</span>
 <span class="sd">transition is purely geometric -- there is no energy scale or temperature --</span>
 <span class="sd">yet it shares the full apparatus of critical phenomena: a sharp threshold,</span>
 <span class="sd">power-law cluster-size distributions, and universal critical exponents.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Percolation2D"</span><span class="p">,</span> <span class="s2">"hoshen_kopelman"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Percolation2D&quot;</span><span class="p">,</span> <span class="s2">&quot;hoshen_kopelman&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">hoshen_kopelman</span><span class="p">(</span><span class="n">occupied</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Label connected clusters of occupied sites with the Hoshen-Kopelman algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Label connected clusters of occupied sites with the Hoshen-Kopelman algorithm.</span>
 
 <span class="sd">    A single raster pass assigns provisional labels while a union-find</span>
 <span class="sd">    structure tracks label equivalences (created whenever a site connects two</span>
 <span class="sd">    previously separate provisional clusters); a second pass resolves every</span>
-<span class="sd">    label to its cluster's root.</span>
+<span class="sd">    label to its cluster&#39;s root.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -457,7 +457,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(labels[2, 2] not in (0, labels[0, 0]))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">L0</span><span class="p">,</span> <span class="n">L1</span> <span class="o">=</span> <span class="n">occupied</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">L0</span><span class="p">,</span> <span class="n">L1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
     <span class="n">parent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -504,7 +504,7 @@
 <div class="viewcode-block" id="Percolation2D">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Percolation2D</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Site or bond percolation on a periodic-free (open-boundary) square lattice.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Site or bond percolation on a periodic-free (open-boundary) square lattice.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -513,7 +513,7 @@
 <span class="sd">    p : float, default=0.5</span>
 <span class="sd">        Occupation probability: fraction of sites (site percolation) or</span>
 <span class="sd">        bonds (bond percolation) that are open.</span>
-<span class="sd">    mode : {"site", "bond"}, default="site"</span>
+<span class="sd">    mode : {&quot;site&quot;, &quot;bond&quot;}, default=&quot;site&quot;</span>
 <span class="sd">        Percolation type. Known exact thresholds for the square lattice are</span>
 <span class="sd">        :math:`p_c \\approx 0.592746` (site) and :math:`p_c = 0.5` (bond,</span>
 <span class="sd">        exact by self-duality).</span>
@@ -525,16 +525,16 @@
 <span class="sd">    labels : ndarray of shape (L, L)</span>
 <span class="sd">        Cluster labels of the current realization, from</span>
 <span class="sd">        :func:`hoshen_kopelman`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: Known threshold for square-lattice site percolation (numerical estimate).</span>
     <span class="n">P_C_SITE</span> <span class="o">=</span> <span class="mf">0.592746</span>
     <span class="c1">#: Exact threshold for square-lattice bond percolation (self-duality).</span>
     <span class="n">P_C_BOND</span> <span class="o">=</span> <span class="mf">0.5</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"site"</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"site"</span><span class="p">,</span> <span class="s2">"bond"</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"mode must be 'site' or 'bond'"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;bond&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mode must be &#39;site&#39; or &#39;bond&#39;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
@@ -544,13 +544,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">p_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Threshold occupation probability for the current ``mode``."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_C_SITE</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"site"</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_C_BOND</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Threshold occupation probability for the current ``mode``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_C_SITE</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;site&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_C_BOND</span>
 
 <div class="viewcode-block" id="Percolation2D.generate">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.generate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Draw a fresh random realization and label its clusters.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw a fresh random realization and label its clusters.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -562,10 +562,10 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of shape (L, L)</span>
 <span class="sd">            The updated cluster ``labels`` array.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"site"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;site&quot;</span><span class="p">:</span>
             <span class="n">occupied</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">))</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">occupied</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bond_occupation_to_sites</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
@@ -574,13 +574,13 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_bond_occupation_to_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Build an effective all-occupied site grid whose HK labeling respects bond connectivity.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build an effective all-occupied site grid whose HK labeling respects bond connectivity.</span>
 
 <span class="sd">        Bond percolation is reduced to Hoshen-Kopelman site labeling by</span>
 <span class="sd">        working on a doubled lattice: real sites at even indices, and</span>
-<span class="sd">        "bond sites" at the odd indices between them, present only when the</span>
+<span class="sd">        &quot;bond sites&quot; at the odd indices between them, present only when the</span>
 <span class="sd">        corresponding bond is open.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
         <span class="n">expanded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">expanded</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># all real sites present</span>
@@ -594,7 +594,7 @@
 <div class="viewcode-block" id="Percolation2D.spanning_labels">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.spanning_labels">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">spanning_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Cluster labels of the current realization that span top to bottom.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cluster labels of the current realization that span top to bottom.</span>
 
 <span class="sd">        For bond percolation the doubled lattice is used internally, but</span>
 <span class="sd">        returned labels index the real (even-index) sites.</span>
@@ -603,8 +603,8 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray</span>
 <span class="sd">            Labels present on both the first and last row of real sites.</span>
-<span class="sd">        """</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"site"</span><span class="p">:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;site&quot;</span><span class="p">:</span>
             <span class="n">top_labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span> <span class="o">-</span> <span class="p">{</span><span class="mi">0</span><span class="p">}</span>
             <span class="n">bottom_labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span> <span class="o">-</span> <span class="p">{</span><span class="mi">0</span><span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
@@ -616,18 +616,18 @@
 <div class="viewcode-block" id="Percolation2D.spans">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.spans">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">spans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Whether the current realization has a top-to-bottom spanning cluster."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the current realization has a top-to-bottom spanning cluster.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spanning_labels</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_real_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Cluster labels restricted to real (non-bond-auxiliary) lattice sites."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"site"</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cluster labels restricted to real (non-bond-auxiliary) lattice sites.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;site&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
 <div class="viewcode-block" id="Percolation2D.largest_cluster_size">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.largest_cluster_size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">largest_cluster_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Number of (real) sites in the largest cluster of the current realization."""</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of (real) sites in the largest cluster of the current realization.&quot;&quot;&quot;</span>
         <span class="n">sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_size_distribution</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">sizes</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="k">if</span> <span class="n">sizes</span><span class="o">.</span><span class="n">size</span> <span class="k">else</span> <span class="mi">0</span></div>
 
@@ -635,7 +635,7 @@
 <div class="viewcode-block" id="Percolation2D.cluster_size_distribution">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.cluster_size_distribution">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cluster_size_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Sizes of every cluster in the current realization.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sizes of every cluster in the current realization.</span>
 
 <span class="sd">        At the percolation threshold, the number of clusters of size ``s``</span>
 <span class="sd">        follows a power law :math:`n_s \\sim s^{-\\tau}` with the Fisher</span>
@@ -648,7 +648,7 @@
 <span class="sd">        ndarray</span>
 <span class="sd">            Cluster sizes, in sites, one entry per cluster (including the</span>
 <span class="sd">            spanning cluster if one exists).</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">real_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_real_labels</span><span class="p">()</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">real_labels</span><span class="p">[</span><span class="n">real_labels</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -660,7 +660,7 @@
 <div class="viewcode-block" id="Percolation2D.spanning_probability">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.spanning_probability">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">spanning_probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Monte Carlo estimate of the spanning probability :math:`P_{\\text{span}}(p)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Monte Carlo estimate of the spanning probability :math:`P_{\\text{span}}(p)`.</span>
 
 <span class="sd">        For each probability in ``p_values``, generates ``n_trials``</span>
 <span class="sd">        independent realizations and reports the fraction that contain a</span>
@@ -686,7 +686,7 @@
 <span class="sd">        &gt;&gt;&gt; p, P = perc.spanning_probability([0.3, 0.593, 0.8], n_trials=20)</span>
 <span class="sd">        &gt;&gt;&gt; bool(P[0] &lt; P[2])</span>
 <span class="sd">        True</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p_values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">P_span</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p_values</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">p_values</span><span class="p">):</span>
@@ -701,13 +701,13 @@
 <div class="viewcode-block" id="Percolation2D.fractal_dimension">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.Percolation2D.fractal_dimension">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fractal_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Estimate the fractal dimension of the largest cluster at :math:`p = p_c`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimate the fractal dimension of the largest cluster at :math:`p = p_c`.</span>
 
 <span class="sd">        A single lattice size gives no direct mass-versus-``L`` scaling, so</span>
 <span class="sd">        instead this estimates :math:`d_f` from the mass-radius relation of</span>
 <span class="sd">        the largest cluster in each realization,</span>
 <span class="sd">        :math:`d_f = \\log(\\text{cluster size}) / \\log(R_g)`, where</span>
-<span class="sd">        :math:`R_g` is the cluster's radius of gyration, averaged over</span>
+<span class="sd">        :math:`R_g` is the cluster&#39;s radius of gyration, averaged over</span>
 <span class="sd">        trials. The 2D percolation universality class predicts</span>
 <span class="sd">        :math:`d_f = 91/48 \\approx 1.896`.</span>
 
@@ -720,7 +720,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Estimated fractal dimension.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dims</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_trials</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p_c</span><span class="p">)</span>
@@ -737,7 +737,7 @@
             <span class="n">Rg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">ii</span> <span class="o">-</span> <span class="n">ii</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">jj</span> <span class="o">-</span> <span class="n">jj</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">Rg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">dims</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Rg</span><span class="p">))</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dims</span><span class="p">))</span> <span class="k">if</span> <span class="n">dims</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"nan"</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dims</span><span class="p">))</span> <span class="k">if</span> <span class="n">dims</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

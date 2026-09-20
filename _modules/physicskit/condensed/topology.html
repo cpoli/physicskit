@@ -411,29 +411,29 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.topology</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Berry curvature, Chern numbers, Zak phase, and Z2 invariants.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Berry curvature, Chern numbers, Zak phase, and Z2 invariants.</span>
 
 <span class="sd">The workhorse here is the Fukui-Hatsugai-Suzuki (FHS) lattice algorithm,</span>
 <span class="sd">which computes an exactly quantized, gauge-invariant Chern number from a</span>
 <span class="sd">finite grid of Bloch eigenvectors -- no smooth gauge choice required. The</span>
 <span class="sd">per-plaquette flux accumulation is numba-jitted since it is the inner loop</span>
 <span class="sd">of a double sum over the whole Brillouin-zone grid.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"compute_berry_curvature"</span><span class="p">,</span> <span class="s2">"compute_chern_number"</span><span class="p">,</span> <span class="s2">"zak_phase"</span><span class="p">,</span> <span class="s2">"z2_invariant"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;compute_berry_curvature&quot;</span><span class="p">,</span> <span class="s2">&quot;compute_chern_number&quot;</span><span class="p">,</span> <span class="s2">&quot;zak_phase&quot;</span><span class="p">,</span> <span class="s2">&quot;z2_invariant&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_bloch_eigensystem</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Diagonalize ``hamiltonian_func`` on a closed (grid_size+1)^2 k-grid.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Diagonalize ``hamiltonian_func`` on a closed (grid_size+1)^2 k-grid.</span>
 
 <span class="sd">    The extra row/column closes the discretized Brillouin-zone torus so</span>
 <span class="sd">    that plaquette (a, n) reuses the same eigenvectors as plaquette (a, 0).</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">grid_size</span>
     <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="n">norb</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -472,7 +472,7 @@
 <div class="viewcode-block" id="compute_berry_curvature">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.compute_berry_curvature">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_berry_curvature</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">band_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Compute the discretized Berry curvature of one band over the Brillouin zone.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the discretized Berry curvature of one band over the Brillouin zone.</span>
 
 <span class="sd">    Uses the Fukui-Hatsugai-Suzuki (FHS) link-variable formula, which is</span>
 <span class="sd">    gauge invariant plaquette by plaquette and needs no smooth choice of</span>
@@ -493,7 +493,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray, shape (grid_size, grid_size)</span>
 <span class="sd">        Berry flux through each plaquette, in :math:`(-\\pi, \\pi]`. Summing</span>
-<span class="sd">        and dividing by :math:`2\\pi` gives the band's Chern number.</span>
+<span class="sd">        and dividing by :math:`2\\pi` gives the band&#39;s Chern number.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -509,7 +509,7 @@
 <span class="sd">    (30, 30)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(F.sum() / (2 * np.pi)))</span>
 <span class="sd">    1</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">U</span> <span class="o">=</span> <span class="n">_bloch_eigensystem</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_fhs_curvature_grid</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">,</span> <span class="n">band_index</span><span class="p">)</span></div>
 
@@ -518,7 +518,7 @@
 <div class="viewcode-block" id="compute_chern_number">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.compute_chern_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_chern_number</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Compute the Chern number of every band using the Fukui-Hatsugai-Suzuki method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the Chern number of every band using the Fukui-Hatsugai-Suzuki method.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -543,7 +543,7 @@
 <span class="sd">    &gt;&gt;&gt; chern_numbers = compute_chern_number(H_func, grid_size=30)</span>
 <span class="sd">    &gt;&gt;&gt; print(chern_numbers)</span>
 <span class="sd">    [1, -1]</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">U</span> <span class="o">=</span> <span class="n">_bloch_eigensystem</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
     <span class="n">norb</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">_fhs_curvature_grid</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">,</span> <span class="n">band</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span> <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">)]</span></div>
@@ -553,7 +553,7 @@
 <div class="viewcode-block" id="zak_phase">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.zak_phase">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">zak_phase</span><span class="p">(</span><span class="n">hamiltonian_func_1d</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">band_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Compute the Zak phase of a 1D band: the Berry phase accumulated across the BZ.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the Zak phase of a 1D band: the Berry phase accumulated across the BZ.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -582,7 +582,7 @@
 <span class="sd">    3.1416</span>
 <span class="sd">    &gt;&gt;&gt; round(abs(zak_phase(trivial)), 4)</span>
 <span class="sd">    0.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">grid_size</span>
     <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hamiltonian_func_1d</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -600,11 +600,11 @@
 <div class="viewcode-block" id="z2_invariant">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.z2_invariant">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">z2_invariant</span><span class="p">(</span><span class="n">hamiltonian_func</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">spin_block</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Compute the :math:`\\mathbb{Z}_2` invariant of an :math:`s_z`-conserving spinful model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the :math:`\\mathbb{Z}_2` invariant of an :math:`s_z`-conserving spinful model.</span>
 
 <span class="sd">    Valid whenever ``hamiltonian_func`` is block-diagonal in spin (e.g. the</span>
 <span class="sd">    Kane-Mele or BHZ models with Rashba coupling set to zero), in which case</span>
-<span class="sd">    the :math:`\\mathbb{Z}_2` invariant reduces to the spin-up sector's Chern</span>
+<span class="sd">    the :math:`\\mathbb{Z}_2` invariant reduces to the spin-up sector&#39;s Chern</span>
 <span class="sd">    number modulo 2 (Sheng et al. / spin-Chern-number approach).</span>
 
 <span class="sd">    Parameters</span>
@@ -615,7 +615,7 @@
 <span class="sd">    grid_size : int, default=30</span>
 <span class="sd">        Discretization resolution for the Chern-number calculation.</span>
 <span class="sd">    spin_block : tuple of int, default=(0, 2)</span>
-<span class="sd">        ``(start, stop)`` slice selecting the spin-up block's rows/columns.</span>
+<span class="sd">        ``(start, stop)`` slice selecting the spin-up block&#39;s rows/columns.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -631,7 +631,7 @@
 <span class="sd">    0</span>
 <span class="sd">    &gt;&gt;&gt; z2_invariant(topological, grid_size=20)</span>
 <span class="sd">    1</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">spin_block</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">h_up</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">):</span>

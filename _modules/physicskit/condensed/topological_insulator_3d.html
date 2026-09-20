@@ -411,14 +411,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.topological_insulator_3d</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""The 3D strong topological insulator: from theory (2007) to Bi2Se3/Bi2Te3 (2008-2009).</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The 3D strong topological insulator: from theory (2007) to Bi2Se3/Bi2Te3 (2008-2009).</span>
 
 <span class="sd">Fu, Kane, and Mele extended the 2D :math:`\mathbb{Z}_2` classification of</span>
 <span class="sd">:mod:`physicskit.condensed.models` (``kane_mele_hamiltonian``,</span>
-<span class="sd">``bhz_hamiltonian``) to three dimensions, predicting a "strong" topological</span>
+<span class="sd">``bhz_hamiltonian``) to three dimensions, predicting a &quot;strong&quot; topological</span>
 <span class="sd">insulator: a bulk band insulator whose *every* surface, regardless of</span>
 <span class="sd">orientation, hosts a single, gapless, spin-momentum-locked Dirac cone</span>
-<span class="sd">protected by time-reversal symmetry alone. Hasan and Cava's groups and</span>
+<span class="sd">protected by time-reversal symmetry alone. Hasan and Cava&#39;s groups and</span>
 <span class="sd">collaborators confirmed this directly in 2008-2009 by ARPES on</span>
 <span class="sd">Bi\ :sub:`2`\ Se\ :sub:`3` and Bi\ :sub:`2`\ Te\ :sub:`3`, resolving exactly</span>
 <span class="sd">one Dirac cone at the surface Brillouin zone center -- the 3D generalization</span>
@@ -446,13 +446,13 @@
 
 <span class="sd">Uses the same natural-unit convention (:math:`\hbar=e=1`) as the rest of</span>
 <span class="sd">:mod:`physicskit.condensed`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"topological_insulator_3d_hamiltonian"</span><span class="p">,</span> <span class="s2">"topological_insulator_3d_slab_hamiltonian"</span><span class="p">,</span> <span class="s2">"surface_dirac_hamiltonian"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;topological_insulator_3d_hamiltonian&quot;</span><span class="p">,</span> <span class="s2">&quot;topological_insulator_3d_slab_hamiltonian&quot;</span><span class="p">,</span> <span class="s2">&quot;surface_dirac_hamiltonian&quot;</span><span class="p">]</span>
 
 <span class="n">_sigma_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
 <span class="n">_sigma_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
@@ -470,7 +470,7 @@
 <div class="viewcode-block" id="topological_insulator_3d_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.topological_insulator_3d_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">topological_insulator_3d_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ky</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Bloch Hamiltonian of the minimal cubic-lattice 3D topological insulator model.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the minimal cubic-lattice 3D topological insulator model.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -497,7 +497,7 @@
 <span class="sd">    &gt;&gt;&gt; H0 = topological_insulator_3d_hamiltonian(0.0, 0.0, 0.0, m=1.0, t=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(np.linalg.eigvalsh(H0), 8)</span>
 <span class="sd">    array([-4., -4.,  4.,  4.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mass</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kz</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">*</span> <span class="n">_GAMMA1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ky</span><span class="p">)</span> <span class="o">*</span> <span class="n">_GAMMA2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kz</span><span class="p">)</span> <span class="o">*</span> <span class="n">_GAMMA3</span> <span class="o">+</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">_GAMMA0</span></div>
 
@@ -506,7 +506,7 @@
 <div class="viewcode-block" id="topological_insulator_3d_slab_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.topological_insulator_3d_slab_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">topological_insulator_3d_slab_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ky</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Slab Hamiltonian: periodic in ``x``, ``y``, open (finite) along ``z``.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Slab Hamiltonian: periodic in ``x``, ``y``, open (finite) along ``z``.</span>
 
 <span class="sd">    Truncating the ``z`` direction exposes the top and bottom (001)</span>
 <span class="sd">    surfaces. Diagonalizing at each ``(kx, ky)`` and looking for</span>
@@ -545,7 +545,7 @@
 <span class="sd">    &gt;&gt;&gt; gap_trivial = np.linalg.eigvalsh(topological_insulator_3d_slab_hamiltonian(0.0, 0.0, n_layers=40, m=0.0))</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.min(np.abs(gap_trivial)) &gt; 0.5)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mass_xy</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">))</span>
     <span class="n">H0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">*</span> <span class="n">_GAMMA1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ky</span><span class="p">)</span> <span class="o">*</span> <span class="n">_GAMMA2</span> <span class="o">+</span> <span class="n">mass_xy</span> <span class="o">*</span> <span class="n">_GAMMA0</span>
     <span class="n">Tz</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">_GAMMA0</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">_GAMMA3</span>
@@ -564,7 +564,7 @@
 <div class="viewcode-block" id="surface_dirac_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.surface_dirac_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">surface_dirac_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ky</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_f</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Low-energy effective Hamiltonian of a single topological-insulator surface Dirac cone.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Low-energy effective Hamiltonian of a single topological-insulator surface Dirac cone.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -595,7 +595,7 @@
 <span class="sd">    &gt;&gt;&gt; H = surface_dirac_hamiltonian(0.3, -0.4, v_f=2.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(np.linalg.eigvalsh(H), 8)</span>
 <span class="sd">    array([-1.,  1.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">v_f</span> <span class="o">*</span> <span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">_sigma_y</span> <span class="o">-</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">_sigma_x</span><span class="p">)</span></div>
 
 </pre></div>

@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.instabilities</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Time-evolving current-sheet instabilities: magnetic reconnection and Weibel filamentation.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Time-evolving current-sheet instabilities: magnetic reconnection and Weibel filamentation.</span>
 
 <span class="sd">Both problems in this module involve a current-carrying layer that breaks up</span>
 <span class="sd">under a collective instability, but at opposite ends of the fluid-kinetic</span>
@@ -428,11 +428,11 @@
 <span class="sd">the 1D-space/1D-velocity PIC machinery of :mod:`physicskit.plasma.kinetic` to</span>
 <span class="sd">a full 2D-in-velocity, electromagnetic PIC code (a much larger undertaking),</span>
 <span class="sd">a spectrum of transverse-current Fourier modes is seeded with random phases</span>
-<span class="sd">and each mode's amplitude is evolved analytically according to the known</span>
+<span class="sd">and each mode&#39;s amplitude is evolved analytically according to the known</span>
 <span class="sd">linear Weibel growth rate -- exact for as long as the linear approximation</span>
 <span class="sd">holds, and sufficient to show the characteristic real-space current</span>
 <span class="sd">filaments forming and growing.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -441,20 +441,20 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">_const</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"reconnection_harris_ic"</span><span class="p">,</span>
-    <span class="s2">"reconnection_inflow_velocity"</span><span class="p">,</span>
-    <span class="s2">"reconnection_field_from_flux"</span><span class="p">,</span>
-    <span class="s2">"simulate_reconnection"</span><span class="p">,</span>
-    <span class="s2">"weibel_growth_rate"</span><span class="p">,</span>
-    <span class="s2">"weibel_fastest_growing_mode"</span><span class="p">,</span>
-    <span class="s2">"simulate_weibel_filamentation"</span><span class="p">,</span>
+    <span class="s2">&quot;reconnection_harris_ic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reconnection_inflow_velocity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reconnection_field_from_flux&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;simulate_reconnection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;weibel_growth_rate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;weibel_fastest_growing_mode&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;simulate_weibel_filamentation&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="reconnection_harris_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.reconnection_harris_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reconnection_harris_ic</span><span class="p">(</span><span class="n">nx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ny</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sheet_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">perturbation_amplitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_modes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Flux-function initial condition: a Harris current sheet with an X-point-seeding ripple.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flux-function initial condition: a Harris current sheet with an X-point-seeding ripple.</span>
 
 <span class="sd">    The unperturbed Harris sheet :math:`\\psi_0(y) = -B_0 L\\ln\\cosh(y/L)`</span>
 <span class="sd">    gives an antiparallel reconnecting field</span>
@@ -498,10 +498,10 @@
 <span class="sd">    &gt;&gt;&gt; psi0 = reconnection_harris_ic(64, 64, Lx=20.0, Ly=20.0, sheet_width=1.0, perturbation_amplitude=0.1)</span>
 <span class="sd">    &gt;&gt;&gt; psi0.shape</span>
 <span class="sd">    (64, 64)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
     <span class="n">psi0</span> <span class="o">=</span> <span class="o">-</span><span class="n">sheet_width</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">Y</span> <span class="o">/</span> <span class="n">sheet_width</span><span class="p">))</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">k_modes</span> <span class="o">/</span> <span class="n">Lx</span>
     <span class="n">psi1</span> <span class="o">=</span> <span class="n">perturbation_amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">Y</span> <span class="o">/</span> <span class="n">sheet_width</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
@@ -512,13 +512,13 @@
 <div class="viewcode-block" id="reconnection_inflow_velocity">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.reconnection_inflow_velocity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reconnection_inflow_velocity</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Prescribed stagnation-point inflow/outflow velocity field around the reconnection X-point.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prescribed stagnation-point inflow/outflow velocity field around the reconnection X-point.</span>
 
-<span class="sd">    A simple incompressible stagnation flow, :math:`v_x=+v_0 x'/L_x`,</span>
-<span class="sd">    :math:`v_y=-v_0 y'/L_y` (with :math:`x', y'` measured from the nearest</span>
+<span class="sd">    A simple incompressible stagnation flow, :math:`v_x=+v_0 x&#39;/L_x`,</span>
+<span class="sd">    :math:`v_y=-v_0 y&#39;/L_y` (with :math:`x&#39;, y&#39;` measured from the nearest</span>
 <span class="sd">    X-point at the domain center), that converges onto the X-point from</span>
 <span class="sd">    above and below and squirts back out sideways as reconnection outflow</span>
-<span class="sd">    "jets" -- exactly the inflow/outflow pattern Sweet-Parker and Petschek</span>
+<span class="sd">    &quot;jets&quot; -- exactly the inflow/outflow pattern Sweet-Parker and Petschek</span>
 <span class="sd">    reconnection assume, here imposed directly rather than derived from a</span>
 <span class="sd">    momentum equation (see the module docstring).</span>
 
@@ -539,11 +539,11 @@
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
-<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(np.linspace(0, 20, 8, endpoint=False), np.linspace(-10, 10, 8, endpoint=False), indexing="ij")</span>
+<span class="sd">    &gt;&gt;&gt; X, Y = np.meshgrid(np.linspace(0, 20, 8, endpoint=False), np.linspace(-10, 10, 8, endpoint=False), indexing=&quot;ij&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; vx, vy = reconnection_inflow_velocity(X, Y, v0=0.1, Lx=20.0, Ly=20.0)</span>
 <span class="sd">    &gt;&gt;&gt; vx.shape</span>
 <span class="sd">    (8, 8)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Xc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">Lx</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">Lx</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">)</span> <span class="o">-</span> <span class="n">Lx</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">vx</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">*</span> <span class="n">Xc</span> <span class="o">/</span> <span class="p">(</span><span class="n">Lx</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
     <span class="n">vy</span> <span class="o">=</span> <span class="o">-</span><span class="n">v0</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">/</span> <span class="p">(</span><span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
@@ -554,7 +554,7 @@
 <div class="viewcode-block" id="reconnection_field_from_flux">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.reconnection_field_from_flux">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reconnection_field_from_flux</span><span class="p">(</span><span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Recover the in-plane magnetic field :math:`(B_x, B_y) = (\\partial_y\\psi, -\\partial_x\\psi)` from the flux function.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Recover the in-plane magnetic field :math:`(B_x, B_y) = (\\partial_y\\psi, -\\partial_x\\psi)` from the flux function.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -575,7 +575,7 @@
 <span class="sd">    &gt;&gt;&gt; Bx, By = reconnection_field_from_flux(psi, dx=20.0 / 32, dy=20.0 / 32)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.all(Bx[:, 16] * Bx[:, 15] &lt;= 0))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dpsi_dy</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">dy</span><span class="p">)</span>
     <span class="n">dpsi_dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dpsi_dy</span><span class="p">,</span> <span class="o">-</span><span class="n">dpsi_dx</span></div>
@@ -591,7 +591,7 @@
 <div class="viewcode-block" id="simulate_reconnection">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.simulate_reconnection">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_reconnection</span><span class="p">(</span><span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Time-step the kinematic resistive induction equation :math:`\\partial_t\\psi = \\eta\\nabla^2\\psi - \\mathbf{v}\\cdot\\nabla\\psi`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the kinematic resistive induction equation :math:`\\partial_t\\psi = \\eta\\nabla^2\\psi - \\mathbf{v}\\cdot\\nabla\\psi`.</span>
 
 <span class="sd">    A doubly periodic, second-order central-difference, explicit (forward</span>
 <span class="sd">    Euler in time) finite-difference solve. With a prescribed velocity</span>
@@ -600,14 +600,14 @@
 <span class="sd">    transport-and-diffusion: the inflow (:func:`reconnection_inflow_velocity`)</span>
 <span class="sd">    advects oppositely directed flux into the X-point, where resistive</span>
 <span class="sd">    diffusion (the :math:`\\eta\\nabla^2\\psi` term) is the only mechanism</span>
-<span class="sd">    that can actually break and reconnect field lines -- exactly Faraday's</span>
-<span class="sd">    law with an Ohmic (rather than ideal) Ohm's law, restricted to the</span>
+<span class="sd">    that can actually break and reconnect field lines -- exactly Faraday&#39;s</span>
+<span class="sd">    law with an Ohmic (rather than ideal) Ohm&#39;s law, restricted to the</span>
 <span class="sd">    kinematic (fixed-flow) limit.</span>
 
 <span class="sd">    Explicit forward-Euler time-stepping is only conditionally stable:</span>
 <span class="sd">    the diffusive term requires :math:`\\eta\\,dt \\lesssim \\tfrac{1}{4}\\min(dx,dy)^2`</span>
 <span class="sd">    and the advective term requires the Courant condition</span>
-<span class="sd">    :math:`v_0\\,dt \\lesssim \\min(dx, dy)`. Both are the caller's</span>
+<span class="sd">    :math:`v_0\\,dt \\lesssim \\min(dx, dy)`. Both are the caller&#39;s</span>
 <span class="sd">    responsibility to satisfy by choosing `dt` appropriately; unstable</span>
 <span class="sd">    combinations manifest as exponentially growing grid-scale noise.</span>
 
@@ -629,7 +629,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{"psi": final flux function, "Bx": ..., "By": ...}``.</span>
+<span class="sd">        ``{&quot;psi&quot;: final flux function, &quot;Bx&quot;: ..., &quot;By&quot;: ...}``.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -642,16 +642,16 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; psi0 = reconnection_harris_ic(48, 48, Lx=20.0, Ly=20.0, sheet_width=1.0, perturbation_amplitude=0.2)</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_reconnection(psi0, eta=0.02, v0=0.05, dt=0.02, steps=50, Lx=20.0, Ly=20.0)</span>
-<span class="sd">    &gt;&gt;&gt; result["psi"].shape</span>
+<span class="sd">    &gt;&gt;&gt; result[&quot;psi&quot;].shape</span>
 <span class="sd">    (48, 48)</span>
-<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result["psi"])))</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result[&quot;psi&quot;])))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">psi0</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">Lx</span> <span class="o">/</span> <span class="n">nx</span><span class="p">,</span> <span class="n">Ly</span> <span class="o">/</span> <span class="n">ny</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
     <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">reconnection_inflow_velocity</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">)</span>
 
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -662,14 +662,14 @@
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">rhs</span>
 
     <span class="n">Bx</span><span class="p">,</span> <span class="n">By</span> <span class="o">=</span> <span class="n">reconnection_field_from_flux</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">"psi"</span><span class="p">:</span> <span class="n">psi</span><span class="p">,</span> <span class="s2">"Bx"</span><span class="p">:</span> <span class="n">Bx</span><span class="p">,</span> <span class="s2">"By"</span><span class="p">:</span> <span class="n">By</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;psi&quot;</span><span class="p">:</span> <span class="n">psi</span><span class="p">,</span> <span class="s2">&quot;Bx&quot;</span><span class="p">:</span> <span class="n">Bx</span><span class="p">,</span> <span class="s2">&quot;By&quot;</span><span class="p">:</span> <span class="n">By</span><span class="p">}</span></div>
 
 
 
 <div class="viewcode-block" id="weibel_growth_rate">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.weibel_growth_rate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">weibel_growth_rate</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temperature_anisotropy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Linear growth rate of the (non-relativistic, cold-parallel-limit) Weibel/filamentation instability.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear growth rate of the (non-relativistic, cold-parallel-limit) Weibel/filamentation instability.</span>
 
 <span class="sd">    For an electron distribution anisotropic between the direction of</span>
 <span class="sd">    wave propagation (temperature :math:`T_\\parallel`, taken cold here)</span>
@@ -683,7 +683,7 @@
 
 <span class="sd">    unstable for :math:`T_\\perp &gt; T_\\parallel` and only up to the cutoff</span>
 <span class="sd">    :math:`k_{max} = (\\omega_{pe}/c)\\sqrt{T_\\perp/T_\\parallel - 1}` --</span>
-<span class="sd">    beyond which the field's magnetic tension (the :math:`k^2c^2` term)</span>
+<span class="sd">    beyond which the field&#39;s magnetic tension (the :math:`k^2c^2` term)</span>
 <span class="sd">    overcomes the free energy the anisotropy supplies. Growing transverse</span>
 <span class="sd">    magnetic perturbations pinch counter-streaming electron sub-populations</span>
 <span class="sd">    into spatially separated current channels: the filaments this</span>
@@ -720,7 +720,7 @@
 <span class="sd">    1.732051</span>
 <span class="sd">    &gt;&gt;&gt; bool(weibel_growth_rate(k=1e10, wpe=1.0, temperature_anisotropy=4.0) == 0.0)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">gamma_sq</span> <span class="o">=</span> <span class="n">wpe</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">temperature_anisotropy</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">gamma_sq</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span></div>
@@ -730,7 +730,7 @@
 <div class="viewcode-block" id="weibel_fastest_growing_mode">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.weibel_fastest_growing_mode">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">weibel_fastest_growing_mode</span><span class="p">(</span><span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temperature_anisotropy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Wavenumber and growth rate of the fastest-growing Weibel mode.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wavenumber and growth rate of the fastest-growing Weibel mode.</span>
 
 <span class="sd">    For the growth-rate law of :func:`weibel_growth_rate`,</span>
 <span class="sd">    :math:`\\gamma(k)^2` is maximized at :math:`k=0` (long wavelength,</span>
@@ -766,7 +766,7 @@
 <span class="sd">    0.0</span>
 <span class="sd">    &gt;&gt;&gt; round(gamma_max, 6)</span>
 <span class="sd">    1.732051</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">temperature_anisotropy</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
     <span class="n">gamma_max</span> <span class="o">=</span> <span class="n">wpe</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">temperature_anisotropy</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -779,12 +779,12 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_weibel_filamentation</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temperature_anisotropy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_modes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">k_max_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Reduced quasi-linear Weibel filamentation model: a spectrum of independently growing current modes.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reduced quasi-linear Weibel filamentation model: a spectrum of independently growing current modes.</span>
 
 <span class="sd">    Seeds `n_modes` transverse-current Fourier modes with small random</span>
 <span class="sd">    amplitudes and phases, spanning wavenumbers up to</span>
 <span class="sd">    ``k_max_factor`` times the linear cutoff :math:`k_{max}` of</span>
-<span class="sd">    :func:`weibel_growth_rate`, and evolves each mode's amplitude</span>
+<span class="sd">    :func:`weibel_growth_rate`, and evolves each mode&#39;s amplitude</span>
 <span class="sd">    independently as :math:`a_k(t) = a_k(0)\\,e^{\\gamma(k)t}` -- exact</span>
 <span class="sd">    linear theory, valid until the fastest-growing filaments approach</span>
 <span class="sd">    nonlinear saturation (order-unity current perturbation), at which</span>
@@ -832,7 +832,7 @@
 <span class="sd">    (10, 128)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.std(J[-1]) &gt; np.std(J[0]))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">C</span>
     <span class="n">k_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">wpe</span> <span class="o">/</span> <span class="n">c</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temperature_anisotropy</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">))</span>

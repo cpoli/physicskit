@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.ginzburg_landau</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">"""Ginzburg-Landau theory: the 1950 phenomenological theory of continuous phase transitions.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ginzburg-Landau theory: the 1950 phenomenological theory of continuous phase transitions.</span>
 
 <span class="sd">Landau and Ginzburg proposed that a superconductor (or any system undergoing</span>
 <span class="sd">a continuous symmetry-breaking transition) is described entirely by a</span>
@@ -435,26 +435,26 @@
 
 <span class="sd">Uses the same natural-unit convention (:math:`\hbar=e=1`, and here also</span>
 <span class="sd">:math:`\mu_0=1`) as the rest of :mod:`physicskit.condensed`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"gl_free_energy_density"</span><span class="p">,</span>
-    <span class="s2">"gl_equilibrium_order_parameter"</span><span class="p">,</span>
-    <span class="s2">"gl_coherence_length"</span><span class="p">,</span>
-    <span class="s2">"gl_penetration_depth"</span><span class="p">,</span>
-    <span class="s2">"ginzburg_landau_parameter"</span><span class="p">,</span>
-    <span class="s2">"gl_order_parameter_profile"</span><span class="p">,</span>
+    <span class="s2">&quot;gl_free_energy_density&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gl_equilibrium_order_parameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gl_coherence_length&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gl_penetration_depth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ginzburg_landau_parameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gl_order_parameter_profile&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="gl_free_energy_density">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.gl_free_energy_density">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gl_free_energy_density</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">grad_psi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Ginzburg-Landau free energy density :math:`f = a|\psi|^2 + \tfrac{b}{2}|\psi|^4 + \tfrac{\hbar^2}{2m}|\nabla\psi|^2`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ginzburg-Landau free energy density :math:`f = a|\psi|^2 + \tfrac{b}{2}|\psi|^4 + \tfrac{\hbar^2}{2m}|\nabla\psi|^2`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -483,7 +483,7 @@
 <span class="sd">    &gt;&gt;&gt; psi0 = gl_equilibrium_order_parameter(a=-1.0, b=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; round(gl_free_energy_density(psi0, a=-1.0, b=1.0), 6)</span>
 <span class="sd">    -0.5</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="n">grad_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grad_psi</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="n">hbar</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">grad_psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
@@ -494,7 +494,7 @@
 <div class="viewcode-block" id="gl_equilibrium_order_parameter">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.gl_equilibrium_order_parameter">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gl_equilibrium_order_parameter</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Equilibrium (uniform, field-free) order parameter magnitude :math:`|\psi_0|=\sqrt{-a/b}`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Equilibrium (uniform, field-free) order parameter magnitude :math:`|\psi_0|=\sqrt{-a/b}`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -515,7 +515,7 @@
 <span class="sd">    1.0</span>
 <span class="sd">    &gt;&gt;&gt; gl_equilibrium_order_parameter(a=1.0, b=2.0)</span>
 <span class="sd">    0.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">))</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span></div>
 
 
@@ -523,7 +523,7 @@
 <div class="viewcode-block" id="gl_coherence_length">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.gl_coherence_length">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gl_coherence_length</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Ginzburg-Landau coherence length :math:`\xi = \hbar/\sqrt{2m|a|}`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ginzburg-Landau coherence length :math:`\xi = \hbar/\sqrt{2m|a|}`.</span>
 
 <span class="sd">    The length scale over which the order parameter heals back to its bulk</span>
 <span class="sd">    value after being suppressed at a boundary or a vortex core.</span>
@@ -545,7 +545,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; gl_coherence_length(a=-0.5)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">hbar</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span></div>
 
 
@@ -553,10 +553,10 @@
 <div class="viewcode-block" id="gl_penetration_depth">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.gl_penetration_depth">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gl_penetration_depth</span><span class="p">(</span><span class="n">psi0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""London penetration depth :math:`\lambda = \sqrt{m/(e^2|\psi_0|^2)}`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;London penetration depth :math:`\lambda = \sqrt{m/(e^2|\psi_0|^2)}`.</span>
 
 <span class="sd">    The length scale over which an external magnetic field is screened</span>
-<span class="sd">    from a superconductor's interior by the supercurrent it induces in the</span>
+<span class="sd">    from a superconductor&#39;s interior by the supercurrent it induces in the</span>
 <span class="sd">    condensate of density :math:`|\psi_0|^2`.</span>
 
 <span class="sd">    Parameters</span>
@@ -577,7 +577,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; gl_penetration_depth(psi0=1.0)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span> <span class="o">/</span> <span class="p">(</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">psi0</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span></div>
 
 
@@ -585,9 +585,9 @@
 <div class="viewcode-block" id="ginzburg_landau_parameter">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.ginzburg_landau_parameter">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ginzburg_landau_parameter</span><span class="p">(</span><span class="n">coherence_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">penetration_depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Ginzburg-Landau parameter :math:`\kappa = \lambda/\xi`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ginzburg-Landau parameter :math:`\kappa = \lambda/\xi`.</span>
 
-<span class="sd">    The single dimensionless number that decides a superconductor's</span>
+<span class="sd">    The single dimensionless number that decides a superconductor&#39;s</span>
 <span class="sd">    response to a magnetic field: :math:`\kappa &lt; 1/\sqrt2` is Type I</span>
 <span class="sd">    (the normal-superconducting interface has positive surface energy, and</span>
 <span class="sd">    the field is excluded entirely below :math:`H_c`); :math:`\kappa &gt;</span>
@@ -610,7 +610,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(ginzburg_landau_parameter(coherence_length=1.0, penetration_depth=1.0), 4)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">penetration_depth</span> <span class="o">/</span> <span class="n">coherence_length</span><span class="p">)</span></div>
 
 
@@ -618,10 +618,10 @@
 <div class="viewcode-block" id="gl_order_parameter_profile">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.gl_order_parameter_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gl_order_parameter_profile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Order parameter healing profile :math:`\psi(x)/\psi_0 = \tanh(x/(\sqrt2\,\xi))`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Order parameter healing profile :math:`\psi(x)/\psi_0 = \tanh(x/(\sqrt2\,\xi))`.</span>
 
 <span class="sd">    The exact solution of the dimensionless Ginzburg-Landau equation</span>
-<span class="sd">    :math:`\xi^2\psi'' = \psi^3-\psi` for a condensate pinned to zero at a</span>
+<span class="sd">    :math:`\xi^2\psi&#39;&#39; = \psi^3-\psi` for a condensate pinned to zero at a</span>
 <span class="sd">    boundary (``x = 0``, e.g. a normal-superconducting interface) and</span>
 <span class="sd">    recovering its bulk value far from it -- the direct, textbook</span>
 <span class="sd">    illustration of the coherence length as a *healing length*.</span>
@@ -645,7 +645,7 @@
 <span class="sd">    0.0</span>
 <span class="sd">    &gt;&gt;&gt; bool(gl_order_parameter_profile(np.array([10.0]), xi=1.0)[0] &gt; 0.999)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">xi</span><span class="p">))</span></div>
 

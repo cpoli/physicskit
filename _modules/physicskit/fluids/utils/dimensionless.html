@@ -411,46 +411,46 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.utils.dimensionless</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Dimensionless numbers: Reynolds, Froude, Mach, Strouhal, and Weber.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Dimensionless numbers: Reynolds, Froude, Mach, Strouhal, and Weber.</span>
 
 <span class="sd">Fluid mechanics is governed by ratios, not absolute scales: two flows with</span>
 <span class="sd">the same dimensionless numbers behave identically regardless of their size,</span>
 <span class="sd">speed, or fluid, which is what makes wind-tunnel testing of a model</span>
 <span class="sd">airplane meaningful for a full-size one. Each function here computes one</span>
-<span class="sd">such ratio, and each result's magnitude is what determines which regime</span>
+<span class="sd">such ratio, and each result&#39;s magnitude is what determines which regime</span>
 <span class="sd">(and which module of this package) actually applies -- a low Reynolds</span>
 <span class="sd">number licenses :func:`physicskit.fluids.systems.viscous_flow.stokes_drag`,</span>
 <span class="sd">a high one calls for</span>
 <span class="sd">:class:`physicskit.fluids.systems.navier_stokes.NavierStokes2D` or the</span>
 <span class="sd">turbulence tools in :mod:`physicskit.fluids.utils.spectral_analysis`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"reynolds_number"</span><span class="p">,</span>
-    <span class="s2">"froude_number"</span><span class="p">,</span>
-    <span class="s2">"mach_number"</span><span class="p">,</span>
-    <span class="s2">"strouhal_number"</span><span class="p">,</span>
-    <span class="s2">"weber_number"</span><span class="p">,</span>
+    <span class="s2">&quot;reynolds_number&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;froude_number&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mach_number&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;strouhal_number&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;weber_number&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="reynolds_number">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.reynolds_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reynolds_number</span><span class="p">(</span><span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Reynolds number: inertial forces over viscous forces.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Reynolds number: inertial forces over viscous forces.</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        Re = \\frac{U L}{\\nu}</span>
 
-<span class="sd">    Osborne Reynolds' 1883 pipe-flow experiments identified this ratio as</span>
+<span class="sd">    Osborne Reynolds&#39; 1883 pipe-flow experiments identified this ratio as</span>
 <span class="sd">    the single parameter controlling the transition from smooth (laminar)</span>
-<span class="sd">    to chaotic (turbulent) flow, regardless of the pipe's size or the</span>
-<span class="sd">    fluid's identity -- the founding result of dimensional-similarity</span>
+<span class="sd">    to chaotic (turbulent) flow, regardless of the pipe&#39;s size or the</span>
+<span class="sd">    fluid&#39;s identity -- the founding result of dimensional-similarity</span>
 <span class="sd">    reasoning in fluid mechanics.</span>
 
 <span class="sd">    Parameters</span>
@@ -476,11 +476,11 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; reynolds_number(velocity=2.0, length=0.5, nu=1e-6)</span>
 <span class="sd">    1000000.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"length must be positive, got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;length must be positive, got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">length</span> <span class="o">/</span> <span class="n">nu</span></div>
 
 
@@ -488,7 +488,7 @@
 <div class="viewcode-block" id="froude_number">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.froude_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">froude_number</span><span class="p">(</span><span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Froude number: inertial forces over gravitational forces.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Froude number: inertial forces over gravitational forces.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -497,7 +497,7 @@
 <span class="sd">    Governs free-surface (gravity wave) flows the way the Reynolds number</span>
 <span class="sd">    governs viscous ones: a ship model and its full-size counterpart make</span>
 <span class="sd">    the same waves, relative to their length, only if `Fr` matches. William</span>
-<span class="sd">    Froude's 1868 ship-hull towing-tank experiments established exactly</span>
+<span class="sd">    Froude&#39;s 1868 ship-hull towing-tank experiments established exactly</span>
 <span class="sd">    this scaling law.</span>
 
 <span class="sd">    Parameters</span>
@@ -523,11 +523,11 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(froude_number(velocity=3.0, length=9.81, g=9.81), 4)</span>
 <span class="sd">    0.3058</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"length must be positive, got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;length must be positive, got </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">g</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"g must be positive, got </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;g must be positive, got </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">velocity</span> <span class="o">/</span> <span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">length</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span></div>
 
 
@@ -535,7 +535,7 @@
 <div class="viewcode-block" id="mach_number">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.mach_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mach_number</span><span class="p">(</span><span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">speed_of_sound</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Mach number: flow speed over the local speed of sound.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Mach number: flow speed over the local speed of sound.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -568,9 +568,9 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; mach_number(velocity=340.0, speed_of_sound=340.0)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">speed_of_sound</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"speed_of_sound must be positive, got </span><span class="si">{</span><span class="n">speed_of_sound</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;speed_of_sound must be positive, got </span><span class="si">{</span><span class="n">speed_of_sound</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">velocity</span> <span class="o">/</span> <span class="n">speed_of_sound</span></div>
 
 
@@ -578,7 +578,7 @@
 <div class="viewcode-block" id="strouhal_number">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.strouhal_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">strouhal_number</span><span class="p">(</span><span class="n">frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Strouhal number: a dimensionless vortex-shedding frequency.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Strouhal number: a dimensionless vortex-shedding frequency.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -595,7 +595,7 @@
 <span class="sd">    frequency : float</span>
 <span class="sd">        Vortex-shedding frequency `f`.</span>
 <span class="sd">    length : float</span>
-<span class="sd">        Characteristic length scale `L` (e.g. the body's cross-stream width).</span>
+<span class="sd">        Characteristic length scale `L` (e.g. the body&#39;s cross-stream width).</span>
 <span class="sd">    velocity : float</span>
 <span class="sd">        Characteristic flow speed `U`.</span>
 
@@ -613,9 +613,9 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(strouhal_number(frequency=2.0, length=0.1, velocity=1.0), 4)</span>
 <span class="sd">    0.2</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">velocity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"velocity must be positive, got </span><span class="si">{</span><span class="n">velocity</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;velocity must be positive, got </span><span class="si">{</span><span class="n">velocity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">frequency</span> <span class="o">*</span> <span class="n">length</span> <span class="o">/</span> <span class="n">velocity</span></div>
 
 
@@ -623,7 +623,7 @@
 <div class="viewcode-block" id="weber_number">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.weber_number">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">weber_number</span><span class="p">(</span><span class="n">rho</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">surface_tension</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The Weber number: inertial forces over surface-tension forces.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Weber number: inertial forces over surface-tension forces.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -660,9 +660,9 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(weber_number(rho=1000.0, velocity=1.0, length=0.001, surface_tension=0.072), 4)</span>
 <span class="sd">    13.8889</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">surface_tension</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"surface_tension must be positive, got </span><span class="si">{</span><span class="n">surface_tension</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;surface_tension must be positive, got </span><span class="si">{</span><span class="n">surface_tension</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">velocity</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">length</span> <span class="o">/</span> <span class="n">surface_tension</span></div>
 
 </pre></div>

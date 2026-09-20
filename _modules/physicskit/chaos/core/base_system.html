@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.chaos.core.base_system</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Abstract base classes for dynamical systems, discrete maps, and billiards."""</span>
+<span></span><span class="sd">&quot;&quot;&quot;Abstract base classes for dynamical systems, discrete maps, and billiards.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -424,14 +424,14 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_init_params</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Read an object's constructor arguments back out of its own attributes.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read an object&#39;s constructor arguments back out of its own attributes.</span>
 
-<span class="sd">    Reads each of ``type(obj).__init__``'s parameter names and looks up a</span>
+<span class="sd">    Reads each of ``type(obj).__init__``&#39;s parameter names and looks up a</span>
 <span class="sd">    same-named attribute on `obj` (the convention every concrete system in</span>
 <span class="sd">    physicskit.chaos follows, e.g. ``self.sigma = float(sigma)``), skipping any</span>
 <span class="sd">    parameter not stored under its own name. Used by :func:`_init_repr` for</span>
 <span class="sd">    generic ``__repr__`` support and by</span>
-<span class="sd">    :mod:`physicskit.chaos.utils.io` to serialize a system's configuration without</span>
+<span class="sd">    :mod:`physicskit.chaos.utils.io` to serialize a system&#39;s configuration without</span>
 <span class="sd">    each subclass writing its own serializer.</span>
 
 <span class="sd">    Parameters</span>
@@ -443,7 +443,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
 <span class="sd">        Mapping of ``__init__`` parameter name to its current value on `obj`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span>
@@ -452,7 +452,7 @@
 
     <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"self"</span> <span class="ow">or</span> <span class="n">param</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;self&quot;</span> <span class="ow">or</span> <span class="n">param</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span>
             <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">VAR_POSITIONAL</span><span class="p">,</span>
             <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">VAR_KEYWORD</span><span class="p">,</span>
         <span class="p">):</span>
@@ -464,28 +464,28 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_init_repr</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Build an ``eval``-able-looking repr from an object's ``__init__`` signature.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an ``eval``-able-looking repr from an object&#39;s ``__init__`` signature.</span>
 
 <span class="sd">    See :func:`get_init_params`; this just formats the result as</span>
 <span class="sd">    ``ClassName(param=value, ...)``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">get_init_params</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">value_repr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">", "</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value_repr</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span>
+        <span class="n">value_repr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value_repr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 
 <div class="viewcode-block" id="DynamicalSystem">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DynamicalSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DynamicalSystem</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Base class for continuous-time dynamical systems integrated as ODEs.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for continuous-time dynamical systems integrated as ODEs.</span>
 
 <span class="sd">    Subclasses expose the right-hand side of ``dx/dt = f(x, t)`` both as a</span>
 <span class="sd">    plain Python method (for convenience/plotting) and, where available, as a</span>
 <span class="sd">    Numba-jitted module-level function usable with</span>
 <span class="sd">    :mod:`physicskit.chaos.core.integrators`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: Dimension of the state vector ``x``. Set by each concrete subclass.</span>
     <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span>
@@ -494,7 +494,7 @@
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DynamicalSystem.rhs">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the vector field at ``state`` and time ``t``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the vector field at ``state`` and time ``t``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -507,13 +507,13 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (dim,)</span>
 <span class="sd">            The time derivative ``dx/dt`` evaluated at ``(state, t)``.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="DynamicalSystem.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DynamicalSystem.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Return a reasonable default initial condition, if defined by the subclass.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a reasonable default initial condition, if defined by the subclass.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -524,7 +524,7 @@
 <span class="sd">        ------</span>
 <span class="sd">        NotImplementedError</span>
 <span class="sd">            If the subclass does not define a default initial condition.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
@@ -536,7 +536,7 @@
 <div class="viewcode-block" id="DiscreteMap">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DiscreteMap">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DiscreteMap</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Base class for discrete-time dynamical systems (iterated maps)."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for discrete-time dynamical systems (iterated maps).&quot;&quot;&quot;</span>
 
     <span class="c1">#: Dimension of the state vector ``x``. Set by each concrete subclass.</span>
     <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span>
@@ -545,7 +545,7 @@
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DiscreteMap.step">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Advance ``state`` by one iteration of the map.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``state`` by one iteration of the map.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -556,13 +556,13 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (dim,)</span>
 <span class="sd">            The next state vector.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="DiscreteMap.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DiscreteMap.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Return a reasonable default initial condition, if defined by the subclass.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a reasonable default initial condition, if defined by the subclass.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -573,14 +573,14 @@
 <span class="sd">        ------</span>
 <span class="sd">        NotImplementedError</span>
 <span class="sd">            If the subclass does not define a default initial condition.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
 <div class="viewcode-block" id="DiscreteMap.trajectory">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.DiscreteMap.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Iterate the map ``n_iter`` times starting from ``state0``.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate the map ``n_iter`` times starting from ``state0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -593,7 +593,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n_iter + 1, dim)</span>
 <span class="sd">            The state at each iteration, including ``state0`` as row 0.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
         <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state0</span>
@@ -612,7 +612,7 @@
 <div class="viewcode-block" id="BilliardSystem">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BilliardSystem</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Base class for 2D billiard geometries.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for 2D billiard geometries.</span>
 
 <span class="sd">    A billiard is described as a closed boundary made of straight segments</span>
 <span class="sd">    and circular arcs. Subclasses build this boundary representation once (in</span>
@@ -635,7 +635,7 @@
 <span class="sd">        Cumulative boundary arclength at the start of each arc.</span>
 <span class="sd">    _perimeter : float</span>
 <span class="sd">        Total boundary perimeter.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_segments</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -648,37 +648,37 @@
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_boundary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Populate the boundary arrays and cumulative arclength offsets.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate the boundary arrays and cumulative arclength offsets.</span>
 
 <span class="sd">        Sets ``self._segments``, ``self._arcs``, ``self._arc_full``,</span>
 <span class="sd">        ``self._s_offsets_seg``, ``self._s_offsets_arc``, and</span>
 <span class="sd">        ``self._perimeter``, typically by delegating to</span>
 <span class="sd">        ``self._finalize_boundary``.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BilliardSystem.sample_interior_point">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.sample_interior_point">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sample_interior_point</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Return a point guaranteed to lie in the billiard's interior.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a point guaranteed to lie in the billiard&#39;s interior.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            An ``(x, y)`` point strictly inside the billiard.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="BilliardSystem.perimeter">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.perimeter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Total boundary perimeter.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total boundary perimeter.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">            The billiard boundary's total arclength.</span>
-<span class="sd">        """</span>
+<span class="sd">            The billiard boundary&#39;s total arclength.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_perimeter</span></div>
 
 
@@ -687,7 +687,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">boundary_arrays</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Return the raw boundary wall arrays.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the raw boundary wall arrays.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -697,7 +697,7 @@
 <span class="sd">            Circular-arc walls, each row ``(cx, cy, r, theta1, theta2)``.</span>
 <span class="sd">        arc_full : ndarray of bool, shape (n_arcs,)</span>
 <span class="sd">            Whether each arc is a full circle.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segments</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arcs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arc_full</span></div>
 
 
@@ -705,12 +705,12 @@
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.simulate">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">vel</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Trace ``n_bounces`` specular reflections from an initial ray.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trace ``n_bounces`` specular reflections from an initial ray.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        pos : array_like of float, shape (2,)</span>
-<span class="sd">            Initial position ``(x, y)``; must lie in the billiard's interior.</span>
+<span class="sd">            Initial position ``(x, y)``; must lie in the billiard&#39;s interior.</span>
 <span class="sd">        vel : array_like of float, shape (2,)</span>
 <span class="sd">            Initial velocity direction ``(vx, vy)``; normalized internally.</span>
 <span class="sd">        n_bounces : int</span>
@@ -723,20 +723,20 @@
 <span class="sd">            ``sin_phi``, ``wall_type``, ``wall_idx``, each an array of</span>
 <span class="sd">            length `n_bounces`; see the concrete implementation (shared by</span>
 <span class="sd">            every billiard shape) for details.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="BilliardSystem.simulate_many_rays">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.simulate_many_rays">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate_many_rays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Trace many independent rays from one point, in parallel.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trace many independent rays from one point, in parallel.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        pos : array_like of float, shape (2,)</span>
 <span class="sd">            Shared initial position ``(x, y)`` for every ray; must lie in the</span>
-<span class="sd">            billiard's interior.</span>
+<span class="sd">            billiard&#39;s interior.</span>
 <span class="sd">        angles : array_like of float, shape (n_rays,)</span>
 <span class="sd">            Initial launch angle (radians) of each ray.</span>
 <span class="sd">        n_bounces : int</span>
@@ -746,21 +746,21 @@
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
 <span class="sd">            Same keys as :meth:`simulate`, but each value is the</span>
-<span class="sd">            concatenation (in ray order, then bounce order) of every ray's</span>
+<span class="sd">            concatenation (in ray order, then bounce order) of every ray&#39;s</span>
 <span class="sd">            results, shape ``(n_rays * n_bounces,)``.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="BilliardSystem.trajectory_segments">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.trajectory_segments">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">vel</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">"""Trace a trajectory and return its full real-space polyline.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trace a trajectory and return its full real-space polyline.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        pos : array_like of float, shape (2,)</span>
-<span class="sd">            Initial position ``(x, y)``; must lie in the billiard's interior.</span>
+<span class="sd">            Initial position ``(x, y)``; must lie in the billiard&#39;s interior.</span>
 <span class="sd">        vel : array_like of float, shape (2,)</span>
 <span class="sd">            Initial velocity direction ``(vx, vy)``; normalized internally.</span>
 <span class="sd">        n_bounces : int</span>
@@ -772,14 +772,14 @@
 <span class="sd">            Positions visited, including the initial position as row 0.</span>
 <span class="sd">        result : dict</span>
 <span class="sd">            The same dictionary returned by :meth:`simulate`.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="BilliardSystem.boundary_polyline">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BilliardSystem.boundary_polyline">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">boundary_polyline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points_per_arc</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Trace the boundary as one or more closed polylines, suitable for plotting.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trace the boundary as one or more closed polylines, suitable for plotting.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -792,7 +792,7 @@
 <span class="sd">            Points tracing the boundary; disjoint closed components (if any)</span>
 <span class="sd">            are separated by a row of ``NaN``. See the concrete</span>
 <span class="sd">            implementation (shared by every billiard shape) for details.</span>
-<span class="sd">        """</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

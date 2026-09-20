@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.systems.navier_stokes</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Incompressible 2D Navier-Stokes via the vorticity-streamfunction formulation.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Incompressible 2D Navier-Stokes via the vorticity-streamfunction formulation.</span>
 
 <span class="sd">Solves :math:`\\partial_t \\omega + (\\mathbf{u}\\cdot\\nabla)\\omega = \\nu \\nabla^2 \\omega`</span>
 <span class="sd">on a doubly periodic domain, with the incompressible velocity field</span>
@@ -429,7 +429,7 @@
 <span class="sd">its Kelvin-Helmholtz and Rayleigh-Taylor initial conditions with it (or with</span>
 <span class="sd">its Boussinesq extension), and :mod:`physicskit.fluids.utils.spectral_analysis`</span>
 <span class="sd">measures the turbulent energy spectrum of the velocity fields it produces.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -440,13 +440,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.core.timestepping</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate_vorticity_streamfunction</span><span class="p">,</span> <span class="n">vorticity_rhs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"NavierStokes2D"</span><span class="p">,</span> <span class="s2">"simulate_vorticity_streamfunction"</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NavierStokes2D&quot;</span><span class="p">,</span> <span class="s2">&quot;simulate_vorticity_streamfunction&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="NavierStokes2D">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.NavierStokes2D">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NavierStokes2D</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A doubly periodic 2D incompressible Navier-Stokes solver, in vorticity-streamfunction form.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A doubly periodic 2D incompressible Navier-Stokes solver, in vorticity-streamfunction form.</span>
 
 <span class="sd">    Builds the pseudo-spectral grid once at construction and exposes</span>
 <span class="sd">    :meth:`rhs`, :meth:`step`, and :meth:`simulate` against it, so that</span>
@@ -490,15 +490,15 @@
 <span class="sd">    &gt;&gt;&gt; solver = NavierStokes2D(n=48, length=2 * np.pi, nu=0.05)</span>
 <span class="sd">    &gt;&gt;&gt; omega0 = np.sin(solver.X) * np.sin(solver.Y)</span>
 <span class="sd">    &gt;&gt;&gt; result = solver.simulate(omega0, dt=0.01, steps=20)</span>
-<span class="sd">    &gt;&gt;&gt; result["omega"].shape</span>
+<span class="sd">    &gt;&gt;&gt; result[&quot;omega&quot;].shape</span>
 <span class="sd">    (48, 48)</span>
-<span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(result["omega"])) &lt; np.max(np.abs(omega0)))</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(result[&quot;omega&quot;])) &lt; np.max(np.abs(omega0)))</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">nu</span><span class="p">)</span>
@@ -507,7 +507,7 @@
 <div class="viewcode-block" id="NavierStokes2D.rhs">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.NavierStokes2D.rhs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Evaluate the vorticity-transport right-hand side at `omega`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the vorticity-transport right-hand side at `omega`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -518,14 +518,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n, n)</span>
 <span class="sd">            :math:`-(\\mathbf{u}\\cdot\\nabla)\\omega + \\nu\\nabla^2\\omega`.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">vorticity_rhs</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NavierStokes2D.velocity">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.NavierStokes2D.velocity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Recover the velocity field associated with a vorticity field.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recover the velocity field associated with a vorticity field.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -536,7 +536,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        u, v : ndarray of float, shape (n, n)</span>
 <span class="sd">            Velocity components.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">poisson_solve_streamfunction</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">velocity_from_streamfunction</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KY</span><span class="p">)</span></div>
 
@@ -544,7 +544,7 @@
 <div class="viewcode-block" id="NavierStokes2D.step">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.NavierStokes2D.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Advance the vorticity field by one RK4 step of size `dt`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the vorticity field by one RK4 step of size `dt`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -557,7 +557,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n, n)</span>
 <span class="sd">            Vorticity field advanced by one step.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">k1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span>
         <span class="n">k2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">(</span><span class="n">omega</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k1</span><span class="p">)</span>
         <span class="n">k3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">(</span><span class="n">omega</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k2</span><span class="p">)</span>
@@ -568,7 +568,7 @@
 <div class="viewcode-block" id="NavierStokes2D.simulate">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.NavierStokes2D.simulate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omega0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">"""Time-step an initial vorticity field forward by ``steps`` RK4 steps.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Time-step an initial vorticity field forward by ``steps`` RK4 steps.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -582,25 +582,25 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            ``{"omega": final vorticity, "psi": final streamfunction, "u": ..., "v": ...}``.</span>
-<span class="sd">        """</span>
+<span class="sd">            ``{&quot;omega&quot;: final vorticity, &quot;psi&quot;: final streamfunction, &quot;u&quot;: ..., &quot;v&quot;: ...}``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">omega0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
             <span class="n">omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">poisson_solve_streamfunction</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K2</span><span class="p">)</span>
         <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">velocity_from_streamfunction</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KY</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">"omega"</span><span class="p">:</span> <span class="n">omega</span><span class="p">,</span> <span class="s2">"psi"</span><span class="p">:</span> <span class="n">psi</span><span class="p">,</span> <span class="s2">"u"</span><span class="p">:</span> <span class="n">u</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;omega&quot;</span><span class="p">:</span> <span class="n">omega</span><span class="p">,</span> <span class="s2">&quot;psi&quot;</span><span class="p">:</span> <span class="n">psi</span><span class="p">,</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="n">u</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"NavierStokes2D(n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, length=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">, nu=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="si">}</span><span class="s2">)"</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;NavierStokes2D(n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, length=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">, nu=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="simulate_vorticity_streamfunction">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.simulate_vorticity_streamfunction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_vorticity_streamfunction</span><span class="p">(</span><span class="n">omega0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">"""Time-step 2D incompressible vorticity-streamfunction Navier-Stokes with RK4.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step 2D incompressible vorticity-streamfunction Navier-Stokes with RK4.</span>
 
 <span class="sd">    A one-shot functional convenience wrapper around :class:`NavierStokes2D`,</span>
 <span class="sd">    for scripts that only need a single run rather than repeated stepping</span>
@@ -622,7 +622,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{"omega": final vorticity, "psi": final streamfunction, "u": ..., "v": ...}``.</span>
+<span class="sd">        ``{&quot;omega&quot;: final vorticity, &quot;psi&quot;: final streamfunction, &quot;u&quot;: ..., &quot;v&quot;: ...}``.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -643,11 +643,11 @@
 <span class="sd">    &gt;&gt;&gt; X, Y, KX, KY, K2 = spectral_grid(n, 2 * np.pi)</span>
 <span class="sd">    &gt;&gt;&gt; omega0 = np.sin(X) * np.sin(Y)</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_vorticity_streamfunction(omega0, nu=0.05, dt=0.01, steps=20, length=2 * np.pi)</span>
-<span class="sd">    &gt;&gt;&gt; result["omega"].shape</span>
+<span class="sd">    &gt;&gt;&gt; result[&quot;omega&quot;].shape</span>
 <span class="sd">    (48, 48)</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">integrate_vorticity_streamfunction</span><span class="p">(</span><span class="n">omega0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span></div>
 
 </pre></div>

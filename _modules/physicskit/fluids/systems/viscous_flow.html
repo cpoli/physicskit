@@ -411,7 +411,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.systems.viscous_flow</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Classic exact solutions of the viscous (Navier-Stokes) equations.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Classic exact solutions of the viscous (Navier-Stokes) equations.</span>
 
 <span class="sd">Four textbook problems simple enough to solve in closed form (or, for</span>
 <span class="sd">Blasius, by reducing an entire boundary layer to a single ordinary</span>
@@ -421,8 +421,8 @@
 <span class="sd">tractable -- steady unidirectional shear flow (Couette, Poiseuille),</span>
 <span class="sd">vanishing Reynolds number (Stokes), or a self-similar boundary layer</span>
 <span class="sd">(Blasius) -- and each remains a standard benchmark for validating a general</span>
-<span class="sd">solver, since it is one of the few cases where "the answer" is known exactly.</span>
-<span class="sd">"""</span>
+<span class="sd">solver, since it is one of the few cases where &quot;the answer&quot; is known exactly.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -433,20 +433,20 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"couette_flow_velocity"</span><span class="p">,</span>
-    <span class="s2">"poiseuille_flow_velocity"</span><span class="p">,</span>
-    <span class="s2">"poiseuille_flow_rate"</span><span class="p">,</span>
-    <span class="s2">"stokes_drag"</span><span class="p">,</span>
-    <span class="s2">"blasius_solve"</span><span class="p">,</span>
-    <span class="s2">"blasius_boundary_layer_thickness"</span><span class="p">,</span>
-    <span class="s2">"blasius_skin_friction_coefficient"</span><span class="p">,</span>
+    <span class="s2">&quot;couette_flow_velocity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;poiseuille_flow_velocity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;poiseuille_flow_rate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stokes_drag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blasius_solve&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blasius_boundary_layer_thickness&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blasius_skin_friction_coefficient&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="couette_flow_velocity">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.couette_flow_velocity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">couette_flow_velocity</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">U_wall</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Velocity profile of steady plane Couette flow.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Velocity profile of steady plane Couette flow.</span>
 
 <span class="sd">    The flow between two infinite parallel plates, the lower one at rest</span>
 <span class="sd">    and the upper one (at ``y = h``) moving at speed `U_wall`, with no</span>
@@ -478,9 +478,9 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; couette_flow_velocity(y=[0.0, 0.5, 1.0], U_wall=2.0, h=1.0)</span>
 <span class="sd">    array([0., 1., 2.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">U_wall</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">h</span></div>
 
@@ -489,7 +489,7 @@
 <div class="viewcode-block" id="poiseuille_flow_velocity">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.poiseuille_flow_velocity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">poiseuille_flow_velocity</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">dpdx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Velocity profile of steady plane Poiseuille flow.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Velocity profile of steady plane Poiseuille flow.</span>
 
 <span class="sd">    The flow between two stationary infinite parallel plates driven by a</span>
 <span class="sd">    constant imposed pressure gradient `dpdx`. The steady Navier-Stokes</span>
@@ -530,11 +530,11 @@
 <span class="sd">    1.0</span>
 <span class="sd">    &gt;&gt;&gt; bool(u[0] == 0.0 and u[-1] == 0.0)  # no-slip at both walls</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span></div>
 
@@ -543,7 +543,7 @@
 <div class="viewcode-block" id="poiseuille_flow_rate">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.poiseuille_flow_rate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">poiseuille_flow_rate</span><span class="p">(</span><span class="n">dpdx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Volumetric flow rate per unit depth of plane Poiseuille flow.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Volumetric flow rate per unit depth of plane Poiseuille flow.</span>
 
 <span class="sd">    The integral of :func:`poiseuille_flow_velocity` across the channel:</span>
 
@@ -574,11 +574,11 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(poiseuille_flow_rate(dpdx=-12.0, mu=1.0, h=1.0), 4)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;h must be positive, got </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">h</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mf">12.0</span> <span class="o">*</span> <span class="n">mu</span><span class="p">))</span> <span class="o">*</span> <span class="n">dpdx</span></div>
 
 
@@ -586,7 +586,7 @@
 <div class="viewcode-block" id="stokes_drag">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.stokes_drag">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">stokes_drag</span><span class="p">(</span><span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Stokes' law: drag force on a sphere at low Reynolds number.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stokes&#39; law: drag force on a sphere at low Reynolds number.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -595,7 +595,7 @@
 <span class="sd">    Valid in the creeping-flow limit :math:`Re = 2R|v|/\\nu \\ll 1`, where</span>
 <span class="sd">    the nonlinear advection term in Navier-Stokes is negligible next to</span>
 <span class="sd">    viscous diffusion, leaving the linear Stokes equations</span>
-<span class="sd">    :math:`\\mu\\nabla^2\\mathbf{u}=\\nabla p` -- George Stokes' 1851 exact</span>
+<span class="sd">    :math:`\\mu\\nabla^2\\mathbf{u}=\\nabla p` -- George Stokes&#39; 1851 exact</span>
 <span class="sd">    solution for uniform flow past a sphere.</span>
 
 <span class="sd">    Parameters</span>
@@ -621,29 +621,29 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(stokes_drag(mu=1.0, radius=1.0, velocity=1.0), 4)</span>
 <span class="sd">    18.8496</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mu must be positive, got </span><span class="si">{</span><span class="n">mu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"radius must be positive, got </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;radius must be positive, got </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">velocity</span></div>
 
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_blasius_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Blasius ODE as a first-order system: ``(f, f', f'')' = (f', f'', -f f''/2)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Blasius ODE as a first-order system: ``(f, f&#39;, f&#39;&#39;)&#39; = (f&#39;, f&#39;&#39;, -f f&#39;&#39;/2)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    state : ndarray of float, shape (3,)</span>
-<span class="sd">        ``(f, f', f'')`` at the current similarity coordinate `eta`.</span>
+<span class="sd">        ``(f, f&#39;, f&#39;&#39;)`` at the current similarity coordinate `eta`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (3,)</span>
 <span class="sd">        Derivative of `state` with respect to `eta`.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">f</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fpp</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fp</span>
@@ -654,12 +654,12 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_blasius_integrate</span><span class="p">(</span><span class="n">fpp0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">eta_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Integrate the Blasius ODE with RK4 from ``eta=0`` given a guessed ``f''(0)``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integrate the Blasius ODE with RK4 from ``eta=0`` given a guessed ``f&#39;&#39;(0)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    fpp0 : float</span>
-<span class="sd">        Guessed shooting parameter :math:`f''(0)`.</span>
+<span class="sd">        Guessed shooting parameter :math:`f&#39;&#39;(0)`.</span>
 <span class="sd">    eta_max : float</span>
 <span class="sd">        Similarity coordinate at which to stop integrating.</span>
 <span class="sd">    n_points : int</span>
@@ -668,9 +668,9 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (n_points, 3)</span>
-<span class="sd">        ``(f, f', f'')`` at each of `n_points` equally spaced `eta` in</span>
+<span class="sd">        ``(f, f&#39;, f&#39;&#39;)`` at each of `n_points` equally spaced `eta` in</span>
 <span class="sd">        ``[0, eta_max]``.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_points</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">fpp0</span><span class="p">])</span>
     <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
@@ -688,52 +688,52 @@
 <div class="viewcode-block" id="blasius_solve">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.blasius_solve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">blasius_solve</span><span class="p">(</span><span class="n">eta_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2001</span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">"""Solve the Blasius laminar boundary-layer equation by shooting.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve the Blasius laminar boundary-layer equation by shooting.</span>
 
 <span class="sd">    The Blasius similarity reduction of the steady, 2D, zero-pressure-gradient</span>
 <span class="sd">    boundary-layer equations collapses them to the single third-order ODE</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        f''' + \\tfrac{1}{2} f f'' = 0, \\qquad</span>
-<span class="sd">        f(0) = f'(0) = 0, \\qquad f'(\\infty) = 1,</span>
+<span class="sd">        f&#39;&#39;&#39; + \\tfrac{1}{2} f f&#39;&#39; = 0, \\qquad</span>
+<span class="sd">        f(0) = f&#39;(0) = 0, \\qquad f&#39;(\\infty) = 1,</span>
 
 <span class="sd">    for the dimensionless streamfunction :math:`f(\\eta)` of the similarity</span>
 <span class="sd">    variable :math:`\\eta = y\\sqrt{U_\\infty/(\\nu x)}`; the streamwise</span>
-<span class="sd">    velocity is :math:`u/U_\\infty = f'(\\eta)`. Since :math:`f''(0)` (rather</span>
+<span class="sd">    velocity is :math:`u/U_\\infty = f&#39;(\\eta)`. Since :math:`f&#39;&#39;(0)` (rather</span>
 <span class="sd">    than the far-field condition) is the free parameter needed to start an</span>
 <span class="sd">    initial-value integration, this is a two-point boundary value problem</span>
-<span class="sd">    solved here by shooting: bisect on :math:`f''(0)` until the resulting</span>
-<span class="sd">    :func:`_blasius_integrate` solution satisfies :math:`f'(\\eta_{max})</span>
+<span class="sd">    solved here by shooting: bisect on :math:`f&#39;&#39;(0)` until the resulting</span>
+<span class="sd">    :func:`_blasius_integrate` solution satisfies :math:`f&#39;(\\eta_{max})</span>
 <span class="sd">    \\approx 1`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    eta_max : float, default 10.0</span>
-<span class="sd">        Similarity coordinate treated as "infinity"; large enough that</span>
-<span class="sd">        :math:`f'` has converged to 1 to within `tol`.</span>
+<span class="sd">        Similarity coordinate treated as &quot;infinity&quot;; large enough that</span>
+<span class="sd">        :math:`f&#39;` has converged to 1 to within `tol`.</span>
 <span class="sd">    n_points : int, default 2001</span>
 <span class="sd">        Number of output points between ``eta=0`` and `eta_max`.</span>
 <span class="sd">    tol : float, default 1e-10</span>
-<span class="sd">        Bisection tolerance on :math:`f'(\\eta_{max}) - 1`.</span>
+<span class="sd">        Bisection tolerance on :math:`f&#39;(\\eta_{max}) - 1`.</span>
 <span class="sd">    max_iter : int, default 100</span>
 <span class="sd">        Maximum number of bisection iterations.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{"eta": ..., "f": ..., "fp": ..., "fpp": ...}``, each an array of</span>
+<span class="sd">        ``{&quot;eta&quot;: ..., &quot;f&quot;: ..., &quot;fp&quot;: ..., &quot;fpp&quot;: ...}``, each an array of</span>
 <span class="sd">        length `n_points`. ``fpp[0]`` is the classic Blasius constant,</span>
-<span class="sd">        :math:`f''(0) \\approx 0.332`.</span>
+<span class="sd">        :math:`f&#39;&#39;(0) \\approx 0.332`.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; result = blasius_solve()</span>
-<span class="sd">    &gt;&gt;&gt; round(float(result["fpp"][0]), 3)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(result[&quot;fpp&quot;][0]), 3)</span>
 <span class="sd">    0.332</span>
-<span class="sd">    &gt;&gt;&gt; round(float(result["fp"][-1]), 4)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(result[&quot;fp&quot;][-1]), 4)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span>
     <span class="n">solution</span> <span class="o">=</span> <span class="n">_blasius_integrate</span><span class="p">(</span><span class="n">hi</span><span class="p">,</span> <span class="n">eta_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
     <span class="k">while</span> <span class="n">solution</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
@@ -752,14 +752,14 @@
             <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span>
 
     <span class="n">eta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">eta_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">"eta"</span><span class="p">:</span> <span class="n">eta</span><span class="p">,</span> <span class="s2">"f"</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">"fp"</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">"fpp"</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">eta</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;fp&quot;</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;fpp&quot;</span><span class="p">:</span> <span class="n">solution</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]}</span></div>
 
 
 
 <div class="viewcode-block" id="blasius_boundary_layer_thickness">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.blasius_boundary_layer_thickness">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">blasius_boundary_layer_thickness</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">U_inf</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">eta_99</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">4.91</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Blasius laminar boundary-layer thickness :math:`\\delta_{99}(x)`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Blasius laminar boundary-layer thickness :math:`\\delta_{99}(x)`.</span>
 
 <span class="sd">    The height at which :math:`u/U_\\infty` first reaches 0.99 occurs, in</span>
 <span class="sd">    similarity coordinates, at :math:`\\eta \\approx 4.91` (a property of</span>
@@ -770,9 +770,9 @@
 <span class="sd">        \\delta_{99}(x) = \\eta_{99}\\sqrt{\\frac{\\nu x}{U_\\infty}}</span>
 <span class="sd">            \\propto \\sqrt{x}.</span>
 
-<span class="sd">    The boundary layer's parabolic-looking growth with downstream distance</span>
-<span class="sd">    -- much slower than the layer's own streamwise extent -- is exactly the</span>
-<span class="sd">    "thin layer" assumption Ludwig Prandtl's 1904 boundary-layer theory</span>
+<span class="sd">    The boundary layer&#39;s parabolic-looking growth with downstream distance</span>
+<span class="sd">    -- much slower than the layer&#39;s own streamwise extent -- is exactly the</span>
+<span class="sd">    &quot;thin layer&quot; assumption Ludwig Prandtl&#39;s 1904 boundary-layer theory</span>
 <span class="sd">    used to simplify Navier-Stokes into the boundary-layer equations Blasius</span>
 <span class="sd">    then solved.</span>
 
@@ -785,7 +785,7 @@
 <span class="sd">    nu : float</span>
 <span class="sd">        Kinematic viscosity.</span>
 <span class="sd">    eta_99 : float, default 4.91</span>
-<span class="sd">        Similarity coordinate at which :math:`f'(\\eta)=0.99`.</span>
+<span class="sd">        Similarity coordinate at which :math:`f&#39;(\\eta)=0.99`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -801,14 +801,14 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(blasius_boundary_layer_thickness(x=1.0, U_inf=1.0, nu=1e-4)), 4)</span>
 <span class="sd">    0.0491</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">U_inf</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;U_inf must be positive, got </span><span class="si">{</span><span class="n">U_inf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"x must be positive (measured from the leading edge)"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;x must be positive (measured from the leading edge)&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">eta_99</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nu</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">U_inf</span><span class="p">)</span></div>
 
 
@@ -816,15 +816,15 @@
 <div class="viewcode-block" id="blasius_skin_friction_coefficient">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.blasius_skin_friction_coefficient">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">blasius_skin_friction_coefficient</span><span class="p">(</span><span class="n">reynolds_x</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">fpp0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.33206</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Local skin-friction coefficient of the Blasius boundary layer.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Local skin-friction coefficient of the Blasius boundary layer.</span>
 
-<span class="sd">    The wall shear stress :math:`\\tau_w = \\mu U_\\infty f''(0)\\sqrt{U_\\infty/(\\nu x)}`</span>
+<span class="sd">    The wall shear stress :math:`\\tau_w = \\mu U_\\infty f&#39;&#39;(0)\\sqrt{U_\\infty/(\\nu x)}`</span>
 <span class="sd">    gives a local skin-friction coefficient</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        c_f(x) = \\frac{\\tau_w}{\\tfrac{1}{2}\\rho U_\\infty^2}</span>
-<span class="sd">            = \\frac{2 f''(0)}{\\sqrt{Re_x}}, \\qquad</span>
+<span class="sd">            = \\frac{2 f&#39;&#39;(0)}{\\sqrt{Re_x}}, \\qquad</span>
 <span class="sd">        Re_x = \\frac{U_\\infty x}{\\nu},</span>
 
 <span class="sd">    the classic :math:`c_f \\propto Re_x^{-1/2}` scaling of a laminar</span>
@@ -835,7 +835,7 @@
 <span class="sd">    reynolds_x : array_like of float</span>
 <span class="sd">        Local Reynolds number :math:`Re_x = U_\\infty x/\\nu`; must be positive.</span>
 <span class="sd">    fpp0 : float, default 0.33206</span>
-<span class="sd">        The Blasius constant :math:`f''(0)`, as returned by :func:`blasius_solve`.</span>
+<span class="sd">        The Blasius constant :math:`f&#39;&#39;(0)`, as returned by :func:`blasius_solve`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -851,10 +851,10 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(blasius_skin_friction_coefficient(reynolds_x=1e4)), 5)</span>
 <span class="sd">    0.00664</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">reynolds_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reynolds_x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">reynolds_x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"reynolds_x must be positive"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;reynolds_x must be positive&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">fpp0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">reynolds_x</span><span class="p">)</span></div>
 
 </pre></div>

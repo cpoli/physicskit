@@ -411,13 +411,13 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.condensed.models</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Canonical condensed-matter lattice models: SSH, graphene, Haldane, Kane-Mele, BHZ, Kitaev chain.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Canonical condensed-matter lattice models: SSH, graphene, Haldane, Kane-Mele, BHZ, Kitaev chain.</span>
 
 <span class="sd">All 2D Bloch Hamiltonians in this module are functions of the *reduced*</span>
 <span class="sd">crystal momentum ``(k1, k2)`` described in :mod:`physicskit.condensed.tight_binding`</span>
 <span class="sd">(periodic gauge, each component periodic on :math:`[0, 2\\pi)`), which is the</span>
 <span class="sd">convention expected by :func:`physicskit.condensed.topology.compute_chern_number`.</span>
-<span class="sd">"""</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -426,18 +426,18 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.tight_binding</span><span class="w"> </span><span class="kn">import</span> <span class="n">Hamiltonian</span><span class="p">,</span> <span class="n">Lattice</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"ssh_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"ssh_lattice_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"graphene_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"graphene_lattice_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"haldane_model"</span><span class="p">,</span>
-    <span class="s2">"haldane_lattice_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"kane_mele_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"bhz_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"bhz_ribbon_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"kitaev_chain_hamiltonian"</span><span class="p">,</span>
-    <span class="s2">"kitaev_chain_bdg_real_space"</span><span class="p">,</span>
-    <span class="s2">"harper_hofstadter_hamiltonian"</span><span class="p">,</span>
+    <span class="s2">&quot;ssh_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ssh_lattice_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;graphene_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;graphene_lattice_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;haldane_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;haldane_lattice_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kane_mele_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bhz_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bhz_ribbon_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kitaev_chain_hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kitaev_chain_bdg_real_space&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harper_hofstadter_hamiltonian&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">_SIGMA_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
@@ -452,7 +452,7 @@
 <div class="viewcode-block" id="ssh_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.ssh_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ssh_hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bloch Hamiltonian of the Su-Schrieffer-Heeger (SSH) dimerized chain.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the Su-Schrieffer-Heeger (SSH) dimerized chain.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -481,7 +481,7 @@
 <span class="sd">    &gt;&gt;&gt; H = ssh_hamiltonian(k=0.0, v=0.5, w=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(np.linalg.eigvalsh(H), 8)</span>
 <span class="sd">    array([-1.5,  1.5])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span></div>
 
@@ -490,7 +490,7 @@
 <div class="viewcode-block" id="ssh_lattice_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.ssh_lattice_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ssh_lattice_hamiltonian</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hamiltonian</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Build the SSH chain as a :class:`~physicskit.condensed.tight_binding.Hamiltonian`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the SSH chain as a :class:`~physicskit.condensed.tight_binding.Hamiltonian`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -516,8 +516,8 @@
 <span class="sd">    &gt;&gt;&gt; H = ssh_lattice_hamiltonian(v=0.5, w=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(H.bands([0.0]), 8)</span>
 <span class="sd">    array([-1.5,  1.5])</span>
-<span class="sd">    """</span>
-    <span class="n">lat</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice_vectors</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.0</span><span class="p">]],</span> <span class="n">orbitals</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice_vectors</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.0</span><span class="p">]],</span> <span class="n">orbitals</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span>
     <span class="n">H</span><span class="o">.</span><span class="n">add_hopping</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">v</span><span class="p">)</span>
     <span class="n">H</span><span class="o">.</span><span class="n">add_hopping</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">w</span><span class="p">)</span>
@@ -531,7 +531,7 @@
 <div class="viewcode-block" id="graphene_lattice_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.graphene_lattice_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">graphene_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hamiltonian</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Nearest-neighbor honeycomb (graphene) tight-binding Hamiltonian.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Nearest-neighbor honeycomb (graphene) tight-binding Hamiltonian.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -545,7 +545,7 @@
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
 <span class="sd">    graphene_hamiltonian : Closed-form 2x2 Bloch Hamiltonian equivalent to this builder.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lat</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">honeycomb</span><span class="p">()</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span>
     <span class="n">H</span><span class="o">.</span><span class="n">add_hopping</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
@@ -558,7 +558,7 @@
 <div class="viewcode-block" id="graphene_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.graphene_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">graphene_hamiltonian</span><span class="p">(</span><span class="n">k1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bloch Hamiltonian of nearest-neighbor graphene (honeycomb lattice).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of nearest-neighbor graphene (honeycomb lattice).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -589,7 +589,7 @@
 <span class="sd">    &gt;&gt;&gt; eigs = np.linalg.eigvalsh(graphene_hamiltonian(*(K + [1e-4, 0])))</span>
 <span class="sd">    &gt;&gt;&gt; round(float(eigs[1] / 1e-4), 4)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">graphene_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">bloch</span><span class="p">([</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">])</span></div>
 
 
@@ -600,7 +600,7 @@
 <div class="viewcode-block" id="haldane_lattice_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.haldane_lattice_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">haldane_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">t2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Hamiltonian</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Haldane model (quantum anomalous Hall) as a :class:`Hamiltonian`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Haldane model (quantum anomalous Hall) as a :class:`Hamiltonian`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -620,7 +620,7 @@
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
 <span class="sd">    haldane_model : Closed-form 2x2 Bloch Hamiltonian equivalent to this builder.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lat</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">honeycomb</span><span class="p">()</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">onsite</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">M</span><span class="p">,</span> <span class="n">M</span><span class="p">])</span>
     <span class="n">H</span><span class="o">.</span><span class="n">add_hopping</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
@@ -637,7 +637,7 @@
 <div class="viewcode-block" id="haldane_model">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.haldane_model">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">haldane_model</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ky</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">t2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bloch Hamiltonian of the Haldane model on the honeycomb lattice.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the Haldane model on the honeycomb lattice.</span>
 
 <span class="sd">    The Haldane model realizes the quantum anomalous Hall effect: a Chern</span>
 <span class="sd">    insulator with zero *net* magnetic flux per unit cell, arising from a</span>
@@ -678,7 +678,7 @@
 <span class="sd">    &gt;&gt;&gt; H_trivial = lambda k1, k2: haldane_model(k1, k2, t=1.0, t2=0.2, phi=np.pi / 2, M=2.0)</span>
 <span class="sd">    &gt;&gt;&gt; compute_chern_number(H_trivial, grid_size=30)</span>
 <span class="sd">    [0, 0]</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">haldane_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span><span class="o">.</span><span class="n">bloch</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">])</span></div>
 
 
@@ -696,7 +696,7 @@
     <span class="n">lambda_v</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="n">lambda_r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bloch Hamiltonian of the Kane-Mele quantum spin Hall model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the Kane-Mele quantum spin Hall model.</span>
 
 <span class="sd">    Two time-reversed Haldane copies (intrinsic spin-orbit coupling with</span>
 <span class="sd">    opposite Chern-number-generating phase for each spin), realizing a</span>
@@ -740,7 +740,7 @@
 <span class="sd">    &gt;&gt;&gt; down_expected = kane_mele_hamiltonian(0.3, 0.7, lambda_so=0.06)[2:, 2:]</span>
 <span class="sd">    &gt;&gt;&gt; np.allclose(down, down_expected)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">H_up</span> <span class="o">=</span> <span class="n">haldane_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="n">lambda_so</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="n">lambda_v</span><span class="p">)</span><span class="o">.</span><span class="n">bloch</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">])</span>
     <span class="n">H_down</span> <span class="o">=</span> <span class="n">haldane_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="n">lambda_so</span><span class="p">,</span> <span class="n">phi</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="n">lambda_v</span><span class="p">)</span><span class="o">.</span><span class="n">bloch</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">])</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
@@ -785,7 +785,7 @@
 <div class="viewcode-block" id="bhz_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.bhz_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bhz_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ky</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bloch Hamiltonian of the Bernevig-Hughes-Zhang (BHZ) model for HgTe quantum wells.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the Bernevig-Hughes-Zhang (BHZ) model for HgTe quantum wells.</span>
 
 <span class="sd">    A minimal 4-band :math:`\\mathbb{Z}_2` topological insulator model,</span>
 <span class="sd">    block-diagonal in a time-reversed pair of 2x2 Dirac-like blocks. Basis</span>
@@ -816,7 +816,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; np.allclose(H[:2, :2], H[2:, 2:].conj())</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">eps</span> <span class="o">=</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">))</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span>
     <span class="n">dy</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ky</span><span class="p">)</span>
@@ -833,7 +833,7 @@
 <div class="viewcode-block" id="bhz_ribbon_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.bhz_ribbon_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bhz_ribbon_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_cells</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Real-space BHZ ribbon: periodic along ``x``, open (finite) along ``y``.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Real-space BHZ ribbon: periodic along ``x``, open (finite) along ``y``.</span>
 
 <span class="sd">    Truncating the ``y`` direction exposes the pair of helical, spin-locked</span>
 <span class="sd">    edge states that make the BHZ model a quantum spin Hall insulator --</span>
@@ -874,7 +874,7 @@
 <span class="sd">    &gt;&gt;&gt; spectrum_trivial = np.linalg.eigvalsh(bhz_ribbon_hamiltonian(kx=0.0, n_cells=40, M=-1.0, B=1.0))</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.any(np.abs(spectrum_trivial) &lt; 1e-6))</span>
 <span class="sd">    False</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">eps0</span> <span class="o">=</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">))</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span>
     <span class="n">dz0</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">))</span>
@@ -903,7 +903,7 @@
 <div class="viewcode-block" id="kitaev_chain_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.kitaev_chain_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kitaev_chain_hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Bogoliubov-de Gennes Bloch Hamiltonian of the Kitaev p-wave superconducting chain.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bogoliubov-de Gennes Bloch Hamiltonian of the Kitaev p-wave superconducting chain.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -935,7 +935,7 @@
 <span class="sd">    &gt;&gt;&gt; H = kitaev_chain_hamiltonian(k=np.pi / 2, mu=0.0, t=1.0, delta=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(np.linalg.eigvalsh(H), 8)</span>
 <span class="sd">    array([-2.,  2.])</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">xi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="n">mu</span>
     <span class="n">d</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">xi</span> <span class="o">*</span> <span class="n">_SIGMA_Z</span> <span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">_SIGMA_Y</span></div>
@@ -945,7 +945,7 @@
 <div class="viewcode-block" id="kitaev_chain_bdg_real_space">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.kitaev_chain_bdg_real_space">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kitaev_chain_bdg_real_space</span><span class="p">(</span><span class="n">n_sites</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Real-space open-boundary BdG Hamiltonian of the Kitaev chain.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Real-space open-boundary BdG Hamiltonian of the Kitaev chain.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -975,7 +975,7 @@
 <span class="sd">    &gt;&gt;&gt; eigs = np.linalg.eigvalsh(H)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.abs(eigs[np.argmin(np.abs(eigs))]) &lt; 1e-6)</span>
 <span class="sd">    True</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">N</span> <span class="o">=</span> <span class="n">n_sites</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
@@ -1000,7 +1000,7 @@
 <div class="viewcode-block" id="harper_hofstadter_hamiltonian">
 <a class="viewcode-back" href="../../../api/condensed.html#physicskit.condensed.harper_hofstadter_hamiltonian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">harper_hofstadter_hamiltonian</span><span class="p">(</span><span class="n">k1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Bloch Hamiltonian of the square-lattice Harper-Hofstadter model at flux ``p/q``.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Bloch Hamiltonian of the square-lattice Harper-Hofstadter model at flux ``p/q``.</span>
 
 <span class="sd">    A charged particle on a square lattice threaded by a uniform magnetic</span>
 <span class="sd">    flux :math:`p/q` (in units of the flux quantum) per plaquette, in</span>
@@ -1063,7 +1063,7 @@
 <span class="sd">    [-1, 2, -1]</span>
 <span class="sd">    &gt;&gt;&gt; sum(chern_numbers)</span>
 <span class="sd">    0</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">q</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="n">H</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">diag_indices</span><span class="p">(</span><span class="n">q</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">m</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span>
