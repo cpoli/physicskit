@@ -6,11 +6,12 @@ physicskit
 **physicskit** is a unified scientific toolkit for computational physics,
 spanning |num_subpackages| domains -- from stellar dynamics to quantum
 entanglement -- under one NumPy-based API. It's built for physics students
-working through a textbook problem, researchers prototyping a new model,
-and educators building a demonstration: every subpackage is called,
-tested, and visualized the same way, so moving from classical mechanics to
-condensed matter to general relativity means picking up new physics, not a
-new set of conventions. Units stay native to the field instead:
+working through a textbook problem, curious learners exploring a topic
+on their own, and educators building a demonstration: every subpackage
+is called, tested, and visualized the same way, so moving from classical
+mechanics to condensed matter to general relativity means picking up new
+physics, not a new set of conventions. Units stay native to the field
+instead:
 :math:`G=1` for orbits, :math:`\hbar=1` for quantum states, :math:`k_B=1`
 for statistical mechanics, matching how the papers you're checking against
 actually write it, rather than forcing everything through SI.
