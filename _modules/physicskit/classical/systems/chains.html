@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,16 +409,16 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.classical.systems.chains</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Coupled-oscillator and soliton lattice chains.</span>
+<span></span><span class="sd">"""Coupled-oscillator and soliton lattice chains.</span>
 
 <span class="sd">All three chains are 1D lattices of N particles with fixed</span>
 <span class="sd">(wall-anchored) boundary conditions, i.e. q_0 = q_{N+1} = 0. Each is a</span>
 <span class="sd">separable Hamiltonian system H = sum_i p_i^2/(2m) + V(q), with the</span>
 <span class="sd">force computed by a hand-written ``@njit`` loop over lattice sites (the</span>
-<span class="sd">&quot;lattice loops&quot; the project brief calls out for mandatory Numba</span>
+<span class="sd">"lattice loops" the project brief calls out for mandatory Numba</span>
 <span class="sd">acceleration) rather than through the symbolic engine, since the</span>
 <span class="sd">physics is fixed and the loop structure is identical for every N.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -431,7 +429,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">HamiltonianSystem</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;HarmonicChain&quot;</span><span class="p">,</span> <span class="s2">&quot;FPUTChain&quot;</span><span class="p">,</span> <span class="s2">&quot;SineGordonChain&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"HarmonicChain"</span><span class="p">,</span> <span class="s2">"FPUTChain"</span><span class="p">,</span> <span class="s2">"SineGordonChain"</span><span class="p">]</span>
 
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
@@ -471,19 +469,19 @@
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">normal_mode_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Angular frequencies omega_k of the N linear normal modes of a fixed-fixed harmonic chain.</span>
+<span class="w">        </span><span class="sd">"""Angular frequencies omega_k of the N linear normal modes of a fixed-fixed harmonic chain.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray, shape (n,)</span>
 <span class="sd">            omega_k for k = 1..N.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span>
         <span class="n">modes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">modes</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">normal_mode_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform (q, p) to normal-mode coordinates (Q_k, P_k).</span>
+<span class="w">        </span><span class="sd">"""Transform (q, p) to normal-mode coordinates (Q_k, P_k).</span>
 
 <span class="sd">        Via the discrete sine transform appropriate for fixed-fixed</span>
 <span class="sd">        boundaries: ``Q_k = sqrt(2/(N+1)) * sum_i q_i sin(i*k*pi/(N+1))``,</span>
@@ -497,7 +495,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Q, P : ndarray, shape (n,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="k">if</span> <span class="n">q</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">q</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">p</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span>
@@ -509,7 +507,7 @@
         <span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">P</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">modal_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Energy stored in each normal mode.</span>
+<span class="w">        </span><span class="sd">"""Energy stored in each normal mode.</span>
 
 <span class="sd">        ``E_k = 0.5*(P_k^2/m + m*omega_k^2*Q_k^2)`` -- the diagnostic</span>
 <span class="sd">        used to show non-ergodic recurrence (the FPUT paradox) in</span>
@@ -524,7 +522,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray, shape (n,)</span>
 <span class="sd">            E_k for k = 1..N.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">Q</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normal_mode_coords</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
         <span class="n">omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normal_mode_frequencies</span><span class="p">()</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">P</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -533,7 +531,7 @@
 <div class="viewcode-block" id="HarmonicChain">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.HarmonicChain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HarmonicChain</span><span class="p">(</span><span class="n">_ChainBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear chain of N masses coupled by identical springs k, both</span>
+<span class="w">    </span><span class="sd">"""Linear chain of N masses coupled by identical springs k, both</span>
 <span class="sd">    ends fixed to walls -- the exactly-solvable reference lattice whose</span>
 <span class="sd">    normal modes are the sine waves used to analyze the non-linear</span>
 <span class="sd">    :class:`FPUTChain` below.</span>
@@ -544,7 +542,7 @@
 <span class="sd">        Initial displacements and momenta.</span>
 <span class="sd">    m, k : float</span>
 <span class="sd">        Mass and spring constant (uniform across the chain).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
@@ -595,11 +593,11 @@
 <div class="viewcode-block" id="FPUTChain">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.FPUTChain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FPUTChain</span><span class="p">(</span><span class="n">_ChainBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fermi-Pasta-Ulam-Tsingou beta-lattice: N masses (default 32) with</span>
+<span class="w">    </span><span class="sd">"""Fermi-Pasta-Ulam-Tsingou beta-lattice: N masses (default 32) with</span>
 <span class="sd">    the quartic non-linear coupling potential</span>
 <span class="sd">    V(r) = (k/2) r^2 + (beta/4) r^4, r = q_{i+1} - q_i.</span>
 
-<span class="sd">    Famous for its &quot;paradox&quot;: exciting a single low-order normal mode</span>
+<span class="sd">    Famous for its "paradox": exciting a single low-order normal mode</span>
 <span class="sd">    does *not* thermalize energy across all modes as naive ergodic</span>
 <span class="sd">    reasoning predicts; instead the energy in :meth:`modal_energies`</span>
 <span class="sd">    returns almost exactly to the initially excited mode after a</span>
@@ -617,7 +615,7 @@
 <span class="sd">        Which normal mode to excite initially.</span>
 <span class="sd">    amplitude : float</span>
 <span class="sd">        Initial amplitude of that mode.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span>
@@ -668,7 +666,7 @@
 <div class="viewcode-block" id="SineGordonChain">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.SineGordonChain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SineGordonChain</span><span class="p">(</span><span class="n">_ChainBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discretized pendulum chain (Frenkel-Kontorova model): N coupled</span>
+<span class="w">    </span><span class="sd">"""Discretized pendulum chain (Frenkel-Kontorova model): N coupled</span>
 <span class="sd">    pendulums, V = sum_i [k/2 (q_{i+1}-q_i)^2 + (1 - cos q_i)], with</span>
 <span class="sd">    free (Neumann-like) boundary conditions so a topological kink can</span>
 <span class="sd">    propagate off either end without an artificial restoring wall.</span>
@@ -688,7 +686,7 @@
 <span class="sd">    q0, p0 : array-like, shape (n,), optional</span>
 <span class="sd">        Initial displacements and momenta; defaults to all zeros. Use</span>
 <span class="sd">        :meth:`kink` to build soliton initial data instead.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">q0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">q0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -709,11 +707,11 @@
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.SineGordonChain.kink">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">kink</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">center</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">velocity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">polarity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Continuum-limit single-kink (or antikink, polarity=-1) initial</span>
+<span class="w">        </span><span class="sd">"""Continuum-limit single-kink (or antikink, polarity=-1) initial</span>
 <span class="sd">        condition, optionally boosted to move at ``velocity`` (sites per</span>
 <span class="sd">        unit time; to the right for positive ``velocity``, assuming the</span>
-<span class="sd">        default ``m=1, k=1`` -- i.e. a natural wave/&quot;light&quot; speed</span>
-<span class="sd">        ``c = sqrt(k/m) = 1``, the sine-Gordon equation&#39;s exact</span>
+<span class="sd">        default ``m=1, k=1`` -- i.e. a natural wave/"light" speed</span>
+<span class="sd">        ``c = sqrt(k/m) = 1``, the sine-Gordon equation's exact</span>
 <span class="sd">        Lorentz-invariance scale, so ``|velocity| &lt; 1`` is required).</span>
 
 <span class="sd">        ``width`` is *not* a free shape knob: q_xx = sin(q) (the</span>
@@ -755,9 +753,9 @@
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If ``abs(velocity) &gt;= 1``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;|velocity| must be &lt; 1 (the natural wave speed sqrt(k/m), default 1) for a valid moving kink&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"|velocity| must be &lt; 1 (the natural wave speed sqrt(k/m), default 1) for a valid moving kink"</span><span class="p">)</span>
         <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">velocity</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span>

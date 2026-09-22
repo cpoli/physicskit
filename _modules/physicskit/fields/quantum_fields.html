@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fields.quantum_fields</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Gross-Pitaevskii mean-field theory for trapped, rotating Bose-Einstein condensates.</span>
+<span></span><span class="sd">"""Gross-Pitaevskii mean-field theory for trapped, rotating Bose-Einstein condensates.</span>
 
 <span class="sd">Solves the time-dependent Gross-Pitaevskii equation (GPE)</span>
 
@@ -430,33 +428,33 @@
 
 <span class="sd">A single quantized vortex, imprinted by multiplying the wavefunction by</span>
 <span class="sd">:math:`(x-x_0)+i(y-y_0)`, is used throughout as the worked example of a</span>
-<span class="sd">&quot;vortex lattice&quot; building block: :func:`gpe_relax` finds it as a genuine</span>
+<span class="sd">"vortex lattice" building block: :func:`gpe_relax` finds it as a genuine</span>
 <span class="sd">stationary GPE solution, and comparing its rotating-frame energy against</span>
 <span class="sd">the vortex-free ground state reproduces the standard textbook criterion</span>
 <span class="sd">for the critical rotation frequency :math:`\\Omega_c` above which nucleating</span>
 <span class="sd">a vortex lowers the energy.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;harmonic_trap_grid&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;gpe_imprint_vortex&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;gpe_relax&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;gpe_evolve&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;gpe_energy&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;count_vortices&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;casimir_mode_frequencies&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;casimir_energy_1d&quot;</span><span class="p">,</span>
+    <span class="s2">"harmonic_trap_grid"</span><span class="p">,</span>
+    <span class="s2">"gpe_imprint_vortex"</span><span class="p">,</span>
+    <span class="s2">"gpe_relax"</span><span class="p">,</span>
+    <span class="s2">"gpe_evolve"</span><span class="p">,</span>
+    <span class="s2">"gpe_energy"</span><span class="p">,</span>
+    <span class="s2">"count_vortices"</span><span class="p">,</span>
+    <span class="s2">"casimir_mode_frequencies"</span><span class="p">,</span>
+    <span class="s2">"casimir_energy_1d"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="harmonic_trap_grid">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.harmonic_trap_grid">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">harmonic_trap_grid</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a centered real-space and wavenumber grid for a 2D harmonic trap.</span>
+<span class="w">    </span><span class="sd">"""Build a centered real-space and wavenumber grid for a 2D harmonic trap.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -479,11 +477,11 @@
 <span class="sd">    &gt;&gt;&gt; X, Y, KX, KY, K2 = harmonic_trap_grid(32, 12.0)</span>
 <span class="sd">    &gt;&gt;&gt; float(X[0, 0])</span>
 <span class="sd">    -6.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">length</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
-    <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">K2</span> <span class="o">=</span> <span class="n">KX</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">KY</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span><span class="p">,</span> <span class="n">K2</span></div>
 
@@ -492,7 +490,7 @@
 <div class="viewcode-block" id="gpe_imprint_vortex">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.gpe_imprint_vortex">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gpe_imprint_vortex</span><span class="p">(</span><span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Imprint one singly-quantized vortex per position by multiplying in a phase winding.</span>
+<span class="w">    </span><span class="sd">"""Imprint one singly-quantized vortex per position by multiplying in a phase winding.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -517,7 +515,7 @@
 <span class="sd">    &gt;&gt;&gt; psi = gpe_imprint_vortex(psi0, X, Y, [(0.0, 0.0)])</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(psi[16, 16]) &lt; 1e-10)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">norm0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -542,7 +540,7 @@
     <span class="n">Omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="n">n_particles</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Relax a GPE initial condition toward a stationary state via imaginary-time propagation.</span>
+<span class="w">    </span><span class="sd">"""Relax a GPE initial condition toward a stationary state via imaginary-time propagation.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -596,10 +594,10 @@
 <span class="sd">    &gt;&gt;&gt; psi0_v = gpe_imprint_vortex(np.exp(-0.5 * (X**2 + Y**2)).astype(complex), X, Y, [(0.0, 0.0)])</span>
 <span class="sd">    &gt;&gt;&gt; psi_v = gpe_relax(psi0_v, V, g, dtau=5e-4, steps=4000, X=X, Y=Y, K2=K2)</span>
 <span class="sd">    &gt;&gt;&gt; E0, E1 = gpe_energy(psi_vf, V, g, X, Y, K2), gpe_energy(psi_v, V, g, X, Y, K2)</span>
-<span class="sd">    &gt;&gt;&gt; Omega_c = (E1[&quot;total&quot;] - E0[&quot;total&quot;]) / (E1[&quot;angular_momentum&quot;] - E0[&quot;angular_momentum&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; Omega_c = (E1["total"] - E0["total"]) / (E1["angular_momentum"] - E0["angular_momentum"])</span>
 <span class="sd">    &gt;&gt;&gt; bool(0.0 &lt; Omega_c &lt; 1.0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span>
@@ -622,10 +620,10 @@
 <div class="viewcode-block" id="gpe_evolve">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.gpe_evolve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gpe_evolve</span><span class="p">(</span><span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">V</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">K2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">snapshot_stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Real-time propagation of the 2D Gross-Pitaevskii / cubic NLS equation via split-step Fourier.</span>
+<span class="w">    </span><span class="sd">"""Real-time propagation of the 2D Gross-Pitaevskii / cubic NLS equation via split-step Fourier.</span>
 
 <span class="sd">    Solves :math:`i\\partial_t\\psi = [-\\tfrac{1}{2}\\nabla^2 + V + g|\\psi|^2]\\psi`</span>
-<span class="sd">    forward in *real* time (unlike :func:`gpe_relax`&#39;s imaginary-time</span>
+<span class="sd">    forward in *real* time (unlike :func:`gpe_relax`'s imaginary-time</span>
 <span class="sd">    relaxation, which only finds stationary states): the kinetic term is</span>
 <span class="sd">    exact in Fourier space, and the potential-plus-nonlinear term is exact</span>
 <span class="sd">    as a pointwise phase rotation in real space, the same split-step</span>
@@ -642,8 +640,8 @@
 <span class="sd">      around the trap under the density gradient -- real vortex dynamics,</span>
 <span class="sd">      as opposed to the static relaxed state :func:`gpe_relax` finds.</span>
 <span class="sd">    - With ``V = 0`` (or weak) and attractive interactions (``g &lt; 0``</span>
-<span class="sd">      here, opposite sign convention from ``nls_evolve``&#39;s ``g`` since this</span>
-<span class="sd">      module&#39;s equation carries a ``+g|psi|^2`` term), a sufficiently tall,</span>
+<span class="sd">      here, opposite sign convention from ``nls_evolve``'s ``g`` since this</span>
+<span class="sd">      module's equation carries a ``+g|psi|^2`` term), a sufficiently tall,</span>
 <span class="sd">      narrow initial packet self-focuses, concentrating into a narrower,</span>
 <span class="sd">      taller peak -- a numerical stand-in for wave collapse. True collapse</span>
 <span class="sd">      is a singularity in finite time; this integrator (like any</span>
@@ -696,7 +694,7 @@
 <span class="sd">    &gt;&gt;&gt; norms = np.sum(np.abs(snaps) ** 2, axis=(1, 2)) * dxg * dxg</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(norms - norms[0])) &lt; 1e-6)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">lin_prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">K2</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
     <span class="n">n_snap</span> <span class="o">=</span> <span class="n">steps</span> <span class="o">//</span> <span class="n">snapshot_stride</span> <span class="o">+</span> <span class="mi">1</span>
@@ -721,7 +719,7 @@
 <div class="viewcode-block" id="gpe_energy">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.gpe_energy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gpe_energy</span><span class="p">(</span><span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">V</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">K2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate the energy and angular momentum of a GPE wavefunction.</span>
+<span class="w">    </span><span class="sd">"""Evaluate the energy and angular momentum of a GPE wavefunction.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -737,7 +735,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;kinetic&quot;, &quot;potential&quot;, &quot;interaction&quot;, &quot;angular_momentum&quot;, &quot;total&quot;}``,</span>
+<span class="sd">        ``{"kinetic", "potential", "interaction", "angular_momentum", "total"}``,</span>
 <span class="sd">        where ``total`` is the lab-frame energy (kinetic + potential + interaction)</span>
 <span class="sd">        and ``angular_momentum`` is :math:`\\langle L_z \\rangle`. The</span>
 <span class="sd">        rotating-frame energy at rotation rate ``Omega`` is</span>
@@ -751,9 +749,9 @@
 <span class="sd">    &gt;&gt;&gt; psi = np.exp(-0.5 * (X ** 2 + Y ** 2)).astype(complex)</span>
 <span class="sd">    &gt;&gt;&gt; psi *= 1.0 / np.sqrt(np.sum(np.abs(psi) ** 2) * (X[1, 0] - X[0, 0]) ** 2)</span>
 <span class="sd">    &gt;&gt;&gt; E = gpe_energy(psi, V, g=0.0, X=X, Y=Y, K2=K2)</span>
-<span class="sd">    &gt;&gt;&gt; round(float(E[&quot;kinetic&quot;] + E[&quot;potential&quot;]), 4)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(E["kinetic"] + E["potential"]), 4)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">psi_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
@@ -765,14 +763,14 @@
     <span class="n">dpsidy</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
     <span class="n">angular_momentum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">dpsidy</span> <span class="o">-</span> <span class="n">Y</span> <span class="o">*</span> <span class="n">dpsidx</span><span class="p">)))</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
     <span class="n">total</span> <span class="o">=</span> <span class="n">kinetic</span> <span class="o">+</span> <span class="n">potential</span> <span class="o">+</span> <span class="n">interaction</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;kinetic&quot;</span><span class="p">:</span> <span class="n">kinetic</span><span class="p">,</span> <span class="s2">&quot;potential&quot;</span><span class="p">:</span> <span class="n">potential</span><span class="p">,</span> <span class="s2">&quot;interaction&quot;</span><span class="p">:</span> <span class="n">interaction</span><span class="p">,</span> <span class="s2">&quot;angular_momentum&quot;</span><span class="p">:</span> <span class="n">angular_momentum</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="n">total</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"kinetic"</span><span class="p">:</span> <span class="n">kinetic</span><span class="p">,</span> <span class="s2">"potential"</span><span class="p">:</span> <span class="n">potential</span><span class="p">,</span> <span class="s2">"interaction"</span><span class="p">:</span> <span class="n">interaction</span><span class="p">,</span> <span class="s2">"angular_momentum"</span><span class="p">:</span> <span class="n">angular_momentum</span><span class="p">,</span> <span class="s2">"total"</span><span class="p">:</span> <span class="n">total</span><span class="p">}</span></div>
 
 
 
 <div class="viewcode-block" id="count_vortices">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.count_vortices">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">count_vortices</span><span class="p">(</span><span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">density_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Locate quantized vortices by summing the phase winding around each grid plaquette.</span>
+<span class="w">    </span><span class="sd">"""Locate quantized vortices by summing the phase winding around each grid plaquette.</span>
 
 <span class="sd">    Plaquettes in very low density regions are excluded, since the phase</span>
 <span class="sd">    of a near-zero-amplitude wavefunction is dominated by numerical noise</span>
@@ -795,7 +793,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of int, shape (n, n)</span>
-<span class="sd">        Integer winding number around each plaquette&#39;s corner ``(i, j)``;</span>
+<span class="sd">        Integer winding number around each plaquette's corner ``(i, j)``;</span>
 <span class="sd">        nonzero entries mark a vortex core (``+1`` or ``-1`` for a</span>
 <span class="sd">        singly-quantized vortex/antivortex) enclosed by that plaquette.</span>
 
@@ -808,7 +806,7 @@
 <span class="sd">    &gt;&gt;&gt; winding = count_vortices(psi_vortex)</span>
 <span class="sd">    &gt;&gt;&gt; int(np.sum(np.abs(winding)))</span>
 <span class="sd">    1</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
     <span class="n">dphi_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">phase</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">phase</span><span class="p">)))</span>
     <span class="n">dphi_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">phase</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">phase</span><span class="p">)))</span>
@@ -824,7 +822,7 @@
 <span class="c1"># -- QFT vacuum fluctuations / Casimir effect (1D toy cavity) ----------------</span>
 <span class="c1">#</span>
 <span class="c1"># A simplified, standard textbook treatment, not a 3D electromagnetic</span>
-<span class="c1"># calculation: a scalar field confined between two parallel &quot;plates&quot; a</span>
+<span class="c1"># calculation: a scalar field confined between two parallel "plates" a</span>
 <span class="c1"># distance d apart has only the discrete standing-wave modes</span>
 <span class="c1"># omega_n = n*pi*c/d (n=1,2,...) rather than a continuum, and the</span>
 <span class="c1"># difference between this discrete zero-point sum and the continuum it</span>
@@ -841,7 +839,7 @@
 <div class="viewcode-block" id="casimir_mode_frequencies">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.casimir_mode_frequencies">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">casimir_mode_frequencies</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discrete standing-wave mode frequencies of a 1D cavity of plate separation ``d``.</span>
+<span class="w">    </span><span class="sd">"""Discrete standing-wave mode frequencies of a 1D cavity of plate separation ``d``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -867,7 +865,7 @@
 <span class="sd">    &gt;&gt;&gt; omega = casimir_mode_frequencies(d=2.0, c=1.0, n_max=3)</span>
 <span class="sd">    &gt;&gt;&gt; [round(float(w), 4) for w in omega]</span>
 <span class="sd">    [1.5708, 3.1416, 4.7124]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="n">d</span></div>
 
@@ -876,7 +874,7 @@
 <div class="viewcode-block" id="casimir_energy_1d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.casimir_energy_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">casimir_energy_1d</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regularized zero-point (Casimir) energy of the discrete 1D cavity spectrum.</span>
+<span class="w">    </span><span class="sd">"""Regularized zero-point (Casimir) energy of the discrete 1D cavity spectrum.</span>
 
 <span class="sd">    Uses the standard exponential-cutoff regularization: the sum</span>
 <span class="sd">    :math:`\\sum_n n x^n = x/(1-x)^2` (with :math:`x=e^{-a}`,</span>
@@ -936,7 +934,7 @@
 
 <span class="sd">    &gt;&gt;&gt; bool(casimir_energy_1d(1.0) &lt; casimir_energy_1d(2.0) &lt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">cutoff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cutoff</span> <span class="o">=</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">d</span> <span class="o">/</span> <span class="n">c</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">d</span>

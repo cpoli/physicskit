@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,56 +409,56 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.quantum.core.operators</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Dirac algebra helpers: Pauli matrices, spin/ladder operators, commutators.</span>
+<span></span><span class="sa">r</span><span class="sd">"""Dirac algebra helpers: Pauli matrices, spin/ladder operators, commutators.</span>
 
 <span class="sd">Conventions follow Cohen-Tannoudji, Diu &amp; Laloe, with :math:`\hbar = 1`</span>
 <span class="sd">unless a function explicitly takes ``hbar`` as a parameter.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;sigma_x&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;sigma_y&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;sigma_z&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;identity2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PAULI&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;spin_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;annihilation_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;creation_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;number_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;position_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;momentum_operator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;commutator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;anticommutator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;expectation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;is_hermitian&quot;</span><span class="p">,</span>
+    <span class="s2">"sigma_x"</span><span class="p">,</span>
+    <span class="s2">"sigma_y"</span><span class="p">,</span>
+    <span class="s2">"sigma_z"</span><span class="p">,</span>
+    <span class="s2">"identity2"</span><span class="p">,</span>
+    <span class="s2">"PAULI"</span><span class="p">,</span>
+    <span class="s2">"spin_operator"</span><span class="p">,</span>
+    <span class="s2">"annihilation_operator"</span><span class="p">,</span>
+    <span class="s2">"creation_operator"</span><span class="p">,</span>
+    <span class="s2">"number_operator"</span><span class="p">,</span>
+    <span class="s2">"position_operator"</span><span class="p">,</span>
+    <span class="s2">"momentum_operator"</span><span class="p">,</span>
+    <span class="s2">"commutator"</span><span class="p">,</span>
+    <span class="s2">"anticommutator"</span><span class="p">,</span>
+    <span class="s2">"expectation"</span><span class="p">,</span>
+    <span class="s2">"is_hermitian"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># --- Pauli matrices -------------------------------------------------------</span>
 
 <span class="n">sigma_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;The Pauli matrix :math:`\sigma_x = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix}`.&quot;&quot;&quot;</span>
+<span class="sa">r</span><span class="sd">"""The Pauli matrix :math:`\sigma_x = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix}`."""</span>
 
 <span class="n">sigma_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;The Pauli matrix :math:`\sigma_y = \begin{pmatrix} 0 &amp; -i \\ i &amp; 0 \end{pmatrix}`.&quot;&quot;&quot;</span>
+<span class="sa">r</span><span class="sd">"""The Pauli matrix :math:`\sigma_y = \begin{pmatrix} 0 &amp; -i \\ i &amp; 0 \end{pmatrix}`."""</span>
 
 <span class="n">sigma_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
-<span class="sa">r</span><span class="sd">&quot;&quot;&quot;The Pauli matrix :math:`\sigma_z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}`.&quot;&quot;&quot;</span>
+<span class="sa">r</span><span class="sd">"""The Pauli matrix :math:`\sigma_z = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}`."""</span>
 
 <span class="n">identity2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;The :math:`2\\times 2` identity matrix.&quot;&quot;&quot;</span>
+<span class="sd">"""The :math:`2\\times 2` identity matrix."""</span>
 
-<span class="n">PAULI</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">sigma_x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">sigma_y</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="n">sigma_z</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">:</span> <span class="n">identity2</span><span class="p">}</span>
-<span class="sd">&quot;&quot;&quot;Dict mapping ``&#39;x&#39;``, ``&#39;y&#39;``, ``&#39;z&#39;``, ``&#39;i&#39;`` to the corresponding matrix.&quot;&quot;&quot;</span>
+<span class="n">PAULI</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="n">sigma_x</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">:</span> <span class="n">sigma_y</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">:</span> <span class="n">sigma_z</span><span class="p">,</span> <span class="s2">"i"</span><span class="p">:</span> <span class="n">identity2</span><span class="p">}</span>
+<span class="sd">"""Dict mapping ``'x'``, ``'y'``, ``'z'``, ``'i'`` to the corresponding matrix."""</span>
 
 
 <div class="viewcode-block" id="spin_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.spin_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">spin_operator</span><span class="p">(</span><span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Angular-momentum operator :math:`\hat S_\text{axis}` for spin quantum number ``s``.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Angular-momentum operator :math:`\hat S_\text{axis}` for spin quantum number ``s``.</span>
 
 <span class="sd">    For :math:`s=1/2` this reduces to :math:`(\hbar/2)\,\sigma_\text{axis}`. For</span>
 <span class="sd">    general :math:`s`, the :math:`(2s+1)`-dimensional matrix representation is</span>
@@ -476,7 +474,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    axis : {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;+&#39;, &#39;-&#39;}</span>
+<span class="sd">    axis : {'x', 'y', 'z', '+', '-'}</span>
 <span class="sd">        Which component (or ladder operator) to return.</span>
 <span class="sd">    s : float, default=0.5</span>
 <span class="sd">        Spin quantum number (may be integer or half-integer).</span>
@@ -492,12 +490,12 @@
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    ValueError</span>
-<span class="sd">        If ``axis`` is not one of ``&#39;x&#39;``, ``&#39;y&#39;``, ``&#39;z&#39;``, ``&#39;+&#39;``, ``&#39;-&#39;``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        If ``axis`` is not one of ``'x'``, ``'y'``, ``'z'``, ``'+'``, ``'-'``.</span>
+<span class="sd">    """</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">m_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span> <span class="o">-</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">)])</span>  <span class="c1"># m = s, s-1, ..., -s</span>
 
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"z"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">m_values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
 
     <span class="n">s_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
@@ -507,15 +505,15 @@
         <span class="n">s_plus</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">coeff</span>
     <span class="n">s_minus</span> <span class="o">=</span> <span class="n">s_plus</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"+"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">s_plus</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"-"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">s_minus</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"x"</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_plus</span> <span class="o">+</span> <span class="n">s_minus</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">"y"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">s_plus</span> <span class="o">-</span> <span class="n">s_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="n">j</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown axis </span><span class="si">{</span><span class="n">axis</span><span class="si">!r}</span><span class="s2">; expected &#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;+&#39; or &#39;-&#39;.&quot;</span><span class="p">)</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown axis </span><span class="si">{</span><span class="n">axis</span><span class="si">!r}</span><span class="s2">; expected 'x', 'y', 'z', '+' or '-'."</span><span class="p">)</span></div>
 
 
 
@@ -525,7 +523,7 @@
 <div class="viewcode-block" id="annihilation_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.annihilation_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">annihilation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Lowering operator :math:`\hat a` in a truncated Fock basis.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Lowering operator :math:`\hat a` in a truncated Fock basis.</span>
 
 <span class="sd">    Acts as :math:`\hat a \lvert n\rangle = \sqrt{n}\,\lvert n-1\rangle` on the</span>
 <span class="sd">    truncated basis :math:`\{\lvert 0\rangle, \dots, \lvert n_\text{max}-1\rangle\}`.</span>
@@ -540,7 +538,7 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        The :math:`n_\text{max}\times n_\text{max}` matrix representation of</span>
 <span class="sd">        :math:`\hat a`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_max</span><span class="p">,</span> <span class="n">n_max</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_max</span><span class="p">):</span>
         <span class="n">a</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -551,7 +549,7 @@
 <div class="viewcode-block" id="creation_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.creation_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">creation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Raising operator :math:`\hat a^\dagger`, the Hermitian conjugate of</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Raising operator :math:`\hat a^\dagger`, the Hermitian conjugate of</span>
 <span class="sd">    :func:`annihilation_operator`.</span>
 
 <span class="sd">    Parameters</span>
@@ -564,7 +562,7 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        The :math:`n_\text{max}\times n_\text{max}` matrix representation of</span>
 <span class="sd">        :math:`\hat a^\dagger`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">annihilation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span></div>
 
 
@@ -572,7 +570,7 @@
 <div class="viewcode-block" id="number_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.number_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">number_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Number operator :math:`\hat N = \hat a^\dagger \hat a`, diagonal with</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Number operator :math:`\hat N = \hat a^\dagger \hat a`, diagonal with</span>
 <span class="sd">    eigenvalues :math:`0, 1, \dots, n_\text{max}-1`.</span>
 
 <span class="sd">    Parameters</span>
@@ -585,7 +583,7 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        The :math:`n_\text{max}\times n_\text{max}` matrix representation of</span>
 <span class="sd">        :math:`\hat N`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">annihilation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">a</span></div>
 
@@ -594,7 +592,7 @@
 <div class="viewcode-block" id="position_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.position_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">position_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Harmonic-oscillator position operator in the truncated Fock basis,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Harmonic-oscillator position operator in the truncated Fock basis,</span>
 
 <span class="sd">    .. math::</span>
 
@@ -616,7 +614,7 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        The :math:`n_\text{max}\times n_\text{max}` matrix representation of</span>
 <span class="sd">        :math:`\hat x`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">annihilation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">omega</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div>
 
@@ -625,7 +623,7 @@
 <div class="viewcode-block" id="momentum_operator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.momentum_operator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">momentum_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Harmonic-oscillator momentum operator in the truncated Fock basis,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Harmonic-oscillator momentum operator in the truncated Fock basis,</span>
 
 <span class="sd">    .. math::</span>
 
@@ -647,7 +645,7 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        The :math:`n_\text{max}\times n_\text{max}` matrix representation of</span>
 <span class="sd">        :math:`\hat p`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">annihilation_operator</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hbar</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span></div>
 
@@ -659,7 +657,7 @@
 <div class="viewcode-block" id="commutator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.commutator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">commutator</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The commutator :math:`[\hat A, \hat B] = \hat A \hat B - \hat B \hat A`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The commutator :math:`[\hat A, \hat B] = \hat A \hat B - \hat B \hat A`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -670,7 +668,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        :math:`\hat A \hat B - \hat B \hat A`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">B</span> <span class="o">-</span> <span class="n">B</span> <span class="o">@</span> <span class="n">A</span></div>
 
 
@@ -678,7 +676,7 @@
 <div class="viewcode-block" id="anticommutator">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.anticommutator">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">anticommutator</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The anticommutator :math:`\{\hat A, \hat B\} = \hat A \hat B + \hat B \hat A`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The anticommutator :math:`\{\hat A, \hat B\} = \hat A \hat B + \hat B \hat A`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -689,7 +687,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        :math:`\hat A \hat B + \hat B \hat A`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">B</span> <span class="o">+</span> <span class="n">B</span> <span class="o">@</span> <span class="n">A</span></div>
 
 
@@ -697,7 +695,7 @@
 <div class="viewcode-block" id="expectation">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.expectation">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">expectation</span><span class="p">(</span><span class="n">operator</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Expectation value :math:`\langle\psi\rvert \hat A \lvert\psi\rangle` of</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Expectation value :math:`\langle\psi\rvert \hat A \lvert\psi\rangle` of</span>
 <span class="sd">    an operator in a discrete-basis state vector.</span>
 
 <span class="sd">    Parameters</span>
@@ -712,7 +710,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    complex</span>
 <span class="sd">        :math:`\langle\psi\rvert \hat A \lvert\psi\rangle`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">complex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">operator</span> <span class="o">@</span> <span class="n">state</span><span class="p">))</span></div>
 
@@ -721,7 +719,7 @@
 <div class="viewcode-block" id="is_hermitian">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.is_hermitian">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_hermitian</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Check whether a matrix is Hermitian, :math:`\hat A = \hat A^\dagger`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Check whether a matrix is Hermitian, :math:`\hat A = \hat A^\dagger`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -734,7 +732,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    bool</span>
 <span class="sd">        ``True`` if ``A`` equals its conjugate transpose within ``atol``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span></div>
 
 </pre></div>

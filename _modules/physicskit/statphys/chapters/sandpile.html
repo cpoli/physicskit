@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,16 +409,16 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.sandpile</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;The Bak-Tang-Wiesenfeld sandpile: self-organized criticality.</span>
+<span></span><span class="sd">"""The Bak-Tang-Wiesenfeld sandpile: self-organized criticality.</span>
 
 <span class="sd">Ordinary critical phenomena require fine-tuning a parameter (temperature,</span>
-<span class="sd">occupation probability) to a special value. Bak, Tang, and Wiesenfeld&#39;s 1987</span>
+<span class="sd">occupation probability) to a special value. Bak, Tang, and Wiesenfeld's 1987</span>
 <span class="sd">sandpile model was the first example of a system that tunes *itself* to a</span>
 <span class="sd">critical state through its own slow-driving, fast-relaxation dynamics --</span>
-<span class="sd">&quot;self-organized criticality&quot; (SOC) -- and was proposed as a generic</span>
+<span class="sd">"self-organized criticality" (SOC) -- and was proposed as a generic</span>
 <span class="sd">explanation for the ubiquity of power laws in nature (earthquakes, forest</span>
 <span class="sd">fires, neural avalanches), without needing anyone to tune anything.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -428,17 +426,17 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.core.sandpile_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">topple_to_stability</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BTWSandpile&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"BTWSandpile"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="BTWSandpile">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BTWSandpile">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BTWSandpile</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Bak-Tang-Wiesenfeld sandpile on an L x L grid with open (absorbing) boundaries.</span>
+<span class="w">    </span><span class="sd">"""The Bak-Tang-Wiesenfeld sandpile on an L x L grid with open (absorbing) boundaries.</span>
 
 <span class="sd">    Grains are added one at a time to a chosen (or random) site; whenever a</span>
-<span class="sd">    site&#39;s height reaches the toppling threshold, it topples, distributing</span>
-<span class="sd">    one grain to each orthogonal neighbor (grains that fall off the grid&#39;s</span>
+<span class="sd">    site's height reaches the toppling threshold, it topples, distributing</span>
+<span class="sd">    one grain to each orthogonal neighbor (grains that fall off the grid's</span>
 <span class="sd">    edge are permanently lost). A single added grain can trigger a chain</span>
 <span class="sd">    reaction of topplings -- an avalanche -- whose size has no</span>
 <span class="sd">    characteristic scale once the pile has self-organized to its critical</span>
@@ -458,7 +456,7 @@
 <span class="sd">    heights : ndarray of shape (L, L)</span>
 <span class="sd">        Current pile heights; always ``&lt; threshold`` everywhere immediately</span>
 <span class="sd">        after a call to :meth:`add_grain` or :meth:`run`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span>
@@ -469,7 +467,7 @@
 <div class="viewcode-block" id="BTWSandpile.add_grain">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BTWSandpile.add_grain">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_grain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add one grain and relax the pile to stability.</span>
+<span class="w">        </span><span class="sd">"""Add one grain and relax the pile to stability.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -482,7 +480,7 @@
 <span class="sd">        int</span>
 <span class="sd">            Avalanche size: the number of individual topplings triggered by</span>
 <span class="sd">            this grain (``0`` if it did not trigger any toppling).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">site</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
@@ -495,7 +493,7 @@
 <div class="viewcode-block" id="BTWSandpile.run">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BTWSandpile.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_grains</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Drop many grains at random sites, recording each one&#39;s avalanche size.</span>
+<span class="w">        </span><span class="sd">"""Drop many grains at random sites, recording each one's avalanche size.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -516,7 +514,7 @@
 <span class="sd">        &gt;&gt;&gt; sizes = pile.run(n_grains=500, warmup=500)</span>
 <span class="sd">        &gt;&gt;&gt; sizes.shape</span>
 <span class="sd">        (500,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">warmup</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_grain</span><span class="p">()</span>
         <span class="n">sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_grains</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
@@ -528,7 +526,7 @@
 <div class="viewcode-block" id="BTWSandpile.total_grains">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BTWSandpile.total_grains">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">total_grains</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of grains currently on the pile.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Total number of grains currently on the pile."""</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heights</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span></div>
 </div>
 

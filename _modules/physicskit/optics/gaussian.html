@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.optics.gaussian</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gaussian beam propagation: the complex beam parameter, ABCD transformation, and higher-order modes.</span>
+<span></span><span class="sa">r</span><span class="sd">"""Gaussian beam propagation: the complex beam parameter, ABCD transformation, and higher-order modes.</span>
 
 <span class="sd">A paraxial, monochromatic beam with a Gaussian transverse intensity profile</span>
 <span class="sd">is completely described, at any position :math:`z` along its propagation</span>
@@ -439,7 +437,7 @@
 <span class="sd">state ``[y, theta]`` as ``state_out = M @ state_in``; e.g. free space of</span>
 <span class="sd">length ``d`` is ``[[1, d], [0, 1]]`` and a thin lens of focal length ``f``</span>
 <span class="sd">is ``[[1, 0], [-1/f, 1]]``.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -447,19 +445,19 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">eval_genlaguerre</span><span class="p">,</span> <span class="n">eval_hermite</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;propagate_q&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;q_to_beam_params&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;GaussianBeam&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hermite_gaussian_mode&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;laguerre_gaussian_mode&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;m2_beam_waist&quot;</span><span class="p">,</span>
+    <span class="s2">"propagate_q"</span><span class="p">,</span>
+    <span class="s2">"q_to_beam_params"</span><span class="p">,</span>
+    <span class="s2">"GaussianBeam"</span><span class="p">,</span>
+    <span class="s2">"hermite_gaussian_mode"</span><span class="p">,</span>
+    <span class="s2">"laguerre_gaussian_mode"</span><span class="p">,</span>
+    <span class="s2">"m2_beam_waist"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="propagate_q">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.propagate_q">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">propagate_q</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Propagate a complex beam parameter through a paraxial optical system.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Propagate a complex beam parameter through a paraxial optical system.</span>
 
 <span class="sd">    Applies the same bilinear transformation used for ray-transfer (ABCD)</span>
 <span class="sd">    matrices,</span>
@@ -489,7 +487,7 @@
 <span class="sd">    &gt;&gt;&gt; free_space = np.array([[1.0, 2.0], [0.0, 1.0]])</span>
 <span class="sd">    &gt;&gt;&gt; propagate_q(1j, free_space)</span>
 <span class="sd">    (2+1j)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
     <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
     <span class="n">q</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
@@ -500,7 +498,7 @@
 <div class="viewcode-block" id="q_to_beam_params">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.q_to_beam_params">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">q_to_beam_params</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Extract the beam radius and radius of curvature from a complex beam parameter.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Extract the beam radius and radius of curvature from a complex beam parameter.</span>
 
 <span class="sd">    Inverts</span>
 
@@ -533,7 +531,7 @@
 <span class="sd">    &gt;&gt;&gt; w, R = q_to_beam_params(1j * zR, wavelength=0.5e-3)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(w), 6), R</span>
 <span class="sd">    (0.021851, inf)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">q</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="n">inv_q</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">q</span>
     <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="o">=</span> <span class="n">inv_q</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">inv_q</span><span class="o">.</span><span class="n">imag</span>
@@ -550,7 +548,7 @@
 <div class="viewcode-block" id="GaussianBeam">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.GaussianBeam">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GaussianBeam</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A fundamental (:math:`\mathrm{TEM}_{00}`) Gaussian laser beam.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""A fundamental (:math:`\mathrm{TEM}_{00}`) Gaussian laser beam.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -560,7 +558,7 @@
 <span class="sd">        Waist radius (:math:`1/e^2` intensity radius at the narrowest point).</span>
 <span class="sd">    z0 : float, default=0.0</span>
 <span class="sd">        Axial position of the waist.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">w0</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span>
@@ -569,13 +567,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rayleigh_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rayleigh range, :math:`z_R = \pi w_0^2/\lambda`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Rayleigh range, :math:`z_R = \pi w_0^2/\lambda`."""</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span>
 
 <div class="viewcode-block" id="GaussianBeam.waist">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.GaussianBeam.waist">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">waist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Beam radius at axial position ``z``.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Beam radius at axial position ``z``.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -589,7 +587,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">zR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rayleigh_range</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z0</span><span class="p">)</span> <span class="o">/</span> <span class="n">zR</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
 
@@ -597,7 +595,7 @@
 <div class="viewcode-block" id="GaussianBeam.radius_of_curvature">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.GaussianBeam.radius_of_curvature">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">radius_of_curvature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Wavefront radius of curvature at axial position ``z``.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Wavefront radius of curvature at axial position ``z``.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -615,7 +613,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">zR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rayleigh_range</span>
         <span class="n">dz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z0</span>
         <span class="n">dz_safe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dz</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
@@ -631,7 +629,7 @@
 <div class="viewcode-block" id="GaussianBeam.gouy_phase">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.GaussianBeam.gouy_phase">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gouy_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gouy phase at axial position ``z``, :math:`\zeta(z) = \arctan[(z-z_0)/z_R]`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Gouy phase at axial position ``z``, :math:`\zeta(z) = \arctan[(z-z_0)/z_R]`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -641,7 +639,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">zR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rayleigh_range</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z0</span><span class="p">)</span> <span class="o">/</span> <span class="n">zR</span><span class="p">)</span></div>
 
@@ -649,7 +647,7 @@
 <div class="viewcode-block" id="GaussianBeam.q_parameter">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.GaussianBeam.q_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">q_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Complex beam parameter at axial position ``z``, :math:`q(z) = (z-z_0) + i z_R`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Complex beam parameter at axial position ``z``, :math:`q(z) = (z-z_0) + i z_R`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -659,14 +657,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">zR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rayleigh_range</span>
         <span class="k">return</span> <span class="nb">complex</span><span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">z0</span><span class="p">,</span> <span class="n">zR</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">divergence_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Far-field half-angle divergence, :math:`\theta = \lambda/(\pi w_0)`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Far-field half-angle divergence, :math:`\theta = \lambda/(\pi w_0)`."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span><span class="p">)</span></div>
 
 
@@ -674,7 +672,7 @@
 <div class="viewcode-block" id="hermite_gaussian_mode">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.hermite_gaussian_mode">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">hermite_gaussian_mode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">beam</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Hermite-Gaussian :math:`\mathrm{TEM}_{mn}` mode amplitude.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Hermite-Gaussian :math:`\mathrm{TEM}_{mn}` mode amplitude.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -712,7 +710,7 @@
 <span class="sd">    &gt;&gt;&gt; u00 = hermite_gaussian_mode(0.0, 0.0, 0.0, beam, 0, 0)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(abs(u00)), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">beam</span><span class="o">.</span><span class="n">wavelength</span>
@@ -730,7 +728,7 @@
 <div class="viewcode-block" id="laguerre_gaussian_mode">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.laguerre_gaussian_mode">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">laguerre_gaussian_mode</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">beam</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Laguerre-Gaussian :math:`\mathrm{LG}_p^l` mode amplitude.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Laguerre-Gaussian :math:`\mathrm{LG}_p^l` mode amplitude.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -771,7 +769,7 @@
 <span class="sd">    &gt;&gt;&gt; u00 = laguerre_gaussian_mode(0.0, 0.0, 0.0, beam, 0, 0)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(abs(u00)), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">beam</span><span class="o">.</span><span class="n">wavelength</span>
@@ -788,7 +786,7 @@
 <div class="viewcode-block" id="m2_beam_waist">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.m2_beam_waist">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">m2_beam_waist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">w0</span><span class="p">,</span> <span class="n">M2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Beam radius of a non-ideal (:math:`M^2 &gt; 1`) real laser beam, waist fixed at :math:`z=0`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Beam radius of a non-ideal (:math:`M^2 &gt; 1`) real laser beam, waist fixed at :math:`z=0`.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -819,7 +817,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(m2_beam_waist(0.0, wavelength=0.5e-3, w0=0.1, M2=2.0)), 6)</span>
 <span class="sd">    0.1</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">zR_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">w0</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">M2</span> <span class="o">*</span> <span class="n">wavelength</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">w0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="n">zR_eff</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
 

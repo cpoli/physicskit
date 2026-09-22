@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.acceleration</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Plasma-wakefield-style particle acceleration: a test charge surfing a prescribed traveling wave.</span>
+<span></span><span class="sd">"""Plasma-wakefield-style particle acceleration: a test charge surfing a prescribed traveling wave.</span>
 
 <span class="sd">A full plasma-wakefield-accelerator simulation would derive the</span>
 <span class="sd">accelerating field self-consistently from a driver beam or laser pulse</span>
@@ -421,17 +419,17 @@
 <span class="sd">simplification -- used throughout introductory wakefield-acceleration</span>
 <span class="sd">treatments -- is instead to *prescribe* the wakefield as a traveling</span>
 <span class="sd">longitudinal electric-field wave :math:`E_z(x,t)=E_0\\cos[k(x-v_{ph}t)]`</span>
-<span class="sd">(a rigid wake moving at the driver&#39;s phase velocity :math:`v_{ph}`, not fed</span>
+<span class="sd">(a rigid wake moving at the driver's phase velocity :math:`v_{ph}`, not fed</span>
 <span class="sd">back on by the accelerated particle) and inject a single test charge into</span>
 <span class="sd">it with :func:`physicskit.plasma.single_particle.boris_push` (setting</span>
 <span class="sd">:math:`\\mathbf{B}=0`, since this toy model has no transverse focusing</span>
-<span class="sd">field). A particle riding near the wave&#39;s phase velocity feels a</span>
+<span class="sd">field). A particle riding near the wave's phase velocity feels a</span>
 <span class="sd">sign-definite accelerating field for as long as it stays within one</span>
-<span class="sd">quarter-wavelength of the field&#39;s zero-crossing (the &quot;accelerating bucket&quot;),</span>
+<span class="sd">quarter-wavelength of the field's zero-crossing (the "accelerating bucket"),</span>
 <span class="sd">gaining energy at the expense of the (externally prescribed, infinite-energy-</span>
 <span class="sd">reservoir) wave, exactly the qualitative picture of plasma wakefield</span>
 <span class="sd">acceleration without any of its self-consistent field generation.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -440,15 +438,15 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.plasma.single_particle</span><span class="w"> </span><span class="kn">import</span> <span class="n">boris_push</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;wakefield_e_field&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;simulate_wakefield_acceleration&quot;</span><span class="p">,</span>
+    <span class="s2">"wakefield_e_field"</span><span class="p">,</span>
+    <span class="s2">"simulate_wakefield_acceleration"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="wakefield_e_field">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.wakefield_e_field">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">wakefield_e_field</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prescribed traveling-wave longitudinal wakefield :math:`E_z(x,t) = E_0\\cos[k(x - v_{ph}t)]`.</span>
+<span class="w">    </span><span class="sd">"""Prescribed traveling-wave longitudinal wakefield :math:`E_z(x,t) = E_0\\cos[k(x - v_{ph}t)]`.</span>
 
 <span class="sd">    A rigid sinusoidal accelerating structure moving at the fixed phase</span>
 <span class="sd">    velocity `v_phase`, standing in for the self-consistent plasma</span>
@@ -481,7 +479,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(wakefield_e_field(0.0, t=0.0, E0=1.0, k=1.0, v_phase=1.0)), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">E0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">v_phase</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span></div>
 
 
@@ -489,11 +487,11 @@
 <div class="viewcode-block" id="simulate_wakefield_acceleration">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.simulate_wakefield_acceleration">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_wakefield_acceleration</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integrate a test charge&#39;s 1D motion in the prescribed traveling wakefield, with the Boris pusher.</span>
+<span class="w">    </span><span class="sd">"""Integrate a test charge's 1D motion in the prescribed traveling wakefield, with the Boris pusher.</span>
 
 <span class="sd">    Calls :func:`physicskit.plasma.single_particle.boris_push` once per</span>
 <span class="sd">    step with :math:`\\mathbf{B}=0` and :math:`\\mathbf{E}=(E_z(x,t),0,0)`</span>
-<span class="sd">    re-evaluated at the particle&#39;s *current* position and time each</span>
+<span class="sd">    re-evaluated at the particle's *current* position and time each</span>
 <span class="sd">    step -- unlike :func:`physicskit.plasma.single_particle.boris_integrate`,</span>
 <span class="sd">    which assumes a field uniform in space and time, this wakefield varies</span>
 <span class="sd">    in both, so the field must be recomputed every step rather than</span>
@@ -501,7 +499,7 @@
 <span class="sd">    exactly energy-conserving in a pure magnetic field and exact-leapfrog</span>
 <span class="sd">    in a pure electric field; it is otherwise an ordinary (non-relativistic)</span>
 <span class="sd">    classical integrator, so results should be read qualitatively once</span>
-<span class="sd">    the particle&#39;s speed approaches a meaningful fraction of `v_phase`</span>
+<span class="sd">    the particle's speed approaches a meaningful fraction of `v_phase`</span>
 <span class="sd">    (real wakefield acceleration is an intrinsically relativistic problem).</span>
 
 <span class="sd">    Parameters</span>
@@ -528,8 +526,8 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;t&quot;: ndarray shape (steps+1,), &quot;x&quot;: position history, &quot;v&quot;:</span>
-<span class="sd">        longitudinal velocity history, &quot;kinetic_energy&quot;: :math:`\\tfrac12 m v^2`</span>
+<span class="sd">        ``{"t": ndarray shape (steps+1,), "x": position history, "v":</span>
+<span class="sd">        longitudinal velocity history, "kinetic_energy": :math:`\\tfrac12 m v^2`</span>
 <span class="sd">        history}``.</span>
 
 <span class="sd">    See Also</span>
@@ -538,16 +536,16 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    A particle launched exactly at the wave&#39;s phase velocity, sitting on</span>
+<span class="sd">    A particle launched exactly at the wave's phase velocity, sitting on</span>
 <span class="sd">    the accelerating part of the field, gains kinetic energy:</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_wakefield_acceleration(</span>
 <span class="sd">    ...     x0=0.0, v0=0.9, q=1.0, m=1.0, E0=0.05, k=1.0, v_phase=1.0, dt=0.01, steps=2000</span>
 <span class="sd">    ... )</span>
-<span class="sd">    &gt;&gt;&gt; bool(result[&quot;kinetic_energy&quot;][-1] &gt; result[&quot;kinetic_energy&quot;][0])</span>
+<span class="sd">    &gt;&gt;&gt; bool(result["kinetic_energy"][-1] &gt; result["kinetic_energy"][0])</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="n">vel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -567,7 +565,7 @@
 
     <span class="n">t_hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
     <span class="n">kinetic_energy</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">v_hist</span><span class="o">**</span><span class="mi">2</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t_hist</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_hist</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">v_hist</span><span class="p">,</span> <span class="s2">&quot;kinetic_energy&quot;</span><span class="p">:</span> <span class="n">kinetic_energy</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">t_hist</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">:</span> <span class="n">x_hist</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">v_hist</span><span class="p">,</span> <span class="s2">"kinetic_energy"</span><span class="p">:</span> <span class="n">kinetic_energy</span><span class="p">}</span></div>
 
 </pre></div>
 

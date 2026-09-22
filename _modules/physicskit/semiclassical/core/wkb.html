@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.semiclassical.core.wkb</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;1D WKB wavefunctions, classical turning points, and Bohr-Sommerfeld (EBK) quantization.</span>
+<span></span><span class="sa">r</span><span class="sd">"""1D WKB wavefunctions, classical turning points, and Bohr-Sommerfeld (EBK) quantization.</span>
 
 <span class="sd">The Wentzel-Kramers-Brillouin (WKB) approximation writes the wavefunction</span>
 <span class="sd">as :math:`\psi(x) \sim p(x)^{-1/2}\exp(\pm i\int p\,dx/\hbar)` -- an</span>
@@ -437,7 +435,7 @@
 <span class="sd">:math:`\int_{x_1}^{x_2}p\,dx=(n+\tfrac12)\pi\hbar` -- is the</span>
 <span class="sd">one-dimensional Einstein-Brillouin-Keller (EBK) rule implemented by</span>
 <span class="sd">:func:`bohr_sommerfeld_energies`.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -448,18 +446,18 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.._compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapz</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;classical_momentum&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;turning_points&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;wkb_action&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;bohr_sommerfeld_energies&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;wkb_wavefunction&quot;</span><span class="p">,</span>
+    <span class="s2">"classical_momentum"</span><span class="p">,</span>
+    <span class="s2">"turning_points"</span><span class="p">,</span>
+    <span class="s2">"wkb_action"</span><span class="p">,</span>
+    <span class="s2">"bohr_sommerfeld_energies"</span><span class="p">,</span>
+    <span class="s2">"wkb_wavefunction"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="classical_momentum">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.classical_momentum">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">classical_momentum</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Classical momentum :math:`p(x) = \sqrt{2m(E-V(x))}` in the allowed region.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Classical momentum :math:`p(x) = \sqrt{2m(E-V(x))}` in the allowed region.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -486,7 +484,7 @@
 <span class="sd">    &gt;&gt;&gt; p = classical_momentum(E=2.0, V=V, x=np.array([0.0, 1.0, 3.0]))</span>
 <span class="sd">    &gt;&gt;&gt; np.round(p, 4)</span>
 <span class="sd">    array([2.    , 1.7321,    nan])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">-</span> <span class="n">V</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diff</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span></div>
@@ -496,10 +494,10 @@
 <div class="viewcode-block" id="turning_points">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.turning_points">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">turning_points</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_search</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Locate the classical turning points (roots of :math:`E=V(x)`) in :math:`[x_{min},x_{max}]`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Locate the classical turning points (roots of :math:`E=V(x)`) in :math:`[x_{min},x_{max}]`.</span>
 
 <span class="sd">    Scans a fine grid for sign changes of :math:`E-V(x)` and refines each</span>
-<span class="sd">    with Brent&#39;s method; returns every turning point found, not just the</span>
+<span class="sd">    with Brent's method; returns every turning point found, not just the</span>
 <span class="sd">    innermost pair, so multi-well potentials are handled correctly.</span>
 
 <span class="sd">    Parameters</span>
@@ -529,7 +527,7 @@
 <span class="sd">    &gt;&gt;&gt; V = lambda x: 0.5 * x ** 2</span>
 <span class="sd">    &gt;&gt;&gt; [round(t, 4) for t in turning_points(E=2.0, V=V, x_min=-10, x_max=10)]</span>
 <span class="sd">    [-2.0, 2.0]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">n_search</span><span class="p">)</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">E</span> <span class="o">-</span> <span class="n">V</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
     <span class="n">roots</span> <span class="o">=</span> <span class="p">[]</span>
@@ -545,7 +543,7 @@
 <div class="viewcode-block" id="wkb_action">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.wkb_action">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">wkb_action</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;WKB action integral :math:`S(E)=\int_{x_1}^{x_2} p(x)\,dx` between two turning points.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""WKB action integral :math:`S(E)=\int_{x_1}^{x_2} p(x)\,dx` between two turning points.</span>
 
 <span class="sd">    This is the classical action accumulated on one traversal of the</span>
 <span class="sd">    classically allowed region -- half of the full round-trip action</span>
@@ -581,7 +579,7 @@
 <span class="sd">    &gt;&gt;&gt; x1, x2 = turning_points(E=2.0, V=V, x_min=-10, x_max=10)</span>
 <span class="sd">    &gt;&gt;&gt; round(wkb_action(E=2.0, V=V, m=1.0, x1=x1, x2=x2), 6)</span>
 <span class="sd">    6.283185</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">integrand</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">classical_momentum</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">]),</span> <span class="n">m</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nan</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))</span>
@@ -594,7 +592,7 @@
 <div class="viewcode-block" id="bohr_sommerfeld_energies">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.bohr_sommerfeld_energies">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bohr_sommerfeld_energies</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">E_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">E_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Bohr-Sommerfeld (EBK) bound-state energies from the WKB quantization condition.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Bohr-Sommerfeld (EBK) bound-state energies from the WKB quantization condition.</span>
 
 <span class="sd">    Solves :math:`\int_{x_1(E_n)}^{x_2(E_n)}p(x)\,dx=(n+\tfrac12)\pi\hbar`</span>
 <span class="sd">    for each :math:`n=0,\dots,n_{max}-1` by root-finding on :math:`E`,</span>
@@ -623,7 +621,7 @@
 <span class="sd">        enough that its turning points still resolve on the</span>
 <span class="sd">        :func:`turning_points` search grid.</span>
 <span class="sd">    E_max : float, default=100.0</span>
-<span class="sd">        Upper bracket for the highest level&#39;s root search.</span>
+<span class="sd">        Upper bracket for the highest level's root search.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -642,7 +640,7 @@
 <span class="sd">    &gt;&gt;&gt; energies = bohr_sommerfeld_energies(V, m=1.0, x_min=-20, x_max=20, n_max=5)</span>
 <span class="sd">    &gt;&gt;&gt; np.round(energies, 6)</span>
 <span class="sd">    array([0.5, 1.5, 2.5, 3.5, 4.5])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
 
@@ -659,12 +657,12 @@
 <div class="viewcode-block" id="wkb_wavefunction">
 <a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.wkb_wavefunction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">wkb_wavefunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The (real-valued, standing-wave) WKB wavefunction in the classically allowed region.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The (real-valued, standing-wave) WKB wavefunction in the classically allowed region.</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">       \psi(x) \approx \frac{C}{\sqrt{p(x)}}</span>
-<span class="sd">       \cos\!\left(\frac{1}{\hbar}\int_{x_1}^{x}p(x&#39;)\,dx&#39; - \frac{\pi}{4}\right),</span>
+<span class="sd">       \cos\!\left(\frac{1}{\hbar}\int_{x_1}^{x}p(x')\,dx' - \frac{\pi}{4}\right),</span>
 
 <span class="sd">    with the :math:`\pi/4` phase set by the Airy connection formula at</span>
 <span class="sd">    the left (soft) turning point :math:`x_1`, and :math:`C` fixed by</span>
@@ -691,7 +689,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray</span>
 <span class="sd">        :math:`\psi(x)`, same shape as ``x``, normalized so</span>
-<span class="sd">        :math:`\int|\psi|^2\,dx=1` over ``x``&#39;s range.</span>
+<span class="sd">        :math:`\int|\psi|^2\,dx=1` over ``x``'s range.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -710,7 +708,7 @@
 <span class="sd">    &gt;&gt;&gt; nonzero = psi[psi != 0]</span>
 <span class="sd">    &gt;&gt;&gt; int(np.sum(np.diff(np.sign(nonzero)) != 0))</span>
 <span class="sd">    5</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">tp</span> <span class="o">=</span> <span class="n">turning_points</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
     <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">tp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>

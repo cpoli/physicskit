@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.turbulence</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Drift-wave turbulence: a reduced Hasegawa-Mima model.</span>
+<span></span><span class="sd">"""Drift-wave turbulence: a reduced Hasegawa-Mima model.</span>
 
 <span class="sd">Gyrokinetic drift-wave turbulence -- the dominant cross-field transport</span>
 <span class="sd">mechanism in magnetized fusion plasmas -- is normally studied with a</span>
@@ -437,36 +435,36 @@
 <span class="sd">temperature-gradient drive -- but it is the standard reduced model used</span>
 <span class="sd">throughout the drift-wave-turbulence literature to demonstrate the basic</span>
 <span class="sd">phenomenology: small-amplitude drift-wave noise nonlinearly cascading into</span>
-<span class="sd">a turbulent field of vortices (&quot;blobs&quot;) via the same kind of :math:`E\\times B`</span>
+<span class="sd">a turbulent field of vortices ("blobs") via the same kind of :math:`E\\times B`</span>
 <span class="sd">advection that governs 2D Navier-Stokes turbulence.</span>
 
 <span class="sd">The pseudo-spectral solver here is self-contained (built directly on</span>
-<span class="sd">``numpy.fft`` rather than importing :mod:`physicskit.fluids`&#39;s spectral-grid</span>
+<span class="sd">``numpy.fft`` rather than importing :mod:`physicskit.fluids`'s spectral-grid</span>
 <span class="sd">machinery) so that :mod:`physicskit.plasma` has no cross-package dependency</span>
 <span class="sd">on :mod:`physicskit.fluids`, even though the underlying numerics -- an</span>
 <span class="sd">elliptic inversion for a streamfunction-like potential, followed by</span>
 <span class="sd">pseudo-spectral advection of a vorticity-like field -- are structurally the</span>
 <span class="sd">same idea used there for 2D Navier-Stokes.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;drift_wave_noise_ic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hasegawa_mima_rhs&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;simulate_hasegawa_mima&quot;</span><span class="p">,</span>
+    <span class="s2">"drift_wave_noise_ic"</span><span class="p">,</span>
+    <span class="s2">"hasegawa_mima_rhs"</span><span class="p">,</span>
+    <span class="s2">"simulate_hasegawa_mima"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="drift_wave_noise_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.drift_wave_noise_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">drift_wave_noise_ic</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Small-amplitude random-phase noise initial condition for Hasegawa-Mima drift-wave turbulence.</span>
+<span class="w">    </span><span class="sd">"""Small-amplitude random-phase noise initial condition for Hasegawa-Mima drift-wave turbulence.</span>
 
 <span class="sd">    A featureless, isotropic random field with the specified root-mean-square</span>
-<span class="sd">    amplitude -- the standard &quot;let it find its own structure&quot; initial</span>
+<span class="sd">    amplitude -- the standard "let it find its own structure" initial</span>
 <span class="sd">    condition for turbulence simulations, in place of a specific unstable</span>
 <span class="sd">    linear eigenmode, since real drift-wave turbulence in a fusion device is</span>
 <span class="sd">    continuously driven by many linearly unstable modes simultaneously</span>
@@ -497,7 +495,7 @@
 <span class="sd">    &gt;&gt;&gt; phi0 = drift_wave_noise_ic(64, 2 * 3.141592653589793, amplitude=0.01, seed=0)</span>
 <span class="sd">    &gt;&gt;&gt; phi0.shape</span>
 <span class="sd">    (64, 64)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
     <span class="n">noise</span> <span class="o">-=</span> <span class="n">noise</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -508,7 +506,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_spectral_grid</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">length</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
-    <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">K2</span> <span class="o">=</span> <span class="n">KX</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">KY</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span><span class="p">,</span> <span class="n">K2</span>
 
@@ -516,7 +514,7 @@
 <div class="viewcode-block" id="hasegawa_mima_rhs">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.hasegawa_mima_rhs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">hasegawa_mima_rhs</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">KX</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">KY</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">K2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Non-dissipative right-hand side of the Hasegawa-Mima potential-vorticity equation, evaluated pseudo-spectrally.</span>
+<span class="w">    </span><span class="sd">"""Non-dissipative right-hand side of the Hasegawa-Mima potential-vorticity equation, evaluated pseudo-spectrally.</span>
 
 <span class="sd">    Evolves the potential vorticity :math:`q=\\nabla^2\\phi-\\phi` (from</span>
 <span class="sd">    which :math:`\\phi` is recovered via :math:`\\hat{\\phi}=-\\hat{q}/(1+k^2)`,</span>
@@ -540,7 +538,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray, shape (n, n)</span>
 <span class="sd">        :math:`dq/dt`, excluding dissipation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">q_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="n">phi_hat</span> <span class="o">=</span> <span class="o">-</span><span class="n">q_hat</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">K2</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">KY</span> <span class="o">*</span> <span class="n">phi_hat</span><span class="p">))</span>
@@ -557,7 +555,7 @@
 <div class="viewcode-block" id="simulate_hasegawa_mima">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.simulate_hasegawa_mima">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_hasegawa_mima</span><span class="p">(</span><span class="n">phi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.03</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the Hasegawa-Mima drift-wave-turbulence equation with pseudo-spectral RK4.</span>
+<span class="w">    </span><span class="sd">"""Time-step the Hasegawa-Mima drift-wave-turbulence equation with pseudo-spectral RK4.</span>
 
 <span class="sd">    Starting from a potential field :math:`\\phi_0` (e.g. small-amplitude</span>
 <span class="sd">    noise from :func:`drift_wave_noise_ic`), converts to the potential</span>
@@ -566,7 +564,7 @@
 <span class="sd">    (:func:`hasegawa_mima_rhs`) with explicit RK4, Strang-split around an</span>
 <span class="sd">    *exact* diffusive decay :math:`\\hat{q}\\mathrel{*}=e^{-\\nu k^2 dt/2}`</span>
 <span class="sd">    applied before and after -- the same splitting idea</span>
-<span class="sd">    :mod:`physicskit.fields.solitons`&#39;s KdV solver uses for its stiff</span>
+<span class="sd">    :mod:`physicskit.fields.solitons`'s KdV solver uses for its stiff</span>
 <span class="sd">    dispersive term, applied here because a small Laplacian-type</span>
 <span class="sd">    dissipation :math:`-\\nu\\nabla^2 q` (not part of the ideal</span>
 <span class="sd">    Hasegawa-Mima equation) is needed to drain enstrophy piling up at the</span>
@@ -575,8 +573,8 @@
 <span class="sd">    ordinary right-hand-side term would impose. Reproduces the</span>
 <span class="sd">    characteristic Hasegawa-Mima phenomenology of small-scale drift waves</span>
 <span class="sd">    nonlinearly steepening and merging into a field of long-lived coherent</span>
-<span class="sd">    vortices (&quot;turbulent blobs&quot;) that then dominates the cross-field</span>
-<span class="sd">    transport, in analogy to two-dimensional Navier-Stokes turbulence&#39;s</span>
+<span class="sd">    vortices ("turbulent blobs") that then dominates the cross-field</span>
+<span class="sd">    transport, in analogy to two-dimensional Navier-Stokes turbulence's</span>
 <span class="sd">    inverse energy cascade.</span>
 
 <span class="sd">    Parameters</span>
@@ -595,12 +593,12 @@
 <span class="sd">        the (undealiased) pseudo-spectral nonlinear term blow up once the</span>
 <span class="sd">        flow turns turbulent; the default was chosen to remain stable for</span>
 <span class="sd">        the noise amplitudes and grid resolutions used throughout this</span>
-<span class="sd">        module&#39;s examples and tests.</span>
+<span class="sd">        module's examples and tests.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;phi&quot;: final potential, &quot;q&quot;: final potential vorticity}``.</span>
+<span class="sd">        ``{"phi": final potential, "q": final potential vorticity}``.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -612,11 +610,11 @@
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; phi0 = drift_wave_noise_ic(48, 2 * np.pi, amplitude=0.01, seed=0)</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_hasegawa_mima(phi0, dt=0.02, steps=20, length=2 * np.pi)</span>
-<span class="sd">    &gt;&gt;&gt; result[&quot;phi&quot;].shape</span>
+<span class="sd">    &gt;&gt;&gt; result["phi"].shape</span>
 <span class="sd">    (48, 48)</span>
-<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result[&quot;phi&quot;])))</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.all(np.isfinite(result["phi"])))</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">phi0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span><span class="p">,</span> <span class="n">K2</span> <span class="o">=</span> <span class="n">_spectral_grid</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
     <span class="n">phi0_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">phi0</span><span class="p">)</span>
@@ -637,7 +635,7 @@
     <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="n">q_hat</span><span class="p">))</span>
     <span class="n">phi_hat</span> <span class="o">=</span> <span class="o">-</span><span class="n">q_hat</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">K2</span><span class="p">)</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="n">phi_hat</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"phi"</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span> <span class="s2">"q"</span><span class="p">:</span> <span class="n">q</span><span class="p">}</span></div>
 
 </pre></div>
 

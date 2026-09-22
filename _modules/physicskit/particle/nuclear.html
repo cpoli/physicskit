@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,19 +409,19 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.particle.nuclear</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Nuclear binding energy and reaction Q-values.</span>
+<span></span><span class="sa">r</span><span class="sd">"""Nuclear binding energy and reaction Q-values.</span>
 
 <span class="sd">Masses and energies here are in **MeV**, the universal convention for the</span>
-<span class="sd">semi-empirical mass formula&#39;s fitted coefficients.</span>
+<span class="sd">semi-empirical mass formula's fitted coefficients.</span>
 
 <span class="sd">- :func:`semf_binding_energy`, :func:`binding_energy_per_nucleon` -- the</span>
 <span class="sd">  Weizsacker (liquid-drop) semi-empirical mass formula.</span>
 <span class="sd">- :func:`q_value` -- the energy released (or absorbed) in a nuclear reaction.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;semf_binding_energy&quot;</span><span class="p">,</span> <span class="s2">&quot;binding_energy_per_nucleon&quot;</span><span class="p">,</span> <span class="s2">&quot;q_value&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"semf_binding_energy"</span><span class="p">,</span> <span class="s2">"binding_energy_per_nucleon"</span><span class="p">,</span> <span class="s2">"q_value"</span><span class="p">]</span>
 
 <span class="n">_A_V</span> <span class="o">=</span> <span class="mf">15.75</span>
 <span class="n">_A_S</span> <span class="o">=</span> <span class="mf">17.8</span>
@@ -435,7 +433,7 @@
 <div class="viewcode-block" id="semf_binding_energy">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.semf_binding_energy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">semf_binding_energy</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Semi-empirical (Weizsacker) total nuclear binding energy, in MeV.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Semi-empirical (Weizsacker) total nuclear binding energy, in MeV.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -465,7 +463,7 @@
 <span class="sd">    &gt;&gt;&gt; B = semf_binding_energy(26, 56)  # Iron-56</span>
 <span class="sd">    &gt;&gt;&gt; 8.0 &lt; B / 56 &lt; 9.0</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">N</span> <span class="o">=</span> <span class="n">A</span> <span class="o">-</span> <span class="n">Z</span>
     <span class="k">if</span> <span class="n">Z</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="n">_A_P</span> <span class="o">/</span> <span class="n">A</span><span class="o">**</span><span class="mf">0.5</span>
@@ -480,14 +478,14 @@
 <div class="viewcode-block" id="binding_energy_per_nucleon">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.binding_energy_per_nucleon">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">binding_energy_per_nucleon</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binding energy per nucleon, ``semf_binding_energy(Z, A) / A``, in MeV.</span>
+<span class="w">    </span><span class="sd">"""Binding energy per nucleon, ``semf_binding_energy(Z, A) / A``, in MeV.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; bpn = binding_energy_per_nucleon(26, 56)</span>
 <span class="sd">    &gt;&gt;&gt; 8.0 &lt; bpn &lt; 9.0</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">semf_binding_energy</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="n">A</span></div>
 
 
@@ -495,7 +493,7 @@
 <div class="viewcode-block" id="q_value">
 <a class="viewcode-back" href="../../../api/particle.html#physicskit.particle.q_value">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">q_value</span><span class="p">(</span><span class="n">reactant_masses</span><span class="p">,</span> <span class="n">product_masses</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Reaction Q-value, :math:`Q=\sum m_{\rm reactants}-\sum m_{\rm products}`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Reaction Q-value, :math:`Q=\sum m_{\rm reactants}-\sum m_{\rm products}`.</span>
 
 <span class="sd">    A positive ``Q`` means the reaction is exothermic (releases energy);</span>
 <span class="sd">    a negative ``Q`` means it is endothermic and requires that much</span>
@@ -517,7 +515,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(q_value([2.014102, 3.016049], [4.002602, 1.008665]), 6)  # D + T -&gt; He4 + n</span>
 <span class="sd">    0.018884</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">reactant_masses</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">product_masses</span><span class="p">)</span></div>
 
 </pre></div>

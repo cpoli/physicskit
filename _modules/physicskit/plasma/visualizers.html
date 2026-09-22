@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.visualizers</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Plotting helpers for particle orbits, MHD equilibria, wave maps, and kinetic phase space.</span>
+<span></span><span class="sd">"""Plotting helpers for particle orbits, MHD equilibria, wave maps, and kinetic phase space.</span>
 
 <span class="sd">Every Matplotlib function returns its figure and axes rather than calling</span>
 <span class="sd">``show()``; :func:`plot_phase_space_interactive` returns a Plotly figure</span>
@@ -420,7 +418,7 @@
 <span class="sd">from a sequence of snapshots taken while repeatedly re-invoking the</span>
 <span class="sd">corresponding time-domain simulation function -- save with, e.g.,</span>
 <span class="sd">``anim.save(path, writer=PillowWriter(fps=10))``.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -436,29 +434,29 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.plasma.waves</span><span class="w"> </span><span class="kn">import</span> <span class="n">ion_acoustic_soliton_evolve</span><span class="p">,</span> <span class="n">simulate_alfven_wave</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;plot_particle_orbit_3d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_drift_trajectory&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_flux_surfaces&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_q_profile&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_phase_space&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_field_energy_history&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_cma_diagram&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plot_phase_space_interactive&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_reconnection&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_weibel_filamentation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_two_stream_phase_space&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_langmuir_wave&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_ion_acoustic_soliton&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_drift_wave_turbulence&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_alfven_wave&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;animate_wakefield_acceleration&quot;</span><span class="p">,</span>
+    <span class="s2">"plot_particle_orbit_3d"</span><span class="p">,</span>
+    <span class="s2">"plot_drift_trajectory"</span><span class="p">,</span>
+    <span class="s2">"plot_flux_surfaces"</span><span class="p">,</span>
+    <span class="s2">"plot_q_profile"</span><span class="p">,</span>
+    <span class="s2">"plot_phase_space"</span><span class="p">,</span>
+    <span class="s2">"plot_field_energy_history"</span><span class="p">,</span>
+    <span class="s2">"plot_cma_diagram"</span><span class="p">,</span>
+    <span class="s2">"plot_phase_space_interactive"</span><span class="p">,</span>
+    <span class="s2">"animate_reconnection"</span><span class="p">,</span>
+    <span class="s2">"animate_weibel_filamentation"</span><span class="p">,</span>
+    <span class="s2">"animate_two_stream_phase_space"</span><span class="p">,</span>
+    <span class="s2">"animate_langmuir_wave"</span><span class="p">,</span>
+    <span class="s2">"animate_ion_acoustic_soliton"</span><span class="p">,</span>
+    <span class="s2">"animate_drift_wave_turbulence"</span><span class="p">,</span>
+    <span class="s2">"animate_alfven_wave"</span><span class="p">,</span>
+    <span class="s2">"animate_wakefield_acceleration"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="plot_particle_orbit_3d">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_particle_orbit_3d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_particle_orbit_3d</span><span class="p">(</span><span class="n">pos_hist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot a charged particle&#39;s 3D trajectory (e.g. Boris-pusher gyro-orbit).</span>
+<span class="w">    </span><span class="sd">"""Plot a charged particle's 3D trajectory (e.g. Boris-pusher gyro-orbit).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -482,16 +480,16 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_particle_orbit_3d(pos_hist)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">"3d"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pos_hist</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos_hist</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">pos_hist</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;z (m)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"z (m)"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -499,7 +497,7 @@
 <div class="viewcode-block" id="plot_drift_trajectory">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_drift_trajectory">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_drift_trajectory</span><span class="p">(</span><span class="n">pos_hist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the guiding-center drift path as seen from above (the x-y plane).</span>
+<span class="w">    </span><span class="sd">"""Plot the guiding-center drift path as seen from above (the x-y plane).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -527,15 +525,15 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_drift_trajectory(pos_hist)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pos_hist</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos_hist</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -543,7 +541,7 @@
 <div class="viewcode-block" id="plot_flux_surfaces">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_flux_surfaces">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_flux_surfaces</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">levels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contour-plot poloidal flux surfaces :math:`\\psi(R, Z)` of a toroidal equilibrium.</span>
+<span class="w">    </span><span class="sd">"""Contour-plot poloidal flux surfaces :math:`\\psi(R, Z)` of a toroidal equilibrium.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -571,17 +569,17 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_flux_surfaces(R, Z, psi)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">RR</span><span class="p">,</span> <span class="n">ZZ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">RR</span><span class="p">,</span> <span class="n">ZZ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">RR</span><span class="p">,</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\psi$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;R (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Z (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$\psi$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"R (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Z (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -589,7 +587,7 @@
 <div class="viewcode-block" id="plot_q_profile">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_q_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_q_profile</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the tokamak safety factor :math:`q(r)` against minor radius.</span>
+<span class="w">    </span><span class="sd">"""Plot the tokamak safety factor :math:`q(r)` against minor radius.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -616,15 +614,15 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_q_profile(r, q)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;q=1 (sawtooth)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;minor radius r (m)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;safety factor q&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"q=1 (sawtooth)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"minor radius r (m)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"safety factor q"</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
@@ -633,7 +631,7 @@
 <div class="viewcode-block" id="plot_phase_space">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_phase_space">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_phase_space</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Heatmap the particle-in-cell phase-space density :math:`f(x, v)` from a particle snapshot.</span>
+<span class="w">    </span><span class="sd">"""Heatmap the particle-in-cell phase-space density :math:`f(x, v)` from a particle snapshot.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -662,15 +660,15 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_phase_space(x, v)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">h</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">hist2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;particle count&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">hist2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"inferno"</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"particle count"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"v"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -678,7 +676,7 @@
 <div class="viewcode-block" id="plot_field_energy_history">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_field_energy_history">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_field_energy_history</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">field_energy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Semilog plot of electrostatic field energy vs. time, showing Landau damping (or two-stream growth).</span>
+<span class="w">    </span><span class="sd">"""Semilog plot of electrostatic field energy vs. time, showing Landau damping (or two-stream growth).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -700,17 +698,17 @@
 <span class="sd">    &gt;&gt;&gt; from physicskit.plasma.kinetic import landau_damping_ic, pic_simulate</span>
 <span class="sd">    &gt;&gt;&gt; x0, v0 = landau_damping_ic(2000, L=4 * np.pi, k_mode=0.5, alpha=0.05, v_th=1.0, seed=0)</span>
 <span class="sd">    &gt;&gt;&gt; result = pic_simulate(x0, v0, L=4 * np.pi, ng=32, dt=0.1, steps=30)</span>
-<span class="sd">    &gt;&gt;&gt; fig, ax = plot_field_energy_history(result[&quot;t&quot;], result[&quot;field_energy&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; fig, ax = plot_field_energy_history(result["t"], result["field_energy"])</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">field_energy</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;t (1/$</span><span class="se">\\</span><span class="s2">omega_</span><span class="si">{pe}</span><span class="s2">$)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;field energy&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"t (1/$</span><span class="se">\\</span><span class="s2">omega_</span><span class="si">{pe}</span><span class="s2">$)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"field energy"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -718,7 +716,7 @@
 <div class="viewcode-block" id="plot_cma_diagram">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_cma_diagram">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_cma_diagram</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scatter a set of plasma states on log-log Clemmow-Mullaly-Allis (CMA) diagram axes.</span>
+<span class="w">    </span><span class="sd">"""Scatter a set of plasma states on log-log Clemmow-Mullaly-Allis (CMA) diagram axes.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -741,16 +739,16 @@
 <span class="sd">    &gt;&gt;&gt; fig, ax = plot_cma_diagram(X, Y)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, plt.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$X = \omega_</span><span class="si">{pe}</span><span class="s2">^2/\omega^2$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$Y = \omega_</span><span class="si">{ce}</span><span class="s2">/\omega$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$X = \omega_</span><span class="si">{pe}</span><span class="s2">^2/\omega^2$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$Y = \omega_</span><span class="si">{ce}</span><span class="s2">/\omega$"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
 
 
@@ -758,7 +756,7 @@
 <div class="viewcode-block" id="plot_phase_space_interactive">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plot_phase_space_interactive">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_phase_space_interactive</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interactive Plotly scatter of a particle-in-cell phase-space snapshot.</span>
+<span class="w">    </span><span class="sd">"""Interactive Plotly scatter of a particle-in-cell phase-space snapshot.</span>
 
 <span class="sd">    Unlike :func:`plot_phase_space`, points remain individually</span>
 <span class="sd">    identifiable under pan and zoom -- useful for inspecting fine</span>
@@ -786,15 +784,15 @@
 <span class="sd">    &gt;&gt;&gt; fig = plot_phase_space_interactive(x, v)</span>
 <span class="sd">    &gt;&gt;&gt; isinstance(fig, go.Figure)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Scattergl</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;markers&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Scattergl</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"markers"</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="p">{</span><span class="s2">"size"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">"v"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shared line-plot animator: redraws a single ``y(x)`` curve over a sequence of snapshots.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Shared line-plot animator: redraws a single ``y(x)`` curve over a sequence of snapshots."""</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="p">(</span><span class="n">line</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
@@ -814,12 +812,12 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_animate_2d_snapshots</span><span class="p">(</span>
-    <span class="n">snapshots</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">extent</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">snapshots</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">extent</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"y"</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"RdBu_r"</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shared imshow animator: redraws a single 2D scalar field over a sequence of snapshots.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Shared imshow animator: redraws a single 2D scalar field over a sequence of snapshots."""</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
     <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">snapshots</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">1.0</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">snapshots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">snapshots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">"lower"</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">vmax</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
@@ -838,15 +836,15 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_reconnection</span><span class="p">(</span>
     <span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate the flux function :math:`\\psi(x,y,t)` reconnecting at the X-point of a resistive current sheet.</span>
+<span class="w">    </span><span class="sd">"""Animate the flux function :math:`\\psi(x,y,t)` reconnecting at the X-point of a resistive current sheet.</span>
 
 <span class="sd">    Repeatedly calls :func:`physicskit.plasma.instabilities.simulate_reconnection`</span>
-<span class="sd">    for ``steps_per_frame`` steps at a time, using each call&#39;s final state as</span>
-<span class="sd">    the next call&#39;s initial condition, and shows the accumulated flux</span>
+<span class="sd">    for ``steps_per_frame`` steps at a time, using each call's final state as</span>
+<span class="sd">    the next call's initial condition, and shows the accumulated flux</span>
 <span class="sd">    snapshots as an imshow animation -- the antiparallel field lines above</span>
 <span class="sd">    and below the sheet visibly merge into a single reconnected topology at</span>
 <span class="sd">    the X-point, and the squeezed-out reconnected flux forms the outflow</span>
-<span class="sd">    &quot;jets&quot; along the sheet.</span>
+<span class="sd">    "jets" along the sheet.</span>
 
 <span class="sd">    Each snapshot has its :math:`x`-mean subtracted, :math:`\\psi(x,y,t) -</span>
 <span class="sd">    \\langle\\psi\\rangle_x(y,t)`, before display. The unperturbed Harris</span>
@@ -889,20 +887,20 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_reconnection(psi0, eta=0.02, v0=0.05, dt=0.02, steps_per_frame=5, n_frames=4, Lx=20.0, Ly=20.0)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">psi0</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">psi0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">simulate_reconnection</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">)</span>
-        <span class="n">psi</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;psi&quot;</span><span class="p">]</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"psi"</span><span class="p">]</span>
         <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
     <span class="n">deviations</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">snapshots</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">_animate_2d_snapshots</span><span class="p">(</span>
         <span class="n">deviations</span><span class="p">,</span>
         <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="o">-</span><span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">Ly</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">),</span>
-        <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
-        <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Reconnection: perturbed flux $\psi-\langle\psi\rangle_x$&quot;</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Reconnection: perturbed flux $\psi-\langle\psi\rangle_x$"</span><span class="p">,</span>
         <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
     <span class="p">)</span></div>
 
@@ -913,7 +911,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_weibel_filamentation</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temperature_anisotropy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_modes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate the transverse current filaments growing under the reduced quasi-linear Weibel model.</span>
+<span class="w">    </span><span class="sd">"""Animate the transverse current filaments growing under the reduced quasi-linear Weibel model.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -949,11 +947,11 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_weibel_filamentation(x, t, wpe=1.0, temperature_anisotropy=4.0, n_modes=6)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    6</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">J</span> <span class="o">=</span> <span class="n">simulate_weibel_filamentation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">wpe</span><span class="p">,</span> <span class="n">temperature_anisotropy</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="n">n_modes</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">J</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
     <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;current density $J_y$ (normalized)&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Weibel/filamentation instability&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"current density $J_y$ (normalized)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Weibel/filamentation instability"</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span>
     <span class="p">)</span></div>
 
 
@@ -963,13 +961,13 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_two_stream_phase_space</span><span class="p">(</span>
     <span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ng</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate two-stream-instability phase space :math:`(x, v)` developing its characteristic vortex.</span>
+<span class="w">    </span><span class="sd">"""Animate two-stream-instability phase space :math:`(x, v)` developing its characteristic vortex.</span>
 
 <span class="sd">    Repeatedly calls :func:`physicskit.plasma.kinetic.pic_simulate` for</span>
 <span class="sd">    ``steps_per_frame`` leapfrog steps at a time, redrawing a scatter of</span>
-<span class="sd">    every particle&#39;s position and velocity each frame -- the two initially</span>
+<span class="sd">    every particle's position and velocity each frame -- the two initially</span>
 <span class="sd">    separate beams of :func:`physicskit.plasma.kinetic.two_stream_ic`</span>
-<span class="sd">    visibly wrap around each other into a single phase-space &quot;hole&quot; as the</span>
+<span class="sd">    visibly wrap around each other into a single phase-space "hole" as the</span>
 <span class="sd">    instability saturates.</span>
 
 <span class="sd">    Parameters</span>
@@ -1001,12 +999,12 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_two_stream_phase_space(x0, v0, L=10.0, ng=32, dt=0.05, steps_per_frame=5, n_frames=4)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">x_snaps</span><span class="p">,</span> <span class="n">v_snaps</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()],</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">pic_simulate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">)</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"x"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"v"</span><span class="p">]</span>
         <span class="n">x_snaps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
         <span class="n">v_snaps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
 
@@ -1016,9 +1014,9 @@
     <span class="n">all_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">v_snaps</span><span class="p">)</span>
     <span class="n">vpad</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">all_v</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">all_v</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">all_v</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">vpad</span><span class="p">,</span> <span class="n">all_v</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">vpad</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Two-stream instability phase space&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"v"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Two-stream instability phase space"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
         <span class="n">scatter</span><span class="o">.</span><span class="n">set_offsets</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x_snaps</span><span class="p">[</span><span class="n">frame</span><span class="p">],</span> <span class="n">v_snaps</span><span class="p">[</span><span class="n">frame</span><span class="p">]]))</span>
@@ -1033,7 +1031,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_langmuir_wave</span><span class="p">(</span>
     <span class="n">x0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ng</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate a Langmuir wave&#39;s electron density oscillating in place at (approximately) the plasma frequency.</span>
+<span class="w">    </span><span class="sd">"""Animate a Langmuir wave's electron density oscillating in place at (approximately) the plasma frequency.</span>
 
 <span class="sd">    Repeatedly calls :func:`physicskit.plasma.kinetic.pic_simulate` for</span>
 <span class="sd">    ``steps_per_frame`` steps at a time and, each frame, deposits the</span>
@@ -1041,7 +1039,7 @@
 <span class="sd">    :func:`physicskit.plasma.kinetic.deposit_number_density` -- reusing the</span>
 <span class="sd">    exact charge-assignment kernel the PIC field solve itself uses, so the</span>
 <span class="sd">    density shown is precisely what</span>
-<span class="sd">    :func:`physicskit.plasma.kinetic.pic_step` sees when it solves Poisson&#39;s</span>
+<span class="sd">    :func:`physicskit.plasma.kinetic.pic_step` sees when it solves Poisson's</span>
 <span class="sd">    equation for the field driving the next sub-step.</span>
 
 <span class="sd">    Parameters</span>
@@ -1075,22 +1073,22 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_langmuir_wave(x0, v0, L=4.0, ng=32, dt=0.05, steps_per_frame=4, n_frames=4)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">x_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">deposit_number_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">pic_simulate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">)</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"x"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"v"</span><span class="p">]</span>
         <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deposit_number_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x_grid</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;electron density&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Langmuir wave&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x_grid</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"electron density"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Langmuir wave"</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="animate_ion_acoustic_soliton">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.animate_ion_acoustic_soliton">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_ion_acoustic_soliton</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate an ion-acoustic soliton propagating without change of shape.</span>
+<span class="w">    </span><span class="sd">"""Animate an ion-acoustic soliton propagating without change of shape.</span>
 
 <span class="sd">    Repeatedly calls :func:`physicskit.plasma.waves.ion_acoustic_soliton_evolve`</span>
 <span class="sd">    for ``steps_per_frame`` steps at a time and animates the resulting</span>
@@ -1125,13 +1123,13 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_ion_acoustic_soliton(u0, x, dt=0.0005, steps_per_frame=200, n_frames=4)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">ion_acoustic_soliton_evolve</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">)</span>
         <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;density perturbation&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ion-acoustic soliton&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"density perturbation"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Ion-acoustic soliton"</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
 
 
 
@@ -1140,7 +1138,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_drift_wave_turbulence</span><span class="p">(</span>
     <span class="n">phi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.03</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate a Hasegawa-Mima potential field developing turbulent structure from small-amplitude noise.</span>
+<span class="w">    </span><span class="sd">"""Animate a Hasegawa-Mima potential field developing turbulent structure from small-amplitude noise.</span>
 
 <span class="sd">    Repeatedly calls</span>
 <span class="sd">    :func:`physicskit.plasma.turbulence.simulate_hasegawa_mima` for</span>
@@ -1177,14 +1175,14 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_drift_wave_turbulence(phi0, dt=0.02, steps_per_frame=10, n_frames=4, length=2 * np.pi)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">phi</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">simulate_hasegawa_mima</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">)</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">]</span>
         <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">_animate_2d_snapshots</span><span class="p">(</span><span class="n">snapshots</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Drift-wave turbulence (Hasegawa-Mima)&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_animate_2d_snapshots</span><span class="p">(</span><span class="n">snapshots</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Drift-wave turbulence (Hasegawa-Mima)"</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
 
 
 
@@ -1202,7 +1200,7 @@
     <span class="n">mu0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate a transverse Alfven-wave pulse propagating (and splitting) along the background field.</span>
+<span class="w">    </span><span class="sd">"""Animate a transverse Alfven-wave pulse propagating (and splitting) along the background field.</span>
 
 <span class="sd">    Repeatedly calls :func:`physicskit.plasma.waves.simulate_alfven_wave`</span>
 <span class="sd">    for ``steps_per_frame`` steps at a time and animates the resulting</span>
@@ -1244,14 +1242,14 @@
 <span class="sd">    &gt;&gt;&gt; anim = animate_alfven_wave(By0, vy0, x, dt=0.002, steps_per_frame=200, n_frames=4, B0=1.0, rho0=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">By</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">By0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">vy0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[</span><span class="n">By</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">simulate_alfven_wave</span><span class="p">(</span><span class="n">By</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="p">,</span> <span class="n">B0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="n">mu0</span><span class="p">)</span>
-        <span class="n">By</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;By&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;vy&quot;</span><span class="p">]</span>
+        <span class="n">By</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"By"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"vy"</span><span class="p">]</span>
         <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B_y$ perturbation&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Alfven wave&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_animate_1d_snapshots</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snapshots</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$B_y$ perturbation"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Alfven wave"</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span></div>
 
 
 
@@ -1260,13 +1258,13 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">animate_wakefield_acceleration</span><span class="p">(</span>
     <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame_stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FuncAnimation</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Animate a test charge surfing a prescribed traveling wakefield, with an energy-gain trace inset.</span>
+<span class="w">    </span><span class="sd">"""Animate a test charge surfing a prescribed traveling wakefield, with an energy-gain trace inset.</span>
 
 <span class="sd">    Runs :func:`physicskit.plasma.acceleration.simulate_wakefield_acceleration`</span>
 <span class="sd">    once for the full trajectory, then animates a snapshot of the wakefield</span>
-<span class="sd">    :math:`E_z(x, t)` with the particle&#39;s position marked on it, alongside</span>
+<span class="sd">    :math:`E_z(x, t)` with the particle's position marked on it, alongside</span>
 <span class="sd">    a running plot of its kinetic energy -- showing both the spatial</span>
-<span class="sd">    &quot;surfing&quot; picture and the resulting energy gain simultaneously.</span>
+<span class="sd">    "surfing" picture and the resulting energy gain simultaneously.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1297,9 +1295,9 @@
 <span class="sd">    ... )</span>
 <span class="sd">    &gt;&gt;&gt; len(list(anim.new_frame_seq()))</span>
 <span class="sd">    11</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">simulate_wakefield_acceleration</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
-    <span class="n">t_hist</span><span class="p">,</span> <span class="n">x_hist</span><span class="p">,</span> <span class="n">kinetic_energy</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;kinetic_energy&quot;</span><span class="p">]</span>
+    <span class="n">t_hist</span><span class="p">,</span> <span class="n">x_hist</span><span class="p">,</span> <span class="n">kinetic_energy</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"x"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"kinetic_energy"</span><span class="p">]</span>
     <span class="n">frame_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_hist</span><span class="p">),</span> <span class="n">frame_stride</span><span class="p">)</span>
 
     <span class="n">x_span</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x_hist</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x_hist</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -1307,16 +1305,16 @@
 
     <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_field</span><span class="p">,</span> <span class="n">ax_energy</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
     <span class="p">(</span><span class="n">field_line</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_field</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_field</span><span class="p">,</span> <span class="n">wakefield_e_field</span><span class="p">(</span><span class="n">x_field</span><span class="p">,</span> <span class="n">t_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">E0</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">))</span>
-    <span class="p">(</span><span class="n">particle_marker</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_field</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">wakefield_e_field</span><span class="p">(</span><span class="n">x_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">E0</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">)],</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$E_z$&quot;</span><span class="p">)</span>
-    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Wakefield acceleration&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">particle_marker</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_field</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">wakefield_e_field</span><span class="p">(</span><span class="n">x_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">E0</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_phase</span><span class="p">)],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)</span>
+    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$E_z$"</span><span class="p">)</span>
+    <span class="n">ax_field</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Wakefield acceleration"</span><span class="p">)</span>
 
     <span class="p">(</span><span class="n">energy_line</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax_energy</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[])</span>
     <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">t_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_hist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">kinetic_energy</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-    <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
-    <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;kinetic energy&quot;</span><span class="p">)</span>
+    <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"t"</span><span class="p">)</span>
+    <span class="n">ax_energy</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"kinetic energy"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">frame_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>

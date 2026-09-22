@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.waves</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Cold plasma waves: the Stix dielectric tensor, dispersion relations, and CMA mapping.</span>
+<span></span><span class="sd">"""Cold plasma waves: the Stix dielectric tensor, dispersion relations, and CMA mapping.</span>
 
 <span class="sd">Linearizes the multi-fluid cold-plasma equations around a uniform</span>
 <span class="sd">background threaded by a uniform :math:`\\mathbf{B}_0` to get the</span>
@@ -425,7 +423,7 @@
 <span class="sd">a special case of that one quartic in :math:`n^2`.</span>
 <span class="sd">:func:`cma_coordinates` maps a plasma state onto the two dimensionless</span>
 <span class="sd">axes of the Clemmow-Mullaly-Allis diagram that organizes all of them.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -434,39 +432,39 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">_const</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;QE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ME&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;EPS0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;plasma_frequency&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;stix_parameters&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rl_parameters&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cold_plasma_dispersion&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;whistler_dispersion&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cma_coordinates&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ion_acoustic_soliton_profile&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ion_acoustic_soliton_evolve&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;alfven_wave_pulse_ic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;simulate_alfven_wave&quot;</span><span class="p">,</span>
+    <span class="s2">"QE"</span><span class="p">,</span>
+    <span class="s2">"ME"</span><span class="p">,</span>
+    <span class="s2">"MP"</span><span class="p">,</span>
+    <span class="s2">"EPS0"</span><span class="p">,</span>
+    <span class="s2">"plasma_frequency"</span><span class="p">,</span>
+    <span class="s2">"stix_parameters"</span><span class="p">,</span>
+    <span class="s2">"rl_parameters"</span><span class="p">,</span>
+    <span class="s2">"cold_plasma_dispersion"</span><span class="p">,</span>
+    <span class="s2">"whistler_dispersion"</span><span class="p">,</span>
+    <span class="s2">"cma_coordinates"</span><span class="p">,</span>
+    <span class="s2">"ion_acoustic_soliton_profile"</span><span class="p">,</span>
+    <span class="s2">"ion_acoustic_soliton_evolve"</span><span class="p">,</span>
+    <span class="s2">"alfven_wave_pulse_ic"</span><span class="p">,</span>
+    <span class="s2">"simulate_alfven_wave"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">QE</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">ELEMENTARY_CHARGE</span>
-<span class="sd">&quot;&quot;&quot;Elementary charge, in Coulombs.&quot;&quot;&quot;</span>
+<span class="sd">"""Elementary charge, in Coulombs."""</span>
 
 <span class="n">ME</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">ELECTRON_MASS</span>
-<span class="sd">&quot;&quot;&quot;Electron mass, in kilograms.&quot;&quot;&quot;</span>
+<span class="sd">"""Electron mass, in kilograms."""</span>
 
 <span class="n">MP</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">PROTON_MASS</span>
-<span class="sd">&quot;&quot;&quot;Proton mass, in kilograms.&quot;&quot;&quot;</span>
+<span class="sd">"""Proton mass, in kilograms."""</span>
 
 <span class="n">EPS0</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">VACUUM_PERMITTIVITY</span>
-<span class="sd">&quot;&quot;&quot;Vacuum permittivity, in F/m.&quot;&quot;&quot;</span>
+<span class="sd">"""Vacuum permittivity, in F/m."""</span>
 
 
 <div class="viewcode-block" id="plasma_frequency">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.plasma_frequency">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plasma_frequency</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">QE</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ME</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Species plasma frequency :math:`\\omega_p = \\sqrt{nq^2/(\\varepsilon_0 m)}`.</span>
+<span class="w">    </span><span class="sd">"""Species plasma frequency :math:`\\omega_p = \\sqrt{nq^2/(\\varepsilon_0 m)}`.</span>
 
 <span class="sd">    The natural oscillation frequency of a species displaced from</span>
 <span class="sd">    quasineutrality: the restoring electric field it builds up is</span>
@@ -492,7 +490,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(plasma_frequency(1e19)) / 1e9, 3)</span>
 <span class="sd">    178.399</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">EPS0</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span></div>
 
 
@@ -500,9 +498,9 @@
 <div class="viewcode-block" id="stix_parameters">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.stix_parameters">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">stix_parameters</span><span class="p">(</span><span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stix cold-plasma dielectric tensor components :math:`S`, :math:`D`, :math:`P`.</span>
+<span class="w">    </span><span class="sd">"""Stix cold-plasma dielectric tensor components :math:`S`, :math:`D`, :math:`P`.</span>
 
-<span class="sd">    Summing each species&#39; contribution to the linearized fluid response</span>
+<span class="sd">    Summing each species' contribution to the linearized fluid response</span>
 <span class="sd">    gives the Hermitian dielectric tensor</span>
 
 <span class="sd">    .. math::</span>
@@ -513,7 +511,7 @@
 <span class="sd">       D = \\sum_s \\frac{\\omega_{cs}}{\\omega}\\frac{\\omega_{ps}^2}{\\omega^2-\\omega_{cs}^2}, \\quad</span>
 <span class="sd">       P = 1 - \\sum_s \\frac{\\omega_{ps}^2}{\\omega^2},</span>
 
-<span class="sd">    with each species&#39; signed cyclotron frequency :math:`\\omega_{cs}=q_sB/m_s`</span>
+<span class="sd">    with each species' signed cyclotron frequency :math:`\\omega_{cs}=q_sB/m_s`</span>
 <span class="sd">    entering :math:`D` with its own sign -- the source of the</span>
 <span class="sd">    circular-polarization asymmetry between the R- and L-waves.</span>
 
@@ -544,7 +542,7 @@
 <span class="sd">    &gt;&gt;&gt; S, D, P = stix_parameters(omega=2e9, B=1.0, species=[electrons, ions])</span>
 <span class="sd">    &gt;&gt;&gt; round(S, 4), round(D, 4), round(P, 4)</span>
 <span class="sd">    (-2.3143, 90.6954, -7959.8516)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span>
     <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">species</span><span class="p">:</span>
         <span class="n">wp2</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">EPS0</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span>
@@ -559,7 +557,7 @@
 <div class="viewcode-block" id="rl_parameters">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.rl_parameters">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">rl_parameters</span><span class="p">(</span><span class="n">S</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Right- and left-hand Stix parameters :math:`R = S+D`, :math:`L = S-D`.</span>
+<span class="w">    </span><span class="sd">"""Right- and left-hand Stix parameters :math:`R = S+D`, :math:`L = S-D`.</span>
 
 <span class="sd">    :math:`R` and :math:`L` are the dielectric response seen by a purely</span>
 <span class="sd">    right- or left-hand circularly polarized wave propagating exactly</span>
@@ -580,7 +578,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; rl_parameters(S=1.0, D=0.5)</span>
 <span class="sd">    (1.5, 0.5)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">S</span> <span class="o">+</span> <span class="n">D</span><span class="p">,</span> <span class="n">S</span> <span class="o">-</span> <span class="n">D</span></div>
 
 
@@ -588,7 +586,7 @@
 <div class="viewcode-block" id="cold_plasma_dispersion">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.cold_plasma_dispersion">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cold_plasma_dispersion</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">S</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">P</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve the cold-plasma dispersion relation for the squared refractive index :math:`n^2`.</span>
+<span class="w">    </span><span class="sd">"""Solve the cold-plasma dispersion relation for the squared refractive index :math:`n^2`.</span>
 
 <span class="sd">    Substituting a plane wave into</span>
 <span class="sd">    :math:`\\mathbf{n}\\times(\\mathbf{n}\\times\\mathbf{E})+\\mathbf{K}\\cdot\\mathbf{E}=0`</span>
@@ -633,7 +631,7 @@
 <span class="sd">    &gt;&gt;&gt; R, L = rl_parameters(S, D)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.isclose(sorted([n2_plus, n2_minus]), sorted([R, L])).all())</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">R</span><span class="p">,</span> <span class="n">L</span> <span class="o">=</span> <span class="n">rl_parameters</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">P</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="n">Bc</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">P</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
@@ -647,15 +645,15 @@
 <div class="viewcode-block" id="whistler_dispersion">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.whistler_dispersion">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">whistler_dispersion</span><span class="p">(</span><span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wce</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Electron-only, parallel-propagation whistler-mode refractive index :math:`n^2 = \\omega_{pe}^2/[\\omega(\\omega_{ce}-\\omega)]`.</span>
+<span class="w">    </span><span class="sd">"""Electron-only, parallel-propagation whistler-mode refractive index :math:`n^2 = \\omega_{pe}^2/[\\omega(\\omega_{ce}-\\omega)]`.</span>
 
 <span class="sd">    The low-frequency (:math:`\\omega \\ll \\omega_{ce}`), right-hand</span>
 <span class="sd">    circularly polarized branch of the R-wave, with ion motion neglected.</span>
 <span class="sd">    Because :math:`n^2` grows without bound as :math:`\\omega\\to\\omega_{ce}`,</span>
 <span class="sd">    whistlers slow down sharply as they approach the electron cyclotron</span>
-<span class="sd">    frequency -- the falling-tone &quot;whistle&quot; heard in radio receivers after</span>
+<span class="sd">    frequency -- the falling-tone "whistle" heard in radio receivers after</span>
 <span class="sd">    a lightning stroke launches a broadband pulse that disperses along</span>
-<span class="sd">    Earth&#39;s field lines, with the highest frequencies (closest to</span>
+<span class="sd">    Earth's field lines, with the highest frequencies (closest to</span>
 <span class="sd">    :math:`\\omega_{ce}`) arriving last.</span>
 
 <span class="sd">    Parameters</span>
@@ -688,7 +686,7 @@
 <span class="sd">    &gt;&gt;&gt; n2_approx = whistler_dispersion(omega, wpe, wce)</span>
 <span class="sd">    &gt;&gt;&gt; round(abs(n2_approx - R) / R, 2)</span>
 <span class="sd">    0.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">wpe</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">omega</span> <span class="o">*</span> <span class="p">(</span><span class="n">wce</span> <span class="o">-</span> <span class="n">omega</span><span class="p">))</span></div>
 
 
@@ -696,7 +694,7 @@
 <div class="viewcode-block" id="cma_coordinates">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.cma_coordinates">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cma_coordinates</span><span class="p">(</span><span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wpe</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wce</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dimensionless :math:`(X, Y)` coordinates of the Clemmow-Mullaly-Allis (CMA) diagram.</span>
+<span class="w">    </span><span class="sd">"""Dimensionless :math:`(X, Y)` coordinates of the Clemmow-Mullaly-Allis (CMA) diagram.</span>
 
 <span class="sd">    The CMA diagram partitions the plane :math:`X=\\omega_{pe}^2/\\omega^2`</span>
 <span class="sd">    (density axis) vs. :math:`Y=\\omega_{ce}/\\omega` (field-strength axis)</span>
@@ -724,7 +722,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; cma_coordinates(omega=1.0, wpe=2.0, wce=3.0)</span>
 <span class="sd">    (4.0, 3.0)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">wpe</span> <span class="o">/</span> <span class="n">omega</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">wce</span> <span class="o">/</span> <span class="n">omega</span></div>
 
 
@@ -732,7 +730,7 @@
 <div class="viewcode-block" id="ion_acoustic_soliton_profile">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.ion_acoustic_soliton_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ion_acoustic_soliton_profile</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact single-soliton solution of the ion-acoustic Korteweg-de Vries reduction.</span>
+<span class="w">    </span><span class="sd">"""Exact single-soliton solution of the ion-acoustic Korteweg-de Vries reduction.</span>
 
 <span class="sd">    The reductive-perturbation (Washimi &amp; Taniuti, 1966) expansion of the</span>
 <span class="sd">    cold-ion-fluid/Boltzmann-electron equations in the weakly nonlinear,</span>
@@ -775,7 +773,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(ion_acoustic_soliton_profile(0.0, speed=4.0)), 6)</span>
 <span class="sd">    2.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">speed</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)))</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 
@@ -789,7 +787,7 @@
 <div class="viewcode-block" id="ion_acoustic_soliton_evolve">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.ion_acoustic_soliton_evolve">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ion_acoustic_soliton_evolve</span><span class="p">(</span><span class="n">u0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve an ion-acoustic KdV initial condition forward in time on a periodic domain.</span>
+<span class="w">    </span><span class="sd">"""Evolve an ion-acoustic KdV initial condition forward in time on a periodic domain.</span>
 
 <span class="sd">    A pseudo-spectral Strang-split scheme: the stiff linear dispersion</span>
 <span class="sd">    :math:`\\partial_\\xi^3` is advanced exactly in Fourier space, and the</span>
@@ -836,7 +834,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(u.max() - u0.max()) &lt; 0.05)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ik3</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k</span><span class="o">**</span><span class="mi">3</span>
     <span class="n">u_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span>
@@ -855,15 +853,15 @@
 <div class="viewcode-block" id="alfven_wave_pulse_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.alfven_wave_pulse_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">alfven_wave_pulse_ic</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initial condition for a transverse Alfven-wave pulse launched from rest.</span>
+<span class="w">    </span><span class="sd">"""Initial condition for a transverse Alfven-wave pulse launched from rest.</span>
 
 <span class="sd">    A Gaussian transverse-field pulse :math:`B_y(x,0)=B_1 e^{-[(x-x_0)/w]^2}`</span>
-<span class="sd">    with the transverse velocity perturbation initially zero -- a &quot;plucked</span>
-<span class="sd">    string&quot; initial condition. Because the linearized ideal-MHD Alfven-wave</span>
+<span class="sd">    with the transverse velocity perturbation initially zero -- a "plucked</span>
+<span class="sd">    string" initial condition. Because the linearized ideal-MHD Alfven-wave</span>
 <span class="sd">    equations (:func:`simulate_alfven_wave`) are the same non-dispersive wave</span>
 <span class="sd">    equation a string obeys, a disturbance released from rest splits exactly</span>
 <span class="sd">    in half and propagates as two identical, oppositely directed pulses at</span>
-<span class="sd">    :math:`\\pm v_A` -- exactly the field-line-plucking picture Alfven&#39;s</span>
+<span class="sd">    :math:`\\pm v_A` -- exactly the field-line-plucking picture Alfven's</span>
 <span class="sd">    original 1942 analogy describes.</span>
 
 <span class="sd">    Parameters</span>
@@ -894,7 +892,7 @@
 <span class="sd">    &gt;&gt;&gt; By0, vy0 = alfven_wave_pulse_ic(x, x0=0.0, width=1.0, amplitude=0.1)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.all(vy0 == 0.0))</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">By0</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">vy0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">By0</span><span class="p">,</span> <span class="n">vy0</span></div>
@@ -912,7 +910,7 @@
 <div class="viewcode-block" id="simulate_alfven_wave">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.simulate_alfven_wave">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_alfven_wave</span><span class="p">(</span><span class="n">By0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vy0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">B0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the linearized 1D ideal-MHD Alfven-wave equations with a pseudo-spectral RK4 scheme.</span>
+<span class="w">    </span><span class="sd">"""Time-step the linearized 1D ideal-MHD Alfven-wave equations with a pseudo-spectral RK4 scheme.</span>
 
 <span class="sd">    Advances the coupled transverse induction and momentum equations</span>
 
@@ -925,7 +923,7 @@
 <span class="sd">    :math:`\\partial_t^2 B_y = v_A^2\\,\\partial_x^2 B_y` with</span>
 <span class="sd">    :math:`v_A=B_0/\\sqrt{\\mu_0\\rho_0}` (:func:`physicskit.plasma.mhd.alfven_speed`).</span>
 <span class="sd">    Spatial derivatives are evaluated exactly via FFT (as elsewhere in this</span>
-<span class="sd">    package&#39;s periodic-domain solvers) and advanced in time with classical</span>
+<span class="sd">    package's periodic-domain solvers) and advanced in time with classical</span>
 <span class="sd">    RK4; a uniform background field and density are assumed throughout</span>
 <span class="sd">    (linear, ideal, cold-background MHD -- no thermal pressure term enters</span>
 <span class="sd">    a purely transverse, incompressible perturbation like this one).</span>
@@ -960,7 +958,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;By&quot;: final transverse field, &quot;vy&quot;: final transverse velocity}``.</span>
+<span class="sd">        ``{"By": final transverse field, "vy": final transverse velocity}``.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -973,11 +971,11 @@
 <span class="sd">    &gt;&gt;&gt; x = np.linspace(-20, 20, 256, endpoint=False)</span>
 <span class="sd">    &gt;&gt;&gt; By0, vy0 = alfven_wave_pulse_ic(x, x0=0.0, width=1.0, amplitude=0.1)</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_alfven_wave(By0, vy0, x, dt=0.002, steps=2000, B0=1.0, rho0=1.0)</span>
-<span class="sd">    &gt;&gt;&gt; result[&quot;By&quot;].shape</span>
+<span class="sd">    &gt;&gt;&gt; result["By"].shape</span>
 <span class="sd">    (256,)</span>
-<span class="sd">    &gt;&gt;&gt; bool(np.isfinite(result[&quot;By&quot;]).all())</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isfinite(result["By"]).all())</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">By</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">By0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">vy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vy0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -988,7 +986,7 @@
         <span class="n">k4B</span><span class="p">,</span> <span class="n">k4v</span> <span class="o">=</span> <span class="n">_alfven_rhs</span><span class="p">(</span><span class="n">By</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3B</span><span class="p">,</span> <span class="n">vy</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3v</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">B0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">mu0</span><span class="p">)</span>
         <span class="n">By</span> <span class="o">=</span> <span class="n">By</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1B</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k2B</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k3B</span> <span class="o">+</span> <span class="n">k4B</span><span class="p">)</span>
         <span class="n">vy</span> <span class="o">=</span> <span class="n">vy</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1v</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k2v</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k3v</span> <span class="o">+</span> <span class="n">k4v</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;By&quot;</span><span class="p">:</span> <span class="n">By</span><span class="p">,</span> <span class="s2">&quot;vy&quot;</span><span class="p">:</span> <span class="n">vy</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"By"</span><span class="p">:</span> <span class="n">By</span><span class="p">,</span> <span class="s2">"vy"</span><span class="p">:</span> <span class="n">vy</span><span class="p">}</span></div>
 
 </pre></div>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.chaos.systems.maps</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Discrete chaotic maps: the Standard Map, the Henon Map, the Baker&#39;s Map, and the Logistic Map.&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Discrete chaotic maps: the Standard Map, the Henon Map, the Baker's Map, and the Logistic Map."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -427,7 +425,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_standard_map_step</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Single Chirikov-Taylor standard map iteration.</span>
+<span class="w">    </span><span class="sd">"""Single Chirikov-Taylor standard map iteration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -442,7 +440,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    theta_new, p_new : float</span>
 <span class="sd">        Next angle and momentum, both wrapped into ``[0, 2*pi)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">p_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">%</span> <span class="n">TWO_PI</span>
     <span class="n">theta_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta</span> <span class="o">+</span> <span class="n">p_new</span><span class="p">)</span> <span class="o">%</span> <span class="n">TWO_PI</span>
     <span class="k">return</span> <span class="n">theta_new</span><span class="p">,</span> <span class="n">p_new</span>
@@ -450,7 +448,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_standard_map_trajectory</span><span class="p">(</span><span class="n">theta0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate the standard map ``n_iter`` times from ``(theta0, p0)``.</span>
+<span class="w">    </span><span class="sd">"""Iterate the standard map ``n_iter`` times from ``(theta0, p0)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -467,7 +465,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    thetas, ps : ndarray of float, shape (n_iter + 1,)</span>
 <span class="sd">        Angle and momentum at each iteration, including the initial values.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">p0</span>
@@ -482,7 +480,7 @@
 <div class="viewcode-block" id="StandardMap">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.StandardMap">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StandardMap</span><span class="p">(</span><span class="n">DiscreteMap</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Chirikov-Taylor standard map on the ``(theta, p)`` cylinder.</span>
+<span class="w">    </span><span class="sd">"""The Chirikov-Taylor standard map on the ``(theta, p)`` cylinder.</span>
 
 <span class="sd">    ``k=0`` is integrable; chaos onset is around ``k~1``, with global chaos</span>
 <span class="sd">    for ``k &gt;~ 4-5``.</span>
@@ -496,7 +494,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    k : float</span>
 <span class="sd">        Kick strength.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1">#: State dimension, always 2. State is ``(theta, p)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
@@ -507,7 +505,7 @@
 <div class="viewcode-block" id="StandardMap.step">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.StandardMap.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``(theta, p)`` by one map iteration.</span>
+<span class="w">        </span><span class="sd">"""Advance ``(theta, p)`` by one map iteration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -518,7 +516,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            Next state ``(theta, p)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">theta</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_standard_map_step</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">theta</span><span class="p">,</span> <span class="n">p</span><span class="p">])</span></div>
 
@@ -526,19 +524,19 @@
 <div class="viewcode-block" id="StandardMap.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.StandardMap.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(0.1, 0.1)``.</span>
+<span class="w">        </span><span class="sd">"""Default initial condition ``(0.1, 0.1)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="StandardMap.trajectory">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.StandardMap.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate the map ``n_iter`` times starting from ``state0``.</span>
+<span class="w">        </span><span class="sd">"""Iterate the map ``n_iter`` times starting from ``state0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -551,7 +549,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n_iter + 1, 2)</span>
 <span class="sd">            State at each iteration, including ``state0`` as row 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">thetas</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">_standard_map_trajectory</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">thetas</span><span class="p">,</span> <span class="n">ps</span><span class="p">])</span></div>
@@ -561,7 +559,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_henon_map_step</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Single Henon map iteration.</span>
+<span class="w">    </span><span class="sd">"""Single Henon map iteration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -574,13 +572,13 @@
 <span class="sd">    -------</span>
 <span class="sd">    x_new, y_new : float</span>
 <span class="sd">        Next state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_henon_map_trajectory</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate the Henon map ``n_iter`` times from ``(x0, y0)``.</span>
+<span class="w">    </span><span class="sd">"""Iterate the Henon map ``n_iter`` times from ``(x0, y0)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -595,7 +593,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    xs, ys : ndarray of float, shape (n_iter + 1,)</span>
 <span class="sd">        State components at each iteration, including the initial values.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span>
@@ -610,7 +608,7 @@
 <div class="viewcode-block" id="HenonMap">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.HenonMap">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HenonMap</span><span class="p">(</span><span class="n">DiscreteMap</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Henon map ``x&#39; = 1 - a*x^2 + y, y&#39; = b*x``.</span>
+<span class="w">    </span><span class="sd">"""The Henon map ``x' = 1 - a*x^2 + y, y' = b*x``.</span>
 
 <span class="sd">    The classic chaotic parameters are ``a=1.4, b=0.3``.</span>
 
@@ -625,7 +623,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    a, b : float</span>
 <span class="sd">        Map parameters.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1">#: State dimension, always 2. State is ``(x, y)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
@@ -637,7 +635,7 @@
 <div class="viewcode-block" id="HenonMap.step">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.HenonMap.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``(x, y)`` by one map iteration.</span>
+<span class="w">        </span><span class="sd">"""Advance ``(x, y)`` by one map iteration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -648,7 +646,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            Next state ``(x, y)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_henon_map_step</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></div>
 
@@ -656,19 +654,19 @@
 <div class="viewcode-block" id="HenonMap.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.HenonMap.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(0, 0)``.</span>
+<span class="w">        </span><span class="sd">"""Default initial condition ``(0, 0)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="HenonMap.trajectory">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.HenonMap.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate the map ``n_iter`` times starting from ``state0``.</span>
+<span class="w">        </span><span class="sd">"""Iterate the map ``n_iter`` times starting from ``state0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -681,7 +679,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n_iter + 1, 2)</span>
 <span class="sd">            State at each iteration, including ``state0`` as row 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">_henon_map_trajectory</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">])</span></div>
@@ -691,7 +689,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_bakers_map_step</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Single (generalized) baker&#39;s map iteration.</span>
+<span class="w">    </span><span class="sd">"""Single (generalized) baker's map iteration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -704,7 +702,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    x_new, y_new : float</span>
 <span class="sd">        Next state, each in ``[0, 1)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">y</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span>
@@ -712,7 +710,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_bakers_map_trajectory</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate the baker&#39;s map ``n_iter`` times from ``(x0, y0)``.</span>
+<span class="w">    </span><span class="sd">"""Iterate the baker's map ``n_iter`` times from ``(x0, y0)``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -727,7 +725,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    xs, ys : ndarray of float, shape (n_iter + 1,)</span>
 <span class="sd">        State components at each iteration, including the initial values.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span>
@@ -742,12 +740,12 @@
 <div class="viewcode-block" id="BakersMap">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BakersMap">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BakersMap</span><span class="p">(</span><span class="n">DiscreteMap</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The (generalized) baker&#39;s map on the unit square: the textbook model of chaos.</span>
+<span class="w">    </span><span class="sd">"""The (generalized) baker's map on the unit square: the textbook model of chaos.</span>
 
 <span class="sd">    The map cuts the unit square ``[0, 1) x [0, 1)`` at ``x = alpha``, stretches</span>
 <span class="sd">    each piece horizontally back to unit width (contracting it vertically to</span>
-<span class="sd">    match), and stacks the two pieces -- literally the &quot;stretch, cut, and</span>
-<span class="sd">    stack&quot; mechanism used to motivate deterministic chaos:</span>
+<span class="sd">    match), and stacks the two pieces -- literally the "stretch, cut, and</span>
+<span class="sd">    stack" mechanism used to motivate deterministic chaos:</span>
 
 <span class="sd">    .. math::</span>
 
@@ -762,7 +760,7 @@
 <span class="sd">    unit square uniformly and densely, and its Lyapunov exponents are known</span>
 <span class="sd">    exactly in closed form (see :meth:`lyapunov_exponents`), making it the</span>
 <span class="sd">    standard textbook example for validating numerical chaos estimators.</span>
-<span class="sd">    ``alpha=0.5`` (the default) recovers the classic symmetric baker&#39;s map.</span>
+<span class="sd">    ``alpha=0.5`` (the default) recovers the classic symmetric baker's map.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -793,24 +791,24 @@
 <span class="sd">    sensitively on `alpha` and the initial condition: it may also never</span>
 <span class="sd">    happen within a given run). Do not rely on :meth:`trajectory` orbits of</span>
 <span class="sd">    more than a few hundred iterations to be a faithful sample of the</span>
-<span class="sd">    invariant measure without first checking the orbit hasn&#39;t collapsed;</span>
+<span class="sd">    invariant measure without first checking the orbit hasn't collapsed;</span>
 <span class="sd">    :class:`~physicskit.chaos.systems.maps.HenonMap` and continuous systems such as</span>
 <span class="sd">    :class:`~physicskit.chaos.systems.continuous.Lorenz` do not share this failure</span>
 <span class="sd">    mode and are better suited to long-trajectory statistics.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1">#: State dimension, always 2. State is ``(x, y)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">&quot;alpha must satisfy 0 &lt; alpha &lt; 1&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"alpha must satisfy 0 &lt; alpha &lt; 1"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BakersMap.step">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BakersMap.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``(x, y)`` by one map iteration.</span>
+<span class="w">        </span><span class="sd">"""Advance ``(x, y)`` by one map iteration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -821,7 +819,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
 <span class="sd">            Next state ``(x, y)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_bakers_map_step</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></div>
 
@@ -829,19 +827,19 @@
 <div class="viewcode-block" id="BakersMap.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BakersMap.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(0.5, 0.5)``.</span>
+<span class="w">        </span><span class="sd">"""Default initial condition ``(0.5, 0.5)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (2,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="BakersMap.trajectory">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BakersMap.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate the map ``n_iter`` times starting from ``state0``.</span>
+<span class="w">        </span><span class="sd">"""Iterate the map ``n_iter`` times starting from ``state0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -855,7 +853,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n_iter + 1, 2)</span>
 <span class="sd">            State at each iteration, including ``state0`` as row 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">_bakers_map_trajectory</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">])</span></div>
@@ -864,15 +862,15 @@
 <div class="viewcode-block" id="BakersMap.lyapunov_exponents">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.BakersMap.lyapunov_exponents">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">lyapunov_exponents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exact Lyapunov exponents of the map, in closed form.</span>
+<span class="w">        </span><span class="sd">"""Exact Lyapunov exponents of the map, in closed form.</span>
 
-<span class="sd">        The baker&#39;s map is piecewise-linear and uniformly hyperbolic: almost</span>
+<span class="sd">        The baker's map is piecewise-linear and uniformly hyperbolic: almost</span>
 <span class="sd">        every orbit spends a fraction `alpha` of its time in the expanding-by</span>
 <span class="sd">        ``1/alpha`` branch and ``1 - alpha`` in the expanding-by</span>
 <span class="sd">        ``1/(1 - alpha)`` branch, so by the ergodic theorem its Lyapunov</span>
 <span class="sd">        exponent equals the Shannon entropy of that two-symbol Bernoulli</span>
 <span class="sd">        process -- no numerical estimation needed. This is exactly what makes</span>
-<span class="sd">        the baker&#39;s map useful as a ground truth for validating</span>
+<span class="sd">        the baker's map useful as a ground truth for validating</span>
 <span class="sd">        :func:`physicskit.chaos.utils.metrics.lyapunov_exponent_from_divergence` and</span>
 <span class="sd">        similar numerical estimators.</span>
 
@@ -882,7 +880,7 @@
 <span class="sd">            The two Lyapunov exponents, ``+h`` and ``-h``, where</span>
 <span class="sd">            ``h = -alpha*ln(alpha) - (1-alpha)*ln(1-alpha)`` (``= ln(2)`` for</span>
 <span class="sd">            the classic symmetric map, ``alpha=0.5``).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
         <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="o">-</span><span class="n">h</span></div>
@@ -892,7 +890,7 @@
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_logistic_map_step</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Single logistic map iteration.</span>
+<span class="w">    </span><span class="sd">"""Single logistic map iteration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -905,13 +903,13 @@
 <span class="sd">    -------</span>
 <span class="sd">    float</span>
 <span class="sd">        Next state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">r</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
 
 
 <span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_logistic_map_trajectory</span><span class="p">(</span><span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate the logistic map ``n_iter`` times from ``x0``.</span>
+<span class="w">    </span><span class="sd">"""Iterate the logistic map ``n_iter`` times from ``x0``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -926,7 +924,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    ndarray of float, shape (n_iter + 1,)</span>
 <span class="sd">        State at each iteration, including the initial value.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
@@ -939,7 +937,7 @@
 <div class="viewcode-block" id="LogisticMap">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.LogisticMap">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LogisticMap</span><span class="p">(</span><span class="n">DiscreteMap</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The logistic map ``x&#39; = r*x*(1-x)``: the simplest gateway to chaos.</span>
+<span class="w">    </span><span class="sd">"""The logistic map ``x' = r*x*(1-x)``: the simplest gateway to chaos.</span>
 
 <span class="sd">    Varying the single growth-rate parameter `r` takes this map through the</span>
 <span class="sd">    complete period-doubling route to chaos: a stable fixed point for</span>
@@ -959,7 +957,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    r : float</span>
 <span class="sd">        Growth rate parameter.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1">#: State dimension, always 1. State is ``(x,)``.</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span>
@@ -970,7 +968,7 @@
 <div class="viewcode-block" id="LogisticMap.step">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.LogisticMap.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance ``x`` by one map iteration.</span>
+<span class="w">        </span><span class="sd">"""Advance ``x`` by one map iteration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -981,26 +979,26 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (1,)</span>
 <span class="sd">            Next state ``(x,)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">_logistic_map_step</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)])</span></div>
 
 
 <div class="viewcode-block" id="LogisticMap.initial_state">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.LogisticMap.initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default initial condition ``(0.5,)``.</span>
+<span class="w">        </span><span class="sd">"""Default initial condition ``(0.5,)``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (1,)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="LogisticMap.trajectory">
 <a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.LogisticMap.trajectory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate the map ``n_iter`` times starting from ``state0``.</span>
+<span class="w">        </span><span class="sd">"""Iterate the map ``n_iter`` times starting from ``state0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1013,7 +1011,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of float, shape (n_iter + 1, 1)</span>
 <span class="sd">            State at each iteration, including ``state0`` as row 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">xs</span> <span class="o">=</span> <span class="n">_logistic_map_trajectory</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">state0</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">xs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>

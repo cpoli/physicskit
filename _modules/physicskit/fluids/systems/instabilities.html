@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fluids.systems.instabilities</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Shear and buoyancy-driven instabilities: Kelvin-Helmholtz and Rayleigh-Taylor.</span>
+<span></span><span class="sd">"""Shear and buoyancy-driven instabilities: Kelvin-Helmholtz and Rayleigh-Taylor.</span>
 
 <span class="sd">Both instabilities turn a smooth base state (a shear layer, a stratified</span>
 <span class="sd">interface) into vigorous mixing given only an infinitesimal perturbation --</span>
@@ -423,7 +421,7 @@
 <span class="sd">point where the linear theory stops applying, into the rolled-up vortices</span>
 <span class="sd">(Kelvin-Helmholtz) or mushroom-shaped plumes (Rayleigh-Taylor) these</span>
 <span class="sd">instabilities are named for.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -434,26 +432,26 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;kelvin_helmholtz_ic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;kelvin_helmholtz_growth_rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;simulate_kelvin_helmholtz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rayleigh_taylor_ic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rayleigh_taylor_growth_rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;simulate_rayleigh_taylor&quot;</span><span class="p">,</span>
+    <span class="s2">"kelvin_helmholtz_ic"</span><span class="p">,</span>
+    <span class="s2">"kelvin_helmholtz_growth_rate"</span><span class="p">,</span>
+    <span class="s2">"simulate_kelvin_helmholtz"</span><span class="p">,</span>
+    <span class="s2">"rayleigh_taylor_ic"</span><span class="p">,</span>
+    <span class="s2">"rayleigh_taylor_growth_rate"</span><span class="p">,</span>
+    <span class="s2">"simulate_rayleigh_taylor"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="kelvin_helmholtz_ic">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.kelvin_helmholtz_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kelvin_helmholtz_ic</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shear_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">perturbation_amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Vorticity initial condition for the Kelvin-Helmholtz shear-layer instability.</span>
+<span class="w">    </span><span class="sd">"""Vorticity initial condition for the Kelvin-Helmholtz shear-layer instability.</span>
 
 <span class="sd">    A thin vortex sheet at mid-domain, with a small sinusoidal ripple that</span>
 <span class="sd">    seeds the instability: under</span>
 <span class="sd">    :class:`physicskit.fluids.systems.navier_stokes.NavierStokes2D`, the</span>
-<span class="sd">    ripple&#39;s amplitude grows -- initially at the rate predicted by</span>
+<span class="sd">    ripple's amplitude grows -- initially at the rate predicted by</span>
 <span class="sd">    :func:`kelvin_helmholtz_growth_rate` -- as the shear layer rolls up into</span>
-<span class="sd">    a row of discrete &quot;cat&#39;s eye&quot; vortices.</span>
+<span class="sd">    a row of discrete "cat's eye" vortices.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -478,9 +476,9 @@
 <span class="sd">    (64, 64)</span>
 <span class="sd">    &gt;&gt;&gt; bool(omega0.max() &gt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">y0</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">base</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">shear_width</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">/</span> <span class="n">shear_width</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="n">ripple</span> <span class="o">=</span> <span class="n">perturbation_amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">X</span> <span class="o">/</span> <span class="n">length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">length</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
@@ -491,7 +489,7 @@
 <div class="viewcode-block" id="kelvin_helmholtz_growth_rate">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.kelvin_helmholtz_growth_rate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kelvin_helmholtz_growth_rate</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">delta_u</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inviscid linear growth rate of a Kelvin-Helmholtz-unstable vortex sheet.</span>
+<span class="w">    </span><span class="sd">"""Inviscid linear growth rate of a Kelvin-Helmholtz-unstable vortex sheet.</span>
 
 <span class="sd">    For a vortex sheet (an infinitesimally thin shear layer with a velocity</span>
 <span class="sd">    jump `delta_u` across it), linear stability analysis of the Euler</span>
@@ -529,21 +527,21 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(kelvin_helmholtz_growth_rate(k=1.0, delta_u=2.0), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">delta_u</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_kelvin_helmholtz</span><span class="p">(</span><span class="n">omega0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the 2D incompressible Kelvin-Helmholtz shear layer with RK4.</span>
+<span class="w">    </span><span class="sd">"""Time-step the 2D incompressible Kelvin-Helmholtz shear layer with RK4.</span>
 
 <span class="sd">    A thin wrapper around</span>
 <span class="sd">    :func:`physicskit.fluids.core.timestepping.integrate_vorticity_streamfunction`</span>
 <span class="sd">    -- the same pseudo-spectral vorticity-streamfunction Navier-Stokes</span>
 <span class="sd">    engine :func:`simulate_rayleigh_taylor` builds its Boussinesq extension</span>
 <span class="sd">    on -- evolving :func:`kelvin_helmholtz_ic` through the roll-up of its</span>
-<span class="sd">    seeded ripple into the characteristic &quot;cat&#39;s-eye&quot; vortex row, well past</span>
-<span class="sd">    the point :func:`kelvin_helmholtz_growth_rate`&#39;s linear-theory</span>
+<span class="sd">    seeded ripple into the characteristic "cat's-eye" vortex row, well past</span>
+<span class="sd">    the point :func:`kelvin_helmholtz_growth_rate`'s linear-theory</span>
 <span class="sd">    exponential growth stops applying.</span>
 
 <span class="sd">    Parameters</span>
@@ -562,7 +560,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;omega&quot;: ..., &quot;psi&quot;: ..., &quot;u&quot;: ..., &quot;v&quot;: ...}`` at the final time.</span>
+<span class="sd">        ``{"omega": ..., "psi": ..., "u": ..., "v": ...}`` at the final time.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -581,11 +579,11 @@
 <span class="sd">    &gt;&gt;&gt; n, length = 96, 2 * np.pi</span>
 <span class="sd">    &gt;&gt;&gt; omega0 = kelvin_helmholtz_ic(n, length, shear_width=0.1, perturbation_amplitude=0.05)</span>
 <span class="sd">    &gt;&gt;&gt; result = simulate_kelvin_helmholtz(omega0, nu=0.001, dt=0.0025, steps=50, length=length)</span>
-<span class="sd">    &gt;&gt;&gt; result[&quot;omega&quot;].shape</span>
+<span class="sd">    &gt;&gt;&gt; result["omega"].shape</span>
 <span class="sd">    (96, 96)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">integrate_vorticity_streamfunction</span><span class="p">(</span><span class="n">omega0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
 
 
@@ -594,7 +592,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">rayleigh_taylor_ic</span><span class="p">(</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">atwood_number</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">perturbation_amplitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">interface_position</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Vorticity and buoyancy initial condition for the Rayleigh-Taylor instability.</span>
+<span class="w">    </span><span class="sd">"""Vorticity and buoyancy initial condition for the Rayleigh-Taylor instability.</span>
 
 <span class="sd">    A denser fluid layer sits atop a lighter one (heavy-on-top is exactly</span>
 <span class="sd">    the unstable arrangement), separated by an interface at mid-domain with</span>
@@ -640,11 +638,11 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(buoyancy0.max() &gt; 0 &gt; buoyancy0.min())</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">atwood_number</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;atwood_number must be in (0, 1), got </span><span class="si">{</span><span class="n">atwood_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"atwood_number must be in (0, 1), got </span><span class="si">{</span><span class="n">atwood_number</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">y0</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">interface_position</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">interface_position</span>
     <span class="n">smoothing</span> <span class="o">=</span> <span class="n">length</span> <span class="o">/</span> <span class="n">n</span>
     <span class="n">ripple</span> <span class="o">=</span> <span class="n">perturbation_amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">X</span> <span class="o">/</span> <span class="n">length</span><span class="p">)</span>
@@ -657,7 +655,7 @@
 <div class="viewcode-block" id="rayleigh_taylor_growth_rate">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.rayleigh_taylor_growth_rate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">rayleigh_taylor_growth_rate</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">atwood_number</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear growth rate of the Rayleigh-Taylor instability.</span>
+<span class="w">    </span><span class="sd">"""Linear growth rate of the Rayleigh-Taylor instability.</span>
 
 <span class="sd">    For two inviscid, semi-infinite fluid layers (heavy density</span>
 <span class="sd">    :math:`\\rho_2` on top of light density :math:`\\rho_1`, gravity `g`</span>
@@ -697,11 +695,11 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(rayleigh_taylor_growth_rate(k=2.0, atwood_number=0.5, g=1.0), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">atwood_number</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;atwood_number must be in (0, 1), got </span><span class="si">{</span><span class="n">atwood_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"atwood_number must be in (0, 1), got </span><span class="si">{</span><span class="n">atwood_number</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;k must be non-negative, got </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"k must be non-negative, got </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">atwood_number</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">k</span><span class="p">))</span></div>
 
 
@@ -718,7 +716,7 @@
     <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the Boussinesq Rayleigh-Taylor system with RK4.</span>
+<span class="w">    </span><span class="sd">"""Time-step the Boussinesq Rayleigh-Taylor system with RK4.</span>
 
 <span class="sd">    Evolves the coupled vorticity-buoyancy equations of</span>
 <span class="sd">    :func:`physicskit.fluids.core.timestepping.buoyant_vorticity_rhs`</span>
@@ -748,7 +746,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
-<span class="sd">        ``{&quot;omega&quot;: ..., &quot;buoyancy&quot;: ..., &quot;psi&quot;: ..., &quot;u&quot;: ..., &quot;v&quot;: ...}`` at</span>
+<span class="sd">        ``{"omega": ..., "buoyancy": ..., "psi": ..., "u": ..., "v": ...}`` at</span>
 <span class="sd">        the final time.</span>
 
 <span class="sd">    Raises</span>
@@ -760,13 +758,13 @@
 <span class="sd">    --------</span>
 <span class="sd">    rayleigh_taylor_ic : Builds the initial condition consumed here.</span>
 <span class="sd">    rayleigh_taylor_growth_rate : The linear-theory prediction this simulation exceeds nonlinearly.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">nu</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nu (kinematic viscosity) must be positive, got </span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;kappa (buoyancy diffusivity) must be positive, got </span><span class="si">{</span><span class="n">kappa</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"kappa (buoyancy diffusivity) must be positive, got </span><span class="si">{</span><span class="n">kappa</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">g</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;g (gravitational acceleration) must be positive, got </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"g (gravitational acceleration) must be positive, got </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">integrate_boussinesq</span><span class="p">(</span><span class="n">omega0</span><span class="p">,</span> <span class="n">buoyancy0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span></div>
 
 </pre></div>

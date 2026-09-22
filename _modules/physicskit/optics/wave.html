@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.optics.wave</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Scalar wave optics: FFT-based Fresnel, Fraunhofer, and angular-spectrum diffraction.</span>
+<span></span><span class="sd">"""Scalar wave optics: FFT-based Fresnel, Fraunhofer, and angular-spectrum diffraction.</span>
 
 <span class="sd">Treats light as a scalar complex field :math:`U(x,y)` obeying the</span>
 <span class="sd">Helmholtz equation, and propagates it between parallel planes using the</span>
@@ -423,7 +421,7 @@
 <span class="sd">  transform), advancing each by its own propagation phase</span>
 <span class="sd">  :math:`e^{ik_z z}`, and re-synthesizing. Valid at any distance,</span>
 <span class="sd">  including deep into the near field, as long as the grid resolves the</span>
-<span class="sd">  field&#39;s spatial frequencies.</span>
+<span class="sd">  field's spatial frequencies.</span>
 <span class="sd">- :func:`fresnel_diffraction` -- the paraxial (parabolic-wave) near-field</span>
 <span class="sd">  approximation, computable as a single Fourier transform of the aperture</span>
 <span class="sd">  times a quadratic phase.</span>
@@ -436,28 +434,28 @@
 <span class="sd">All propagation routines expect a field sampled on a uniform square-pixel</span>
 <span class="sd">grid of spacing ``dx`` (same length units as ``wavelength``), and treat</span>
 <span class="sd">array index ``(Ny//2, Nx//2)`` as the on-axis origin.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;circular_aperture&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;single_slit_aperture&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;double_slit_aperture&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fraunhofer_diffraction&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fresnel_diffraction&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;angular_spectrum_propagate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;intensity&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;field_grid&quot;</span><span class="p">,</span>
+    <span class="s2">"circular_aperture"</span><span class="p">,</span>
+    <span class="s2">"single_slit_aperture"</span><span class="p">,</span>
+    <span class="s2">"double_slit_aperture"</span><span class="p">,</span>
+    <span class="s2">"fraunhofer_diffraction"</span><span class="p">,</span>
+    <span class="s2">"fresnel_diffraction"</span><span class="p">,</span>
+    <span class="s2">"angular_spectrum_propagate"</span><span class="p">,</span>
+    <span class="s2">"intensity"</span><span class="p">,</span>
+    <span class="s2">"field_grid"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <div class="viewcode-block" id="field_grid">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.field_grid">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">field_grid</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Centered physical-coordinate grid for an array of the given ``shape``.</span>
+<span class="w">    </span><span class="sd">"""Centered physical-coordinate grid for an array of the given ``shape``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -477,7 +475,7 @@
 <span class="sd">    &gt;&gt;&gt; X, Y = field_grid((4, 4), dx=1.0)</span>
 <span class="sd">    &gt;&gt;&gt; X[0].tolist()</span>
 <span class="sd">    [-2.0, -1.0, 0.0, 1.0]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span> <span class="o">=</span> <span class="n">shape</span>
     <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">-</span> <span class="n">Nx</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span>
     <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ny</span><span class="p">)</span> <span class="o">-</span> <span class="n">Ny</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span>
@@ -489,7 +487,7 @@
 <div class="viewcode-block" id="circular_aperture">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.circular_aperture">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">circular_aperture</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A circular (disk) aperture, transmittance 1 inside, 0 outside.</span>
+<span class="w">    </span><span class="sd">"""A circular (disk) aperture, transmittance 1 inside, 0 outside.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -512,7 +510,7 @@
 <span class="sd">    1.0</span>
 <span class="sd">    &gt;&gt;&gt; float(ap[0, 0])</span>
 <span class="sd">    0.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">field_grid</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
@@ -521,7 +519,7 @@
 <div class="viewcode-block" id="single_slit_aperture">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.single_slit_aperture">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">single_slit_aperture</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A single slit of the given ``width`` along x, open along the full height in y.</span>
+<span class="w">    </span><span class="sd">"""A single slit of the given ``width`` along x, open along the full height in y.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -542,7 +540,7 @@
 <span class="sd">    &gt;&gt;&gt; ap = single_slit_aperture((3, 7), dx=1.0, width=2.5)</span>
 <span class="sd">    &gt;&gt;&gt; ap[0].tolist()</span>
 <span class="sd">    [0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">field_grid</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
@@ -551,7 +549,7 @@
 <div class="viewcode-block" id="double_slit_aperture">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.double_slit_aperture">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">double_slit_aperture</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">separation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Two parallel slits of the given ``width``, centers separated by ``separation``.</span>
+<span class="w">    </span><span class="sd">"""Two parallel slits of the given ``width``, centers separated by ``separation``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -574,7 +572,7 @@
 <span class="sd">    &gt;&gt;&gt; ap = double_slit_aperture((3, 11), dx=1.0, width=1.5, separation=6.0)</span>
 <span class="sd">    &gt;&gt;&gt; ap[0].tolist()</span>
 <span class="sd">    [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">field_grid</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
     <span class="n">left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="n">separation</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span>
     <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">separation</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -585,21 +583,21 @@
 <div class="viewcode-block" id="fraunhofer_diffraction">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.fraunhofer_diffraction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fraunhofer_diffraction</span><span class="p">(</span><span class="n">aperture</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Far-field (Fraunhofer) diffraction pattern of ``aperture`` at distance ``z``.</span>
+<span class="w">    </span><span class="sd">"""Far-field (Fraunhofer) diffraction pattern of ``aperture`` at distance ``z``.</span>
 
 <span class="sd">    Uses the standard single-Fourier-transform Fraunhofer formula (Goodman</span>
 <span class="sd">    convention),</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        U(x&#39;,y&#39;) = \\frac{e^{ikz}}{i\\lambda z}</span>
-<span class="sd">            e^{i\\frac{k}{2z}(x&#39;^2+y&#39;^2)}</span>
+<span class="sd">        U(x',y') = \\frac{e^{ikz}}{i\\lambda z}</span>
+<span class="sd">            e^{i\\frac{k}{2z}(x'^2+y'^2)}</span>
 <span class="sd">            \\iint U_0(x,y)\\,</span>
-<span class="sd">            e^{-i\\frac{2\\pi}{\\lambda z}(x x&#39; + y y&#39;)}\\,dx\\,dy,</span>
+<span class="sd">            e^{-i\\frac{2\\pi}{\\lambda z}(x x' + y y')}\\,dx\\,dy,</span>
 
 <span class="sd">    with :math:`k = 2\\pi/\\lambda`. The double integral is exactly a 2D</span>
 <span class="sd">    Fourier transform of ``aperture`` evaluated at spatial frequency</span>
-<span class="sd">    :math:`(f_x, f_y) = (x&#39;/(\\lambda z), y&#39;/(\\lambda z))`, computed here</span>
+<span class="sd">    :math:`(f_x, f_y) = (x'/(\\lambda z), y'/(\\lambda z))`, computed here</span>
 <span class="sd">    with a single FFT (the discrete sum is converted to a continuum</span>
 <span class="sd">    integral by the ``dx**2`` pixel-area factor). The output array lives</span>
 <span class="sd">    on its own natural grid of spacing :math:`\\lambda z / (N\\,dx)`, not</span>
@@ -633,7 +631,7 @@
 <span class="sd">    (64, 64)</span>
 <span class="sd">    &gt;&gt;&gt; bool(intensity(U)[32, 32] == intensity(U).max())</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">aperture</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">aperture</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">wavelength</span>
     <span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span> <span class="o">=</span> <span class="n">aperture</span><span class="o">.</span><span class="n">shape</span>
@@ -649,19 +647,19 @@
 <div class="viewcode-block" id="fresnel_diffraction">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.fresnel_diffraction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fresnel_diffraction</span><span class="p">(</span><span class="n">aperture</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Near-field (Fresnel) diffraction pattern of ``aperture`` at distance ``z``.</span>
+<span class="w">    </span><span class="sd">"""Near-field (Fresnel) diffraction pattern of ``aperture`` at distance ``z``.</span>
 
-<span class="sd">    The single-Fourier-transform (&quot;one-step&quot;) Fresnel propagation method:</span>
+<span class="sd">    The single-Fourier-transform ("one-step") Fresnel propagation method:</span>
 <span class="sd">    multiply the input field by the Fresnel quadratic phase, Fourier</span>
 <span class="sd">    transform, then multiply by the corresponding output quadratic phase</span>
 <span class="sd">    and prefactor,</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        U(x&#39;,y&#39;) = \\frac{e^{ikz}}{i\\lambda z}</span>
-<span class="sd">            e^{i\\frac{k}{2z}(x&#39;^2+y&#39;^2)}\\,</span>
+<span class="sd">        U(x',y') = \\frac{e^{ikz}}{i\\lambda z}</span>
+<span class="sd">            e^{i\\frac{k}{2z}(x'^2+y'^2)}\\,</span>
 <span class="sd">            \\mathcal{F}\\!\\left[U_0(x,y)\\,</span>
-<span class="sd">            e^{i\\frac{k}{2z}(x^2+y^2)}\\right]_{f_x=x&#39;/(\\lambda z),\\ f_y=y&#39;/(\\lambda z)},</span>
+<span class="sd">            e^{i\\frac{k}{2z}(x^2+y^2)}\\right]_{f_x=x'/(\\lambda z),\\ f_y=y'/(\\lambda z)},</span>
 
 <span class="sd">    the paraxial approximation to exact scalar diffraction. As with</span>
 <span class="sd">    :func:`fraunhofer_diffraction`, the output lives on its own natural</span>
@@ -693,7 +691,7 @@
 <span class="sd">    &gt;&gt;&gt; U = fresnel_diffraction(ap, wavelength=0.5e-3, z=5.0, dx=0.01)</span>
 <span class="sd">    &gt;&gt;&gt; U.shape</span>
 <span class="sd">    (64, 64)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">aperture</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">aperture</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">wavelength</span>
     <span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span> <span class="o">=</span> <span class="n">aperture</span><span class="o">.</span><span class="n">shape</span>
@@ -711,7 +709,7 @@
 <div class="viewcode-block" id="angular_spectrum_propagate">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.angular_spectrum_propagate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">angular_spectrum_propagate</span><span class="p">(</span><span class="n">U0</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact scalar diffraction propagation via the angular spectrum method.</span>
+<span class="w">    </span><span class="sd">"""Exact scalar diffraction propagation via the angular spectrum method.</span>
 
 <span class="sd">    Decomposes the input field into plane-wave components (its 2D Fourier</span>
 <span class="sd">    transform), advances each by its own longitudinal propagation phase,</span>
@@ -759,7 +757,7 @@
 <span class="sd">    (64, 64)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.isclose(intensity(U).sum(), intensity(ap).sum(), rtol=0.02))</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">U0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">U0</span><span class="p">)</span>
     <span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span> <span class="o">=</span> <span class="n">U0</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">wavelength</span>
@@ -781,7 +779,7 @@
 <div class="viewcode-block" id="intensity">
 <a class="viewcode-back" href="../../../api/optics.html#physicskit.optics.intensity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">intensity</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optical intensity :math:`|U|^2` of a complex field.</span>
+<span class="w">    </span><span class="sd">"""Optical intensity :math:`|U|^2` of a complex field.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -797,7 +795,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; intensity(np.array([3.0 + 4.0j]))</span>
 <span class="sd">    array([25.])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">U</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 </pre></div>

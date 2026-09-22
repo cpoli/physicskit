@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,16 +409,16 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.plasma.single_particle</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Single-particle motion in electromagnetic fields: the Boris pusher and guiding-center drifts.</span>
+<span></span><span class="sd">"""Single-particle motion in electromagnetic fields: the Boris pusher and guiding-center drifts.</span>
 
 <span class="sd">Two complementary pictures of charged-particle motion in a magnetized</span>
 <span class="sd">plasma live here. The *full-orbit* picture integrates the exact Lorentz</span>
 <span class="sd">force :math:`m\\dot{\\mathbf{v}} = q(\\mathbf{E} + \\mathbf{v}\\times\\mathbf{B})`</span>
-<span class="sd">with :func:`boris_push` / :func:`boris_integrate`, Jay Boris&#39;s 1970</span>
+<span class="sd">with :func:`boris_push` / :func:`boris_integrate`, Jay Boris's 1970</span>
 <span class="sd">energy-conserving leapfrog scheme -- still the workhorse integrator of</span>
 <span class="sd">every particle-in-cell (PIC) plasma code. The *guiding-center* picture</span>
 <span class="sd">instead averages over the fast gyration and tracks only the slow drift of</span>
-<span class="sd">the orbit&#39;s center: :func:`exb_drift`, :func:`grad_b_drift`, and</span>
+<span class="sd">the orbit's center: :func:`exb_drift`, :func:`grad_b_drift`, and</span>
 <span class="sd">:func:`curvature_drift` give that drift velocity directly, while</span>
 <span class="sd">:func:`magnetic_moment` and :func:`mirror_force` capture the adiabatic</span>
 <span class="sd">invariant :math:`\\mu = m v_\\perp^2 / 2B` responsible for magnetic-mirror</span>
@@ -428,7 +426,7 @@
 
 <span class="sd">The Boris kernels are compiled with Numba for particle-in-cell-scale</span>
 <span class="sd">performance; every other function here is a closed-form NumPy expression.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -438,35 +436,35 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">_const</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;QE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ME&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MP&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cyclotron_frequency&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;larmor_radius&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;magnetic_moment&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;boris_push&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;boris_integrate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;exb_drift&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;grad_b_drift&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;curvature_drift&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mirror_force&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;magnetic_mirror_bounce&quot;</span><span class="p">,</span>
+    <span class="s2">"QE"</span><span class="p">,</span>
+    <span class="s2">"ME"</span><span class="p">,</span>
+    <span class="s2">"MP"</span><span class="p">,</span>
+    <span class="s2">"cyclotron_frequency"</span><span class="p">,</span>
+    <span class="s2">"larmor_radius"</span><span class="p">,</span>
+    <span class="s2">"magnetic_moment"</span><span class="p">,</span>
+    <span class="s2">"boris_push"</span><span class="p">,</span>
+    <span class="s2">"boris_integrate"</span><span class="p">,</span>
+    <span class="s2">"exb_drift"</span><span class="p">,</span>
+    <span class="s2">"grad_b_drift"</span><span class="p">,</span>
+    <span class="s2">"curvature_drift"</span><span class="p">,</span>
+    <span class="s2">"mirror_force"</span><span class="p">,</span>
+    <span class="s2">"magnetic_mirror_bounce"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">QE</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">ELEMENTARY_CHARGE</span>
-<span class="sd">&quot;&quot;&quot;Elementary charge, in Coulombs.&quot;&quot;&quot;</span>
+<span class="sd">"""Elementary charge, in Coulombs."""</span>
 
 <span class="n">ME</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">ELECTRON_MASS</span>
-<span class="sd">&quot;&quot;&quot;Electron mass, in kilograms.&quot;&quot;&quot;</span>
+<span class="sd">"""Electron mass, in kilograms."""</span>
 
 <span class="n">MP</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">PROTON_MASS</span>
-<span class="sd">&quot;&quot;&quot;Proton mass, in kilograms.&quot;&quot;&quot;</span>
+<span class="sd">"""Proton mass, in kilograms."""</span>
 
 
 <div class="viewcode-block" id="cyclotron_frequency">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.cyclotron_frequency">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cyclotron_frequency</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Angular cyclotron (gyration) frequency :math:`\\omega_c = qB/m`.</span>
+<span class="w">    </span><span class="sd">"""Angular cyclotron (gyration) frequency :math:`\\omega_c = qB/m`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -493,7 +491,7 @@
 
 <span class="sd">    &gt;&gt;&gt; round(cyclotron_frequency(QE, MP, 1.0) / (2 * 3.141592653589793) / 1e6, 2)</span>
 <span class="sd">    15.25</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">q</span> <span class="o">*</span> <span class="n">B</span> <span class="o">/</span> <span class="n">m</span></div>
 
 
@@ -501,7 +499,7 @@
 <div class="viewcode-block" id="larmor_radius">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.larmor_radius">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">larmor_radius</span><span class="p">(</span><span class="n">v_perp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Larmor (gyro) radius :math:`r_L = m v_\\perp / (|q| B)`.</span>
+<span class="w">    </span><span class="sd">"""Larmor (gyro) radius :math:`r_L = m v_\\perp / (|q| B)`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -523,7 +521,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(larmor_radius(1e5, QE, MP, 1.0), 6)</span>
 <span class="sd">    0.001044</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">m</span> <span class="o">*</span> <span class="n">v_perp</span> <span class="o">/</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span></div>
 
 
@@ -531,11 +529,11 @@
 <div class="viewcode-block" id="magnetic_moment">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.magnetic_moment">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">magnetic_moment</span><span class="p">(</span><span class="n">v_perp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The first adiabatic invariant :math:`\\mu = m v_\\perp^2 / (2B)`.</span>
+<span class="w">    </span><span class="sd">"""The first adiabatic invariant :math:`\\mu = m v_\\perp^2 / (2B)`.</span>
 
 <span class="sd">    Conserved for a charged particle whose gyration is fast compared to</span>
 <span class="sd">    any change in the field it sees, :math:`\\mu` acts as a magnetic</span>
-<span class="sd">    &quot;potential energy per unit field&quot;: as the particle drifts into</span>
+<span class="sd">    "potential energy per unit field": as the particle drifts into</span>
 <span class="sd">    stronger :math:`B`, :math:`v_\\perp` must grow to keep :math:`\\mu`</span>
 <span class="sd">    fixed, converting parallel kinetic energy into perpendicular kinetic</span>
 <span class="sd">    energy. That conversion is the mechanism behind :func:`mirror_force`.</span>
@@ -562,7 +560,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(magnetic_moment(1e5, MP, 1.0) * 1e18, 4)</span>
 <span class="sd">    8.3631</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">v_perp</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">B</span></div>
 
 
@@ -612,11 +610,11 @@
 <div class="viewcode-block" id="boris_push">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.boris_push">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">boris_push</span><span class="p">(</span><span class="n">pos</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vel</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Advance a charged particle one leapfrog step with the Boris integrator.</span>
+<span class="w">    </span><span class="sd">"""Advance a charged particle one leapfrog step with the Boris integrator.</span>
 
 <span class="sd">    The Boris (1970) scheme splits each step into an electric</span>
 <span class="sd">    half-acceleration, an exact rotation about :math:`\\mathbf{B}` (via the</span>
-<span class="sd">    Boris &quot;E-cross-B&quot; trick, avoiding any explicit trigonometry), and a</span>
+<span class="sd">    Boris "E-cross-B" trick, avoiding any explicit trigonometry), and a</span>
 <span class="sd">    second electric half-acceleration. The rotation step preserves speed</span>
 <span class="sd">    exactly in a pure magnetic field, which is why the scheme conserves</span>
 <span class="sd">    kinetic energy over arbitrarily many gyro-orbits where a naive</span>
@@ -661,7 +659,7 @@
 <span class="sd">    &gt;&gt;&gt; r1, v1 = boris_push(r0, v0, q=QE, m=MP, E=E, B=B, dt=1e-9)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(np.linalg.norm(v1)), 6)</span>
 <span class="sd">    100000.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span><span class="p">,</span> <span class="n">zn</span><span class="p">,</span> <span class="n">vnx</span><span class="p">,</span> <span class="n">vny</span><span class="p">,</span> <span class="n">vnz</span> <span class="o">=</span> <span class="n">_boris_kernel</span><span class="p">(</span>
         <span class="nb">float</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
         <span class="nb">float</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
@@ -686,7 +684,7 @@
 <div class="viewcode-block" id="boris_integrate">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.boris_integrate">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">boris_integrate</span><span class="p">(</span><span class="n">pos0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vel0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">E</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integrate a charged particle&#39;s trajectory in *uniform* E and B fields with the Boris pusher.</span>
+<span class="w">    </span><span class="sd">"""Integrate a charged particle's trajectory in *uniform* E and B fields with the Boris pusher.</span>
 
 <span class="sd">    Repeatedly applies :func:`boris_push` inside a single Numba-compiled</span>
 <span class="sd">    loop, avoiding Python-level overhead per step -- the throughput this</span>
@@ -741,7 +739,7 @@
 <span class="sd">    &gt;&gt;&gt; speeds = np.linalg.norm(vel_hist, axis=1)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.max(np.abs(speeds - 1e5)) &lt; 1e-6)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">vxs</span><span class="p">,</span> <span class="n">vys</span><span class="p">,</span> <span class="n">vzs</span> <span class="o">=</span> <span class="n">_boris_integrate_kernel</span><span class="p">(</span>
         <span class="nb">float</span><span class="p">(</span><span class="n">pos0</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
         <span class="nb">float</span><span class="p">(</span><span class="n">pos0</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
@@ -769,7 +767,7 @@
 <div class="viewcode-block" id="exb_drift">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.exb_drift">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">exb_drift</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The :math:`\\mathbf{E}\\times\\mathbf{B}` drift velocity :math:`\\mathbf{v}_E = (\\mathbf{E}\\times\\mathbf{B})/B^2`.</span>
+<span class="w">    </span><span class="sd">"""The :math:`\\mathbf{E}\\times\\mathbf{B}` drift velocity :math:`\\mathbf{v}_E = (\\mathbf{E}\\times\\mathbf{B})/B^2`.</span>
 
 <span class="sd">    Unlike every other guiding-center drift, this one is independent of</span>
 <span class="sd">    charge, mass, and energy: electrons and ions drift together at the</span>
@@ -797,7 +795,7 @@
 <span class="sd">    &gt;&gt;&gt; B = np.array([0.0, 0.0, 1.0])</span>
 <span class="sd">    &gt;&gt;&gt; exb_drift(E, B)</span>
 <span class="sd">    array([1000.,    0.,    0.])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span></div>
 
 
@@ -805,7 +803,7 @@
 <div class="viewcode-block" id="grad_b_drift">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.grad_b_drift">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">grad_b_drift</span><span class="p">(</span><span class="n">v_perp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">grad_B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The grad-B drift :math:`\\mathbf{v}_{\\nabla B} = \\dfrac{m v_\\perp^2}{2qB^3}(\\mathbf{B}\\times\\nabla B)`.</span>
+<span class="w">    </span><span class="sd">"""The grad-B drift :math:`\\mathbf{v}_{\\nabla B} = \\dfrac{m v_\\perp^2}{2qB^3}(\\mathbf{B}\\times\\nabla B)`.</span>
 
 <span class="sd">    A particle gyrating in a field whose magnitude varies across the</span>
 <span class="sd">    orbit sees a tighter turn (smaller Larmor radius) on the strong-field</span>
@@ -846,7 +844,7 @@
 <span class="sd">    &gt;&gt;&gt; drift = grad_b_drift(1e5, QE, MP, B, grad_B)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(drift[1]), 4)</span>
 <span class="sd">    5.2198</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Bmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">v_perp</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">q</span> <span class="o">*</span> <span class="n">Bmag</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">grad_B</span><span class="p">)</span></div>
 
@@ -855,7 +853,7 @@
 <div class="viewcode-block" id="curvature_drift">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.curvature_drift">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">curvature_drift</span><span class="p">(</span><span class="n">v_par</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">R_c</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The curvature drift :math:`\\mathbf{v}_R = \\dfrac{m v_\\parallel^2}{q}\\dfrac{\\mathbf{R}_c\\times\\mathbf{B}}{R_c^2 B^2}`.</span>
+<span class="w">    </span><span class="sd">"""The curvature drift :math:`\\mathbf{v}_R = \\dfrac{m v_\\parallel^2}{q}\\dfrac{\\mathbf{R}_c\\times\\mathbf{B}}{R_c^2 B^2}`.</span>
 
 <span class="sd">    A particle streaming along a curved field line feels a centrifugal</span>
 <span class="sd">    force in the guiding-center frame, which -- crossed with</span>
@@ -877,7 +875,7 @@
 <span class="sd">    B : ndarray, shape (3,)</span>
 <span class="sd">        Local magnetic field vector in Tesla.</span>
 <span class="sd">    R_c : ndarray, shape (3,)</span>
-<span class="sd">        Radius-of-curvature vector, pointing from the field line&#39;s local</span>
+<span class="sd">        Radius-of-curvature vector, pointing from the field line's local</span>
 <span class="sd">        center of curvature to the particle, magnitude :math:`R_c` in meters.</span>
 
 <span class="sd">    Returns</span>
@@ -893,7 +891,7 @@
 <span class="sd">    &gt;&gt;&gt; drift = curvature_drift(1e5, QE, MP, B, R_c)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(drift[1]), 2)</span>
 <span class="sd">    -104.4</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Bmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
     <span class="n">Rc2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R_c</span><span class="p">,</span> <span class="n">R_c</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">v_par</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">R_c</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Rc2</span> <span class="o">*</span> <span class="n">Bmag</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
@@ -903,9 +901,9 @@
 <div class="viewcode-block" id="mirror_force">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.mirror_force">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mirror_force</span><span class="p">(</span><span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">grad_B_parallel</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The mirror force :math:`F_\\parallel = -\\mu\\, \\partial B/\\partial \\ell` along a field line.</span>
+<span class="w">    </span><span class="sd">"""The mirror force :math:`F_\\parallel = -\\mu\\, \\partial B/\\partial \\ell` along a field line.</span>
 
-<span class="sd">    As a particle&#39;s guiding center moves into a region of stronger field</span>
+<span class="sd">    As a particle's guiding center moves into a region of stronger field</span>
 <span class="sd">    (larger :math:`\\partial B/\\partial\\ell`), the conservation of</span>
 <span class="sd">    :func:`magnetic_moment` forces :math:`v_\\perp` to grow at the expense</span>
 <span class="sd">    of :math:`v_\\parallel`; this is the reaction force decelerating the</span>
@@ -930,7 +928,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; mirror_force(mu=1e-17, grad_B_parallel=2.0)</span>
 <span class="sd">    -2e-17</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">mu</span> <span class="o">*</span> <span class="n">grad_B_parallel</span></div>
 
 
@@ -938,12 +936,12 @@
 <div class="viewcode-block" id="magnetic_mirror_bounce">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.magnetic_mirror_bounce">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">magnetic_mirror_bounce</span><span class="p">(</span><span class="n">z0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_par0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_perp0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_func</span><span class="p">,</span> <span class="n">dz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulate 1D guiding-center bounce motion between the throats of a magnetic mirror.</span>
+<span class="w">    </span><span class="sd">"""Simulate 1D guiding-center bounce motion between the throats of a magnetic mirror.</span>
 
 <span class="sd">    Integrates :math:`m\\dot{v}_\\parallel = -\\mu\\, dB/dz` with :math:`\\mu`</span>
 <span class="sd">    fixed at its initial value (the adiabatic invariant), using a</span>
 <span class="sd">    symmetric leapfrog step. A particle with too little pitch angle to</span>
-<span class="sd">    reflect before reaching the mirror throat&#39;s peak field instead falls</span>
+<span class="sd">    reflect before reaching the mirror throat's peak field instead falls</span>
 <span class="sd">    into the *loss cone* and would be lost from confinement in a real</span>
 <span class="sd">    device; :func:`mirror_force` supplies the underlying force law.</span>
 
@@ -986,7 +984,7 @@
 <span class="sd">    ... )</span>
 <span class="sd">    &gt;&gt;&gt; bool(v_par_hist[0] &gt; 0 and v_par_hist[-1] &lt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">z0</span>
     <span class="n">v_par</span> <span class="o">=</span> <span class="n">v_par0</span>
     <span class="n">B0</span> <span class="o">=</span> <span class="n">B_func</span><span class="p">(</span><span class="n">z0</span><span class="p">)</span>

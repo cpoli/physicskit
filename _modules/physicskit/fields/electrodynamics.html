@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,17 +409,17 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.fields.electrodynamics</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Finite-difference time-domain (FDTD) solutions of Maxwell&#39;s equations on a Yee grid.</span>
+<span></span><span class="sd">"""Finite-difference time-domain (FDTD) solutions of Maxwell's equations on a Yee grid.</span>
 
 <span class="sd">Implements the staggered-grid (Yee 1966) leapfrog update for 1D plane waves</span>
 <span class="sd">and 2D TMz-mode propagation, plus a graded-conductivity absorbing boundary</span>
-<span class="sd">(a simplified, non-split-field approximation to Berenger&#39;s Perfectly</span>
+<span class="sd">(a simplified, non-split-field approximation to Berenger's Perfectly</span>
 <span class="sd">Matched Layer) that damps outgoing waves instead of reflecting them off a</span>
 <span class="sd">hard electric wall.</span>
 
 <span class="sd">Units are SI throughout; :data:`EPS0`, :data:`MU0`, :data:`C0` are the</span>
 <span class="sd">vacuum permittivity, permeability, and speed of light.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -430,22 +428,22 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">_const</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;EPS0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MU0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;C0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;courant_limit_1d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;courant_limit_2d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fdtd_1d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fdtd_2d_tmz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fdtd_2d_tmz_evolve&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pml_conductivity_profile&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pml_conductivity_profile_2d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;oscillating_dipole_source&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;dielectric_slab&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;tmz_cavity_mode&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;poynting_vector_tmz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;flux_tube_field_1d&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;flux_tube_energy_density_2d&quot;</span><span class="p">,</span>
+    <span class="s2">"EPS0"</span><span class="p">,</span>
+    <span class="s2">"MU0"</span><span class="p">,</span>
+    <span class="s2">"C0"</span><span class="p">,</span>
+    <span class="s2">"courant_limit_1d"</span><span class="p">,</span>
+    <span class="s2">"courant_limit_2d"</span><span class="p">,</span>
+    <span class="s2">"fdtd_1d"</span><span class="p">,</span>
+    <span class="s2">"fdtd_2d_tmz"</span><span class="p">,</span>
+    <span class="s2">"fdtd_2d_tmz_evolve"</span><span class="p">,</span>
+    <span class="s2">"pml_conductivity_profile"</span><span class="p">,</span>
+    <span class="s2">"pml_conductivity_profile_2d"</span><span class="p">,</span>
+    <span class="s2">"oscillating_dipole_source"</span><span class="p">,</span>
+    <span class="s2">"dielectric_slab"</span><span class="p">,</span>
+    <span class="s2">"tmz_cavity_mode"</span><span class="p">,</span>
+    <span class="s2">"poynting_vector_tmz"</span><span class="p">,</span>
+    <span class="s2">"flux_tube_field_1d"</span><span class="p">,</span>
+    <span class="s2">"flux_tube_energy_density_2d"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">EPS0</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">VACUUM_PERMITTIVITY</span>
@@ -456,7 +454,7 @@
 <div class="viewcode-block" id="courant_limit_1d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.courant_limit_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">courant_limit_1d</span><span class="p">(</span><span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum stable time step for the 1D FDTD update.</span>
+<span class="w">    </span><span class="sd">"""Maximum stable time step for the 1D FDTD update.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -472,7 +470,7 @@
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; round(float(courant_limit_1d(1e-3) * C0 / 1e-3), 6)</span>
 <span class="sd">    1.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">C0</span></div>
 
 
@@ -480,7 +478,7 @@
 <div class="viewcode-block" id="courant_limit_2d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.courant_limit_2d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">courant_limit_2d</span><span class="p">(</span><span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum stable time step for the 2D FDTD update.</span>
+<span class="w">    </span><span class="sd">"""Maximum stable time step for the 2D FDTD update.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -498,7 +496,7 @@
 <span class="sd">    &gt;&gt;&gt; dt = courant_limit_2d(1e-3, 1e-3)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(dt * C0 / 1e-3), 6)</span>
 <span class="sd">    0.707107</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">C0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
 
 
@@ -506,11 +504,11 @@
 <div class="viewcode-block" id="pml_conductivity_profile">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.pml_conductivity_profile">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pml_conductivity_profile</span><span class="p">(</span><span class="n">n_cells</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pml_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sigma_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a polynomial-graded electric conductivity profile absorbing at both ends of a 1D grid.</span>
+<span class="w">    </span><span class="sd">"""Build a polynomial-graded electric conductivity profile absorbing at both ends of a 1D grid.</span>
 
-<span class="sd">    A simplified (non-split-field) approximation to Berenger&#39;s Perfectly</span>
+<span class="sd">    A simplified (non-split-field) approximation to Berenger's Perfectly</span>
 <span class="sd">    Matched Layer: rather than solving auxiliary split-field equations,</span>
-<span class="sd">    this grades the ordinary medium&#39;s electric conductivity smoothly up</span>
+<span class="sd">    this grades the ordinary medium's electric conductivity smoothly up</span>
 <span class="sd">    from zero over ``pml_width`` cells at each boundary, damping outgoing</span>
 <span class="sd">    waves via the standard lossy-dielectric FDTD update</span>
 <span class="sd">    (see ``sigma`` in :func:`fdtd_1d`) instead of reflecting them off a</span>
@@ -525,7 +523,7 @@
 <span class="sd">    dx : float</span>
 <span class="sd">        Spatial grid spacing in meters, used to scale the default ``sigma_max``.</span>
 <span class="sd">    order : int, default=3</span>
-<span class="sd">        Polynomial grading order (Sadiku&#39;s rule of thumb uses a cubic ramp).</span>
+<span class="sd">        Polynomial grading order (Sadiku's rule of thumb uses a cubic ramp).</span>
 <span class="sd">    sigma_max : float, optional</span>
 <span class="sd">        Peak conductivity at the outermost cell. Defaults to the standard</span>
 <span class="sd">        empirical optimum ``(order + 1) / (150 * pi * dx)``.</span>
@@ -542,7 +540,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(sigma[0] &gt; sigma[10] &gt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">sigma_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">sigma_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">150</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
     <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_cells</span><span class="p">)</span>
@@ -556,7 +554,7 @@
 <div class="viewcode-block" id="pml_conductivity_profile_2d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.pml_conductivity_profile_2d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pml_conductivity_profile_2d</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">pml_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sigma_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a 2D graded-conductivity absorbing boundary by combining two 1D PML profiles.</span>
+<span class="w">    </span><span class="sd">"""Build a 2D graded-conductivity absorbing boundary by combining two 1D PML profiles.</span>
 
 <span class="sd">    Reuses :func:`pml_conductivity_profile` along each axis and takes the</span>
 <span class="sd">    pointwise maximum, so a cell absorbs at whichever rate is larger --</span>
@@ -567,7 +565,7 @@
 <span class="sd">    shape : tuple(int, int)</span>
 <span class="sd">        ``(Nx, Ny)`` grid shape.</span>
 <span class="sd">    pml_width : int</span>
-<span class="sd">        Number of cells over which each axis&#39;s conductivity ramps up.</span>
+<span class="sd">        Number of cells over which each axis's conductivity ramps up.</span>
 <span class="sd">    dx, dy : float</span>
 <span class="sd">        Spatial grid spacing along each axis.</span>
 <span class="sd">    order : int, default=3</span>
@@ -587,7 +585,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(sigma[0, 0] &gt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="n">shape</span>
     <span class="n">sx</span> <span class="o">=</span> <span class="n">pml_conductivity_profile</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span> <span class="n">pml_width</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">sigma_max</span><span class="p">)</span>
     <span class="n">sy</span> <span class="o">=</span> <span class="n">pml_conductivity_profile</span><span class="p">(</span><span class="n">Ny</span><span class="p">,</span> <span class="n">pml_width</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">sigma_max</span><span class="p">)</span>
@@ -598,7 +596,7 @@
 <div class="viewcode-block" id="fdtd_1d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.fdtd_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fdtd_1d</span><span class="p">(</span><span class="n">Ez0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hy0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mu_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a 1D plane wave (Ez, Hy) on a Yee grid using leapfrog FDTD.</span>
+<span class="w">    </span><span class="sd">"""Evolve a 1D plane wave (Ez, Hy) on a Yee grid using leapfrog FDTD.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -649,7 +647,7 @@
 <span class="sd">    &gt;&gt;&gt; measured_speed = (peak - x0) * dx / (360 * dt)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(measured_speed / C0), 3)</span>
 <span class="sd">    1.002</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Ez</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ez0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Hy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Hy0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sigma</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -671,7 +669,7 @@
 <div class="viewcode-block" id="fdtd_2d_tmz">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.fdtd_2d_tmz">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fdtd_2d_tmz</span><span class="p">(</span><span class="n">Ez0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hx0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hy0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mu_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evolve a 2D TMz-mode field (Ez, Hx, Hy) on a Yee grid using leapfrog FDTD.</span>
+<span class="w">    </span><span class="sd">"""Evolve a 2D TMz-mode field (Ez, Hx, Hy) on a Yee grid using leapfrog FDTD.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -712,7 +710,7 @@
 <span class="sd">    &gt;&gt;&gt; Ez, Hx, Hy = fdtd_2d_tmz(Ez0, Hx0, Hy0, eps_r, mu_r, steps=10, dt=dt, dx=dx, dy=dy)</span>
 <span class="sd">    &gt;&gt;&gt; Ez.shape</span>
 <span class="sd">    (50, 50)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Ez</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ez0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Hx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Hx0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Hy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Hy0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -723,13 +721,13 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_fdtd_2d_tmz_step</span><span class="p">(</span><span class="n">Ez</span><span class="p">,</span> <span class="n">Hx</span><span class="p">,</span> <span class="n">Hy</span><span class="p">,</span> <span class="n">eps_r</span><span class="p">,</span> <span class="n">mu_r</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">Ca</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;One leapfrog TMz update, in place; the shared inner loop of :func:`fdtd_2d_tmz` and :func:`fdtd_2d_tmz_evolve`.</span>
+<span class="w">    </span><span class="sd">"""One leapfrog TMz update, in place; the shared inner loop of :func:`fdtd_2d_tmz` and :func:`fdtd_2d_tmz_evolve`.</span>
 
 <span class="sd">    With ``Ca``/``Cb`` left as ``None`` this is exactly the lossless,</span>
 <span class="sd">    hard-wall (PEC) update. Passing loss coefficients (as built from a</span>
 <span class="sd">    conductivity map by :func:`fdtd_2d_tmz_evolve`) instead applies the</span>
 <span class="sd">    same lossy-dielectric update used by :func:`fdtd_1d`, generalized to 2D.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Hx</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">MU0</span> <span class="o">*</span> <span class="n">mu_r</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dy</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ez</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Ez</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">Hy</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">MU0</span> <span class="o">*</span> <span class="n">mu_r</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">Ez</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
     <span class="n">curl_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">Hy</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">Hy</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dx</span> <span class="o">-</span> <span class="p">(</span><span class="n">Hx</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">Hx</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="n">dy</span>
@@ -759,7 +757,7 @@
     <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">snapshot_stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Time-step the 2D TMz FDTD update while recording ``Ez`` snapshots, for animation.</span>
+<span class="w">    </span><span class="sd">"""Time-step the 2D TMz FDTD update while recording ``Ez`` snapshots, for animation.</span>
 
 <span class="sd">    Unlike :func:`fdtd_2d_tmz`, which returns only the field at the final</span>
 <span class="sd">    step, this driver records ``Ez`` every ``snapshot_stride`` steps and</span>
@@ -775,7 +773,7 @@
 <span class="sd">        As in :func:`fdtd_2d_tmz`.</span>
 <span class="sd">    sigma : ndarray, shape (Nx, Ny), optional</span>
 <span class="sd">        Electric conductivity map. ``None`` (default) reproduces</span>
-<span class="sd">        :func:`fdtd_2d_tmz`&#39;s lossless, hard-wall behavior exactly.</span>
+<span class="sd">        :func:`fdtd_2d_tmz`'s lossless, hard-wall behavior exactly.</span>
 <span class="sd">    source : callable, optional</span>
 <span class="sd">        ``source(Ez, t)``, called after each field update and expected to</span>
 <span class="sd">        mutate ``Ez`` in place (a soft source: added to, not overwriting,</span>
@@ -807,7 +805,7 @@
 <span class="sd">    &gt;&gt;&gt; snaps, times = fdtd_2d_tmz_evolve(Ez0, Hx0, Hy0, eps_r, mu_r, steps=20, dt=dt, dx=dx, dy=dy, source=source, snapshot_stride=5)</span>
 <span class="sd">    &gt;&gt;&gt; snaps.shape</span>
 <span class="sd">    (5, 40, 40)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Ez</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ez0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Hx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Hx0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Hy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Hy0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -839,7 +837,7 @@
 <div class="viewcode-block" id="oscillating_dipole_source">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.oscillating_dipole_source">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">oscillating_dipole_source</span><span class="p">(</span><span class="n">i0</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j0</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">freq</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a soft, sinusoidally-oscillating point source for :func:`fdtd_2d_tmz_evolve`.</span>
+<span class="w">    </span><span class="sd">"""Build a soft, sinusoidally-oscillating point source for :func:`fdtd_2d_tmz_evolve`.</span>
 
 <span class="sd">    Models a simple oscillating dipole antenna: a source current</span>
 <span class="sd">    concentrated at a single Yee cell, injected as a *soft* source (added</span>
@@ -858,7 +856,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
-<span class="sd">        ``source(Ez, t)``, suitable for :func:`fdtd_2d_tmz_evolve`&#39;s</span>
+<span class="sd">        ``source(Ez, t)``, suitable for :func:`fdtd_2d_tmz_evolve`'s</span>
 <span class="sd">        ``source`` argument: adds ``amplitude * sin(2*pi*freq*t)`` to</span>
 <span class="sd">        ``Ez[i0, j0]`` in place.</span>
 
@@ -870,7 +868,7 @@
 <span class="sd">    &gt;&gt;&gt; source(Ez, t=0.25)</span>
 <span class="sd">    &gt;&gt;&gt; round(float(Ez[5, 5]), 6)</span>
 <span class="sd">    2.0</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_source</span><span class="p">(</span><span class="n">Ez</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="n">Ez</span><span class="p">[</span><span class="n">i0</span><span class="p">,</span> <span class="n">j0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
@@ -882,7 +880,7 @@
 <div class="viewcode-block" id="dielectric_slab">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.dielectric_slab">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">dielectric_slab</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">i_start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">i_end</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps_r_slab</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A planar dielectric slab: ``eps_r_slab`` between grid columns ``i_start`` and ``i_end``, vacuum elsewhere.</span>
+<span class="w">    </span><span class="sd">"""A planar dielectric slab: ``eps_r_slab`` between grid columns ``i_start`` and ``i_end``, vacuum elsewhere.</span>
 
 <span class="sd">    A minimal demo permittivity map for :func:`fdtd_2d_tmz` / :func:`fdtd_2d_tmz_evolve`:</span>
 <span class="sd">    a wave launched from one side crossing ``i_start`` partially reflects</span>
@@ -908,7 +906,7 @@
 <span class="sd">    &gt;&gt;&gt; eps_r = dielectric_slab((40, 20), i_start=15, i_end=25, eps_r_slab=4.0)</span>
 <span class="sd">    &gt;&gt;&gt; float(eps_r[10, 5]), float(eps_r[20, 5])</span>
 <span class="sd">    (1.0, 4.0)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="n">shape</span>
     <span class="n">eps_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">))</span>
     <span class="n">eps_r</span><span class="p">[</span><span class="n">i_start</span><span class="p">:</span><span class="n">i_end</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">eps_r_slab</span>
@@ -919,7 +917,7 @@
 <div class="viewcode-block" id="tmz_cavity_mode">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.tmz_cavity_mode">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">tmz_cavity_mode</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The analytic :math:`TM_{mn}` standing-wave mode of an ideal rectangular PEC cavity.</span>
+<span class="w">    </span><span class="sd">"""The analytic :math:`TM_{mn}` standing-wave mode of an ideal rectangular PEC cavity.</span>
 
 <span class="sd">    :func:`fdtd_2d_tmz` (and :func:`fdtd_2d_tmz_evolve` without ``sigma``)</span>
 <span class="sd">    already enforce ``Ez=0`` on all four edges every step -- exactly a</span>
@@ -942,7 +940,7 @@
 <span class="sd">    Ez0 : ndarray, shape (Nx, Ny)</span>
 <span class="sd">        :math:`\\sin(m\\pi x/L_x)\\sin(n\\pi y/L_y)`.</span>
 <span class="sd">    omega_mn : float</span>
-<span class="sd">        The mode&#39;s angular frequency, :math:`c_0\\pi\\sqrt{(m/L_x)^2+(n/L_y)^2}`.</span>
+<span class="sd">        The mode's angular frequency, :math:`c_0\\pi\\sqrt{(m/L_x)^2+(n/L_y)^2}`.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -951,12 +949,12 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(omega &gt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="n">shape</span>
     <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span> <span class="o">=</span> <span class="p">(</span><span class="n">Nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="p">(</span><span class="n">Ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dy</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span> <span class="o">*</span> <span class="n">dx</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ny</span><span class="p">)</span> <span class="o">*</span> <span class="n">dy</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="n">Ez0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">X</span> <span class="o">/</span> <span class="n">Lx</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">Ly</span><span class="p">)</span>
     <span class="c1"># sin(m*pi) / sin(n*pi) at the boundary is 0 only up to floating-point roundoff</span>
     <span class="c1"># (e.g. ~1e-16, not exactly 0) -- clamp it exactly, since it must vanish there by construction.</span>
@@ -972,7 +970,7 @@
 <div class="viewcode-block" id="poynting_vector_tmz">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.poynting_vector_tmz">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">poynting_vector_tmz</span><span class="p">(</span><span class="n">Ez</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hx</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Poynting vector :math:`\\mathbf{S} = \\mathbf{E} \\times \\mathbf{H}` for a TMz-mode field.</span>
+<span class="w">    </span><span class="sd">"""Poynting vector :math:`\\mathbf{S} = \\mathbf{E} \\times \\mathbf{H}` for a TMz-mode field.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -995,20 +993,20 @@
 <span class="sd">    &gt;&gt;&gt; Hy = np.array([[5.0]])</span>
 <span class="sd">    &gt;&gt;&gt; poynting_vector_tmz(Ez, Hx, Hy)</span>
 <span class="sd">    (array([[-10.]]), array([[6.]]))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Ez</span> <span class="o">*</span> <span class="n">Hy</span><span class="p">,</span> <span class="n">Ez</span> <span class="o">*</span> <span class="n">Hx</span></div>
 
 
 
-<span class="c1"># -- Toy confinement (&quot;flux tube&quot;) model -------------------------------------</span>
+<span class="c1"># -- Toy confinement ("flux tube") model -------------------------------------</span>
 <span class="c1">#</span>
 <span class="c1"># NOT a lattice-QCD or first-principles gauge-theory calculation. This is the</span>
-<span class="c1"># textbook illustrative picture of confinement (the &quot;dual superconductor&quot; /</span>
+<span class="c1"># textbook illustrative picture of confinement (the "dual superconductor" /</span>
 <span class="c1"># bag-model flux tube): unlike an ordinary Coulomb field, which spreads out</span>
 <span class="c1"># in all directions and whose energy is independent of source separation,</span>
 <span class="c1"># confinement is modeled here simply by *forbidding* the field from</span>
 <span class="c1"># spreading transversely -- it is squeezed into a tube of fixed</span>
-<span class="c1"># cross-section connecting the two charges. Gauss&#39;s law then forces the</span>
+<span class="c1"># cross-section connecting the two charges. Gauss's law then forces the</span>
 <span class="c1"># field strength inside the tube to stay at the fixed value set by the</span>
 <span class="c1"># enclosed charge, independent of how far apart the charges are, so the</span>
 <span class="c1"># field energy density is uniform along the whole tube and the total field</span>
@@ -1020,7 +1018,7 @@
 <div class="viewcode-block" id="flux_tube_field_1d">
 <a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.flux_tube_field_1d">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">flux_tube_field_1d</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">flux_quantum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">wall_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Static 1D confined flux profile between two opposite point charges (toy confinement model).</span>
+<span class="w">    </span><span class="sd">"""Static 1D confined flux profile between two opposite point charges (toy confinement model).</span>
 
 <span class="sd">    Solves the 1D Gauss law :math:`d(\\text{flux})/dx = \\rho(x)` for a field</span>
 <span class="sd">    confined to a fixed-cross-section tube connecting two opposite charges</span>
@@ -1028,7 +1026,7 @@
 <span class="sd">    width ``wall_width`` (a numerical regularization of the point charge,</span>
 <span class="sd">    not a physical effect). The field is computed by direct numerical</span>
 <span class="sd">    integration (cumulative trapezoidal sum) of this charge density, so it</span>
-<span class="sd">    is genuinely &quot;solved for&quot; at each separation rather than assumed.</span>
+<span class="sd">    is genuinely "solved for" at each separation rather than assumed.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1062,7 +1060,7 @@
 <span class="sd">    True</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(field[0]) &lt; 0.05)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">wall_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">wall_width</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">dx</span>
@@ -1079,11 +1077,11 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">flux_tube_energy_density_2d</span><span class="p">(</span>
     <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">separation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">flux_quantum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">tube_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;2D energy-density map of the confined flux tube, for visualizing it as a stretching heatmap.</span>
+<span class="w">    </span><span class="sd">"""2D energy-density map of the confined flux tube, for visualizing it as a stretching heatmap.</span>
 
 <span class="sd">    Extrudes :func:`flux_tube_field_1d` (evaluated along the axis joining</span>
 <span class="sd">    the two charges) into 2D by giving it a fixed-width Gaussian transverse</span>
-<span class="sd">    profile -- the &quot;fixed cross-section&quot; that produces confinement -- and</span>
+<span class="sd">    profile -- the "fixed cross-section" that produces confinement -- and</span>
 <span class="sd">    forms the field energy density :math:`\\tfrac{1}{2}\\,\\text{field}(x)^2\\times\\text{transverse}(y)^2`.</span>
 
 <span class="sd">    Parameters</span>
@@ -1111,7 +1109,7 @@
 <span class="sd">    &gt;&gt;&gt; e = flux_tube_energy_density_2d((200, 40), dx=0.2, dy=0.2, separation=10.0)</span>
 <span class="sd">    &gt;&gt;&gt; bool(e.sum() &gt; 0)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="n">shape</span>
     <span class="k">if</span> <span class="n">tube_width</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">tube_width</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">dy</span>

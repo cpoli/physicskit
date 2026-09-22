@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,10 +409,10 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.spin_glass</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Spin glasses: quenched disorder, frustration, and replica symmetry breaking.</span>
+<span></span><span class="sd">"""Spin glasses: quenched disorder, frustration, and replica symmetry breaking.</span>
 
 <span class="sd">Unlike the pure Ising model, where every bond has the same sign, a spin</span>
-<span class="sd">glass&#39;s bond couplings are themselves random variables, fixed (&quot;quenched&quot;)</span>
+<span class="sd">glass's bond couplings are themselves random variables, fixed ("quenched")</span>
 <span class="sd">for the lifetime of a given sample rather than fluctuating with the spins.</span>
 <span class="sd">A plaquette with an odd number of antiferromagnetic bonds is *frustrated*:</span>
 <span class="sd">no spin configuration can satisfy every one of its bonds simultaneously.</span>
@@ -428,11 +426,11 @@
 <span class="sd">version of this story on a 2D lattice. :class:`SherringtonKirkpatrick` is</span>
 <span class="sd">its infinite-range completion: every spin couples to every other spin, the</span>
 <span class="sd">model Sherrington and Kirkpatrick introduced in 1975 and that Giorgio</span>
-<span class="sd">Parisi&#39;s 1979-1980 replica-symmetry-breaking solution ultimately resolved,</span>
+<span class="sd">Parisi's 1979-1980 replica-symmetry-breaking solution ultimately resolved,</span>
 <span class="sd">revealing an equilibrium phase built not from one ground state but from a</span>
 <span class="sd">hierarchy of infinitely many, organized by a nontrivial overlap</span>
 <span class="sd">distribution :math:`P(q)` rather than a single frozen value.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -446,13 +444,13 @@
     <span class="n">spin_glass_total_energy</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EdwardsAndersonSpinGlass2D&quot;</span><span class="p">,</span> <span class="s2">&quot;SherringtonKirkpatrick&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"EdwardsAndersonSpinGlass2D"</span><span class="p">,</span> <span class="s2">"SherringtonKirkpatrick"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="EdwardsAndersonSpinGlass2D">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EdwardsAndersonSpinGlass2D">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EdwardsAndersonSpinGlass2D</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The 2D +/-J Edwards-Anderson Ising spin glass on a periodic L x L lattice.</span>
+<span class="w">    </span><span class="sd">"""The 2D +/-J Edwards-Anderson Ising spin glass on a periodic L x L lattice.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -460,7 +458,7 @@
 <span class="sd">        Linear lattice size.</span>
 <span class="sd">    J : float, default=1.0</span>
 <span class="sd">        Bond magnitude; each bond independently takes the value ``+J`` or</span>
-<span class="sd">        ``-J`` with equal probability (the &quot;bimodal&quot; Edwards-Anderson</span>
+<span class="sd">        ``-J`` with equal probability (the "bimodal" Edwards-Anderson</span>
 <span class="sd">        glass).</span>
 <span class="sd">    kB : float, default=1.0</span>
 <span class="sd">        Boltzmann constant.</span>
@@ -475,8 +473,8 @@
 <span class="sd">    J_right, J_down : ndarray of shape (L, L)</span>
 <span class="sd">        Quenched bond couplings; see</span>
 <span class="sd">        :func:`physicskit.statphys.core.monte_carlo.metropolis_sweep_spin_glass` for</span>
-<span class="sd">        their indexing convention. Fixed for the model&#39;s lifetime.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        their indexing convention. Fixed for the model's lifetime.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kB</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span>
@@ -493,7 +491,7 @@
 <div class="viewcode-block" id="EdwardsAndersonSpinGlass2D.sweep">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EdwardsAndersonSpinGlass2D.sweep">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sweep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the spins by ``n_sweeps`` Metropolis-Hastings sweeps (bonds are fixed).</span>
+<span class="w">        </span><span class="sd">"""Advance the spins by ``n_sweeps`` Metropolis-Hastings sweeps (bonds are fixed).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -501,7 +499,7 @@
 <span class="sd">            Inverse temperature.</span>
 <span class="sd">        n_sweeps : int, default=1</span>
 <span class="sd">            Number of sweeps to perform.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sweeps</span><span class="p">):</span>
             <span class="n">metropolis_sweep_spin_glass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_right</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_down</span><span class="p">)</span></div>
 
@@ -509,14 +507,14 @@
 <div class="viewcode-block" id="EdwardsAndersonSpinGlass2D.energy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EdwardsAndersonSpinGlass2D.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total energy :math:`-\\sum_{\\langle i,j\\rangle} J_{ij} s_i s_j` of the current configuration.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Total energy :math:`-\\sum_{\\langle i,j\\rangle} J_{ij} s_i s_j` of the current configuration."""</span>
         <span class="k">return</span> <span class="n">spin_glass_total_energy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_right</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_down</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EdwardsAndersonSpinGlass2D.frustration_density">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EdwardsAndersonSpinGlass2D.frustration_density">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">frustration_density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fraction of elementary plaquettes that are frustrated.</span>
+<span class="w">        </span><span class="sd">"""Fraction of elementary plaquettes that are frustrated.</span>
 
 <span class="sd">        A plaquette is frustrated when the product of its four bond</span>
 <span class="sd">        couplings is negative -- no spin configuration can satisfy all four</span>
@@ -526,7 +524,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">product</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_right</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">J_down</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">J_right</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">J_down</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">product</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">))</span></div>
 
@@ -534,12 +532,12 @@
 <div class="viewcode-block" id="EdwardsAndersonSpinGlass2D.edwards_anderson_order_parameter">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EdwardsAndersonSpinGlass2D.edwards_anderson_order_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">edwards_anderson_order_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">measure_every</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimate :math:`\\langle q^2 \\rangle`, the mean-squared Edwards-Anderson replica overlap.</span>
+<span class="w">        </span><span class="sd">"""Estimate :math:`\\langle q^2 \\rangle`, the mean-squared Edwards-Anderson replica overlap.</span>
 
 <span class="sd">        Two independently initialized and thermalized replicas, sharing the</span>
 <span class="sd">        *same* quenched bonds, are compared via their spin overlap</span>
 <span class="sd">        :math:`q = \\frac{1}{N}\\sum_i s_i^{(1)} s_i^{(2)}`. Even though</span>
-<span class="sd">        each replica&#39;s spins keep fluctuating, below the spin-glass</span>
+<span class="sd">        each replica's spins keep fluctuating, below the spin-glass</span>
 <span class="sd">        transition they fluctuate around the same disorder-selected frozen</span>
 <span class="sd">        pattern, so :math:`\\langle q^2 \\rangle` stays nonzero; above it,</span>
 <span class="sd">        the replicas decorrelate and :math:`\\langle q^2 \\rangle \\to 0`.</span>
@@ -559,7 +557,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Estimated :math:`\\langle q^2 \\rangle \\in [0, 1]`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">replica_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">))</span>
         <span class="n">replica_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_equil</span><span class="p">):</span>
@@ -580,7 +578,7 @@
 <div class="viewcode-block" id="SherringtonKirkpatrick">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.SherringtonKirkpatrick">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SherringtonKirkpatrick</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The infinite-range Sherrington-Kirkpatrick Ising spin glass on N fully-connected spins.</span>
+<span class="w">    </span><span class="sd">"""The infinite-range Sherrington-Kirkpatrick Ising spin glass on N fully-connected spins.</span>
 
 <span class="sd">    Every pair of spins is coupled by an independent Gaussian random bond,</span>
 
@@ -590,7 +588,7 @@
 <span class="sd">        J_{ij} \\sim \\mathcal{N}\\!\\left(0, \\frac{J^2}{N}\\right),</span>
 
 <span class="sd">    where the :math:`1/N` variance scaling is what keeps the energy</span>
-<span class="sd">    extensive as :math:`N \\to \\infty`. Rather than attempt Parisi&#39;s</span>
+<span class="sd">    extensive as :math:`N \\to \\infty`. Rather than attempt Parisi's</span>
 <span class="sd">    analytic replica-symmetry-breaking solution, :meth:`overlap_distribution`</span>
 <span class="sd">    measures its numerically observable fingerprint directly: the</span>
 <span class="sd">    distribution :math:`P(q)` of the replica overlap</span>
@@ -598,7 +596,7 @@
 <span class="sd">    independent disorder realizations. A single sharp peak at :math:`q=0`</span>
 <span class="sd">    signals the trivial (replica-symmetric) paramagnetic phase; a broad,</span>
 <span class="sd">    non-Gaussian, non-self-averaging :math:`P(q)` is the finite-size</span>
-<span class="sd">    signature of the many-valley spin-glass phase that Parisi&#39;s solution</span>
+<span class="sd">    signature of the many-valley spin-glass phase that Parisi's solution</span>
 <span class="sd">    describes exactly in the :math:`N \\to \\infty` limit.</span>
 
 <span class="sd">    Parameters</span>
@@ -620,8 +618,8 @@
 <span class="sd">        Current spin configuration, values in ``{-1, +1}``.</span>
 <span class="sd">    J : ndarray of shape (N, N)</span>
 <span class="sd">        Quenched, symmetric coupling matrix with zero diagonal. Fixed for</span>
-<span class="sd">        the model&#39;s lifetime.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        the model's lifetime.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kB</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
@@ -638,7 +636,7 @@
 <div class="viewcode-block" id="SherringtonKirkpatrick.sweep">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.SherringtonKirkpatrick.sweep">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sweep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">n_sweeps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the spins by ``n_sweeps`` Metropolis-Hastings sweeps (bonds are fixed).</span>
+<span class="w">        </span><span class="sd">"""Advance the spins by ``n_sweeps`` Metropolis-Hastings sweeps (bonds are fixed).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -646,7 +644,7 @@
 <span class="sd">            Inverse temperature.</span>
 <span class="sd">        n_sweeps : int, default=1</span>
 <span class="sd">            Number of sweeps to perform.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sweeps</span><span class="p">):</span>
             <span class="n">metropolis_sweep_sk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J</span><span class="p">)</span></div>
 
@@ -654,14 +652,14 @@
 <div class="viewcode-block" id="SherringtonKirkpatrick.energy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.SherringtonKirkpatrick.energy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total energy :math:`-\\sum_{i&lt;j} J_{ij} s_i s_j` of the current configuration.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Total energy :math:`-\\sum_{i&lt;j} J_{ij} s_i s_j` of the current configuration."""</span>
         <span class="k">return</span> <span class="n">sk_total_energy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">J</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SherringtonKirkpatrick.overlap_distribution">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.SherringtonKirkpatrick.overlap_distribution">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">overlap_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">n_disorder</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">n_equil</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">measure_every</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample the replica-overlap distribution P(q), pooled over independent disorder realizations.</span>
+<span class="w">        </span><span class="sd">"""Sample the replica-overlap distribution P(q), pooled over independent disorder realizations.</span>
 
 <span class="sd">        For each of ``n_disorder`` independent bond realizations, two</span>
 <span class="sd">        replicas are initialized randomly, thermalized under that shared</span>
@@ -669,10 +667,10 @@
 <span class="sd">        s_i^{(1)} s_i^{(2)}` recorded repeatedly. Pooling samples across</span>
 <span class="sd">        many disorder realizations (rather than just many measurements of</span>
 <span class="sd">        one realization) is essential here: unlike the Edwards-Anderson</span>
-<span class="sd">        model&#39;s single well-defined :math:`\\langle q^2 \\rangle`, the SK</span>
-<span class="sd">        spin glass&#39;s overlap distribution is sample-dependent (it does not</span>
+<span class="sd">        model's single well-defined :math:`\\langle q^2 \\rangle`, the SK</span>
+<span class="sd">        spin glass's overlap distribution is sample-dependent (it does not</span>
 <span class="sd">        self-average) below the transition, and it is exactly this</span>
-<span class="sd">        sample-to-sample variability that Parisi&#39;s solution organizes into</span>
+<span class="sd">        sample-to-sample variability that Parisi's solution organizes into</span>
 <span class="sd">        a hierarchy of pure states.</span>
 
 <span class="sd">        Parameters</span>
@@ -692,7 +690,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of shape (n_disorder * n_measure,)</span>
 <span class="sd">            Pooled overlap samples :math:`q \\in [-1, 1]`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_disorder</span> <span class="o">*</span> <span class="n">n_measure</span><span class="p">)</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_disorder</span><span class="p">):</span>

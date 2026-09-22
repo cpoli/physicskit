@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.quantum.chapters.hydrogen_am</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;3D spherical harmonics and hydrogen-atom orbitals :math:`\lvert n,l,m\rangle`.&quot;&quot;&quot;</span>
+<span></span><span class="sa">r</span><span class="sd">"""3D spherical harmonics and hydrogen-atom orbitals :math:`\lvert n,l,m\rangle`."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -423,21 +421,21 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.._compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">sph_harm_y</span><span class="p">,</span> <span class="n">trapz</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;spherical_harmonic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;radial_wavefunction&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;HydrogenOrbital&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_superposition_psi&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_superposition_density&quot;</span><span class="p">,</span>
+    <span class="s2">"spherical_harmonic"</span><span class="p">,</span>
+    <span class="s2">"radial_wavefunction"</span><span class="p">,</span>
+    <span class="s2">"HydrogenOrbital"</span><span class="p">,</span>
+    <span class="s2">"orbital_superposition_psi"</span><span class="p">,</span>
+    <span class="s2">"orbital_superposition_density"</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">A0</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="sd">&quot;&quot;&quot;float: Bohr radius, in atomic units (length measured in units of :math:`a_0`).&quot;&quot;&quot;</span>
+<span class="sd">"""float: Bohr radius, in atomic units (length measured in units of :math:`a_0`)."""</span>
 
 
 <div class="viewcode-block" id="spherical_harmonic">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.spherical_harmonic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">spherical_harmonic</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The spherical harmonic :math:`Y_l^m(\theta,\phi)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The spherical harmonic :math:`Y_l^m(\theta,\phi)`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -454,7 +452,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        Complex-valued :math:`Y_l^m(\theta,\phi)`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">sph_harm_y</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></div>
 
 
@@ -462,7 +460,7 @@
 <div class="viewcode-block" id="radial_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.radial_wavefunction">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">radial_wavefunction</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Z</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">A0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The hydrogenic radial wavefunction :math:`R_{nl}(r)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The hydrogenic radial wavefunction :math:`R_{nl}(r)`.</span>
 
 <span class="sd">    Normalized so that :math:`\int_0^\infty \lvert R_{nl}(r)\rvert^2 r^2\,dr = 1`.</span>
 
@@ -487,9 +485,9 @@
 <span class="sd">    ------</span>
 <span class="sd">    ValueError</span>
 <span class="sd">        If ``l &gt;= n``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Require l &lt; n.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Require l &lt; n."</span><span class="p">)</span>
     <span class="n">rho</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Z</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">a0</span><span class="p">)</span>
     <span class="n">L</span> <span class="o">=</span> <span class="n">genlaguerre</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)(</span><span class="n">rho</span><span class="p">)</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">gammaln</span>
@@ -504,7 +502,7 @@
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">HydrogenOrbital</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The hydrogenic wavefunction</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The hydrogenic wavefunction</span>
 <span class="sd">    :math:`\psi_{nlm}(r,\theta,\phi) = R_{nl}(r)\, Y_l^m(\theta,\phi)`.</span>
 
 <span class="sd">    Parameters</span>
@@ -525,7 +523,7 @@
 <span class="sd">    ValueError</span>
 <span class="sd">        If the quantum numbers violate :math:`0 \le l &lt; n` or</span>
 <span class="sd">        :math:`\lvert m\rvert \le l`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">l</span><span class="p">:</span> <span class="nb">int</span>
@@ -535,20 +533,20 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Require 0 &lt;= l &lt; n.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Require 0 &lt;= l &lt; n."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Require |m| &lt;= l.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Require |m| &lt;= l."</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;float: Energy :math:`E_n = -Z^2/(2n^2)` Hartree (atomic units,</span>
-<span class="sd">        :math:`\hbar = m_e = e = 1`).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""float: Energy :math:`E_n = -Z^2/(2n^2)` Hartree (atomic units,</span>
+<span class="sd">        :math:`\hbar = m_e = e = 1`)."""</span>
         <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HydrogenOrbital.radial">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.radial">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">radial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The radial part :math:`R_{nl}(r)`; see :func:`radial_wavefunction`.</span>
+<span class="w">        </span><span class="sd">"""The radial part :math:`R_{nl}(r)`; see :func:`radial_wavefunction`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -557,14 +555,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">radial_wavefunction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a0</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HydrogenOrbital.angular">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.angular">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">angular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The angular part :math:`Y_l^m(\\theta,\\phi)`; see :func:`spherical_harmonic`.</span>
+<span class="w">        </span><span class="sd">"""The angular part :math:`Y_l^m(\\theta,\\phi)`; see :func:`spherical_harmonic`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -573,14 +571,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">spherical_harmonic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HydrogenOrbital.psi">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.psi">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">psi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The full wavefunction :math:`\psi_{nlm}(r,\theta,\phi)`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The full wavefunction :math:`\psi_{nlm}(r,\theta,\phi)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -590,14 +588,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">radial</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">angular</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HydrogenOrbital.density">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.density">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The probability density :math:`\lvert\psi_{nlm}\rvert^2`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The probability density :math:`\lvert\psi_{nlm}\rvert^2`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -606,14 +604,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="HydrogenOrbital.radial_density">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.radial_density">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">radial_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The radial probability density :math:`P(r) = r^2 \lvert R_{nl}(r)\rvert^2`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The radial probability density :math:`P(r) = r^2 \lvert R_{nl}(r)\rvert^2`.</span>
 
 <span class="sd">        The probability of finding the electron in a shell</span>
 <span class="sd">        :math:`[r, r+dr]`, already integrated over solid angle.</span>
@@ -625,27 +623,27 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radial</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="HydrogenOrbital.most_probable_radius">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.most_probable_radius">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">most_probable_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The radius at which :meth:`radial_density` is maximal.</span>
+<span class="w">        </span><span class="sd">"""The radius at which :meth:`radial_density` is maximal.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        r_max : float or None, optional</span>
 <span class="sd">            Upper bound of the search range; defaults to a value scaled to</span>
-<span class="sd">            the orbital&#39;s expected extent.</span>
+<span class="sd">            the orbital's expected extent.</span>
 <span class="sd">        n_points : int, default=20000</span>
 <span class="sd">            Number of grid points used for the search.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">r_max</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">+</span> <span class="mi">10</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
@@ -656,20 +654,20 @@
 <div class="viewcode-block" id="HydrogenOrbital.check_normalization">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HydrogenOrbital.check_normalization">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">check_normalization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Integrate :meth:`radial_density` over :math:`[0, r_\text{max}]` (should be 1).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Integrate :meth:`radial_density` over :math:`[0, r_\text{max}]` (should be 1).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        r_max : float or None, optional</span>
 <span class="sd">            Upper integration limit; defaults to a value scaled to the</span>
-<span class="sd">            orbital&#39;s expected extent.</span>
+<span class="sd">            orbital's expected extent.</span>
 <span class="sd">        n_points : int, default=20000</span>
 <span class="sd">            Number of quadrature points.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">r_max</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">+</span> <span class="mi">20</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
@@ -683,7 +681,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">orbital_superposition_psi</span><span class="p">(</span>
     <span class="n">orb_a</span><span class="p">:</span> <span class="n">HydrogenOrbital</span><span class="p">,</span> <span class="n">orb_b</span><span class="p">:</span> <span class="n">HydrogenOrbital</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ca</span><span class="p">:</span> <span class="nb">complex</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="nb">complex</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**-</span><span class="mf">0.5</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A coherent superposition of two hydrogen eigenstates at time :math:`t`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""A coherent superposition of two hydrogen eigenstates at time :math:`t`.</span>
 
 <span class="sd">    .. math::</span>
 
@@ -710,7 +708,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">        Complex-valued :math:`\psi(r,\theta,\phi,t)`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ca</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">ca</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">ca</span> <span class="o">/</span> <span class="n">norm</span><span class="p">,</span> <span class="n">cb</span> <span class="o">/</span> <span class="n">norm</span>
     <span class="n">phase_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">orb_a</span><span class="o">.</span><span class="n">energy</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
@@ -724,7 +722,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">orbital_superposition_density</span><span class="p">(</span>
     <span class="n">orb_a</span><span class="p">:</span> <span class="n">HydrogenOrbital</span><span class="p">,</span> <span class="n">orb_b</span><span class="p">:</span> <span class="n">HydrogenOrbital</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ca</span><span class="p">:</span> <span class="nb">complex</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="nb">complex</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**-</span><span class="mf">0.5</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The probability density of :func:`orbital_superposition_psi`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The probability density of :func:`orbital_superposition_psi`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -736,7 +734,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    numpy.ndarray</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">orbital_superposition_psi</span><span class="p">(</span><span class="n">orb_a</span><span class="p">,</span> <span class="n">orb_b</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ca</span><span class="p">,</span> <span class="n">cb</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 </pre></div>

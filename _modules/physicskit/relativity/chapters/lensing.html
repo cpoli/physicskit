@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,10 +409,10 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.relativity.chapters.lensing</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Point-source gravitational lensing: Einstein rings and multiple images.</span>
+<span></span><span class="sd">"""Point-source gravitational lensing: Einstein rings and multiple images.</span>
 
 <span class="sd">When a point source, a point (or compact) lens, and an observer are exactly</span>
-<span class="sd">aligned, the source&#39;s light is bent symmetrically around the lens into a</span>
+<span class="sd">aligned, the source's light is bent symmetrically around the lens into a</span>
 <span class="sd">complete ring -- an Einstein ring, predicted by Einstein in 1936 (though he</span>
 <span class="sd">believed it would never be observable) and first imaged for a galaxy-scale</span>
 <span class="sd">lens in 1988. For any other alignment, a point lens splits a single source</span>
@@ -425,19 +423,19 @@
 <span class="sd">(point-mass) limit, and provides the exact (numerically integrated)</span>
 <span class="sd">deflection angle for exploring strong-field corrections near the photon</span>
 <span class="sd">sphere.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PointMassLens&quot;</span><span class="p">,</span> <span class="s2">&quot;exact_deflection_angle&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"PointMassLens"</span><span class="p">,</span> <span class="s2">"exact_deflection_angle"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="PointMassLens">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.PointMassLens">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PointMassLens</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A point-mass (weak-field) gravitational lens: Einstein ring, images, and magnification.</span>
+<span class="w">    </span><span class="sd">"""A point-mass (weak-field) gravitational lens: Einstein ring, images, and magnification.</span>
 
 <span class="sd">    Uses the thin-lens approximation with the leading-order deflection</span>
 <span class="sd">    angle :math:`\\hat\\alpha(b) = 4M/b`, valid whenever the source is not</span>
@@ -457,7 +455,7 @@
 <span class="sd">    -----</span>
 <span class="sd">    Every formula here is a ratio of ``M``, ``D_L``, ``D_S`` (angles and</span>
 <span class="sd">    magnifications, not an absolute strain), so it is scale-invariant: a</span>
-<span class="sd">    normalized convention (``M=1``, distances &quot;in units of M&quot;) gives</span>
+<span class="sd">    normalized convention (``M=1``, distances "in units of M") gives</span>
 <span class="sd">    exactly the same angles as real SI-consistent geometrized values would.</span>
 <span class="sd">    Unlike :class:`~physicskit.relativity.chapters.gw_merger.BinaryMerger`,</span>
 <span class="sd">    there is no absolute-scale trap here -- any self-consistent unit choice</span>
@@ -468,11 +466,11 @@
 <span class="sd">    D_LS : float</span>
 <span class="sd">        Lens-source distance, :math:`D_S - D_L` (flat-space subtraction;</span>
 <span class="sd">        this is a local, non-cosmological thin-lens treatment).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">D_L</span><span class="p">,</span> <span class="n">D_S</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">D_S</span> <span class="o">&lt;=</span> <span class="n">D_L</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;D_S must exceed D_L (the source must be behind the lens)&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"D_S must exceed D_L (the source must be behind the lens)"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">M</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">D_L</span> <span class="o">=</span> <span class="n">D_L</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">D_S</span> <span class="o">=</span> <span class="n">D_S</span>
@@ -481,7 +479,7 @@
 <div class="viewcode-block" id="PointMassLens.einstein_angle">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.PointMassLens.einstein_angle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">einstein_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Einstein ring angular radius, :math:`\\theta_E = \\sqrt{4M D_{LS}/(D_L D_S)}`.</span>
+<span class="w">        </span><span class="sd">"""Einstein ring angular radius, :math:`\\theta_E = \\sqrt{4M D_{LS}/(D_L D_S)}`.</span>
 
 <span class="sd">        The angular radius at which a perfectly aligned (:math:`\\beta=0`)</span>
 <span class="sd">        point source appears as a complete ring.</span>
@@ -489,14 +487,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">D_LS</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D_L</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">D_S</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="PointMassLens.image_angles">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.PointMassLens.image_angles">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">image_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Angular positions of the two images of a source at angular offset ``beta``.</span>
+<span class="w">        </span><span class="sd">"""Angular positions of the two images of a source at angular offset ``beta``.</span>
 
 <span class="sd">        Solves the thin-lens equation</span>
 <span class="sd">        :math:`\\beta = \\theta - \\theta_E^2/\\theta` (equivalent to a</span>
@@ -528,7 +526,7 @@
 <span class="sd">        True</span>
 <span class="sd">        &gt;&gt;&gt; bool(np.isclose(theta_minus, -lens.einstein_angle()))</span>
 <span class="sd">        True</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">theta_E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">einstein_angle</span><span class="p">()</span>
         <span class="n">discriminant</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">beta</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">theta_E</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">theta_plus</span> <span class="o">=</span> <span class="p">(</span><span class="n">beta</span> <span class="o">+</span> <span class="n">discriminant</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
@@ -539,7 +537,7 @@
 <div class="viewcode-block" id="PointMassLens.magnification">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.PointMassLens.magnification">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">magnification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Magnification of each image, and their sum (total observed brightening).</span>
+<span class="w">        </span><span class="sd">"""Magnification of each image, and their sum (total observed brightening).</span>
 
 <span class="sd">        Standard point-lens (Paczynski 1986) result, with</span>
 <span class="sd">        :math:`u = \\beta/\\theta_E`:</span>
@@ -563,7 +561,7 @@
 <span class="sd">            negative).</span>
 <span class="sd">        total : float</span>
 <span class="sd">            Total observed magnification, :math:`|\\mu_+| + |\\mu_-|`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">theta_E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">einstein_angle</span><span class="p">()</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">/</span> <span class="n">theta_E</span>
         <span class="n">base</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">4.0</span><span class="p">))</span>
@@ -575,7 +573,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">exact_deflection_angle</span><span class="p">(</span><span class="n">bh</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">,</span> <span class="n">r_far</span><span class="o">=</span><span class="mf">2.0e5</span><span class="p">,</span> <span class="n">dtau</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">300000</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exact (numerically integrated) Schwarzschild light deflection angle.</span>
+<span class="w">    </span><span class="sd">"""Exact (numerically integrated) Schwarzschild light deflection angle.</span>
 
 <span class="sd">    Unlike the weak-field :math:`4M/b` formula used by</span>
 <span class="sd">    :class:`PointMassLens`, this integrates the actual null geodesic from</span>
@@ -592,7 +590,7 @@
 <span class="sd">        Impact parameter :math:`b`; must exceed</span>
 <span class="sd">        ``bh.critical_impact_parameter`` for the photon to escape.</span>
 <span class="sd">    r_far : float, default=2e5</span>
-<span class="sd">        Starting (and target ending) radius, used to approximate &quot;infinity.&quot;</span>
+<span class="sd">        Starting (and target ending) radius, used to approximate "infinity."</span>
 <span class="sd">    dtau : float, optional</span>
 <span class="sd">        Affine-parameter step size. Defaults to ``3 * r_far / n_steps``, which</span>
 <span class="sd">        comfortably covers the round trip to and from ``r_far`` while still</span>
@@ -613,12 +611,12 @@
 <span class="sd">    &gt;&gt;&gt; delta = exact_deflection_angle(bh, impact_parameter=50.0)</span>
 <span class="sd">    &gt;&gt;&gt; bool(abs(delta - bh.light_deflection_angle(50.0)) &lt; 0.01)</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">dtau</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dtau</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">r_far</span> <span class="o">/</span> <span class="n">n_steps</span>
     <span class="n">y0</span> <span class="o">=</span> <span class="n">bh</span><span class="o">.</span><span class="n">null_geodesic_initial_state</span><span class="p">(</span><span class="n">r0</span><span class="o">=</span><span class="n">r_far</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="o">=</span><span class="n">impact_parameter</span><span class="p">,</span> <span class="n">ingoing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">traj</span> <span class="o">=</span> <span class="n">bh</span><span class="o">.</span><span class="n">integrate_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">dtau</span><span class="o">=</span><span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">traj</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">traj</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 </pre></div>
 
                 </article>

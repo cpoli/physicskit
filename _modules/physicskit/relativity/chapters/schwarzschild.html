@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,17 +409,17 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.relativity.chapters.schwarzschild</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;The Schwarzschild black hole: orbits, precession, light bending, and the photon sphere.</span>
+<span></span><span class="sd">"""The Schwarzschild black hole: orbits, precession, light bending, and the photon sphere.</span>
 
-<span class="sd">The Schwarzschild solution -- the first exact solution to Einstein&#39;s field</span>
+<span class="sd">The Schwarzschild solution -- the first exact solution to Einstein's field</span>
 <span class="sd">equations, found by Karl Schwarzschild in 1916 while serving on the Russian</span>
 <span class="sd">front, just weeks after Einstein published General Relativity -- describes</span>
 <span class="sd">the spacetime around any non-rotating, uncharged spherical mass. It predicts</span>
-<span class="sd">three of GR&#39;s classic observational triumphs: the anomalous perihelion</span>
+<span class="sd">three of GR's classic observational triumphs: the anomalous perihelion</span>
 <span class="sd">precession of Mercury, the bending of starlight grazing the Sun (confirmed</span>
-<span class="sd">by Eddington&#39;s 1919 eclipse expedition), and the Shapiro time delay of radar</span>
+<span class="sd">by Eddington's 1919 eclipse expedition), and the Shapiro time delay of radar</span>
 <span class="sd">signals passing near the Sun.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -429,13 +427,13 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.relativity.core.geodesics</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate_schwarzschild_geodesic</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SchwarzschildBlackHole&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"SchwarzschildBlackHole"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="SchwarzschildBlackHole">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SchwarzschildBlackHole</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A non-rotating black hole (or any spherical mass) of mass ``M``, in geometrized units.</span>
+<span class="w">    </span><span class="sd">"""A non-rotating black hole (or any spherical mass) of mass ``M``, in geometrized units.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -443,35 +441,35 @@
 <span class="sd">        Mass, in geometrized length units (:math:`GM/c^2`). Use</span>
 <span class="sd">        :func:`physicskit.relativity.utils.constants.solar_masses_to_geometrized`</span>
 <span class="sd">        to convert from a physical mass in solar masses.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">M</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">horizon_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Event horizon radius, :math:`r_s = 2M`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Event horizon radius, :math:`r_s = 2M`."""</span>
         <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">photon_sphere_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Photon sphere radius, :math:`r_{ph} = 3M`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Photon sphere radius, :math:`r_{ph} = 3M`."""</span>
         <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">isco_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Innermost stable circular orbit radius, :math:`r_{\\text{ISCO}} = 6M`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Innermost stable circular orbit radius, :math:`r_{\\text{ISCO}} = 6M`."""</span>
         <span class="k">return</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">critical_impact_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Critical photon impact parameter, :math:`b_c = 3\\sqrt{3}\\,M`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Critical photon impact parameter, :math:`b_c = 3\\sqrt{3}\\,M`."""</span>
         <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
 
 <div class="viewcode-block" id="SchwarzschildBlackHole.circular_orbit_angular_velocity">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.circular_orbit_angular_velocity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">circular_orbit_angular_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Coordinate angular velocity :math:`\\Omega = d\\phi/dt` of a circular timelike orbit.</span>
+<span class="w">        </span><span class="sd">"""Coordinate angular velocity :math:`\\Omega = d\\phi/dt` of a circular timelike orbit.</span>
 
 <span class="sd">        Exactly Keplerian in Schwarzschild coordinates:</span>
 <span class="sd">        :math:`\\Omega = \\sqrt{M/r^3}`.</span>
@@ -484,14 +482,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SchwarzschildBlackHole.circular_orbit_initial_state">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.circular_orbit_initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">circular_orbit_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initial 8-component state for a circular, equatorial, timelike orbit at radius ``r0``.</span>
+<span class="w">        </span><span class="sd">"""Initial 8-component state for a circular, equatorial, timelike orbit at radius ``r0``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -504,7 +502,7 @@
 <span class="sd">        ndarray of shape (8,)</span>
 <span class="sd">            :math:`(t, r, \\theta, \\phi, u^t, u^r, u^\\theta, u^\\phi)` at</span>
 <span class="sd">            :math:`\\tau = 0`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
         <span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="n">r0</span>
         <span class="n">Omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">circular_orbit_angular_velocity</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span>
@@ -516,7 +514,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.eccentric_orbit_initial_state">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.eccentric_orbit_initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">eccentric_orbit_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">eccentricity_boost</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initial state for a bound, generally eccentric equatorial timelike orbit.</span>
+<span class="w">        </span><span class="sd">"""Initial state for a bound, generally eccentric equatorial timelike orbit.</span>
 
 <span class="sd">        Starts at radius ``r0`` (taken as the initial apoapsis) with purely</span>
 <span class="sd">        tangential velocity reduced below the circular value by</span>
@@ -536,7 +534,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        ndarray of shape (8,)</span>
 <span class="sd">            Initial state, as in :meth:`circular_orbit_initial_state`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
         <span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="n">r0</span>
         <span class="n">Omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">circular_orbit_angular_velocity</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">eccentricity_boost</span><span class="p">)</span>
@@ -548,7 +546,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.null_geodesic_initial_state">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.null_geodesic_initial_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">null_geodesic_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">,</span> <span class="n">ingoing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initial state for an equatorial null (photon) geodesic with a given impact parameter.</span>
+<span class="w">        </span><span class="sd">"""Initial state for an equatorial null (photon) geodesic with a given impact parameter.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -564,7 +562,7 @@
 <span class="sd">        ndarray of shape (8,)</span>
 <span class="sd">            Initial state with :math:`E = 1` (an affine-parameter</span>
 <span class="sd">            normalization choice; only the ratio :math:`b` is physical).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
         <span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">/</span> <span class="n">r0</span>
         <span class="n">E</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -579,7 +577,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.integrate_geodesic">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.integrate_geodesic">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">integrate_geodesic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate a geodesic from initial state ``y0`` via fixed-step RK4.</span>
+<span class="w">        </span><span class="sd">"""Integrate a geodesic from initial state ``y0`` via fixed-step RK4.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -595,10 +593,10 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict of str -&gt; ndarray</span>
-<span class="sd">            Keys ``&quot;t&quot;``, ``&quot;r&quot;``, ``&quot;theta&quot;``, ``&quot;phi&quot;``, ``&quot;ut&quot;``,</span>
-<span class="sd">            ``&quot;ur&quot;``, ``&quot;utheta&quot;``, ``&quot;uphi&quot;``, each a 1D array over the</span>
-<span class="sd">            (trimmed) trajectory, plus ``&quot;energy&quot;`` and</span>
-<span class="sd">            ``&quot;angular_momentum&quot;``: the conserved</span>
+<span class="sd">            Keys ``"t"``, ``"r"``, ``"theta"``, ``"phi"``, ``"ut"``,</span>
+<span class="sd">            ``"ur"``, ``"utheta"``, ``"uphi"``, each a 1D array over the</span>
+<span class="sd">            (trimmed) trajectory, plus ``"energy"`` and</span>
+<span class="sd">            ``"angular_momentum"``: the conserved</span>
 <span class="sd">            :math:`E = -u_t = (1-2M/r) u^t` and</span>
 <span class="sd">            :math:`L = u_\\phi = r^2 \\sin^2\\theta \\, u^\\phi` evaluated</span>
 <span class="sd">            at every step (constant along an exact geodesic; their spread</span>
@@ -609,9 +607,9 @@
 <span class="sd">        &gt;&gt;&gt; bh = SchwarzschildBlackHole(M=1.0)</span>
 <span class="sd">        &gt;&gt;&gt; y0 = bh.circular_orbit_initial_state(r0=10.0)</span>
 <span class="sd">        &gt;&gt;&gt; traj = bh.integrate_geodesic(y0, dtau=0.01, n_steps=500)</span>
-<span class="sd">        &gt;&gt;&gt; float(np.std(traj[&quot;energy&quot;])) &lt; 1e-6</span>
+<span class="sd">        &gt;&gt;&gt; float(np.std(traj["energy"])) &lt; 1e-6</span>
 <span class="sd">        True</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">trajectory</span><span class="p">,</span> <span class="n">n_valid</span> <span class="o">=</span> <span class="n">integrate_schwarzschild_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
         <span class="n">trajectory</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[:</span> <span class="n">n_valid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ut</span><span class="p">,</span> <span class="n">ur</span><span class="p">,</span> <span class="n">uth</span><span class="p">,</span> <span class="n">uphi</span> <span class="o">=</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">T</span>
@@ -619,23 +617,23 @@
         <span class="n">energy</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="n">ut</span>
         <span class="n">ang_mom</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">uphi</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
-            <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
-            <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="n">theta</span><span class="p">,</span>
-            <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span>
-            <span class="s2">&quot;ut&quot;</span><span class="p">:</span> <span class="n">ut</span><span class="p">,</span>
-            <span class="s2">&quot;ur&quot;</span><span class="p">:</span> <span class="n">ur</span><span class="p">,</span>
-            <span class="s2">&quot;utheta&quot;</span><span class="p">:</span> <span class="n">uth</span><span class="p">,</span>
-            <span class="s2">&quot;uphi&quot;</span><span class="p">:</span> <span class="n">uphi</span><span class="p">,</span>
-            <span class="s2">&quot;energy&quot;</span><span class="p">:</span> <span class="n">energy</span><span class="p">,</span>
-            <span class="s2">&quot;angular_momentum&quot;</span><span class="p">:</span> <span class="n">ang_mom</span><span class="p">,</span>
+            <span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+            <span class="s2">"r"</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+            <span class="s2">"theta"</span><span class="p">:</span> <span class="n">theta</span><span class="p">,</span>
+            <span class="s2">"phi"</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span>
+            <span class="s2">"ut"</span><span class="p">:</span> <span class="n">ut</span><span class="p">,</span>
+            <span class="s2">"ur"</span><span class="p">:</span> <span class="n">ur</span><span class="p">,</span>
+            <span class="s2">"utheta"</span><span class="p">:</span> <span class="n">uth</span><span class="p">,</span>
+            <span class="s2">"uphi"</span><span class="p">:</span> <span class="n">uphi</span><span class="p">,</span>
+            <span class="s2">"energy"</span><span class="p">:</span> <span class="n">energy</span><span class="p">,</span>
+            <span class="s2">"angular_momentum"</span><span class="p">:</span> <span class="n">ang_mom</span><span class="p">,</span>
         <span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="SchwarzschildBlackHole.perihelion_precession">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.perihelion_precession">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">perihelion_precession</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Measure the apsidal (perihelion) precession per orbit from an integrated trajectory.</span>
+<span class="w">        </span><span class="sd">"""Measure the apsidal (perihelion) precession per orbit from an integrated trajectory.</span>
 
 <span class="sd">        Locates successive periapsis passages (local minima of :math:`r(\\lambda)`)</span>
 <span class="sd">        and returns the excess azimuthal angle swept between them beyond</span>
@@ -651,9 +649,9 @@
 <span class="sd">        ndarray</span>
 <span class="sd">            Precession (in radians) measured between each pair of</span>
 <span class="sd">            consecutive periapsis passages found in the trajectory.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="s2">"r"</span><span class="p">]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">]</span>
         <span class="n">is_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">is_min</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -666,7 +664,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.weak_field_precession_per_orbit">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.weak_field_precession_per_orbit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">weak_field_precession_per_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">semi_major_axis</span><span class="p">,</span> <span class="n">eccentricity</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Leading-order post-Newtonian perihelion precession per orbit.</span>
+<span class="w">        </span><span class="sd">"""Leading-order post-Newtonian perihelion precession per orbit.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -683,14 +681,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Precession per orbit, in radians.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="p">(</span><span class="n">semi_major_axis</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">eccentricity</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="SchwarzschildBlackHole.light_deflection_angle">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.light_deflection_angle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">light_deflection_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Leading-order light deflection angle for a photon passing at a given impact parameter.</span>
+<span class="w">        </span><span class="sd">"""Leading-order light deflection angle for a photon passing at a given impact parameter.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -709,14 +707,14 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Deflection angle, in radians.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">impact_parameter</span></div>
 
 
 <div class="viewcode-block" id="SchwarzschildBlackHole.shapiro_delay">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.shapiro_delay">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">shapiro_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shapiro (gravitational) time delay for light passing between two radii.</span>
+<span class="w">        </span><span class="sd">"""Shapiro (gravitational) time delay for light passing between two radii.</span>
 
 <span class="sd">        .. math::</span>
 
@@ -742,7 +740,7 @@
 <span class="sd">        float</span>
 <span class="sd">            Time delay, in geometrized time units (length; divide by</span>
 <span class="sd">            :data:`physicskit.relativity.utils.constants.C_SI` for seconds).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">impact_parameter</span>
         <span class="n">term1</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">term2</span> <span class="o">=</span> <span class="n">r2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -752,7 +750,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.effective_potential">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.effective_potential">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">effective_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Effective potential for equatorial timelike orbits, :math:`V_{\\text{eff}}(r) = (1-2M/r)(1+L^2/r^2)`.</span>
+<span class="w">        </span><span class="sd">"""Effective potential for equatorial timelike orbits, :math:`V_{\\text{eff}}(r) = (1-2M/r)(1+L^2/r^2)`.</span>
 
 <span class="sd">        Radial motion obeys :math:`(dr/d\\tau)^2 = E^2 - V_{\\text{eff}}(r)`.</span>
 
@@ -766,7 +764,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
 
@@ -774,7 +772,7 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.disk_redshift_factor">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.disk_redshift_factor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">disk_redshift_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combined gravitational + Doppler redshift factor for a circularly orbiting disk emitter.</span>
+<span class="w">        </span><span class="sd">"""Combined gravitational + Doppler redshift factor for a circularly orbiting disk emitter.</span>
 
 <span class="sd">        For a photon with impact parameter :math:`b = L_{\\text{ph}}/E_{\\text{ph}}`</span>
 <span class="sd">        received from gas in a circular Keplerian orbit at radius :math:`r`,</span>
@@ -786,7 +784,7 @@
 <span class="sd">              = \\frac{1}{u^t(r)\\left[1 - b\\,\\Omega(r)\\right]}</span>
 
 <span class="sd">        where :math:`u^t(r) = 1/\\sqrt{f(r) - r^2\\Omega(r)^2}` is the</span>
-<span class="sd">        emitter&#39;s time dilation factor and :math:`\\Omega(r) =</span>
+<span class="sd">        emitter's time dilation factor and :math:`\\Omega(r) =</span>
 <span class="sd">        \\sqrt{M/r^3}` its orbital angular velocity (see</span>
 <span class="sd">        :meth:`circular_orbit_angular_velocity`). :math:`g &lt; 1` is redshifted</span>
 <span class="sd">        (gravity, or the far/receding side of the disk); :math:`g &gt; 1` is</span>
@@ -797,13 +795,13 @@
 <span class="sd">        r : float or array_like</span>
 <span class="sd">            Disk radius at emission.</span>
 <span class="sd">        impact_parameter : float or array_like</span>
-<span class="sd">            The received photon&#39;s impact parameter :math:`b`.</span>
+<span class="sd">            The received photon's impact parameter :math:`b`.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
 <span class="sd">            The redshift factor :math:`g`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">impact_parameter</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">r</span>
@@ -815,10 +813,10 @@
 <div class="viewcode-block" id="SchwarzschildBlackHole.tidal_acceleration">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.SchwarzschildBlackHole.tidal_acceleration">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tidal_acceleration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">proper_separation</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tidal (geodesic deviation) acceleration on a radially infalling object.</span>
+<span class="w">        </span><span class="sd">"""Tidal (geodesic deviation) acceleration on a radially infalling object.</span>
 
 <span class="sd">        In the local orthonormal frame of a freely-falling observer, the</span>
-<span class="sd">        Riemann tensor&#39;s nonzero components give a stretching acceleration</span>
+<span class="sd">        Riemann tensor's nonzero components give a stretching acceleration</span>
 <span class="sd">        along the radial direction and an equal compression along each</span>
 <span class="sd">        transverse direction:</span>
 
@@ -828,7 +826,7 @@
 <span class="sd">            a_{\\text{transverse}} = -\\frac{M}{r^3}\\,\\ell</span>
 
 <span class="sd">        for two points separated by a small proper length :math:`\\ell`.</span>
-<span class="sd">        This is &quot;spaghettification&quot;: an object falling feet-first is</span>
+<span class="sd">        This is "spaghettification": an object falling feet-first is</span>
 <span class="sd">        stretched head-to-toe and squeezed side-to-side, with both effects</span>
 <span class="sd">        growing as :math:`1/r^3` and formally diverging at the singularity.</span>
 
@@ -855,7 +853,7 @@
 <span class="sd">        &gt;&gt;&gt; radial, transverse = bh.tidal_acceleration(r=6.0, proper_separation=1.0)</span>
 <span class="sd">        &gt;&gt;&gt; bool(radial &gt; 0.0 and transverse &lt; 0.0)</span>
 <span class="sd">        True</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">radial</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">proper_separation</span>
         <span class="n">transverse</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">proper_separation</span>

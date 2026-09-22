@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,38 +409,38 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.relativity.chapters.neutron_star</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Neutron star structure: the Tolman-Oppenheimer-Volkoff equations.</span>
+<span></span><span class="sd">"""Neutron star structure: the Tolman-Oppenheimer-Volkoff equations.</span>
 
-<span class="sd">A black hole is not the only fate of a massive star&#39;s core: below about</span>
+<span class="sd">A black hole is not the only fate of a massive star's core: below about</span>
 <span class="sd">:math:`3 M_\\odot`, degenerate neutron pressure can halt gravitational</span>
 <span class="sd">collapse entirely, leaving behind a neutron star -- matter compressed to</span>
 <span class="sd">nuclear density and held up against its own gravity by quantum degeneracy</span>
-<span class="sd">pressure. Oppenheimer and Volkoff (1939), building on Tolman&#39;s earlier work,</span>
+<span class="sd">pressure. Oppenheimer and Volkoff (1939), building on Tolman's earlier work,</span>
 <span class="sd">derived the relativistic generalization of the Newtonian hydrostatic</span>
 <span class="sd">equilibrium equation for a self-gravitating fluid sphere. Unlike the</span>
 <span class="sd">Newtonian case, the TOV equation predicts a maximum possible neutron star</span>
 <span class="sd">mass: add too much matter and pressure alone can no longer resist collapse,</span>
 <span class="sd">regardless of the equation of state -- the star must become a black hole.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NeutronStar&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"NeutronStar"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="NeutronStar">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.NeutronStar">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NeutronStar</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A neutron star modeled with a polytropic equation of state, solved via the TOV equations.</span>
+<span class="w">    </span><span class="sd">"""A neutron star modeled with a polytropic equation of state, solved via the TOV equations.</span>
 
 <span class="sd">    The equation of state is the polytrope :math:`P = K \\rho_0^\\Gamma`</span>
 <span class="sd">    relating pressure to rest-mass density; the total energy density</span>
 <span class="sd">    (rest mass plus internal energy) used as the gravitational source is</span>
 <span class="sd">    :math:`\\varepsilon = \\rho_0 + P/(\\Gamma - 1)`. All quantities are in</span>
-<span class="sd">    geometrized units; ``K`` and ``Gamma`` are illustrative &quot;toy&quot; parameters</span>
+<span class="sd">    geometrized units; ``K`` and ``Gamma`` are illustrative "toy" parameters</span>
 <span class="sd">    unless calibrated to a specific realistic equation of state.</span>
 
 <span class="sd">    Parameters</span>
@@ -452,7 +450,7 @@
 <span class="sd">    Gamma : float, default=2.0</span>
 <span class="sd">        Polytropic index (:math:`\\Gamma = 2` is a common toy choice</span>
 <span class="sd">        loosely representative of nuclear matter).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">Gamma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
@@ -461,7 +459,7 @@
 <div class="viewcode-block" id="NeutronStar.energy_density">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.NeutronStar.energy_density">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">energy_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total energy density :math:`\\varepsilon(P) = (P/K)^{1/\\Gamma} + P/(\\Gamma-1)`.</span>
+<span class="w">        </span><span class="sd">"""Total energy density :math:`\\varepsilon(P) = (P/K)^{1/\\Gamma} + P/(\\Gamma-1)`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -471,7 +469,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float or ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">rest_mass_density</span> <span class="o">=</span> <span class="p">(</span><span class="n">pressure</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Gamma</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rest_mass_density</span> <span class="o">+</span> <span class="n">pressure</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span></div>
@@ -489,7 +487,7 @@
 <div class="viewcode-block" id="NeutronStar.solve">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.NeutronStar.solve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">central_density</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">r_start</span><span class="o">=</span><span class="mf">1.0e-6</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the TOV equations outward from the center to the stellar surface.</span>
+<span class="w">        </span><span class="sd">"""Integrate the TOV equations outward from the center to the stellar surface.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -519,7 +517,7 @@
 <span class="sd">        &gt;&gt;&gt; M, R, sol = star.solve(central_density=1.28e-3)</span>
 <span class="sd">        &gt;&gt;&gt; bool(M &gt; 0.0 and R &gt; 0.0)</span>
 <span class="sd">        True</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">pressure_central</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">*</span> <span class="n">central_density</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">Gamma</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">surface_event</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -546,11 +544,11 @@
 <div class="viewcode-block" id="NeutronStar.mass_radius_curve">
 <a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.NeutronStar.mass_radius_curve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">mass_radius_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">central_densities</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trace the mass-radius relation over a range of central densities.</span>
+<span class="w">        </span><span class="sd">"""Trace the mass-radius relation over a range of central densities.</span>
 
 <span class="sd">        The existence of a maximum mass (a turning point in :math:`M` as a</span>
 <span class="sd">        function of central density, beyond which increasing the central</span>
-<span class="sd">        density *decreases* the stable mass) is the TOV equation&#39;s central</span>
+<span class="sd">        density *decreases* the stable mass) is the TOV equation's central</span>
 <span class="sd">        physical prediction.</span>
 
 <span class="sd">        Parameters</span>
@@ -562,7 +560,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        masses : ndarray</span>
 <span class="sd">        radii : ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">central_densities</span><span class="p">))</span>
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">central_densities</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rho_c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">central_densities</span><span class="p">):</span>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.quantum.core.solvers</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Split-operator FFT propagators for the time-dependent Schrodinger equation.</span>
+<span></span><span class="sa">r</span><span class="sd">"""Split-operator FFT propagators for the time-dependent Schrodinger equation.</span>
 
 <span class="sd">Both solvers implement the symmetric (Strang) splitting</span>
 
@@ -423,7 +421,7 @@
 <span class="sd">which is unitary to machine precision regardless of :math:`dt` (probability</span>
 <span class="sd">is exactly conserved up to FFT/round-off error), and second-order accurate</span>
 <span class="sd">in :math:`dt`.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -433,13 +431,13 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.._compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapz</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SplitOperatorSolver1D&quot;</span><span class="p">,</span> <span class="s2">&quot;SplitOperatorSolver2D&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"SplitOperatorSolver1D"</span><span class="p">,</span> <span class="s2">"SplitOperatorSolver2D"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="SplitOperatorSolver1D">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver1D">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SplitOperatorSolver1D</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Propagate a 1D wavepacket under potential :math:`V(x)` or :math:`V(x,t)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Propagate a 1D wavepacket under potential :math:`V(x)` or :math:`V(x,t)`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -447,7 +445,7 @@
 <span class="sd">        Uniform spatial grid.</span>
 <span class="sd">    V : callable or array_like</span>
 <span class="sd">        Potential energy: a function ``V(x)`` (static) or ``V(x, t)``</span>
-<span class="sd">        (time-dependent, detected by inspecting the function&#39;s signature),</span>
+<span class="sd">        (time-dependent, detected by inspecting the function's signature),</span>
 <span class="sd">        or a precomputed array matching ``x``.</span>
 <span class="sd">    hbar : float, default=1.0</span>
 <span class="sd">        Value of :math:`\hbar` to use.</span>
@@ -455,7 +453,7 @@
 <span class="sd">        Particle mass.</span>
 <span class="sd">    dt : float, default=1e-3</span>
 <span class="sd">        Time step.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -485,7 +483,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver1D.step">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver1D.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the wavefunction by one time step ``dt``.</span>
+<span class="w">        </span><span class="sd">"""Advance the wavefunction by one time step ``dt``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -498,7 +496,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The wavefunction at time ``t + dt``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_potential_phase</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kin_phase</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_potential_phase</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
@@ -508,7 +506,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver1D.propagate">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver1D.propagate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">propagate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">save_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Propagate an initial state and record its history.</span>
+<span class="w">        </span><span class="sd">"""Propagate an initial state and record its history.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -527,7 +525,7 @@
 <span class="sd">            Stacked wavefunction snapshots, shape ``(n_saved, len(x))``.</span>
 <span class="sd">        times : numpy.ndarray</span>
 <span class="sd">            The time of each snapshot, shape ``(n_saved,)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">psi</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">trapz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
 
@@ -546,7 +544,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver1D.norm">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver1D.norm">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Total probability :math:`\int \lvert\psi(x)\rvert^2\,dx`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Total probability :math:`\int \lvert\psi(x)\rvert^2\,dx`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -558,7 +556,7 @@
 <span class="sd">        float</span>
 <span class="sd">            The normalization integral (should stay at 1.0 under unitary</span>
 <span class="sd">            evolution).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">trapz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span></div>
 </div>
 
@@ -567,7 +565,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver2D">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver2D">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SplitOperatorSolver2D</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Propagate a 2D wavepacket under potential :math:`V(x,y)` or :math:`V(x,y,t)`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Propagate a 2D wavepacket under potential :math:`V(x,y)` or :math:`V(x,y,t)`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -575,7 +573,7 @@
 <span class="sd">        Uniform spatial grids along each axis.</span>
 <span class="sd">    V : callable or array_like</span>
 <span class="sd">        Potential energy: a function ``V(x, y)`` (static) or ``V(x, y, t)``</span>
-<span class="sd">        (time-dependent, detected by inspecting the function&#39;s signature),</span>
+<span class="sd">        (time-dependent, detected by inspecting the function's signature),</span>
 <span class="sd">        or a precomputed array matching the ``(x, y)`` meshgrid.</span>
 <span class="sd">    hbar : float, default=1.0</span>
 <span class="sd">        Value of :math:`\hbar` to use.</span>
@@ -583,7 +581,7 @@
 <span class="sd">        Particle mass.</span>
 <span class="sd">    dt : float, default=1e-3</span>
 <span class="sd">        Time step.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -596,10 +594,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_V</span> <span class="o">=</span> <span class="n">V</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_time_dependent</span> <span class="o">=</span> <span class="nb">callable</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="ow">and</span> <span class="n">_accepts_time</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">n_spatial_args</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
         <span class="n">kx</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
         <span class="n">ky</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
-        <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+        <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_kin_phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="p">(</span><span class="n">KX</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">KY</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_dependent</span><span class="p">:</span>
@@ -617,7 +615,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver2D.step">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver2D.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Advance the wavefunction by one time step ``dt``.</span>
+<span class="w">        </span><span class="sd">"""Advance the wavefunction by one time step ``dt``.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -630,7 +628,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The wavefunction at time ``t + dt``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_potential_phase</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kin_phase</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_potential_phase</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
@@ -640,7 +638,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver2D.propagate">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver2D.propagate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">propagate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">save_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Propagate an initial state and record its history.</span>
+<span class="w">        </span><span class="sd">"""Propagate an initial state and record its history.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -659,7 +657,7 @@
 <span class="sd">            Stacked wavefunction snapshots, shape ``(n_saved, *X.shape)``.</span>
 <span class="sd">        times : numpy.ndarray</span>
 <span class="sd">            The time of each snapshot, shape ``(n_saved,)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">psi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">psi</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
 
@@ -678,7 +676,7 @@
 <div class="viewcode-block" id="SplitOperatorSolver2D.norm">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.SplitOperatorSolver2D.norm">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">psi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Total probability :math:`\iint \lvert\psi(x,y)\rvert^2\,dx\,dy`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Total probability :math:`\iint \lvert\psi(x,y)\rvert^2\,dx\,dy`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -690,7 +688,7 @@
 <span class="sd">        float</span>
 <span class="sd">            The normalization integral (should stay at 1.0 under unitary</span>
 <span class="sd">            evolution).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">trapz</span><span class="p">(</span><span class="n">trapz</span><span class="p">(</span><span class="n">density</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span></div>
 </div>
@@ -698,8 +696,8 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_accepts_time</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">n_spatial_args</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True if ``func`` takes more than ``n_spatial_args`` positional</span>
-<span class="sd">    parameters, i.e. it is V(x, ..., t) rather than V(x, ...).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""True if ``func`` takes more than ``n_spatial_args`` positional</span>
+<span class="sd">    parameters, i.e. it is V(x, ..., t) rather than V(x, ...)."""</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 

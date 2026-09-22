@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,32 +409,32 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.statphys.chapters.ehrenfest_urn</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;The Ehrenfest urn model: the simplest illustration of statistical irreversibility.</span>
+<span></span><span class="sd">"""The Ehrenfest urn model: the simplest illustration of statistical irreversibility.</span>
 
-<span class="sd">Loschmidt and Zermelo objected that Boltzmann&#39;s H-theorem could not be</span>
+<span class="sd">Loschmidt and Zermelo objected that Boltzmann's H-theorem could not be</span>
 <span class="sd">right, since microscopically reversible dynamics cannot produce genuinely</span>
 <span class="sd">irreversible macroscopic behavior (Loschmidt), and any bounded mechanical</span>
 <span class="sd">system must eventually return arbitrarily close to its initial state</span>
-<span class="sd">(Zermelo, via Poincare recurrence). The Ehrenfests&#39; 1907 urn model resolves</span>
+<span class="sd">(Zermelo, via Poincare recurrence). The Ehrenfests' 1907 urn model resolves</span>
 <span class="sd">both objections in the simplest possible setting: the dynamics is exactly</span>
 <span class="sd">reversible and does recur exactly, yet for any macroscopic number of balls</span>
 <span class="sd">the expected recurrence time is astronomically long, while the approach to</span>
 <span class="sd">equilibrium is essentially instantaneous -- reconciling reversible</span>
 <span class="sd">microphysics with an observed arrow of time.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">gammaln</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EhrenfestUrn&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"EhrenfestUrn"</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="EhrenfestUrn">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EhrenfestUrn">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EhrenfestUrn</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Ehrenfest urn model of N labeled balls exchanged between two boxes.</span>
+<span class="w">    </span><span class="sd">"""The Ehrenfest urn model of N labeled balls exchanged between two boxes.</span>
 
 <span class="sd">    At each time step, one of the ``n_balls`` balls (chosen uniformly at</span>
 <span class="sd">    random) is moved from whichever box it currently occupies to the other.</span>
@@ -455,7 +453,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    n_left : int</span>
 <span class="sd">        Current number of balls in the left box.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_balls</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_left_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_balls</span> <span class="o">=</span> <span class="n">n_balls</span>
@@ -465,13 +463,13 @@
 <div class="viewcode-block" id="EhrenfestUrn.step">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EhrenfestUrn.step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move one uniformly random ball to the other box.</span>
+<span class="w">        </span><span class="sd">"""Move one uniformly random ball to the other box.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        int</span>
 <span class="sd">            The updated :attr:`n_left`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">chosen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_balls</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">chosen</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_left</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_left</span> <span class="o">-=</span> <span class="mi">1</span>
@@ -483,7 +481,7 @@
 <div class="viewcode-block" id="EhrenfestUrn.entropy">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EhrenfestUrn.entropy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Boltzmann entropy :math:`S/k_B = \\ln W` of the current macrostate.</span>
+<span class="w">        </span><span class="sd">"""Boltzmann entropy :math:`S/k_B = \\ln W` of the current macrostate.</span>
 
 <span class="sd">        :math:`W = \\binom{N}{n_{\\text{left}}}` counts the ball-labelings</span>
 <span class="sd">        consistent with the current left-box occupancy; the binomial</span>
@@ -494,7 +492,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">N</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_balls</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_left</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">gammaln</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">gammaln</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">gammaln</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div>
 
@@ -502,7 +500,7 @@
 <div class="viewcode-block" id="EhrenfestUrn.run">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.EhrenfestUrn.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the urn for ``n_steps`` and record its history.</span>
+<span class="w">        </span><span class="sd">"""Run the urn for ``n_steps`` and record its history.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -512,18 +510,18 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict of str -&gt; ndarray</span>
-<span class="sd">            Keys ``&quot;t&quot;``, ``&quot;n_left&quot;``, ``&quot;entropy&quot;``, each of length</span>
+<span class="sd">            Keys ``"t"``, ``"n_left"``, ``"entropy"``, each of length</span>
 <span class="sd">            ``n_steps + 1`` (including the initial state).</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; urn = EhrenfestUrn(n_balls=50, seed=0)</span>
 <span class="sd">        &gt;&gt;&gt; history = urn.run(200)</span>
-<span class="sd">        &gt;&gt;&gt; history[&quot;n_left&quot;].shape</span>
+<span class="sd">        &gt;&gt;&gt; history["n_left"].shape</span>
 <span class="sd">        (201,)</span>
-<span class="sd">        &gt;&gt;&gt; int(history[&quot;n_left&quot;][0])</span>
+<span class="sd">        &gt;&gt;&gt; int(history["n_left"][0])</span>
 <span class="sd">        50</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">n_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
         <span class="n">entropy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">n_left</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_left</span>
@@ -532,7 +530,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
             <span class="n">n_left</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_left</span>
             <span class="n">entropy</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;n_left&quot;</span><span class="p">:</span> <span class="n">n_left</span><span class="p">,</span> <span class="s2">&quot;entropy&quot;</span><span class="p">:</span> <span class="n">entropy</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">"n_left"</span><span class="p">:</span> <span class="n">n_left</span><span class="p">,</span> <span class="s2">"entropy"</span><span class="p">:</span> <span class="n">entropy</span><span class="p">}</span></div>
 </div>
 
 </pre></div>

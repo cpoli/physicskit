@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -12,8 +12,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -62,7 +62,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -123,11 +123,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -411,18 +409,18 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.quantum.core.eigensolvers</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Matrix Numerov eigensolver for the time-independent Schrodinger equation.</span>
+<span></span><span class="sa">r</span><span class="sd">"""Matrix Numerov eigensolver for the time-independent Schrodinger equation.</span>
 
 <span class="sd">Solves</span>
 
 <span class="sd">.. math::</span>
 
-<span class="sd">    -\frac{\hbar^2}{2m}\,\psi&#39;&#39;(x) + V(x)\,\psi(x) = E\,\psi(x)</span>
+<span class="sd">    -\frac{\hbar^2}{2m}\,\psi''(x) + V(x)\,\psi(x) = E\,\psi(x)</span>
 
 <span class="sd">on a uniform grid with :math:`\psi = 0` at the domain boundary, using the</span>
 <span class="sd">generalized-eigenvalue formulation of the Numerov method (Pillai, Goglio &amp;</span>
 <span class="sd">Walker, *Am. J. Phys.* **80**, 1017 (2012)).</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -436,14 +434,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.._compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">trapz</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;EigenResult&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;NumerovSolver&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;infinite_well&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;finite_well&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;asymmetric_step_well&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;linear_gravitational_well&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;double_well&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;harmonic_well&quot;</span><span class="p">,</span>
+    <span class="s2">"EigenResult"</span><span class="p">,</span>
+    <span class="s2">"NumerovSolver"</span><span class="p">,</span>
+    <span class="s2">"infinite_well"</span><span class="p">,</span>
+    <span class="s2">"finite_well"</span><span class="p">,</span>
+    <span class="s2">"asymmetric_step_well"</span><span class="p">,</span>
+    <span class="s2">"linear_gravitational_well"</span><span class="p">,</span>
+    <span class="s2">"double_well"</span><span class="p">,</span>
+    <span class="s2">"harmonic_well"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -469,25 +467,25 @@
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.EigenResult">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">EigenResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for the output of :meth:`NumerovSolver.solve`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for the output of :meth:`NumerovSolver.solve`."""</span>
 
     <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;numpy.ndarray: The spatial grid the wavefunctions are sampled on.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""numpy.ndarray: The spatial grid the wavefunctions are sampled on."""</span>
 
     <span class="n">energies</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;numpy.ndarray: Eigenenergies :math:`E_n`, ascending, shape ``(n_states,)``.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""numpy.ndarray: Eigenenergies :math:`E_n`, ascending, shape ``(n_states,)``."""</span>
 
     <span class="n">wavefunctions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;numpy.ndarray: Normalized eigenfunctions :math:`\psi_n(x)`, shape</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""numpy.ndarray: Normalized eigenfunctions :math:`\psi_n(x)`, shape</span>
 <span class="sd">    ``(n_states, len(x))``, with :math:`\int \lvert\psi_n\rvert^2\,dx = 1`</span>
-<span class="sd">    and :math:`\psi_n(x[0]) = \psi_n(x[-1]) = 0`.&quot;&quot;&quot;</span></div>
+<span class="sd">    and :math:`\psi_n(x[0]) = \psi_n(x[-1]) = 0`."""</span></div>
 
 
 
 <div class="viewcode-block" id="NumerovSolver">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.NumerovSolver">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NumerovSolver</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Bound-state solver for an arbitrary 1D potential :math:`V(x)` on a fixed grid.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Bound-state solver for an arbitrary 1D potential :math:`V(x)` on a fixed grid.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -505,7 +503,7 @@
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    The Numerov finite-difference relation for :math:`\psi&#39;&#39; = f\psi` is</span>
+<span class="sd">    The Numerov finite-difference relation for :math:`\psi'' = f\psi` is</span>
 <span class="sd">    recast as the generalized eigenvalue problem</span>
 
 <span class="sd">    .. math::</span>
@@ -517,13 +515,13 @@
 <span class="sd">    :math:`\mathrm{tridiag}(1,-2,1)` and :math:`\mathrm{tridiag}(1,10,1)/12`</span>
 <span class="sd">    and :math:`h` is the grid spacing. Validated against the analytic</span>
 <span class="sd">    infinite-well and harmonic-oscillator spectra to four decimal places.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">h</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;NumerovSolver requires a uniform grid.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"NumerovSolver requires a uniform grid."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">=</span> <span class="n">hbar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
@@ -532,7 +530,7 @@
 <div class="viewcode-block" id="NumerovSolver.solve">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.NumerovSolver.solve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_states</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EigenResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the lowest bound states.</span>
+<span class="w">        </span><span class="sd">"""Compute the lowest bound states.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -550,12 +548,12 @@
 <span class="sd">        ValueError</span>
 <span class="sd">            If ``n_states`` is not smaller than the number of interior grid</span>
 <span class="sd">            points.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Interior points only; psi vanishes at the two boundary points.</span>
         <span class="n">V_int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">V_full</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">V_int</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">n_states</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_states must be smaller than the number of interior grid points.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"n_states must be smaller than the number of interior grid points."</span><span class="p">)</span>
 
         <span class="n">a_main</span><span class="p">,</span> <span class="n">a_off</span><span class="p">,</span> <span class="n">b_main</span><span class="p">,</span> <span class="n">b_off</span> <span class="o">=</span> <span class="n">_tridiag_arrays</span><span class="p">(</span><span class="n">V_int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
 
@@ -584,7 +582,7 @@
 <div class="viewcode-block" id="infinite_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.infinite_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">infinite_well</span><span class="p">():</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The infinite square well: :math:`V(x) = 0` inside the domain.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The infinite square well: :math:`V(x) = 0` inside the domain.</span>
 
 <span class="sd">    The grid boundaries passed to :class:`NumerovSolver` act as the</span>
 <span class="sd">    infinite walls, since the wavefunction is forced to vanish there.</span>
@@ -593,7 +591,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)`` returning zeros the same shape as ``x``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -605,7 +603,7 @@
 <div class="viewcode-block" id="finite_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.finite_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">finite_well</span><span class="p">(</span><span class="n">V0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A finite square well,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""A finite square well,</span>
 
 <span class="sd">    .. math::</span>
 
@@ -623,7 +621,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">V0</span><span class="p">)</span>
@@ -635,7 +633,7 @@
 <div class="viewcode-block" id="asymmetric_step_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.asymmetric_step_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">asymmetric_step_well</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V_left</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">V_right</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A well of unequal left/right wall heights,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""A well of unequal left/right wall heights,</span>
 
 <span class="sd">    .. math::</span>
 
@@ -658,7 +656,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -673,7 +671,7 @@
 <div class="viewcode-block" id="linear_gravitational_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.linear_gravitational_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">linear_gravitational_well</span><span class="p">(</span><span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The V-shaped &#39;quantum bouncer&#39; well, :math:`V(x) = \alpha \lvert x\rvert`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The V-shaped 'quantum bouncer' well, :math:`V(x) = \alpha \lvert x\rvert`.</span>
 
 <span class="sd">    A particle in this potential is the quantum analogue of a ball bouncing</span>
 <span class="sd">    under uniform gravity (:math:`\alpha = mg` on the half-line); its</span>
@@ -688,7 +686,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -700,7 +698,7 @@
 <div class="viewcode-block" id="double_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.double_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">double_well</span><span class="p">(</span><span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The symmetric quartic double well, :math:`V(x) = \lambda (x^2 - a^2)^2`.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The symmetric quartic double well, :math:`V(x) = \lambda (x^2 - a^2)^2`.</span>
 
 <span class="sd">    Has minima at :math:`x = \pm a`, each of depth 0, separated by a barrier</span>
 <span class="sd">    of height :math:`\lambda a^4` at :math:`x=0`.</span>
@@ -716,7 +714,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
@@ -728,7 +726,7 @@
 <div class="viewcode-block" id="harmonic_well">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.harmonic_well">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">harmonic_well</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The quantum harmonic oscillator potential,</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""The quantum harmonic oscillator potential,</span>
 <span class="sd">    :math:`V(x) = \tfrac{1}{2} m \omega^2 x^2`.</span>
 
 <span class="sd">    Parameters</span>
@@ -742,7 +740,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    callable</span>
 <span class="sd">        A function ``V(x)``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">omega</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
