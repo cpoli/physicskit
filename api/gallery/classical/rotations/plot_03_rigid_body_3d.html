@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../../" >
+<html lang="en" data-content_root="../../../../" data-theme="dark">
 
   <head>
     <meta charset="utf-8" />
@@ -13,8 +13,8 @@
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
   </script>
   <!--
     this give us a css class that will be invisible only if js is disabled
@@ -66,7 +66,7 @@
     <script src="../../../../searchindex.js"></script>
   
   </head>
-  <body data-default-mode="">
+  <body data-default-mode="dark">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
@@ -127,11 +127,9 @@
   
     
     
-      
     
-    
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light" alt="physicskit logo"/>
-    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark pst-js-only" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
   
   
 </a></div>
@@ -606,21 +604,21 @@ intermediate axis and it periodically flips end over end; spin it
 about either other principal axis and it just spins.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.systems.rotations</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">EulerTop</span></a></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.systems.rotations</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">EulerTop</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.classical.visualizers.animations</span><span class="w"> </span><span class="kn">import</span> <span class="n">animate_rigid_body_tumble</span>
 
 <span class="c1"># Half-extents (a, b, c) along body axes (1, 2, 3): a &gt; b &gt; c makes</span>
 <span class="c1"># I1 = b^2+c^2 (smallest) &lt; I2 = a^2+c^2 &lt; I3 = a^2+b^2 (largest),</span>
-<span class="c1"># matching the EulerTop&#39;s I1=1, I2=2, I3=3 below.</span>
-<a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">HALF_EXTENTS</span></a></a> <span class="o">=</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="c1"># matching the EulerTop's I1=1, I2=2, I3=3 below.</span>
+<a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">HALF_EXTENTS</span></a> <span class="o">=</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="spin-about-the-intermediate-axis-it-periodically-flips-end-over-end">
 <h2>Spin about the intermediate axis: it periodically flips end over end<a class="headerlink" href="#spin-about-the-intermediate-axis-it-periodically-flips-end-over-end" title="Link to this heading">#</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">top</span> <span class="o">=</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">EulerTop</span></a></a><span class="p">(</span><span class="n">omega0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">I1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">I2</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">I3</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">integrate</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">),</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;implicit_midpoint&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">top</span> <span class="o">=</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">EulerTop</span></a><span class="p">(</span><span class="n">omega0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">I1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">I2</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">I3</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">integrate</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">),</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"implicit_midpoint"</span><span class="p">)</span>
 
-<span class="n">anim</span> <span class="o">=</span> <span class="n">animate_rigid_body_tumble</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">half_extents</span><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">HALF_EXTENTS</span></a></a><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">anim</span> <span class="o">=</span> <span class="n">animate_rigid_body_tumble</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">half_extents</span><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">HALF_EXTENTS</span></a><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -224087,7 +224085,7 @@ rkJggg==\
 </script></div>
 <p>To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;rigid_body_tumble_animation.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"rigid_body_tumble_animation.gif"</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">"pillow"</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.796 seconds)</p>
