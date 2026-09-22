@@ -181,7 +181,11 @@ sphinx_gallery_conf = {
     "download_all_examples": False,
     "within_subsection_order": "FileNameSortKey",
     "remove_config_comments": True,
-    "matplotlib_animations": True,
+    # (True, "html5") uses matplotlib's ffmpeg writer to embed a real
+    # compressed <video> element; the default (True alone, i.e. jshtml)
+    # instead embeds every frame as its own full-resolution base64 PNG,
+    # which is why two gallery pages previously reached ~50MB each.
+    "matplotlib_animations": (True, "html5"),
     "reset_modules": ("matplotlib", "seaborn", _raise_animation_embed_limit),
     # Lets ".. minigallery::" (used throughout docs/source/history/) resolve
     # fully-qualified object names in addition to the file paths/globs it
@@ -216,7 +220,6 @@ html_theme_options = {
         },
     ],
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
-    "default_mode": "dark",
     "show_toc_level": 2,
     "navigation_with_keys": True,
     "navigation_depth": 2,
@@ -226,6 +229,19 @@ html_theme_options = {
 }
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
+
+# The installed pydata_sphinx_theme (0.21.0) no longer declares
+# 'default_mode' as a valid html_theme_options key (theme.conf's
+# [options] section dropped it), so passing it there is silently
+# ignored -- Sphinx warns "unsupported theme option" and the site falls
+# back to following the visitor's OS light/dark preference instead of a
+# fixed default. The theme's layout.html template still reads
+# `default_mode` from the general Jinja context though, which
+# html_context feeds directly, so setting it here is what actually
+# takes effect.
+html_context = {
+    "default_mode": "dark",
+}
 
 
 def _card(link, blurb, link_title):
