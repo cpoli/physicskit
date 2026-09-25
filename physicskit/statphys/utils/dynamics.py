@@ -62,10 +62,13 @@ def integrated_autocorrelation_time(series, c=5.0, max_lag=None):
 
     The summation window :math:`M` is chosen automatically as the smallest
     value satisfying :math:`M \\ge c \\, \\tau_{\\text{int}}(M)` (Sokal
-    1997), balancing statistical noise against truncation bias.
-    :math:`2\\tau_{\\text{int}}` gives (approximately) the number of Monte
-    Carlo sweeps needed between effectively independent samples -- the
-    standard quantitative measure of critical slowing down.
+    1997), balancing statistical noise against truncation bias. With this
+    normalization (:math:`\\tau_{\\text{int}} = 1` for uncorrelated data),
+    :math:`\\tau_{\\text{int}}` itself is (approximately) the number of Monte
+    Carlo sweeps per effectively independent sample, since
+    :math:`\\mathrm{Var}(\\bar x) \\approx \\tau_{\\text{int}}\\,
+    \\mathrm{Var}(x)/N` -- the standard quantitative measure of critical
+    slowing down.
 
     Parameters
     ----------
@@ -85,7 +88,7 @@ def integrated_autocorrelation_time(series, c=5.0, max_lag=None):
     Examples
     --------
     >>> rng = np.random.default_rng(0)
-    >>> x = rng.normal(size=5000)  # independent samples: tau ~ 0.5-1
+    >>> x = rng.normal(size=5000)  # independent samples: tau ~ 1
     >>> tau = integrated_autocorrelation_time(x)
     >>> tau < 3.0
     True

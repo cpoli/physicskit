@@ -52,6 +52,7 @@ class GeneralWignerEnsemble(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     entry_sampler : callable
         ``entry_sampler(rng, size)`` returning i.i.d. mean-zero,
         unit-variance samples of the given shape. See
@@ -59,6 +60,9 @@ class GeneralWignerEnsemble(MatrixEnsemble):
         ``exponential_centered_unit_variance`` for ready-made options.
     beta : int
         1 (real symmetric) or 2 (complex Hermitian).
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

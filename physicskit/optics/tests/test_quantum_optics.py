@@ -145,3 +145,16 @@ def test_off_resonant_jaynes_cummings_reduces_rabi_amplitude():
     t_array = np.linspace(0.0, 20.0, 50)
     Pe = jc.excited_state_population(t_array, n_photons=0)
     assert Pe.min() > 0.9
+
+
+def test_coherent_state_wigner_peaks_at_its_phase_space_point():
+    # x = (a + a^dag)/sqrt2, p = (a - a^dag)/(i sqrt2)  =>  |alpha> is centred on sqrt2 (Re alpha, Im alpha).
+    # Previously the momentum axis was mirrored (peak at p = -sqrt2 Im alpha).
+    from physicskit.optics.quantum_optics import coherent_state, compute_wigner_function
+
+    grid = np.linspace(-4.0, 4.0, 161)
+    for alpha in (1.0 + 0.7j, -0.5 - 1.2j):
+        W = compute_wigner_function(coherent_state(alpha, 40), grid, grid)
+        i, j = np.unravel_index(np.argmax(W), W.shape)
+        assert grid[i] == pytest.approx(np.sqrt(2) * alpha.real, abs=0.05)
+        assert grid[j] == pytest.approx(np.sqrt(2) * alpha.imag, abs=0.05)

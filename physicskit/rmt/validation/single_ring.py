@@ -17,8 +17,16 @@ from .base import Benchmark, ValidationResult
 
 class SingleRingTheorem(Benchmark):
     """Validates a bi-unitarily-invariant non-Hermitian Spectrum's
-    eigenvalue *radii* against the single ring theorem's radial marginal
-    (uniform on the annulus ``r_in <= |z| <= r_out``).
+    eigenvalue *radii* against a uniform-in-area annulus
+    ``r_in <= |z| <= r_out``.
+
+    The single ring theorem (Guionnet-Krishnapur-Zeitouni 2011) fixes the
+    ring's radii for any such ensemble, but its radial profile is set by
+    the S-transform of the singular-value law and is uniform only in
+    special cases -- notably the induced-Ginibre/Wishart singular values of
+    :class:`~physicskit.rmt.ensembles.single_ring.NonHermitianWishartEnsemble`
+    (radii from ``single_ring_radii_wishart_theory``). For other
+    singular-value laws, use this only as a check of the support.
 
     Like ``CircularLaw`` (its r_in=0 special case), overrides
     ``validate`` because the base class compares ``spectrum.rescaled``

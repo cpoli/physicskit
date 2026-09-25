@@ -114,3 +114,15 @@ def test_kerr_disk_redshift_factor_doppler_asymmetry():
     g_approaching = bh.disk_redshift_factor(r, impact_parameter=5.0)
     assert g_receding < g_none < g_approaching
     assert g_none < 1.0
+
+
+@pytest.mark.parametrize("prograde", [True, False])
+def test_circular_orbit_conserved_quantities_give_a_circular_geodesic(prograde):
+    # Feeding (E, L) back into the equatorial geodesic integrator must keep r fixed;
+    # a retrograde orbit needs L < 0 (previously it came back positive and the orbit
+    # swung out from r = 12 to r ~ 26).
+    bh = KerrBlackHole(M=1.0, a=0.9)
+    E, L = bh.circular_orbit_conserved_quantities(r0=12.0, prograde=prograde)
+    assert (L > 0) == prograde
+    trajectory = bh.integrate_equatorial_geodesic(12.0, E, L, mu2=1.0, dtau=0.05, n_steps=20000)
+    np.testing.assert_allclose(trajectory["r"], 12.0, atol=1e-3)

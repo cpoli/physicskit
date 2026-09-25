@@ -90,6 +90,8 @@ class HermiteBetaEnsemble(MatrixEnsemble):
         beta : float
             Dyson index; must be positive.
         seed : int, numpy.random.Generator, or None, optional
+            Seed for reproducible sampling. See
+            :func:`~physicskit.rmt.utils.random_state.as_generator`.
         """
         if beta <= 0:
             raise ValueError(f"beta must be positive, got {beta}")

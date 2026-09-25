@@ -79,6 +79,17 @@ def test_energy_spectrum_is_isotropic_for_a_radially_symmetric_field():
     assert E[3] > 100 * np.sum(E[np.arange(len(E)) != 3])
 
 
+def test_energy_spectrum_sums_to_mean_kinetic_energy():
+    # Parseval: the shells must add up to the domain-averaged (u^2 + v^2)/2, independent of n.
+    rng = np.random.default_rng(0)
+    for n in (32, 64):
+        u, v = rng.standard_normal((2, n, n))
+        _, E = energy_spectrum(u - u.mean(), v - v.mean(), 2 * np.pi)
+        corner_modes = 0.5 * np.mean((u - u.mean()) ** 2 + (v - v.mean()) ** 2)
+        assert E.sum() <= corner_modes + 1e-12  # shells stop at n//2, dropping the |k| > n/2 corners
+        assert E.sum() > 0.7 * corner_modes
+
+
 def test_energy_spectrum_rejects_mismatched_shapes():
     with pytest.raises(InvalidParameterError):
         energy_spectrum(np.zeros((16, 16)), np.zeros((8, 8)), length=1.0)

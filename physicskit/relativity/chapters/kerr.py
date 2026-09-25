@@ -237,7 +237,11 @@ class KerrBlackHole:
             L = \\frac{M^{1/2}\\left(r^2 - 2aM^{1/2}r^{1/2} + a^2\\right)}
                      {r^{3/4}\\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}
 
-        with :math:`a \\to -a` for a retrograde orbit.
+        for a prograde orbit. For a retrograde orbit, substitute
+        :math:`a \\to -a` and flip the sign of :math:`L`: it counter-rotates,
+        so :math:`L<0` (``d(phi)/d(tau) < 0``) in the hole's frame, which is the
+        sign :meth:`integrate_equatorial_geodesic` needs to reproduce the
+        circular orbit.
 
         Parameters
         ----------
@@ -252,7 +256,7 @@ class KerrBlackHole:
         E : float
             Specific energy.
         L : float
-            Specific angular momentum.
+            Specific angular momentum (negative for a retrograde orbit).
         """
         M = self.M
         a_eff = self.a if prograde else -self.a
@@ -260,7 +264,7 @@ class KerrBlackHole:
         denom = r**0.75 * np.sqrt(r**1.5 - 3.0 * M * r**0.5 + 2.0 * a_eff * M**0.5)
         E = (r**1.5 - 2.0 * M * r**0.5 + a_eff * M**0.5) / denom
         L = np.sqrt(M) * (r**2 - 2.0 * a_eff * np.sqrt(M) * r**0.5 + a_eff**2) / denom
-        return E, L
+        return E, (L if prograde else -L)
 
     def integrate_equatorial_geodesic(self, r0, E, L, mu2, dtau, n_steps):
         """Integrate an equatorial Kerr geodesic of conserved energy ``E`` and momentum ``L``.

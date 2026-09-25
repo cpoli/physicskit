@@ -43,7 +43,8 @@ def reconnection_harris_ic(nx: int, ny: int, Lx: float, Ly: float, sheet_width: 
 
     The unperturbed Harris sheet :math:`\\psi_0(y) = -B_0 L\\ln\\cosh(y/L)`
     gives an antiparallel reconnecting field
-    :math:`B_x = -\\partial_y\\psi_0 = B_0\\tanh(y/L)` that reverses sign
+    :math:`B_x = \\partial_y\\psi_0 = -B_0\\tanh(y/L)` (with the
+    :func:`reconnection_field_from_flux` convention :math:`B_x=\\partial_y\\psi`) that reverses sign
     across :math:`y=0` -- the classic current-sheet configuration in which
     reconnection is normally studied. Adding a small ripple
     :math:`\\psi_1 = \\epsilon\\cos(k x)\\,\\mathrm{sech}^2(y/L)`, localized to
@@ -318,16 +319,19 @@ def weibel_fastest_growing_mode(wpe: float, temperature_anisotropy: float, c: fl
     wpe : float
         Electron plasma frequency.
     temperature_anisotropy : float
-        The ratio :math:`T_\\perp/T_\\parallel`; must exceed 1.
+        The ratio :math:`T_\\perp/T_\\parallel`. At or below 1 the plasma
+        is Weibel-stable and ``(0.0, 0.0)`` is returned.
     c : float, default=physicskit.constants.C
-        Speed of light.
+        Speed of light. Unused, since the maximum sits at :math:`k=0` where
+        the :math:`k^2c^2` term vanishes; kept for signature symmetry with
+        :func:`weibel_growth_rate`.
 
     Returns
     -------
-    k_max_growth, gamma_max : float
-        The (zero) wavenumber of maximum growth and the corresponding
-        growth rate, and the cutoff wavenumber :func:`weibel_growth_rate`
-        vanishes beyond.
+    k_max_growth : float
+        Wavenumber of maximum growth (always 0.0).
+    gamma_max : float
+        The corresponding growth rate :math:`\\gamma_{max}`.
 
     Examples
     --------

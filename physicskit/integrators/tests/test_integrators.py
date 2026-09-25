@@ -99,3 +99,45 @@ def test_dopri5_agrees_with_fixed_step_rk4_at_tight_tolerance():
     _, ys_rk4 = rk4_integrate(_harmonic_rhs, state0, 0.0, 1e-4, 50000, params)
 
     np.testing.assert_allclose(ys[-1], ys_rk4[-1], atol=1e-6)
+
+
+def test_dopri5_warns_when_max_steps_exhausted_before_t_end():
+    params = np.array([2.0])
+    state0 = np.array([1.0, 0.0])
+
+    with pytest.warns(RuntimeWarning, match="max_steps=5"):
+        ts, _ = dopri5_integrate(_harmonic_rhs, state0, 0.0, 10.0, 0.01, params, max_steps=5)
+    assert ts[-1] < 10.0
+
+
+def test_dopri5_does_not_warn_when_t_end_reached(recwarn):
+    ts, _ = dopri5_integrate(_harmonic_rhs, np.array([1.0, 0.0]), 0.0, 1.0, 0.01, np.array([2.0]))
+    assert ts[-1] == 1.0
+    assert not [w for w in recwarn if issubclass(w.category, RuntimeWarning)]
+
+
+def test_function_taking_kernels_are_not_disk_cached():
+    # Their compiled signature includes the rhs/force dispatcher's type, which is fresh
+    # per factory-closure instance, so on-disk caching only accumulates dead entries.
+    from numba.core.caching import NullCache
+
+    from physicskit.chaos.visualizers.basins import _compute_basin_grid
+    from physicskit.integrators import adaptive, fixed_step
+    from physicskit.semiclassical.core import propagators
+
+    kernels = [
+        fixed_step.rk4_step,
+        fixed_step.rk4_integrate,
+        fixed_step.leapfrog_step,
+        fixed_step.leapfrog_integrate,
+        fixed_step.yoshida4_step,
+        fixed_step.yoshida4_integrate,
+        adaptive.dopri5_step,
+        adaptive._dopri5_integrate_njit,
+        _compute_basin_grid,
+        propagators._rhs,
+        propagators._rk4_step,
+        propagators._integrate,
+    ]
+    for kernel in kernels:
+        assert isinstance(kernel._cache, NullCache), kernel.py_func.__qualname__

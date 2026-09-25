@@ -70,6 +70,7 @@ class IIDEnsemble(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     entry_sampler : callable
         ``entry_sampler(rng, size)`` returning i.i.d. mean-zero,
         unit-variance real samples of the given shape -- see
@@ -83,6 +84,9 @@ class IIDEnsemble(MatrixEnsemble):
         GinUE's construction. If False, entries are real -- matching
         GinOE, including its real-eigenvalue anomaly at any finite n
         (a property of real matrices generally, not just Gaussian ones).
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(
@@ -161,12 +165,16 @@ class GirkoElliptic(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     rho : float
         Entry-pair correlation, in [-1, 1].
     entry_sampler : callable, optional
         ``entry_sampler(rng, size)`` returning i.i.d. mean-zero,
         unit-variance real samples (default: ``standard_normal``, i.e.
         the Fyodorov-Khoruzhenko-Sommers elliptic Ginibre special case).
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

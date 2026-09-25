@@ -38,6 +38,23 @@ def test_polytropic_star_positive_physical_quantities():
     assert star.xi1 > 0
 
 
+# Tabulated (xi_1, -xi_1^2 theta'(xi_1)), Chandrasekhar (1939) Table 4.
+@pytest.mark.parametrize(
+    ("n", "xi1", "mass_factor"),
+    [(1.5, 3.65375, 2.71406), (3.0, 6.89685, 2.01824), (4.0, 14.97155, 1.79723), (4.5, 31.83646, 1.73780)],
+)
+def test_polytropic_star_matches_tabulated_surface_and_mass(n, xi1, mass_factor):
+    # n >= 4 has its surface beyond xi = 10, which the old xi_max default silently truncated at.
+    star = PolytropicStar(n=n, K=1.0, rho_c=1.0)
+    assert star.xi1 == pytest.approx(xi1, rel=1e-5)
+    assert star.mass / (4.0 * np.pi * star.alpha**3) == pytest.approx(mass_factor, rel=1e-4)
+
+
+def test_polytropic_star_rejects_n5_infinite_radius():
+    with pytest.raises(ValueError, match="infinite radius"):
+        PolytropicStar(n=5.0, K=1.0, rho_c=1.0)
+
+
 def test_chandrasekhar_mass_near_known_value():
     M = chandrasekhar_mass(2.0)
     assert 1.2 < M < 1.5

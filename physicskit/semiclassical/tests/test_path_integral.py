@@ -172,6 +172,11 @@ def test_feynman_phasor_partial_sums_rejects_empty_actions_and_zero_hbar():
         feynman_phasor_partial_sums(paths=np.zeros((2, 1)), actions=np.array([0.1, 0.2]), hbar=0.0)
 
 
+def test_feynman_phasor_partial_sums_rejects_paths_actions_length_mismatch():
+    with pytest.raises(ValueError, match="one action per path"):
+        feynman_phasor_partial_sums(paths=np.zeros((3, 2)), actions=np.array([0.1, 0.2]), hbar=1.0)
+
+
 def test_build_phasor_diagram_harmonic_potential_matches_classical_path_and_action():
     omega = 1.5
     paths, actions, x_cl, S_cl, partial = build_phasor_diagram(

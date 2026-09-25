@@ -248,10 +248,13 @@ def von_karman_vortex_street(
 
     Two parallel rows of point vortices, offset from each other by half the
     along-row spacing `spacing_l` and by a row separation
-    ``h = spacing_ratio * spacing_l``, with alternating-sign circulation
-    within each row so that adjacent vortices across the two rows always
-    have *opposite* sign -- the staggered, alternating pattern observed in
-    the wake behind a bluff body. Von Karman showed that a doubly *infinite*
+    ``h = spacing_ratio * spacing_l``. Every vortex in the upper row has
+    circulation -1 (clockwise) and every vortex in the lower row +1
+    (counterclockwise) -- the staggered pattern shed alternately from the
+    top and bottom of a bluff body in a stream toward :math:`+x`. Such an
+    infinite street translates rigidly, relative to the surrounding fluid,
+    at :math:`U = \\frac{\\Gamma}{2l}\\tanh(\\pi h/l)` toward :math:`-x`
+    (von Karman 1911-1912; Lamb, *Hydrodynamics*, Sec. 156). Von Karman showed that a doubly *infinite*
     row of this form is linearly stable to vortex-row perturbations at
     exactly one spacing ratio, :data:`VON_KARMAN_SPACING_RATIO`; any other
     ratio (or any symmetric, unstaggered arrangement) grows unstable, which
@@ -273,7 +276,8 @@ def von_karman_vortex_street(
     positions : ndarray of float, shape (2*n_pairs, 2)
         Vortex positions.
     circulations : ndarray of float, shape (2*n_pairs,)
-        Vortex circulations, alternating in sign.
+        Vortex circulations, interleaved upper/lower: -1 for the upper row
+        (even indices), +1 for the lower row (odd indices).
 
     Raises
     ------
@@ -285,8 +289,8 @@ def von_karman_vortex_street(
     >>> positions, circulations = von_karman_vortex_street(n_pairs=6, spacing_l=1.0)
     >>> positions.shape
     (12, 2)
-    >>> bool(np.isclose(circulations.sum(), 0.0))  # equal and opposite in each row
-    True
+    >>> circulations[:4]  # upper row clockwise, lower row counterclockwise
+    array([-1.,  1., -1.,  1.])
     """
     if n_pairs < 2:
         raise InvalidParameterError(f"n_pairs must be at least 2, got {n_pairs}")
@@ -296,9 +300,8 @@ def von_karman_vortex_street(
     positions = np.empty((2 * n_pairs, 2))
     circulations = np.empty(2 * n_pairs)
     for i in range(n_pairs):
-        sign = 1.0 if i % 2 == 0 else -1.0
         positions[2 * i] = [i * spacing_l, h / 2.0]
-        circulations[2 * i] = sign
+        circulations[2 * i] = -1.0
         positions[2 * i + 1] = [(i + 0.5) * spacing_l, -h / 2.0]
-        circulations[2 * i + 1] = -sign
+        circulations[2 * i + 1] = 1.0
     return positions, circulations

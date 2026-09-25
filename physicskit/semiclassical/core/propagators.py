@@ -19,7 +19,9 @@ must be module-level ``@njit`` functions with signature
 ``dVdx(q, params) -> float`` / ``d2Vdx2(q, params) -> float`` /
 ``V(q, params) -> float``, with ``params`` a ``float64`` array -- the
 same convention used throughout this package's Numba-accelerated
-integrators, letting a single compiled kernel serve any potential.
+integrators, letting a single compiled kernel serve any potential. For
+the same reason as :mod:`physicskit.integrators.fixed_step`, the kernels
+that take these functions as arguments are not ``cache=True``.
 """
 
 from __future__ import annotations
@@ -39,7 +41,7 @@ __all__ = [
 ]
 
 
-@njit(cache=True)
+@njit
 def _rhs(state, dVdx, d2Vdx2, V, m, params):
     q, p, M00, M01, M10, M11, _S = state
     d2V = d2Vdx2(q, params)
@@ -54,7 +56,7 @@ def _rhs(state, dVdx, d2Vdx2, V, m, params):
     return out
 
 
-@njit(cache=True)
+@njit
 def _rk4_step(state, dt, dVdx, d2Vdx2, V, m, params):
     k1 = _rhs(state, dVdx, d2Vdx2, V, m, params)
     k2 = _rhs(state + 0.5 * dt * k1, dVdx, d2Vdx2, V, m, params)
@@ -63,7 +65,7 @@ def _rk4_step(state, dt, dVdx, d2Vdx2, V, m, params):
     return state + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
 
 
-@njit(cache=True)
+@njit
 def _integrate(q0, p0, dt, steps, dVdx, d2Vdx2, V, m, params):
     state = np.array([q0, p0, 1.0, 0.0, 0.0, 1.0, 0.0])
     Mqp_hist = np.empty(steps + 1)
@@ -417,9 +419,12 @@ def herman_kluk_prefactor(M: np.ndarray, gamma: float, hbar: float = 1.0) -> com
     .. math::
 
        C_t = \sqrt{\frac{1}{2}\left(M_{qq} + M_{pp}
-       - i\hbar\gamma M_{qp} + \frac{i}{\hbar\gamma}M_{pq}\right)},
+       - 2i\hbar\gamma M_{qp} + \frac{i}{2\hbar\gamma}M_{pq}\right)},
 
-    which reduces to :math:`C_t=1` at :math:`t=0` (:math:`M=\mathbb{1}`),
+    the standard Herman-Kluk form (Herman & Kluk 1984; Kay 1994) written
+    for this module's frozen Gaussians :math:`e^{-\gamma(x-q)^2}`, whose
+    width parameter in the usual :math:`e^{-\gamma_s(x-q)^2/2}` convention
+    is :math:`\gamma_s=2\gamma`. It reduces to :math:`C_t=1` at :math:`t=0` (:math:`M=\mathbb{1}`),
     consistent with the frozen Gaussian basis's resolution of the
     identity, :math:`\int \tfrac{dq\,dp}{2\pi\hbar}\,|g_{q,p}\rangle\langle
     g_{q,p}| = \hat{1}`.
@@ -445,7 +450,8 @@ def herman_kluk_prefactor(M: np.ndarray, gamma: float, hbar: float = 1.0) -> com
     (1+0j)
     """
     Mqq, Mqp, Mpq, Mpp = M[0, 0], M[0, 1], M[1, 0], M[1, 1]
-    val = 0.5 * (Mqq + Mpp - 1j * hbar * gamma * Mqp + 1j * Mpq / (hbar * gamma))
+    gamma_s = 2.0 * gamma  # e^{-gamma x^2} = e^{-gamma_s x^2 / 2}
+    val = 0.5 * (Mqq + Mpp - 1j * hbar * gamma_s * Mqp + 1j * Mpq / (hbar * gamma_s))
     return np.sqrt(val + 0j)
 
 

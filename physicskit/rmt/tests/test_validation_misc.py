@@ -65,3 +65,16 @@ def test_circular_law_and_tracy_widom_convergence_curve_overrides():
     tw = rmt.validation.TracyWidom(beta=2)
     results_tw = tw.convergence_curve(lambda n, seed: rmt.ensembles.GUE(n=n, seed=seed), n_values=[20, 40], n_samples=10, seed=0)
     assert [n for n, _ in results_tw] == [20, 40]
+
+
+def test_universality_result_passed_uses_ks_threshold():
+    per = {"uniform": rmt.validation.base.ValidationResult(0.03, 0.5, 0.02, 50)}
+    assert not UniversalityResult(per_distribution=per, max_ks_statistic=0.03, ks_threshold=0.02).passed
+    assert UniversalityResult(per_distribution=per, max_ks_statistic=0.03, ks_threshold=0.05).passed
+
+
+def test_check_universality_forwards_ks_threshold():
+    loose = rmt.validation.check_universality(n=50, beta=1, n_samples=2, seed=1, ks_threshold=1.0)
+    strict = rmt.validation.check_universality(n=50, beta=1, n_samples=2, seed=1, ks_threshold=1e-9)
+    assert loose.ks_threshold == 1.0 and loose.passed
+    assert strict.ks_threshold == 1e-9 and not strict.passed

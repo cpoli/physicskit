@@ -297,17 +297,28 @@ class HarmonicOscillator:
     # --- Squeezed states -------------------------------------------------
 
     def squeezed_vacuum_wavefunction(self, x: np.ndarray, r: float, phi: float = 0.0) -> np.ndarray:
-        r"""Position-space squeezed vacuum :math:`\lvert r,\phi\rangle`.
+        r"""Position-space squeezed vacuum :math:`\lvert r,\phi\rangle = \hat S(re^{2i\phi})\lvert0\rangle`.
 
-        A Gaussian with quadrature variance
+        With :math:`\hat S(\xi)=\exp[(\xi^*\hat a^2-\xi\hat a^{\dagger2})/2]`
+        and :math:`z=e^{2i\phi}\tanh r`, the exact wavefunction is the
+        complex Gaussian
 
         .. math::
 
-            \Delta x^2 = \frac{\hbar}{2 m \omega}\, e^{-2r}
+            \psi(x) \propto \exp\!\left[-\frac{x^2}{2x_0^2}\,\frac{1+z}{1-z}\right],
+            \qquad x_0=\sqrt{\hbar/m\omega},
 
-        (for :math:`\phi=0`, squeezed below the zero-point value when
-        :math:`r>0`), at the expense of
-        :math:`\Delta p^2 = (\hbar m \omega/2)\, e^{2r}`.
+        squeezed along the rotated quadrature :math:`x\cos\phi+(p/m\omega)\sin\phi`
+        (variance :math:`e^{-2r}` times the zero-point value) and
+        anti-squeezed along the orthogonal one. In particular
+
+        .. math::
+
+            \Delta x^2 = \frac{\hbar}{2 m \omega}\left(e^{-2r}\cos^2\phi + e^{2r}\sin^2\phi\right),
+
+        which is :math:`\frac{\hbar}{2m\omega}e^{-2r}` at :math:`\phi=0`
+        (with :math:`\Delta p^2 = (\hbar m \omega/2)\, e^{2r}`); at
+        :math:`r=0` every :math:`\phi` gives the vacuum.
 
         Parameters
         ----------
@@ -316,7 +327,8 @@ class HarmonicOscillator:
         r : float
             Squeezing parameter.
         phi : float, default=0.0
-            Squeezing angle (rotates the quadrature ellipse).
+            Squeezing angle: rotates the uncertainty ellipse in phase space
+            by :math:`\phi` (:math:`\phi=\pi/2` squeezes momentum instead).
 
         Returns
         -------
@@ -324,13 +336,12 @@ class HarmonicOscillator:
             Complex-valued (real when ``phi=0``) squeezed-vacuum wavefunction.
         """
         x = np.asarray(x)
-        var_x = (self.hbar / (2 * self.m * self.omega)) * np.exp(-2 * r)
-        norm = (1.0 / (2 * np.pi * var_x)) ** 0.25
-        gaussian = norm * np.exp(-(x**2) / (4 * var_x))
-        # A squeezing-angle phi rotates the quadrature ellipse; encode it as
-        # a quadratic chirp phase, exact for the Gaussian squeezed state.
-        chirp = np.exp(1j * np.tan(phi) * x**2 / (4 * var_x)) if phi != 0.0 else 1.0
-        return gaussian * chirp
+        z = np.exp(2j * phi) * np.tanh(r)
+        width = (1.0 + z) / (1.0 - z)  # complex; Re(width) > 0 for finite r
+        x0_sq = self.hbar / (self.m * self.omega)
+        norm = (width.real / (np.pi * x0_sq)) ** 0.25
+        psi = norm * np.exp(-(x**2) * width / (2.0 * x0_sq))
+        return psi.real if phi == 0.0 else psi
 
     def squeezed_uncertainties(self, r: float):
         r"""Position/momentum uncertainties of the :math:`r`-squeezed vacuum

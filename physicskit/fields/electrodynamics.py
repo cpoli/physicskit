@@ -173,6 +173,12 @@ def pml_conductivity_profile_2d(shape: tuple, pml_width: int, dx: float, dy: flo
 def fdtd_1d(Ez0: np.ndarray, Hy0: np.ndarray, eps_r: np.ndarray, mu_r: np.ndarray, steps: int, dt: float, dx: float, sigma: np.ndarray | None = None) -> tuple:
     """Evolve a 1D plane wave (Ez, Hy) on a Yee grid using leapfrog FDTD.
 
+    Discretizes Maxwell's curl equations for fields varying only along
+    ``x``, :math:`\\partial_t H_y = \\partial_x E_z/\\mu` and
+    :math:`\\partial_t E_z = \\partial_x H_y/\\epsilon` (the same signs as
+    :func:`fdtd_2d_tmz`), so a wave moving toward ``+x`` has
+    :math:`H_y = -E_z/\\eta` (Poynting vector :math:`-E_zH_y>0`).
+
     Parameters
     ----------
     Ez0 : ndarray, shape (N,)
@@ -204,8 +210,8 @@ def fdtd_1d(Ez0: np.ndarray, Hy0: np.ndarray, eps_r: np.ndarray, mu_r: np.ndarra
     Examples
     --------
     A smooth Gaussian pulse, launched with the impedance-matched initial
-    condition of a purely right-moving wave, propagates at exactly the
-    vacuum speed of light:
+    condition of a purely right-moving wave (:math:`H_y=-E_z/\\eta_0`),
+    propagates at exactly the vacuum speed of light:
 
     >>> import numpy as np
     >>> N = 800
@@ -215,7 +221,7 @@ def fdtd_1d(Ez0: np.ndarray, Hy0: np.ndarray, eps_r: np.ndarray, mu_r: np.ndarra
     >>> x0, sigma_pulse = 100, 25
     >>> Ez0 = np.exp(-((np.arange(N) - x0) ** 2) / (2 * sigma_pulse ** 2))
     >>> xh = np.arange(N - 1) + 0.5
-    >>> Hy0 = np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse ** 2)) / eta0
+    >>> Hy0 = -np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse ** 2)) / eta0
     >>> eps_r, mu_r = np.ones(N), np.ones(N)
     >>> Ez, Hy = fdtd_1d(Ez0, Hy0, eps_r, mu_r, steps=360, dt=dt, dx=dx)
     >>> peak = np.argmax(Ez)
@@ -233,8 +239,8 @@ def fdtd_1d(Ez0: np.ndarray, Hy0: np.ndarray, eps_r: np.ndarray, mu_r: np.ndarra
         Ca = (1 - loss) / (1 + loss)
         Cb = (dt / (EPS0 * eps_r * dx)) / (1 + loss)
     for _ in range(steps):
-        Hy += -dt / (MU0 * mu_r[:-1] * dx) * (Ez[1:] - Ez[:-1])
-        Ez[1:-1] = Ca[1:-1] * Ez[1:-1] - Cb[1:-1] * (Hy[1:] - Hy[:-1])
+        Hy += dt / (MU0 * mu_r[:-1] * dx) * (Ez[1:] - Ez[:-1])
+        Ez[1:-1] = Ca[1:-1] * Ez[1:-1] + Cb[1:-1] * (Hy[1:] - Hy[:-1])
         Ez[0] = 0.0
         Ez[-1] = 0.0
     return Ez, Hy

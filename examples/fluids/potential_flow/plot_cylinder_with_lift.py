@@ -21,8 +21,10 @@ and checks the resulting lift against the Kutta-Joukowski theorem,
 
 .. math::
 
-    L' = \rho\,U_\infty\,\Gamma,
+    L' = -\rho\,U_\infty\,\Gamma,
 
+(:math:`\Gamma>0` counterclockwise; the clockwise :math:`\Gamma<0` used
+here speeds up the flow over the top and lifts upward, like an airfoil)
 (:func:`~physicskit.fluids.systems.potential_flow.kutta_joukowski_lift`), by
 directly integrating that same pressure around the surface.
 """
@@ -42,7 +44,7 @@ from physicskit.fluids.visualizers.potential_flow import plot_pressure_coefficie
 # the cylinder surface entirely.
 
 U_inf, R, rho = 1.0, 1.0, 1.0
-Gamma = 3.0
+Gamma = -3.0  # clockwise: faster flow over the top, upward lift
 flow = flow_past_cylinder(U_inf=U_inf, radius=R, circulation=Gamma)
 
 x = np.linspace(-3, 3, 300)
@@ -78,17 +80,17 @@ fig.tight_layout()
 # ---------------------------------------------
 # Integrating the surface pressure directly should reproduce
 # :func:`~physicskit.fluids.systems.potential_flow.kutta_joukowski_lift`'s
-# closed-form answer, :math:`L' = \rho U_\infty \Gamma`.
+# closed-form answer, :math:`L' = -\rho U_\infty \Gamma`.
 
 theta_fine = np.linspace(0, 2 * np.pi, 4000, endpoint=False)
 x_fine, y_fine = R * np.cos(theta_fine), R * np.sin(theta_fine)
 Cp_fine = flow.pressure_coefficient(x_fine, y_fine)
 p_fine = Cp_fine * (0.5 * rho * U_inf**2)
 dtheta = theta_fine[1] - theta_fine[0]
-lift_numeric = abs(np.sum(p_fine * np.sin(theta_fine) * R) * dtheta)
+lift_numeric = -np.sum(p_fine * np.sin(theta_fine) * R) * dtheta  # y-component of -oint p n dA
 lift_theory = kutta_joukowski_lift(rho=rho, U_inf=U_inf, circulation=Gamma)
 
 print(f"lift from pressure integral: {lift_numeric:.4f}")
-print(f"lift from Kutta-Joukowski theorem (rho * U_inf * Gamma): {lift_theory:.4f}")
+print(f"lift from Kutta-Joukowski theorem (-rho * U_inf * Gamma): {lift_theory:.4f}")
 
 plt.show()

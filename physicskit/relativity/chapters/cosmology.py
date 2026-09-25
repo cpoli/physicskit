@@ -124,7 +124,21 @@ class FLRWCosmology:
         return distance_m / _MPC_M
 
     def luminosity_distance_mpc(self, z):
-        """Luminosity distance to redshift ``z``, in Mpc, :math:`D_L = (1+z) D_C` (flat-sky FLRW).
+        """Luminosity distance to redshift ``z``, in Mpc.
+
+        .. math::
+
+            D_L = (1+z) D_M, \\qquad
+            D_M = \\begin{cases}
+                \\frac{D_H}{\\sqrt{\\Omega_k}} \\sinh\\left(\\sqrt{\\Omega_k}\\, D_C/D_H\\right), & \\Omega_k > 0, \\\\
+                D_C, & \\Omega_k = 0, \\\\
+                \\frac{D_H}{\\sqrt{|\\Omega_k|}} \\sin\\left(\\sqrt{|\\Omega_k|}\\, D_C/D_H\\right), & \\Omega_k < 0,
+            \\end{cases}
+
+        where :math:`D_H = c/H_0` is the Hubble distance and :math:`D_M` the
+        transverse comoving distance, which differs from the line-of-sight
+        :meth:`comoving_distance_mpc` :math:`D_C` only in a curved universe
+        (Hogg 1999, astro-ph/9905116, eqs. 16 and 21).
 
         Parameters
         ----------
@@ -134,8 +148,27 @@ class FLRWCosmology:
         Returns
         -------
         float
+
+        Examples
+        --------
+        An open, matter-only universe matches Mattig's closed form,
+        :math:`D_L = \\frac{2 D_H}{\\Omega_m^2}\\left[\\Omega_m z + (\\Omega_m - 2)(\\sqrt{1+\\Omega_m z} - 1)\\right]`:
+
+        >>> cosmo = FLRWCosmology(H0=70.0, Omega_m=0.3, Omega_r=0.0, Omega_Lambda=0.0)
+        >>> round(cosmo.luminosity_distance_mpc(1.0), 1)
+        5872.3
         """
-        return (1.0 + z) * self.comoving_distance_mpc(z)
+        d_c = self.comoving_distance_mpc(z)
+        d_h = C_SI / self._H0_si() / _MPC_M
+        if self.Omega_k > 0.0:
+            sqrt_ok = np.sqrt(self.Omega_k)
+            d_m = d_h / sqrt_ok * np.sinh(sqrt_ok * d_c / d_h)
+        elif self.Omega_k < 0.0:
+            sqrt_ok = np.sqrt(-self.Omega_k)
+            d_m = d_h / sqrt_ok * np.sin(sqrt_ok * d_c / d_h)
+        else:
+            d_m = d_c
+        return float((1.0 + z) * d_m)
 
     def age_gyr(self, a=1.0):
         """Cosmic age at scale factor ``a``, in Gyr.

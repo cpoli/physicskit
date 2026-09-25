@@ -69,11 +69,24 @@ def test_von_karman_street_rejects_nonpositive_spacing():
         von_karman_vortex_street(n_pairs=3, spacing_l=0.0)
 
 
-def test_von_karman_street_alternates_sign_across_rows():
+def test_von_karman_street_rows_have_uniform_opposite_signs():
     positions, circulations = von_karman_vortex_street(n_pairs=4, spacing_l=1.0)
     top_row = circulations[0::2]
     bottom_row = circulations[1::2]
-    np.testing.assert_allclose(top_row, -bottom_row)
+    np.testing.assert_allclose(top_row, -1.0)
+    np.testing.assert_allclose(bottom_row, 1.0)
+
+
+def test_von_karman_street_translates_at_the_classical_speed():
+    # Deep inside a long street, every vortex moves along -x at U = (Gamma / 2l) tanh(pi h / l).
+    n_pairs, spacing_l = 200, 1.0
+    positions, circulations = von_karman_vortex_street(n_pairs=n_pairs, spacing_l=spacing_l)
+    velocities = point_vortex_velocities(positions, circulations)
+    middle = velocities[[n_pairs, n_pairs + 1]]
+    h = positions[0, 1] - positions[1, 1]
+    U = np.tanh(np.pi * h / spacing_l) / (2.0 * spacing_l)
+    np.testing.assert_allclose(middle[:, 0], -U, rtol=5e-3)
+    np.testing.assert_allclose(middle[:, 1], 0.0, atol=5e-3)
 
 
 def test_von_karman_street_uses_the_stable_spacing_ratio_by_default():

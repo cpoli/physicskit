@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 from physicskit.fluids.exceptions import InvalidParameterError
@@ -64,3 +65,13 @@ def test_sod_shock_tube_rejects_too_few_cells_and_nonpositive_t_final():
         sod_shock_tube(nx=3)
     with pytest.raises(InvalidParameterError):
         sod_shock_tube(nx=100, t_final=0.0)
+
+
+def test_rankine_hugoniot_residuals_vanish_for_monatomic_gas_shock():
+    gamma = 5.0 / 3.0
+    jump = normal_shock_relations(M1=3.0, gamma=gamma)
+    rho1, p1 = 1.0, 1.0
+    u1 = 3.0 * np.sqrt(gamma * p1 / rho1)
+    rho2, p2 = jump["rho2_rho1"] * rho1, jump["p2_p1"] * p1
+    residuals = rankine_hugoniot_jump_conditions(rho1, u1, p1, rho2, rho1 * u1 / rho2, p2, gamma=gamma)
+    assert max(abs(v) for v in residuals.values()) < 1e-10

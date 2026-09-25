@@ -303,9 +303,9 @@ def kane_mele_hamiltonian(
     >>> H = kane_mele_hamiltonian(0.3, 0.7, lambda_so=0.06)
     >>> np.allclose(H, H.conj().T)
     True
-    >>> up = H[:2, :2]; down = H[2:, 2:]
-    >>> down_expected = kane_mele_hamiltonian(0.3, 0.7, lambda_so=0.06)[2:, 2:]
-    >>> np.allclose(down, down_expected)
+    >>> up = H[:2, :2]
+    >>> down_at_minus_k = kane_mele_hamiltonian(-0.3, -0.7, lambda_so=0.06)[2:, 2:]
+    >>> np.allclose(down_at_minus_k, up.conj())  # time reversal: H_dn(-k) = H_up(k)*
     True
     """
     H_up = haldane_lattice_hamiltonian(t=t, t2=lambda_so, phi=np.pi / 2, M=lambda_v).bloch([kx, ky])
@@ -363,10 +363,16 @@ def bhz_hamiltonian(kx: float, ky: float, A: float = 1.0, B: float = 1.0, M: flo
         Model parameters controlling the Dirac velocity and quadratic
         band curvature.
     M : float, default=1.0
-        Band inversion mass. The model is topological (band-inverted) for
-        :math:`M/B > 0` and trivial for :math:`M/B < 0`.
+        Band inversion mass. With :math:`d_z = M - 2B(2-\\cos k_x-\\cos k_y)`
+        the model is topological (band-inverted, spin Chern number
+        :math:`\\pm1`) for :math:`0 < M/B < 8` and trivial otherwise (the
+        gap closes at :math:`\\Gamma`, :math:`X`/:math:`Y`, and :math:`M` for
+        :math:`M/B = 0, 4, 8`).
     D : float, default=0.0
-        Particle-hole asymmetry parameter.
+        Particle-hole asymmetry parameter, entering as
+        :math:`\\epsilon(k) = -2D(2-\\cos k_x-\\cos k_y)`, the lattice
+        regularization of the continuum :math:`-Dk^2` (Qi, Hughes & Zhang
+        2008), matching :math:`B`'s.
 
     Returns
     -------
@@ -381,7 +387,7 @@ def bhz_hamiltonian(kx: float, ky: float, A: float = 1.0, B: float = 1.0, M: flo
     >>> np.allclose(H[:2, :2], H[2:, 2:].conj())
     True
     """
-    eps = -D * (2 - np.cos(kx) - np.cos(ky))
+    eps = -2 * D * (2 - np.cos(kx) - np.cos(ky))
     dx = A * np.sin(kx)
     dy = A * np.sin(ky)
     dz = M - 2 * B * (2 - np.cos(kx) - np.cos(ky))
@@ -412,7 +418,7 @@ def bhz_ribbon_hamiltonian(kx: float, n_cells: int, A: float = 1.0, B: float = 1
         band curvature (see :func:`bhz_hamiltonian`).
     M : float, default=1.0
         Band inversion mass. Topological (edge-state-carrying) for
-        :math:`M/B > 0`.
+        :math:`0 < M/B < 8`.
     D : float, default=0.0
         Particle-hole asymmetry parameter.
 
@@ -424,9 +430,9 @@ def bhz_ribbon_hamiltonian(kx: float, n_cells: int, A: float = 1.0, B: float = 1
 
     Examples
     --------
-    In the topological regime (:math:`M/B > 0`), the ribbon has a pair of
+    In the topological regime (:math:`0 < M/B < 8`), the ribbon has a pair of
     near-zero-energy states crossing at :math:`k_x = 0` -- the helical edge
-    modes -- absent in the trivial regime (:math:`M/B < 0`):
+    modes -- absent in the trivial regime (e.g. :math:`M/B < 0`):
 
     >>> import numpy as np
     >>> spectrum = np.linalg.eigvalsh(bhz_ribbon_hamiltonian(kx=0.0, n_cells=40, M=1.0, B=1.0))
@@ -436,12 +442,12 @@ def bhz_ribbon_hamiltonian(kx: float, n_cells: int, A: float = 1.0, B: float = 1
     >>> bool(np.any(np.abs(spectrum_trivial) < 1e-6))
     False
     """
-    eps0 = -D * (2 - np.cos(kx))
+    eps0 = -2 * D * (2 - np.cos(kx))
     dx = A * np.sin(kx)
     dz0 = M - 2 * B * (2 - np.cos(kx))
     onsite_up = eps0 * _SIGMA_0 + dx * _SIGMA_X + dz0 * _SIGMA_Z
     onsite_down = onsite_up
-    hop_up = 0.5 * (D * _SIGMA_0 + 2 * B * _SIGMA_Z) - 0.5j * A * _SIGMA_Y
+    hop_up = 0.5 * (2 * D * _SIGMA_0 + 2 * B * _SIGMA_Z) - 0.5j * A * _SIGMA_Y
     hop_down = hop_up.conj().T
 
     N = n_cells

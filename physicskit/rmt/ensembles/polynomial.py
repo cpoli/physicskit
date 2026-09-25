@@ -99,6 +99,7 @@ class PolynomialEnsemble(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     num_factors : int, optional
         Number of independent Ginibre factors L (default 2, the
         smallest case exhibiting genuine biorthogonal, non-orthogonal-
@@ -106,6 +107,9 @@ class PolynomialEnsemble(MatrixEnsemble):
         Laguerre ensemble exactly).
     beta : int, optional
         1 (real Ginibre factors) or 2 (complex Ginibre factors).
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

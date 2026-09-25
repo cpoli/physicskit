@@ -107,8 +107,10 @@ def binder_cumulant(magnetizations):
     Returns
     -------
     float
-        The Binder cumulant, in :math:`[0, 2/3]` for a symmetric
-        distribution.
+        The Binder cumulant: at most :math:`2/3` (reached by a two-peak
+        ordered distribution) and ``0`` for a Gaussian (disordered)
+        distribution; heavier-than-Gaussian tails, e.g. near a first-order
+        transition, make it negative.
     """
     m = np.asarray(magnetizations, dtype=np.float64)
     m2 = np.mean(m**2)
@@ -329,9 +331,11 @@ def bec_condensate_fraction(temperature, critical_temperature):
         0 & T \\ge T_c
         \\end{cases}
 
-    A textbook prediction of Bose-Einstein statistics for a trapped ideal
-    gas, first confirmed experimentally in 1995 in dilute alkali-atom gases
-    (Cornell and Wieman; Ketterle; 2001 Nobel Prize in Physics).
+    A textbook prediction of Bose-Einstein statistics for an ideal gas in a
+    box; in a 3D harmonic trap the exponent becomes 3 instead of 3/2.
+    Condensation was first realized experimentally in 1995 in trapped
+    dilute alkali-atom gases (Cornell and Wieman; Ketterle; 2001 Nobel Prize
+    in Physics).
 
     Parameters
     ----------

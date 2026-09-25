@@ -28,6 +28,11 @@ algebra {gamma_a, gamma_b} = 2*delta_ab), with couplings
 
     J_{i_1...i_q} ~ N(0, (q-1)! * J**2 / N**(q-1))    i.i.d. over index tuples
 
+(Maldacena-Stanford's coupling variance). Maldacena and Stanford normalize
+their Majoranas as {chi_a, chi_b} = delta_ab, i.e. chi = gamma/sqrt(2), so
+with the same J this H is 2**(q/2) times theirs (4x for q=4): divide the
+eigenvalues by 2**(q/2) to compare energies with their conventions.
+
 The i**(q/2) prefactor is exactly what is needed to make H Hermitian for
 any even q: reversing the order of q distinct anticommuting operators
 picks up a sign (-1)**(q*(q-1)/2), and i**(q/2) is precisely the phase
@@ -142,6 +147,9 @@ class SYKEnsemble(MatrixEnsemble):
         with variance (q-1)! * J**2 / N**(q-1) (Maldacena-Stanford
         normalization), so the spectral width stays controlled as N
         grows at fixed J.
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

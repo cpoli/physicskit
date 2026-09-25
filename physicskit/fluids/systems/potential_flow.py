@@ -397,7 +397,7 @@ def kutta_joukowski_lift(rho: float, U_inf: float, circulation: float) -> float:
 
     .. math::
 
-        L' = \\rho\\,U_\\infty\\,\\Gamma
+        L' = -\\rho\\,U_\\infty\\,\\Gamma
 
     Any 2D body generating a net circulation :math:`\\Gamma` around itself in
     a stream of speed :math:`U_\\infty` experiences a lift force per unit
@@ -407,7 +407,11 @@ def kutta_joukowski_lift(rho: float, U_inf: float, circulation: float) -> float:
     classical airfoil theory. Real airfoils select `circulation` via the
     Kutta condition (smooth flow off a sharp trailing edge); the cylinder
     with an added point vortex built by :func:`flow_past_cylinder` sets it
-    directly.
+    directly. With this module's convention (free stream toward :math:`+x`,
+    :math:`\\Gamma>0` counterclockwise, as in :func:`point_vortex_potential`)
+    the lift is signed along :math:`+y`: a clockwise circulation
+    (:math:`\\Gamma<0`), which speeds up the flow over the top, lifts
+    upward, as on a conventional airfoil.
 
     Parameters
     ----------
@@ -421,7 +425,7 @@ def kutta_joukowski_lift(rho: float, U_inf: float, circulation: float) -> float:
     Returns
     -------
     float
-        Lift force per unit span, :math:`L'`.
+        Lift force per unit span along :math:`+y`, :math:`L'`.
 
     Raises
     ------
@@ -430,11 +434,11 @@ def kutta_joukowski_lift(rho: float, U_inf: float, circulation: float) -> float:
 
     Examples
     --------
-    >>> round(kutta_joukowski_lift(rho=1.2, U_inf=10.0, circulation=5.0), 1)
+    >>> round(kutta_joukowski_lift(rho=1.2, U_inf=10.0, circulation=-5.0), 1)
     60.0
     """
     if rho <= 0:
         raise InvalidParameterError(f"rho must be positive, got {rho}")
     if U_inf <= 0:
         raise InvalidParameterError(f"U_inf must be positive, got {U_inf}")
-    return rho * U_inf * circulation
+    return -rho * U_inf * circulation

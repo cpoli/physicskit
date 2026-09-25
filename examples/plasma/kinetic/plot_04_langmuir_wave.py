@@ -6,10 +6,9 @@ Irving Langmuir (1928) discovered that a plasma's electron gas resonates
 at a sharply defined natural frequency: displace the electrons and their
 own restoring electric field snaps them back, overshoots, and rings,
 exactly like a mass on a spring built from nothing but the plasma's own
-charge density. Both the density displacement and the electron fluid
-velocity linear cold-fluid theory predicts for a wave oscillating at
-the electron plasma frequency :math:`\omega_{pe}` are built into the
-particles directly:
+charge density. :func:`~physicskit.plasma.kinetic.langmuir_wave_ic` seeds a
+particle-in-cell plasma with a sinusoidal displacement and a coherent
+velocity kick,
 
 .. math::
 
@@ -17,13 +16,12 @@ particles directly:
    \qquad
    \delta v = \frac{\alpha\,\omega_{pe}}{k}\sin(kx_0),
 
-which together produce the density perturbation
-:math:`n(x)\approx n_0\big(1-\alpha\cos(kx)\big)` oscillating coherently
-at :math:`\omega\approx\omega_{pe}`. :func:`~physicskit.plasma.kinetic.langmuir_wave_ic`
-seeds a particle-in-cell plasma with both of these perturbations, so that
--- unlike the otherwise identical :func:`~physicskit.plasma.kinetic.landau_damping_ic`,
-which omits the velocity kick and damps away -- the density rings in
-place for many periods.
+giving the density perturbation :math:`n(x)\approx n_0\big(1-\alpha\cos(kx)\big)`,
+which then rings in place as a standing wave at :math:`\omega\approx\omega_{pe}`.
+The thermal spread here is small (:math:`k\lambda_D \ll 1`), so Landau
+damping is negligible and the oscillation persists for many periods -- in
+contrast to the warmer plasma of the Landau-damping example, where
+:math:`k\lambda_D` is large enough for resonant electrons to drain the wave.
 
 :func:`~physicskit.plasma.kinetic.pic_simulate` evolves this initial
 condition exactly as it does for Landau damping and the two-stream

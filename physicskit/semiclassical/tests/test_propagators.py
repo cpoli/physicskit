@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 from numba import njit
 
 from physicskit.semiclassical.core.propagators import (
@@ -80,3 +81,29 @@ def test_herman_kluk_defaults_params_to_an_empty_array_when_unused():
     psi0 = frozen_gaussian_1d(x, qc=1.0, pc=0.0, gamma=1.0)
     fidelity = abs(np.trapezoid(np.conj(psi0) * psi, x)) ** 2
     assert fidelity > 0.999
+
+
+@pytest.mark.parametrize("gamma", [0.25, 0.5, 1.0])
+def test_herman_kluk_is_exact_for_the_harmonic_oscillator(gamma):
+    # HK is exact for quadratic potentials, so the propagated packet must stay normalized and
+    # follow the classical centre at a finite time (where M is far from the identity).
+    # Previously the prefactor used gamma instead of 2*gamma for e^{-gamma x^2} Gaussians,
+    # giving norms of 1.16 / 0.86 at t = 0.9.
+    import numpy as np
+    from numba import njit
+
+    from physicskit.semiclassical.core.propagators import herman_kluk_prefactor, herman_kluk_propagate_wavepacket
+
+    t = 0.9
+    M = np.array([[np.cos(t), np.sin(t)], [-np.sin(t), np.cos(t)]])
+    assert abs(herman_kluk_prefactor(M, gamma=0.5)) == pytest.approx(1.0, abs=1e-12)  # width-matched coherent state
+
+    dVdx = njit(lambda q, params: q)
+    d2Vdx2 = njit(lambda q, params: 1.0)
+    V = njit(lambda q, params: 0.5 * q * q)
+    x = np.linspace(-7.0, 7.0, 281)
+    q0, p0, steps = 1.0, 0.5, 90
+    psi = herman_kluk_propagate_wavepacket(q0, p0, gamma, dVdx, d2Vdx2, V, 1.0, t / steps, steps, x, n_grid=41)
+    density = np.abs(psi) ** 2
+    assert np.trapezoid(density, x) == pytest.approx(1.0, abs=2e-3)
+    assert np.trapezoid(x * density, x) == pytest.approx(q0 * np.cos(t) + p0 * np.sin(t), abs=2e-3)

@@ -248,13 +248,16 @@ def grin_medium(n0, n2_coeff, d):
         B = \\frac{\\sin(\\sqrt{n_2}\\,d)}{n_0\\sqrt{n_2}}, \\qquad
         C = -n_0\\sqrt{n_2}\\,\\sin(\\sqrt{n_2}\\,d).
 
-    As ``n2_coeff`` :math:`\\to 0` (a homogeneous medium of index
-    :math:`n_0`), :math:`A=D\\to 1`, :math:`C\\to 0`, and
-    :math:`B \\to d/n_0` -- matching :func:`free_space` exactly only for
-    :math:`n_0 = 1`. This ``d/n_0`` scaling (rather than plain ``d``) for
-    :math:`n_0 \\neq 1` is inherent to the standard GRIN formula quoted
-    above; callers comparing against :func:`free_space` in this limit
-    should do so at :math:`n_0 = 1`.
+    Input and output ray angles are measured *outside* the rod, in a
+    medium of index 1: this is the inside-the-rod solution
+    (:math:`A=D=\\cos`, :math:`B=\\sin/\\sqrt{n_2}`,
+    :math:`C=-\\sqrt{n_2}\\sin`) sandwiched between the flat entrance and
+    exit faces, ``flat_interface(n0, 1) @ M_inside @ flat_interface(1, n0)``,
+    which is where the :math:`n_0` factors come from. As ``n2_coeff``
+    :math:`\\to 0`, :math:`A=D\\to 1`, :math:`C\\to 0`, and
+    :math:`B \\to d/n_0` -- the familiar reduced thickness of a
+    homogeneous slab of index :math:`n_0` in air, equal to
+    :func:`free_space` only for :math:`n_0 = 1`.
 
     Parameters
     ----------

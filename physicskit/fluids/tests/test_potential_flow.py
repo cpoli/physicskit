@@ -49,9 +49,9 @@ def test_kutta_joukowski_lift_matches_cylinder_pressure_integral():
     dtheta = theta[1] - theta[0]
     lift_numeric = -np.sum(p * np.sin(theta) * R) * dtheta
     lift_theory = kutta_joukowski_lift(rho, U_inf, Gamma)
-    # the sign of the pressure-integral convention above is independent of
-    # the theorem itself; only the magnitude is being cross-checked here.
-    assert abs(lift_numeric) == pytest.approx(lift_theory, rel=0.02)
+    # Signed check: counterclockwise Gamma > 0 slows the flow over the top, so the lift is downward.
+    assert lift_numeric < 0
+    assert lift_numeric == pytest.approx(lift_theory, rel=0.02)
 
 
 def test_flow_past_cylinder_rejects_nonpositive_radius():

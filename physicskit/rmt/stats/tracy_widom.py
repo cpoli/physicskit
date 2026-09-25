@@ -25,11 +25,12 @@ diverge exponentially in that direction.
 
 Numerical domain note: backward integration itself becomes unstable
 (round-off eventually kicks the trajectory onto a diverging branch) for
-x below about -9 to -10. This implementation restricts to [-6, 6] by
-default, verified to match the known asymptotic q(x) ~ sqrt(-x/2) to
-better than 0.2% at x=-6, and F_2/F_1/F_4 are already extremely close to
-0 there (the left tail decays like ``exp(-|s|^3/12)``), so truncating the
-domain has negligible effect on the distributions actually used.
+x below about -9 to -10. This implementation restricts to [-8, 6] by
+default: F_1 and F_2 are negligible below -6, but F_4 in the convention
+used here (mean -3.26, matched to the ``(2n)^{2/3}`` GSE edge scaling)
+still has F_4(-6) ~ 2e-3, so the domain extends to -8, where
+F_4 ~ 5e-8 and the first two moments of all three laws match the
+literature values to four digits.
 
 Given q, the three distributions are:
 
@@ -76,7 +77,7 @@ class _PainleveIISolution:
 _CACHE: dict[tuple[float, float, int], _PainleveIISolution] = {}
 
 
-def _solve(x_max: float = 6.0, x_min: float = -6.0, n_grid: int = 20000) -> _PainleveIISolution:
+def _solve(x_max: float = 6.0, x_min: float = -8.0, n_grid: int = 24000) -> _PainleveIISolution:
     """Solve Painleve II once and build F1/F2/F4 on a grid. Cached by
     (x_max, x_min, n_grid) since this is a one-time cost reused by every
     subsequent CDF/PDF/sampling call."""

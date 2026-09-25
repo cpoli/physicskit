@@ -61,6 +61,7 @@ def real_eigenvalue_count_asymptotic(n: int) -> float:
     Parameters
     ----------
     n : int
+        Matrix dimension.
 
     Returns
     -------
@@ -122,6 +123,7 @@ def real_eigenvalue_density_asymptotic(x: np.ndarray, n: int) -> np.ndarray:
     ----------
     x : numpy.ndarray
     n : int
+        Matrix dimension.
 
     Returns
     -------

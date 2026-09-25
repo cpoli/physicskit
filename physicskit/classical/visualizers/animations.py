@@ -53,10 +53,14 @@ class SideBySideAnimator:
     dof_index : int
         Which column of ``result.q``/``result.p`` to plot when mode="phase"
         and the system has more than one degree of freedom.
+    figsize : tuple of float, default=(11, 5)
+        Figure size in inches.
     physical_3d : bool
         If True, the left axes are created with a 3D projection.
     stride : int
         Render only every ``stride``-th recorded sample (for long runs).
+    left_title : str, default="Physical space"
+        Title of the left (physical-space) panel.
     """
 
     def __init__(

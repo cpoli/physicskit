@@ -119,10 +119,12 @@ def airy_bouncer_energies(alpha: float = 1.0, n_states: int = 8, hbar: float = 1
 
     .. math::
 
-        E_n = -\alpha \left(\frac{\hbar^2}{2 m \alpha^2}\right)^{1/3} a_n,
+        E_n = -\alpha \left(\frac{\hbar^2}{2 m \alpha}\right)^{1/3} a_n
+            = -\left(\frac{\hbar^2 \alpha^2}{2 m}\right)^{1/3} a_n,
 
     where :math:`a_n < 0` are the zeros of the Airy function,
-    :math:`\mathrm{Ai}(a_n) = 0`.
+    :math:`\mathrm{Ai}(a_n) = 0`, and :math:`(\hbar^2/2m\alpha)^{1/3}` is
+    the bouncer's natural length scale (see :func:`airy_wavefunction`).
 
     Parameters
     ----------
@@ -277,10 +279,19 @@ class DoubleWellSimulator:
         numpy.ndarray
             The localized wavefunction at :math:`t=0`.
         """
-        psi0, psi1 = result.wavefunctions[0], result.wavefunctions[1]
+        psi0, psi1 = self._phase_fixed_doublet(result)
         sign = 1.0 if side == "left" else -1.0
         psi = (psi0 + sign * psi1) / np.sqrt(2)
         return psi
+
+    def _phase_fixed_doublet(self, result: DoubleWellResult) -> tuple:
+        # Eigenvector signs are arbitrary; flip psi_1 so it is in phase with psi_0 on the left
+        # (x < 0), which makes psi_0 + psi_1 the left-localized combination by construction.
+        psi0, psi1 = result.wavefunctions[0], result.wavefunctions[1]
+        left = self.x < 0
+        if trapz(psi0[left] * psi1[left], self.x[left]) < 0:
+            psi1 = -psi1
+        return psi0, psi1
 
     def tunneling_wavefunction(self, result: DoubleWellResult, t: np.ndarray, side: str = "left") -> np.ndarray:
         r"""Time-dependent wavefunction of a state localized on ``side``.
@@ -305,7 +316,7 @@ class DoubleWellSimulator:
         numpy.ndarray
             Complex-valued :math:`\psi(x,t)`, shape ``(len(t), len(x))``.
         """
-        psi0, psi1 = result.wavefunctions[0], result.wavefunctions[1]
+        psi0, psi1 = self._phase_fixed_doublet(result)
         E0, E1 = result.energies[0], result.energies[1]
         sign = 1.0 if side == "left" else -1.0
         t = np.asarray(t)

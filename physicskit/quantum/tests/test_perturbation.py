@@ -109,3 +109,26 @@ def test_floquet_quasienergies_are_real_and_sorted(small_box):
     assert quasi_energies.shape == (2,)
     assert np.all(np.isreal(quasi_energies))
     np.testing.assert_allclose(quasi_energies, np.sort(quasi_energies))
+
+
+def test_floquet_operator_follows_the_oscillating_drive():
+    # U(T) must be built with the time-dependent V(x, t); previously every step used t = 0,
+    # i.e. a frozen static tilt. Cross-check against SplitOperatorSolver1D.propagate, which
+    # advances t itself.
+    from physicskit.quantum.chapters.perturbation import FloquetDrivenBox
+
+    box = FloquetDrivenBox(V0=5.0, omega=20.0, n_grid=256)
+    period = 2 * np.pi / box.omega
+    n_steps = 400
+    dt = period / n_steps
+    quasi = box.floquet_quasienergies(n_levels=2, dt=dt)
+
+    solver = box.make_solver(dt)
+    basis = [box.box_eigenstate(n) for n in (1, 2)]
+    U = np.zeros((2, 2), dtype=complex)
+    for j, psi0 in enumerate(basis):
+        frames, _ = solver.propagate(psi0.astype(complex), n_steps, save_every=n_steps)
+        for i, target in enumerate(basis):
+            U[i, j] = np.trapezoid(np.conj(target) * frames[-1], box.x)
+    expected = np.sort(-(box.hbar / period) * np.angle(np.linalg.eigvals(U)))
+    np.testing.assert_allclose(quasi, expected, atol=1e-10)

@@ -51,3 +51,15 @@ def test_twin_slit_amplitude_is_complex_and_finite():
     amp = ts.amplitude(x, screen_distance=30.0)
     assert np.iscomplexobj(amp)
     assert np.all(np.isfinite(amp))
+
+
+def test_twin_slit_single_slit_envelope_narrows_as_the_slit_widens():
+    # Far field of a Gaussian aperture exp(-y^2/w^2): envelope exp(-(k w sin(theta))^2 / 4).
+    L, k = 50.0, 10.0
+    x = np.array([0.0, 20.0])
+    for w in (0.2, 0.6):
+        ts = TwinSlit(slit_separation=0.0, slit_width=w, k0=k)  # coincident slits: envelope only
+        amp = np.abs(ts.amplitude(x, screen_distance=L))
+        r = np.sqrt(L**2 + x**2)
+        expected_ratio = np.exp(-((k * w * x[1] / r[1]) ** 2) / 4.0) * np.sqrt(r[0] / r[1])
+        assert amp[1] / amp[0] == pytest.approx(expected_ratio, rel=1e-12)

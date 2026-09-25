@@ -139,8 +139,9 @@ def landau_susceptibility(T, Tc, a=1.0, b=1.0):
     Tc : float
         Critical temperature.
     a, b : float, default=1.0
-        Positive Landau expansion coefficients (``b`` is unused above
-        :math:`T_C`, kept for a uniform signature).
+        Positive Landau expansion coefficients. ``b`` is unused: it cancels
+        out of :math:`\\chi` on both sides of :math:`T_C` (below it,
+        :math:`m_0^2 = a(T_C-T)/2b`); kept for a uniform signature.
 
     Returns
     -------

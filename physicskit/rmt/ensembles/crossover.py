@@ -59,6 +59,8 @@ class GOEGUECrossoverEnsemble(MatrixEnsemble):
         statistics (at a lam scale that shrinks with n -- see module
         docstring).
     seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(self, n: int, lam: float, seed: int | np.random.Generator | None = None) -> None:

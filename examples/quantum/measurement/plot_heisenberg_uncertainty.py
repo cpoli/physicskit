@@ -79,15 +79,16 @@ fig.tight_layout()
 # --------------------------------------------------------------------------
 #
 # :meth:`~physicskit.quantum.chapters.harmonic_spin.HarmonicOscillator.squeezed_vacuum_wavefunction`
-# encodes its squeezing angle :math:`\phi` as a quadratic chirp phase on
-# the position-space Gaussian; :math:`\Delta x` itself never sees
-# :math:`\phi` (only :math:`r` sets it), but the chirp broadens the
-# *momentum* distribution -- exactly like a chirped pulse's larger
-# time-bandwidth product -- so :math:`\Delta p(r,\phi)` genuinely depends
-# on both parameters, unlike the single :math:`\phi=0` curve shown above.
+# takes a squeezing angle :math:`\phi` that rotates the uncertainty
+# ellipse in phase space: at :math:`\phi=0` position is squeezed, at
+# :math:`\phi=\pi/2` momentum is, and in between the squeezing sits
+# along a rotated quadrature, so :math:`\Delta x` and :math:`\Delta p`
+# both depend on :math:`r` and :math:`\phi`, and their product exceeds
+# :math:`\hbar/2` away from the two axes even though the state is still
+# a minimum-uncertainty state for its own rotated quadratures.
 
 r_values = np.linspace(0.0, 1.2, 40)
-phi_values = np.linspace(0.0, 1.4, 40)  # stays well short of the phi=pi/2 chirp singularity
+phi_values = np.linspace(0.0, np.pi / 2, 40)
 dp_map = np.zeros((len(r_values), len(phi_values)))
 prod_ratio = np.zeros_like(phi_values)
 x_sq = np.linspace(-10, 10, 1500)
@@ -103,10 +104,10 @@ fig2, ax2 = plt.subplots(figsize=(6.5, 5))
 im2 = ax2.pcolormesh(phi_values, r_values, dp_map, shading="auto", cmap="magma")
 ax2.set_xlabel(r"squeezing angle $\phi$")
 ax2.set_ylabel(r"squeezing amplitude $r$")
-ax2.set_title(r"Squeezed vacuum: $\Delta p(r,\phi)$" "\n(grows with r and with |phi| off the squeezing axis)")
+ax2.set_title(r"Squeezed vacuum: $\Delta p(r,\phi)$" "\n(anti-squeezed at phi=0, squeezed at phi=pi/2)")
 fig2.colorbar(im2, ax=ax2, label=r"$\Delta p$")
 fig2.tight_layout()
 
 print(f"Delta p(r={r_values[-1]:.2f}, phi=0) = {dp_map[-1, 0]:.4f}   Delta p(r={r_values[-1]:.2f}, phi={phi_values[-1]:.2f}) = {dp_map[-1, -1]:.4f}")
-print("Delta x*Delta p/hbar off-axis (r=0 row) equals the value at every other r (analytic separability):")
-print("  ", np.round(prod_ratio[:: len(prod_ratio) // 4], 4), "... always >= 0.5, minimum only at phi=0")
+print("Delta x*Delta p/hbar along the r=0 row (the vacuum, whatever phi):")
+print("  ", np.round(prod_ratio[:: len(prod_ratio) // 4], 4))

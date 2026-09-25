@@ -111,3 +111,17 @@ def test_largest_eigenvalues_helper():
     lam_max = rmt.stats.largest_eigenvalues(spectrum)
     assert lam_max.shape == (10,)
     np.testing.assert_allclose(lam_max, spectrum.rescaled.max(axis=1))
+
+
+@pytest.mark.parametrize(("beta", "mean", "var"), [(1, -1.2065, 1.6077), (2, -1.7711, 0.8132), (4, -3.2624, 1.0355)])
+def test_tracy_widom_cdf_moments_match_literature(beta, mean, var):
+    # F_4's left tail is not negligible at s = -6 (F_4(-6) ~ 2e-3), so the grid must reach further.
+    import numpy as np
+
+    from physicskit.rmt.stats.tracy_widom import tracy_widom_cdf
+
+    s = np.linspace(-9.0, 6.0, 30001)
+    pdf = np.gradient(tracy_widom_cdf(s, beta), s)
+    m = np.trapezoid(s * pdf, s)
+    assert m == pytest.approx(mean, abs=2e-3)
+    assert np.trapezoid(s**2 * pdf, s) - m**2 == pytest.approx(var, abs=5e-3)

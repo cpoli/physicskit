@@ -170,6 +170,8 @@ def mass_exponent(
     n_samples : int, optional
         Independent matrix draws to pool at each n.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for the per-size ensemble draws, passed to
+        :func:`numpy.random.default_rng`.
 
     Returns
     -------
@@ -222,6 +224,8 @@ def multifractal_dimension(
     n_samples : int, optional
         Independent matrix draws to pool at each n.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for the per-size ensemble draws, passed to
+        :func:`numpy.random.default_rng`.
 
     Returns
     -------
@@ -279,6 +283,8 @@ def singularity_spectrum(
         Moment orders to evaluate tau(q) at (need not exclude q=1).
     n_samples : int, optional
     seed : int, numpy.random.Generator, or None, optional
+        Seed for the per-size ensemble draws, passed to
+        :func:`numpy.random.default_rng`.
 
     Returns
     -------

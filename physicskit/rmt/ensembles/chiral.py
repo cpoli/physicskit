@@ -143,6 +143,9 @@ class ChiralBetaEnsemble(MatrixEnsemble):
     nu : int, optional
         Topological index: number of exact zero eigenvalues (default
         0). The larger block dimension is N + nu.
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

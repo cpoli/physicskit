@@ -46,6 +46,7 @@ def sample_hermite_beta_eigenvalues(n: int, beta: float, rng: np.random.Generato
         Dyson index. beta=1 -> GOE, beta=2 -> GUE, beta=4 -> GSE; any
         beta > 0 is a valid continuum generalization.
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------
@@ -88,6 +89,7 @@ def sample_hermite_beta_eigenvalues_and_vectors(n: int, beta: float, rng: np.ran
         Dyson index. beta=1 -> GOE, beta=2 -> GUE, beta=4 -> GSE; any
         beta > 0 is a valid continuum generalization.
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------
@@ -141,6 +143,7 @@ def sample_laguerre_beta_eigenvalues(m: int, n: int, beta: float, rng: np.random
         Dyson index. beta=1 -> real, beta=2 -> complex, beta=4 ->
         quaternionic; any beta > 0 is a valid continuum generalization.
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------

@@ -32,7 +32,8 @@ from physicskit.chaos.core.integrators import rk4_step
 from physicskit.chaos.visualizers import theme
 
 
-@njit(cache=True, parallel=True)
+# Not cache=True: takes an njit dispatcher argument (see physicskit.integrators.fixed_step).
+@njit(parallel=True)
 def _compute_basin_grid(rhs, xs, ys, vx0, vy0, dt, n_steps, attractors, params) -> NDArray[np.int64]:
     n_y = ys.shape[0]
     n_x = xs.shape[0]

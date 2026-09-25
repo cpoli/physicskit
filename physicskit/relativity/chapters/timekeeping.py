@@ -31,7 +31,7 @@ __all__ = [
 
 #: Earth's mass, in kg.
 EARTH_MASS_KG = 5.9722e24
-#: Earth's mean equatorial radius, in meters.
+#: Earth's mean radius, in meters (the equatorial radius is 6.378e6 m).
 EARTH_RADIUS_M = 6.371e6
 #: Earth's sidereal rotation period, in seconds.
 EARTH_SIDEREAL_DAY_S = 86164.0905

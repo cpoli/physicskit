@@ -138,3 +138,15 @@ def test_thermal_state_check_normalization_is_close_to_one(osc):
     x = np.linspace(-15, 15, 3000)
     ts = ThermalState(oscillator=osc, T=1.0, n_max=60)
     assert ts.check_normalization(x) == pytest.approx(1.0, abs=1e-2)
+
+
+@pytest.mark.parametrize(("r", "phi"), [(0.5, 0.0), (0.5, 0.4), (0.8, 1.2), (0.0, 0.7), (0.6, np.pi / 2)])
+def test_squeezed_vacuum_matches_rotated_quadrature_variance(osc, r, phi):
+    # Delta x^2 = (hbar / 2 m omega)(e^{-2r} cos^2 phi + e^{2r} sin^2 phi); r = 0 is the vacuum for any phi.
+    x = np.linspace(-15, 15, 8001)
+    psi = osc.squeezed_vacuum_wavefunction(x, r=r, phi=phi)
+    assert np.trapezoid(np.abs(psi) ** 2, x) == pytest.approx(1.0, abs=1e-8)
+    var_x = np.trapezoid(np.abs(psi) ** 2 * x**2, x)
+    zero_point = osc.hbar / (2 * osc.m * osc.omega)
+    expected = zero_point * (np.exp(-2 * r) * np.cos(phi) ** 2 + np.exp(2 * r) * np.sin(phi) ** 2)
+    assert var_x == pytest.approx(expected, rel=1e-6)

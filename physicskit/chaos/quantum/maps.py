@@ -234,7 +234,9 @@ class QuantumBakersMap:
     alpha : float
         Cut position.
     hbar : float
-        Effective Planck constant, ``1 / dim``.
+        Effective reduced Planck constant, ``1 / (2*pi*dim)``: the unit
+        torus holds ``dim = 1/h = 1/(2*pi*hbar)`` states (Balazs & Voros
+        1989), so plane waves are ``exp(i*p*q/hbar) = exp(2*pi*i*dim*p*q)``.
 
     Raises
     ------
@@ -260,7 +262,7 @@ class QuantumBakersMap:
             raise InvalidParameterError("alpha * dim must round to an integer strictly between 0 and dim")
         self.dim = int(dim)
         self.alpha = float(alpha)
-        self.hbar = 1.0 / self.dim
+        self.hbar = 1.0 / (2.0 * np.pi * self.dim)
         self._n1 = n1
         self._n2 = dim - n1
 

@@ -176,10 +176,15 @@ class LennardJonesGas:
 
         .. math::
 
-            H(t) = \\int_0^\\infty f(v, t) \\ln f(v, t) \\, dv
+            H(t) = \\int_0^\\infty f(v, t) \\ln \\frac{f(v, t)}{2\\pi v} \\, dv
 
         estimated by binning the current particle speeds into a normalized
-        density histogram. :math:`H` decreases monotonically (on average) as
+        density histogram. For an isotropic 2D gas, :math:`f(v)/(2\\pi v)` is
+        the velocity-space density, so this equals Boltzmann's
+        :math:`\\int f \\ln f \\, d^2v`; dropping the :math:`2\\pi v` Jacobian
+        would give a functional minimized by a half-Gaussian in speed rather
+        than by the Maxwell-Boltzmann (Rayleigh) distribution.
+        :math:`H` decreases monotonically (on average) as
         an arbitrary initial velocity distribution relaxes toward the
         Maxwell-Boltzmann equilibrium, which minimizes :math:`H` at fixed
         energy -- the microscopic root of the second law of thermodynamics.
@@ -202,8 +207,9 @@ class LennardJonesGas:
             v_max = 1.5 * speeds.max() if speeds.max() > 0 else 1.0
         density, edges = np.histogram(speeds, bins=bins, range=(0.0, v_max), density=True)
         widths = np.diff(edges)
+        centers = 0.5 * (edges[:-1] + edges[1:])
         mask = density > 0
-        return float(np.sum(density[mask] * np.log(density[mask]) * widths[mask]))
+        return float(np.sum(density[mask] * np.log(density[mask] / (2.0 * np.pi * centers[mask])) * widths[mask]))
 
     def run(self, n_steps, steps_per_record=10, bins=40):
         """Integrate forward while recording a time series of thermodynamic observables.

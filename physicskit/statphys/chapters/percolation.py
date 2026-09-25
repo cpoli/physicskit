@@ -99,9 +99,9 @@ class Percolation2D:
         Occupation probability: fraction of sites (site percolation) or
         bonds (bond percolation) that are open.
     mode : {"site", "bond"}, default="site"
-        Percolation type. Known exact thresholds for the square lattice are
-        :math:`p_c \\approx 0.592746` (site) and :math:`p_c = 0.5` (bond,
-        exact by self-duality).
+        Percolation type. The square-lattice thresholds are
+        :math:`p_c \\approx 0.592746` (site, known only numerically) and
+        :math:`p_c = 0.5` (bond, exact by self-duality).
     seed : int, optional
         Seed for reproducible lattice realizations.
 

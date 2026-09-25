@@ -44,14 +44,31 @@ DEFAULT_ENTRY_DISTRIBUTIONS: dict[str, EntrySampler] = {
 
 @dataclass
 class UniversalityResult:
-    """Per-distribution validation results plus a summary judgment."""
+    """Per-distribution validation results plus a summary judgment.
+
+    Attributes
+    ----------
+    per_distribution : dict of str to ValidationResult
+        Semicircle-law validation result for each entry distribution.
+    max_ks_statistic : float
+        Largest KS statistic across all entry distributions.
+    ks_threshold : float
+        KS statistic every distribution must stay below for `passed`.
+    """
 
     per_distribution: dict[str, ValidationResult] = field(default_factory=dict)
     max_ks_statistic: float = 0.0
+    ks_threshold: float = 0.02
+
+    @property
+    def passed(self) -> bool:
+        """True if every distribution's KS statistic is below `ks_threshold`."""
+        return self.max_ks_statistic < self.ks_threshold
 
     def __repr__(self):
         lines = [f"  {name}: {result}" for name, result in self.per_distribution.items()]
-        return "UniversalityResult(\n" + "\n".join(lines) + f"\n  max_ks={self.max_ks_statistic:.5f}\n)"
+        verdict = "passed" if self.passed else "failed"
+        return "UniversalityResult(\n" + "\n".join(lines) + f"\n  max_ks={self.max_ks_statistic:.5f} ({verdict} at ks_threshold={self.ks_threshold:g})\n)"
 
 
 def check_universality(
@@ -69,10 +86,13 @@ def check_universality(
     Parameters
     ----------
     n : int
+        Matrix dimension.
     beta : int
         1 or 2 (see ``GeneralWignerEnsemble``).
     n_samples : int
+        Number of matrices sampled per entry distribution.
     seed : int or None
+        Seed for reproducible sampling.
     entry_distributions : dict or None
         name -> entry_sampler callable; defaults to
         ``DEFAULT_ENTRY_DISTRIBUTIONS``.
@@ -83,6 +103,8 @@ def check_universality(
     Returns
     -------
     UniversalityResult
+        Its ``passed`` property gives the overall verdict against
+        `ks_threshold`.
     """
     if entry_distributions is None:
         entry_distributions = DEFAULT_ENTRY_DISTRIBUTIONS
@@ -97,4 +119,4 @@ def check_universality(
         per_distribution[name] = result
 
     max_ks = max(r.ks_statistic for r in per_distribution.values())
-    return UniversalityResult(per_distribution=per_distribution, max_ks_statistic=max_ks)
+    return UniversalityResult(per_distribution=per_distribution, max_ks_statistic=max_ks, ks_threshold=ks_threshold)

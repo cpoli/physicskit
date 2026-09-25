@@ -61,6 +61,9 @@ class GraphLaplacianEnsemble(MatrixEnsemble):
         If True (default False), use the normalized Laplacian
         I - D^(-1/2) A D^(-1/2) (eigenvalues in [0, 2]) instead of the
         combinatorial Laplacian D - A.
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

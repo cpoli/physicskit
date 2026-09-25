@@ -84,10 +84,13 @@ class SingleRingEnsemble(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     singular_value_sampler : callable
         ``singular_value_sampler(rng, n)`` returning ``n`` non-negative
         singular values.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(
@@ -133,6 +136,8 @@ class NonHermitianWishartEnsemble(MatrixEnsemble):
         Dyson index of the underlying Wishart-type singular-value
         distribution (default 2); any beta > 0 valid continuum value.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

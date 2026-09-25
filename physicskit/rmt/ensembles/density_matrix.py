@@ -99,6 +99,9 @@ class InducedMeasureEnsemble(MatrixEnsemble):
     k : int, optional
         Environment/other-subsystem dimension (default: n, the
         Hilbert-Schmidt measure). k=1 gives Haar-random pure states.
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     beta: float = 2

@@ -260,7 +260,7 @@ def nls_dark_soliton(x: np.ndarray, t: float, rho0: float = 1.0, x0: float = 0.0
     Returns
     -------
     ndarray of complex
-        :math:`\\psi(x,t) = \\sqrt{\\rho_0}\\,\\tanh\\!\\big(\\sqrt{\\rho_0/2}\\,(x-x_0)\\big)\\, e^{-i\\rho_0 t}`,
+        :math:`\\psi(x,t) = \\sqrt{\\rho_0}\\,\\tanh\\!\\big(\\sqrt{\\rho_0}\\,(x-x_0)\\big)\\, e^{-i\\rho_0 t}`,
         with healing length :math:`\\xi = 1/\\sqrt{\\rho_0}`.
 
     See Also
@@ -274,7 +274,7 @@ def nls_dark_soliton(x: np.ndarray, t: float, rho0: float = 1.0, x0: float = 0.0
     >>> abs(nls_dark_soliton(x, t=0.0, rho0=1.0))
     array([0.])
     """
-    envelope = np.sqrt(rho0) * np.tanh(np.sqrt(rho0 / 2) * (x - x0))
+    envelope = np.sqrt(rho0) * np.tanh(np.sqrt(rho0) * (x - x0))
     return envelope * np.exp(-1j * rho0 * t)
 
 

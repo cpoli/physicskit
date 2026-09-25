@@ -57,6 +57,8 @@ class TruncatedUnitaryEnsemble(MatrixEnsemble):
         on the unit circle); alpha -> 0 approaches complex Ginibre after
         rescaling.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(self, m: int, alpha: float, seed: int | np.random.Generator | None = None) -> None:

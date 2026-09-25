@@ -206,6 +206,8 @@ def spectral_rigidity_empirical(
         Grid resolution used to approximate the line-fit integral within
         each window.
     seed : int, numpy.random.Generator, or None, optional
+        Seed for the random window placement, passed to
+        :func:`numpy.random.default_rng`.
 
     Returns
     -------

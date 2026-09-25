@@ -340,8 +340,8 @@ class FloquetDrivenBox:
         U = np.zeros((n_levels, n_levels), dtype=complex)
         for j, psi0 in enumerate(basis):
             psi = psi0.astype(complex)
-            for _ in range(n_steps):
-                psi = solver.step(psi)
+            for k in range(n_steps):
+                psi = solver.step(psi, k * dt)  # the drive is time-dependent: pass t
             for i, target in enumerate(basis):
                 U[i, j] = trapz(np.conj(target) * psi, self.x)
 

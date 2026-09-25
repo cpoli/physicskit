@@ -198,8 +198,10 @@ class TwinSlit:
     def amplitude(self, x: np.ndarray, screen_distance: float, t: float | None = None) -> np.ndarray:
         r"""Fraunhofer-style amplitude on a screen at distance :math:`L`.
 
-        Sums the two slit contributions with their propagation phase
-        :math:`kL + kx^2/2L` (paraxial/Fresnel approximation), :math:`x`
+        Sums the two slit contributions, each a Gaussian aperture
+        :math:`e^{-y^2/w^2}` radiating :math:`e^{ikr}/\sqrt{r}` (exact path
+        length :math:`r` to the screen point) under its single-slit
+        diffraction envelope :math:`e^{-(kw\sin\theta)^2/4}`; :math:`x` is
         measured along the screen.
 
         Parameters
@@ -222,11 +224,13 @@ class TwinSlit:
         w = self.slit_width
 
         def slit_amp(y0):
-            # each slit acts as a Gaussian source of width w
+            # Each slit is a Gaussian aperture exp(-y^2/w^2); its far-field (Fraunhofer)
+            # diffraction envelope is exp(-(k w sin(theta))^2 / 4).
             r = np.sqrt(L**2 + (x - y0) ** 2)
             phase = k * r
-            sinc_envelope = np.exp(-((x - y0) ** 2) * (w**2) / (4 * L**2 + 1e-12))
-            return sinc_envelope * np.exp(1j * phase) / np.sqrt(r)
+            sin_theta = (x - y0) / r
+            envelope = np.exp(-((k * w * sin_theta) ** 2) / 4.0)
+            return envelope * np.exp(1j * phase) / np.sqrt(r)
 
         return slit_amp(d / 2) + slit_amp(-d / 2)
 

@@ -20,7 +20,7 @@ from scipy.integrate import solve_ivp
 __all__ = ["lane_emden", "PolytropicStar", "chandrasekhar_mass", "main_sequence_luminosity"]
 
 
-def lane_emden(n, xi_max=10.0, n_points=2000):
+def lane_emden(n, xi_max=1000.0, n_points=2000):
     r"""Integrate the Lane-Emden equation for a polytrope of index ``n``.
 
     .. math::
@@ -35,9 +35,12 @@ def lane_emden(n, xi_max=10.0, n_points=2000):
     ----------
     n : float
         Polytropic index.
-    xi_max : float, default=10.0
-        Upper integration bound, used only as a fallback for indices
-        (e.g. ``n=5``) where :math:`\theta` never reaches zero.
+    xi_max : float, default=1000.0
+        Upper integration bound. Integration normally stops earlier, at the
+        surface; the default is large enough to reach it for every
+        :math:`n \le 4.9` (:math:`\xi_1 \approx 171` there, diverging as
+        :math:`n \to 5`). For :math:`n \ge 5` there is no surface and the
+        profile is returned out to ``xi_max``.
     n_points : int, default=2000
         Number of points to sample the returned arrays at.
 
@@ -45,15 +48,19 @@ def lane_emden(n, xi_max=10.0, n_points=2000):
     -------
     xi : ndarray
         Dimensionless radius, from just above 0 to the surface (the first
-        zero of :math:`\theta`) or to ``xi_max``.
+        zero of :math:`\theta`) or, if none was found, to ``xi_max``.
     theta : ndarray
-        The Lane-Emden function :math:`\theta(\xi)`.
+        The Lane-Emden function :math:`\theta(\xi)`. ``theta[-1] == 0``
+        exactly when the surface was reached.
 
     Examples
     --------
     >>> xi, theta = lane_emden(0.0)
     >>> round(float(xi[-1]), 3)  # exact analytic surface is sqrt(6)
     2.449
+    >>> xi, theta = lane_emden(4.0)
+    >>> round(float(xi[-1]), 3)  # tabulated xi_1 for n=4
+    14.972
     """
     xi0 = 1e-6
     theta0 = 1.0 - xi0**2 / 6.0
@@ -79,12 +86,13 @@ def lane_emden(n, xi_max=10.0, n_points=2000):
         dense_output=True,
         rtol=1e-9,
         atol=1e-11,
-        max_step=xi_max / 2000,
     )
     xi_surface = sol.t[-1]
     xi = np.linspace(xi0, xi_surface, n_points)
     theta = sol.sol(xi)[0]
     theta = np.clip(theta, 0.0, None)
+    if sol.status == 1:  # stopped at the surface event
+        theta[-1] = 0.0
     return xi, theta
 
 
@@ -102,6 +110,12 @@ class PolytropicStar:
     G : float, default=1.0
         Gravitational constant.
 
+    Raises
+    ------
+    ValueError
+        If the Lane-Emden solution has no surface (:math:`n \ge 5`, where
+        the polytrope's radius is infinite).
+
     Examples
     --------
     >>> star = PolytropicStar(n=0.0, K=1.0, rho_c=1.0)
@@ -115,10 +129,12 @@ class PolytropicStar:
         self.rho_c = rho_c
         self.G = G
         self._xi, self._theta = lane_emden(n)
+        if self._theta[-1] > 0.0:
+            raise ValueError(f"the n={n} Lane-Emden solution has no surface by xi={self._xi[-1]:g}; polytropes with n >= 5 have infinite radius")
 
     @property
     def xi1(self):
-        """The dimensionless surface radius, the last point of the Lane-Emden solution."""
+        r"""The dimensionless surface radius :math:`\xi_1`, the first zero of the Lane-Emden solution."""
         return float(self._xi[-1])
 
     @property
@@ -138,7 +154,9 @@ class PolytropicStar:
     @property
     def mass(self):
         r"""Physical stellar mass, :math:`M=4\pi\alpha^3\rho_c\left[-\xi_1^2\theta'(\xi_1)\right]`."""
-        dtheta_surface = (self._theta[-1] - self._theta[-2]) / (self._xi[-1] - self._xi[-2])
+        # Second-order one-sided difference on the uniform xi grid.
+        h = self._xi[-1] - self._xi[-2]
+        dtheta_surface = (3.0 * self._theta[-1] - 4.0 * self._theta[-2] + self._theta[-3]) / (2.0 * h)
         return float(4.0 * np.pi * self.alpha**3 * self.rho_c * (-(self.xi1**2) * dtheta_surface))
 
 

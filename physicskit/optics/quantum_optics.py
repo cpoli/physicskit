@@ -183,7 +183,7 @@ def _wigner_kernel(n, m, x, p):
     function :math:`W_n(x,p) = (-1)^n/\pi\, e^{-(x^2+p^2)} L_n[2(x^2+p^2)]`.
     """
     s = x**2 + p**2
-    z = x - 1j * p
+    z = x + 1j * p
     log_coeff = 0.5 * (gammaln(n + 1.0) - gammaln(m + 1.0))
     coeff = (-1.0) ** n * np.exp(log_coeff)
     return (1.0 / np.pi) * coeff * (np.sqrt(2.0) * z) ** (m - n) * np.exp(-s) * eval_genlaguerre(n, m - n, 2.0 * s)

@@ -52,7 +52,7 @@ class TestFDTDWaveSpeed:
         x0, sigma_pulse = 100, 25
         Ez0 = np.exp(-((np.arange(N) - x0) ** 2) / (2 * sigma_pulse**2))
         xh = np.arange(N - 1) + 0.5
-        Hy0 = np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse**2)) / eta0
+        Hy0 = -np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse**2)) / eta0
         eps_r, mu_r = np.ones(N), np.ones(N)
         steps = 400
         Ez, _ = fdtd_1d(Ez0, Hy0, eps_r, mu_r, steps=steps, dt=dt, dx=dx)
@@ -208,6 +208,18 @@ class TestNLSDarkSoliton:
         x = np.array([50.0, -50.0])
         np.testing.assert_allclose(np.abs(nls_dark_soliton(x, t=0.0, rho0=rho0)), np.sqrt(rho0), atol=1e-6)
 
+    @pytest.mark.parametrize("rho0", [0.5, 1.0, 2.0])
+    def test_satisfies_defocusing_nls_equation(self, rho0):
+        # Finite-difference residual of i psi_t + psi_xx/2 - |psi|^2 psi; the width sqrt(rho0) is
+        # fixed by the equation (the previous sqrt(rho0/2) left an O(1) residual).
+        x = np.linspace(-10.0, 10.0, 4001)
+        dx, dt = x[1] - x[0], 1e-5
+        psi = nls_dark_soliton(x, 0.0, rho0)
+        psi_t = (nls_dark_soliton(x, dt, rho0) - nls_dark_soliton(x, -dt, rho0)) / (2 * dt)
+        psi_xx = (psi[2:] - 2 * psi[1:-1] + psi[:-2]) / dx**2
+        residual = 1j * psi_t[1:-1] + 0.5 * psi_xx - np.abs(psi[1:-1]) ** 2 * psi[1:-1]
+        assert np.max(np.abs(residual)) < 1e-4
+
 
 class TestSineGordonKink:
     def test_kink_propagates_at_prescribed_velocity(self):
@@ -299,7 +311,7 @@ class TestDielectricSlabReflection:
         xs = np.arange(N)
         Ez0 = np.exp(-((xs - x0) ** 2) / (2 * sigma_pulse**2))
         xh = np.arange(N - 1) + 0.5
-        Hy0 = np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse**2)) / eta0
+        Hy0 = -np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse**2)) / eta0
         eps_r_slab = 4.0
         eps_r = np.ones(N)
         eps_r[1500:] = eps_r_slab

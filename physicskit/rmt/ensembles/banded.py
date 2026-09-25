@@ -57,11 +57,15 @@ class PowerLawBandedEnsemble(MatrixEnsemble):
     Parameters
     ----------
     n : int
+        Matrix dimension.
     b : float
         Band-width parameter (b > 0).
     alpha : float, optional
         Power-law decay exponent (default 1.0, the multifractal
         critical point).
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     beta: float = 1

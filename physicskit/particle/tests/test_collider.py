@@ -117,3 +117,19 @@ def test_charged_track_points_initial_direction_matches_momentum():
         step_dir = step / np.linalg.norm(step)
         expected_dir = np.array([3.0, 4.0]) / 5.0
         assert step_dir == pytest.approx(expected_dir, abs=1e-2)
+
+
+def test_charged_track_bends_as_the_lorentz_force_dictates():
+    # B along +z: a positive charge moving along +x feels q v x B along -y and curves clockwise.
+    import numpy as np
+
+    from physicskit.particle.collider import charged_track_points
+    from physicskit.particle.kinematics import FourVector
+
+    p = FourVector(5.0, 3.0, 0.0, 0.0)
+    positive = charged_track_points(p, charge=1.0, B=1.0, path_length=1.0)
+    negative = charged_track_points(p, charge=-1.0, B=1.0, path_length=1.0)
+    assert positive[-1, 1] < 0.0
+    assert negative[-1, 1] > 0.0
+    radii = np.linalg.norm(positive - np.array([0.0, -3.0]), axis=1)  # centre at (0, -pT/(qB))
+    np.testing.assert_allclose(radii, 3.0)

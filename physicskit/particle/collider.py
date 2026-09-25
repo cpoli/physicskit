@@ -337,8 +337,10 @@ def charged_track_points(four_vector, charge, B, vertex=(0.0, 0.0), n_points=100
     charge : float
         Charge, in units of the elementary charge (0 for neutral).
     B : float
-        Magnetic field strength (along the axis perpendicular to the
-        transverse plane).
+        Magnetic field along :math:`+z`, out of the transverse plane.
+        The Lorentz force :math:`q\,\mathbf{v}\times\mathbf{B}` then bends
+        positive charges clockwise (for ``B > 0``) and negative charges
+        counterclockwise, as seen looking down the :math:`z` axis.
     vertex : array_like of shape (2,), default=(0, 0)
         Starting point of the track.
     n_points : int, default=100
@@ -371,7 +373,7 @@ def charged_track_points(four_vector, charge, B, vertex=(0.0, 0.0), n_points=100
         return vertex + np.outer(s, direction)
     r = pT / (abs(charge) * B)
     phi0 = np.arctan2(py, px)
-    curve_sign = float(np.sign(charge * B))
+    curve_sign = -float(np.sign(charge * B))  # +1: counterclockwise; q v x B turns q*B > 0 clockwise
     center = vertex + r * np.array([-np.sin(phi0), np.cos(phi0)]) * curve_sign
     max_angle = min(path_length / r, 2.0 * np.pi)
     thetas = np.linspace(0.0, max_angle, n_points)

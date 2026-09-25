@@ -76,6 +76,8 @@ class PTSymmetricEnsemble(MatrixEnsemble):
     beta : int, optional
         1 (real blocks) or 2 (complex Hermitian blocks, default).
     seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

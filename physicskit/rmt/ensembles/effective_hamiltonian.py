@@ -138,6 +138,9 @@ class EffectiveHamiltonianEnsemble(MatrixEnsemble):
         drive the system from the isolated-resonance regime towards
         resonance trapping without changing beta or the number of
         channels m.
+    seed : int, numpy.random.Generator, or None, optional
+        Seed for reproducible sampling. See
+        :func:`~physicskit.rmt.utils.random_state.as_generator`.
     """
 
     def __init__(

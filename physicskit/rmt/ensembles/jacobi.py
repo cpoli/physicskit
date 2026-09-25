@@ -113,6 +113,8 @@ class JacobiBetaEnsemble(MatrixEnsemble):
         beta : int
             Dyson index; must be 1, 2, or 4.
         seed : int, numpy.random.Generator, or None, optional
+            Seed for reproducible sampling. See
+            :func:`~physicskit.rmt.utils.random_state.as_generator`.
         """
         if beta not in (1, 2, 4):
             raise ValueError(f"JacobiBetaEnsemble only supports beta in (1, 2, 4), got {beta}")

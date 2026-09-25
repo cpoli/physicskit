@@ -86,8 +86,10 @@ NEUTRON_MASS = _sc.m_n
 #: Avogadro constant, in mol^-1 (exact by SI definition).
 AVOGADRO = _sc.N_A
 
-#: Molar gas constant, in J mol^-1 K^-1.
-GAS_CONSTANT = _sc.R
+#: Molar gas constant, in J mol^-1 K^-1 -- exactly ``AVOGADRO * K_B`` by SI
+#: definition. Computed rather than taken from ``scipy.constants.R``, which
+#: older SciPy releases store truncated (8.314462618).
+GAS_CONSTANT = _sc.N_A * _sc.k
 
 #: Vacuum electric permittivity, in F/m.
 VACUUM_PERMITTIVITY = _sc.epsilon_0

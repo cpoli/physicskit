@@ -62,7 +62,9 @@ def drift_wave_noise_ic(n: int, length: float, amplitude: float, seed: int = 0) 
     n : int
         Number of grid points along each axis.
     length : float
-        Physical domain size.
+        Physical domain size. Unused, since the noise is independent per
+        grid point (white) and so has no length scale; kept for signature
+        symmetry with :func:`simulate_hasegawa_mima`.
     amplitude : float
         Root-mean-square amplitude of the seeded potential noise.
     seed : int, default=0

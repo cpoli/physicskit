@@ -77,6 +77,13 @@ def laughlin_metropolis_sweep(z: np.ndarray, m: int, step: float = 1.0) -> np.nd
     ndarray of shape (N,)
         The same array passed in.
 
+    Notes
+    -----
+    Trial moves draw from Numba's internal RNG, which neither
+    ``np.random.seed`` nor a ``np.random.default_rng`` generator affects
+    when called from ordinary Python. For a reproducible chain, seed it
+    first with :func:`physicskit.statphys.core.monte_carlo.seed_numba_random`.
+
     Examples
     --------
     A two-particle system's Metropolis chain never proposes an *exactly*
@@ -84,7 +91,8 @@ def laughlin_metropolis_sweep(z: np.ndarray, m: int, step: float = 1.0) -> np.nd
     repeated sweeps keep the two particles strictly apart:
 
     >>> import numpy as np
-    >>> rng = np.random.default_rng(0)
+    >>> from physicskit.statphys.core.monte_carlo import seed_numba_random
+    >>> seed_numba_random(0)
     >>> z = np.array([0.1 + 0.0j, -0.1 + 0.0j])
     >>> for _ in range(200):
     ...     _ = laughlin_metropolis_sweep(z, m=3, step=0.5)
@@ -151,6 +159,8 @@ def laughlin_pair_correlation(z_samples: np.ndarray, m: int, r_max: float, n_bin
     Examples
     --------
     >>> import numpy as np
+    >>> from physicskit.statphys.core.monte_carlo import seed_numba_random
+    >>> seed_numba_random(0)
     >>> rng = np.random.default_rng(0)
     >>> N, m = 12, 3
     >>> R0 = np.sqrt(2 * m * N)

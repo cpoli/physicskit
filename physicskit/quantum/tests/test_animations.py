@@ -223,3 +223,17 @@ def test_double_well_tunneling_animates(tmp_path):
 
     anim = animate_density(dw.x, frames, times=times)
     _save_and_check(anim, tmp_path, "double_well.gif")
+
+
+def test_double_well_left_state_is_left_even_if_eigensolver_flips_psi1():
+    import numpy as np
+
+    from physicskit.quantum.chapters.potentials import DoubleWellSimulator
+
+    sim = DoubleWellSimulator()
+    result = sim.solve(4)
+    result.wavefunctions[1] *= -1.0  # eigenvector signs are arbitrary
+    psi = sim.localized_state(result, "left")
+    left = sim.x < 0
+    assert np.trapezoid(psi[left] ** 2, sim.x[left]) > 0.99
+    assert sim.left_well_probability(result, np.array([0.0]))[0] > 0.99

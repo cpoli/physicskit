@@ -26,7 +26,9 @@ def haar_unitary(n: int, rng: np.random.Generator) -> np.ndarray:
     Parameters
     ----------
     n : int
+        Matrix dimension.
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------
@@ -79,7 +81,9 @@ def haar_orthogonal(n: int, rng: np.random.Generator) -> np.ndarray:
     Parameters
     ----------
     n : int
+        Matrix dimension.
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------
@@ -116,6 +120,7 @@ def haar_symplectic(n_quaternionic: int, rng: np.random.Generator) -> np.ndarray
         The quaternionic dimension; the returned matrix has shape
         (2*n_quaternionic, 2*n_quaternionic).
     rng : numpy.random.Generator
+        Random number generator to draw from.
 
     Returns
     -------

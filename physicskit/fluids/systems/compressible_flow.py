@@ -26,7 +26,7 @@ __all__ = [
 ]
 
 
-def rankine_hugoniot_jump_conditions(rho1: float, u1: float, p1: float, rho2: float, u2: float, p2: float) -> dict[str, float]:
+def rankine_hugoniot_jump_conditions(rho1: float, u1: float, p1: float, rho2: float, u2: float, p2: float, gamma: float = 1.4) -> dict[str, float]:
     """Residuals of the Rankine-Hugoniot jump conditions across a stationary discontinuity.
 
     A steady discontinuity in a 1D inviscid compressible flow (states 1
@@ -54,6 +54,10 @@ def rankine_hugoniot_jump_conditions(rho1: float, u1: float, p1: float, rho2: fl
         Upstream density, velocity, and pressure.
     rho2, u2, p2 : float
         Downstream density, velocity, and pressure.
+    gamma : float, default=1.4
+        Ratio of specific heats, used only in the enthalpy of the energy
+        residual; must match the one used to generate a candidate jump
+        (e.g. :func:`normal_shock_relations`'s `gamma`).
 
     Returns
     -------
@@ -68,7 +72,6 @@ def rankine_hugoniot_jump_conditions(rho1: float, u1: float, p1: float, rho2: fl
     >>> bool(max(abs(v) for v in residuals.values()) < 1e-10)
     True
     """
-    gamma = 1.4
     mass = rho1 * u1 - rho2 * u2
     momentum = (p1 + rho1 * u1**2) - (p2 + rho2 * u2**2)
     h1 = gamma * p1 / ((gamma - 1.0) * rho1)

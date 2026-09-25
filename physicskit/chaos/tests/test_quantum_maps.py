@@ -117,8 +117,21 @@ def test_bakers_map_coherent_state_husimi_peaks_at_its_own_center():
 
 
 def test_bakers_map_hbar_matches_classical_area_quantization():
+    # dim = 1/h = 1/(2 pi hbar) states on the unit torus.
     qbm = QuantumBakersMap(dim=40)
-    assert qbm.hbar == pytest.approx(1.0 / 40)
+    assert qbm.hbar == pytest.approx(1.0 / (2.0 * np.pi * 40))
+
+
+def test_bakers_map_coherent_state_has_requested_momentum():
+    # Momentum eigenstates on the unit torus are exp(2 pi i k q), p = k/dim; a coherent state
+    # at p0 must peak at k = p0*dim (previously it peaked at p0*dim/(2 pi)).
+    dim = 64
+    qbm = QuantumBakersMap(dim=dim)
+    psi = qbm.coherent_state(0.5, 0.25)
+    momentum_amplitudes = np.fft.fft(psi)
+    assert int(np.argmax(np.abs(momentum_amplitudes))) == round(0.25 * dim)
+    position_spread = np.sqrt(np.sum(np.abs(psi) ** 2 * (np.arange(dim) / dim - 0.5) ** 2))
+    assert position_spread == pytest.approx(np.sqrt(qbm.hbar / 2.0), rel=1e-3)  # minimum uncertainty
 
 
 def test_bakers_map_eigenphases_shape_and_range():

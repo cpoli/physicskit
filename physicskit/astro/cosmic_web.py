@@ -321,10 +321,10 @@ def first_caustic_time(q, k_vectors, amplitudes, phases):
 
         D_{\rm collapse} = \frac{1}{\max_{\mathbf{q}}\lambda_{\max}(\mathbf{q})}
 
-    evaluated over the sampled points ``q`` (the true collapse time is a
-    supremum over the *continuous* field, so this is a lower bound that
-    tightens toward the true value as ``q`` samples the field more
-    finely).
+    evaluated over the sampled points ``q``. The sampled maximum
+    eigenvalue can only underestimate the maximum over the *continuous*
+    field, so this is an upper bound on the true collapse time that
+    tightens toward it as ``q`` samples the field more finely.
 
     Parameters
     ----------

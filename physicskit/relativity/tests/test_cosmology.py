@@ -53,6 +53,17 @@ def test_luminosity_distance_exceeds_comoving_distance_at_nonzero_redshift():
     assert cosmo.luminosity_distance_mpc(z) > cosmo.comoving_distance_mpc(z)
 
 
+@pytest.mark.parametrize("omega_m", [0.3, 1.0, 2.0])
+def test_luminosity_distance_matches_mattig_formula_in_curved_matter_only_universe(omega_m):
+    # Open (0.3), flat (1.0), and closed (2.0) dust universes; D_L must include the curvature
+    # transform D_C -> D_M, not just (1+z) D_C.
+    cosmo = FLRWCosmology(H0=70.0, Omega_m=omega_m, Omega_r=0.0, Omega_Lambda=0.0)
+    d_h = 299792.458 / 70.0
+    for z in (0.5, 1.0, 3.0):
+        mattig = 2.0 * d_h / omega_m**2 * (omega_m * z + (omega_m - 2.0) * (np.sqrt(1.0 + omega_m * z) - 1.0))
+        assert cosmo.luminosity_distance_mpc(z) == pytest.approx(mattig, rel=1e-6)
+
+
 def test_scale_factor_history_shape():
     cosmo = FLRWCosmology(H0=70.0, Omega_m=0.3, Omega_r=0.0, Omega_Lambda=0.7)
     t_gyr, a = cosmo.scale_factor_history(n_points=50)

@@ -434,8 +434,9 @@ def feynman_phasor_partial_sums(
     Parameters
     ----------
     paths : ndarray, shape (n_paths, n_points)
-        Ensemble of paths (only used to determine ``n_paths``; the
-        ordering and summation depend only on ``actions``).
+        Ensemble of paths, used only to check that ``actions`` has one
+        entry per path; the ordering and summation depend only on
+        ``actions``.
     actions : ndarray, shape (n_paths,)
         Discretized action of each path, e.g. from :func:`discretized_action`.
     hbar : float
@@ -456,7 +457,8 @@ def feynman_phasor_partial_sums(
     Raises
     ------
     ValueError
-        If ``hbar == 0`` or ``actions`` is empty.
+        If ``hbar == 0``, ``actions`` is empty, or ``len(paths) !=
+        len(actions)``.
 
     Examples
     --------
@@ -474,6 +476,8 @@ def feynman_phasor_partial_sums(
     actions = np.asarray(actions, dtype=float)
     if actions.size == 0:
         raise ValueError("actions must be non-empty.")
+    if len(paths) != actions.size:
+        raise ValueError(f"paths has {len(paths)} rows but actions has {actions.size} entries; need one action per path.")
     if hbar == 0:
         raise ValueError("hbar must be nonzero.")
 

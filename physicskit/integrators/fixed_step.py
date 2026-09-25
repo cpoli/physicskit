@@ -25,6 +25,18 @@ closure is built once per system instance, which conflicts with a runtime
 ``params`` array meant to be swept without recompilation. That subpackage
 keeps its own small, independently-tested step implementations rather than
 adapting to this one.
+
+These integrators (and :mod:`physicskit.integrators.adaptive`'s) are
+deliberately *not* ``cache=True``: their compiled signature includes the
+type of the ``rhs``/``force`` dispatcher passed in, and Numba's on-disk
+cache cannot usefully key on that. The per-system njit callbacks built by
+factory closures throughout physicskit get a fresh dispatcher type per
+instance, so every run appended new, never-reused entries to the on-disk
+index (``__pycache__`` grew without bound and the cache never hit), and on
+some Numba versions re-saving an index whose dispatcher had been
+garbage-collected raised ``ReferenceError: underlying object has
+vanished``. The ``rhs``/``force`` callbacks themselves take only arrays and
+remain cacheable.
 """
 
 from __future__ import annotations
@@ -52,7 +64,7 @@ __all__ = [
 RHSFunc = Callable[[NDArray[np.float64], float, NDArray[np.float64]], NDArray[np.float64]]
 
 
-@njit(cache=True)
+@njit
 def rk4_step(
     rhs: RHSFunc,
     state: NDArray[np.float64],
@@ -88,7 +100,7 @@ def rk4_step(
     return state + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
 
 
-@njit(cache=True)
+@njit
 def rk4_integrate(
     rhs: RHSFunc,
     state0: NDArray[np.float64],
@@ -137,7 +149,7 @@ def rk4_integrate(
     return times, states
 
 
-@njit(cache=True)
+@njit
 def leapfrog_step(
     force: RHSFunc,
     pos: NDArray[np.float64],
@@ -178,7 +190,7 @@ def leapfrog_step(
     return pos_new, vel_new
 
 
-@njit(cache=True)
+@njit
 def leapfrog_integrate(
     force: RHSFunc,
     pos0: NDArray[np.float64],
@@ -251,7 +263,7 @@ _YOSHIDA_W0 = -_YOSHIDA_CBRT2 / (2.0 - _YOSHIDA_CBRT2)
 _YOSHIDA_W1 = 1.0 / (2.0 - _YOSHIDA_CBRT2)
 
 
-@njit(cache=True)
+@njit
 def yoshida4_step(
     force: RHSFunc,
     pos: NDArray[np.float64],
@@ -302,7 +314,7 @@ def yoshida4_step(
     return pos, vel
 
 
-@njit(cache=True)
+@njit
 def yoshida4_integrate(
     force: RHSFunc,
     pos0: NDArray[np.float64],

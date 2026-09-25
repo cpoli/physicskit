@@ -35,9 +35,9 @@ def husimi_function(
     basis of `N` points evenly spaced around a periodic domain
     ``[0, q_period)`` (``q_period = 2*pi`` for the kicked rotor's angle,
     ``q_period = 1`` for the baker's map's unit interval); the coherent
-    states used here are periodized Gaussians of width ``sqrt(hbar *
-    q_period / (2*pi))`` on that same domain, so this one function serves
-    both.
+    states used here are periodized, symmetric minimum-uncertainty
+    Gaussians (amplitude width ``sqrt(hbar)``) on that same square phase
+    space, so this one function serves both.
 
     Parameters
     ----------
@@ -45,7 +45,10 @@ def husimi_function(
         State vector in the position representation (`N` basis points
         evenly spaced over ``[0, q_period)``); need not be normalized.
     hbar : float
-        Effective Planck constant of the underlying quantum map.
+        Effective reduced Planck constant of the underlying quantum map,
+        ``q_period**2 / (2*pi*N)`` for `N` states on the square torus
+        (``2*pi/N`` for the kicked rotor, ``1/(2*pi*N)`` for the baker's
+        map).
     q_period : float
         Length of the (periodic) position and momentum domain, e.g.
         ``2*pi`` for the kicked rotor or ``1.0`` for the baker's map.
@@ -68,7 +71,7 @@ def husimi_function(
     psi = np.asarray(psi, dtype=np.complex128)
     n = psi.shape[0]
     q_j = np.arange(n) * (q_period / n)
-    sigma2 = hbar * q_period / (2.0 * np.pi)
+    sigma2 = hbar
 
     q0 = np.linspace(0.0, q_period, resolution, endpoint=False)
     p0 = np.linspace(0.0, q_period, resolution, endpoint=False)

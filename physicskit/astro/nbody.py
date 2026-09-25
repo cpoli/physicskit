@@ -200,7 +200,7 @@ def figure_eight_initial_conditions():
     >>> history.shape
     (101, 3, 3)
     """
-    r1 = np.array([0.9700436, -0.24308753, 0.0])
+    r1 = np.array([0.97000436, -0.24308753, 0.0])
     v3 = np.array([0.93240737, 0.86473146, 0.0])
     positions = np.array([r1, -r1, [0.0, 0.0, 0.0]])
     velocities = np.array([-0.5 * v3, -0.5 * v3, v3])

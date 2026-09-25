@@ -31,7 +31,8 @@ def energy_spectrum(u: NDArray[np.float64], v: NDArray[np.float64], length: floa
     by FFT, forms the kinetic energy density
     :math:`\\tfrac{1}{2}(|\\hat{u}|^2+|\\hat{v}|^2)` at each wavevector, and
     sums it over the discrete annulus of wavevectors with
-    :math:`k \\le |\\mathbf{k}| < k+1` (in grid-index units) to give
+    :math:`k - \\tfrac12 \\le |\\mathbf{k}| < k + \\tfrac12` (in grid-index
+    units) to give
     :math:`E(k)`, normalized so that :math:`\\sum_k E(k) \\approx` the
     domain-averaged kinetic energy per unit mass (Parseval's theorem).
 
@@ -69,6 +70,8 @@ def energy_spectrum(u: NDArray[np.float64], v: NDArray[np.float64], length: floa
     >>> k, E = energy_spectrum(u, v, length)
     >>> bool(np.argmax(E) == 1)  # all the energy sits at the single k=1 mode
     True
+    >>> round(float(E.sum()), 6)  # = mean of (u**2 + v**2) / 2
+    0.5
     """
     if u.shape != v.shape:
         raise InvalidParameterError("u and v must have the same shape")
@@ -77,7 +80,7 @@ def energy_spectrum(u: NDArray[np.float64], v: NDArray[np.float64], length: floa
     n = u.shape[0]
     u_hat = np.fft.fft2(u) / n**2
     v_hat = np.fft.fft2(v) / n**2
-    energy_density = 0.5 * (np.abs(u_hat) ** 2 + np.abs(v_hat) ** 2) * n**2
+    energy_density = 0.5 * (np.abs(u_hat) ** 2 + np.abs(v_hat) ** 2)
 
     kfreq = np.fft.fftfreq(n, d=length / n) * 2.0 * np.pi
     KX, KY = np.meshgrid(kfreq, kfreq, indexing="ij")

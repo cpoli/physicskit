@@ -49,6 +49,7 @@ class MatrixEnsemble(ABC):
         Parameters
         ----------
         rng : numpy.random.Generator
+            Random number generator to draw from.
 
         Returns
         -------
@@ -68,6 +69,7 @@ class MatrixEnsemble(ABC):
         Parameters
         ----------
         rng : numpy.random.Generator
+            Random number generator to draw from.
 
         Returns
         -------

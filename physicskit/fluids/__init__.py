@@ -27,9 +27,9 @@ Typical usage::
     import physicskit as pk
     import numpy as np
 
-    # Flow past a lifting cylinder:
-    flow = pk.fluids.flow_past_cylinder(U_inf=1.0, radius=1.0, circulation=4 * np.pi)
-    lift = pk.fluids.kutta_joukowski_lift(rho=1.2, U_inf=1.0, circulation=4 * np.pi)
+    # Flow past a lifting cylinder (clockwise circulation -> upward lift):
+    flow = pk.fluids.flow_past_cylinder(U_inf=1.0, radius=1.0, circulation=-4 * np.pi)
+    lift = pk.fluids.kutta_joukowski_lift(rho=1.2, U_inf=1.0, circulation=-4 * np.pi)
 """
 
 from physicskit.fluids.exceptions import FluidskitError, InvalidParameterError

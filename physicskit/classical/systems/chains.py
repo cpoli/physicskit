@@ -288,7 +288,9 @@ class SineGordonChain(_ChainBase):
         continuum equation this chain approximates, with the default
         m=1, k=1) is solved by q=4*atan(exp(x)) only for exactly unit
         width. Passing a different ``width`` here without also scaling
-        ``k``/``m`` to match (``width = sqrt(k/m)``) gives a profile
+        ``k`` to match (the static kink of ``m q_tt = k q_xx - sin(q)`` has
+        ``width = sqrt(k)``; ``m`` only sets the wave speed
+        ``c = sqrt(k/m)``) gives a profile
         that visibly relaxes/radiates under the true dynamics instead
         of propagating as a clean, stable soliton.
 
@@ -307,8 +309,8 @@ class SineGordonChain(_ChainBase):
         center : float
             Lattice site the kink is centered on at t=0.
         width : float
-            Soliton width; must equal ``sqrt(k/m)`` (1, for the default
-            m=1, k=1) for a genuine soliton solution.
+            Soliton width; must equal ``sqrt(k)`` (1, for the default
+            k=1) for a genuine soliton solution.
         velocity : float
             Boost velocity, ``|velocity| < 1``.
         polarity : {1, -1}
@@ -317,7 +319,9 @@ class SineGordonChain(_ChainBase):
         Returns
         -------
         q0, p0 : ndarray, shape (n,)
-            Initial displacements and momenta.
+            Initial displacements and momenta. ``p0`` is ``dq/dt`` at t=0,
+            i.e. the momentum for the default ``m=1``; multiply by ``m``
+            for another mass.
 
         Raises
         ------
