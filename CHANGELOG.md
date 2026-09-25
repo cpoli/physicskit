@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-25
+
 ### Fixed
 
 - The shared `physicskit.integrators` (`rk4`, `leapfrog`/`velocity_verlet`,
@@ -270,6 +272,7 @@ Extensive Sphinx documentation, including a per-subpackage chronology of
 the field's foundational breakthroughs (`docs/source/history/`) linked to
 the corresponding implementation.
 
-[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/cpoli/physicskit/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cpoli/physicskit/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/cpoli/physicskit/releases/tag/v0.1.0
