@@ -490,6 +490,13 @@
 <span class="sd">    ndarray of shape (N,)</span>
 <span class="sd">        The same array passed in.</span>
 
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Trial moves draw from Numba's internal RNG, which neither</span>
+<span class="sd">    ``np.random.seed`` nor a ``np.random.default_rng`` generator affects</span>
+<span class="sd">    when called from ordinary Python. For a reproducible chain, seed it</span>
+<span class="sd">    first with :func:`physicskit.statphys.core.monte_carlo.seed_numba_random`.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    A two-particle system's Metropolis chain never proposes an *exactly*</span>
@@ -497,7 +504,8 @@
 <span class="sd">    repeated sweeps keep the two particles strictly apart:</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
-<span class="sd">    &gt;&gt;&gt; rng = np.random.default_rng(0)</span>
+<span class="sd">    &gt;&gt;&gt; from physicskit.statphys.core.monte_carlo import seed_numba_random</span>
+<span class="sd">    &gt;&gt;&gt; seed_numba_random(0)</span>
 <span class="sd">    &gt;&gt;&gt; z = np.array([0.1 + 0.0j, -0.1 + 0.0j])</span>
 <span class="sd">    &gt;&gt;&gt; for _ in range(200):</span>
 <span class="sd">    ...     _ = laughlin_metropolis_sweep(z, m=3, step=0.5)</span>
@@ -567,6 +575,8 @@
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from physicskit.statphys.core.monte_carlo import seed_numba_random</span>
+<span class="sd">    &gt;&gt;&gt; seed_numba_random(0)</span>
 <span class="sd">    &gt;&gt;&gt; rng = np.random.default_rng(0)</span>
 <span class="sd">    &gt;&gt;&gt; N, m = 12, 3</span>
 <span class="sd">    &gt;&gt;&gt; R0 = np.sqrt(2 * m * N)</span>

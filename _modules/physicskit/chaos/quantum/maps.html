@@ -665,7 +665,9 @@
 <span class="sd">    alpha : float</span>
 <span class="sd">        Cut position.</span>
 <span class="sd">    hbar : float</span>
-<span class="sd">        Effective Planck constant, ``1 / dim``.</span>
+<span class="sd">        Effective reduced Planck constant, ``1 / (2*pi*dim)``: the unit</span>
+<span class="sd">        torus holds ``dim = 1/h = 1/(2*pi*hbar)`` states (Balazs &amp; Voros</span>
+<span class="sd">        1989), so plane waves are ``exp(i*p*q/hbar) = exp(2*pi*i*dim*p*q)``.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -691,7 +693,7 @@
             <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"alpha * dim must round to an integer strictly between 0 and dim"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n1</span> <span class="o">=</span> <span class="n">n1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n2</span> <span class="o">=</span> <span class="n">dim</span> <span class="o">-</span> <span class="n">n1</span>
 

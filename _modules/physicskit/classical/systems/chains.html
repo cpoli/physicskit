@@ -718,7 +718,9 @@
 <span class="sd">        continuum equation this chain approximates, with the default</span>
 <span class="sd">        m=1, k=1) is solved by q=4*atan(exp(x)) only for exactly unit</span>
 <span class="sd">        width. Passing a different ``width`` here without also scaling</span>
-<span class="sd">        ``k``/``m`` to match (``width = sqrt(k/m)``) gives a profile</span>
+<span class="sd">        ``k`` to match (the static kink of ``m q_tt = k q_xx - sin(q)`` has</span>
+<span class="sd">        ``width = sqrt(k)``; ``m`` only sets the wave speed</span>
+<span class="sd">        ``c = sqrt(k/m)``) gives a profile</span>
 <span class="sd">        that visibly relaxes/radiates under the true dynamics instead</span>
 <span class="sd">        of propagating as a clean, stable soliton.</span>
 
@@ -737,8 +739,8 @@
 <span class="sd">        center : float</span>
 <span class="sd">            Lattice site the kink is centered on at t=0.</span>
 <span class="sd">        width : float</span>
-<span class="sd">            Soliton width; must equal ``sqrt(k/m)`` (1, for the default</span>
-<span class="sd">            m=1, k=1) for a genuine soliton solution.</span>
+<span class="sd">            Soliton width; must equal ``sqrt(k)`` (1, for the default</span>
+<span class="sd">            k=1) for a genuine soliton solution.</span>
 <span class="sd">        velocity : float</span>
 <span class="sd">            Boost velocity, ``|velocity| &lt; 1``.</span>
 <span class="sd">        polarity : {1, -1}</span>
@@ -747,7 +749,9 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        q0, p0 : ndarray, shape (n,)</span>
-<span class="sd">            Initial displacements and momenta.</span>
+<span class="sd">            Initial displacements and momenta. ``p0`` is ``dq/dt`` at t=0,</span>
+<span class="sd">            i.e. the momentum for the default ``m=1``; multiply by ``m``</span>
+<span class="sd">            for another mass.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>

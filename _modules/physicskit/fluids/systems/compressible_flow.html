@@ -439,7 +439,7 @@
 
 <div class="viewcode-block" id="rankine_hugoniot_jump_conditions">
 <a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.rankine_hugoniot_jump_conditions">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">rankine_hugoniot_jump_conditions</span><span class="p">(</span><span class="n">rho1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rankine_hugoniot_jump_conditions</span><span class="p">(</span><span class="n">rho1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">u2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""Residuals of the Rankine-Hugoniot jump conditions across a stationary discontinuity.</span>
 
 <span class="sd">    A steady discontinuity in a 1D inviscid compressible flow (states 1</span>
@@ -467,6 +467,10 @@
 <span class="sd">        Upstream density, velocity, and pressure.</span>
 <span class="sd">    rho2, u2, p2 : float</span>
 <span class="sd">        Downstream density, velocity, and pressure.</span>
+<span class="sd">    gamma : float, default=1.4</span>
+<span class="sd">        Ratio of specific heats, used only in the enthalpy of the energy</span>
+<span class="sd">        residual; must match the one used to generate a candidate jump</span>
+<span class="sd">        (e.g. :func:`normal_shock_relations`'s `gamma`).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -481,7 +485,6 @@
 <span class="sd">    &gt;&gt;&gt; bool(max(abs(v) for v in residuals.values()) &lt; 1e-10)</span>
 <span class="sd">    True</span>
 <span class="sd">    """</span>
-    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.4</span>
     <span class="n">mass</span> <span class="o">=</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">u1</span> <span class="o">-</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">u2</span>
     <span class="n">momentum</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">+</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">u1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">p2</span> <span class="o">+</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">u2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">h1</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">/</span> <span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rho1</span><span class="p">)</span>

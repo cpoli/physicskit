@@ -456,7 +456,8 @@
 
 <span class="sd">    The unperturbed Harris sheet :math:`\\psi_0(y) = -B_0 L\\ln\\cosh(y/L)`</span>
 <span class="sd">    gives an antiparallel reconnecting field</span>
-<span class="sd">    :math:`B_x = -\\partial_y\\psi_0 = B_0\\tanh(y/L)` that reverses sign</span>
+<span class="sd">    :math:`B_x = \\partial_y\\psi_0 = -B_0\\tanh(y/L)` (with the</span>
+<span class="sd">    :func:`reconnection_field_from_flux` convention :math:`B_x=\\partial_y\\psi`) that reverses sign</span>
 <span class="sd">    across :math:`y=0` -- the classic current-sheet configuration in which</span>
 <span class="sd">    reconnection is normally studied. Adding a small ripple</span>
 <span class="sd">    :math:`\\psi_1 = \\epsilon\\cos(k x)\\,\\mathrm{sech}^2(y/L)`, localized to</span>
@@ -746,16 +747,19 @@
 <span class="sd">    wpe : float</span>
 <span class="sd">        Electron plasma frequency.</span>
 <span class="sd">    temperature_anisotropy : float</span>
-<span class="sd">        The ratio :math:`T_\\perp/T_\\parallel`; must exceed 1.</span>
+<span class="sd">        The ratio :math:`T_\\perp/T_\\parallel`. At or below 1 the plasma</span>
+<span class="sd">        is Weibel-stable and ``(0.0, 0.0)`` is returned.</span>
 <span class="sd">    c : float, default=physicskit.constants.C</span>
-<span class="sd">        Speed of light.</span>
+<span class="sd">        Speed of light. Unused, since the maximum sits at :math:`k=0` where</span>
+<span class="sd">        the :math:`k^2c^2` term vanishes; kept for signature symmetry with</span>
+<span class="sd">        :func:`weibel_growth_rate`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    k_max_growth, gamma_max : float</span>
-<span class="sd">        The (zero) wavenumber of maximum growth and the corresponding</span>
-<span class="sd">        growth rate, and the cutoff wavenumber :func:`weibel_growth_rate`</span>
-<span class="sd">        vanishes beyond.</span>
+<span class="sd">    k_max_growth : float</span>
+<span class="sd">        Wavenumber of maximum growth (always 0.0).</span>
+<span class="sd">    gamma_max : float</span>
+<span class="sd">        The corresponding growth rate :math:`\\gamma_{max}`.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>

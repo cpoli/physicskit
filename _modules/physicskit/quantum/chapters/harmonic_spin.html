@@ -739,17 +739,28 @@
 <div class="viewcode-block" id="HarmonicOscillator.squeezed_vacuum_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.HarmonicOscillator.squeezed_vacuum_wavefunction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">squeezed_vacuum_wavefunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Position-space squeezed vacuum :math:`\lvert r,\phi\rangle`.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Position-space squeezed vacuum :math:`\lvert r,\phi\rangle = \hat S(re^{2i\phi})\lvert0\rangle`.</span>
 
-<span class="sd">        A Gaussian with quadrature variance</span>
+<span class="sd">        With :math:`\hat S(\xi)=\exp[(\xi^*\hat a^2-\xi\hat a^{\dagger2})/2]`</span>
+<span class="sd">        and :math:`z=e^{2i\phi}\tanh r`, the exact wavefunction is the</span>
+<span class="sd">        complex Gaussian</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            \Delta x^2 = \frac{\hbar}{2 m \omega}\, e^{-2r}</span>
+<span class="sd">            \psi(x) \propto \exp\!\left[-\frac{x^2}{2x_0^2}\,\frac{1+z}{1-z}\right],</span>
+<span class="sd">            \qquad x_0=\sqrt{\hbar/m\omega},</span>
 
-<span class="sd">        (for :math:`\phi=0`, squeezed below the zero-point value when</span>
-<span class="sd">        :math:`r&gt;0`), at the expense of</span>
-<span class="sd">        :math:`\Delta p^2 = (\hbar m \omega/2)\, e^{2r}`.</span>
+<span class="sd">        squeezed along the rotated quadrature :math:`x\cos\phi+(p/m\omega)\sin\phi`</span>
+<span class="sd">        (variance :math:`e^{-2r}` times the zero-point value) and</span>
+<span class="sd">        anti-squeezed along the orthogonal one. In particular</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \Delta x^2 = \frac{\hbar}{2 m \omega}\left(e^{-2r}\cos^2\phi + e^{2r}\sin^2\phi\right),</span>
+
+<span class="sd">        which is :math:`\frac{\hbar}{2m\omega}e^{-2r}` at :math:`\phi=0`</span>
+<span class="sd">        (with :math:`\Delta p^2 = (\hbar m \omega/2)\, e^{2r}`); at</span>
+<span class="sd">        :math:`r=0` every :math:`\phi` gives the vacuum.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -758,7 +769,8 @@
 <span class="sd">        r : float</span>
 <span class="sd">            Squeezing parameter.</span>
 <span class="sd">        phi : float, default=0.0</span>
-<span class="sd">            Squeezing angle (rotates the quadrature ellipse).</span>
+<span class="sd">            Squeezing angle: rotates the uncertainty ellipse in phase space</span>
+<span class="sd">            by :math:`\phi` (:math:`\phi=\pi/2` squeezes momentum instead).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -766,13 +778,12 @@
 <span class="sd">            Complex-valued (real when ``phi=0``) squeezed-vacuum wavefunction.</span>
 <span class="sd">        """</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">var_x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
-        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">var_x</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.25</span>
-        <span class="n">gaussian</span> <span class="o">=</span> <span class="n">norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">var_x</span><span class="p">))</span>
-        <span class="c1"># A squeezing-angle phi rotates the quadrature ellipse; encode it as</span>
-        <span class="c1"># a quadratic chirp phase, exact for the Gaussian squeezed state.</span>
-        <span class="n">chirp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">var_x</span><span class="p">))</span> <span class="k">if</span> <span class="n">phi</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="mf">1.0</span>
-        <span class="k">return</span> <span class="n">gaussian</span> <span class="o">*</span> <span class="n">chirp</span></div>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>  <span class="c1"># complex; Re(width) &gt; 0 for finite r</span>
+        <span class="n">x0_sq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">)</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x0_sq</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.25</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">norm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">x0_sq</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">psi</span><span class="o">.</span><span class="n">real</span> <span class="k">if</span> <span class="n">phi</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="n">psi</span></div>
 
 
 <div class="viewcode-block" id="HarmonicOscillator.squeezed_uncertainties">

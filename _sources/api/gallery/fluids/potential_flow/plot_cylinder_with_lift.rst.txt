@@ -40,12 +40,14 @@ and checks the resulting lift against the Kutta-Joukowski theorem,
 
 .. math::
 
-    L' = \rho\,U_\infty\,\Gamma,
+    L' = -\rho\,U_\infty\,\Gamma,
 
+(:math:`\Gamma>0` counterclockwise; the clockwise :math:`\Gamma<0` used
+here speeds up the flow over the top and lifts upward, like an airfoil)
 (:func:`~physicskit.fluids.systems.potential_flow.kutta_joukowski_lift`), by
 directly integrating that same pressure around the surface.
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-37
+.. GENERATED FROM PYTHON SOURCE LINES 31-39
 
 .. code-block:: Python
 
@@ -64,7 +66,7 @@ directly integrating that same pressure around the surface.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-43
+.. GENERATED FROM PYTHON SOURCE LINES 40-45
 
 Build the flow
 ---------------
@@ -72,13 +74,13 @@ Circulation is chosen large enough to make the effect obvious; too much
 circulation would pull the (physically required) stagnation points off
 the cylinder surface entirely.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-61
+.. GENERATED FROM PYTHON SOURCE LINES 45-63
 
 .. code-block:: Python
 
 
     U_inf, R, rho = 1.0, 1.0, 1.0
-    Gamma = 3.0
+    Gamma = -3.0  # clockwise: faster flow over the top, upward lift
     flow = flow_past_cylinder(U_inf=U_inf, radius=R, circulation=Gamma)
 
     x = np.linspace(-3, 3, 300)
@@ -98,7 +100,7 @@ the cylinder surface entirely.
 
 
 .. image-sg:: /api/gallery/fluids/potential_flow/images/sphx_glr_plot_cylinder_with_lift_001.png
-   :alt: Cylinder with circulation $\Gamma$ = 3.0
+   :alt: Cylinder with circulation $\Gamma$ = -3.0
    :srcset: /api/gallery/fluids/potential_flow/images/sphx_glr_plot_cylinder_with_lift_001.png
    :class: sphx-glr-single-img
 
@@ -106,7 +108,7 @@ the cylinder surface entirely.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-68
+.. GENERATED FROM PYTHON SOURCE LINES 64-70
 
 Surface pressure coefficient
 ------------------------------
@@ -115,7 +117,7 @@ from the front/back symmetry point they'd sit at with no circulation, and makes
 the low-pressure suction peak on top stronger than the one on the bottom
 -- exactly the pressure asymmetry that produces lift.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-76
+.. GENERATED FROM PYTHON SOURCE LINES 70-78
 
 .. code-block:: Python
 
@@ -139,15 +141,15 @@ the low-pressure suction peak on top stronger than the one on the bottom
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-82
+.. GENERATED FROM PYTHON SOURCE LINES 79-84
 
 Cross-checking the Kutta-Joukowski theorem
 ---------------------------------------------
 Integrating the surface pressure directly should reproduce
 :func:`~physicskit.fluids.systems.potential_flow.kutta_joukowski_lift`'s
-closed-form answer, :math:`L' = \rho U_\infty \Gamma`.
+closed-form answer, :math:`L' = -\rho U_\infty \Gamma`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-95
+.. GENERATED FROM PYTHON SOURCE LINES 84-97
 
 .. code-block:: Python
 
@@ -157,11 +159,11 @@ closed-form answer, :math:`L' = \rho U_\infty \Gamma`.
     Cp_fine = flow.pressure_coefficient(x_fine, y_fine)
     p_fine = Cp_fine * (0.5 * rho * U_inf**2)
     dtheta = theta_fine[1] - theta_fine[0]
-    lift_numeric = abs(np.sum(p_fine * np.sin(theta_fine) * R) * dtheta)
+    lift_numeric = -np.sum(p_fine * np.sin(theta_fine) * R) * dtheta  # y-component of -oint p n dA
     lift_theory = kutta_joukowski_lift(rho=rho, U_inf=U_inf, circulation=Gamma)
 
     print(f"lift from pressure integral: {lift_numeric:.4f}")
-    print(f"lift from Kutta-Joukowski theorem (rho * U_inf * Gamma): {lift_theory:.4f}")
+    print(f"lift from Kutta-Joukowski theorem (-rho * U_inf * Gamma): {lift_theory:.4f}")
 
     plt.show()
 
@@ -173,7 +175,7 @@ closed-form answer, :math:`L' = \rho U_\infty \Gamma`.
  .. code-block:: none
 
     lift from pressure integral: 3.0000
-    lift from Kutta-Joukowski theorem (rho * U_inf * Gamma): 3.0000
+    lift from Kutta-Joukowski theorem (-rho * U_inf * Gamma): 3.0000
 
 
 
@@ -181,7 +183,7 @@ closed-form answer, :math:`L' = \rho U_\infty \Gamma`.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.162 seconds)
+   **Total running time of the script:** (0 minutes 0.258 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_potential_flow_plot_cylinder_with_lift.py:

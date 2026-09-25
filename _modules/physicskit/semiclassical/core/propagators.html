@@ -430,7 +430,9 @@
 <span class="sd">``dVdx(q, params) -&gt; float`` / ``d2Vdx2(q, params) -&gt; float`` /</span>
 <span class="sd">``V(q, params) -&gt; float``, with ``params`` a ``float64`` array -- the</span>
 <span class="sd">same convention used throughout this package's Numba-accelerated</span>
-<span class="sd">integrators, letting a single compiled kernel serve any potential.</span>
+<span class="sd">integrators, letting a single compiled kernel serve any potential. For</span>
+<span class="sd">the same reason as :mod:`physicskit.integrators.fixed_step`, the kernels</span>
+<span class="sd">that take these functions as arguments are not ``cache=True``.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
@@ -450,7 +452,7 @@
 <span class="p">]</span>
 
 
-<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@njit</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="n">q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M00</span><span class="p">,</span> <span class="n">M01</span><span class="p">,</span> <span class="n">M10</span><span class="p">,</span> <span class="n">M11</span><span class="p">,</span> <span class="n">_S</span> <span class="o">=</span> <span class="n">state</span>
     <span class="n">d2V</span> <span class="o">=</span> <span class="n">d2Vdx2</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -465,7 +467,7 @@
     <span class="k">return</span> <span class="n">out</span>
 
 
-<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@njit</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_rk4_step</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="n">k1</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">k2</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -474,7 +476,7 @@
     <span class="k">return</span> <span class="n">state</span> <span class="o">+</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
 
 
-<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@njit</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_integrate</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="n">Mqp_hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -848,9 +850,12 @@
 <span class="sd">    .. math::</span>
 
 <span class="sd">       C_t = \sqrt{\frac{1}{2}\left(M_{qq} + M_{pp}</span>
-<span class="sd">       - i\hbar\gamma M_{qp} + \frac{i}{\hbar\gamma}M_{pq}\right)},</span>
+<span class="sd">       - 2i\hbar\gamma M_{qp} + \frac{i}{2\hbar\gamma}M_{pq}\right)},</span>
 
-<span class="sd">    which reduces to :math:`C_t=1` at :math:`t=0` (:math:`M=\mathbb{1}`),</span>
+<span class="sd">    the standard Herman-Kluk form (Herman &amp; Kluk 1984; Kay 1994) written</span>
+<span class="sd">    for this module's frozen Gaussians :math:`e^{-\gamma(x-q)^2}`, whose</span>
+<span class="sd">    width parameter in the usual :math:`e^{-\gamma_s(x-q)^2/2}` convention</span>
+<span class="sd">    is :math:`\gamma_s=2\gamma`. It reduces to :math:`C_t=1` at :math:`t=0` (:math:`M=\mathbb{1}`),</span>
 <span class="sd">    consistent with the frozen Gaussian basis's resolution of the</span>
 <span class="sd">    identity, :math:`\int \tfrac{dq\,dp}{2\pi\hbar}\,|g_{q,p}\rangle\langle</span>
 <span class="sd">    g_{q,p}| = \hat{1}`.</span>
@@ -876,7 +881,8 @@
 <span class="sd">    (1+0j)</span>
 <span class="sd">    """</span>
     <span class="n">Mqq</span><span class="p">,</span> <span class="n">Mqp</span><span class="p">,</span> <span class="n">Mpq</span><span class="p">,</span> <span class="n">Mpp</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Mqq</span> <span class="o">+</span> <span class="n">Mpp</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">Mqp</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">Mpq</span> <span class="o">/</span> <span class="p">(</span><span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">))</span>
+    <span class="n">gamma_s</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">gamma</span>  <span class="c1"># e^{-gamma x^2} = e^{-gamma_s x^2 / 2}</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Mqq</span> <span class="o">+</span> <span class="n">Mpp</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma_s</span> <span class="o">*</span> <span class="n">Mqp</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">Mpq</span> <span class="o">/</span> <span class="p">(</span><span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma_s</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">)</span></div>
 
 

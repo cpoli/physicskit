@@ -19,9 +19,10 @@ form, with the H-function
 
 .. math::
 
-    H = \int_0^\infty f(v) \ln f(v) \, dv
+    H = \int_0^\infty f(v) \ln \frac{f(v)}{2\pi v} \, dv
 
-decreasing monotonically on average as the gas thermalizes, since the
+(Boltzmann's :math:`\int f \ln f \, d^2v` written in terms of the speed
+distribution :math:`f(v)`, with :math:`2\pi v` the 2D Jacobian) decreasing monotonically on average as the gas thermalizes, since the
 Maxwell-Boltzmann distribution is the one that minimizes :math:`H` at
 fixed energy. This example starts the gas from a highly artificial
 "delta-function" speed distribution -- every particle moving at the same

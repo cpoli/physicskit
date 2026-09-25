@@ -598,6 +598,12 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">fdtd_1d</span><span class="p">(</span><span class="n">Ez0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Hy0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mu_r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Evolve a 1D plane wave (Ez, Hy) on a Yee grid using leapfrog FDTD.</span>
 
+<span class="sd">    Discretizes Maxwell's curl equations for fields varying only along</span>
+<span class="sd">    ``x``, :math:`\\partial_t H_y = \\partial_x E_z/\\mu` and</span>
+<span class="sd">    :math:`\\partial_t E_z = \\partial_x H_y/\\epsilon` (the same signs as</span>
+<span class="sd">    :func:`fdtd_2d_tmz`), so a wave moving toward ``+x`` has</span>
+<span class="sd">    :math:`H_y = -E_z/\\eta` (Poynting vector :math:`-E_zH_y&gt;0`).</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Ez0 : ndarray, shape (N,)</span>
@@ -629,8 +635,8 @@
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    A smooth Gaussian pulse, launched with the impedance-matched initial</span>
-<span class="sd">    condition of a purely right-moving wave, propagates at exactly the</span>
-<span class="sd">    vacuum speed of light:</span>
+<span class="sd">    condition of a purely right-moving wave (:math:`H_y=-E_z/\\eta_0`),</span>
+<span class="sd">    propagates at exactly the vacuum speed of light:</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; N = 800</span>
@@ -640,7 +646,7 @@
 <span class="sd">    &gt;&gt;&gt; x0, sigma_pulse = 100, 25</span>
 <span class="sd">    &gt;&gt;&gt; Ez0 = np.exp(-((np.arange(N) - x0) ** 2) / (2 * sigma_pulse ** 2))</span>
 <span class="sd">    &gt;&gt;&gt; xh = np.arange(N - 1) + 0.5</span>
-<span class="sd">    &gt;&gt;&gt; Hy0 = np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse ** 2)) / eta0</span>
+<span class="sd">    &gt;&gt;&gt; Hy0 = -np.exp(-((xh - x0) ** 2) / (2 * sigma_pulse ** 2)) / eta0</span>
 <span class="sd">    &gt;&gt;&gt; eps_r, mu_r = np.ones(N), np.ones(N)</span>
 <span class="sd">    &gt;&gt;&gt; Ez, Hy = fdtd_1d(Ez0, Hy0, eps_r, mu_r, steps=360, dt=dt, dx=dx)</span>
 <span class="sd">    &gt;&gt;&gt; peak = np.argmax(Ez)</span>
@@ -658,8 +664,8 @@
         <span class="n">Ca</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">loss</span><span class="p">)</span>
         <span class="n">Cb</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">EPS0</span> <span class="o">*</span> <span class="n">eps_r</span> <span class="o">*</span> <span class="n">dx</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">loss</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
-        <span class="n">Hy</span> <span class="o">+=</span> <span class="o">-</span><span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">MU0</span> <span class="o">*</span> <span class="n">mu_r</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Ez</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ca</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">Cb</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Hy</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Hy</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">Hy</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">MU0</span> <span class="o">*</span> <span class="n">mu_r</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Ez</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ca</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ez</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Cb</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Hy</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Hy</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">Ez</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">Ez</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">return</span> <span class="n">Ez</span><span class="p">,</span> <span class="n">Hy</span></div>

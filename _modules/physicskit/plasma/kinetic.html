@@ -546,23 +546,24 @@
 <div class="viewcode-block" id="langmuir_wave_ic">
 <a class="viewcode-back" href="../../../api/plasma.html#physicskit.plasma.langmuir_wave_ic">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">langmuir_wave_ic</span><span class="p">(</span><span class="n">n_particles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_mode</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_th</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Small-amplitude single-mode initial condition for a driven Langmuir (electron plasma) wave.</span>
+<span class="w">    </span><span class="sd">"""Small-amplitude single-mode initial condition for a Langmuir (electron plasma) wave.</span>
 
-<span class="sd">    Identical in construction to :func:`landau_damping_ic` -- the same</span>
-<span class="sd">    quiet-start displacement :math:`\\delta x=(\\alpha/k)\\sin(kx_0)` seeds</span>
-<span class="sd">    the same density perturbation :math:`n_0(1-\\alpha\\cos(kx))` -- but</span>
-<span class="sd">    additionally imparts each particle the small coherent velocity</span>
-<span class="sd">    perturbation :math:`\\delta v = (\\alpha\\,\\omega_{pe}/k)\\sin(kx_0)`</span>
-<span class="sd">    predicted by the linearized cold-fluid continuity equation for a wave</span>
-<span class="sd">    oscillating at the electron plasma frequency (:math:`\\omega\\approx\\omega_{pe}=1`</span>
-<span class="sd">    in these normalized units). Giving both the density *and* velocity</span>
-<span class="sd">    perturbation their linear-theory phase relationship launches a wave</span>
-<span class="sd">    that is (for :math:`k\\lambda_D \\ll 1`, i.e. `v_th` small enough that</span>
-<span class="sd">    Landau damping in :func:`landau_damping_rate` is negligible) very</span>
-<span class="sd">    weakly damped, so :func:`pic_simulate` shows the density oscillating</span>
-<span class="sd">    in place at :math:`\\omega_{pe}` for many periods rather than decaying</span>
-<span class="sd">    within a few, as the otherwise-identical :func:`landau_damping_ic`</span>
-<span class="sd">    (fluid velocity perturbation omitted) would for the same `alpha`.</span>
+<span class="sd">    Uses the same quiet-start displacement as :func:`landau_damping_ic`,</span>
+<span class="sd">    :math:`\\delta x=(\\alpha/k)\\sin(kx_0)` (density perturbation</span>
+<span class="sd">    :math:`n_0(1-\\alpha\\cos(kx))`), and additionally gives each particle</span>
+<span class="sd">    the coherent velocity :math:`\\delta v = (\\alpha\\,\\omega_{pe}/k)\\sin(kx_0)`</span>
+<span class="sd">    (:math:`\\omega_{pe}=1` in these normalized units). In cold-fluid</span>
+<span class="sd">    linear theory the displacement then evolves as</span>
+<span class="sd">    :math:`\\xi(x_0,t) = (\\alpha/k)\\sin(kx_0)\\,[\\cos\\omega_{pe}t + \\sin\\omega_{pe}t]`:</span>
+<span class="sd">    a standing wave ringing in place at :math:`\\omega_{pe}`, with</span>
+<span class="sd">    :math:`\\sqrt2` the amplitude (twice the field energy) of the</span>
+<span class="sd">    displacement-only start and a :math:`\\pi/4` phase shift.</span>
+
+<span class="sd">    How long it rings is set by Landau damping, i.e. by :math:`k\\lambda_D`</span>
+<span class="sd">    (see :func:`landau_damping_rate`), not by the velocity kick: for</span>
+<span class="sd">    :math:`k_{mode}\\,v_{th} \\ll \\omega_{pe}` this and</span>
+<span class="sd">    :func:`landau_damping_ic` both oscillate essentially undamped, while</span>
+<span class="sd">    for :math:`k\\lambda_D \\gtrsim 0.3` both damp.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -589,8 +590,8 @@
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
 <span class="sd">    landau_damping_ic : The companion density-only perturbation (no</span>
-<span class="sd">        coherent velocity kick), which damps rather than sustains its</span>
-<span class="sd">        oscillation.</span>
+<span class="sd">        coherent velocity kick); it damps or rings for the same</span>
+<span class="sd">        :math:`k\\lambda_D` as this one.</span>
 <span class="sd">    pic_simulate : Evolve this initial condition forward in time.</span>
 
 <span class="sd">    Examples</span>

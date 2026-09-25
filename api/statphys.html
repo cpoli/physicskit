@@ -1153,9 +1153,14 @@ H-theorem; <code class="docutils literal notranslate"><span class="pre">&quot;ma
 <span class="sig-name descname"><span class="pre">h_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/molecular_dynamics.html#LennardJonesGas.h_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LennardJonesGas.h_function" title="Link to this definition">#</a></dt>
 <dd><p>Estimate Boltzmann’s H-function from the instantaneous speed histogram.</p>
 <div class="math notranslate nohighlight">
-\[H(t) = \int_0^\infty f(v, t) \ln f(v, t) \, dv\]</div>
+\[H(t) = \int_0^\infty f(v, t) \ln \frac{f(v, t)}{2\pi v} \, dv\]</div>
 <p>estimated by binning the current particle speeds into a normalized
-density histogram. <span class="math notranslate nohighlight">\(H\)</span> decreases monotonically (on average) as
+density histogram. For an isotropic 2D gas, <span class="math notranslate nohighlight">\(f(v)/(2\pi v)\)</span> is
+the velocity-space density, so this equals Boltzmann’s
+<span class="math notranslate nohighlight">\(\int f \ln f \, d^2v\)</span>; dropping the <span class="math notranslate nohighlight">\(2\pi v\)</span> Jacobian
+would give a functional minimized by a half-Gaussian in speed rather
+than by the Maxwell-Boltzmann (Rayleigh) distribution.
+<span class="math notranslate nohighlight">\(H\)</span> decreases monotonically (on average) as
 an arbitrary initial velocity distribution relaxes toward the
 Maxwell-Boltzmann equilibrium, which minimizes <span class="math notranslate nohighlight">\(H\)</span> at fixed
 energy – the microscopic root of the second law of thermodynamics.</p>
@@ -1257,9 +1262,9 @@ for the fixed center-of-mass momentum.</p>
 <li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=64</em>) – Linear lattice size.</p></li>
 <li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.5</em>) – Occupation probability: fraction of sites (site percolation) or
 bonds (bond percolation) that are open.</p></li>
-<li><p><strong>mode</strong> (<em>{&quot;site&quot;</em><em>, </em><em>&quot;bond&quot;}</em><em>, </em><em>default=&quot;site&quot;</em>) – Percolation type. Known exact thresholds for the square lattice are
-<span class="math notranslate nohighlight">\(p_c \approx 0.592746\)</span> (site) and <span class="math notranslate nohighlight">\(p_c = 0.5\)</span> (bond,
-exact by self-duality).</p></li>
+<li><p><strong>mode</strong> (<em>{&quot;site&quot;</em><em>, </em><em>&quot;bond&quot;}</em><em>, </em><em>default=&quot;site&quot;</em>) – Percolation type. The square-lattice thresholds are
+<span class="math notranslate nohighlight">\(p_c \approx 0.592746\)</span> (site, known only numerically) and
+<span class="math notranslate nohighlight">\(p_c = 0.5\)</span> (bond, exact by self-duality).</p></li>
 <li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for reproducible lattice realizations.</p></li>
 </ul>
 </dd>

@@ -35,7 +35,7 @@ eta0 = np.sqrt(MU0 / EPS0)
 x0, sigma = 100, 25
 Ez0 = np.exp(-((np.arange(N) - x0) ** 2) / (2 * sigma**2))
 xh = np.arange(N - 1) + 0.5
-Hy0 = np.exp(-((xh - x0) ** 2) / (2 * sigma**2)) / eta0
+Hy0 = -np.exp(-((xh - x0) ** 2) / (2 * sigma**2)) / eta0  # right-moving: Hy = -Ez/eta0
 eps_r, mu_r = np.ones(N), np.ones(N)
 
 # %%

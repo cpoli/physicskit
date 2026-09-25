@@ -25,10 +25,9 @@ Irving Langmuir (1928) discovered that a plasma's electron gas resonates
 at a sharply defined natural frequency: displace the electrons and their
 own restoring electric field snaps them back, overshoots, and rings,
 exactly like a mass on a spring built from nothing but the plasma's own
-charge density. Both the density displacement and the electron fluid
-velocity linear cold-fluid theory predicts for a wave oscillating at
-the electron plasma frequency :math:`\omega_{pe}` are built into the
-particles directly:
+charge density. :func:`~physicskit.plasma.kinetic.langmuir_wave_ic` seeds a
+particle-in-cell plasma with a sinusoidal displacement and a coherent
+velocity kick,
 
 .. math::
 
@@ -36,20 +35,19 @@ particles directly:
    \qquad
    \delta v = \frac{\alpha\,\omega_{pe}}{k}\sin(kx_0),
 
-which together produce the density perturbation
-:math:`n(x)\approx n_0\big(1-\alpha\cos(kx)\big)` oscillating coherently
-at :math:`\omega\approx\omega_{pe}`. :func:`~physicskit.plasma.kinetic.langmuir_wave_ic`
-seeds a particle-in-cell plasma with both of these perturbations, so that
--- unlike the otherwise identical :func:`~physicskit.plasma.kinetic.landau_damping_ic`,
-which omits the velocity kick and damps away -- the density rings in
-place for many periods.
+giving the density perturbation :math:`n(x)\approx n_0\big(1-\alpha\cos(kx)\big)`,
+which then rings in place as a standing wave at :math:`\omega\approx\omega_{pe}`.
+The thermal spread here is small (:math:`k\lambda_D \ll 1`), so Landau
+damping is negligible and the oscillation persists for many periods -- in
+contrast to the warmer plasma of the Landau-damping example, where
+:math:`k\lambda_D` is large enough for resonant electrons to drain the wave.
 
 :func:`~physicskit.plasma.kinetic.pic_simulate` evolves this initial
 condition exactly as it does for Landau damping and the two-stream
 instability: the same particles, the same field solve, no wave equation
 assumed anywhere.
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-40
+.. GENERATED FROM PYTHON SOURCE LINES 33-38
 
 .. code-block:: Python
 
@@ -65,14 +63,14 @@ assumed anywhere.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-45
+.. GENERATED FROM PYTHON SOURCE LINES 39-43
 
 A single-mode density-and-velocity perturbation
 ------------------------------------------------------
 k * lambda_D is kept small (cold, slow thermal spread) so the wave is
 only weakly Landau-damped and rings for many periods instead of decaying.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-50
+.. GENERATED FROM PYTHON SOURCE LINES 43-48
 
 .. code-block:: Python
 
@@ -88,7 +86,7 @@ only weakly Landau-damped and rings for many periods instead of decaying.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-57
+.. GENERATED FROM PYTHON SOURCE LINES 49-55
 
 The density oscillates in place at (approximately) omega_pe
 ------------------------------------------------------------------------
@@ -97,7 +95,7 @@ the run shows the same standing-wave pattern recurring, rather than
 decaying, because both the density *and* velocity perturbations carry
 the correct linear-theory phase relationship.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-75
+.. GENERATED FROM PYTHON SOURCE LINES 55-73
 
 .. code-block:: Python
 
@@ -131,7 +129,7 @@ the correct linear-theory phase relationship.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-87
+.. GENERATED FROM PYTHON SOURCE LINES 74-85
 
 The full space-time ringing pattern
 ------------------------------------------------------------------------
@@ -145,7 +143,7 @@ structure decaying, translating, or growing. A larger particle count
 than the two-snapshot comparison above is used here purely to keep
 discreteness noise from swamping the pattern across so many rows.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-114
+.. GENERATED FROM PYTHON SOURCE LINES 85-112
 
 .. code-block:: Python
 
@@ -188,12 +186,12 @@ discreteness noise from swamping the pattern across so many rows.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-117
+.. GENERATED FROM PYTHON SOURCE LINES 113-115
 
 Animating the standing-wave oscillation
 --------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-120
+.. GENERATED FROM PYTHON SOURCE LINES 115-118
 
 .. code-block:: Python
 
@@ -2478,7 +2476,7 @@ Animating the standing-wave oscillation
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.066 seconds)
+   **Total running time of the script:** (0 minutes 4.716 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_kinetic_plot_04_langmuir_wave.py:

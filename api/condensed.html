@@ -897,9 +897,15 @@ order is <code class="docutils literal notranslate"><span class="pre">(E</span> 
 band curvature.</p></li>
 <li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Model parameters controlling the Dirac velocity and quadratic
 band curvature.</p></li>
-<li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. The model is topological (band-inverted) for
-<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span> and trivial for <span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>.</p></li>
-<li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter.</p></li>
+<li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. With <span class="math notranslate nohighlight">\(d_z = M - 2B(2-\cos k_x-\cos k_y)\)</span>
+the model is topological (band-inverted, spin Chern number
+<span class="math notranslate nohighlight">\(\pm1\)</span>) for <span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span> and trivial otherwise (the
+gap closes at <span class="math notranslate nohighlight">\(\Gamma\)</span>, <span class="math notranslate nohighlight">\(X\)</span>/<span class="math notranslate nohighlight">\(Y\)</span>, and <span class="math notranslate nohighlight">\(M\)</span> for
+<span class="math notranslate nohighlight">\(M/B = 0, 4, 8\)</span>).</p></li>
+<li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter, entering as
+<span class="math notranslate nohighlight">\(\epsilon(k) = -2D(2-\cos k_x-\cos k_y)\)</span>, the lattice
+regularization of the continuum <span class="math notranslate nohighlight">\(-Dk^2\)</span> (Qi, Hughes &amp; Zhang
+2008), matching <span class="math notranslate nohighlight">\(B\)</span>’s.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -938,7 +944,7 @@ band curvature (see <a class="reference internal" href="#physicskit.condensed.bh
 <li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Model parameters controlling the Dirac velocity and quadratic
 band curvature (see <a class="reference internal" href="#physicskit.condensed.bhz_hamiltonian" title="physicskit.condensed.bhz_hamiltonian"><code class="xref py py-func docutils literal notranslate"><span class="pre">bhz_hamiltonian()</span></code></a>).</p></li>
 <li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. Topological (edge-state-carrying) for
-<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span>.</p></li>
+<span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span>.</p></li>
 <li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter.</p></li>
 </ul>
 </dd>
@@ -951,9 +957,9 @@ band curvature (see <a class="reference internal" href="#physicskit.condensed.bh
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>In the topological regime (<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span>), the ribbon has a pair of
+<p>In the topological regime (<span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span>), the ribbon has a pair of
 near-zero-energy states crossing at <span class="math notranslate nohighlight">\(k_x = 0\)</span> – the helical edge
-modes – absent in the trivial regime (<span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>):</p>
+modes – absent in the trivial regime (e.g. <span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">bhz_ribbon_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">n_cells</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">))</span>
@@ -1704,9 +1710,9 @@ block-diagonal in spin; each block is a Haldane model with
 <span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">up</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">];</span> <span class="n">down</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">down_expected</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="n">down_expected</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">up</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">down_at_minus_k</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">down_at_minus_k</span><span class="p">,</span> <span class="n">up</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>  <span class="c1"># time reversal: H_dn(-k) = H_up(k)*</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1911,12 +1917,18 @@ drawn uniformly from <code class="docutils literal notranslate"><span class="pre
 <dd class="field-odd"><p><em>ndarray of shape (N,)</em> – The same array passed in.</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>Trial moves draw from Numba’s internal RNG, which neither
+<code class="docutils literal notranslate"><span class="pre">np.random.seed</span></code> nor a <code class="docutils literal notranslate"><span class="pre">np.random.default_rng</span></code> generator affects
+when called from ordinary Python. For a reproducible chain, seed it
+first with <code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.statphys.core.monte_carlo.seed_numba_random()</span></code>.</p>
 <p class="rubric">Examples</p>
 <p>A two-particle system’s Metropolis chain never proposes an <em>exactly</em>
 coincident configuration acceptable (<span class="math notranslate nohighlight">\(|\Psi_m|^2 = 0\)</span> there), so
 repeated sweeps keep the two particles strictly apart:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.core.monte_carlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">seed_numba_random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seed_numba_random</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.0</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.0</span><span class="n">j</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">laughlin_metropolis_sweep</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1966,6 +1978,8 @@ hole, <code class="docutils literal notranslate"><span class="pre">g</span> <spa
 </div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.core.monte_carlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">seed_numba_random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seed_numba_random</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
@@ -3904,9 +3918,15 @@ order is <code class="docutils literal notranslate"><span class="pre">(E</span> 
 band curvature.</p></li>
 <li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Model parameters controlling the Dirac velocity and quadratic
 band curvature.</p></li>
-<li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. The model is topological (band-inverted) for
-<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span> and trivial for <span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>.</p></li>
-<li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter.</p></li>
+<li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. With <span class="math notranslate nohighlight">\(d_z = M - 2B(2-\cos k_x-\cos k_y)\)</span>
+the model is topological (band-inverted, spin Chern number
+<span class="math notranslate nohighlight">\(\pm1\)</span>) for <span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span> and trivial otherwise (the
+gap closes at <span class="math notranslate nohighlight">\(\Gamma\)</span>, <span class="math notranslate nohighlight">\(X\)</span>/<span class="math notranslate nohighlight">\(Y\)</span>, and <span class="math notranslate nohighlight">\(M\)</span> for
+<span class="math notranslate nohighlight">\(M/B = 0, 4, 8\)</span>).</p></li>
+<li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter, entering as
+<span class="math notranslate nohighlight">\(\epsilon(k) = -2D(2-\cos k_x-\cos k_y)\)</span>, the lattice
+regularization of the continuum <span class="math notranslate nohighlight">\(-Dk^2\)</span> (Qi, Hughes &amp; Zhang
+2008), matching <span class="math notranslate nohighlight">\(B\)</span>’s.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3945,7 +3965,7 @@ band curvature (see <a class="reference internal" href="#physicskit.condensed.mo
 <li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Model parameters controlling the Dirac velocity and quadratic
 band curvature (see <a class="reference internal" href="#physicskit.condensed.models.bhz_hamiltonian" title="physicskit.condensed.models.bhz_hamiltonian"><code class="xref py py-func docutils literal notranslate"><span class="pre">bhz_hamiltonian()</span></code></a>).</p></li>
 <li><p><strong>M</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Band inversion mass. Topological (edge-state-carrying) for
-<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span>.</p></li>
+<span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span>.</p></li>
 <li><p><strong>D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Particle-hole asymmetry parameter.</p></li>
 </ul>
 </dd>
@@ -3958,9 +3978,9 @@ band curvature (see <a class="reference internal" href="#physicskit.condensed.mo
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>In the topological regime (<span class="math notranslate nohighlight">\(M/B &gt; 0\)</span>), the ribbon has a pair of
+<p>In the topological regime (<span class="math notranslate nohighlight">\(0 &lt; M/B &lt; 8\)</span>), the ribbon has a pair of
 near-zero-energy states crossing at <span class="math notranslate nohighlight">\(k_x = 0\)</span> – the helical edge
-modes – absent in the trivial regime (<span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>):</p>
+modes – absent in the trivial regime (e.g. <span class="math notranslate nohighlight">\(M/B &lt; 0\)</span>):</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">bhz_ribbon_hamiltonian</span><span class="p">(</span><span class="n">kx</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">n_cells</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">))</span>
@@ -4224,9 +4244,9 @@ block-diagonal in spin; each block is a Haldane model with
 <span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">up</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">];</span> <span class="n">down</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">down_expected</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="n">down_expected</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">up</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">down_at_minus_k</span> <span class="o">=</span> <span class="n">kane_mele_hamiltonian</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">lambda_so</span><span class="o">=</span><span class="mf">0.06</span><span class="p">)[</span><span class="mi">2</span><span class="p">:,</span> <span class="mi">2</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">down_at_minus_k</span><span class="p">,</span> <span class="n">up</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>  <span class="c1"># time reversal: H_dn(-k) = H_up(k)*</span>
 <span class="go">True</span>
 </pre></div>
 </div>

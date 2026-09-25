@@ -1995,7 +1995,9 @@ Lorentz-invariance scale, so <code class="docutils literal notranslate"><span cl
 continuum equation this chain approximates, with the default
 m=1, k=1) is solved by q=4*atan(exp(x)) only for exactly unit
 width. Passing a different <code class="docutils literal notranslate"><span class="pre">width</span></code> here without also scaling
-<code class="docutils literal notranslate"><span class="pre">k</span></code>/<code class="docutils literal notranslate"><span class="pre">m</span></code> to match (<code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">sqrt(k/m)</span></code>) gives a profile
+<code class="docutils literal notranslate"><span class="pre">k</span></code> to match (the static kink of <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">q_tt</span> <span class="pre">=</span> <span class="pre">k</span> <span class="pre">q_xx</span> <span class="pre">-</span> <span class="pre">sin(q)</span></code> has
+<code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">sqrt(k)</span></code>; <code class="docutils literal notranslate"><span class="pre">m</span></code> only sets the wave speed
+<code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">sqrt(k/m)</span></code>) gives a profile
 that visibly relaxes/radiates under the true dynamics instead
 of propagating as a clean, stable soliton.</p>
 <p>The exact traveling-wave solution of the continuum sine-Gordon
@@ -2010,8 +2012,8 @@ a small-v approximation and becomes badly wrong as <code class="docutils literal
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Chain length.</p></li>
 <li><p><strong>center</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Lattice site the kink is centered on at t=0.</p></li>
-<li><p><strong>width</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Soliton width; must equal <code class="docutils literal notranslate"><span class="pre">sqrt(k/m)</span></code> (1, for the default
-m=1, k=1) for a genuine soliton solution.</p></li>
+<li><p><strong>width</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Soliton width; must equal <code class="docutils literal notranslate"><span class="pre">sqrt(k)</span></code> (1, for the default
+k=1) for a genuine soliton solution.</p></li>
 <li><p><strong>velocity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Boost velocity, <code class="docutils literal notranslate"><span class="pre">|velocity|</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>.</p></li>
 <li><p><strong>polarity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – +1 for a kink, -1 for an antikink.</p></li>
 </ul>
@@ -2020,7 +2022,9 @@ m=1, k=1) for a genuine soliton solution.</p></li>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>q0, p0</strong> (<em>ndarray, shape (n,)</em>) – Initial displacements and momenta.</p>
+<dd class="field-odd"><p><strong>q0, p0</strong> (<em>ndarray, shape (n,)</em>) – Initial displacements and momenta. <code class="docutils literal notranslate"><span class="pre">p0</span></code> is <code class="docutils literal notranslate"><span class="pre">dq/dt</span></code> at t=0,
+i.e. the momentum for the default <code class="docutils literal notranslate"><span class="pre">m=1</span></code>; multiply by <code class="docutils literal notranslate"><span class="pre">m</span></code>
+for another mass.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <code class="docutils literal notranslate"><span class="pre">abs(velocity)</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code>.</p>

@@ -1288,13 +1288,16 @@ grid of spacing <span class="math notranslate nohighlight">\(\lambda z/(N\,dx)\)
 \[A = D = \cos(\sqrt{n_2}\,d), \qquad
 B = \frac{\sin(\sqrt{n_2}\,d)}{n_0\sqrt{n_2}}, \qquad
 C = -n_0\sqrt{n_2}\,\sin(\sqrt{n_2}\,d).\]</div>
-<p>As <code class="docutils literal notranslate"><span class="pre">n2_coeff</span></code> <span class="math notranslate nohighlight">\(\to 0\)</span> (a homogeneous medium of index
-<span class="math notranslate nohighlight">\(n_0\)</span>), <span class="math notranslate nohighlight">\(A=D\to 1\)</span>, <span class="math notranslate nohighlight">\(C\to 0\)</span>, and
-<span class="math notranslate nohighlight">\(B \to d/n_0\)</span> – matching <a class="reference internal" href="#physicskit.optics.free_space" title="physicskit.optics.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> exactly only for
-<span class="math notranslate nohighlight">\(n_0 = 1\)</span>. This <code class="docutils literal notranslate"><span class="pre">d/n_0</span></code> scaling (rather than plain <code class="docutils literal notranslate"><span class="pre">d</span></code>) for
-<span class="math notranslate nohighlight">\(n_0 \neq 1\)</span> is inherent to the standard GRIN formula quoted
-above; callers comparing against <a class="reference internal" href="#physicskit.optics.free_space" title="physicskit.optics.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> in this limit
-should do so at <span class="math notranslate nohighlight">\(n_0 = 1\)</span>.</p>
+<p>Input and output ray angles are measured <em>outside</em> the rod, in a
+medium of index 1: this is the inside-the-rod solution
+(<span class="math notranslate nohighlight">\(A=D=\cos\)</span>, <span class="math notranslate nohighlight">\(B=\sin/\sqrt{n_2}\)</span>,
+<span class="math notranslate nohighlight">\(C=-\sqrt{n_2}\sin\)</span>) sandwiched between the flat entrance and
+exit faces, <code class="docutils literal notranslate"><span class="pre">flat_interface(n0,</span> <span class="pre">1)</span> <span class="pre">&#64;</span> <span class="pre">M_inside</span> <span class="pre">&#64;</span> <span class="pre">flat_interface(1,</span> <span class="pre">n0)</span></code>,
+which is where the <span class="math notranslate nohighlight">\(n_0\)</span> factors come from. As <code class="docutils literal notranslate"><span class="pre">n2_coeff</span></code>
+<span class="math notranslate nohighlight">\(\to 0\)</span>, <span class="math notranslate nohighlight">\(A=D\to 1\)</span>, <span class="math notranslate nohighlight">\(C\to 0\)</span>, and
+<span class="math notranslate nohighlight">\(B \to d/n_0\)</span> – the familiar reduced thickness of a
+homogeneous slab of index <span class="math notranslate nohighlight">\(n_0\)</span> in air, equal to
+<a class="reference internal" href="#physicskit.optics.free_space" title="physicskit.optics.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> only for <span class="math notranslate nohighlight">\(n_0 = 1\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2101,13 +2104,16 @@ traveled; its angle is unchanged.</p>
 \[A = D = \cos(\sqrt{n_2}\,d), \qquad
 B = \frac{\sin(\sqrt{n_2}\,d)}{n_0\sqrt{n_2}}, \qquad
 C = -n_0\sqrt{n_2}\,\sin(\sqrt{n_2}\,d).\]</div>
-<p>As <code class="docutils literal notranslate"><span class="pre">n2_coeff</span></code> <span class="math notranslate nohighlight">\(\to 0\)</span> (a homogeneous medium of index
-<span class="math notranslate nohighlight">\(n_0\)</span>), <span class="math notranslate nohighlight">\(A=D\to 1\)</span>, <span class="math notranslate nohighlight">\(C\to 0\)</span>, and
-<span class="math notranslate nohighlight">\(B \to d/n_0\)</span> – matching <a class="reference internal" href="#physicskit.optics.ray.free_space" title="physicskit.optics.ray.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> exactly only for
-<span class="math notranslate nohighlight">\(n_0 = 1\)</span>. This <code class="docutils literal notranslate"><span class="pre">d/n_0</span></code> scaling (rather than plain <code class="docutils literal notranslate"><span class="pre">d</span></code>) for
-<span class="math notranslate nohighlight">\(n_0 \neq 1\)</span> is inherent to the standard GRIN formula quoted
-above; callers comparing against <a class="reference internal" href="#physicskit.optics.ray.free_space" title="physicskit.optics.ray.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> in this limit
-should do so at <span class="math notranslate nohighlight">\(n_0 = 1\)</span>.</p>
+<p>Input and output ray angles are measured <em>outside</em> the rod, in a
+medium of index 1: this is the inside-the-rod solution
+(<span class="math notranslate nohighlight">\(A=D=\cos\)</span>, <span class="math notranslate nohighlight">\(B=\sin/\sqrt{n_2}\)</span>,
+<span class="math notranslate nohighlight">\(C=-\sqrt{n_2}\sin\)</span>) sandwiched between the flat entrance and
+exit faces, <code class="docutils literal notranslate"><span class="pre">flat_interface(n0,</span> <span class="pre">1)</span> <span class="pre">&#64;</span> <span class="pre">M_inside</span> <span class="pre">&#64;</span> <span class="pre">flat_interface(1,</span> <span class="pre">n0)</span></code>,
+which is where the <span class="math notranslate nohighlight">\(n_0\)</span> factors come from. As <code class="docutils literal notranslate"><span class="pre">n2_coeff</span></code>
+<span class="math notranslate nohighlight">\(\to 0\)</span>, <span class="math notranslate nohighlight">\(A=D\to 1\)</span>, <span class="math notranslate nohighlight">\(C\to 0\)</span>, and
+<span class="math notranslate nohighlight">\(B \to d/n_0\)</span> – the familiar reduced thickness of a
+homogeneous slab of index <span class="math notranslate nohighlight">\(n_0\)</span> in air, equal to
+<a class="reference internal" href="#physicskit.optics.ray.free_space" title="physicskit.optics.ray.free_space"><code class="xref py py-func docutils literal notranslate"><span class="pre">free_space()</span></code></a> only for <span class="math notranslate nohighlight">\(n_0 = 1\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

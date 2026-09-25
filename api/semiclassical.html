@@ -940,8 +940,11 @@ Bohr-Sommerfeld spectrum:</p>
 <dd><p>Herman-Kluk prefactor <span class="math notranslate nohighlight">\(C_t(q_0,p_0)\)</span> built from the monodromy matrix.</p>
 <div class="math notranslate nohighlight">
 \[C_t = \sqrt{\frac{1}{2}\left(M_{qq} + M_{pp}
-- i\hbar\gamma M_{qp} + \frac{i}{\hbar\gamma}M_{pq}\right)},\]</div>
-<p>which reduces to <span class="math notranslate nohighlight">\(C_t=1\)</span> at <span class="math notranslate nohighlight">\(t=0\)</span> (<span class="math notranslate nohighlight">\(M=\mathbb{1}\)</span>),
+- 2i\hbar\gamma M_{qp} + \frac{i}{2\hbar\gamma}M_{pq}\right)},\]</div>
+<p>the standard Herman-Kluk form (Herman &amp; Kluk 1984; Kay 1994) written
+for this module’s frozen Gaussians <span class="math notranslate nohighlight">\(e^{-\gamma(x-q)^2}\)</span>, whose
+width parameter in the usual <span class="math notranslate nohighlight">\(e^{-\gamma_s(x-q)^2/2}\)</span> convention
+is <span class="math notranslate nohighlight">\(\gamma_s=2\gamma\)</span>. It reduces to <span class="math notranslate nohighlight">\(C_t=1\)</span> at <span class="math notranslate nohighlight">\(t=0\)</span> (<span class="math notranslate nohighlight">\(M=\mathbb{1}\)</span>),
 consistent with the frozen Gaussian basis’s resolution of the
 identity, <span class="math notranslate nohighlight">\(\int \tfrac{dq\,dp}{2\pi\hbar}\,|g_{q,p}\rangle\langle
 g_{q,p}| = \hat{1}\)</span>.</p>
@@ -1991,7 +1994,9 @@ must be module-level <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">dVdx(q,</span> <span class="pre">params)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code> / <code class="docutils literal notranslate"><span class="pre">d2Vdx2(q,</span> <span class="pre">params)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code> /
 <code class="docutils literal notranslate"><span class="pre">V(q,</span> <span class="pre">params)</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code>, with <code class="docutils literal notranslate"><span class="pre">params</span></code> a <code class="docutils literal notranslate"><span class="pre">float64</span></code> array – the
 same convention used throughout this package’s Numba-accelerated
-integrators, letting a single compiled kernel serve any potential.</p>
+integrators, letting a single compiled kernel serve any potential. For
+the same reason as <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.integrators.fixed_step</span></code>, the kernels
+that take these functions as arguments are not <code class="docutils literal notranslate"><span class="pre">cache=True</span></code>.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.semiclassical.core.propagators.coherent_state_overlap">
 <span class="sig-prename descclassname"><span class="pre">physicskit.semiclassical.core.propagators.</span></span><span class="sig-name descname"><span class="pre">coherent_state_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/semiclassical/core/propagators.html#coherent_state_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.semiclassical.core.propagators.coherent_state_overlap" title="Link to this definition">#</a></dt>
@@ -2134,8 +2139,11 @@ means a narrower, more position-localized packet.</p></li>
 <dd><p>Herman-Kluk prefactor <span class="math notranslate nohighlight">\(C_t(q_0,p_0)\)</span> built from the monodromy matrix.</p>
 <div class="math notranslate nohighlight">
 \[C_t = \sqrt{\frac{1}{2}\left(M_{qq} + M_{pp}
-- i\hbar\gamma M_{qp} + \frac{i}{\hbar\gamma}M_{pq}\right)},\]</div>
-<p>which reduces to <span class="math notranslate nohighlight">\(C_t=1\)</span> at <span class="math notranslate nohighlight">\(t=0\)</span> (<span class="math notranslate nohighlight">\(M=\mathbb{1}\)</span>),
+- 2i\hbar\gamma M_{qp} + \frac{i}{2\hbar\gamma}M_{pq}\right)},\]</div>
+<p>the standard Herman-Kluk form (Herman &amp; Kluk 1984; Kay 1994) written
+for this module’s frozen Gaussians <span class="math notranslate nohighlight">\(e^{-\gamma(x-q)^2}\)</span>, whose
+width parameter in the usual <span class="math notranslate nohighlight">\(e^{-\gamma_s(x-q)^2/2}\)</span> convention
+is <span class="math notranslate nohighlight">\(\gamma_s=2\gamma\)</span>. It reduces to <span class="math notranslate nohighlight">\(C_t=1\)</span> at <span class="math notranslate nohighlight">\(t=0\)</span> (<span class="math notranslate nohighlight">\(M=\mathbb{1}\)</span>),
 consistent with the frozen Gaussian basis’s resolution of the
 identity, <span class="math notranslate nohighlight">\(\int \tfrac{dq\,dp}{2\pi\hbar}\,|g_{q,p}\rangle\langle
 g_{q,p}| = \hat{1}\)</span>.</p>

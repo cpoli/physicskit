@@ -43,7 +43,7 @@ far more strongly than Pauli exclusion alone requires, a "correlation
 hole" that vanishes at zero separation and whose quasihole excitations
 carry the fractional charge :math:`e/m`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-34
+.. GENERATED FROM PYTHON SOURCE LINES 29-35
 
 .. code-block:: Python
 
@@ -51,6 +51,7 @@ carry the fractional charge :math:`e/m`.
     import numpy as np
 
     from physicskit.condensed.laughlin import laughlin_metropolis_sweep, laughlin_pair_correlation, laughlin_radial_density
+    from physicskit.statphys.core.monte_carlo import seed_numba_random
 
 
 
@@ -59,7 +60,7 @@ carry the fractional charge :math:`e/m`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-40
+.. GENERATED FROM PYTHON SOURCE LINES 36-41
 
 Sampling the Laughlin plasma
 ----------------------------------
@@ -67,12 +68,13 @@ N particles start in a random disk of the mean-field droplet radius,
 then equilibrate under repeated Metropolis sweeps of the exact
 :math:`|\Psi_m|^2` weight before any measurement is taken.
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-52
+.. GENERATED FROM PYTHON SOURCE LINES 41-54
 
 .. code-block:: Python
 
 
-    rng = np.random.default_rng(0)
+    rng = np.random.default_rng(0)  # initial positions
+    seed_numba_random(0)  # Metropolis moves (drawn inside Numba-compiled code)
     N, m = 40, 3
     R0 = np.sqrt(2 * m * N)
     r0 = R0 * np.sqrt(rng.random(N))
@@ -90,14 +92,14 @@ then equilibrate under repeated Metropolis sweeps of the exact
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-57
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 Measuring the correlation hole and the droplet's flat-top density
 -------------------------------------------------------------------------
 A handful of sweeps between samples decorrelates successive snapshots
 enough for an unbiased pair-correlation and density estimate.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-85
+.. GENERATED FROM PYTHON SOURCE LINES 59-87
 
 .. code-block:: Python
 
@@ -141,7 +143,7 @@ enough for an unbiased pair-correlation and density estimate.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-95
+.. GENERATED FROM PYTHON SOURCE LINES 88-97
 
 ``g(r)`` vanishes at zero separation and climbs to the uncorrelated value
 of 1 within a few magnetic lengths -- particles are kept apart far more
@@ -153,7 +155,7 @@ falling off only within a few magnetic lengths of its edge -- the
 real-space picture of the same incompressible liquid that makes the
 quantized Hall plateau itself possible.
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-97
+.. GENERATED FROM PYTHON SOURCE LINES 97-99
 
 .. code-block:: Python
 
@@ -169,7 +171,7 @@ quantized Hall plateau itself possible.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.120 seconds)
+   **Total running time of the script:** (0 minutes 0.295 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_laughlin_plot_laughlin_correlation_hole.py:

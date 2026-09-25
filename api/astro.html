@@ -531,6 +531,10 @@ rotation-curve plots.</p></li>
 <li><p><strong>G</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Gravitational constant.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the Lane-Emden solution has no surface (<span class="math notranslate nohighlight">\(n \ge 5\)</span>, where
+    the polytrope’s radius is infinite).</p>
+</dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">star</span> <span class="o">=</span> <span class="n">PolytropicStar</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rho_c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
@@ -559,7 +563,7 @@ rotation-curve plots.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="physicskit.astro.PolytropicStar.xi1">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">xi1</span></span><a class="headerlink" href="#physicskit.astro.PolytropicStar.xi1" title="Link to this definition">#</a></dt>
-<dd><p>The dimensionless surface radius, the last point of the Lane-Emden solution.</p>
+<dd><p>The dimensionless surface radius <span class="math notranslate nohighlight">\(\xi_1\)</span>, the first zero of the Lane-Emden solution.</p>
 </dd></dl>
 
 </dd></dl>
@@ -678,7 +682,7 @@ enter the transfer ellipse.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.astro.lane_emden">
-<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">lane_emden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/stellar_structure.html#lane_emden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.lane_emden" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">lane_emden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/stellar_structure.html#lane_emden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.lane_emden" title="Link to this definition">#</a></dt>
 <dd><p>Integrate the Lane-Emden equation for a polytrope of index <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)
@@ -689,16 +693,20 @@ sphere with equation of state <span class="math notranslate nohighlight">\(P=K\r
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Polytropic index.</p></li>
-<li><p><strong>xi_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=10.0</em>) – Upper integration bound, used only as a fallback for indices
-(e.g. <code class="docutils literal notranslate"><span class="pre">n=5</span></code>) where <span class="math notranslate nohighlight">\(\theta\)</span> never reaches zero.</p></li>
+<li><p><strong>xi_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1000.0</em>) – Upper integration bound. Integration normally stops earlier, at the
+surface; the default is large enough to reach it for every
+<span class="math notranslate nohighlight">\(n \le 4.9\)</span> (<span class="math notranslate nohighlight">\(\xi_1 \approx 171\)</span> there, diverging as
+<span class="math notranslate nohighlight">\(n \to 5\)</span>). For <span class="math notranslate nohighlight">\(n \ge 5\)</span> there is no surface and the
+profile is returned out to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
 <li><p><strong>n_points</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=2000</em>) – Number of points to sample the returned arrays at.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>xi</strong> (<em>ndarray</em>) – Dimensionless radius, from just above 0 to the surface (the first
-zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
-<li><p><strong>theta</strong> (<em>ndarray</em>) – The Lane-Emden function <span class="math notranslate nohighlight">\(\theta(\xi)\)</span>.</p></li>
+zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or, if none was found, to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>ndarray</em>) – The Lane-Emden function <span class="math notranslate nohighlight">\(\theta(\xi)\)</span>. <code class="docutils literal notranslate"><span class="pre">theta[-1]</span> <span class="pre">==</span> <span class="pre">0</span></code>
+exactly when the surface was reached.</p></li>
 </ul>
 </p>
 </dd>
@@ -707,6 +715,9 @@ zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or to <cod
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xi</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">lane_emden</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># exact analytic surface is sqrt(6)</span>
 <span class="go">2.449</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xi</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">lane_emden</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># tabulated xi_1 for n=4</span>
+<span class="go">14.972</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1055,6 +1066,10 @@ Lane-Emden solution.</p></li>
 <li><p><strong>G</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Gravitational constant.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the Lane-Emden solution has no surface (<span class="math notranslate nohighlight">\(n \ge 5\)</span>, where
+    the polytrope’s radius is infinite).</p>
+</dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">star</span> <span class="o">=</span> <span class="n">PolytropicStar</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rho_c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
@@ -1083,7 +1098,7 @@ Lane-Emden solution.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="physicskit.astro.stellar_structure.PolytropicStar.xi1">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">xi1</span></span><a class="headerlink" href="#physicskit.astro.stellar_structure.PolytropicStar.xi1" title="Link to this definition">#</a></dt>
-<dd><p>The dimensionless surface radius, the last point of the Lane-Emden solution.</p>
+<dd><p>The dimensionless surface radius <span class="math notranslate nohighlight">\(\xi_1\)</span>, the first zero of the Lane-Emden solution.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1116,7 +1131,7 @@ dwarfs).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.astro.stellar_structure.lane_emden">
-<span class="sig-prename descclassname"><span class="pre">physicskit.astro.stellar_structure.</span></span><span class="sig-name descname"><span class="pre">lane_emden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/stellar_structure.html#lane_emden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.stellar_structure.lane_emden" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.stellar_structure.</span></span><span class="sig-name descname"><span class="pre">lane_emden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/stellar_structure.html#lane_emden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.stellar_structure.lane_emden" title="Link to this definition">#</a></dt>
 <dd><p>Integrate the Lane-Emden equation for a polytrope of index <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\xi^2}\frac{d}{d\xi}\left(\xi^2\frac{d\theta}{d\xi}\right)
@@ -1127,16 +1142,20 @@ sphere with equation of state <span class="math notranslate nohighlight">\(P=K\r
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Polytropic index.</p></li>
-<li><p><strong>xi_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=10.0</em>) – Upper integration bound, used only as a fallback for indices
-(e.g. <code class="docutils literal notranslate"><span class="pre">n=5</span></code>) where <span class="math notranslate nohighlight">\(\theta\)</span> never reaches zero.</p></li>
+<li><p><strong>xi_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1000.0</em>) – Upper integration bound. Integration normally stops earlier, at the
+surface; the default is large enough to reach it for every
+<span class="math notranslate nohighlight">\(n \le 4.9\)</span> (<span class="math notranslate nohighlight">\(\xi_1 \approx 171\)</span> there, diverging as
+<span class="math notranslate nohighlight">\(n \to 5\)</span>). For <span class="math notranslate nohighlight">\(n \ge 5\)</span> there is no surface and the
+profile is returned out to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
 <li><p><strong>n_points</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=2000</em>) – Number of points to sample the returned arrays at.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>xi</strong> (<em>ndarray</em>) – Dimensionless radius, from just above 0 to the surface (the first
-zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
-<li><p><strong>theta</strong> (<em>ndarray</em>) – The Lane-Emden function <span class="math notranslate nohighlight">\(\theta(\xi)\)</span>.</p></li>
+zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or, if none was found, to <code class="docutils literal notranslate"><span class="pre">xi_max</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>ndarray</em>) – The Lane-Emden function <span class="math notranslate nohighlight">\(\theta(\xi)\)</span>. <code class="docutils literal notranslate"><span class="pre">theta[-1]</span> <span class="pre">==</span> <span class="pre">0</span></code>
+exactly when the surface was reached.</p></li>
 </ul>
 </p>
 </dd>
@@ -1145,6 +1164,9 @@ zero of <span class="math notranslate nohighlight">\(\theta\)</span>) or to <cod
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xi</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">lane_emden</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># exact analytic surface is sqrt(6)</span>
 <span class="go">2.449</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xi</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">lane_emden</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># tabulated xi_1 for n=4</span>
+<span class="go">14.972</span>
 </pre></div>
 </div>
 </dd></dl>

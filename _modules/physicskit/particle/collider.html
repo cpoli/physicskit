@@ -768,8 +768,10 @@
 <span class="sd">    charge : float</span>
 <span class="sd">        Charge, in units of the elementary charge (0 for neutral).</span>
 <span class="sd">    B : float</span>
-<span class="sd">        Magnetic field strength (along the axis perpendicular to the</span>
-<span class="sd">        transverse plane).</span>
+<span class="sd">        Magnetic field along :math:`+z`, out of the transverse plane.</span>
+<span class="sd">        The Lorentz force :math:`q\,\mathbf{v}\times\mathbf{B}` then bends</span>
+<span class="sd">        positive charges clockwise (for ``B &gt; 0``) and negative charges</span>
+<span class="sd">        counterclockwise, as seen looking down the :math:`z` axis.</span>
 <span class="sd">    vertex : array_like of shape (2,), default=(0, 0)</span>
 <span class="sd">        Starting point of the track.</span>
 <span class="sd">    n_points : int, default=100</span>
@@ -802,7 +804,7 @@
         <span class="k">return</span> <span class="n">vertex</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">pT</span> <span class="o">/</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span>
     <span class="n">phi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">py</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
-    <span class="n">curve_sign</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">charge</span> <span class="o">*</span> <span class="n">B</span><span class="p">))</span>
+    <span class="n">curve_sign</span> <span class="o">=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">charge</span> <span class="o">*</span> <span class="n">B</span><span class="p">))</span>  <span class="c1"># +1: counterclockwise; q v x B turns q*B &gt; 0 clockwise</span>
     <span class="n">center</span> <span class="o">=</span> <span class="n">vertex</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi0</span><span class="p">)])</span> <span class="o">*</span> <span class="n">curve_sign</span>
     <span class="n">max_angle</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">path_length</span> <span class="o">/</span> <span class="n">r</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
     <span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_angle</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>

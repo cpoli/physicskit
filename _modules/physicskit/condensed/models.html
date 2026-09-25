@@ -734,9 +734,9 @@
 <span class="sd">    &gt;&gt;&gt; H = kane_mele_hamiltonian(0.3, 0.7, lambda_so=0.06)</span>
 <span class="sd">    &gt;&gt;&gt; np.allclose(H, H.conj().T)</span>
 <span class="sd">    True</span>
-<span class="sd">    &gt;&gt;&gt; up = H[:2, :2]; down = H[2:, 2:]</span>
-<span class="sd">    &gt;&gt;&gt; down_expected = kane_mele_hamiltonian(0.3, 0.7, lambda_so=0.06)[2:, 2:]</span>
-<span class="sd">    &gt;&gt;&gt; np.allclose(down, down_expected)</span>
+<span class="sd">    &gt;&gt;&gt; up = H[:2, :2]</span>
+<span class="sd">    &gt;&gt;&gt; down_at_minus_k = kane_mele_hamiltonian(-0.3, -0.7, lambda_so=0.06)[2:, 2:]</span>
+<span class="sd">    &gt;&gt;&gt; np.allclose(down_at_minus_k, up.conj())  # time reversal: H_dn(-k) = H_up(k)*</span>
 <span class="sd">    True</span>
 <span class="sd">    """</span>
     <span class="n">H_up</span> <span class="o">=</span> <span class="n">haldane_lattice_hamiltonian</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="n">lambda_so</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="n">lambda_v</span><span class="p">)</span><span class="o">.</span><span class="n">bloch</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">])</span>
@@ -797,10 +797,16 @@
 <span class="sd">        Model parameters controlling the Dirac velocity and quadratic</span>
 <span class="sd">        band curvature.</span>
 <span class="sd">    M : float, default=1.0</span>
-<span class="sd">        Band inversion mass. The model is topological (band-inverted) for</span>
-<span class="sd">        :math:`M/B &gt; 0` and trivial for :math:`M/B &lt; 0`.</span>
+<span class="sd">        Band inversion mass. With :math:`d_z = M - 2B(2-\\cos k_x-\\cos k_y)`</span>
+<span class="sd">        the model is topological (band-inverted, spin Chern number</span>
+<span class="sd">        :math:`\\pm1`) for :math:`0 &lt; M/B &lt; 8` and trivial otherwise (the</span>
+<span class="sd">        gap closes at :math:`\\Gamma`, :math:`X`/:math:`Y`, and :math:`M` for</span>
+<span class="sd">        :math:`M/B = 0, 4, 8`).</span>
 <span class="sd">    D : float, default=0.0</span>
-<span class="sd">        Particle-hole asymmetry parameter.</span>
+<span class="sd">        Particle-hole asymmetry parameter, entering as</span>
+<span class="sd">        :math:`\\epsilon(k) = -2D(2-\\cos k_x-\\cos k_y)`, the lattice</span>
+<span class="sd">        regularization of the continuum :math:`-Dk^2` (Qi, Hughes &amp; Zhang</span>
+<span class="sd">        2008), matching :math:`B`'s.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -815,7 +821,7 @@
 <span class="sd">    &gt;&gt;&gt; np.allclose(H[:2, :2], H[2:, 2:].conj())</span>
 <span class="sd">    True</span>
 <span class="sd">    """</span>
-    <span class="n">eps</span> <span class="o">=</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">))</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">))</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span>
     <span class="n">dy</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ky</span><span class="p">)</span>
     <span class="n">dz</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ky</span><span class="p">))</span>
@@ -849,7 +855,7 @@
 <span class="sd">        band curvature (see :func:`bhz_hamiltonian`).</span>
 <span class="sd">    M : float, default=1.0</span>
 <span class="sd">        Band inversion mass. Topological (edge-state-carrying) for</span>
-<span class="sd">        :math:`M/B &gt; 0`.</span>
+<span class="sd">        :math:`0 &lt; M/B &lt; 8`.</span>
 <span class="sd">    D : float, default=0.0</span>
 <span class="sd">        Particle-hole asymmetry parameter.</span>
 
@@ -861,9 +867,9 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    In the topological regime (:math:`M/B &gt; 0`), the ribbon has a pair of</span>
+<span class="sd">    In the topological regime (:math:`0 &lt; M/B &lt; 8`), the ribbon has a pair of</span>
 <span class="sd">    near-zero-energy states crossing at :math:`k_x = 0` -- the helical edge</span>
-<span class="sd">    modes -- absent in the trivial regime (:math:`M/B &lt; 0`):</span>
+<span class="sd">    modes -- absent in the trivial regime (e.g. :math:`M/B &lt; 0`):</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; spectrum = np.linalg.eigvalsh(bhz_ribbon_hamiltonian(kx=0.0, n_cells=40, M=1.0, B=1.0))</span>
@@ -873,12 +879,12 @@
 <span class="sd">    &gt;&gt;&gt; bool(np.any(np.abs(spectrum_trivial) &lt; 1e-6))</span>
 <span class="sd">    False</span>
 <span class="sd">    """</span>
-    <span class="n">eps0</span> <span class="o">=</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">))</span>
+    <span class="n">eps0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">))</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">kx</span><span class="p">)</span>
     <span class="n">dz0</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">kx</span><span class="p">))</span>
     <span class="n">onsite_up</span> <span class="o">=</span> <span class="n">eps0</span> <span class="o">*</span> <span class="n">_SIGMA_0</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">_SIGMA_X</span> <span class="o">+</span> <span class="n">dz0</span> <span class="o">*</span> <span class="n">_SIGMA_Z</span>
     <span class="n">onsite_down</span> <span class="o">=</span> <span class="n">onsite_up</span>
-    <span class="n">hop_up</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">D</span> <span class="o">*</span> <span class="n">_SIGMA_0</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">_SIGMA_Z</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">_SIGMA_Y</span>
+    <span class="n">hop_up</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">_SIGMA_0</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">_SIGMA_Z</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">_SIGMA_Y</span>
     <span class="n">hop_down</span> <span class="o">=</span> <span class="n">hop_up</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 
     <span class="n">N</span> <span class="o">=</span> <span class="n">n_cells</span>

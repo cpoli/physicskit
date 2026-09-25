@@ -33,7 +33,8 @@ Biot-Savart law,
 
 where :math:`\Gamma_j` is vortex :math:`j`'s circulation and
 :math:`r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|`. Theodore von Karman showed that a
-staggered double row of alternating-sign point vortices, spaced by
+staggered double row of point vortices -- all clockwise in one row, all
+counterclockwise in the other -- spaced by
 :math:`l` along each row and separated across the rows by :math:`h`, is
 linearly stable to vortex-row perturbations at exactly one spacing ratio,
 :data:`~physicskit.fluids.systems.vortex_dynamics.VON_KARMAN_SPACING_RATIO`
@@ -41,11 +42,12 @@ linearly stable to vortex-row perturbations at exactly one spacing ratio,
 behind every bluff body, from a chimney to a violin string in the wind. This
 example builds that street with
 :func:`~physicskit.fluids.systems.vortex_dynamics.von_karman_vortex_street`
-and lets the full point-vortex N-body dynamics run: the staggered pattern
-should advect downstream (in the frame of the vortices themselves, sideways
-relative to their formation) without buckling.
+and lets the full point-vortex N-body dynamics run: relative to the
+surrounding fluid, the staggered pattern should translate as a whole at
+:math:`U = \frac{\Gamma}{2l}\tanh(\pi h/l)` (toward :math:`-x`, lagging
+the stream that shed it) without buckling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-36
+.. GENERATED FROM PYTHON SOURCE LINES 31-38
 
 .. code-block:: Python
 
@@ -63,12 +65,12 @@ relative to their formation) without buckling.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-39
+.. GENERATED FROM PYTHON SOURCE LINES 39-41
 
 Build the staggered street
 -----------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-43
+.. GENERATED FROM PYTHON SOURCE LINES 41-45
 
 .. code-block:: Python
 
@@ -83,7 +85,7 @@ Build the staggered street
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-50
+.. GENERATED FROM PYTHON SOURCE LINES 46-52
 
 Advance the N-body dynamics
 ------------------------------
@@ -92,7 +94,7 @@ infinite row would be (von Karman's stability analysis assumes an
 infinite, perfectly periodic row), so the interior vortices are the ones
 that should hold their staggered spacing.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-54
+.. GENERATED FROM PYTHON SOURCE LINES 52-56
 
 .. code-block:: Python
 
@@ -107,12 +109,12 @@ that should hold their staggered spacing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-57
+.. GENERATED FROM PYTHON SOURCE LINES 57-59
 
 Plot initial and final configurations
 -----------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-72
+.. GENERATED FROM PYTHON SOURCE LINES 59-74
 
 .. code-block:: Python
 
@@ -143,17 +145,17 @@ Plot initial and final configurations
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-80
+.. GENERATED FROM PYTHON SOURCE LINES 75-82
 
 The full trajectories, not just two snapshots
 ---------------------------------------------------
 ``trajectory`` above already holds every vortex's full path, not just its
 endpoints. Plotting all of it at once, rather than only the initial and
-final configurations, shows the staggered street advecting downstream as a
+final configurations, shows the staggered street translating as a
 whole -- each vortex tracing a wavy but unbroken path -- which is exactly
 what "holds its shape" means for a finite street's interior.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-97
+.. GENERATED FROM PYTHON SOURCE LINES 82-99
 
 .. code-block:: Python
 
@@ -187,7 +189,7 @@ what "holds its shape" means for a finite street's interior.
 
  .. code-block:: none
 
-    interior row-spacing spread: t=0 -> 0.1403, t=4.0 -> 0.7695
+    interior row-spacing spread: t=0 -> 0.1403, t=4.0 -> 0.2063
 
 
 
@@ -195,7 +197,7 @@ what "holds its shape" means for a finite street's interior.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.083 seconds)
+   **Total running time of the script:** (0 minutes 0.120 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_vortex_dynamics_plot_von_karman_street.py:

@@ -14,7 +14,8 @@ Biot-Savart law,
 
 where :math:`\Gamma_j` is vortex :math:`j`'s circulation and
 :math:`r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|`. Theodore von Karman showed that a
-staggered double row of alternating-sign point vortices, spaced by
+staggered double row of point vortices -- all clockwise in one row, all
+counterclockwise in the other -- spaced by
 :math:`l` along each row and separated across the rows by :math:`h`, is
 linearly stable to vortex-row perturbations at exactly one spacing ratio,
 :data:`~physicskit.fluids.systems.vortex_dynamics.VON_KARMAN_SPACING_RATIO`
@@ -22,9 +23,10 @@ linearly stable to vortex-row perturbations at exactly one spacing ratio,
 behind every bluff body, from a chimney to a violin string in the wind. This
 example builds that street with
 :func:`~physicskit.fluids.systems.vortex_dynamics.von_karman_vortex_street`
-and lets the full point-vortex N-body dynamics run: the staggered pattern
-should advect downstream (in the frame of the vortices themselves, sideways
-relative to their formation) without buckling.
+and lets the full point-vortex N-body dynamics run: relative to the
+surrounding fluid, the staggered pattern should translate as a whole at
+:math:`U = \frac{\Gamma}{2l}\tanh(\pi h/l)` (toward :math:`-x`, lagging
+the stream that shed it) without buckling.
 """
 
 import matplotlib.pyplot as plt
@@ -74,7 +76,7 @@ fig.tight_layout()
 # ---------------------------------------------------
 # ``trajectory`` above already holds every vortex's full path, not just its
 # endpoints. Plotting all of it at once, rather than only the initial and
-# final configurations, shows the staggered street advecting downstream as a
+# final configurations, shows the staggered street translating as a
 # whole -- each vortex tracing a wavy but unbroken path -- which is exactly
 # what "holds its shape" means for a finite street's interior.
 

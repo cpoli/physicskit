@@ -479,9 +479,9 @@ turbulence-spectrum tools.</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="c1"># Flow past a lifting cylinder:</span>
-<span class="n">flow</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">fluids</span><span class="o">.</span><span class="n">flow_past_cylinder</span><span class="p">(</span><span class="n">U_inf</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">lift</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">fluids</span><span class="o">.</span><span class="n">kutta_joukowski_lift</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">U_inf</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="c1"># Flow past a lifting cylinder (clockwise circulation -&gt; upward lift):</span>
+<span class="n">flow</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">fluids</span><span class="o">.</span><span class="n">flow_past_cylinder</span><span class="p">(</span><span class="n">U_inf</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">lift</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">fluids</span><span class="o">.</span><span class="n">kutta_joukowski_lift</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">U_inf</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py exception">
@@ -1065,7 +1065,8 @@ walls is the linear profile below – shear stress
 by FFT, forms the kinetic energy density
 <span class="math notranslate nohighlight">\(\tfrac{1}{2}(|\hat{u}|^2+|\hat{v}|^2)\)</span> at each wavevector, and
 sums it over the discrete annulus of wavevectors with
-<span class="math notranslate nohighlight">\(k \le |\mathbf{k}| &lt; k+1\)</span> (in grid-index units) to give
+<span class="math notranslate nohighlight">\(k - \tfrac12 \le |\mathbf{k}| &lt; k + \tfrac12\)</span> (in grid-index
+units) to give
 <span class="math notranslate nohighlight">\(E(k)\)</span>, normalized so that <span class="math notranslate nohighlight">\(\sum_k E(k) \approx\)</span> the
 domain-averaged kinetic energy per unit mass (Parseval’s theorem).</p>
 <dl class="field-list simple">
@@ -1108,6 +1109,8 @@ domain-averaged kinetic energy per unit mass (Parseval’s theorem).</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="p">,</span> <span class="n">E</span> <span class="o">=</span> <span class="n">energy_spectrum</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># all the energy sits at the single k=1 mode</span>
 <span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">E</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># = mean of (u**2 + v**2) / 2</span>
+<span class="go">0.5</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1326,7 +1329,7 @@ parallel to this line over at least a decade of <cite>k</cite>.</p>
 <span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">kutta_joukowski_lift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U_inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circulation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/potential_flow.html#kutta_joukowski_lift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.kutta_joukowski_lift" title="Link to this definition">#</a></dt>
 <dd><p>The Kutta-Joukowski lift theorem: lift per unit span from bound circulation.</p>
 <div class="math notranslate nohighlight">
-\[L' = \rho\,U_\infty\,\Gamma\]</div>
+\[L' = -\rho\,U_\infty\,\Gamma\]</div>
 <p>Any 2D body generating a net circulation <span class="math notranslate nohighlight">\(\Gamma\)</span> around itself in
 a stream of speed <span class="math notranslate nohighlight">\(U_\infty\)</span> experiences a lift force per unit
 span of exactly this magnitude, directed perpendicular to the free
@@ -1335,7 +1338,11 @@ of potential theory (Kutta 1902, Zhukovsky 1906) that underlies all of
 classical airfoil theory. Real airfoils select <cite>circulation</cite> via the
 Kutta condition (smooth flow off a sharp trailing edge); the cylinder
 with an added point vortex built by <a class="reference internal" href="#physicskit.fluids.flow_past_cylinder" title="physicskit.fluids.flow_past_cylinder"><code class="xref py py-func docutils literal notranslate"><span class="pre">flow_past_cylinder()</span></code></a> sets it
-directly.</p>
+directly. With this module’s convention (free stream toward <span class="math notranslate nohighlight">\(+x\)</span>,
+<span class="math notranslate nohighlight">\(\Gamma&gt;0\)</span> counterclockwise, as in <a class="reference internal" href="#physicskit.fluids.point_vortex_potential" title="physicskit.fluids.point_vortex_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">point_vortex_potential()</span></code></a>)
+the lift is signed along <span class="math notranslate nohighlight">\(+y\)</span>: a clockwise circulation
+(<span class="math notranslate nohighlight">\(\Gamma&lt;0\)</span>), which speeds up the flow over the top, lifts
+upward, as on a conventional airfoil.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1348,14 +1355,14 @@ directly.</p>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>float</em> – Lift force per unit span, <span class="math notranslate nohighlight">\(L'\)</span>.</p>
+<dd class="field-odd"><p><em>float</em> – Lift force per unit span along <span class="math notranslate nohighlight">\(+y\)</span>, <span class="math notranslate nohighlight">\(L'\)</span>.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#physicskit.fluids.InvalidParameterError" title="physicskit.fluids.InvalidParameterError"><strong>InvalidParameterError</strong></a> – If <cite>rho</cite> or <cite>U_inf</cite> is not positive.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">kutta_joukowski_lift</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">U_inf</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=</span><span class="mf">5.0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">kutta_joukowski_lift</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">U_inf</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">circulation</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">60.0</span>
 </pre></div>
 </div>
@@ -1766,7 +1773,7 @@ gives the dimensionless pressure coefficient</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.fluids.rankine_hugoniot_jump_conditions">
-<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rankine_hugoniot_jump_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/compressible_flow.html#rankine_hugoniot_jump_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rankine_hugoniot_jump_conditions" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rankine_hugoniot_jump_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/compressible_flow.html#rankine_hugoniot_jump_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rankine_hugoniot_jump_conditions" title="Link to this definition">#</a></dt>
 <dd><p>Residuals of the Rankine-Hugoniot jump conditions across a stationary discontinuity.</p>
 <p>A steady discontinuity in a 1D inviscid compressible flow (states 1
 upstream, 2 downstream, in the frame where the discontinuity itself is
@@ -1792,6 +1799,9 @@ one directly.</p>
 <li><p><strong>rho2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Downstream density, velocity, and pressure.</p></li>
 <li><p><strong>u2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Downstream density, velocity, and pressure.</p></li>
 <li><p><strong>p2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Downstream density, velocity, and pressure.</p></li>
+<li><p><strong>gamma</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ratio of specific heats, used only in the enthalpy of the energy
+residual; must match the one used to generate a candidate jump
+(e.g. <a class="reference internal" href="#physicskit.fluids.normal_shock_relations" title="physicskit.fluids.normal_shock_relations"><code class="xref py py-func docutils literal notranslate"><span class="pre">normal_shock_relations()</span></code></a>’s <cite>gamma</cite>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2203,10 +2213,13 @@ single scaled model predict the shedding frequency at full scale.</p>
 <dd><p>Build a finite, doubly staggered von Karman vortex street.</p>
 <p>Two parallel rows of point vortices, offset from each other by half the
 along-row spacing <cite>spacing_l</cite> and by a row separation
-<code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">=</span> <span class="pre">spacing_ratio</span> <span class="pre">*</span> <span class="pre">spacing_l</span></code>, with alternating-sign circulation
-within each row so that adjacent vortices across the two rows always
-have <em>opposite</em> sign – the staggered, alternating pattern observed in
-the wake behind a bluff body. Von Karman showed that a doubly <em>infinite</em>
+<code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">=</span> <span class="pre">spacing_ratio</span> <span class="pre">*</span> <span class="pre">spacing_l</span></code>. Every vortex in the upper row has
+circulation -1 (clockwise) and every vortex in the lower row +1
+(counterclockwise) – the staggered pattern shed alternately from the
+top and bottom of a bluff body in a stream toward <span class="math notranslate nohighlight">\(+x\)</span>. Such an
+infinite street translates rigidly, relative to the surrounding fluid,
+at <span class="math notranslate nohighlight">\(U = \frac{\Gamma}{2l}\tanh(\pi h/l)\)</span> toward <span class="math notranslate nohighlight">\(-x\)</span>
+(von Karman 1911-1912; Lamb, <em>Hydrodynamics</em>, Sec. 156). Von Karman showed that a doubly <em>infinite</em>
 row of this form is linearly stable to vortex-row perturbations at
 exactly one spacing ratio, <code class="xref py py-data docutils literal notranslate"><span class="pre">VON_KARMAN_SPACING_RATIO</span></code>; any other
 ratio (or any symmetric, unstaggered arrangement) grows unstable, which
@@ -2227,7 +2240,8 @@ least 2 to form a discernible street.</p></li>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><strong>positions</strong> (<em>ndarray of float, shape (2*n_pairs, 2)</em>) – Vortex positions.</p></li>
-<li><p><strong>circulations</strong> (<em>ndarray of float, shape (2*n_pairs,)</em>) – Vortex circulations, alternating in sign.</p></li>
+<li><p><strong>circulations</strong> (<em>ndarray of float, shape (2*n_pairs,)</em>) – Vortex circulations, interleaved upper/lower: -1 for the upper row
+(even indices), +1 for the lower row (odd indices).</p></li>
 </ul>
 </p>
 </dd>
@@ -2239,8 +2253,8 @@ least 2 to form a discernible street.</p></li>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span><span class="p">,</span> <span class="n">circulations</span> <span class="o">=</span> <span class="n">von_karman_vortex_street</span><span class="p">(</span><span class="n">n_pairs</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">spacing_l</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(12, 2)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">circulations</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">))</span>  <span class="c1"># equal and opposite in each row</span>
-<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circulations</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># upper row clockwise, lower row counterclockwise</span>
+<span class="go">array([-1.,  1., -1.,  1.])</span>
 </pre></div>
 </div>
 </dd></dl>

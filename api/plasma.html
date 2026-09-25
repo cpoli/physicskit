@@ -1230,7 +1230,9 @@ rather than growing from one clean seed.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of grid points along each axis.</p></li>
-<li><p><strong>length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Physical domain size.</p></li>
+<li><p><strong>length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Physical domain size. Unused, since the noise is independent per
+grid point (white) and so has no length scale; kept for signature
+symmetry with <a class="reference internal" href="#physicskit.plasma.simulate_hasegawa_mima" title="physicskit.plasma.simulate_hasegawa_mima"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate_hasegawa_mima()</span></code></a>.</p></li>
 <li><p><strong>amplitude</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Root-mean-square amplitude of the seeded potential noise.</p></li>
 <li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Random seed.</p></li>
 </ul>
@@ -1643,22 +1645,22 @@ The formula is only accurate for weak damping,
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.plasma.langmuir_wave_ic">
 <span class="sig-prename descclassname"><span class="pre">physicskit.plasma.</span></span><span class="sig-name descname"><span class="pre">langmuir_wave_ic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_th</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/plasma/kinetic.html#langmuir_wave_ic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.plasma.langmuir_wave_ic" title="Link to this definition">#</a></dt>
-<dd><p>Small-amplitude single-mode initial condition for a driven Langmuir (electron plasma) wave.</p>
-<p>Identical in construction to <a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a> – the same
-quiet-start displacement <span class="math notranslate nohighlight">\(\delta x=(\alpha/k)\sin(kx_0)\)</span> seeds
-the same density perturbation <span class="math notranslate nohighlight">\(n_0(1-\alpha\cos(kx))\)</span> – but
-additionally imparts each particle the small coherent velocity
-perturbation <span class="math notranslate nohighlight">\(\delta v = (\alpha\,\omega_{pe}/k)\sin(kx_0)\)</span>
-predicted by the linearized cold-fluid continuity equation for a wave
-oscillating at the electron plasma frequency (<span class="math notranslate nohighlight">\(\omega\approx\omega_{pe}=1\)</span>
-in these normalized units). Giving both the density <em>and</em> velocity
-perturbation their linear-theory phase relationship launches a wave
-that is (for <span class="math notranslate nohighlight">\(k\lambda_D \ll 1\)</span>, i.e. <cite>v_th</cite> small enough that
-Landau damping in <a class="reference internal" href="#physicskit.plasma.landau_damping_rate" title="physicskit.plasma.landau_damping_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_rate()</span></code></a> is negligible) very
-weakly damped, so <a class="reference internal" href="#physicskit.plasma.pic_simulate" title="physicskit.plasma.pic_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pic_simulate()</span></code></a> shows the density oscillating
-in place at <span class="math notranslate nohighlight">\(\omega_{pe}\)</span> for many periods rather than decaying
-within a few, as the otherwise-identical <a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a>
-(fluid velocity perturbation omitted) would for the same <cite>alpha</cite>.</p>
+<dd><p>Small-amplitude single-mode initial condition for a Langmuir (electron plasma) wave.</p>
+<p>Uses the same quiet-start displacement as <a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a>,
+<span class="math notranslate nohighlight">\(\delta x=(\alpha/k)\sin(kx_0)\)</span> (density perturbation
+<span class="math notranslate nohighlight">\(n_0(1-\alpha\cos(kx))\)</span>), and additionally gives each particle
+the coherent velocity <span class="math notranslate nohighlight">\(\delta v = (\alpha\,\omega_{pe}/k)\sin(kx_0)\)</span>
+(<span class="math notranslate nohighlight">\(\omega_{pe}=1\)</span> in these normalized units). In cold-fluid
+linear theory the displacement then evolves as
+<span class="math notranslate nohighlight">\(\xi(x_0,t) = (\alpha/k)\sin(kx_0)\,[\cos\omega_{pe}t + \sin\omega_{pe}t]\)</span>:
+a standing wave ringing in place at <span class="math notranslate nohighlight">\(\omega_{pe}\)</span>, with
+<span class="math notranslate nohighlight">\(\sqrt2\)</span> the amplitude (twice the field energy) of the
+displacement-only start and a <span class="math notranslate nohighlight">\(\pi/4\)</span> phase shift.</p>
+<p>How long it rings is set by Landau damping, i.e. by <span class="math notranslate nohighlight">\(k\lambda_D\)</span>
+(see <a class="reference internal" href="#physicskit.plasma.landau_damping_rate" title="physicskit.plasma.landau_damping_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_rate()</span></code></a>), not by the velocity kick: for
+<span class="math notranslate nohighlight">\(k_{mode}\,v_{th} \ll \omega_{pe}\)</span> this and
+<a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a> both oscillate essentially undamped, while
+for <span class="math notranslate nohighlight">\(k\lambda_D \gtrsim 0.3\)</span> both damp.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1682,7 +1684,7 @@ only weakly Landau-damped.</p></li>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">landau_damping_ic</span></code></a></dt><dd><p>The companion density-only perturbation (no coherent velocity kick), which damps rather than sustains its oscillation.</p>
+<dt><a class="reference internal" href="#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">landau_damping_ic</span></code></a></dt><dd><p>The companion density-only perturbation (no coherent velocity kick); it damps or rings for the same <span class="math notranslate nohighlight">\(k\lambda_D\)</span> as this one.</p>
 </dd>
 <dt><a class="reference internal" href="#physicskit.plasma.pic_simulate" title="physicskit.plasma.pic_simulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pic_simulate</span></code></a></dt><dd><p>Evolve this initial condition forward in time.</p>
 </dd>
@@ -2437,7 +2439,8 @@ evaluated at each <code class="docutils literal notranslate"><span class="pre">r
 <dd><p>Flux-function initial condition: a Harris current sheet with an X-point-seeding ripple.</p>
 <p>The unperturbed Harris sheet <span class="math notranslate nohighlight">\(\psi_0(y) = -B_0 L\ln\cosh(y/L)\)</span>
 gives an antiparallel reconnecting field
-<span class="math notranslate nohighlight">\(B_x = -\partial_y\psi_0 = B_0\tanh(y/L)\)</span> that reverses sign
+<span class="math notranslate nohighlight">\(B_x = \partial_y\psi_0 = -B_0\tanh(y/L)\)</span> (with the
+<a class="reference internal" href="#physicskit.plasma.reconnection_field_from_flux" title="physicskit.plasma.reconnection_field_from_flux"><code class="xref py py-func docutils literal notranslate"><span class="pre">reconnection_field_from_flux()</span></code></a> convention <span class="math notranslate nohighlight">\(B_x=\partial_y\psi\)</span>) that reverses sign
 across <span class="math notranslate nohighlight">\(y=0\)</span> – the classic current-sheet configuration in which
 reconnection is normally studied. Adding a small ripple
 <span class="math notranslate nohighlight">\(\psi_1 = \epsilon\cos(k x)\,\mathrm{sech}^2(y/L)\)</span>, localized to
@@ -3310,17 +3313,22 @@ farther from <span class="math notranslate nohighlight">\(k=0\)</span>.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wpe</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Electron plasma frequency.</p></li>
-<li><p><strong>temperature_anisotropy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The ratio <span class="math notranslate nohighlight">\(T_\perp/T_\parallel\)</span>; must exceed 1.</p></li>
-<li><p><strong>c</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Speed of light.</p></li>
+<li><p><strong>temperature_anisotropy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The ratio <span class="math notranslate nohighlight">\(T_\perp/T_\parallel\)</span>. At or below 1 the plasma
+is Weibel-stable and <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code> is returned.</p></li>
+<li><p><strong>c</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Speed of light. Unused, since the maximum sits at <span class="math notranslate nohighlight">\(k=0\)</span> where
+the <span class="math notranslate nohighlight">\(k^2c^2\)</span> term vanishes; kept for signature symmetry with
+<a class="reference internal" href="#physicskit.plasma.weibel_growth_rate" title="physicskit.plasma.weibel_growth_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">weibel_growth_rate()</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>k_max_growth, gamma_max</strong> (<em>float</em>) – The (zero) wavenumber of maximum growth and the corresponding
-growth rate, and the cutoff wavenumber <a class="reference internal" href="#physicskit.plasma.weibel_growth_rate" title="physicskit.plasma.weibel_growth_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">weibel_growth_rate()</span></code></a>
-vanishes beyond.</p>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>k_max_growth</strong> (<em>float</em>) – Wavenumber of maximum growth (always 0.0).</p></li>
+<li><p><strong>gamma_max</strong> (<em>float</em>) – The corresponding growth rate <span class="math notranslate nohighlight">\(\gamma_{max}\)</span>.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -5037,22 +5045,22 @@ The formula is only accurate for weak damping,
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.plasma.kinetic.langmuir_wave_ic">
 <span class="sig-prename descclassname"><span class="pre">physicskit.plasma.kinetic.</span></span><span class="sig-name descname"><span class="pre">langmuir_wave_ic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_th</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/plasma/kinetic.html#langmuir_wave_ic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.plasma.kinetic.langmuir_wave_ic" title="Link to this definition">#</a></dt>
-<dd><p>Small-amplitude single-mode initial condition for a driven Langmuir (electron plasma) wave.</p>
-<p>Identical in construction to <a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a> – the same
-quiet-start displacement <span class="math notranslate nohighlight">\(\delta x=(\alpha/k)\sin(kx_0)\)</span> seeds
-the same density perturbation <span class="math notranslate nohighlight">\(n_0(1-\alpha\cos(kx))\)</span> – but
-additionally imparts each particle the small coherent velocity
-perturbation <span class="math notranslate nohighlight">\(\delta v = (\alpha\,\omega_{pe}/k)\sin(kx_0)\)</span>
-predicted by the linearized cold-fluid continuity equation for a wave
-oscillating at the electron plasma frequency (<span class="math notranslate nohighlight">\(\omega\approx\omega_{pe}=1\)</span>
-in these normalized units). Giving both the density <em>and</em> velocity
-perturbation their linear-theory phase relationship launches a wave
-that is (for <span class="math notranslate nohighlight">\(k\lambda_D \ll 1\)</span>, i.e. <cite>v_th</cite> small enough that
-Landau damping in <a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_rate" title="physicskit.plasma.kinetic.landau_damping_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_rate()</span></code></a> is negligible) very
-weakly damped, so <a class="reference internal" href="#physicskit.plasma.kinetic.pic_simulate" title="physicskit.plasma.kinetic.pic_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pic_simulate()</span></code></a> shows the density oscillating
-in place at <span class="math notranslate nohighlight">\(\omega_{pe}\)</span> for many periods rather than decaying
-within a few, as the otherwise-identical <a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a>
-(fluid velocity perturbation omitted) would for the same <cite>alpha</cite>.</p>
+<dd><p>Small-amplitude single-mode initial condition for a Langmuir (electron plasma) wave.</p>
+<p>Uses the same quiet-start displacement as <a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a>,
+<span class="math notranslate nohighlight">\(\delta x=(\alpha/k)\sin(kx_0)\)</span> (density perturbation
+<span class="math notranslate nohighlight">\(n_0(1-\alpha\cos(kx))\)</span>), and additionally gives each particle
+the coherent velocity <span class="math notranslate nohighlight">\(\delta v = (\alpha\,\omega_{pe}/k)\sin(kx_0)\)</span>
+(<span class="math notranslate nohighlight">\(\omega_{pe}=1\)</span> in these normalized units). In cold-fluid
+linear theory the displacement then evolves as
+<span class="math notranslate nohighlight">\(\xi(x_0,t) = (\alpha/k)\sin(kx_0)\,[\cos\omega_{pe}t + \sin\omega_{pe}t]\)</span>:
+a standing wave ringing in place at <span class="math notranslate nohighlight">\(\omega_{pe}\)</span>, with
+<span class="math notranslate nohighlight">\(\sqrt2\)</span> the amplitude (twice the field energy) of the
+displacement-only start and a <span class="math notranslate nohighlight">\(\pi/4\)</span> phase shift.</p>
+<p>How long it rings is set by Landau damping, i.e. by <span class="math notranslate nohighlight">\(k\lambda_D\)</span>
+(see <a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_rate" title="physicskit.plasma.kinetic.landau_damping_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_rate()</span></code></a>), not by the velocity kick: for
+<span class="math notranslate nohighlight">\(k_{mode}\,v_{th} \ll \omega_{pe}\)</span> this and
+<a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a> both oscillate essentially undamped, while
+for <span class="math notranslate nohighlight">\(k\lambda_D \gtrsim 0.3\)</span> both damp.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -5076,7 +5084,7 @@ only weakly Landau-damped.</p></li>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">landau_damping_ic</span></code></a></dt><dd><p>The companion density-only perturbation (no coherent velocity kick), which damps rather than sustains its oscillation.</p>
+<dt><a class="reference internal" href="#physicskit.plasma.kinetic.landau_damping_ic" title="physicskit.plasma.kinetic.landau_damping_ic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">landau_damping_ic</span></code></a></dt><dd><p>The companion density-only perturbation (no coherent velocity kick); it damps or rings for the same <span class="math notranslate nohighlight">\(k\lambda_D\)</span> as this one.</p>
 </dd>
 <dt><a class="reference internal" href="#physicskit.plasma.kinetic.pic_simulate" title="physicskit.plasma.kinetic.pic_simulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pic_simulate</span></code></a></dt><dd><p>Evolve this initial condition forward in time.</p>
 </dd>

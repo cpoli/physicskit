@@ -538,10 +538,12 @@
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        E_n = -\alpha \left(\frac{\hbar^2}{2 m \alpha^2}\right)^{1/3} a_n,</span>
+<span class="sd">        E_n = -\alpha \left(\frac{\hbar^2}{2 m \alpha}\right)^{1/3} a_n</span>
+<span class="sd">            = -\left(\frac{\hbar^2 \alpha^2}{2 m}\right)^{1/3} a_n,</span>
 
 <span class="sd">    where :math:`a_n &lt; 0` are the zeros of the Airy function,</span>
-<span class="sd">    :math:`\mathrm{Ai}(a_n) = 0`.</span>
+<span class="sd">    :math:`\mathrm{Ai}(a_n) = 0`, and :math:`(\hbar^2/2m\alpha)^{1/3}` is</span>
+<span class="sd">    the bouncer's natural length scale (see :func:`airy_wavefunction`).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -710,11 +712,20 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The localized wavefunction at :math:`t=0`.</span>
 <span class="sd">        """</span>
-        <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase_fixed_doublet</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">sign</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">side</span> <span class="o">==</span> <span class="s2">"left"</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="p">(</span><span class="n">psi0</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">psi</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_phase_fixed_doublet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">DoubleWellResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+        <span class="c1"># Eigenvector signs are arbitrary; flip psi_1 so it is in phase with psi_0 on the left</span>
+        <span class="c1"># (x &lt; 0), which makes psi_0 + psi_1 the left-localized combination by construction.</span>
+        <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">trapz</span><span class="p">(</span><span class="n">psi0</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">left</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">psi1</span> <span class="o">=</span> <span class="o">-</span><span class="n">psi1</span>
+        <span class="k">return</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span>
 
 <div class="viewcode-block" id="DoubleWellSimulator.tunneling_wavefunction">
 <a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.DoubleWellSimulator.tunneling_wavefunction">[docs]</a>
@@ -741,7 +752,7 @@
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            Complex-valued :math:`\psi(x,t)`, shape ``(len(t), len(x))``.</span>
 <span class="sd">        """</span>
-        <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">wavefunctions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psi0</span><span class="p">,</span> <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase_fixed_doublet</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="n">E0</span><span class="p">,</span> <span class="n">E1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">sign</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">side</span> <span class="o">==</span> <span class="s2">"left"</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>

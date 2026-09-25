@@ -30,6 +30,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from physicskit.condensed.laughlin import laughlin_metropolis_sweep, laughlin_pair_correlation, laughlin_radial_density
+from physicskit.statphys.core.monte_carlo import seed_numba_random
 
 # %%
 # Sampling the Laughlin plasma
@@ -38,7 +39,8 @@ from physicskit.condensed.laughlin import laughlin_metropolis_sweep, laughlin_pa
 # then equilibrate under repeated Metropolis sweeps of the exact
 # :math:`|\Psi_m|^2` weight before any measurement is taken.
 
-rng = np.random.default_rng(0)
+rng = np.random.default_rng(0)  # initial positions
+seed_numba_random(0)  # Metropolis moves (drawn inside Numba-compiled code)
 N, m = 40, 3
 R0 = np.sqrt(2 * m * N)
 r0 = R0 * np.sqrt(rng.random(N))

@@ -918,7 +918,18 @@ current age of the universe).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="physicskit.relativity.FLRWCosmology.luminosity_distance_mpc">
 <span class="sig-name descname"><span class="pre">luminosity_distance_mpc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/relativity/chapters/cosmology.html#FLRWCosmology.luminosity_distance_mpc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.relativity.FLRWCosmology.luminosity_distance_mpc" title="Link to this definition">#</a></dt>
-<dd><p>Luminosity distance to redshift <code class="docutils literal notranslate"><span class="pre">z</span></code>, in Mpc, <span class="math notranslate nohighlight">\(D_L = (1+z) D_C\)</span> (flat-sky FLRW).</p>
+<dd><p>Luminosity distance to redshift <code class="docutils literal notranslate"><span class="pre">z</span></code>, in Mpc.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}D_L = (1+z) D_M, \qquad
+D_M = \begin{cases}
+    \frac{D_H}{\sqrt{\Omega_k}} \sinh\left(\sqrt{\Omega_k}\, D_C/D_H\right), &amp; \Omega_k &gt; 0, \\
+    D_C, &amp; \Omega_k = 0, \\
+    \frac{D_H}{\sqrt{|\Omega_k|}} \sin\left(\sqrt{|\Omega_k|}\, D_C/D_H\right), &amp; \Omega_k &lt; 0,
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(D_H = c/H_0\)</span> is the Hubble distance and <span class="math notranslate nohighlight">\(D_M\)</span> the
+transverse comoving distance, which differs from the line-of-sight
+<a class="reference internal" href="#physicskit.relativity.FLRWCosmology.comoving_distance_mpc" title="physicskit.relativity.FLRWCosmology.comoving_distance_mpc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">comoving_distance_mpc()</span></code></a> <span class="math notranslate nohighlight">\(D_C\)</span> only in a curved universe
+(Hogg 1999, astro-ph/9905116, eqs. 16 and 21).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>z</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Redshift.</p>
@@ -927,6 +938,14 @@ current age of the universe).</p>
 <dd class="field-even"><p><em>float</em></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>An open, matter-only universe matches Mattig’s closed form,
+<span class="math notranslate nohighlight">\(D_L = \frac{2 D_H}{\Omega_m^2}\left[\Omega_m z + (\Omega_m - 2)(\sqrt{1+\Omega_m z} - 1)\right]\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cosmo</span> <span class="o">=</span> <span class="n">FLRWCosmology</span><span class="p">(</span><span class="n">H0</span><span class="o">=</span><span class="mf">70.0</span><span class="p">,</span> <span class="n">Omega_m</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">Omega_r</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Omega_Lambda</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">cosmo</span><span class="o">.</span><span class="n">luminosity_distance_mpc</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">5872.3</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -989,7 +1008,11 @@ current age of the universe).</p>
          {r^{3/4}\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}, \qquad
 L = \frac{M^{1/2}\left(r^2 - 2aM^{1/2}r^{1/2} + a^2\right)}
          {r^{3/4}\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}\]</div>
-<p>with <span class="math notranslate nohighlight">\(a \to -a\)</span> for a retrograde orbit.</p>
+<p>for a prograde orbit. For a retrograde orbit, substitute
+<span class="math notranslate nohighlight">\(a \to -a\)</span> and flip the sign of <span class="math notranslate nohighlight">\(L\)</span>: it counter-rotates,
+so <span class="math notranslate nohighlight">\(L&lt;0\)</span> (<code class="docutils literal notranslate"><span class="pre">d(phi)/d(tau)</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>) in the hole’s frame, which is the
+sign <a class="reference internal" href="#physicskit.relativity.KerrBlackHole.integrate_equatorial_geodesic" title="physicskit.relativity.KerrBlackHole.integrate_equatorial_geodesic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate_equatorial_geodesic()</span></code></a> needs to reproduce the
+circular orbit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1001,7 +1024,7 @@ L = \frac{M^{1/2}\left(r^2 - 2aM^{1/2}r^{1/2} + a^2\right)}
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>E</strong> (<em>float</em>) – Specific energy.</p></li>
-<li><p><strong>L</strong> (<em>float</em>) – Specific angular momentum.</p></li>
+<li><p><strong>L</strong> (<em>float</em>) – Specific angular momentum (negative for a retrograde orbit).</p></li>
 </ul>
 </p>
 </dd>

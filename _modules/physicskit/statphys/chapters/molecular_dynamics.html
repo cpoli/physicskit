@@ -609,10 +609,15 @@
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            H(t) = \\int_0^\\infty f(v, t) \\ln f(v, t) \\, dv</span>
+<span class="sd">            H(t) = \\int_0^\\infty f(v, t) \\ln \\frac{f(v, t)}{2\\pi v} \\, dv</span>
 
 <span class="sd">        estimated by binning the current particle speeds into a normalized</span>
-<span class="sd">        density histogram. :math:`H` decreases monotonically (on average) as</span>
+<span class="sd">        density histogram. For an isotropic 2D gas, :math:`f(v)/(2\\pi v)` is</span>
+<span class="sd">        the velocity-space density, so this equals Boltzmann's</span>
+<span class="sd">        :math:`\\int f \\ln f \\, d^2v`; dropping the :math:`2\\pi v` Jacobian</span>
+<span class="sd">        would give a functional minimized by a half-Gaussian in speed rather</span>
+<span class="sd">        than by the Maxwell-Boltzmann (Rayleigh) distribution.</span>
+<span class="sd">        :math:`H` decreases monotonically (on average) as</span>
 <span class="sd">        an arbitrary initial velocity distribution relaxes toward the</span>
 <span class="sd">        Maxwell-Boltzmann equilibrium, which minimizes :math:`H` at fixed</span>
 <span class="sd">        energy -- the microscopic root of the second law of thermodynamics.</span>
@@ -635,8 +640,9 @@
             <span class="n">v_max</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">speeds</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">if</span> <span class="n">speeds</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
         <span class="n">density</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">speeds</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v_max</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">density</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">density</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">density</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">widths</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span></div>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">density</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">density</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">centers</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span> <span class="o">*</span> <span class="n">widths</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span></div>
 
 
 <div class="viewcode-block" id="LennardJonesGas.run">

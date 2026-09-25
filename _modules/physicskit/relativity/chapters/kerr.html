@@ -673,7 +673,11 @@
 <span class="sd">            L = \\frac{M^{1/2}\\left(r^2 - 2aM^{1/2}r^{1/2} + a^2\\right)}</span>
 <span class="sd">                     {r^{3/4}\\sqrt{r^{3/2} - 3Mr^{1/2} + 2aM^{1/2}}}</span>
 
-<span class="sd">        with :math:`a \\to -a` for a retrograde orbit.</span>
+<span class="sd">        for a prograde orbit. For a retrograde orbit, substitute</span>
+<span class="sd">        :math:`a \\to -a` and flip the sign of :math:`L`: it counter-rotates,</span>
+<span class="sd">        so :math:`L&lt;0` (``d(phi)/d(tau) &lt; 0``) in the hole's frame, which is the</span>
+<span class="sd">        sign :meth:`integrate_equatorial_geodesic` needs to reproduce the</span>
+<span class="sd">        circular orbit.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -688,7 +692,7 @@
 <span class="sd">        E : float</span>
 <span class="sd">            Specific energy.</span>
 <span class="sd">        L : float</span>
-<span class="sd">            Specific angular momentum.</span>
+<span class="sd">            Specific angular momentum (negative for a retrograde orbit).</span>
 <span class="sd">        """</span>
         <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
         <span class="n">a_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="k">if</span> <span class="n">prograde</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span>
@@ -696,7 +700,7 @@
         <span class="n">denom</span> <span class="o">=</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="n">denom</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">a_eff</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">a_eff</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">denom</span>
-        <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span></div>
+        <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="p">(</span><span class="n">L</span> <span class="k">if</span> <span class="n">prograde</span> <span class="k">else</span> <span class="o">-</span><span class="n">L</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="KerrBlackHole.integrate_equatorial_geodesic">

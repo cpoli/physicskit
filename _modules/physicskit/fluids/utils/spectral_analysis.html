@@ -444,7 +444,8 @@
 <span class="sd">    by FFT, forms the kinetic energy density</span>
 <span class="sd">    :math:`\\tfrac{1}{2}(|\\hat{u}|^2+|\\hat{v}|^2)` at each wavevector, and</span>
 <span class="sd">    sums it over the discrete annulus of wavevectors with</span>
-<span class="sd">    :math:`k \\le |\\mathbf{k}| &lt; k+1` (in grid-index units) to give</span>
+<span class="sd">    :math:`k - \\tfrac12 \\le |\\mathbf{k}| &lt; k + \\tfrac12` (in grid-index</span>
+<span class="sd">    units) to give</span>
 <span class="sd">    :math:`E(k)`, normalized so that :math:`\\sum_k E(k) \\approx` the</span>
 <span class="sd">    domain-averaged kinetic energy per unit mass (Parseval's theorem).</span>
 
@@ -482,6 +483,8 @@
 <span class="sd">    &gt;&gt;&gt; k, E = energy_spectrum(u, v, length)</span>
 <span class="sd">    &gt;&gt;&gt; bool(np.argmax(E) == 1)  # all the energy sits at the single k=1 mode</span>
 <span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; round(float(E.sum()), 6)  # = mean of (u**2 + v**2) / 2</span>
+<span class="sd">    0.5</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"u and v must have the same shape"</span><span class="p">)</span>
@@ -490,7 +493,7 @@
     <span class="n">n</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">u_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
     <span class="n">v_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
-    <span class="n">energy_density</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">energy_density</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="n">kfreq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">length</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
     <span class="n">KX</span><span class="p">,</span> <span class="n">KY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">kfreq</span><span class="p">,</span> <span class="n">kfreq</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>

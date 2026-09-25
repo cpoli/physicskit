@@ -634,8 +634,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">screen_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""Fraunhofer-style amplitude on a screen at distance :math:`L`.</span>
 
-<span class="sd">        Sums the two slit contributions with their propagation phase</span>
-<span class="sd">        :math:`kL + kx^2/2L` (paraxial/Fresnel approximation), :math:`x`</span>
+<span class="sd">        Sums the two slit contributions, each a Gaussian aperture</span>
+<span class="sd">        :math:`e^{-y^2/w^2}` radiating :math:`e^{ikr}/\sqrt{r}` (exact path</span>
+<span class="sd">        length :math:`r` to the screen point) under its single-slit</span>
+<span class="sd">        diffraction envelope :math:`e^{-(kw\sin\theta)^2/4}`; :math:`x` is</span>
 <span class="sd">        measured along the screen.</span>
 
 <span class="sd">        Parameters</span>
@@ -658,11 +660,13 @@
         <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slit_width</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">slit_amp</span><span class="p">(</span><span class="n">y0</span><span class="p">):</span>
-            <span class="c1"># each slit acts as a Gaussian source of width w</span>
+            <span class="c1"># Each slit is a Gaussian aperture exp(-y^2/w^2); its far-field (Fraunhofer)</span>
+            <span class="c1"># diffraction envelope is exp(-(k w sin(theta))^2 / 4).</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">L</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">phase</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">r</span>
-            <span class="n">sinc_envelope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">sinc_envelope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phase</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="n">sin_theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span>
+            <span class="n">envelope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">k</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">sin_theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">envelope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phase</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">slit_amp</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">slit_amp</span><span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
 
