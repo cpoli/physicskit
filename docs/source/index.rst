@@ -39,6 +39,15 @@ re-deriving the plumbing every time:
 - :mod:`physicskit.semiclassical` -- WKB/EBK quantization, semiclassical propagators, the Gutzwiller trace formula, and quantum scarring
 - :mod:`physicskit.statphys` -- statistical mechanics: lattice models, molecular dynamics, criticality
 
+**physicskit** is part of a family of packages -- **physicskit**,
+`mathematicskit <https://cpoli.github.io/mathematicskit/>`_ and
+`chemistrykit <https://cpoli.github.io/chemistrykit/>`_ -- that share the
+same architecture, API conventions, and history-driven documentation.
+For tight-binding models beyond :mod:`physicskit.condensed` -- arbitrary
+finite lattices, ribbons and defects, non-Hermitian bands, Landauer
+transport, and the kernel polynomial method for very large samples --
+see the dedicated package `tbkit <https://cpoli.github.io/tbkit/>`_.
+
 Conventionally imported as ``pk``:
 
 .. code-block:: python

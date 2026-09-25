@@ -20,6 +20,15 @@ runnable code that reproduces it. 14 domain subpackages, one consistent
 NumPy-based API, sharing common ODE integrators and physical constants
 throughout. Conventionally imported as `pk`.
 
+physicskit is part of a family of packages -- **physicskit**,
+[mathematicskit](https://github.com/cpoli/mathematicskit) and
+[chemistrykit](https://github.com/cpoli/chemistrykit) -- that share the
+same architecture, API conventions, and history-driven documentation.
+For tight-binding models beyond `physicskit.condensed` -- arbitrary
+finite lattices, ribbons and defects, non-Hermitian bands, Landauer
+transport, and the kernel polynomial method for very large samples --
+see the dedicated package [tbkit](https://github.com/cpoli/tbkit).
+
 ## Install
 
 ```bash
