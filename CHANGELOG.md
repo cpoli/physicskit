@@ -97,6 +97,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `integrators`, `units`, `results`, `io`), configured per module in
   `pyproject.toml`; `mypy` with no arguments runs exactly that check.
   Whole-package `mypy physicskit` stays advisory.
+- `physicskit.fluids` is now exported from the top-level package
+  (`import physicskit as pk; pk.fluids`), like every other subpackage.
+  Previously it had to be imported explicitly.
 
 ## [0.2.0] - 2026-09-25
 
