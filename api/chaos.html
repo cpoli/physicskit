@@ -1334,6 +1334,186 @@ resolution (perimeter error <code class="docutils literal notranslate"><span cla
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.chaos.</span></span><span class="sig-name descname"><span class="pre">ForcedVanDerPol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/continuous.html#ForcedVanDerPol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#physicskit.chaos.DynamicalSystem" title="physicskit.chaos.core.base_system.DynamicalSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicalSystem</span></code></a></p>
+<p>The sinusoidally forced Van der Pol oscillator.</p>
+<p>Governed by <code class="docutils literal notranslate"><span class="pre">x''</span> <span class="pre">-</span> <span class="pre">mu*(1</span> <span class="pre">-</span> <span class="pre">x^2)*x'</span> <span class="pre">+</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">A*cos(omega*t)</span></code>: a
+self-excited (negatively damped at small amplitude) valve-circuit
+oscillator driven by a periodic signal. With <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">0</span></code> it is the plain
+Van der Pol oscillator, whose limit cycle has amplitude close to 2 for
+small <cite>mu</cite> and becomes a relaxation oscillation of period roughly
+<code class="docutils literal notranslate"><span class="pre">(3</span> <span class="pre">-</span> <span class="pre">2</span> <span class="pre">ln</span> <span class="pre">2)</span> <span class="pre">mu</span></code> for large <cite>mu</cite>.</p>
+<p>Cartwright &amp; Littlewood (1945) proved, in the scaling
+<code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">b</span> <span class="pre">*</span> <span class="pre">omega</span> <span class="pre">*</span> <span class="pre">mu</span></code> with <cite>mu</cite> large, that for a range of <cite>b</cite> the
+forced oscillator has two coexisting stable periodic motions whose
+periods are different odd multiples of the forcing period
+<code class="docutils literal notranslate"><span class="pre">2*pi/omega</span></code>, plus an invariant “bad” set of infinitely many periodic
+and uncountably many non-periodic orbits – the first proof of chaos in
+an equation from physics. The defaults below are one such parameter set
+(<code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">0.58</span></code>), where stable subharmonics of period <code class="docutils literal notranslate"><span class="pre">3T</span></code> and <code class="docutils literal notranslate"><span class="pre">5T</span></code>
+coexist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Nonlinear damping strength (Cartwright and Littlewood’s <cite>k</cite>).</p></li>
+<li><p><strong>A</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Forcing amplitude.</p></li>
+<li><p><strong>omega</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Forcing angular frequency (Cartwright and Littlewood’s <cite>lambda</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>omega</strong> (<a class="reference internal" href="quantum.html#physicskit.quantum.SternGerlach.mu" title="physicskit.quantum.SternGerlach.mu"><em>mu</em></a><em>, </em><em>A</em><em>,</em>) – System parameters.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>M. L. Cartwright and J. E. Littlewood, “On Non-Linear Differential
+Equations of the Second Order: I. The Equation
+y’’ - k(1 - y^2)y’ + y = b lambda k cos(lambda t + a), k Large,”
+<em>J. London Math. Soc.</em> <strong>20</strong>, 180-189 (1945).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.chaos.systems.continuous</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForcedVanDerPol</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">system</span> <span class="o">=</span> <span class="n">ForcedVanDerPol</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">system</span><span class="o">.</span><span class="n">rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]),</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[1.0, 1.5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">system</span><span class="o">.</span><span class="n">forcing_period</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.dim" title="Link to this definition">#</a></dt>
+<dd><p>State dimension, always 2. State is <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">v)</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.forcing_period">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">forcing_period</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.forcing_period" title="Link to this definition">#</a></dt>
+<dd><p>Period <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">=</span> <span class="pre">2*pi/omega</span></code> of the forcing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.initial_state">
+<span class="sig-name descname"><span class="pre">initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/continuous.html#ForcedVanDerPol.initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.initial_state" title="Link to this definition">#</a></dt>
+<dd><p>Default initial condition <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">0)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray of float, shape (2,)</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.params">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.params" title="Link to this definition">#</a></dt>
+<dd><p>Parameter vector <code class="docutils literal notranslate"><span class="pre">(mu,</span> <span class="pre">A,</span> <span class="pre">omega)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (3,)</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/continuous.html#ForcedVanDerPol.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.rhs" title="Link to this definition">#</a></dt>
+<dd><p>Evaluate the forced Van der Pol vector field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – State vector <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">v)</span></code>.</p></li>
+<li><p><strong>t</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Current time (the forcing term depends on <cite>t</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (2,)</em> – Time derivative <code class="docutils literal notranslate"><span class="pre">(dx/dt,</span> <span class="pre">dv/dt)</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.stroboscopic_map">
+<span class="sig-name descname"><span class="pre">stroboscopic_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps_per_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/continuous.html#ForcedVanDerPol.stroboscopic_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.stroboscopic_map" title="Link to this definition">#</a></dt>
+<dd><p>Sample many trajectories once per forcing period, in parallel.</p>
+<p>Every trajectory starts at <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">0</span></code> and is integrated with RK4 at a
+fixed step <code class="docutils literal notranslate"><span class="pre">forcing_period</span> <span class="pre">/</span> <span class="pre">steps_per_period</span></code>, recording the state
+at <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">T,</span> <span class="pre">2T,</span> <span class="pre">...</span></code>. This stroboscopic (Poincare) map turns the
+periodic orbits of the flow into finite cycles of points – a
+subharmonic of period <code class="docutils literal notranslate"><span class="pre">nT</span></code> becomes an <cite>n</cite>-cycle – which is how
+Cartwright and Littlewood’s coexisting periodic motions are told
+apart. Many initial conditions (e.g. a basin-of-attraction grid)
+are integrated at once on all cores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Initial states <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">v)</span></code> at <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p></li>
+<li><p><strong>n_periods</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of forcing periods to integrate.</p></li>
+<li><p><strong>steps_per_period</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – RK4 steps per forcing period.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (n, n_periods + 1, 2)</em> – <code class="docutils literal notranslate"><span class="pre">out[i,</span> <span class="pre">k]</span></code> is the state of trajectory <cite>i</cite> at <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">k*T</span></code>
+(<code class="docutils literal notranslate"><span class="pre">out[i,</span> <span class="pre">0]</span></code> is its initial state). A single <code class="docutils literal notranslate"><span class="pre">(2,)</span></code> input
+still returns a leading axis of length 1.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.chaos.systems.continuous</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForcedVanDerPol</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linear</span> <span class="o">=</span> <span class="n">ForcedVanDerPol</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">linear</span><span class="o">.</span><span class="n">stroboscopic_map</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">n_periods</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1, 4, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">))</span>  <span class="c1"># x = cos(t) has period T</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.ForcedVanDerPol.trajectory">
+<span class="sig-name descname"><span class="pre">trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/continuous.html#ForcedVanDerPol.trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.ForcedVanDerPol.trajectory" title="Link to this definition">#</a></dt>
+<dd><p>Integrate a trajectory with the Numba-accelerated RK4 integrator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Initial state; defaults to <a class="reference internal" href="#physicskit.chaos.ForcedVanDerPol.initial_state" title="physicskit.chaos.ForcedVanDerPol.initial_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initial_state()</span></code></a>.</p></li>
+<li><p><strong>t0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Initial time.</p></li>
+<li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Integration step size (the relaxation jumps at large <cite>mu</cite> need
+<code class="docutils literal notranslate"><span class="pre">dt</span></code> well below <code class="docutils literal notranslate"><span class="pre">1/mu</span></code>).</p></li>
+<li><p><strong>n_steps</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of integration steps.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray of float, shape (n_steps + 1,)</em>)</p></li>
+<li><p><strong>states</strong> (<em>ndarray of float, shape (n_steps + 1, 2)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="physicskit.chaos.HenonMap">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.chaos.</span></span><span class="sig-name descname"><span class="pre">HenonMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#HenonMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.HenonMap" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#physicskit.chaos.DiscreteMap" title="physicskit.chaos.core.base_system.DiscreteMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteMap</span></code></a></p>
@@ -2667,6 +2847,16 @@ kept.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.EllipseBilliard"><code class="docutils literal notranslate"><span class="pre">EllipseBilliard</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.EllipseBilliard.foci"><code class="docutils literal notranslate"><span class="pre">EllipseBilliard.foci()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.EllipseBilliard.sample_interior_point"><code class="docutils literal notranslate"><span class="pre">EllipseBilliard.sample_interior_point()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.dim"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.forcing_period"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.forcing_period</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.initial_state"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.initial_state()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.params"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.params</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.rhs"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.rhs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.stroboscopic_map"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.stroboscopic_map()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.ForcedVanDerPol.trajectory"><code class="docutils literal notranslate"><span class="pre">ForcedVanDerPol.trajectory()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.HenonMap"><code class="docutils literal notranslate"><span class="pre">HenonMap</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">

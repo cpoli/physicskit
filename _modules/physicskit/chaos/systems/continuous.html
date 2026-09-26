@@ -409,7 +409,7 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.chaos.systems.continuous</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, Chua.</span>
+<span></span><span class="sd">"""Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, forced Van der Pol, Chua.</span>
 
 <span class="sd">Each system exposes a plain-Python :meth:`rhs` (for interactive use / plotting)</span>
 <span class="sd">plus a module-level Numba ``@njit`` right-hand-side function with the signature</span>
@@ -421,8 +421,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span><span class="p">,</span> <span class="n">prange</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">brentq</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.chaos.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">DynamicalSystem</span>
@@ -1020,6 +1020,267 @@
 <span class="sd">        """</span>
         <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_duffing_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Forced Van der Pol oscillator</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="s2">"always"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_forced_van_der_pol_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Forced Van der Pol vector field ``dx/dt = f(x, t; mu, A, omega)``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    state : ndarray of float, shape (2,)</span>
+<span class="sd">        State vector ``(x, v)``.</span>
+<span class="sd">    t : float</span>
+<span class="sd">        Current time (the forcing term depends on `t`).</span>
+<span class="sd">    params : ndarray of float, shape (3,)</span>
+<span class="sd">        Parameters ``(mu, A, omega)``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of float, shape (2,)</span>
+<span class="sd">        Time derivative ``(dx/dt, dv/dt)``.</span>
+<span class="sd">    """</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_forced_van_der_pol_strobe</span><span class="p">(</span><span class="n">states0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+    <span class="c1"># Scalar RK4 (no per-step array allocation, which would serialize the</span>
+    <span class="c1"># parallel threads on the allocator).</span>
+    <span class="n">mu</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">states0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">omega</span> <span class="o">/</span> <span class="n">steps_per_period</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n_periods</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># type: ignore[attr-defined]  # numba lacks type stubs for prange</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">states0</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">states0</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_periods</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps_per_period</span><span class="p">):</span>
+                <span class="c1"># Time measured from the start of the current forcing period</span>
+                <span class="c1"># (the forcing is T-periodic), so it never accumulates error.</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">dt</span>
+                <span class="n">k1x</span><span class="p">,</span> <span class="n">k1v</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
+                <span class="n">k2x</span><span class="p">,</span> <span class="n">k2v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1v</span><span class="p">,</span> <span class="n">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1x</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1v</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
+                <span class="n">k3x</span><span class="p">,</span> <span class="n">k3v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2v</span><span class="p">,</span> <span class="n">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2x</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2v</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
+                <span class="n">k4x</span><span class="p">,</span> <span class="n">k4v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3v</span><span class="p">,</span> <span class="n">_forced_van_der_pol_accel</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3x</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3v</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">omega</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1x</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2x</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3x</span> <span class="o">+</span> <span class="n">k4x</span><span class="p">)</span>
+                <span class="n">v</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1v</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2v</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3v</span> <span class="o">+</span> <span class="n">k4v</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="ForcedVanDerPol">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.ForcedVanDerPol">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForcedVanDerPol</span><span class="p">(</span><span class="n">DynamicalSystem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""The sinusoidally forced Van der Pol oscillator.</span>
+
+<span class="sd">    Governed by ``x'' - mu*(1 - x^2)*x' + x = A*cos(omega*t)``: a</span>
+<span class="sd">    self-excited (negatively damped at small amplitude) valve-circuit</span>
+<span class="sd">    oscillator driven by a periodic signal. With ``A = 0`` it is the plain</span>
+<span class="sd">    Van der Pol oscillator, whose limit cycle has amplitude close to 2 for</span>
+<span class="sd">    small `mu` and becomes a relaxation oscillation of period roughly</span>
+<span class="sd">    ``(3 - 2 ln 2) mu`` for large `mu`.</span>
+
+<span class="sd">    Cartwright &amp; Littlewood (1945) proved, in the scaling</span>
+<span class="sd">    ``A = b * omega * mu`` with `mu` large, that for a range of `b` the</span>
+<span class="sd">    forced oscillator has two coexisting stable periodic motions whose</span>
+<span class="sd">    periods are different odd multiples of the forcing period</span>
+<span class="sd">    ``2*pi/omega``, plus an invariant "bad" set of infinitely many periodic</span>
+<span class="sd">    and uncountably many non-periodic orbits -- the first proof of chaos in</span>
+<span class="sd">    an equation from physics. The defaults below are one such parameter set</span>
+<span class="sd">    (``b = 0.58``), where stable subharmonics of period ``3T`` and ``5T``</span>
+<span class="sd">    coexist.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mu : float, default 10.0</span>
+<span class="sd">        Nonlinear damping strength (Cartwright and Littlewood's `k`).</span>
+<span class="sd">    A : float, default 14.5</span>
+<span class="sd">        Forcing amplitude.</span>
+<span class="sd">    omega : float, default 2.5</span>
+<span class="sd">        Forcing angular frequency (Cartwright and Littlewood's `lambda`).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mu, A, omega : float</span>
+<span class="sd">        System parameters.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M. L. Cartwright and J. E. Littlewood, "On Non-Linear Differential</span>
+<span class="sd">    Equations of the Second Order: I. The Equation</span>
+<span class="sd">    y'' - k(1 - y^2)y' + y = b lambda k cos(lambda t + a), k Large,"</span>
+<span class="sd">    *J. London Math. Soc.* **20**, 180-189 (1945).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from physicskit.chaos.systems.continuous import ForcedVanDerPol</span>
+<span class="sd">    &gt;&gt;&gt; system = ForcedVanDerPol(mu=1.0, A=0.5, omega=2.0)</span>
+<span class="sd">    &gt;&gt;&gt; system.rhs(np.array([0.0, 1.0]), 0.0).tolist()</span>
+<span class="sd">    [1.0, 1.5]</span>
+<span class="sd">    &gt;&gt;&gt; system.forcing_period == 2 * np.pi / 2.0</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+
+    <span class="c1">#: State dimension, always 2. State is ``(x, v)``.</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">14.5</span><span class="p">,</span> <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Parameter vector ``(mu, A, omega)``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (3,)</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forcing_period</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Period ``T = 2*pi/omega`` of the forcing.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span>
+
+<div class="viewcode-block" id="ForcedVanDerPol.rhs">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.ForcedVanDerPol.rhs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Evaluate the forced Van der Pol vector field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        state : ndarray of float, shape (2,)</span>
+<span class="sd">            State vector ``(x, v)``.</span>
+<span class="sd">        t : float</span>
+<span class="sd">            Current time (the forcing term depends on `t`).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (2,)</span>
+<span class="sd">            Time derivative ``(dx/dt, dv/dt)``.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_forced_van_der_pol_rhs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ForcedVanDerPol.initial_state">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.ForcedVanDerPol.initial_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Default initial condition ``(1, 0)``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (2,)</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="ForcedVanDerPol.trajectory">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.ForcedVanDerPol.trajectory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trajectory</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">state0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span>
+        <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Integrate a trajectory with the Numba-accelerated RK4 integrator.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        state0 : array_like of float, shape (2,), optional</span>
+<span class="sd">            Initial state; defaults to :meth:`initial_state`.</span>
+<span class="sd">        t0 : float, default 0.0</span>
+<span class="sd">            Initial time.</span>
+<span class="sd">        dt : float, default 0.005</span>
+<span class="sd">            Integration step size (the relaxation jumps at large `mu` need</span>
+<span class="sd">            ``dt`` well below ``1/mu``).</span>
+<span class="sd">        n_steps : int, default 20000</span>
+<span class="sd">            Number of integration steps.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        times : ndarray of float, shape (n_steps + 1,)</span>
+<span class="sd">        states : ndarray of float, shape (n_steps + 1, 2)</span>
+<span class="sd">        """</span>
+        <span class="n">state0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">()</span> <span class="k">if</span> <span class="n">state0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rk4_integrate</span><span class="p">(</span><span class="n">_forced_van_der_pol_rhs</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ForcedVanDerPol.stroboscopic_map">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.ForcedVanDerPol.stroboscopic_map">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stroboscopic_map</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">states0</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+        <span class="n">n_periods</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">steps_per_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Sample many trajectories once per forcing period, in parallel.</span>
+
+<span class="sd">        Every trajectory starts at ``t = 0`` and is integrated with RK4 at a</span>
+<span class="sd">        fixed step ``forcing_period / steps_per_period``, recording the state</span>
+<span class="sd">        at ``t = 0, T, 2T, ...``. This stroboscopic (Poincare) map turns the</span>
+<span class="sd">        periodic orbits of the flow into finite cycles of points -- a</span>
+<span class="sd">        subharmonic of period ``nT`` becomes an `n`-cycle -- which is how</span>
+<span class="sd">        Cartwright and Littlewood's coexisting periodic motions are told</span>
+<span class="sd">        apart. Many initial conditions (e.g. a basin-of-attraction grid)</span>
+<span class="sd">        are integrated at once on all cores.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        states0 : array_like of float, shape (n, 2) or (2,)</span>
+<span class="sd">            Initial states ``(x, v)`` at ``t = 0``.</span>
+<span class="sd">        n_periods : int</span>
+<span class="sd">            Number of forcing periods to integrate.</span>
+<span class="sd">        steps_per_period : int, default 400</span>
+<span class="sd">            RK4 steps per forcing period.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (n, n_periods + 1, 2)</span>
+<span class="sd">            ``out[i, k]`` is the state of trajectory `i` at ``t = k*T``</span>
+<span class="sd">            (``out[i, 0]`` is its initial state). A single ``(2,)`` input</span>
+<span class="sd">            still returns a leading axis of length 1.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from physicskit.chaos.systems.continuous import ForcedVanDerPol</span>
+<span class="sd">        &gt;&gt;&gt; linear = ForcedVanDerPol(mu=0.0, A=0.0, omega=1.0)</span>
+<span class="sd">        &gt;&gt;&gt; out = linear.stroboscopic_map([1.0, 0.0], n_periods=3)</span>
+<span class="sd">        &gt;&gt;&gt; out.shape</span>
+<span class="sd">        (1, 4, 2)</span>
+<span class="sd">        &gt;&gt;&gt; bool(np.allclose(out[0, -1], [1.0, 0.0], atol=1e-8))  # x = cos(t) has period T</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">states0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">states</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">states</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"states0 must have shape (n, 2) or (2,), got </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">states0</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_forced_van_der_pol_strobe</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">states</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_periods</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps_per_period</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 </div>
 
 
