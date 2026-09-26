@@ -21,6 +21,9 @@
   effects, and a Floquet-driven infinite square well.
 - :mod:`physicskit.quantum.chapters.entanglement` -- Bell states and CHSH
   correlations, and the Aharonov-Bohm ring.
+- :mod:`physicskit.quantum.chapters.open_systems` -- the Lindblad master
+  equation, Monte Carlo wavefunction quantum trajectories, and the
+  amplitude-damping and dephasing channels.
 
 See :mod:`physicskit.semiclassical` for WKB/EBK quantization, Van
 Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace
@@ -42,6 +45,20 @@ from physicskit.quantum.chapters.hydrogen_am import (
     orbital_superposition_psi,
     radial_wavefunction,
     spherical_harmonic,
+)
+from physicskit.quantum.chapters.open_systems import (
+    QuantumTrajectories,
+    TrajectoryResult,
+    amplitude_damping_kraus,
+    apply_kraus,
+    dephasing_kraus,
+    is_trace_preserving,
+    lindblad_rhs,
+    lindblad_steady_state,
+    lindblad_superoperator,
+    sigma_minus,
+    solve_lindblad,
+    t1_t2_collapse_operators,
 )
 from physicskit.quantum.chapters.perturbation import (
     FloquetDrivenBox,
@@ -177,4 +194,17 @@ __all__ = [
     # chapters.spin
     "SternGerlach",
     "RabiProblem",
+    # chapters.open_systems
+    "sigma_minus",
+    "t1_t2_collapse_operators",
+    "lindblad_rhs",
+    "lindblad_superoperator",
+    "solve_lindblad",
+    "lindblad_steady_state",
+    "TrajectoryResult",
+    "QuantumTrajectories",
+    "amplitude_damping_kraus",
+    "dephasing_kraus",
+    "apply_kraus",
+    "is_trace_preserving",
 ]

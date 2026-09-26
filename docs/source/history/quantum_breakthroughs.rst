@@ -921,6 +921,52 @@ gives the general stability amplitude :math:`1/\sqrt{\lvert
 
 .. minigallery:: ../../examples/semiclassical/gutzwiller/plot_gutzwiller_quartic_oscillator.py
 
+1976 -- Lindblad's Master Equation for Open Quantum Systems
+-----------------------------------------------------------
+
+No real quantum system is perfectly isolated: an atom radiates into the
+electromagnetic vacuum, a superconducting qubit leaks energy into its
+circuit, and every such coupling turns pure states into mixed ones. Goran
+Lindblad, and simultaneously Vittorio Gorini, Andrzej Kossakowski and
+George Sudarshan, answered the structural question of what equations of
+motion are even allowed for the density matrix of a system whose
+environment has no memory. Requiring the evolution to be a semigroup of
+*completely positive*, trace-preserving maps -- so that probabilities stay
+probabilities even when the system is entangled with something else --
+forces the unique form
+
+.. math::
+
+   \frac{d\rho}{dt} = -\frac{i}{\hbar}[H, \rho]
+       + \sum_k \left( L_k \rho L_k^\dagger
+       - \tfrac12 \{ L_k^\dagger L_k, \rho \} \right),
+
+with one "jump" operator :math:`L_k` per dissipative channel. For a qubit,
+spontaneous decay :math:`L = \sqrt{1/T_1}\,\sigma_-` and pure dephasing
+:math:`L \propto \sigma_z` reproduce exactly the phenomenological
+relaxation times :math:`T_1` and :math:`T_2` that Felix Bloch had written
+down for nuclear magnetic resonance thirty years earlier, now on a
+rigorous quantum footing. The GKSL equation is today the working model of
+decoherence in quantum optics and quantum computing.
+
+*Implementation:* :func:`physicskit.quantum.chapters.open_systems.solve_lindblad`
+propagates :math:`\rho(t)` exactly via the matrix exponential of the
+Liouvillian built by
+:func:`~physicskit.quantum.chapters.open_systems.lindblad_superoperator`;
+:func:`~physicskit.quantum.chapters.open_systems.t1_t2_collapse_operators`
+builds the collapse operators for given :math:`T_1` and :math:`T_2`,
+:func:`~physicskit.quantum.chapters.open_systems.lindblad_steady_state`
+finds the stationary state, and
+:func:`~physicskit.quantum.chapters.open_systems.amplitude_damping_kraus`
+and :func:`~physicskit.quantum.chapters.open_systems.dephasing_kraus` give
+the equivalent finite-time quantum channels.
+
+*References:* G. Lindblad, "On the generators of quantum dynamical
+semigroups," Commun. Math. Phys. 48, 119-130 (1976); V. Gorini, A.
+Kossakowski, and E. C. G. Sudarshan, J. Math. Phys. 17, 821-825 (1976).
+
+.. minigallery:: ../../examples/quantum/open_systems/plot_lindblad_master_equation.py
+
 1982 -- The No-Cloning Theorem
 -------------------------------
 
@@ -1036,6 +1082,48 @@ Lett. 64, 2007-2010 (1990); fractional revivals, I. Sh. Averbukh and N. F.
 Perelman, Phys. Lett. A 139, 449-453 (1989).
 
 .. minigallery:: ../../examples/quantum/wave_packets/plot_quantum_revivals.py
+
+1992 -- Dalibard, Castin, and Molmer: Quantum Trajectories
+-----------------------------------------------------------
+
+By the late 1980s experiments were watching *single* trapped ions switch
+abruptly between bright and dark states -- "quantum jumps" that a density
+matrix, describing only ensemble averages, cannot display. Jean Dalibard,
+Yvan Castin and Klaus Molmer (and, independently, Dum, Zoller and Ritsch,
+and Carmichael, who coined the term "quantum trajectories") showed that
+the Lindblad equation can be *unravelled* into stochastic pure-state
+histories. Between jumps a state evolves under the non-Hermitian
+effective Hamiltonian
+
+.. math::
+
+   H_\mathrm{eff} = H - \frac{i\hbar}{2}\sum_k L_k^\dagger L_k,
+
+whose shrinking norm is the probability that no jump has yet occurred;
+at random times a jump :math:`\psi \to L_k\psi` is applied. Averaging
+:math:`|\psi\rangle\langle\psi|` over many such trajectories recovers
+:math:`\rho(t)` exactly. Besides giving a picture of what a single
+photodetected atom does, the method only needs state vectors of dimension
+:math:`d` instead of density matrices of dimension :math:`d^2`, which is
+why it is widely used for simulating large open quantum systems.
+
+*Implementation:* :class:`physicskit.quantum.chapters.open_systems.QuantumTrajectories`
+runs a vectorized ensemble of trajectories with the waiting-time jump
+rule, returning a
+:class:`~physicskit.quantum.chapters.open_systems.TrajectoryResult` whose
+``density_matrices`` average converges to
+:func:`~physicskit.quantum.chapters.open_systems.solve_lindblad`'s
+solution and whose ``jump_times`` record each trajectory's photon
+emissions.
+
+*References:* J. Dalibard, Y. Castin, and K. Molmer, "Wave-function
+approach to dissipative processes in quantum optics," Phys. Rev. Lett.
+68, 580-583 (1992); R. Dum, P. Zoller, and H. Ritsch, Phys. Rev. A 45,
+4879-4887 (1992); H. J. Carmichael, *An Open Systems Approach to Quantum
+Optics* (Springer, 1993); review: M. B. Plenio and P. L. Knight, Rev.
+Mod. Phys. 70, 101-144 (1998).
+
+.. minigallery:: ../../examples/quantum/open_systems/plot_quantum_trajectories.py
 
 See Also
 --------

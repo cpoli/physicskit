@@ -41,3 +41,6 @@ Sections
   time: the double-slit experiment and Stern-Gerlach beam splitting.
 - **perturbation** -- Stark/Zeeman splitting from perturbation theory and
   Floquet driving.
+- **open_systems** -- a qubit coupled to its environment: Lindblad
+  :math:`T_1`/:math:`T_2` decay and the quantum-trajectory (Monte Carlo
+  wavefunction) unravelling of the same dynamics.

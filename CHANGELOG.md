@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.quantum` open quantum systems
+  (`physicskit.quantum.chapters.open_systems`): `lindblad_rhs`,
+  `lindblad_superoperator`, `solve_lindblad` (exact propagation of the
+  GKSL master equation), `lindblad_steady_state`, the Monte Carlo
+  wavefunction unravelling `QuantumTrajectories` / `TrajectoryResult`,
+  the Kraus channels `amplitude_damping_kraus`, `dephasing_kraus`,
+  `apply_kraus`, `is_trace_preserving`, and the qubit helpers
+  `sigma_minus`, `t1_t2_collapse_operators`.
+- Gallery examples "The Lindblad master equation: T1 relaxation and T2
+  dephasing" and "Quantum trajectories: the Monte Carlo wavefunction
+  method" (`examples/quantum/open_systems/`), and quantum history entries
+  "1976 -- Lindblad's Master Equation for Open Quantum Systems" and
+  "1992 -- Dalibard, Castin, and Molmer: Quantum Trajectories".
 - `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
   `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
   `stroboscopic_map` that samples many trajectories once per forcing
