@@ -278,7 +278,7 @@ Maxwell's theory adds on top of the earlier scalar wave picture.
 *References:* J. C. Maxwell, "A Dynamical Theory of the Electromagnetic
 Field," Phil. Trans. R. Soc. Lond. 155, 459-512 (1865).
 
-.. minigallery:: ../../examples/optics/diffraction/plot_fresnel_poisson_spot.py
+.. minigallery:: ../../examples/optics/diffraction/plot_maxwell_electromagnetic_light.py
 
 1905 -- Einstein's Light-Quantum Hypothesis
 ---------------------------------------------
@@ -316,7 +316,7 @@ classical field amplitude.
 Lichtes betreffenden heuristischen Gesichtspunkt," Ann. Phys. 322(6),
 132-148 (1905).
 
-.. minigallery:: ../../examples/optics/quantum_optics/plot_photon_antibunching.py
+.. minigallery:: ../../examples/optics/quantum_optics/plot_einstein_photoelectric_effect.py
 
 1927 -- Dirac's Quantization of the Electromagnetic Field
 -----------------------------------------------------------

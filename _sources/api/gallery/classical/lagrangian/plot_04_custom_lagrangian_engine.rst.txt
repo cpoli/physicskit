@@ -18,14 +18,19 @@
 .. _sphx_glr_api_gallery_classical_lagrangian_plot_04_custom_lagrangian_engine.py:
 
 
-Building your own system: LagrangianEngine from scratch
-==============================================================
+Lagrange's Mécanique Analytique: equations of motion from L = T - V
+=========================================================================
 
-Every Lagrangian system built into physicskit.classical (DoublePendulum,
-BeadOnRotatingHoop, CoupledOscillators, HeavySymmetricTop) hides its
-use of LagrangianEngine inside a system class. This example shows the
-raw workflow directly, for a system that is *not* already built in:
-the elastic (spring) pendulum -- a mass :math:`m` on a spring of
+Lagrange's *Mécanique Analytique* (1788) reduced mechanics to one scalar
+function, :math:`L = T - V`, written in any generalized coordinates, and
+the Euler-Lagrange equations
+:math:`\frac{d}{dt}\frac{\partial L}{\partial\dot q} -
+\frac{\partial L}{\partial q} = 0` -- no forces, no constraint
+reactions, no diagrams. Every Lagrangian system built into
+physicskit.classical (DoublePendulum, BeadOnRotatingHoop,
+CoupledOscillators, HeavySymmetricTop) hides that recipe inside a system
+class. This example follows Lagrange's recipe by hand, step by step,
+for the elastic (spring) pendulum -- a mass :math:`m` on a spring of
 natural length :math:`l_0` and stiffness :math:`k`, free to swing as a
 pendulum too, so its radial "stretch" and angular "swing" motions are
 coupled. Using polar-style coordinates :math:`q = (r, \theta)` for the
@@ -52,7 +57,7 @@ stretching -- not as a single clean beat (the elastic pendulum is
 famously non-trivial even this close to resonance) but unmistakably
 present, and still exactly energy-conserving.
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-45
+.. GENERATED FROM PYTHON SOURCE LINES 43-50
 
 .. code-block:: Python
 
@@ -70,12 +75,12 @@ present, and still exactly energy-conserving.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-48
+.. GENERATED FROM PYTHON SOURCE LINES 51-53
 
 Write down L(q, qdot) symbolically
 ----------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-62
+.. GENERATED FROM PYTHON SOURCE LINES 53-67
 
 .. code-block:: Python
 
@@ -106,12 +111,12 @@ Write down L(q, qdot) symbolically
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-65
+.. GENERATED FROM PYTHON SOURCE LINES 68-70
 
 Hand it to LagrangianEngine: no other code needed
 --------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-73
+.. GENERATED FROM PYTHON SOURCE LINES 70-78
 
 .. code-block:: Python
 
@@ -136,12 +141,12 @@ Hand it to LagrangianEngine: no other code needed
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-76
+.. GENERATED FROM PYTHON SOURCE LINES 79-81
 
 Integrate directly with the compiled equations of motion
 ------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-107
+.. GENERATED FROM PYTHON SOURCE LINES 81-112
 
 .. code-block:: Python
 
@@ -194,7 +199,7 @@ Integrate directly with the compiled equations of motion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-113
+.. GENERATED FROM PYTHON SOURCE LINES 113-118
 
 The whole workflow is four steps: write ``q``, ``qdot`` as SymPy
 symbols, write down ``L`` in terms of them, hand both to
@@ -202,7 +207,7 @@ symbols, write down ``L`` in terms of them, hand both to
 resulting ``engine.canonical_deriv_njit`` -- no new system class
 required.
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-115
+.. GENERATED FROM PYTHON SOURCE LINES 118-120
 
 .. code-block:: Python
 
@@ -218,7 +223,7 @@ required.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.210 seconds)
+   **Total running time of the script:** (0 minutes 1.592 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_lagrangian_plot_04_custom_lagrangian_engine.py:

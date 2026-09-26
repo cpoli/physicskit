@@ -1,12 +1,17 @@
 r"""
-Building your own system: LagrangianEngine from scratch
-==============================================================
+Lagrange's Mécanique Analytique: equations of motion from L = T - V
+=========================================================================
 
-Every Lagrangian system built into physicskit.classical (DoublePendulum,
-BeadOnRotatingHoop, CoupledOscillators, HeavySymmetricTop) hides its
-use of LagrangianEngine inside a system class. This example shows the
-raw workflow directly, for a system that is *not* already built in:
-the elastic (spring) pendulum -- a mass :math:`m` on a spring of
+Lagrange's *Mécanique Analytique* (1788) reduced mechanics to one scalar
+function, :math:`L = T - V`, written in any generalized coordinates, and
+the Euler-Lagrange equations
+:math:`\frac{d}{dt}\frac{\partial L}{\partial\dot q} -
+\frac{\partial L}{\partial q} = 0` -- no forces, no constraint
+reactions, no diagrams. Every Lagrangian system built into
+physicskit.classical (DoublePendulum, BeadOnRotatingHoop,
+CoupledOscillators, HeavySymmetricTop) hides that recipe inside a system
+class. This example follows Lagrange's recipe by hand, step by step,
+for the elastic (spring) pendulum -- a mass :math:`m` on a spring of
 natural length :math:`l_0` and stiffness :math:`k`, free to swing as a
 pendulum too, so its radial "stretch" and angular "swing" motions are
 coupled. Using polar-style coordinates :math:`q = (r, \theta)` for the

@@ -1,20 +1,21 @@
 r"""
-Pauli, Fermi, and the pion: two-body vs. three-body decay kinematics
-==========================================================================
+Lattes, Occhialini, and Powell: the pion's two-body decay
+============================================================
 
-Beta decay's continuous electron spectrum was, on the assumption that it
-was a two-body process, a genuine puzzle: two-body decay kinematics
-forces the daughter to a single, sharply fixed momentum in the parent's
-rest frame. Pauli (1930) proposed a third, undetected particle -- the
-neutrino -- making beta decay three-body instead, with the continuous
-spectrum simply reflecting three-body phase space. Fermi (1933-1934)
-built this into a full quantitative theory; Lattes, Occhialini, and
-Powell's 1947 discovery of the charged pion supplied a clean, genuinely
-two-body confirmation of the *other* side of the same contrast:
-:math:`\pi^\pm\to\mu^\pm+\nu_\mu` gives the muon one single, sharply
-fixed momentum, exactly as two-body kinematics demands. This example
-puts both cases side by side with
-:func:`~physicskit.particle.decays.two_body_decay_momentum` and
+In 1947 Lattes, Occhialini and Powell exposed nuclear emulsion plates on
+mountaintops and found tracks of a new particle, the charged pion,
+stopping and decaying into a muon. Every one of those muons had the same
+track length in the emulsion, about 600 µm. That is the signature of a
+*two-body* decay, :math:`\pi^+\to\mu^++\nu_\mu`: in the pion's rest
+frame the muon gets one fixed momentum, however many times the decay is
+repeated. The muon in turn decayed to an electron with a continuous range
+of energies, the three-body signature of
+:math:`\mu^+\to e^++\nu_e+\bar\nu_\mu`. The whole
+:math:`\pi\to\mu\to e` chain was visible in a single photograph.
+
+This example computes the pion's fixed daughter momentum with
+:func:`~physicskit.particle.decays.two_body_decay_momentum` and builds the
+muon's continuous electron spectrum event by event with
 :func:`~physicskit.particle.decays.muon_decay_event`.
 """
 

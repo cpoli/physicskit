@@ -511,9 +511,7 @@ robustness BGS's conjecture requires of the "chaotic" side.
 "Characterization of Chaotic Quantum Spectra and Universality of Level
 Fluctuation Laws," Phys. Rev. Lett. 52, 1-4 (1984).
 
-.. minigallery::
-   ../../examples/rmt/paper_replications/wigner_surmise_demo.py
-   ../../examples/rmt/paper_replications/rigidity_universality_demo.py
+.. minigallery:: ../../examples/rmt/paper_replications/rigidity_universality_demo.py
 
 1993 -- Page's Conjecture: the Average Entanglement Entropy of a Random State
 -----------------------------------------------------------------------------

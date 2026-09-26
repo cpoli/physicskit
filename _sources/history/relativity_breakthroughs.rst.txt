@@ -170,7 +170,7 @@ Wissenschaften, 688-696 (1916); A. Einstein, "Über Gravitationswellen,"
 Sitzungsberichte der Preußischen Akademie der Wissenschaften, 154-167
 (1918) (correcting the 1916 paper's factor-of-two error).
 
-.. minigallery:: ../../examples/relativity/gravitational_waves/plot_binary_merger_chirp.py
+.. minigallery:: ../../examples/relativity/gravitational_waves/plot_einstein_quadrupole_waves.py
 
 1919 -- The Eddington Eclipse Expedition
 ----------------------------------------
@@ -211,7 +211,7 @@ Field, from Observations Made at the Total Eclipse of May 29, 1919," Phil.
 Trans. R. Soc. A 220, 291-333 (1920) (results announced Nov. 1919; the
 paper itself appeared the following year).
 
-.. minigallery:: ../../examples/relativity/schwarzschild/plot_light_bending_and_shadow.py
+.. minigallery:: ../../examples/relativity/schwarzschild/plot_eddington_eclipse_deflection.py
 
 1922 -- Friedmann, Lemaitre, and the Expanding Universe
 -------------------------------------------------------
@@ -462,7 +462,7 @@ in a series of Physical Review papers, e.g. R. Arnowitt, S. Deser, and
 C. W. Misner, "Dynamical Structure and Definition of Energy in General
 Relativity," Phys. Rev. 116, 1322 (1959).
 
-.. minigallery:: ../../examples/relativity/gravitational_waves/plot_binary_merger_chirp.py
+.. minigallery:: ../../examples/relativity/spacetime_geometry/plot_adm_initial_data.py
 
 1974 -- The Hulse-Taylor Binary Pulsar
 --------------------------------------
@@ -583,7 +583,7 @@ J. G. Baker, J. Centrella, D.-I. Choi, M. Koppitz, and J. van Meter,
 "Gravitational-Wave Extraction from an Inspiraling Configuration of
 Merging Black Holes," Phys. Rev. Lett. 96, 111102 (2006).
 
-.. minigallery:: ../../examples/relativity/gravitational_waves/plot_binary_merger_chirp.py
+.. minigallery:: ../../examples/relativity/gravitational_waves/plot_numerical_relativity_merger.py
 
 2015 -- LIGO and the Direct Detection of Gravitational Waves
 ------------------------------------------------------------

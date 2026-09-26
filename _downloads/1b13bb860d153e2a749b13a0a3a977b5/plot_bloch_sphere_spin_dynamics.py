@@ -1,6 +1,11 @@
 r"""
-Bloch-sphere spin dynamics
-=============================
+Rabi's magnetic resonance on the Bloch sphere
+================================================
+
+Rabi (1937-1938) flipped nuclear spins in molecular beams with an
+oscillating magnetic field tuned to their Larmor frequency, and Bloch
+(1946) described the same physics as a vector precessing on a sphere.
+This example follows a spin-1/2 on that sphere.
 
 A spin-1/2 (qubit) state evolves under :math:`H=-(\omega/2)\sigma_z` (a
 static field along z) or :math:`H=-(\omega_R/2)\sigma_x` (a resonant drive

@@ -97,7 +97,7 @@ random noise, the flow spins up into sustained convective rolls: the
 kinetic energy at the end of the run is many orders of magnitude larger
 than at the start.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-90
+.. GENERATED FROM PYTHON SOURCE LINES 70-96
 
 .. code-block:: Python
 
@@ -111,12 +111,18 @@ than at the start.
     KE_final = kinetic_energy(omega_snaps[-1], KX, KY, K2)
     print(f"Convective rolls: kinetic energy grew from {KE_initial:.3e} to {KE_final:.3e} (factor of {KE_final / KE_initial:.3e})")
 
-    vmax = np.abs(omega_snaps[-1]).max()
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.5))
-    axes[0].imshow(omega_snaps[0], origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-    axes[0].set_title(f"vorticity, t = {times_conv[0]:.2f} (noise)")
-    axes[1].imshow(omega_snaps[-1], origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-    axes[1].set_title(f"vorticity, t = {times_conv[-1]:.2f} (convective rolls)")
+    # Each panel gets its own symmetric color scale: the initial noise is
+    # thousands of times weaker than the developed rolls, so a shared scale
+    # would render it as a blank field. The colorbars show the magnitude gap.
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
+    for ax, omega, label, t in [
+        (axes[0], omega_snaps[0], "noise", times_conv[0]),
+        (axes[1], omega_snaps[-1], "convective rolls", times_conv[-1]),
+    ]:
+        vmax = np.abs(omega).max()
+        im = ax.imshow(omega, origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+        fig.colorbar(im, ax=ax, label=r"$\omega$")
+        ax.set_title(f"vorticity, t = {t:.2f} ({label})")
     fig.suptitle("2D convection: vorticity, before and after spin-up")
     fig.tight_layout()
     plt.show()
@@ -139,11 +145,11 @@ than at the start.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-92
+.. GENERATED FROM PYTHON SOURCE LINES 97-98
 
 Animating the convective rolls forming and churning.
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-96
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
 
 .. code-block:: Python
 
@@ -3289,7 +3295,7 @@ Animating the convective rolls forming and churning.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-105
+.. GENERATED FROM PYTHON SOURCE LINES 103-111
 
 Part 2: the alpha-omega mean-field dynamo wave
 -----------------------------------------------------
@@ -3300,7 +3306,7 @@ exponential -- no time-discretization error) via
 Parameters are chosen so the closed-form dispersion relation
 :math:`\sigma=\sqrt{|\alpha G k|/2}-\eta k^2` predicts robust growth.
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-128
+.. GENERATED FROM PYTHON SOURCE LINES 111-134
 
 .. code-block:: Python
 
@@ -3340,7 +3346,7 @@ Parameters are chosen so the closed-form dispersion relation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-148
+.. GENERATED FROM PYTHON SOURCE LINES 135-154
 
 The dynamo action map: growth rate and wave frequency over (alpha, shear)
 --------------------------------------------------------------------------------
@@ -3362,7 +3368,7 @@ dynamo -- consistent with the antidynamo reasoning in this example's
 module docstring), but once both are present at all, growth follows
 almost everywhere.
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-176
+.. GENERATED FROM PYTHON SOURCE LINES 154-182
 
 .. code-block:: Python
 
@@ -3406,11 +3412,11 @@ almost everywhere.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-178
+.. GENERATED FROM PYTHON SOURCE LINES 183-184
 
 Animating the migrating, growing dynamo wave.
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-182
+.. GENERATED FROM PYTHON SOURCE LINES 184-188
 
 .. code-block:: Python
 
@@ -6839,14 +6845,14 @@ Animating the migrating, growing dynamo wave.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-187
+.. GENERATED FROM PYTHON SOURCE LINES 189-193
 
 The butterfly diagram: a static space-time summary of the same wave,
 showing the diagonal migrating stripes that are the whole point of the
 alpha-omega mechanism -- the same phenomenology behind the real Sun's
 sunspot-latitude butterfly diagram.
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-190
+.. GENERATED FROM PYTHON SOURCE LINES 193-196
 
 .. code-block:: Python
 
@@ -6868,7 +6874,7 @@ sunspot-latitude butterfly diagram.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 23.592 seconds)
+   **Total running time of the script:** (0 minutes 27.252 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_stellar_dynamo_plot_convection_and_dynamo_wave.py:

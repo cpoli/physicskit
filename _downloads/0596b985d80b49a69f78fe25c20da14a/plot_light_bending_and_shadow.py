@@ -1,17 +1,17 @@
 """
-Light bending, the photon sphere, and the black hole shadow
-==================================================================
+The black hole shadow: from the photon sphere to the Event Horizon Telescope
+===============================================================================
 
-Starlight grazing the Sun is deflected by :math:`\\delta\\phi \\approx 4M/b`
--- twice the (wrong) Newtonian prediction -- confirmed by Eddington's 1919
-solar eclipse expedition and the observation that made Einstein a household
-name overnight. Push the impact parameter down toward the critical value
-:math:`b_c = 3\\sqrt{3}M` and deflection diverges: photons can orbit
-(unstably) forever at the photon sphere :math:`r=3M`, and anything with
-:math:`b < b_c` is captured. This example traces individual light rays at a
-range of impact parameters, then renders the full 2D shadow silhouette by
-ray-tracing an entire camera image -- the calculation behind the 2019 Event
-Horizon Telescope image of M87*.
+Light passing a black hole at impact parameter :math:`b` is bent by
+:math:`\\delta\\phi \\approx 4M/b` far away, but the bending grows without
+bound as :math:`b` falls toward the critical value :math:`b_c = 3\\sqrt{3}M`:
+photons there circle (unstably) on the photon sphere :math:`r=3M`, and
+any ray with :math:`b < b_c` is captured. Seen from far away the black
+hole therefore casts a dark shadow of radius :math:`b_c`, rimmed by a
+bright ring of nearly trapped light -- what the Event Horizon Telescope
+imaged around M87* in 2019. This example traces individual light rays
+at a range of impact parameters, then renders the full shadow
+silhouette by ray-tracing an entire camera image.
 """
 
 import matplotlib.pyplot as plt

@@ -63,7 +63,7 @@ through the ion-acoustic dispersion relation.
 *References:* P. Debye and E. Huckel, "Zur Theorie der Elektrolyte,"
 Phys. Z. 24, 185-206 (1923), later adapted to plasmas.
 
-.. minigallery:: ../../examples/plasma/kinetic/plot_01_landau_damping.py
+.. minigallery:: ../../examples/plasma/waves/plot_04_debye_screening.py
 
 1928 -- Langmuir Coins "Plasma" and Discovers Electron Oscillations
 ------------------------------------------------------------------------
@@ -152,7 +152,7 @@ entries below.
 *References:* A. A. Vlasov, "On Vibration Properties of Electron Gas,"
 J. Exp. Theor. Phys. 8, 291-318 (1938).
 
-.. minigallery:: ../../examples/plasma/kinetic/plot_01_landau_damping.py
+.. minigallery:: ../../examples/plasma/kinetic/plot_05_vlasov_reversibility.py
 
 1942 -- Alfven Waves and the Birth of Magnetohydrodynamics
 ------------------------------------------------------------------------

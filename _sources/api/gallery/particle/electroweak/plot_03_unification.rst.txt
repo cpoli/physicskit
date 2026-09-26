@@ -25,18 +25,23 @@ Glashow (1961), Weinberg (1967), and Salam (1968) showed that the
 electromagnetic and weak interactions are two faces of a single
 :math:`SU(2)\times U(1)` gauge theory, spontaneously broken by the Higgs
 mechanism into the massless photon (electromagnetism) and the massive
-:math:`W^\pm,Z^0` bosons (the weak force) -- unifying two of nature's four
-fundamental interactions. Gargamelle's 1973 discovery of weak neutral
-currents, mediated by the previously unobserved :math:`Z^0`, was the
-theory's first direct experimental confirmation. This example puts the
-theory's two already-modeled pieces side by side:
-:func:`~physicskit.particle.electroweak.qed_dsigma_domega_mumu`, the
-electromagnetic sector reproduced at low energy, and
-:func:`~physicskit.particle.electroweak.higgs_vev`, the symmetry-breaking
-scale that gives the :math:`W`/:math:`Z` their mass while leaving the
-photon massless -- exactly the two ingredients the unification joins.
+:math:`W^\pm,Z^0` bosons (the weak force). One mixing angle
+:math:`\theta_W` ties the two together. With the fine-structure
+constant and Fermi's constant it predicts the boson masses,
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-27
+.. math::
+
+    M_W = \left(\frac{\pi\alpha}{\sqrt2\,G_F}\right)^{1/2}\frac{1}{\sin\theta_W},
+    \qquad M_Z = \frac{M_W}{\cos\theta_W}.
+
+This example puts the theory's pieces side by side:
+:func:`~physicskit.particle.electroweak.qed_total_cross_section_mumu`, the
+electromagnetic sector at low energy;
+:func:`~physicskit.particle.electroweak.higgs_vev`, the symmetry-breaking
+scale; and the tree-level :math:`W` and :math:`Z` mass predictions as a
+function of :math:`\sin^2\theta_W`.
+
+.. GENERATED FROM PYTHON SOURCE LINES 27-32
 
 .. code-block:: Python
 
@@ -52,7 +57,7 @@ photon massless -- exactly the two ingredients the unification joins.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-34
+.. GENERATED FROM PYTHON SOURCE LINES 33-39
 
 Piece 1: the electromagnetic sector, reproduced at low energy
 --------------------------------------------------------------------
@@ -61,7 +66,7 @@ prediction for e+e- -> mu+mu- reduces to pure photon exchange -- the
 same QED cross section already checked on its own terms in the
 renormalized-QED example.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-47
+.. GENERATED FROM PYTHON SOURCE LINES 39-52
 
 .. code-block:: Python
 
@@ -90,7 +95,7 @@ renormalized-QED example.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-55
+.. GENERATED FROM PYTHON SOURCE LINES 53-60
 
 Piece 2: the symmetry-breaking scale setting the W/Z masses
 -------------------------------------------------------------------
@@ -100,7 +105,7 @@ M_W, M_Z ~ g*v for the theory's gauge couplings g) while leaving the
 photon exactly massless -- a direct structural consequence of *which*
 combination of the SU(2)xU(1) generators remains unbroken.
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-70
+.. GENERATED FROM PYTHON SOURCE LINES 60-75
 
 .. code-block:: Python
 
@@ -139,31 +144,48 @@ combination of the SU(2)xU(1) generators remains unbroken.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-83
+.. GENERATED FROM PYTHON SOURCE LINES 76-83
 
-Gargamelle (1973): the first evidence for the Z boson this theory predicts
----------------------------------------------------------------------------------
-Gargamelle's bubble-chamber neutrino events showing a struck electron
-with no accompanying charged lepton -- a neutral current, mediated by
-exactly the Z0 boson this unification requires -- were the theory's
-first direct experimental confirmation, a decade before the W and Z
-were produced and detected directly (see the 1983 entry in this
-chronology). Nothing in the toy pieces modeled here computes a
-neutral-current cross section directly; the qualitative point is that
-both the QED piece and the symmetry-breaking piece above are
-ingredients of the single theory Gargamelle's neutral currents
-confirmed.
+Piece 3: the W and Z masses from the mixing angle
+-----------------------------------------------------
+Tree level, using the low-energy alpha = 1/137 and G_F. Values of
+sin^2 theta_W between 0.2 and 0.25 put M_W near 75-83 GeV and M_Z near
+85-93 GeV, out of reach of any 1970s accelerator; UA1 and UA2 found
+them in 1983 at 81 and 93 GeV (loop corrections, mainly the running of
+alpha, account for the few-GeV difference from this estimate).
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-87
+.. GENERATED FROM PYTHON SOURCE LINES 83-104
 
 .. code-block:: Python
 
-    print("\nGargamelle (1973): observed neutrino-electron neutral-current scattering, mediated by the Z0")
-    print("this unification predicts -- confirming the theory a decade before the W/Z were produced directly.")
+    alpha, G_F = 1 / 137.036, 1.1663787e-5  # GeV^-2
+    A0 = np.sqrt(np.pi * alpha / (np.sqrt(2) * G_F))
+    s2 = np.linspace(0.15, 0.45, 200)
+    M_W = A0 / np.sqrt(s2)
+    M_Z = M_W / np.sqrt(1 - s2)
+    s2_ref = 0.23
+    print(f"\n(pi alpha / sqrt2 G_F)^1/2 = {A0:.2f} GeV")
+    print(f"sin^2 theta_W = {s2_ref}: M_W = {A0 / np.sqrt(s2_ref):.1f} GeV, M_Z = {A0 / np.sqrt(s2_ref * (1 - s2_ref)):.1f} GeV")
+
+    fig3, ax3 = plt.subplots(figsize=(6, 4))
+    ax3.plot(s2, M_W, color="steelblue", label=r"$M_W$ (tree level)")
+    ax3.plot(s2, M_Z, color="firebrick", label=r"$M_Z$ (tree level)")
+    ax3.axhline(80.4, color="steelblue", ls=":", label="measured $M_W$")
+    ax3.axhline(91.19, color="firebrick", ls=":", label="measured $M_Z$")
+    ax3.set_xlabel(r"$\sin^2\theta_W$")
+    ax3.set_ylabel("boson mass [GeV]")
+    ax3.set_title("One mixing angle fixes both masses")
+    ax3.legend(fontsize=8)
+    fig3.tight_layout()
 
     plt.show()
 
 
+
+.. image-sg:: /api/gallery/particle/electroweak/images/sphx_glr_plot_03_unification_003.png
+   :alt: One mixing angle fixes both masses
+   :srcset: /api/gallery/particle/electroweak/images/sphx_glr_plot_03_unification_003.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -171,8 +193,8 @@ confirmed.
  .. code-block:: none
 
 
-    Gargamelle (1973): observed neutrino-electron neutral-current scattering, mediated by the Z0
-    this unification predicts -- confirming the theory a decade before the W/Z were produced directly.
+    (pi alpha / sqrt2 G_F)^1/2 = 37.28 GeV
+    sin^2 theta_W = 0.23: M_W = 77.7 GeV, M_Z = 88.6 GeV
 
 
 
@@ -180,7 +202,7 @@ confirmed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.102 seconds)
+   **Total running time of the script:** (0 minutes 0.158 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_electroweak_plot_03_unification.py:

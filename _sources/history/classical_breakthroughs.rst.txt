@@ -118,7 +118,7 @@ Royale des Sciences (Paris), 417-426 (1744); L. Euler, "Methodus inveniendi
 lineas curvas maximi minimive proprietate gaudentes" (Lausanne/Geneva,
 1744), Additamentum II.
 
-.. minigallery:: ../../examples/classical/lagrangian/plot_04_custom_lagrangian_engine.py
+.. minigallery:: ../../examples/classical/lagrangian/plot_06_maupertuis_euler_least_action.py
 
 1765 -- Euler's Rigid Body and the Tennis-Racket Theorem
 --------------------------------------------------------
@@ -390,7 +390,7 @@ views of Hamiltonian chaos.
 équations de la dynamique," Acta Mathematica 13 (1890), 1-270 (the
 corrected, expanded memoir).
 
-.. minigallery:: ../../examples/classical/hamiltonian/plot_01_henon_heiles.py
+.. minigallery:: ../../examples/classical/hamiltonian/plot_05_poincare_three_body.py
 
 1896 -- 1988 -- Walker, Garcia and Hubbard, and the Rattleback
 ----------------------------------------------------------------
@@ -665,7 +665,7 @@ a Small Perturbation of the Hamiltonian," Russian Math. Surveys 18(5)
 in Classical and Celestial Mechanics," Russian Math. Surveys 18(6)
 (1963), 85-191.
 
-.. minigallery:: ../../examples/classical/hamiltonian/plot_01_henon_heiles.py
+.. minigallery:: ../../examples/classical/hamiltonian/plot_06_kam_tori_standard_map.py
 
 1964 -- The Henon-Heiles System and Hamiltonian Chaos
 -----------------------------------------------------

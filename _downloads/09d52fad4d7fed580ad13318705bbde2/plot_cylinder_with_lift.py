@@ -1,6 +1,11 @@
 r"""
-Flow past a lifting cylinder
-==============================
+The Kutta-Joukowski lift theorem: a cylinder with circulation
+=================================================================
+
+Kutta (1902) and Joukowski (1906) showed that the lift per unit span on
+any two-dimensional body in a uniform stream depends only on the
+circulation around it, :math:`L' = -\rho U_\infty \Gamma`, whatever the
+body's shape. The simplest body to check it on is a circular cylinder.
 
 Superposing a uniform stream of speed :math:`U_\infty` with a doublet of
 strength :math:`\kappa = 2\pi U_\infty R^2` places a circular streamline of

@@ -67,7 +67,7 @@ that a lump of uranium salt spontaneously exposes a photographic plate.
 phosphorescence," C. R. Acad. Sci. 122, 420-421 (1896); follow-up notes,
 *ibid.* pp. 501-503 and 559-564.
 
-.. minigallery:: ../../examples/particle/radioactivity/plot_01_decay_law.py
+.. minigallery:: ../../examples/particle/radioactivity/plot_03_becquerel_uranium_plate.py
 
 1902-1903 -- Rutherford and Soddy's Law of Radioactive Decay
 --------------------------------------------------------------
@@ -305,7 +305,7 @@ presentation of it came three years later: W. Pauli, in *Rapports du
 Septième Conseil de Physique Solvay* (1933). The measurements motivating
 it: C. D. Ellis and W. A. Wooster, Proc. R. Soc. A 117, 109-123 (1927).
 
-.. minigallery:: ../../examples/particle/weak_interaction/plot_01_two_and_three_body_decay.py
+.. minigallery:: ../../examples/particle/weak_interaction/plot_05_pauli_neutrino_hypothesis.py
 
 1932 -- Chadwick's Discovery of the Neutron
 ------------------------------------------------
@@ -339,7 +339,7 @@ independent way to vary :math:`N` at fixed :math:`Z`.
 129, 312 (1932); "The Existence of a Neutron," Proc. R. Soc. A 136,
 692-708 (1932).
 
-.. minigallery:: ../../examples/particle/nuclear/plot_02_neutron_and_semf.py
+.. minigallery:: ../../examples/particle/nuclear/plot_05_chadwick_neutron.py
 
 1932 -- Cockcroft and Walton: The First Artificial Nuclear Disintegration
 ------------------------------------------------------------------------------
@@ -372,7 +372,7 @@ masses.
 229-242 (1932); earlier preliminary note, Proc. R. Soc. A 136, 619-630
 (1932).
 
-.. minigallery:: ../../examples/particle/nuclear/plot_03_fusion_and_fission.py
+.. minigallery:: ../../examples/particle/nuclear/plot_03_cockcroft_walton_disintegration.py
 
 1932 -- Carl Anderson: The Positron and the Curving Cloud-Chamber Track
 -------------------------------------------------------------------------
@@ -420,7 +420,7 @@ Positive Electron," Phys. Rev. 43, 491-494 (1933). Dirac's prediction:
 P. A. M. Dirac, Proc. R. Soc. A 117, 610-624 (1928) and Proc. R. Soc. A
 133, 60-72 (1931).
 
-.. minigallery:: ../../examples/particle/detector_signatures/plot_01_cloud_chamber_tracks.py
+.. minigallery:: ../../examples/particle/detector_signatures/plot_01_anderson_positron.py
 
 1933-1934 -- Fermi's Theory of Beta Decay
 ------------------------------------------------
@@ -469,7 +469,7 @@ predicted.
 Ricerca Scientifica 4, 491-495 (1933); "Versuch einer Theorie der
 beta-Strahlen. I," Z. Phys. 88, 161-177 (1934).
 
-.. minigallery:: ../../examples/particle/weak_interaction/plot_01_two_and_three_body_decay.py
+.. minigallery:: ../../examples/particle/weak_interaction/plot_06_fermi_beta_decay_theory.py
 
 1935 -- The Weizsacker Semi-Empirical Mass Formula
 ------------------------------------------------------
@@ -505,7 +505,7 @@ explain quantitatively.
 *References:* C. F. von Weizsäcker, "Zur Theorie der Kernmassen," Z.
 Phys. 96, 431-458 (1935).
 
-.. minigallery:: ../../examples/particle/nuclear/plot_02_neutron_and_semf.py
+.. minigallery:: ../../examples/particle/nuclear/plot_02_weizsacker_semf.py
 
 1936-1937 -- Anderson, Neddermeyer, Street, and Stevenson: Discovery of the Muon
 ---------------------------------------------------------------------------------
@@ -557,7 +557,7 @@ exactly the particle whose existence this entry establishes.
 263-271 (1936) and Phys. Rev. 51, 884-886 (1937); J. C. Street and E. C.
 Stevenson, Phys. Rev. 52, 1003-1004 (1937).
 
-.. minigallery:: ../../examples/particle/detector_signatures/plot_01_cloud_chamber_tracks.py
+.. minigallery:: ../../examples/particle/detector_signatures/plot_03_muon_mass_from_tracks.py
 
 1937 -- Bhabha, Heitler, Carlson, and Oppenheimer: The Cascade Theory of Cosmic-Ray Showers
 -------------------------------------------------------------------------------------------
@@ -649,7 +649,7 @@ fusing, is what releases energy.
 (1939); L. Meitner and O. R. Frisch, Nature 143, 239-240 (1939); O. R.
 Frisch, Nature 143, 276 (1939).
 
-.. minigallery:: ../../examples/particle/nuclear/plot_03_fusion_and_fission.py
+.. minigallery:: ../../examples/particle/nuclear/plot_04_nuclear_fission.py
 
 1947 -- Lattes, Occhialini, and Powell: The Discovery of the Charged Pion
 -------------------------------------------------------------------------
@@ -759,7 +759,7 @@ discovery, prior to any of the mixing phenomenology built on top of it.
 Existence of New Unstable Elementary Particles," Nature 160, 855-857
 (1947).
 
-.. minigallery:: ../../examples/particle/kaon_system/plot_01_kaon_cp_violation.py
+.. minigallery:: ../../examples/particle/kaon_system/plot_02_rochester_butler_v_particles.py
 
 1947-1949 -- Tomonaga, Schwinger, Feynman, and Dyson: Renormalized Quantum Electrodynamics
 --------------------------------------------------------------------------------------------
@@ -1380,7 +1380,7 @@ charged-current-only expectation.
 *References:* F. J. Hasert et al. (Gargamelle Collaboration), Phys.
 Lett. B 46, 138-140 (1973).
 
-.. minigallery:: ../../examples/particle/electroweak/plot_03_unification.py
+.. minigallery:: ../../examples/particle/electroweak/plot_04_gargamelle_neutral_currents.py
 
 1974 -- The November Revolution: Discovery of the J/psi
 ------------------------------------------------------------
@@ -1427,7 +1427,7 @@ frame in which the invariant mass peak is actually reconstructed.
 33, 1404-1406 (1974); J. E. Augustin et al. (SLAC-SP-017 Collaboration),
 Phys. Rev. Lett. 33, 1406-1408 (1974).
 
-.. minigallery:: ../../examples/particle/resonance_discovery/plot_01_invariant_mass_bump_hunt.py
+.. minigallery:: ../../examples/particle/resonance_discovery/plot_01_jpsi_november_revolution.py
 
 1983 -- Rubbia, van der Meer, and UA1/UA2: Discovery of the W and Z Bosons
 ---------------------------------------------------------------------------
@@ -1467,7 +1467,7 @@ event.
 Phys. Lett. B 126, 398-410 (1983); UA2 Collaboration, Phys. Lett. B 122,
 476-485 (1983) and Phys. Lett. B 129, 130-140 (1983).
 
-.. minigallery:: ../../examples/particle/resonance_discovery/plot_01_invariant_mass_bump_hunt.py
+.. minigallery:: ../../examples/particle/resonance_discovery/plot_02_w_z_discovery.py
 
 1995 -- CDF and D0: Discovery of the Top Quark
 ------------------------------------------------
@@ -1508,7 +1508,7 @@ such a multi-step decay tree exactly as in the 2012 Higgs entry below.
 2626-2631 (1995); S. Abachi et al. (D0 Collaboration), Phys. Rev. Lett.
 74, 2632-2637 (1995).
 
-.. minigallery:: ../../examples/particle/resonance_discovery/plot_01_invariant_mass_bump_hunt.py
+.. minigallery:: ../../examples/particle/resonance_discovery/plot_03_top_quark_discovery.py
 
 2012 -- ATLAS and CMS: Discovery of the Higgs Boson
 --------------------------------------------------------
@@ -1551,7 +1551,7 @@ the full decay tree, :math:`H\to ZZ^{*}\to4\ell`.
 *References:* ATLAS Collaboration, Phys. Lett. B 716, 1-29 (2012); CMS
 Collaboration, Phys. Lett. B 716, 30-61 (2012).
 
-.. minigallery:: ../../examples/particle/resonance_discovery/plot_01_invariant_mass_bump_hunt.py
+.. minigallery:: ../../examples/particle/resonance_discovery/plot_04_higgs_diphoton_discovery.py
 
 See Also
 --------

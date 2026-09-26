@@ -1,11 +1,10 @@
 r"""
-The radioactive decay law: Becquerel, Rutherford, and Soddy
-================================================================
+Rutherford and Soddy's law of radioactive decay
+===================================================
 
-Becquerel's 1896 chance discovery -- a uranium salt spontaneously exposing
-a photographic plate with no external excitation -- opened radioactivity
-as a field; Rutherford and Soddy (1902-1903) showed the underlying law is
-a simple exponential,
+Rutherford and Soddy (1902-1903), working with thorium compounds, showed
+that radioactivity is one element transmuting into another, and that the
+number of parent atoms falls off as a simple exponential,
 
 .. math::
 
@@ -15,8 +14,7 @@ with decay constant :math:`\lambda` characteristic of the parent species
 alone. This example builds that law directly from
 :func:`~physicskit.particle.decays.decay_constant`,
 :func:`~physicskit.particle.decays.radioactive_decay_number`, and
-:func:`~physicskit.particle.decays.activity` -- exactly the blackening
-rate that exposed Becquerel's plate -- and checks the defining property
+:func:`~physicskit.particle.decays.activity` -- and checks the defining property
 of a half-life: the population halves in every successive interval of
 length :math:`t_{1/2}`, regardless of how much has already decayed.
 """

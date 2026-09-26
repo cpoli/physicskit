@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Planck’s quantum hypothesis and blackbody radiation &#8212; physicskit 0.2.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/gallery/quantum/harmonic_oscillator/plot_planck_blackbody';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Wigner phase-space quasi-probability" href="plot_wigner_phase_space.html" />
+    <link rel="prev" title="Dirac’s ladder-operator method" href="plot_ladder_operators.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.2.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../astro/index.html">physicskit.astro</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/cosmic_web/index.html">Cosmic-web formation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/galactic_dynamics/index.html">Galactic dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/nbody/index.html">N-body dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/orbital_mechanics/index.html">Orbital mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/stellar_dynamo/index.html">Stellar convection and the magnetic dynamo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../astro/stellar_structure/index.html">Stellar structure</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../chaos/index.html">physicskit.chaos</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/advanced/index.html">Advanced: Building Custom Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/billiards/index.html">Billiards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/chaos_metrics/index.html">Chaos Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/continuous_systems/index.html">Continuous Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/interactive_and_animation/index.html">Interactive and Animated Visualizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/maps/index.html">Discrete Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaos/quantum_chaos/index.html">Quantum Chaos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../classical/index.html">physicskit.classical</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/chains/index.html">Coupled lattice chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/hamiltonian/index.html">Hamiltonian phase space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/integrators/index.html">Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/lagrangian/index.html">Lagrangian mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/newtonian/index.html">Newtonian mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/rotations/index.html">Rigid-body rotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classical/visualizers/index.html">Visualizers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../condensed/index.html">physicskit.condensed</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/anderson_localization/index.html">Anderson Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/correlated/index.html">Correlated Electrons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/ginzburg_landau/index.html">Ginzburg-Landau Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/landau_levels/index.html">Landau Levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/laughlin/index.html">Laughlin’s Wavefunction and the Fractional Quantum Hall Effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/tight_binding/index.html">Tight-Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../condensed/topology/index.html">Topology</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../fields/index.html">physicskit.fields</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../fields/electrodynamics/index.html">Electrodynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fields/gauge_confinement/index.html">Gauge confinement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fields/quantum_fields/index.html">Quantum fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fields/solitons/index.html">Solitons</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../fluids/index.html">physicskit.fluids</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/compressible_flow/index.html">Compressible Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/instabilities/index.html">Instabilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/navier_stokes/index.html">Navier-Stokes and Turbulence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/potential_flow/index.html">Potential Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/viscous_flow/index.html">Viscous Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fluids/vortex_dynamics/index.html">Vortex Dynamics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../optics/index.html">physicskit.optics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../optics/diffraction/index.html">Diffraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../optics/gaussian_beams/index.html">Gaussian beams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../optics/quantum_optics/index.html">Quantum optics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../optics/ray_optics/index.html">Ray optics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../particle/index.html">physicskit.particle</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/collider_pipeline/index.html">Collider pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/detector_signatures/index.html">Detector signatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/electroweak/index.html">Electroweak theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/flavor_physics/index.html">Flavor physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/kaon_system/index.html">The neutral kaon system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/kinematics/index.html">Relativistic kinematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/nuclear/index.html">Nuclear physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/qcd/index.html">Quantum chromodynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/radioactivity/index.html">Radioactivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/resonance_discovery/index.html">Resonance discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../particle/weak_interaction/index.html">The weak interaction</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../plasma/index.html">physicskit.plasma</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/acceleration/index.html">Particle acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/kinetic/index.html">Kinetic theory (particle-in-cell)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/mhd/index.html">Magnetohydrodynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/single_particle/index.html">Single-particle motion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/turbulence/index.html">Drift-wave turbulence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plasma/waves/index.html">Cold-plasma waves</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">physicskit.quantum</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../entanglement/index.html">Entanglement and topology</a></li>
+<li class="toctree-l2 current active"><a class="reference internal" href="index.html">Harmonic oscillator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hydrogen/index.html">Hydrogen orbitals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../measurement/index.html">Measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../perturbation/index.html">Perturbation and Floquet driving</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../potentials/index.html">Potentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wave_packets/index.html">Wave packets</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../relativity/index.html">physicskit.relativity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/cosmology/index.html">Cosmology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/gravitational_waves/index.html">Gravitational waves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/interactive/index.html">Interactive Plotly visualizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/kerr/index.html">Kerr black holes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/lensing/index.html">Gravitational lensing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/neutron_star/index.html">Neutron stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/schwarzschild/index.html">Schwarzschild black holes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../relativity/spacetime_geometry/index.html">Spacetime geometry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../rmt/index.html">physicskit.rmt</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../rmt/paper_replications/index.html">Paper replications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../semiclassical/index.html">physicskit.semiclassical</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../semiclassical/gutzwiller/index.html">The Gutzwiller trace formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../semiclassical/path_integral/index.html">Feynman paths and the classical limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../semiclassical/propagators/index.html">Semiclassical propagators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../semiclassical/scarring/index.html">Quantum scars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../semiclassical/wkb/index.html">WKB and Bohr-Sommerfeld quantization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../statphys/index.html">physicskit.statphys</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/ehrenfest_urn/index.html">Ehrenfest urn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/interactive/index.html">Interactive Plotly visualizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/ising/index.html">Ising model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/kpz/index.html">Interface growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/landau_theory/index.html">Landau mean-field theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/molecular_dynamics/index.html">Molecular dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/nonequilibrium_work/index.html">Nonequilibrium work relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/percolation/index.html">Percolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/potts_model/index.html">Potts model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/quantum_statistics/index.html">Quantum statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/random_walk/index.html">Random walks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/renormalization/index.html">Renormalization group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/sandpile/index.html">Self-organized criticality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/spin_glass/index.html">Spin glasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/xy_model/index.html">XY model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../statphys/yang_lee/index.html">Partition function zeros</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../../examples/index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Harmonic oscillator</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Planck’s quantum hypothesis and blackbody radiation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-api-gallery-quantum-harmonic-oscillator-plot-planck-blackbody-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="planck-s-quantum-hypothesis-and-blackbody-radiation">
+<span id="sphx-glr-api-gallery-quantum-harmonic-oscillator-plot-planck-blackbody-py"></span><h1>Planck’s quantum hypothesis and blackbody radiation<a class="headerlink" href="#planck-s-quantum-hypothesis-and-blackbody-radiation" title="Link to this heading">#</a></h1>
+<p>Classical physics gives every mode of the radiation field in a hot
+cavity the same average energy <span class="math notranslate nohighlight">\(k_BT\)</span>. There are infinitely many
+short-wavelength modes, so the Rayleigh-Jeans spectrum</p>
+<div class="math notranslate nohighlight">
+\[u_{RJ}(\nu) = \frac{8\pi\nu^2}{c^3}\,k_BT\]</div>
+<p>grows without limit: the “ultraviolet catastrophe”. In December 1900
+Planck assumed instead that an oscillator of frequency <span class="math notranslate nohighlight">\(\nu\)</span> can
+hold energy only in whole units <span class="math notranslate nohighlight">\(nh\nu\)</span>. The Boltzmann average of
+<span class="math notranslate nohighlight">\(nh\nu\)</span> is then no longer <span class="math notranslate nohighlight">\(k_BT\)</span> but</p>
+<div class="math notranslate nohighlight">
+\[\langle E\rangle = \frac{h\nu}{e^{h\nu/k_BT}-1},\]</div>
+<p>which switches off the high-frequency modes and gives the observed
+spectrum. This example computes that average by summing the Boltzmann
+weights of each level of
+<a class="reference internal" href="../../../quantum.html#physicskit.quantum.HarmonicOscillator" title="physicskit.quantum.chapters.harmonic_spin.HarmonicOscillator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HarmonicOscillator</span></code></a>,
+builds the spectrum from it, and recovers Wien’s displacement law and
+the Stefan-Boltzmann constant from <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.constants</span></code>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html#scipy.integrate.quad" title="scipy.integrate.quad" class="sphx-glr-backref-module-scipy-integrate sphx-glr-backref-type-py-function"><span class="n">quad</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar" title="scipy.optimize.minimize_scalar" class="sphx-glr-backref-module-scipy-optimize sphx-glr-backref-type-py-function"><span class="n">minimize_scalar</span></a>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.constants</span><span class="w"> </span><span class="kn">import</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K_B</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">STEFAN_BOLTZMANN</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">C</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">H</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.quantum.chapters.harmonic_spin</span><span class="w"> </span><span class="kn">import</span> <span class="n">HarmonicOscillator</span>
+</pre></div>
+</div>
+<section id="average-energy-of-one-mode-continuous-vs-quantized">
+<h2>Average energy of one mode: continuous vs quantized<a class="headerlink" href="#average-energy-of-one-mode-continuous-vs-quantized" title="Link to this heading">#</a></h2>
+<p>Measured from the ground state, the oscillator’s levels are
+<span class="math notranslate nohighlight">\(nh\nu\)</span>. Averaging with Boltzmann weights over the first 400
+levels reproduces Planck’s closed form. At low frequency it tends to the
+classical <span class="math notranslate nohighlight">\(k_BT\)</span>; at high frequency the first step, <span class="math notranslate nohighlight">\(h\nu\)</span>,
+is too expensive and the mode stays empty.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">osc</span> <span class="o">=</span> <span class="n">HarmonicOscillator</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">hbar</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">level_spacing</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><span class="n">osc</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n</span></a><span class="p">])</span> <span class="o">-</span> <span class="n">osc</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># in units of h nu</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x_values</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">])</span>  <span class="c1"># h nu / k_B T</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'h nu / kT'</span><span class="si">:</span><span class="s2">&gt;10s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'&lt;E&gt;/kT (sum over levels)'</span><span class="si">:</span><span class="s2">&gt;26s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'Planck'</span><span class="si">:</span><span class="s2">&gt;8s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'classical'</span><span class="si">:</span><span class="s2">&gt;10s</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a> <span class="ow">in</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x_values</span></a><span class="p">:</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">w</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">exp</span></a><span class="p">(</span><span class="o">-</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">level_spacing</span></a><span class="p">)</span>
+    <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">E_avg</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.sum.html#numpy.sum" title="numpy.sum" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">sum</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">level_spacing</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">w</span></a><span class="p">)</span> <span class="o">/</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.sum.html#numpy.sum" title="numpy.sum" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">sum</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">w</span></a><span class="p">)</span>  <span class="c1"># &lt;E&gt;/kT</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">E_avg</span></a><span class="si">:</span><span class="s2">26.5f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="w"> </span><span class="o">/</span><span class="w"> </span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">expm1</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">)</span><span class="si">:</span><span class="s2">8.5f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mf">1.0</span><span class="si">:</span><span class="s2">10.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>h nu / kT   &lt;E&gt;/kT (sum over levels)   Planck  classical
+     0.05                    0.97521  0.97521        1.0
+     0.50                    0.77075  0.77075        1.0
+     1.00                    0.58198  0.58198        1.0
+     3.00                    0.15719  0.15719        1.0
+     8.00                    0.00268  0.00268        1.0
+</pre></div>
+</div>
+</section>
+<section id="the-blackbody-spectrum">
+<h2>The blackbody spectrum<a class="headerlink" href="#the-blackbody-spectrum" title="Link to this heading">#</a></h2>
+<p>Energy density per unit frequency: mode density <span class="math notranslate nohighlight">\(8\pi\nu^2/c^3\)</span>
+times the average energy per mode.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">planck</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">8</span> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">pi</span></a> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">H</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">C</span></a><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">expm1</span></a><span class="p">(</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">H</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a> <span class="o">/</span> <span class="p">(</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K_B</span></a> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rayleigh_jeans</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">8</span> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">pi</span></a> <span class="o">*</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">C</span></a><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K_B</span></a> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a>
+
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html#numpy.linspace" title="numpy.linspace" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mf">1e12</span><span class="p">,</span> <span class="mf">1.5e15</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a> <span class="ow">in</span> <span class="p">[(</span><span class="mi">3000</span><span class="p">,</span> <span class="s2">"firebrick"</span><span class="p">),</span> <span class="p">(</span><span class="mi">4500</span><span class="p">,</span> <span class="s2">"darkorange"</span><span class="p">),</span> <span class="p">(</span><span class="mi">5800</span><span class="p">,</span> <span class="s2">"goldenrod"</span><span class="p">)]:</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a> <span class="o">/</span> <span class="mf">1e12</span><span class="p">,</span> <span class="n">planck</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">)</span> <span class="o">*</span> <span class="mf">1e15</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Planck, T = </span><span class="si">{</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="si">}</span><span class="s2"> K"</span><span class="p">)</span>
+    <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">nu_peak</span></a> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar" title="scipy.optimize.minimize_scalar" class="sphx-glr-backref-module-scipy-optimize sphx-glr-backref-type-py-function"><span class="n">minimize_scalar</span></a><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="o">-</span><span class="n">planck</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">),</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">1e13</span><span class="p">,</span> <span class="mf">1e15</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">"bounded"</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">"xatol"</span><span class="p">:</span> <span class="mf">1e6</span><span class="p">})</span><span class="o">.</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"T = </span><span class="si">{</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="si">}</span><span class="s2"> K: spectrum peaks at </span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">nu_peak</span></a><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e12</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> THz; nu_peak / T = </span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">nu_peak</span></a><span class="w"> </span><span class="o">/</span><span class="w"> </span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> Hz/K"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a> <span class="o">/</span> <span class="mf">1e12</span><span class="p">,</span> <span class="n">rayleigh_jeans</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="p">,</span> <span class="mi">5800</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e15</span><span class="p">,</span> <span class="s2">"k--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Rayleigh-Jeans, 5800 K"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.3</span> <span class="o">*</span> <span class="n">planck</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">nu</span></a><span class="p">,</span> <span class="mi">5800</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e15</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"frequency $\nu$ [THz]"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$u(\nu)$ [$10^{-15}$ J m$^{-3}$ Hz$^{-1}$]"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"The ultraviolet catastrophe, avoided"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../../../_images/sphx_glr_plot_planck_blackbody_001.png" srcset="../../../../_images/sphx_glr_plot_planck_blackbody_001.png" alt="The ultraviolet catastrophe, avoided" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>T = 3000 K: spectrum peaks at 176 THz; nu_peak / T = 5.8789e+10 Hz/K
+T = 4500 K: spectrum peaks at 265 THz; nu_peak / T = 5.8789e+10 Hz/K
+T = 5800 K: spectrum peaks at 341 THz; nu_peak / T = 5.8789e+10 Hz/K
+
+&lt;matplotlib.legend.Legend object at 0x13d8ec8c0&gt;
+</pre></div>
+</div>
+</section>
+<section id="wien-s-displacement-law-and-the-stefan-boltzmann-law">
+<h2>Wien’s displacement law and the Stefan-Boltzmann law<a class="headerlink" href="#wien-s-displacement-law-and-the-stefan-boltzmann-law" title="Link to this heading">#</a></h2>
+<p>The peak frequency scales with <span class="math notranslate nohighlight">\(T\)</span>: <span class="math notranslate nohighlight">\(h\nu_{\max}=2.821\,k_BT\)</span>.
+Integrating over all frequencies gives <span class="math notranslate nohighlight">\(u = aT^4\)</span> with
+<span class="math notranslate nohighlight">\(a = 8\pi^5k_B^4/(15h^3c^3) = 4\sigma/c\)</span>: Planck’s constant fixes
+the Stefan-Boltzmann constant.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">nu_peak</span></a> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar" title="scipy.optimize.minimize_scalar" class="sphx-glr-backref-module-scipy-optimize sphx-glr-backref-type-py-function"><span class="n">minimize_scalar</span></a><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="o">-</span><span class="n">planck</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">5800</span><span class="p">),</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">1e13</span><span class="p">,</span> <span class="mf">1e15</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s2">"bounded"</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">"xatol"</span><span class="p">:</span> <span class="mf">1e6</span><span class="p">})</span><span class="o">.</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Wien: h nu_max / (k_B T) = </span><span class="si">{</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">H</span></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">nu_peak</span></a><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K_B</span></a><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">5800</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">  (theory 2.821)"</span><span class="p">)</span>
+<a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a> <span class="o">=</span> <span class="mf">5800.0</span>
+<a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">u_total</span></a> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html#scipy.integrate.quad" title="scipy.integrate.quad" class="sphx-glr-backref-module-scipy-integrate sphx-glr-backref-type-py-function"><span class="n">quad</span></a><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">planck</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="p">),</span> <span class="mf">1e9</span><span class="p">,</span> <span class="mf">5e16</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">200</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sigma_from_planck</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">u_total</span></a> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">C</span></a> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">T</span></a><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stefan-Boltzmann constant from integrating Planck's law: </span><span class="si">{</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sigma_from_planck</span></a><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> W m^-2 K^-4"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CODATA value:                                            </span><span class="si">{</span><a href="https://docs.python.org/3/builtins/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">STEFAN_BOLTZMANN</span></a><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> W m^-2 K^-4"</span><span class="p">)</span>
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html#numpy.geomspace" title="numpy.geomspace" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">geomspace</span></a><span class="p">(</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a> <span class="o">/</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">expm1</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">),</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="o">=</span><span class="s2">"steelblue"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Planck: $x/(e^x-1)$"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ones_like.html#numpy.ones_like" title="numpy.ones_like" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">),</span> <span class="s2">"k--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"classical equipartition"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$h\nu / k_BT$"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\langle E\rangle / k_BT$ per mode"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Quantized modes freeze out"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Wien: h nu_max / (k_B T) = 2.821  (theory 2.821)
+Stefan-Boltzmann constant from integrating Planck's law: 5.6704e-08 W m^-2 K^-4
+CODATA value:                                            5.6704e-08 W m^-2 K^-4
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.153 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-api-gallery-quantum-harmonic-oscillator-plot-planck-blackbody-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../../../_downloads/9e7f60ff9386df9562d925f1b03ff279/plot_planck_blackbody.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_planck_blackbody.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../../../_downloads/f008b2efd6db6f1f14cd99fd714c6cf4/plot_planck_blackbody.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_planck_blackbody.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../../../_downloads/e07af081a14cb96636374e90c1846918/plot_planck_blackbody.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_planck_blackbody.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="plot_ladder_operators.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dirac’s ladder-operator method</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="plot_wigner_phase_space.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Wigner phase-space quasi-probability</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-energy-of-one-mode-continuous-vs-quantized">Average energy of one mode: continuous vs quantized</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-blackbody-spectrum">The blackbody spectrum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wien-s-displacement-law-and-the-stefan-boltzmann-law">Wien’s displacement law and the Stefan-Boltzmann law</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../../../_sources/api/gallery/quantum/harmonic_oscillator/plot_planck_blackbody.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

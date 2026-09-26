@@ -287,7 +287,7 @@ and Haldane apply to electronic bands below.
 1181-1203 (1973), with the two-years-earlier precursor V. L. Berezinskii,
 Sov. Phys. JETP 32, 493-500 (1971).
 
-.. minigallery:: ../../examples/statphys/xy_model/plot_kt_vortex_unbinding.py
+.. minigallery:: ../../examples/statphys/xy_model/plot_kt_vortex_energy_entropy.py
 
 1979 -- Su-Schrieffer-Heeger (SSH) Model and Topological Solitons
 ---------------------------------------------------------------------

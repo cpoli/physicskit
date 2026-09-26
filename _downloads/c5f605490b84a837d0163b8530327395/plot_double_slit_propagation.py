@@ -9,7 +9,7 @@ using the FFT split-operator method
 (:class:`~physicskit.quantum.core.solvers.SplitOperatorSolver2D`). Unlike
 the far-field Fraunhofer formula used in
 :class:`~physicskit.quantum.chapters.wave_packets.TwinSlit`
-(:doc:`/api/gallery/quantum/wave_packets/plot_wave_packet_dynamics`), the
+(:doc:`/api/gallery/quantum/wave_packets/plot_twin_slit_interference`), the
 interference fringes here build up from genuine wave dynamics: the packet
 splits at the wall, the two emerging pieces spread and overlap downstream,
 and the familiar fringe pattern :math:`\lvert\psi_1+\psi_2\rvert^2` emerges
