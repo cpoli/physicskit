@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.condensed` exact diagonalization of spin-1/2 chains
+  (`physicskit.condensed.spin_chains`): sparse `xxz_hamiltonian` and
+  `tfim_hamiltonian` built in magnetization / parity symmetry sectors
+  (`spin_chain_basis`), `lowest_eigenstates` and `energy_gap` (Lanczos),
+  the entanglement tools `embed_state`, `entanglement_entropy`,
+  `entanglement_profile`, `calabrese_cardy_entropy`, `fit_central_charge`,
+  and the exact references `bethe_ansatz_xxx_ground_energy`,
+  `tfim_free_fermion_spectrum`, `tfim_ground_state_energy`.
+- Gallery examples "Bethe's ansatz for the Heisenberg antiferromagnetic
+  chain", "The transverse-field Ising chain as free fermions", and
+  "Calabrese-Cardy: logarithmic entanglement at criticality vs. the area
+  law" (`examples/condensed/spin_chains/`), with condensed history entries
+  "1931 -- Bethe's Ansatz for the Heisenberg Chain", "1961-1970 -- The
+  Transverse-Field Ising Chain as Free Fermions", and "2004 -- Calabrese
+  and Cardy: Entanglement Entropy at Criticality".
 - `physicskit.quantum` open quantum systems
   (`physicskit.quantum.chapters.open_systems`): `lindblad_rhs`,
   `lindblad_superoperator`, `solve_lindblad` (exact propagation of the

@@ -30,6 +30,10 @@ Sections
   Hubbard model, and the short-range antiferromagnetic spin correlations
   that model develops at half filling and strong coupling -- the arena any
   theory of cuprate superconductivity has to live in.
+- **spin_chains** -- exact diagonalization of spin-1/2 chains in their
+  symmetry sectors: Bethe's ansatz for the Heisenberg antiferromagnet, the
+  free-fermion transverse-field Ising chain and its quantum critical
+  point, and logarithmic (Calabrese-Cardy) versus area-law entanglement.
 - **laughlin** -- the fractional quantum Hall effect: Metropolis-sampling
   Laughlin's trial wavefunction directly via its plasma analogy, and the
   correlation hole and incompressible-droplet density profile that result.

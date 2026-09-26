@@ -1,4 +1,4 @@
-"""Condensed matter physics: tight-binding models, topological band theory, and correlated electrons.
+"""Condensed matter physics: tight-binding models, topological band theory, correlated electrons, and quantum spin chains.
 
 Typical usage::
 
@@ -50,6 +50,21 @@ from .models import (
     kitaev_chain_hamiltonian,
     ssh_hamiltonian,
     ssh_lattice_hamiltonian,
+)
+from .spin_chains import (
+    bethe_ansatz_xxx_ground_energy,
+    calabrese_cardy_entropy,
+    embed_state,
+    energy_gap,
+    entanglement_entropy,
+    entanglement_profile,
+    fit_central_charge,
+    lowest_eigenstates,
+    spin_chain_basis,
+    tfim_free_fermion_spectrum,
+    tfim_ground_state_energy,
+    tfim_hamiltonian,
+    xxz_hamiltonian,
 )
 from .tight_binding import Hamiltonian, Lattice, apply_peierls_phase, build_ribbon
 from .topological_insulator_3d import (
@@ -119,4 +134,17 @@ __all__ = [
     "weyl_semimetal_hamiltonian",
     "weyl_node_locations",
     "weyl_semimetal_slab_hamiltonian",
+    "spin_chain_basis",
+    "xxz_hamiltonian",
+    "tfim_hamiltonian",
+    "lowest_eigenstates",
+    "energy_gap",
+    "embed_state",
+    "entanglement_entropy",
+    "entanglement_profile",
+    "calabrese_cardy_entropy",
+    "fit_central_charge",
+    "bethe_ansatz_xxx_ground_energy",
+    "tfim_free_fermion_spectrum",
+    "tfim_ground_state_energy",
 ]
