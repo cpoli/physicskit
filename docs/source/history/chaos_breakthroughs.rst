@@ -66,6 +66,67 @@ mecanique celeste* (Gauthier-Villars, 1892-1899).
 
 .. minigallery:: ../../examples/chaos/continuous_systems/plot_restricted_three_body.py
 
+1945 -- 1949 -- Cartwright, Littlewood, and Levinson: Chaos in the Forced Van der Pol Oscillator
+------------------------------------------------------------------------------------------------
+
+The first proof of chaos in an equation from physics came from radio
+engineering, not celestial mechanics. In 1927 Balthasar van der Pol and
+Jan van der Mark drove a neon-lamp relaxation oscillator with a periodic
+signal and found that it locked onto whole submultiples of the driving
+frequency. Between these locked states they heard an "irregular noise"
+in the telephone receivers, which they dismissed as "a subsidiary
+phenomenon". It is probably
+the first experimental sighting of deterministic chaos. In 1938 the
+British Department of Scientific and Industrial Research, worried about
+the valve (vacuum-tube) oscillators at the heart of the new radar
+systems, asked mathematicians for help with the nonlinear differential
+equations of radio engineering. Their erratic behaviour was the practical
+problem. Mary Cartwright took up the call, and she and J. E. Littlewood
+worked on the forced Van der Pol equation for the next several years.
+
+In 1945 they announced what they had found in the relaxation limit of
+large :math:`k`. For a range of forcing amplitudes, the equation has two
+stable periodic motions at the same parameter values, and their periods
+are different odd multiples of the forcing period. Alongside them sits a
+"bad" invariant set holding infinitely many periodic orbits and
+uncountably many non-periodic ones. This is exactly the structure now
+called chaos, 18 years before Lorenz. Norman Levinson (1949) replaced the
+smooth nonlinearity with a piecewise-linear one that could be analysed
+more explicitly, and he recovered the same picture. When Stephen Smale
+conjectured in 1960 that structurally stable systems have only finitely
+many periodic orbits, Levinson wrote to him with his result as a
+counterexample. Working through Levinson's example is what led Smale to
+the horseshoe (see the 1965 entry below).
+
+.. math::
+
+   \ddot{y} - k (1 - y^2) \dot{y} + y = b \lambda k \cos(\lambda t + a)
+
+*Implementation:* :class:`physicskit.chaos.systems.continuous.ForcedVanDerPol`
+integrates :math:`\ddot{x} - \mu (1 - x^2) \dot{x} + x = A \cos(\omega t)`,
+which is Cartwright and Littlewood's equation with :math:`\mu = k`,
+:math:`\omega = \lambda`, :math:`A = b \lambda k` and phase :math:`a = 0`.
+Its defaults (:math:`\mu = 10`, :math:`\omega = 2.5`, :math:`b = 0.58`)
+sit in the regime where stable subharmonics of period :math:`3T` and
+:math:`5T` coexist, :math:`T = 2\pi/\omega`.
+:meth:`~physicskit.chaos.systems.continuous.ForcedVanDerPol.stroboscopic_map`
+samples many trajectories once per forcing period in parallel. That is
+enough to tell the two stable motions apart, map their interleaved basins
+of attraction, and follow an orbit along the basin boundary, where the
+bad set lives.
+
+*References:* B. van der Pol and J. van der Mark, "Frequency
+Demultiplication," *Nature* **120**, 363-364 (1927); M. L. Cartwright and
+J. E. Littlewood, "On Non-Linear Differential Equations of the Second
+Order: I. The Equation :math:`\ddot{y} - k(1-y^2)\dot{y} + y = b\lambda k
+\cos(\lambda t + a)`, :math:`k` Large," *J. London Math. Soc.* **20**\(3),
+180-189 (1945); N. Levinson, "A Second Order Differential Equation with
+Singular Solutions," *Ann. Math.* **50**\(1), 127-153 (1949); S. Smale,
+"Finding a Horseshoe on the Beaches of Rio," *Math. Intelligencer*
+**20**\(1), 39-44 (1998).
+
+.. minigallery:: ../../examples/chaos/continuous_systems/plot_cartwright_littlewood_forced_van_der_pol.py
+
 1954 -- 1963 -- The KAM Theorem
 -------------------------------
 
@@ -141,8 +202,8 @@ Sci.* **20**\(2), 130-141 (1963).
 -----------------------------
 
 Stephen Smale, looking for the simplest possible topological mechanism
-behind the persistent, structurally stable chaos that Cartwright, Littlewood,
-and Levinson had found in forced-oscillator equations during the 1940s,
+behind the persistent, structurally stable chaos in Levinson's
+forced-oscillator counterexample (see the 1945 -- 1949 entry above),
 distilled it down to a single geometric operation: take a square, stretch it
 into a long thin strip, fold that strip in half, and lay it back down across
 the original square so it intersects the square in two disjoint bands. Points

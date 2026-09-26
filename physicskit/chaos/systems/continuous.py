@@ -1,4 +1,4 @@
-"""Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, Chua.
+"""Continuous-time chaotic dynamical systems: Lorenz, Rossler, Double Pendulum, Duffing, forced Van der Pol, Chua.
 
 Each system exposes a plain-Python :meth:`rhs` (for interactive use / plotting)
 plus a module-level Numba ``@njit`` right-hand-side function with the signature
@@ -10,8 +10,8 @@ plus a module-level Numba ``@njit`` right-hand-side function with the signature
 from __future__ import annotations
 
 import numpy as np
-from numba import njit
-from numpy.typing import NDArray
+from numba import njit, prange
+from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import brentq
 
 from physicskit.chaos.core.base_system import DynamicalSystem
@@ -560,6 +560,252 @@ class Duffing(DynamicalSystem):
         """
         state0 = self.initial_state() if state0 is None else np.asarray(state0, dtype=np.float64)
         return rk4_integrate(_duffing_rhs, state0, t0, dt, n_steps, self.params)
+
+
+# ---------------------------------------------------------------------------
+# Forced Van der Pol oscillator
+# ---------------------------------------------------------------------------
+
+
+@njit(cache=True, inline="always")
+def _forced_van_der_pol_accel(x: float, v: float, t: float, mu: float, A: float, omega: float) -> float:
+    return mu * (1.0 - x * x) * v - x + A * np.cos(omega * t)
+
+
+@njit(cache=True)
+def _forced_van_der_pol_rhs(state: NDArray[np.float64], t: float, params: NDArray[np.float64]) -> NDArray[np.float64]:
+    """Forced Van der Pol vector field ``dx/dt = f(x, t; mu, A, omega)``.
+
+    Parameters
+    ----------
+    state : ndarray of float, shape (2,)
+        State vector ``(x, v)``.
+    t : float
+        Current time (the forcing term depends on `t`).
+    params : ndarray of float, shape (3,)
+        Parameters ``(mu, A, omega)``.
+
+    Returns
+    -------
+    ndarray of float, shape (2,)
+        Time derivative ``(dx/dt, dv/dt)``.
+    """
+    out = np.empty(2)
+    out[0] = state[1]
+    out[1] = _forced_van_der_pol_accel(state[0], state[1], t, params[0], params[1], params[2])
+    return out
+
+
+@njit(cache=True, parallel=True)
+def _forced_van_der_pol_strobe(states0: NDArray[np.float64], n_periods: int, steps_per_period: int, params: NDArray[np.float64]) -> NDArray[np.float64]:
+    # Scalar RK4 (no per-step array allocation, which would serialize the
+    # parallel threads on the allocator).
+    mu, A, omega = params[0], params[1], params[2]
+    n = states0.shape[0]
+    dt = 2.0 * np.pi / omega / steps_per_period
+    h = 0.5 * dt
+    out = np.empty((n, n_periods + 1, 2))
+    for i in prange(n):  # type: ignore[attr-defined]  # numba lacks type stubs for prange
+        x, v = states0[i, 0], states0[i, 1]
+        out[i, 0, 0], out[i, 0, 1] = x, v
+        for p in range(n_periods):
+            for s in range(steps_per_period):
+                # Time measured from the start of the current forcing period
+                # (the forcing is T-periodic), so it never accumulates error.
+                t = s * dt
+                k1x, k1v = v, _forced_van_der_pol_accel(x, v, t, mu, A, omega)
+                k2x, k2v = v + h * k1v, _forced_van_der_pol_accel(x + h * k1x, v + h * k1v, t + h, mu, A, omega)
+                k3x, k3v = v + h * k2v, _forced_van_der_pol_accel(x + h * k2x, v + h * k2v, t + h, mu, A, omega)
+                k4x, k4v = v + dt * k3v, _forced_van_der_pol_accel(x + dt * k3x, v + dt * k3v, t + dt, mu, A, omega)
+                x += dt / 6.0 * (k1x + 2.0 * k2x + 2.0 * k3x + k4x)
+                v += dt / 6.0 * (k1v + 2.0 * k2v + 2.0 * k3v + k4v)
+            out[i, p + 1, 0], out[i, p + 1, 1] = x, v
+    return out
+
+
+class ForcedVanDerPol(DynamicalSystem):
+    """The sinusoidally forced Van der Pol oscillator.
+
+    Governed by ``x'' - mu*(1 - x^2)*x' + x = A*cos(omega*t)``: a
+    self-excited (negatively damped at small amplitude) valve-circuit
+    oscillator driven by a periodic signal. With ``A = 0`` it is the plain
+    Van der Pol oscillator, whose limit cycle has amplitude close to 2 for
+    small `mu` and becomes a relaxation oscillation of period roughly
+    ``(3 - 2 ln 2) mu`` for large `mu`.
+
+    Cartwright & Littlewood (1945) proved, in the scaling
+    ``A = b * omega * mu`` with `mu` large, that for a range of `b` the
+    forced oscillator has two coexisting stable periodic motions whose
+    periods are different odd multiples of the forcing period
+    ``2*pi/omega``, plus an invariant "bad" set of infinitely many periodic
+    and uncountably many non-periodic orbits -- the first proof of chaos in
+    an equation from physics. The defaults below are one such parameter set
+    (``b = 0.58``), where stable subharmonics of period ``3T`` and ``5T``
+    coexist.
+
+    Parameters
+    ----------
+    mu : float, default 10.0
+        Nonlinear damping strength (Cartwright and Littlewood's `k`).
+    A : float, default 14.5
+        Forcing amplitude.
+    omega : float, default 2.5
+        Forcing angular frequency (Cartwright and Littlewood's `lambda`).
+
+    Attributes
+    ----------
+    mu, A, omega : float
+        System parameters.
+
+    References
+    ----------
+    M. L. Cartwright and J. E. Littlewood, "On Non-Linear Differential
+    Equations of the Second Order: I. The Equation
+    y'' - k(1 - y^2)y' + y = b lambda k cos(lambda t + a), k Large,"
+    *J. London Math. Soc.* **20**, 180-189 (1945).
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from physicskit.chaos.systems.continuous import ForcedVanDerPol
+    >>> system = ForcedVanDerPol(mu=1.0, A=0.5, omega=2.0)
+    >>> system.rhs(np.array([0.0, 1.0]), 0.0).tolist()
+    [1.0, 1.5]
+    >>> system.forcing_period == 2 * np.pi / 2.0
+    True
+    """
+
+    #: State dimension, always 2. State is ``(x, v)``.
+    dim = 2
+
+    def __init__(self, mu: float = 10.0, A: float = 14.5, omega: float = 2.5):
+        self.mu = float(mu)
+        self.A = float(A)
+        self.omega = float(omega)
+
+    @property
+    def params(self) -> NDArray[np.float64]:
+        """Parameter vector ``(mu, A, omega)``.
+
+        Returns
+        -------
+        ndarray of float, shape (3,)
+        """
+        return np.array([self.mu, self.A, self.omega])
+
+    @property
+    def forcing_period(self) -> float:
+        """Period ``T = 2*pi/omega`` of the forcing.
+
+        Returns
+        -------
+        float
+        """
+        return 2.0 * np.pi / self.omega
+
+    def rhs(self, state: NDArray[np.float64], t: float) -> NDArray[np.float64]:
+        """Evaluate the forced Van der Pol vector field.
+
+        Parameters
+        ----------
+        state : ndarray of float, shape (2,)
+            State vector ``(x, v)``.
+        t : float
+            Current time (the forcing term depends on `t`).
+
+        Returns
+        -------
+        ndarray of float, shape (2,)
+            Time derivative ``(dx/dt, dv/dt)``.
+        """
+        return np.asarray(_forced_van_der_pol_rhs(np.asarray(state, dtype=np.float64), t, self.params))
+
+    def initial_state(self) -> NDArray[np.float64]:
+        """Default initial condition ``(1, 0)``.
+
+        Returns
+        -------
+        ndarray of float, shape (2,)
+        """
+        return np.array([1.0, 0.0])
+
+    def trajectory(
+        self,
+        state0: NDArray[np.float64] | None = None,
+        t0: float = 0.0,
+        dt: float = 0.005,
+        n_steps: int = 20000,
+    ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
+        """Integrate a trajectory with the Numba-accelerated RK4 integrator.
+
+        Parameters
+        ----------
+        state0 : array_like of float, shape (2,), optional
+            Initial state; defaults to :meth:`initial_state`.
+        t0 : float, default 0.0
+            Initial time.
+        dt : float, default 0.005
+            Integration step size (the relaxation jumps at large `mu` need
+            ``dt`` well below ``1/mu``).
+        n_steps : int, default 20000
+            Number of integration steps.
+
+        Returns
+        -------
+        times : ndarray of float, shape (n_steps + 1,)
+        states : ndarray of float, shape (n_steps + 1, 2)
+        """
+        state0 = self.initial_state() if state0 is None else np.asarray(state0, dtype=np.float64)
+        return rk4_integrate(_forced_van_der_pol_rhs, state0, t0, dt, n_steps, self.params)
+
+    def stroboscopic_map(
+        self,
+        states0: ArrayLike,
+        n_periods: int,
+        steps_per_period: int = 400,
+    ) -> NDArray[np.float64]:
+        """Sample many trajectories once per forcing period, in parallel.
+
+        Every trajectory starts at ``t = 0`` and is integrated with RK4 at a
+        fixed step ``forcing_period / steps_per_period``, recording the state
+        at ``t = 0, T, 2T, ...``. This stroboscopic (Poincare) map turns the
+        periodic orbits of the flow into finite cycles of points -- a
+        subharmonic of period ``nT`` becomes an `n`-cycle -- which is how
+        Cartwright and Littlewood's coexisting periodic motions are told
+        apart. Many initial conditions (e.g. a basin-of-attraction grid)
+        are integrated at once on all cores.
+
+        Parameters
+        ----------
+        states0 : array_like of float, shape (n, 2) or (2,)
+            Initial states ``(x, v)`` at ``t = 0``.
+        n_periods : int
+            Number of forcing periods to integrate.
+        steps_per_period : int, default 400
+            RK4 steps per forcing period.
+
+        Returns
+        -------
+        ndarray of float, shape (n, n_periods + 1, 2)
+            ``out[i, k]`` is the state of trajectory `i` at ``t = k*T``
+            (``out[i, 0]`` is its initial state). A single ``(2,)`` input
+            still returns a leading axis of length 1.
+
+        Examples
+        --------
+        >>> import numpy as np
+        >>> from physicskit.chaos.systems.continuous import ForcedVanDerPol
+        >>> linear = ForcedVanDerPol(mu=0.0, A=0.0, omega=1.0)
+        >>> out = linear.stroboscopic_map([1.0, 0.0], n_periods=3)
+        >>> out.shape
+        (1, 4, 2)
+        >>> bool(np.allclose(out[0, -1], [1.0, 0.0], atol=1e-8))  # x = cos(t) has period T
+        True
+        """
+        states = np.atleast_2d(np.asarray(states0, dtype=np.float64))
+        if states.ndim != 2 or states.shape[1] != 2:
+            raise ValueError(f"states0 must have shape (n, 2) or (2,), got {np.shape(states0)}")
+        return np.asarray(_forced_van_der_pol_strobe(np.ascontiguousarray(states), int(n_periods), int(steps_per_period), self.params))
 
 
 # ---------------------------------------------------------------------------

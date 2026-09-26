@@ -6,6 +6,7 @@ from physicskit.chaos.systems.continuous import (
     DoublePendulum,
     DrivenPendulum,
     Duffing,
+    ForcedVanDerPol,
     MagneticPendulum,
     RestrictedThreeBody,
     Rossler,
@@ -50,6 +51,74 @@ def test_duffing_initial_state_and_rhs():
     assert np.all(np.isfinite(d))
     _, states = system.trajectory(state0=state0, n_steps=100, dt=0.01)
     assert np.all(np.isfinite(states))
+
+
+def test_forced_van_der_pol_reduces_to_van_der_pol_without_forcing():
+    """With A = 0 the right-hand side is the plain Van der Pol field
+    (x' = v, v' = mu*(1 - x^2)*v - x) at every time."""
+    system = ForcedVanDerPol(mu=2.5, A=0.0, omega=1.3)
+    rng = np.random.default_rng(0)
+    for x, v, t in rng.uniform(-3.0, 3.0, size=(10, 3)):
+        assert np.allclose(system.rhs(np.array([x, v]), t), [v, 2.5 * (1.0 - x**2) * v - x])
+
+
+def test_forced_van_der_pol_forcing_term_depends_on_time():
+    """At x = v = 0 only the forcing survives: dv/dt = A*cos(omega*t)."""
+    system = ForcedVanDerPol(mu=10.0, A=1.7, omega=2.5)
+    for t in [0.0, 0.3, 1.0, np.pi / 2.5, 7.2]:
+        derivative = system.rhs(np.array([0.0, 0.0]), t)
+        assert derivative[0] == 0.0
+        assert derivative[1] == pytest.approx(1.7 * np.cos(2.5 * t))
+
+
+def test_forced_van_der_pol_small_mu_limit_cycle_has_amplitude_two():
+    """Averaging theory: for small mu the unforced limit cycle is
+    x ~= 2*cos(t), amplitude 2 (corrections are O(mu^2))."""
+    system = ForcedVanDerPol(mu=0.1, A=0.0, omega=1.0)
+    _, states = system.trajectory(state0=np.array([0.5, 0.0]), dt=0.01, n_steps=30000)
+    settled = states[-2000:, 0]  # ~3 cycles after a t = 280 transient (decay rate mu/2)
+    assert np.max(settled) == pytest.approx(2.0, abs=1e-2)
+    assert np.min(settled) == pytest.approx(-2.0, abs=1e-2)
+
+
+def test_forced_van_der_pol_mu_zero_matches_exact_forced_harmonic_oscillator():
+    """With mu = 0 the equation is x'' + x = A*cos(omega*t), solved exactly by
+    x = (x0 - K)*cos(t) + v0*sin(t) + K*cos(omega*t), K = A/(1 - omega^2);
+    both integrators must reproduce it."""
+    A, omega, x0, v0 = 0.8, 2.0, 0.3, -0.5
+    K = A / (1.0 - omega**2)
+    system = ForcedVanDerPol(mu=0.0, A=A, omega=omega)
+
+    def exact(t):
+        return (x0 - K) * np.cos(t) + v0 * np.sin(t) + K * np.cos(omega * t)
+
+    t, states = system.trajectory(state0=np.array([x0, v0]), dt=0.01, n_steps=2000)
+    assert np.allclose(states[:, 0], exact(t), atol=1e-8)
+
+    strobe = system.stroboscopic_map(np.array([[x0, v0], [x0, v0]]), n_periods=5)
+    assert strobe.shape == (2, 6, 2)
+    times = np.arange(6) * system.forcing_period
+    assert np.allclose(strobe[0, :, 0], exact(times), atol=1e-8)
+    assert np.allclose(strobe[1], strobe[0])
+
+
+def test_forced_van_der_pol_default_parameters_have_coexisting_subharmonics():
+    """Cartwright-Littlewood regime (A = b*omega*mu, b = 0.58): starting
+    points on either side of the basin boundary settle onto stable periodic
+    motions of period 3T and 5T respectively."""
+    system = ForcedVanDerPol()
+    assert system.A == pytest.approx(0.58 * system.omega * system.mu)
+    strobe = system.stroboscopic_map(np.array([[0.5, -14.3], [0.5, -14.2]]), n_periods=160, steps_per_period=300)
+    settled = strobe[:, -30:, 0]
+    periods = []
+    for seq in settled:
+        periods.append(next(p for p in range(1, 10) if np.allclose(seq[p:], seq[:-p], atol=1e-4)))
+    assert sorted(periods) == [3, 5]
+
+
+def test_forced_van_der_pol_stroboscopic_map_rejects_bad_shape():
+    with pytest.raises(ValueError):
+        ForcedVanDerPol().stroboscopic_map(np.zeros((4, 3)), n_periods=1)
 
 
 def test_chua_trajectory_is_finite_and_bounded():
