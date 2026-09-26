@@ -33,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   stretch, fold and escape of each iteration.
 - Gallery example "Smale's Horseshoe Map: Stretch, Fold, and Return"
   (`plot_smale_horseshoe.py`).
+- `physicskit.units`: explicit natural-unit systems. `UnitSystem` is
+  fixed by anchors (constants set to 1 plus user-chosen scales) and
+  refuses to convert a dimension those anchors leave undetermined.
+  Presets `astro_units` (G=1), `geometrized_units` (G=c=1),
+  `quantum_units` (hbar=1) and `statphys_units` (k_B=1) have no hidden
+  default scales; `natural_units` builds any other combination.
+  `to_si`/`from_si` convert values, and `to_pint`/`from_pint` interoperate
+  with pint when it is installed (new `units` extra).
 
 ### Changed
 
