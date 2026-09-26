@@ -60,7 +60,7 @@ Gases," Phil. Mag. Ser. 4, 19, 19-32, and 20, 21-37 (1860); L.
 Boltzmann, "Weitere Studien über das Wärmegleichgewicht unter
 Gasmolekülen," Wiener Berichte 66, 275-370 (1872).
 
-.. minigallery:: ../../examples/statphys/molecular_dynamics/plot_maxwell_boltzmann_relaxation.py
+.. minigallery:: ../../examples/statphys/molecular_dynamics/plot_maxwell_velocity_distribution.py
 
 1870s -- Boltzmann's Statistical Entropy
 ----------------------------------------
@@ -101,9 +101,7 @@ Hauptsatze der mechanischen Wärmetheorie und der
 Wahrscheinlichkeitsrechnung," Wiener Berichte 76, 373-435 (1877);
 M. Planck, Ann. Phys. 4, 553-563 (1901).
 
-.. minigallery::
-   ../../examples/statphys/ehrenfest_urn/plot_ehrenfest_irreversibility.py
-   ../../examples/statphys/molecular_dynamics/plot_maxwell_boltzmann_relaxation.py
+.. minigallery:: ../../examples/statphys/molecular_dynamics/plot_maxwell_boltzmann_relaxation.py
 
 1902 -- Gibbs's Ensemble Formalism
 ----------------------------------
@@ -143,7 +141,7 @@ Cf. H. B. Callen and T. A. Welton, "Irreversibility and Generalized
 Noise," Phys. Rev. 83, 34-40 (1951), for the dynamical
 fluctuation-dissipation theorem proper.
 
-.. minigallery:: ../../examples/statphys/ising/plot_ising_phase_transition.py
+.. minigallery:: ../../examples/statphys/ising/plot_gibbs_canonical_ensemble.py
 
 1905 -- Einstein's Explanation of Brownian Motion
 -------------------------------------------------
@@ -243,7 +241,7 @@ fluctuation-dissipation-balanced strength.
 *References:* P. Langevin, "Sur la théorie du mouvement brownien,"
 C. R. Acad. Sci. 146, 530-533 (1908).
 
-.. minigallery:: ../../examples/statphys/nonequilibrium_work/plot_jarzynski_equality.py
+.. minigallery:: ../../examples/statphys/random_walk/plot_langevin_equation.py
 
 1920-1925 -- The Ising Model
 ----------------------------
@@ -267,9 +265,7 @@ behavior shared with wildly different physical systems.
 "Beitrag zur Theorie des Ferromagnetismus," Z. Phys. 31, 253-258
 (1925).
 
-.. minigallery::
-   ../../examples/statphys/ising/plot_ising_phase_transition.py
-   ../../examples/statphys/ising/plot_ising_criticality_animation.py
+.. minigallery:: ../../examples/statphys/ising/plot_ising_criticality_animation.py
 
 1924-1926 -- Bose-Einstein and Fermi-Dirac Quantum Statistics
 -------------------------------------------------------------
@@ -506,7 +502,7 @@ in the package.
 Teller, and E. Teller, "Equation of State Calculations by Fast
 Computing Machines," J. Chem. Phys. 21, 1087-1092 (1953).
 
-.. minigallery:: ../../examples/statphys/ising/plot_critical_slowing_down.py
+.. minigallery:: ../../examples/statphys/ising/plot_metropolis_algorithm.py
 
 1957 -- Molecular Dynamics Simulation
 -------------------------------------
@@ -534,7 +530,7 @@ relax toward the Maxwell-Boltzmann form under real Newtonian dynamics.
 *References:* B. J. Alder and T. E. Wainwright, J. Chem. Phys. 27,
 1208-1209 (1957).
 
-.. minigallery:: ../../examples/statphys/molecular_dynamics/plot_maxwell_boltzmann_relaxation.py
+.. minigallery:: ../../examples/statphys/molecular_dynamics/plot_alder_wainwright_molecular_dynamics.py
 
 1957 -- Percolation Theory
 --------------------------

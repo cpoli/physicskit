@@ -8,10 +8,11 @@ from matplotlib.animation import PillowWriter
 from matplotlib.collections import LineCollection
 
 from physicskit.chaos.systems.continuous import DrivenPendulum, Lorenz, MagneticPendulum, RestrictedThreeBody
-from physicskit.chaos.systems.maps import BakersMap
+from physicskit.chaos.systems.maps import BakersMap, SmaleHorseshoe
 from physicskit.chaos.visualizers.dynamic_plots import (
     animate_bakers_map,
     animate_driven_pendulum,
+    animate_horseshoe_map,
     animate_multi_orbit_map,
     animate_phase_volume_contraction,
     animate_restricted_three_body,
@@ -276,3 +277,15 @@ def test_animate_driven_pendulum_saves_gif(tmp_path):
     out = tmp_path / "driven_pendulum.gif"
     anim.save(out, writer=PillowWriter(fps=10))
     assert out.exists() and out.stat().st_size > 0
+
+
+def test_animate_horseshoe_map_saves_and_ends_on_the_two_legs(tmp_path):
+    system = SmaleHorseshoe()
+    anim = animate_horseshoe_map(system, n_points=400, n_iterations=2, frames_per_iteration=6)
+    anim.save(tmp_path / "horseshoe.gif", writer=PillowWriter(fps=10))
+
+    anim._draw_frame(5)  # escape frame of the first iteration
+    offsets = anim._fig.axes[0].collections[0].get_offsets()
+    lam = system.contraction
+    assert ((offsets[:, 0] <= lam) | (offsets[:, 0] >= 1.0 - lam)).all()
+    assert (offsets[:, 1] <= 1.0).all()

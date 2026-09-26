@@ -216,22 +216,25 @@ signature (a horseshoe implies an invariant set with positive topological
 entropy and dense periodic orbits) and its first bridge to symbolic
 dynamics, independent of any specific equation.
 
-*Implementation:* :class:`physicskit.chaos.systems.maps.BakersMap` is the
-horseshoe's most direct concrete realization: it cuts the unit square,
-stretches each piece back to full width, and stacks them -- literally
-Smale's stretch, cut, and stack -- and, because each branch is exactly
-affine, its
-:meth:`~physicskit.chaos.systems.maps.BakersMap.lyapunov_exponents` gives
-the horseshoe's expansion rate in closed form as the entropy of the
-underlying two-symbol Bernoulli process, with no numerical estimation
-needed.
+*Implementation:* :class:`physicskit.chaos.systems.maps.SmaleHorseshoe`
+is the piecewise-linear horseshoe: it squeezes the unit square by
+:math:`\lambda < 1/2`, stretches it by :math:`\mu > 2`, and folds it so
+the two legs lie back across the square.
+:meth:`~physicskit.chaos.systems.maps.SmaleHorseshoe.fold` gives the image
+at any stage of the fold,
+:meth:`~physicskit.chaos.systems.maps.SmaleHorseshoe.survives` picks out
+the points that stay in the square, whose limit is the invariant Cantor
+set, and
+:meth:`~physicskit.chaos.systems.maps.SmaleHorseshoe.periodic_points`
+returns all :math:`2^n` points of period :math:`n` in closed form, one per
+symbol sequence.
 
 *References:* S. Smale, "Diffeomorphisms with Many Periodic Points," in
 *Differential and Combinatorial Topology* (S. S. Cairns, ed.), Princeton
 Univ. Press (1965), pp. 63-80; survey *Bull. Amer. Math. Soc.* **73**,
 747-817 (1967).
 
-.. minigallery:: ../../examples/chaos/maps/plot_bakers_map.py
+.. minigallery:: ../../examples/chaos/maps/plot_smale_horseshoe.py
 
 1970 -- 1974 -- Sinai, Bunimovich, and the Chaotic Billiard
 -----------------------------------------------------------
@@ -740,7 +743,6 @@ identified.
 
 .. minigallery::
    ../../examples/chaos/quantum_chaos/plot_quantum_billiard_eigenstates.py
-   ../../examples/chaos/quantum_chaos/plot_quantum_kicked_rotor.py
    ../../examples/chaos/quantum_chaos/plot_quantum_bakers_map.py
 
 See Also

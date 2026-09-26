@@ -1,6 +1,6 @@
 r"""
-Critical slowing down: Metropolis vs. the Wolff cluster algorithm
-=======================================================================
+The Wolff cluster algorithm: beating critical slowing down
+===============================================================
 
 The 2D Ising model places a spin :math:`s_i = \pm 1` on every site of a
 periodic :math:`L \times L` lattice, with Hamiltonian

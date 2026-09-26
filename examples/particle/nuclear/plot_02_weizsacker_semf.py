@@ -1,22 +1,19 @@
 r"""
-Chadwick's neutron and the Weizsacker semi-empirical mass formula
-=======================================================================
+The Weizsäcker semi-empirical mass formula
+=============================================
 
-Chadwick (1932) replaced the proton-electron nucleus with the modern
-picture: a nucleus of mass number :math:`A` and atomic number :math:`Z`
-is exactly :math:`Z` protons and :math:`N=A-Z` neutrons. Three years
-later, Weizsacker combined this proton-neutron picture with a
-liquid-drop model into a single closed-form estimate of nuclear binding
-energy,
+Weizsäcker (1935) treated the nucleus as a charged liquid drop of
+:math:`Z` protons and :math:`N=A-Z` neutrons and wrote its binding
+energy as a sum of five physically motivated terms -- volume, surface,
+Coulomb, asymmetry and pairing -- with coefficients fitted to measured
+masses:
 
 .. math::
 
     B(Z,A) = a_V A - a_S A^{2/3} - a_C\frac{Z(Z-1)}{A^{1/3}}
-    - a_A\frac{(A-2Z)^2}{A} + \delta(A,Z),
+    - a_A\frac{(A-2Z)^2}{A} + \delta(A,Z).
 
-that presupposes exactly Chadwick's :math:`N=A-Z` bookkeeping -- it has
-no way to vary the neutron number independently of :math:`Z` in the
-proton-electron model it replaced. This example plots
+This example plots
 :func:`~physicskit.particle.nuclear.semf_binding_energy` across the
 :math:`(N, Z)` plane, and shows the asymmetry term's role directly: for
 fixed :math:`A`, binding energy peaks not at :math:`Z=A/2` but at the
@@ -86,9 +83,9 @@ print(f"\nat A={A_fixed}: binding-energy-per-nucleon peaks at Z={Z_range[i_max]}
 # %%
 # The pairing term: even-even nuclei are slightly more bound
 # -------------------------------------------------------------------
-# Chadwick's proton-neutron picture also makes the small pairing
-# correction meaningful (it depends on the parity of *both* Z and N
-# separately) -- something with no analogue in a proton-electron model.
+# The pairing term depends on the parity of *both* Z and N: nuclei with
+# even numbers of each are slightly more bound than their odd-odd
+# neighbours of the same A.
 for Z, A, label in [(50, 120, "even-even (Z=50,N=70)"), (51, 120, "odd-odd (Z=51,N=69)")]:
     bpn = binding_energy_per_nucleon(Z, A)
     print(f"{label}: binding energy/nucleon = {bpn:.4f} MeV")

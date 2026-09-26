@@ -50,7 +50,7 @@ to turn a computed velocity field into a pressure distribution.
 *References:* D. Bernoulli, *Hydrodynamica, sive de viribus et motibus
 fluidorum commentarii* (Dulsecker, Strasbourg, 1738).
 
-.. minigallery:: ../../examples/fluids/potential_flow/plot_cylinder_with_lift.py
+.. minigallery:: ../../examples/fluids/potential_flow/plot_bernoulli_principle.py
 
 1752 -- D'Alembert's Paradox
 ------------------------------
@@ -498,7 +498,7 @@ the energy actually flowing from Richardson's "big whorls" down to his
 *References:* L. F. Richardson, *Weather Prediction by Numerical Process*
 (Cambridge University Press, Cambridge, 1922).
 
-.. minigallery:: ../../examples/fluids/navier_stokes/plot_turbulent_cascade.py
+.. minigallery:: ../../examples/fluids/navier_stokes/plot_richardson_cascade.py
 
 1941 -- Kolmogorov's Theory of the Turbulent Cascade
 ----------------------------------------------------------

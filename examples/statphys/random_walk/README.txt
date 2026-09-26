@@ -1,4 +1,5 @@
 Random walks
 ------------
 
-Diffusion, the Einstein relation, and the central limit theorem.
+Diffusion, the Einstein relation, the central limit theorem, and the
+Langevin equation.

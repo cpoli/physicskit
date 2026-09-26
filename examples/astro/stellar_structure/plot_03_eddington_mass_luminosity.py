@@ -37,13 +37,14 @@ print(f"L(1 solar mass)  = {main_sequence_luminosity(1.0):.4f} solar luminositie
 print(f"L(2 solar masses) = {main_sequence_luminosity(2.0):.4f} solar luminosities (a linear guess would give 2.0)")
 print(f"L(10 solar masses) = {main_sequence_luminosity(10.0):.1f} solar luminosities (a linear guess would give 10.0)")
 
-fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
+fig1, ax1 = plt.subplots(figsize=(6, 4.5))
 ax1.loglog(mass_values, luminosity, color="steelblue", label=r"$L\propto M^{3.5}$ (Eddington)")
 ax1.loglog(mass_values, luminosity_linear, "--", color="0.6", label=r"naive $L\propto M$")
 ax1.set_xlabel(r"mass ($M_\odot$)")
 ax1.set_ylabel(r"luminosity ($L_\odot$)")
 ax1.set_title("Mass-luminosity relation (log-log)")
 ax1.legend(fontsize=8)
+fig1.tight_layout()
 
 # %%
 # Consequence: stellar lifetime falls steeply with mass
@@ -55,11 +56,12 @@ ax1.legend(fontsize=8)
 # burns dramatically brighter without carrying proportionally more fuel,
 # so it lives dramatically shorter.
 lifetime_relative = mass_values / luminosity  # relative to the Sun's own lifetime
+fig2, ax2 = plt.subplots(figsize=(6, 4.5))
 ax2.loglog(mass_values, lifetime_relative, color="firebrick")
 ax2.set_xlabel(r"mass ($M_\odot$)")
 ax2.set_ylabel(r"lifetime, relative to the Sun's")
 ax2.set_title(r"$\tau \propto M/L \propto M^{-2.5}$: massive stars live fast")
-fig1.tight_layout()
+fig2.tight_layout()
 
 relative_lifetime_10 = 10.0 / main_sequence_luminosity(10.0)
 print(f"\nrelative lifetime at 10 solar masses: {relative_lifetime_10:.4f} (lives roughly {1 / relative_lifetime_10:.0f}x shorter than the Sun)")

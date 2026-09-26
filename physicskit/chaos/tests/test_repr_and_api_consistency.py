@@ -7,7 +7,7 @@ from physicskit.chaos.quantum.billiards import QuantumBilliard
 from physicskit.chaos.quantum.maps import QuantumBakersMap, QuantumKickedRotor
 from physicskit.chaos.systems.billiards import CircleBilliard, EllipseBilliard, SinaiBilliard
 from physicskit.chaos.systems.continuous import Lorenz, MagneticPendulum
-from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, StandardMap
+from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, SmaleHorseshoe, StandardMap
 
 
 @pytest.mark.parametrize(
@@ -19,6 +19,7 @@ from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, Stan
         (MagneticPendulum(friction=0.3), ["MagneticPendulum(", "friction=0.3"]),
         (QuantumKickedRotor(k=2.0, dim=32), ["QuantumKickedRotor(", "k=2.0", "dim=32"]),
         (QuantumBakersMap(dim=40, alpha=0.5), ["QuantumBakersMap(", "dim=40", "alpha=0.5"]),
+        (SmaleHorseshoe(contraction=0.25), ["SmaleHorseshoe(", "contraction=0.25"]),
         (
             QuantumBilliard(CircleBilliard(radius=1.0), resolution=50),
             ["QuantumBilliard(", "resolution=50"],
@@ -42,7 +43,7 @@ def test_repr_round_trips_through_eval_for_simple_scalar_params():
 
 @pytest.mark.parametrize(
     "make_map",
-    [lambda: StandardMap(), lambda: HenonMap(), lambda: BakersMap(), lambda: LogisticMap()],
+    [lambda: StandardMap(), lambda: HenonMap(), lambda: BakersMap(), lambda: LogisticMap(), lambda: SmaleHorseshoe()],
 )
 def test_discrete_map_trajectory_defaults_state0_like_dynamical_system(make_map):
     """DiscreteMap.trajectory() should default state0 via initial_state(),

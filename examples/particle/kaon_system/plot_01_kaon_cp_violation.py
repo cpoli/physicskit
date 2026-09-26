@@ -1,20 +1,18 @@
 r"""
-The neutral kaon system: from discovery to CP violation
-==============================================================
+Cronin and Fitch: CP violation in neutral kaon decay
+=======================================================
 
-Rochester and Butler's 1947 cloud-chamber photographs of forked "V0"
-tracks were the first examples of the "strange particles," among them
-the neutral kaon -- a genuinely new two-state system whose mixing would,
-seventeen years later, supply the first evidence for CP violation. By
-the early 1960s, CP symmetry predicted that the long-lived neutral kaon
-:math:`K_L`, being CP-odd, could not decay to two pions; Cronin and
-Fitch (1964) found that it does, at a rate of about two parts in a
-thousand. This example models the neutral-kaon system as the
-Wigner-Weisskopf two-state mixing problem
-:func:`~physicskit.particle.electroweak.meson_decay_rates_cp_eigenstate`
-implements, and reproduces the decay-rate asymmetry
-:func:`~physicskit.particle.electroweak.cp_asymmetry` that a real
-measurement of :math:`\Delta m` and CP violation is built from.
+CP symmetry predicted that the long-lived neutral kaon :math:`K_L`,
+being CP-odd, could never decay to two pions, a CP-even final state. In
+1964 Cronin and Fitch found that it does, about twice in every thousand
+decays. The weak interaction is not symmetric under CP. This example
+models the neutral kaon as the two-state mixing problem implemented by
+:func:`~physicskit.particle.electroweak.meson_decay_rates_cp_eigenstate`,
+first with :math:`\varepsilon=0` and then with the measured
+:math:`|\varepsilon|\approx2.2\times10^{-3}`, and computes the
+:math:`K^0`/:math:`\bar K^0` decay-rate asymmetry
+:func:`~physicskit.particle.electroweak.cp_asymmetry` from which the
+violation is measured.
 """
 
 # %%
@@ -25,11 +23,10 @@ from physicskit.particle.electroweak import cp_asymmetry, meson_decay_rates_cp_e
 from physicskit.particle.visualizers import animate_cp_asymmetry
 
 # %%
-# The two very different lifetimes Rochester and Butler's kaon system has
-# ----------------------------------------------------------------------------------
-# K_short and K_long decay at very different rates -- the "unexpectedly
-# long lifetime" that gave the strange particles their name in the first
-# place, in units of the K_S decay width here.
+# The two neutral-kaon lifetimes
+# ----------------------------------
+# K_short and K_long decay at very different rates; times are in units of
+# the K_S lifetime here.
 delta_m = 0.477  # in units of Gamma_S, close to the real K0 system's value
 gamma_s = 1.0
 gamma_l = gamma_s / 579.0  # K_L lives roughly 579x longer than K_S

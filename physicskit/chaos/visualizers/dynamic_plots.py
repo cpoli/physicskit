@@ -15,7 +15,7 @@ from numpy.typing import ArrayLike, NDArray
 
 from physicskit.chaos.core.base_system import BilliardSystem, DiscreteMap
 from physicskit.chaos.systems.continuous import DoublePendulum, DrivenPendulum, MagneticPendulum, RestrictedThreeBody, lagrange_points
-from physicskit.chaos.systems.maps import BakersMap
+from physicskit.chaos.systems.maps import BakersMap, SmaleHorseshoe
 from physicskit.chaos.visualizers import theme
 
 
@@ -573,6 +573,119 @@ def animate_bakers_map(
 
     anim = FuncAnimation(fig, update, frames=total_frames, interval=interval, blit=False)
     return anim
+
+
+def animate_horseshoe_map(
+    system: SmaleHorseshoe,
+    n_points: int = 20000,
+    n_iterations: int = 3,
+    frames_per_iteration: int = 30,
+    interval: int = 60,
+    band_colors: tuple[str, str, str] = (theme.PRIMARY, theme.MUTED, theme.ACCENT),
+) -> FuncAnimation:
+    """Animate Smale's horseshoe: stretch the square, fold it, keep what lands back inside.
+
+    Each iteration starts from a regular grid of square markers filling
+    the part of the unit square that has survived so far (the whole square
+    at first, then ``f(Q) & Q``, ...), colored by horizontal band: ``H0``
+    (``y <= 1/mu``), the middle strip, and ``H1`` (``y >= 1 - 1/mu``). It is
+    then animated in three phases:
+
+    1. **Stretch** -- the square is squeezed to width ``lam`` and stretched
+       to height ``mu``.
+    2. **Fold** -- the part of the strip above ``y = 1`` bends over, until
+       the two legs lie back across the square as the vertical strips
+       ``V0`` and ``V1`` (see :meth:`~physicskit.chaos.systems.maps.SmaleHorseshoe.fold`).
+    3. **Escape** -- the middle band, now on the bend outside the square,
+       disappears; the legs left inside are the region for the next
+       iteration.
+
+    After ``n`` iterations the region is ``2^n`` thin vertical strips,
+    closing in on the invariant Cantor set. The grid is resampled on the
+    new region at each iteration, because forward iteration spreads any
+    fixed set of points apart by ``mu`` along ``y``.
+
+    Parameters
+    ----------
+    system : SmaleHorseshoe
+        Map to animate.
+    n_points : int, default 20000
+        Approximate number of markers covering the full square, on a regular
+        ``round(sqrt(n_points))``-by-``round(sqrt(n_points))`` grid.
+    n_iterations : int, default 3
+        Number of map iterations to animate through.
+    frames_per_iteration : int, default 30
+        Number of frames per iteration, all three phases combined.
+    interval : int, default 60
+        Delay between animation frames, in milliseconds.
+    band_colors : tuple of str, default (theme.PRIMARY, theme.MUTED, theme.ACCENT)
+        Colors of the ``H0``, middle, and ``H1`` bands.
+
+    Returns
+    -------
+    matplotlib.animation.FuncAnimation
+        Assign it to a variable to keep it alive, and display it with
+        ``plt.show()`` or save it with ``anim.save(...)``.
+    """
+    mu = system.expansion
+    n_side = max(2, round(np.sqrt(n_points)))
+    centers = (np.arange(n_side) + 0.5) / n_side
+    grid_x, grid_y = np.meshgrid(centers, centers)
+    grid = np.column_stack([grid_x.ravel(), grid_y.ravel()])
+    band = np.where(grid[:, 1] <= 1.0 / mu, 0, np.where(grid[:, 1] >= 1.0 - 1.0 / mu, 2, 1))
+    grid_colors = np.asarray(band_colors)[band]
+
+    fig, ax = plt.subplots(figsize=(4.5, 1.5 + 3.0 * mu))
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(-0.05, mu + 0.05)
+    ax.set_aspect("equal")
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.add_patch(plt.Rectangle((0.0, 0.0), 1.0, 1.0, fill=False, edgecolor=theme.STRUCTURE, lw=1.2, zorder=3))
+    title = ax.set_title("Smale's horseshoe: stretch (iteration 1)")
+
+    # Marker size from the fixed data-to-pixel scale, so that the resting
+    # grid tiles the unit square (axis limits never change).
+    fig.canvas.draw()
+    p0 = ax.transData.transform((0.0, 0.0))
+    p1 = ax.transData.transform((1.0 / n_side, 0.0))
+    marker_points = (p1[0] - p0[0]) * 72.0 / fig.dpi
+    scatter = ax.scatter(grid[:, 0], grid[:, 1], s=marker_points**2, c=grid_colors, marker="s", linewidths=0, zorder=2)
+
+    n_stretch = max(1, round(0.35 * frames_per_iteration))
+    n_pause = 1 if frames_per_iteration >= 4 else 0
+    n_fold = max(1, frames_per_iteration - n_stretch - n_pause)
+    frames_per_iteration = n_stretch + n_fold + n_pause
+    total_frames = n_iterations * frames_per_iteration
+
+    state: dict[str, Any] = {"it": None}
+
+    def update(frame: int) -> tuple:
+        it, sub = divmod(frame, frames_per_iteration)
+        if state["it"] != it:
+            region = system.survives(grid, n_backward=it)
+            state["it"], state["rest"], state["colors"] = it, grid[region], grid_colors[region]
+            state["strip"] = system.fold(state["rest"], 0.0)
+        rest, colors = state["rest"], state["colors"]
+        if sub < n_stretch:
+            t = (sub + 1) / n_stretch
+            pts = rest + t * (state["strip"] - rest)
+            phase = "stretch"
+        elif sub < n_stretch + n_fold:
+            pts = system.fold(rest, (sub - n_stretch + 1) / n_fold)
+            phase = "fold"
+        else:
+            # The legs of the fold, sampled as densely as the square was:
+            # V0 is the image of H0 and V1 that of H1.
+            pts = grid[system.survives(grid, n_backward=it + 1)]
+            colors = np.where(pts[:, 0] < 0.5, band_colors[0], band_colors[2])
+            phase = "escape"
+        scatter.set_offsets(pts)
+        scatter.set_facecolor(colors)
+        title.set_text(f"Smale's horseshoe: {phase} (iteration {it + 1})")
+        return scatter, title
+
+    return FuncAnimation(fig, update, frames=total_frames, interval=interval, blit=False)
 
 
 def animate_map_orbit(

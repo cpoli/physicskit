@@ -1,7 +1,8 @@
 Quantum optics
 --------------
 
-Light quantized in the truncated Fock basis: Dirac's creation/annihilation
+Einstein's light quanta and the photoelectric effect, and light
+quantized in the truncated Fock basis: Dirac's creation/annihilation
 ladder operators and vacuum fluctuations, Wigner's phase-space
 quasi-probability distribution and the negativity of a single-photon Fock
 state, Glauber's coherent states and their Poissonian photon statistics,

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from physicskit.chaos.systems.maps import BakersMap, LogisticMap
+from physicskit.chaos.systems.maps import BakersMap, LogisticMap, SmaleHorseshoe
 
 
 def test_bakers_map_state_stays_in_unit_square():
@@ -108,3 +108,62 @@ def test_logistic_map_sensitive_dependence_at_chaotic_r():
     traj_a = system.trajectory(np.array([0.4]), n_iter=40)
     traj_b = system.trajectory(np.array([0.4 + 1e-10]), n_iter=40)
     assert abs(traj_a[-1, 0] - traj_b[-1, 0]) > 1e-3
+
+
+def test_horseshoe_branches_match_affine_formulas():
+    system = SmaleHorseshoe(contraction=0.25, expansion=4.0)
+    assert system.step(np.array([0.6, 0.2])) == pytest.approx([0.15, 0.8])
+    assert system.step(np.array([0.6, 0.9])) == pytest.approx([1.0 - 0.15, 4.0 * 0.1])
+
+
+def test_horseshoe_middle_strip_leaves_square_and_escaped_point_is_nan():
+    system = SmaleHorseshoe()
+    image = system.step(np.array([0.3, 0.5]))
+    assert image[1] > 1.0
+    assert np.isnan(system.step(image)).all()
+
+
+def test_horseshoe_inverse_step_undoes_step_on_returning_strips():
+    system = SmaleHorseshoe()
+    pts = np.array([[0.2, 0.1], [0.7, 0.3], [0.4, 0.8], [0.9, 0.95]])
+    assert system.inverse_step(system.fold(pts)) == pytest.approx(pts)
+    assert np.isnan(system.inverse_step(np.array([0.5, 0.5]))).all()
+
+
+def test_horseshoe_fold_at_zero_is_straight_strip():
+    system = SmaleHorseshoe(contraction=0.25, expansion=4.0)
+    assert system.fold(np.array([0.6, 0.9]), 0.0) == pytest.approx([0.15, 3.6])
+
+
+@pytest.mark.parametrize("period", [1, 2, 3, 6])
+def test_horseshoe_has_exactly_two_to_the_n_distinct_periodic_points(period):
+    system = SmaleHorseshoe()
+    points = system.periodic_points(period)
+    assert len(np.unique(points.round(9), axis=0)) == 2**period
+    images = points
+    for _ in range(period):
+        images = system.fold(images)
+    assert images == pytest.approx(points, abs=1e-9)
+
+
+def test_horseshoe_surviving_area_shrinks_by_two_over_mu_per_step():
+    system = SmaleHorseshoe()
+    n = 243
+    centers = (np.arange(n) + 0.5) / n
+    grid = np.stack(np.meshgrid(centers, centers), axis=-1)
+    for k in range(4):
+        assert system.survives(grid, n_forward=k).mean() == pytest.approx((2.0 / 3.0) ** k)
+        assert system.survives(grid, n_backward=k).mean() == pytest.approx((2.0 / 3.0) ** k)
+
+
+def test_horseshoe_exponents_and_entropy():
+    system = SmaleHorseshoe(contraction=0.2, expansion=5.0)
+    assert system.lyapunov_exponents() == pytest.approx((np.log(5.0), np.log(0.2)))
+    assert system.topological_entropy() == pytest.approx(np.log(2.0))
+
+
+def test_horseshoe_rejects_invalid_parameters():
+    with pytest.raises(ValueError):
+        SmaleHorseshoe(contraction=0.5)
+    with pytest.raises(ValueError):
+        SmaleHorseshoe(expansion=2.0)

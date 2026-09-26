@@ -77,12 +77,18 @@ KE_initial = kinetic_energy(omega_snaps[0], KX, KY, K2)
 KE_final = kinetic_energy(omega_snaps[-1], KX, KY, K2)
 print(f"Convective rolls: kinetic energy grew from {KE_initial:.3e} to {KE_final:.3e} (factor of {KE_final / KE_initial:.3e})")
 
-vmax = np.abs(omega_snaps[-1]).max()
-fig, axes = plt.subplots(1, 2, figsize=(10, 4.5))
-axes[0].imshow(omega_snaps[0], origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-axes[0].set_title(f"vorticity, t = {times_conv[0]:.2f} (noise)")
-axes[1].imshow(omega_snaps[-1], origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-axes[1].set_title(f"vorticity, t = {times_conv[-1]:.2f} (convective rolls)")
+# Each panel gets its own symmetric color scale: the initial noise is
+# thousands of times weaker than the developed rolls, so a shared scale
+# would render it as a blank field. The colorbars show the magnitude gap.
+fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
+for ax, omega, label, t in [
+    (axes[0], omega_snaps[0], "noise", times_conv[0]),
+    (axes[1], omega_snaps[-1], "convective rolls", times_conv[-1]),
+]:
+    vmax = np.abs(omega).max()
+    im = ax.imshow(omega, origin="lower", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+    fig.colorbar(im, ax=ax, label=r"$\omega$")
+    ax.set_title(f"vorticity, t = {t:.2f} ({label})")
 fig.suptitle("2D convection: vorticity, before and after spin-up")
 fig.tight_layout()
 plt.show()

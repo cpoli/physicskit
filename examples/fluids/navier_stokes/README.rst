@@ -6,8 +6,9 @@ a doubly periodic, pseudo-spectral solver for the full 2D incompressible
 vorticity-transport equation, exact up to machine precision and aliasing in
 space and 4th-order accurate in time. The first example shows its most basic
 signature -- a vortex patch's peak vorticity bleeding away under viscous
-diffusion, at a rate no inviscid simulation could reproduce. The second
-pushes the same solver into a genuinely turbulent regime: many vortices of
+diffusion, at a rate no inviscid simulation could reproduce. Another follows
+Richardson's qualitative cascade -- a few large eddies folding into ever
+finer filaments until viscosity takes over. The last pushes the same solver into a genuinely turbulent regime: many vortices of
 mixed sign interacting nonlinearly, cascading kinetic energy from the large
 scales they were seeded at down to small scales where viscosity finally
 dissipates it. Watch, in the energy spectrum plot, how a real inertial range

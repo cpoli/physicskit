@@ -56,7 +56,7 @@ Planck's quantization rule precise.
 *References:* M. Planck, Verhandlungen der Deutschen Physikalischen
 Gesellschaft 2, 237-245 (1900).
 
-.. minigallery:: ../../examples/quantum/harmonic_oscillator/plot_ladder_operators.py
+.. minigallery:: ../../examples/quantum/harmonic_oscillator/plot_planck_blackbody.py
 
 1913 -- Bohr's Atomic Model
 ---------------------------
@@ -146,7 +146,7 @@ arbitrary one-dimensional potential.
 *References:* W. Wilson, Phil. Mag. 29, 795-802 (1915); A. Sommerfeld, Ann.
 Phys. 356(17), 1-94 (1916).
 
-.. minigallery:: ../../examples/semiclassical/wkb/plot_wkb_bohr_sommerfeld.py
+.. minigallery:: ../../examples/quantum/hydrogen/plot_wilson_sommerfeld_orbits.py
 
 1922 -- The Stern-Gerlach Experiment
 -------------------------------------
@@ -227,7 +227,7 @@ method and :func:`~physicskit.quantum.visualizers.wavefunctions.animate_density`
 showing the de Broglie phase riding along a center that advances
 ballistically at :math:`v=\hbar k_0/m` while the envelope spreads. The
 animated dispersion is shown in
-:doc:`/api/gallery/quantum/wave_packets/plot_wave_packet_dynamics`.
+:doc:`/api/gallery/quantum/wave_packets/plot_twin_slit_interference`.
 :class:`~physicskit.quantum.visualizers.phase_space.WignerVisualizer`
 renders the same packet's Wigner phase-space distribution directly, a
 single blob centered on :math:`(x_0, p_0)` that is position space and
@@ -285,7 +285,7 @@ Elektronengruppen im Atom mit der Komplexstruktur der Spektren," Z. Phys.
 31, 765-783 (1925) (exclusion principle); W. Pauli, "Zur Quantenmechanik
 des magnetischen Elektrons," Z. Phys. 43, 601-623 (1927) (spin matrices).
 
-.. minigallery:: ../../examples/quantum/entanglement/plot_bloch_sphere_spin_dynamics.py
+.. minigallery:: ../../examples/quantum/hydrogen/plot_pauli_exclusion_and_spin.py
 
 1926 -- Schrodinger's Wave Equation and the Hydrogen Atom
 ---------------------------------------------------------
@@ -391,7 +391,7 @@ theorem and the exact harmonic-oscillator spectrum to machine precision.
 39, 828-840 (1926); L. Brillouin, C. R. Acad. Sci. 183, 24-26 (1926);
 precursor H. Jeffreys, Proc. London Math. Soc. 23, 428-436 (1925).
 
-.. minigallery:: ../../examples/semiclassical/wkb/plot_wkb_bohr_sommerfeld.py
+.. minigallery:: ../../examples/quantum/potentials/plot_wkb_quantum_bouncer.py
 
 1927 -- Heisenberg's Uncertainty Principle
 ------------------------------------------
@@ -588,7 +588,7 @@ included.
 Rev. 81, 848-852 (1951); R. P. Feynman, "Space-Time Approach to
 Non-Relativistic Quantum Mechanics," Rev. Mod. Phys. 20, 367-387 (1948).
 
-.. minigallery:: ../../examples/semiclassical/propagators/plot_semiclassical_propagators.py
+.. minigallery:: ../../examples/semiclassical/propagators/plot_van_vleck_anharmonic_wavepacket.py
 
 1930 -- Dirac's Operator Method and the Harmonic Oscillator
 -----------------------------------------------------------
@@ -687,7 +687,7 @@ Quantenmechanik," Naturwissenschaften 23, 807-812, 823-828, 844-849
 (1935); English translation, "The Present Situation in Quantum Mechanics,"
 Proc. Am. Phil. Soc. 124, 323-338 (1980).
 
-.. minigallery:: ../../examples/quantum/entanglement/plot_ising_entanglement_growth.py
+.. minigallery:: ../../examples/quantum/entanglement/plot_schrodinger_entanglement_and_cat.py
 
 1937-1946 -- Rabi's Magnetic Resonance Method and the Bloch Sphere
 --------------------------------------------------------------------
@@ -824,7 +824,7 @@ one at a time -- at position :math:`y` on the downstream screen.
 builds this two-source interference pattern from coherent Gaussian slit
 sources propagated to a screen; its ``amplitude`` and ``intensity``
 methods reproduce the fringe pattern :math:`\lvert\psi_1+\psi_2\rvert^2`
-directly. See it in :doc:`/api/gallery/quantum/wave_packets/plot_wave_packet_dynamics`.
+directly. See it in :doc:`/api/gallery/quantum/wave_packets/plot_twin_slit_interference`.
 Rather than that far-field (Fraunhofer) shortcut,
 :func:`~physicskit.quantum.chapters.wave_packets.double_slit_potential` and
 :func:`~physicskit.quantum.chapters.wave_packets.propagate_double_slit`
@@ -841,7 +841,7 @@ See it in
 translation, Am. J. Phys. 42, 4-11 (1974).
 
 .. minigallery::
-   ../../examples/quantum/wave_packets/plot_wave_packet_dynamics.py
+   ../../examples/quantum/wave_packets/plot_twin_slit_interference.py
    ../../examples/quantum/measurement/plot_double_slit_propagation.py
 
 1964 -- Bell's Theorem and the CHSH Inequality
@@ -919,7 +919,7 @@ gives the general stability amplitude :math:`1/\sqrt{\lvert
 
 *References:* M. Gutzwiller, J. Math. Phys. 12, 343-358 (1971).
 
-.. minigallery:: ../../examples/semiclassical/gutzwiller/plot_gutzwiller_trace_formula.py
+.. minigallery:: ../../examples/semiclassical/gutzwiller/plot_gutzwiller_quartic_oscillator.py
 
 1982 -- The No-Cloning Theorem
 -------------------------------
@@ -995,9 +995,7 @@ implements the Herman-Kluk multi-trajectory propagator above.
 and E. Kluk, Chem. Phys. 91, 27-34 (1984) (a single joint paper, not two
 independent discoveries).
 
-.. minigallery::
-   ../../examples/semiclassical/scarring/plot_quantum_scars.py
-   ../../examples/semiclassical/propagators/plot_herman_kluk_wavepacket.py
+.. minigallery:: ../../examples/semiclassical/scarring/plot_heller_wavepacket_spectroscopy.py
 
 1986-1990 -- Wave-Packet Revivals
 ----------------------------------
@@ -1030,14 +1028,14 @@ evolves it with ``wavefunction``; its ``revival_time`` property gives
 :math:`t_\text{rev}` above, and ``fidelity_to_initial`` tracks the
 wavepacket's overlap with :math:`\psi(x,0)` collapsing and then sharply
 recovering at that time. See it in
-:doc:`/api/gallery/quantum/wave_packets/plot_wave_packet_dynamics`.
+:doc:`/api/gallery/quantum/wave_packets/plot_quantum_revivals`.
 
 *References:* J. Parker and C. Stroud, Phys. Rev. Lett. 56, 716-719
 (1986); J. A. Yeazell, M. Mallalieu, and C. R. Stroud Jr., Phys. Rev.
 Lett. 64, 2007-2010 (1990); fractional revivals, I. Sh. Averbukh and N. F.
 Perelman, Phys. Lett. A 139, 449-453 (1989).
 
-.. minigallery:: ../../examples/quantum/wave_packets/plot_wave_packet_dynamics.py
+.. minigallery:: ../../examples/quantum/wave_packets/plot_quantum_revivals.py
 
 See Also
 --------

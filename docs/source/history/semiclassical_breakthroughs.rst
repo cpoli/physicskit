@@ -170,7 +170,7 @@ can be *exact* rather than merely leading-order in :math:`\hbar`.
 *References:* M. V. Berry and M. Tabor, "Closed Orbits and the Regular
 Bound Spectrum," Proc. R. Soc. Lond. A **349**, 101-123 (1976).
 
-.. minigallery:: ../../examples/semiclassical/gutzwiller/plot_gutzwiller_trace_formula.py
+.. minigallery:: ../../examples/semiclassical/gutzwiller/plot_berry_tabor_rectangle.py
 
 1984 -- Herman and Kluk's Frozen Gaussians
 ------------------------------------------------

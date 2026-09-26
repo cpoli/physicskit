@@ -7,4 +7,6 @@ Lagrangian :math:`L(q, \dot q, t)` via
 pendulum, a bead on a rotating hoop, coupled oscillators, and an elastic
 (spring) pendulum showing 1:2 autoparametric resonance -- including one
 built entirely from scratch, outside :mod:`physicskit.classical.systems`,
-showing the raw symbolic-derivation workflow directly.
+showing the raw symbolic-derivation workflow directly -- and the
+principle of least action behind it all, found by minimizing a
+discretized action directly.

@@ -1,7 +1,8 @@
 Cold-plasma waves
 -----------------
 
-Linearizes the multi-fluid cold-plasma equations around a uniform
+Debye-Hückel screening of a test charge, and the Debye lengths of real
+plasmas. Linearizes the multi-fluid cold-plasma equations around a uniform
 background to get the plasma frequency
 (:func:`~physicskit.plasma.waves.plasma_frequency`) and the Stix
 dielectric tensor components :math:`S`, :math:`D`, :math:`P`

@@ -6,16 +6,21 @@ Glashow (1961), Weinberg (1967), and Salam (1968) showed that the
 electromagnetic and weak interactions are two faces of a single
 :math:`SU(2)\times U(1)` gauge theory, spontaneously broken by the Higgs
 mechanism into the massless photon (electromagnetism) and the massive
-:math:`W^\pm,Z^0` bosons (the weak force) -- unifying two of nature's four
-fundamental interactions. Gargamelle's 1973 discovery of weak neutral
-currents, mediated by the previously unobserved :math:`Z^0`, was the
-theory's first direct experimental confirmation. This example puts the
-theory's two already-modeled pieces side by side:
-:func:`~physicskit.particle.electroweak.qed_dsigma_domega_mumu`, the
-electromagnetic sector reproduced at low energy, and
+:math:`W^\pm,Z^0` bosons (the weak force). One mixing angle
+:math:`\theta_W` ties the two together. With the fine-structure
+constant and Fermi's constant it predicts the boson masses,
+
+.. math::
+
+    M_W = \left(\frac{\pi\alpha}{\sqrt2\,G_F}\right)^{1/2}\frac{1}{\sin\theta_W},
+    \qquad M_Z = \frac{M_W}{\cos\theta_W}.
+
+This example puts the theory's pieces side by side:
+:func:`~physicskit.particle.electroweak.qed_total_cross_section_mumu`, the
+electromagnetic sector at low energy;
 :func:`~physicskit.particle.electroweak.higgs_vev`, the symmetry-breaking
-scale that gives the :math:`W`/:math:`Z` their mass while leaving the
-photon massless -- exactly the two ingredients the unification joins.
+scale; and the tree-level :math:`W` and :math:`Z` mass predictions as a
+function of :math:`\sin^2\theta_W`.
 """
 
 # %%
@@ -68,19 +73,31 @@ ax2.set_title("The symmetry-breaking scale that sets M_W, M_Z (schematic)")
 fig2.tight_layout()
 
 # %%
-# Gargamelle (1973): the first evidence for the Z boson this theory predicts
-# ---------------------------------------------------------------------------------
-# Gargamelle's bubble-chamber neutrino events showing a struck electron
-# with no accompanying charged lepton -- a neutral current, mediated by
-# exactly the Z0 boson this unification requires -- were the theory's
-# first direct experimental confirmation, a decade before the W and Z
-# were produced and detected directly (see the 1983 entry in this
-# chronology). Nothing in the toy pieces modeled here computes a
-# neutral-current cross section directly; the qualitative point is that
-# both the QED piece and the symmetry-breaking piece above are
-# ingredients of the single theory Gargamelle's neutral currents
-# confirmed.
-print("\nGargamelle (1973): observed neutrino-electron neutral-current scattering, mediated by the Z0")
-print("this unification predicts -- confirming the theory a decade before the W/Z were produced directly.")
+# Piece 3: the W and Z masses from the mixing angle
+# -----------------------------------------------------
+# Tree level, using the low-energy alpha = 1/137 and G_F. Values of
+# sin^2 theta_W between 0.2 and 0.25 put M_W near 75-83 GeV and M_Z near
+# 85-93 GeV, out of reach of any 1970s accelerator; UA1 and UA2 found
+# them in 1983 at 81 and 93 GeV (loop corrections, mainly the running of
+# alpha, account for the few-GeV difference from this estimate).
+alpha, G_F = 1 / 137.036, 1.1663787e-5  # GeV^-2
+A0 = np.sqrt(np.pi * alpha / (np.sqrt(2) * G_F))
+s2 = np.linspace(0.15, 0.45, 200)
+M_W = A0 / np.sqrt(s2)
+M_Z = M_W / np.sqrt(1 - s2)
+s2_ref = 0.23
+print(f"\n(pi alpha / sqrt2 G_F)^1/2 = {A0:.2f} GeV")
+print(f"sin^2 theta_W = {s2_ref}: M_W = {A0 / np.sqrt(s2_ref):.1f} GeV, M_Z = {A0 / np.sqrt(s2_ref * (1 - s2_ref)):.1f} GeV")
+
+fig3, ax3 = plt.subplots(figsize=(6, 4))
+ax3.plot(s2, M_W, color="steelblue", label=r"$M_W$ (tree level)")
+ax3.plot(s2, M_Z, color="firebrick", label=r"$M_Z$ (tree level)")
+ax3.axhline(80.4, color="steelblue", ls=":", label="measured $M_W$")
+ax3.axhline(91.19, color="firebrick", ls=":", label="measured $M_Z$")
+ax3.set_xlabel(r"$\sin^2\theta_W$")
+ax3.set_ylabel("boson mass [GeV]")
+ax3.set_title("One mixing angle fixes both masses")
+ax3.legend(fontsize=8)
+fig3.tight_layout()
 
 plt.show()

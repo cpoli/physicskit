@@ -56,7 +56,7 @@ semi-major axis and eccentricity.
 *Harmonices Mundi* (1619), Bk. V, Ch. 3 (Law III). Books, not journal
 articles -- there is no DOI to cite.
 
-.. minigallery:: ../../examples/astro/orbital_mechanics/plot_01_kepler_newton_orbit.py
+.. minigallery:: ../../examples/astro/orbital_mechanics/plot_01_kepler_laws.py
 
 1687 -- Newton's Law of Universal Gravitation
 ------------------------------------------------
@@ -87,7 +87,7 @@ inverse-square law summed pairwise over N bodies rather than two.
 (1687), Book I, Prop. XI; Book III. A book, not a journal article -- there
 is no DOI to cite.
 
-.. minigallery:: ../../examples/astro/orbital_mechanics/plot_01_kepler_newton_orbit.py
+.. minigallery:: ../../examples/astro/orbital_mechanics/plot_02_newton_universal_gravitation.py
 
 1801 -- Gauss's Method of Orbit Determination
 ------------------------------------------------
@@ -117,7 +117,7 @@ orbital elements that Gauss's method first made possible from sparse data.
 Sectionibus Conicis Solem Ambientium* (Perthes, Hamburg, 1809). A book,
 not a journal article -- there is no DOI to cite.
 
-.. minigallery:: ../../examples/astro/orbital_mechanics/plot_02_orbit_determination.py
+.. minigallery:: ../../examples/astro/orbital_mechanics/plot_03_orbit_determination.py
 
 1890 -- Poincare and the Three-Body Problem
 ------------------------------------------------
@@ -320,7 +320,7 @@ initial, transfer, and final orbits.
 (Oldenbourg, Munich, 1925). A book, not a journal article -- there is no
 DOI to cite.
 
-.. minigallery:: ../../examples/astro/orbital_mechanics/plot_03_hohmann_transfer.py
+.. minigallery:: ../../examples/astro/orbital_mechanics/plot_04_hohmann_transfer.py
 
 1927 -- Oort and Lindblad's Galactic Differential Rotation
 ------------------------------------------------------------------
@@ -472,7 +472,7 @@ Rotverschiebung von extragalaktischen Nebeln," Helv. Phys. Acta 6,
 110-127 (1933); F. Zwicky, "On the Masses of Nebulae and of Clusters of
 Nebulae," ApJ 86, 217-246 (1937) (English-language follow-up).
 
-.. minigallery:: ../../examples/astro/galactic_dynamics/plot_02_rotation_curves_and_dark_matter.py
+.. minigallery:: ../../examples/astro/galactic_dynamics/plot_02_oort_zwicky_missing_mass.py
 
 1939 -- Bethe's Theory of Stellar Nucleosynthesis
 ------------------------------------------------------
@@ -666,7 +666,7 @@ Curves of High-Luminosity Spiral Galaxies. IV," ApJ 225, L107-L111
 (1978), and "Rotational Properties of 21 Sc Galaxies with a Large Range
 of Luminosities and Radii," ApJ 238, 471-487 (1980).
 
-.. minigallery:: ../../examples/astro/galactic_dynamics/plot_02_rotation_curves_and_dark_matter.py
+.. minigallery:: ../../examples/astro/galactic_dynamics/plot_04_rubin_flat_rotation_curves.py
 
 1993-2000 -- Moore, Chenciner, Montgomery, and the Figure-Eight Choreography
 -----------------------------------------------------------------------------
@@ -748,7 +748,7 @@ Structure of Cold Dark Matter Halos," ApJ 462, 563-575 (1996), DOI
 Hierarchical Clustering," ApJ 490, 493-508 (1997), DOI 10.1086/304888,
 arXiv:astro-ph/9611107.
 
-.. minigallery:: ../../examples/astro/galactic_dynamics/plot_02_rotation_curves_and_dark_matter.py
+.. minigallery:: ../../examples/astro/galactic_dynamics/plot_05_nfw_universal_halo_profile.py
 
 2005 -- Symplectic Integration and the Millennium Simulation
 --------------------------------------------------------------------

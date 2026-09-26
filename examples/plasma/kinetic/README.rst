@@ -13,7 +13,8 @@ mirror-image growth mechanism, the two-stream instability
 (:func:`~physicskit.plasma.kinetic.two_stream_ic`), and a Langmuir wave
 ringing in place at the plasma frequency
 (:func:`~physicskit.plasma.kinetic.langmuir_wave_ic`), all without ever
-assuming a collision operator. The Weibel/filamentation instability
+assuming a collision operator -- and, since nothing is dissipated,
+runs backwards in time to undo Landau damping exactly. The Weibel/filamentation instability
 (:func:`~physicskit.plasma.instabilities.weibel_growth_rate`,
 :func:`~physicskit.plasma.instabilities.simulate_weibel_filamentation`)
 is treated as a reduced quasi-linear model of the same current-driven

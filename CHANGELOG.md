@@ -24,6 +24,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   van der Pol-van der Mark observation, the 1938 radar question, the 1945
   result, Levinson's 1949 model and its route to Smale's horseshoe. The
   Smale entry now points back to it.
+- `physicskit.chaos.SmaleHorseshoe`, the piecewise-linear horseshoe map
+  (contraction `lam < 1/2`, expansion `mu > 2`), with `fold` (image part-way
+  through the fold), `inverse_step`, `survives` (points that stay in the
+  square), closed-form `periodic_points`, `lyapunov_exponents` and
+  `topological_entropy`.
+- `physicskit.chaos.visualizers.animate_horseshoe_map`, animating the
+  stretch, fold and escape of each iteration.
+- Gallery example "Smale's Horseshoe Map: Stretch, Fold, and Return"
+  (`plot_smale_horseshoe.py`).
+
+### Changed
+
+- The chaos history entry "1965 -- Smale's Horseshoe Map" now links the
+  horseshoe example and `SmaleHorseshoe` instead of the Baker's map.
+- Every history breakthrough now links its own gallery example(s); no
+  example is linked from two breakthroughs any more. 37 shared examples
+  were resolved:
+  - Combined examples split into focused ones: Kepler / Newton
+    (`plot_01_kepler_laws.py`, `plot_02_newton_universal_gravitation.py`;
+    orbit determination and Hohmann renumbered to `plot_03`/`plot_04`),
+    Oort-Zwicky / Rubin-Ford / NFW, Cockcroft-Walton / fission, positron /
+    muon, the four resonance discoveries (J/psi, W and Z, top, Higgs),
+    Jönsson's twin slit / wave-packet revivals.
+  - Shared examples retitled for the one entry they now serve (e.g. the
+    Lagrangian-engine example for Lagrange, the cylinder-with-lift example
+    for Kutta-Joukowski, the SEMF example for Weizsäcker, now
+    `plot_02_weizsacker_semf.py`), with new examples for the others.
+  - New examples: least action, Poincaré's three-body section, KAM tori,
+    KT energy-entropy, Bernoulli, Richardson's cascade, Maxwell's light,
+    the photoelectric effect, Becquerel, Pauli's neutrino, Fermi's beta
+    decay, Chadwick, Rochester-Butler V particles, Gargamelle, Debye
+    screening, Vlasov reversibility, Planck's blackbody, Wilson-Sommerfeld,
+    WKB on the quantum bouncer, Pauli's exclusion principle, Schrödinger's
+    entanglement, the Van Vleck-Morette propagator in an anharmonic well,
+    Gutzwiller for the quartic oscillator, Berry-Tabor, Heller's wavepacket
+    spectroscopy, Einstein's quadrupole waves, ADM initial data,
+    numerical-relativity remnants, the Eddington eclipse, Maxwell's velocity
+    distribution, Alder-Wainwright MD, Gibbs's ensemble, the Langevin
+    equation, and the Metropolis algorithm.
 
 ## [0.2.0] - 2026-09-25
 

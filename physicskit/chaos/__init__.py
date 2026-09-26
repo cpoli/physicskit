@@ -22,7 +22,7 @@ from physicskit.chaos.systems.continuous import (
     RestrictedThreeBody,
     Rossler,
 )
-from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, StandardMap
+from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, SmaleHorseshoe, StandardMap
 
 __version__ = "0.1.0"
 
@@ -51,6 +51,7 @@ __all__ = [
     "RestrictedThreeBody",
     "Rossler",
     "SinaiBilliard",
+    "SmaleHorseshoe",
     "StandardMap",
     "TruncatedCircleBilliard",
     "__version__",
