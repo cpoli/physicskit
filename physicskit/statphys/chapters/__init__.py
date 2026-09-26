@@ -5,6 +5,8 @@
   infinite-range Sherrington-Kirkpatrick model.
 - :mod:`physicskit.statphys.chapters.molecular_dynamics` -- Lennard-Jones gas and the H-theorem.
 - :mod:`physicskit.statphys.chapters.random_walk` -- random walks, diffusion, and the CLT.
+- :mod:`physicskit.statphys.chapters.langevin` -- Brownian motion, underdamped Langevin dynamics,
+  the Einstein relation, and the Ornstein-Uhlenbeck process.
 - :mod:`physicskit.statphys.chapters.percolation` -- site/bond percolation and cluster geometry.
 - :mod:`physicskit.statphys.chapters.renormalization` -- Kadanoff block-spin coarse-graining.
 - :mod:`physicskit.statphys.chapters.sandpile` -- the Bak-Tang-Wiesenfeld self-organized-critical sandpile.
@@ -18,6 +20,7 @@
 from physicskit.statphys.chapters.ehrenfest_urn import EhrenfestUrn
 from physicskit.statphys.chapters.ising_lattice import Ising2D, PottsModel2D, XYModel2D
 from physicskit.statphys.chapters.kpz_growth import KPZInterface
+from physicskit.statphys.chapters.langevin import BrownianMotion, LangevinDynamics, OrnsteinUhlenbeck
 from physicskit.statphys.chapters.molecular_dynamics import LennardJonesGas
 from physicskit.statphys.chapters.nonequilibrium_work import JarzynskiHarmonicTrap
 from physicskit.statphys.chapters.percolation import Percolation2D
@@ -29,12 +32,15 @@ from physicskit.statphys.chapters.spin_glass import EdwardsAndersonSpinGlass2D, 
 __all__ = [
     "BTWSandpile",
     "BlockSpinRG",
+    "BrownianMotion",
     "EdwardsAndersonSpinGlass2D",
     "EhrenfestUrn",
     "Ising2D",
     "JarzynskiHarmonicTrap",
     "KPZInterface",
+    "LangevinDynamics",
     "LennardJonesGas",
+    "OrnsteinUhlenbeck",
     "Percolation2D",
     "PottsModel2D",
     "RandomWalk",

@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.integrators.stochastic`: `euler_maruyama_step`/`_integrate`
+  and `milstein_step`/`_integrate` for diagonal-noise Itô SDEs, using the
+  shared `f(state, t, params)` callback convention and caller-supplied
+  Wiener increments (`wiener_increments`), with a `save_every` stride; and
+  `baoab_step`/`baoab_integrate`, the BAOAB splitting for underdamped
+  Langevin dynamics with a `force(pos, t, params)` callback.
+- `physicskit.statphys.BrownianMotion` (overdamped, optionally driven and
+  trapped, with `measured_diffusion_coefficient` and `measured_mobility`),
+  `LangevinDynamics` (underdamped; BAOAB by default, Euler-Maruyama
+  optional), `OrnsteinUhlenbeck` (exact or Euler-Maruyama sampling, with
+  closed-form mean, variance and autocovariance),
+  `einstein_diffusion_coefficient`, and
+  `stokes_einstein_diffusion_coefficient`. Units have `k_B = 1`.
+- `physicskit.statphys.utils.fokker_planck`: `fokker_planck_operator`,
+  `fokker_planck_1d` (mass-conserving finite volumes, reflecting walls,
+  Crank-Nicolson or backward Euler), and `fokker_planck_stationary`.
+- Statphys history entries "1914-1917 -- The Fokker-Planck Equation",
+  "1930 -- The Ornstein-Uhlenbeck Process" and "1944-1955 -- Itô's
+  Stochastic Calculus and the Euler-Maruyama Scheme", each with its own
+  gallery example in the new `examples/statphys/stochastic_processes/`
+  section (`plot_fokker_planck_equation.py`,
+  `plot_ornstein_uhlenbeck_process.py`,
+  `plot_ito_euler_maruyama_milstein.py`).
+
 - `physicskit.fields.electrostatics`: `coulomb_potential`/`coulomb_field`
   (point-charge superposition), `solve_poisson` (Jacobi or SOR relaxation
   on 2D/3D grids with fixed-voltage conductor cells, returning a
@@ -60,6 +84,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The statphys history entries "1905 -- Einstein's Explanation of
+  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
+  `BrownianMotion` and `LangevinDynamics`, and each links one more
+  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
+  `plot_langevin_fluctuation_dissipation.py`).
 - The chaos history entry "1965 -- Smale's Horseshoe Map" now links the
   horseshoe example and `SmaleHorseshoe` instead of the Baker's map.
 - Every history breakthrough now links its own gallery example(s); no

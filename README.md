@@ -68,13 +68,13 @@ Domain subpackages, each with runnable examples linked below:
 - [`physicskit.relativity`](https://cpoli.github.io/physicskit/api/gallery/relativity/) -- numerical general relativity: black holes, lensing, gravitational waves, cosmology.
 - [`physicskit.rmt`](https://cpoli.github.io/physicskit/api/gallery/rmt/) -- random matrix theory, organized around Dyson's threefold way.
 - [`physicskit.semiclassical`](https://cpoli.github.io/physicskit/api/gallery/semiclassical/) -- WKB/EBK quantization, Van Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace formula, and quantum scarring.
-- [`physicskit.statphys`](https://cpoli.github.io/physicskit/api/gallery/statphys/) -- statistical mechanics: lattice models, molecular dynamics, criticality, disordered systems.
+- [`physicskit.statphys`](https://cpoli.github.io/physicskit/api/gallery/statphys/) -- statistical mechanics: lattice models, molecular dynamics, criticality, disordered systems, Langevin/Brownian dynamics, the Ornstein-Uhlenbeck process, and a 1D Fokker-Planck solver.
 
 Shared infrastructure, used across the subpackages above rather than
 standalone toolkits:
 
 - `physicskit.constants` -- SI physical constants shared across subpackages, plus a few well-defined unit conversions (energy/temperature, eV/joules, gravitational G=1 unit systems).
-- `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) used across the other subpackages.
+- `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) and SDE integrators (Euler-Maruyama, Milstein, BAOAB Langevin) used across the other subpackages.
 
 ## Test
 

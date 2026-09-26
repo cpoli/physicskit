@@ -1,4 +1,4 @@
-"""physicskit.statphys: interactive, computational statistical mechanics.
+r"""physicskit.statphys: interactive, computational statistical mechanics.
 
 ``physicskit.statphys`` brings the core breakthroughs of statistical mechanics, lattice
 physics, critical phenomena, molecular dynamics, and disordered systems into
@@ -17,6 +17,11 @@ a visual, computational Python framework:
 - **Diffusion** (:mod:`physicskit.statphys.chapters.random_walk`): random walk
   ensembles illustrating the Einstein relation and the central limit
   theorem.
+- **Stochastic dynamics** (:mod:`physicskit.statphys.chapters.langevin`,
+  :mod:`physicskit.statphys.utils.fokker_planck`): overdamped Brownian
+  motion and underdamped Langevin particles checking the Einstein relation
+  :math:`D = k_BT/\gamma`, the Ornstein-Uhlenbeck process, and a 1D
+  Fokker-Planck solver for the probability density itself.
 - **Critical phenomena** (:mod:`physicskit.statphys.chapters.percolation`,
   :mod:`physicskit.statphys.chapters.renormalization`, :mod:`physicskit.statphys.chapters.sandpile`):
   site/bond percolation with Hoshen-Kopelman cluster labeling, Kadanoff
@@ -46,35 +51,48 @@ Examples
 
 from physicskit.statphys.chapters import (
     BlockSpinRG,
+    BrownianMotion,
     BTWSandpile,
     EdwardsAndersonSpinGlass2D,
     EhrenfestUrn,
     Ising2D,
     JarzynskiHarmonicTrap,
     KPZInterface,
+    LangevinDynamics,
     LennardJonesGas,
+    OrnsteinUhlenbeck,
     Percolation2D,
     PottsModel2D,
     RandomWalk,
     SherringtonKirkpatrick,
     XYModel2D,
 )
+from physicskit.statphys.chapters.langevin import einstein_diffusion_coefficient, stokes_einstein_diffusion_coefficient
+from physicskit.statphys.utils.fokker_planck import fokker_planck_1d, fokker_planck_operator, fokker_planck_stationary
 
 __version__ = "0.2.0"
 
 __all__ = [
     "BTWSandpile",
     "BlockSpinRG",
+    "BrownianMotion",
     "EdwardsAndersonSpinGlass2D",
     "EhrenfestUrn",
     "Ising2D",
     "JarzynskiHarmonicTrap",
     "KPZInterface",
+    "LangevinDynamics",
     "LennardJonesGas",
+    "OrnsteinUhlenbeck",
     "Percolation2D",
     "PottsModel2D",
     "RandomWalk",
     "SherringtonKirkpatrick",
     "XYModel2D",
+    "einstein_diffusion_coefficient",
+    "fokker_planck_1d",
+    "fokker_planck_operator",
+    "fokker_planck_stationary",
+    "stokes_einstein_diffusion_coefficient",
     "__version__",
 ]
