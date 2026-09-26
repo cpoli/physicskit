@@ -409,13 +409,13 @@
                 <article class="bd-article">
                   
   <h1>Source code for physicskit.chaos.systems.maps</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Discrete chaotic maps: the Standard Map, the Henon Map, the Baker's Map, and the Logistic Map."""</span>
+<span></span><span class="sd">"""Discrete chaotic maps: the Standard Map, the Henon Map, the Baker's Map, Smale's Horseshoe, and the Logistic Map."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.chaos.core.base_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiscreteMap</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.chaos.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
@@ -884,6 +884,299 @@
         <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
         <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="o">-</span><span class="n">h</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_horseshoe_fold</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Stretch the unit square into a ``lam x mu`` strip and bend it over.</span>
+
+<span class="sd">    The strip's left edge stays on ``x = 0``, running up from the origin;</span>
+<span class="sd">    ``s = mu * y`` is the arclength coordinate along it and ``lam * x`` the</span>
+<span class="sd">    distance from its outer edge. Above ``s = 1`` it bends around a</span>
+<span class="sd">    semicircle centred on ``(1/2, 1)``, sweeping an angle ``pi * fold`` over</span>
+<span class="sd">    arclength ``(mu - 2) * fold``, then continues straight along the tangent.</span>
+<span class="sd">    At ``fold = 1`` the two straight legs are the vertical strips</span>
+<span class="sd">    ``[0, lam] x [0, 1]`` and ``[1 - lam, 1] x [0, 1]``: the horseshoe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x, y : ndarray of float</span>
+<span class="sd">        Points of the unit square.</span>
+<span class="sd">    lam, mu : float</span>
+<span class="sd">        Contraction ``0 &lt; lam &lt; 1/2`` and expansion ``mu &gt; 2``.</span>
+<span class="sd">    fold : float, default 1.0</span>
+<span class="sd">        Fraction of the fold completed, in ``[0, 1]``; ``0`` is the straight</span>
+<span class="sd">        stretched strip.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x_new, y_new : ndarray of float</span>
+<span class="sd">        Folded positions.</span>
+<span class="sd">    """</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">y</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="n">arc</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">fold</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">arc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">beyond</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">arc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">+</span> <span class="n">beyond</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">+</span> <span class="n">beyond</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SmaleHorseshoe</span><span class="p">(</span><span class="n">DiscreteMap</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Smale's horseshoe map: stretch the unit square, fold it, lay it back across itself.</span>
+
+<span class="sd">    The square ``Q = [0, 1] x [0, 1]`` is squeezed horizontally by</span>
+<span class="sd">    ``lam &lt; 1/2``, stretched vertically by ``mu &gt; 2``, and bent into a U whose</span>
+<span class="sd">    two legs lie back across ``Q`` as the vertical strips</span>
+<span class="sd">    ``V0 = [0, lam] x [0, 1]`` and ``V1 = [1 - lam, 1] x [0, 1]``. Only the</span>
+<span class="sd">    horizontal strips ``H0 = {y &lt;= 1/mu}`` and ``H1 = {y &gt;= 1 - 1/mu}``</span>
+<span class="sd">    return to ``Q``, each by an affine branch (S. Smale, "Differentiable</span>
+<span class="sd">    Dynamical Systems," *Bull. Amer. Math. Soc.* **73**, 747-817 (1967),</span>
+<span class="sd">    Sec. I.5; J. Guckenheimer and P. Holmes, *Nonlinear Oscillations,</span>
+<span class="sd">    Dynamical Systems, and Bifurcations of Vector Fields*, Springer (1983),</span>
+<span class="sd">    Sec. 5.1):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f(x, y) = \\begin{cases}</span>
+<span class="sd">            (\\lambda x,\\ \\mu y) &amp; (x, y) \\in H_0 \\\\</span>
+<span class="sd">            (1 - \\lambda x,\\ \\mu (1 - y)) &amp; (x, y) \\in H_1</span>
+<span class="sd">        \\end{cases}</span>
+
+<span class="sd">    The second branch is orientation-reversing: that is the fold. The middle</span>
+<span class="sd">    strip maps onto the bend of the U, outside ``Q``.</span>
+
+<span class="sd">    The points that stay in ``Q`` under all forward and backward iterates</span>
+<span class="sd">    form a Cantor set ``Lambda`` (the product of two middle-thirds-like</span>
+<span class="sd">    Cantor sets), on which ``f`` is conjugate to the full shift on two</span>
+<span class="sd">    symbols: each bi-infinite sequence of ``H0``/``H1`` visits is realized by</span>
+<span class="sd">    exactly one orbit. Hence ``f^n`` has exactly ``2^n`` fixed points in</span>
+<span class="sd">    ``Q`` (see :meth:`periodic_points`) and the topological entropy is</span>
+<span class="sd">    ``ln 2``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contraction : float, default 1/3</span>
+<span class="sd">        Horizontal contraction ``lam``, in ``(0, 1/2)``.</span>
+<span class="sd">    expansion : float, default 3.0</span>
+<span class="sd">        Vertical expansion ``mu``, greater than 2.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contraction : float</span>
+<span class="sd">        Horizontal contraction ``lam``.</span>
+<span class="sd">    expansion : float</span>
+<span class="sd">        Vertical expansion ``mu``.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If `contraction` is not in ``(0, 1/2)`` or `expansion` is not</span>
+<span class="sd">        greater than 2.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; horseshoe = SmaleHorseshoe()</span>
+<span class="sd">    &gt;&gt;&gt; horseshoe.periodic_points(3).shape</span>
+<span class="sd">    (8, 2)</span>
+<span class="sd">    """</span>
+
+    <span class="c1">#: State dimension, always 2. State is ``(x, y)``.</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">expansion</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">contraction</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"contraction must satisfy 0 &lt; contraction &lt; 1/2"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">expansion</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"expansion must be greater than 2"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contraction</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contraction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expansion</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">expansion</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_in_square</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SmaleHorseshoe.fold">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.fold">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Image of points of the square, part-way through the stretch and fold.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        points : array_like of float, shape (..., 2)</span>
+<span class="sd">            Points of the unit square.</span>
+<span class="sd">        fraction : float, default 1.0</span>
+<span class="sd">            ``0`` gives the straight ``lam x mu`` strip, ``1`` the finished</span>
+<span class="sd">            horseshoe (the map itself).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (..., 2)</span>
+<span class="sd">            Positions of the points; ``nan`` for points outside the square.</span>
+<span class="sd">        """</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span> <span class="o">=</span> <span class="n">_horseshoe_fold</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">contraction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expansion</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_square</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.step">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.step">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Advance ``(x, y)`` by one map iteration.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        state : array_like of float, shape (2,)</span>
+<span class="sd">            Current state ``(x, y)``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (2,)</span>
+<span class="sd">            Next state. It lies outside the square (on the bend) if `state`</span>
+<span class="sd">            is between ``H0`` and ``H1``, and is ``nan`` if `state` is</span>
+<span class="sd">            already outside the square: the orbit has escaped.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.inverse_step">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.inverse_step">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Undo one map iteration, for points of the square.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        state : array_like of float, shape (..., 2)</span>
+<span class="sd">            Points ``(x, y)``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (..., 2)</span>
+<span class="sd">            Preimages; ``nan`` for points outside ``V0`` and ``V1``, which</span>
+<span class="sd">            have no preimage in the square.</span>
+<span class="sd">        """</span>
+        <span class="n">lam</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contraction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expansion</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">lam</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">lam</span><span class="p">,</span> <span class="n">x</span> <span class="o">/</span> <span class="n">lam</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">y</span> <span class="o">/</span> <span class="n">mu</span><span class="p">,</span> <span class="n">y</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_square</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">lam</span><span class="p">)</span> <span class="o">|</span> <span class="n">right</span><span class="p">))]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.initial_state">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.initial_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The fixed point in ``H1``, a point of the invariant set.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (2,)</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_points</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.survives">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.survives">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">survives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">n_forward</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n_backward</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Whether points stay in the square for the given numbers of iterations.</span>
+
+<span class="sd">        The points surviving ``n`` forward iterations fill ``2^n`` horizontal</span>
+<span class="sd">        strips, those surviving ``n`` backward iterations ``2^n`` vertical</span>
+<span class="sd">        strips; both together, ``4^n`` squares converging on the invariant</span>
+<span class="sd">        Cantor set ``Lambda``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        points : array_like of float, shape (..., 2)</span>
+<span class="sd">            Points ``(x, y)``.</span>
+<span class="sd">        n_forward, n_backward : int, default 0</span>
+<span class="sd">            Numbers of forward and backward iterations.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of bool, shape (...)</span>
+<span class="sd">        """</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">alive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_square</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">fwd</span> <span class="o">=</span> <span class="n">pts</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_forward</span><span class="p">):</span>
+            <span class="n">fwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="n">fwd</span><span class="p">)</span>
+            <span class="n">alive</span> <span class="o">&amp;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_square</span><span class="p">(</span><span class="n">fwd</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fwd</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">bwd</span> <span class="o">=</span> <span class="n">pts</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_backward</span><span class="p">):</span>
+            <span class="n">bwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_step</span><span class="p">(</span><span class="n">bwd</span><span class="p">)</span>
+            <span class="n">alive</span> <span class="o">&amp;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_square</span><span class="p">(</span><span class="n">bwd</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bwd</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">alive</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.periodic_points">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.periodic_points">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">periodic_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""All ``2^period`` fixed points of ``f^period``, in closed form.</span>
+
+<span class="sd">        Each branch acts separately and affinely on ``x`` and ``y``, so the</span>
+<span class="sd">        composition along an itinerary ``s_0 ... s_{n-1}`` (``s_k = 1`` if the</span>
+<span class="sd">        ``k``-th iterate is in ``H1``) is ``x -&gt; a x + b``,</span>
+<span class="sd">        ``y -&gt; c y + d`` with fixed point ``(b / (1 - a), d / (1 - c))``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        period : int</span>
+<span class="sd">            Period ``n &gt;= 1``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of float, shape (2**period, 2)</span>
+<span class="sd">            Row ``k`` is the point whose itinerary is the binary expansion of</span>
+<span class="sd">            ``k``, most significant digit first.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">period</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"period must be at least 1"</span><span class="p">)</span>
+        <span class="n">lam</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contraction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expansion</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">period</span><span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">period</span><span class="p">):</span>
+            <span class="n">flip</span> <span class="o">=</span> <span class="p">(</span><span class="n">codes</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">period</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="c1"># compose with branch s_k applied after the maps so far</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">flip</span><span class="p">,</span> <span class="o">-</span><span class="n">lam</span> <span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">a</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">flip</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">flip</span><span class="p">,</span> <span class="o">-</span><span class="n">mu</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">c</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">flip</span><span class="p">,</span> <span class="n">mu</span> <span class="o">-</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a</span><span class="p">),</span> <span class="n">d</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">c</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.lyapunov_exponents">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.lyapunov_exponents">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lyapunov_exponents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Lyapunov exponents on the invariant set, in closed form.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lambda_expanding, lambda_contracting : float</span>
+<span class="sd">            ``ln(expansion)`` and ``ln(contraction)``.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expansion</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contraction</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SmaleHorseshoe.topological_entropy">
+<a class="viewcode-back" href="../../../../api/chaos.html#physicskit.chaos.SmaleHorseshoe.topological_entropy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">topological_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Topological entropy of the map on its invariant set, ``ln 2``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">))</span></div>
 </div>
 
 

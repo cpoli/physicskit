@@ -2616,6 +2616,214 @@ of <cite>cell_size</cite>.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.chaos.</span></span><span class="sig-name descname"><span class="pre">SmaleHorseshoe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3333333333333333</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expansion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#physicskit.chaos.DiscreteMap" title="physicskit.chaos.core.base_system.DiscreteMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteMap</span></code></a></p>
+<p>Smale’s horseshoe map: stretch the unit square, fold it, lay it back across itself.</p>
+<p>The square <code class="docutils literal notranslate"><span class="pre">Q</span> <span class="pre">=</span> <span class="pre">[0,</span> <span class="pre">1]</span> <span class="pre">x</span> <span class="pre">[0,</span> <span class="pre">1]</span></code> is squeezed horizontally by
+<code class="docutils literal notranslate"><span class="pre">lam</span> <span class="pre">&lt;</span> <span class="pre">1/2</span></code>, stretched vertically by <code class="docutils literal notranslate"><span class="pre">mu</span> <span class="pre">&gt;</span> <span class="pre">2</span></code>, and bent into a U whose
+two legs lie back across <code class="docutils literal notranslate"><span class="pre">Q</span></code> as the vertical strips
+<code class="docutils literal notranslate"><span class="pre">V0</span> <span class="pre">=</span> <span class="pre">[0,</span> <span class="pre">lam]</span> <span class="pre">x</span> <span class="pre">[0,</span> <span class="pre">1]</span></code> and <code class="docutils literal notranslate"><span class="pre">V1</span> <span class="pre">=</span> <span class="pre">[1</span> <span class="pre">-</span> <span class="pre">lam,</span> <span class="pre">1]</span> <span class="pre">x</span> <span class="pre">[0,</span> <span class="pre">1]</span></code>. Only the
+horizontal strips <code class="docutils literal notranslate"><span class="pre">H0</span> <span class="pre">=</span> <span class="pre">{y</span> <span class="pre">&lt;=</span> <span class="pre">1/mu}</span></code> and <code class="docutils literal notranslate"><span class="pre">H1</span> <span class="pre">=</span> <span class="pre">{y</span> <span class="pre">&gt;=</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">1/mu}</span></code>
+return to <code class="docutils literal notranslate"><span class="pre">Q</span></code>, each by an affine branch (S. Smale, “Differentiable
+Dynamical Systems,” <em>Bull. Amer. Math. Soc.</em> <strong>73</strong>, 747-817 (1967),
+Sec. I.5; J. Guckenheimer and P. Holmes, <em>Nonlinear Oscillations,
+Dynamical Systems, and Bifurcations of Vector Fields</em>, Springer (1983),
+Sec. 5.1):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(x, y) = \begin{cases}
+    (\lambda x,\ \mu y) &amp; (x, y) \in H_0 \\
+    (1 - \lambda x,\ \mu (1 - y)) &amp; (x, y) \in H_1
+\end{cases}\end{split}\]</div>
+<p>The second branch is orientation-reversing: that is the fold. The middle
+strip maps onto the bend of the U, outside <code class="docutils literal notranslate"><span class="pre">Q</span></code>.</p>
+<p>The points that stay in <code class="docutils literal notranslate"><span class="pre">Q</span></code> under all forward and backward iterates
+form a Cantor set <code class="docutils literal notranslate"><span class="pre">Lambda</span></code> (the product of two middle-thirds-like
+Cantor sets), on which <code class="docutils literal notranslate"><span class="pre">f</span></code> is conjugate to the full shift on two
+symbols: each bi-infinite sequence of <code class="docutils literal notranslate"><span class="pre">H0</span></code>/<code class="docutils literal notranslate"><span class="pre">H1</span></code> visits is realized by
+exactly one orbit. Hence <code class="docutils literal notranslate"><span class="pre">f^n</span></code> has exactly <code class="docutils literal notranslate"><span class="pre">2^n</span></code> fixed points in
+<code class="docutils literal notranslate"><span class="pre">Q</span></code> (see <a class="reference internal" href="#physicskit.chaos.SmaleHorseshoe.periodic_points" title="physicskit.chaos.SmaleHorseshoe.periodic_points"><code class="xref py py-meth docutils literal notranslate"><span class="pre">periodic_points()</span></code></a>) and the topological entropy is
+<code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">2</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contraction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Horizontal contraction <code class="docutils literal notranslate"><span class="pre">lam</span></code>, in <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">1/2)</span></code>.</p></li>
+<li><p><strong>expansion</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Vertical expansion <code class="docutils literal notranslate"><span class="pre">mu</span></code>, greater than 2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>contraction</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Horizontal contraction <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p></li>
+<li><p><strong>expansion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Vertical expansion <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If <cite>contraction</cite> is not in <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">1/2)</span></code> or <cite>expansion</cite> is not
+    greater than 2.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">horseshoe</span> <span class="o">=</span> <span class="n">SmaleHorseshoe</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">horseshoe</span><span class="o">.</span><span class="n">periodic_points</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(8, 2)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.dim" title="Link to this definition">#</a></dt>
+<dd><p>State dimension, always 2. State is <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.fold">
+<span class="sig-name descname"><span class="pre">fold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.fold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.fold" title="Link to this definition">#</a></dt>
+<dd><p>Image of points of the square, part-way through the stretch and fold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Points of the unit square.</p></li>
+<li><p><strong>fraction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – <code class="docutils literal notranslate"><span class="pre">0</span></code> gives the straight <code class="docutils literal notranslate"><span class="pre">lam</span> <span class="pre">x</span> <span class="pre">mu</span></code> strip, <code class="docutils literal notranslate"><span class="pre">1</span></code> the finished
+horseshoe (the map itself).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (…, 2)</em> – Positions of the points; <code class="docutils literal notranslate"><span class="pre">nan</span></code> for points outside the square.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.initial_state">
+<span class="sig-name descname"><span class="pre">initial_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.initial_state" title="Link to this definition">#</a></dt>
+<dd><p>The fixed point in <code class="docutils literal notranslate"><span class="pre">H1</span></code>, a point of the invariant set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray of float, shape (2,)</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.inverse_step">
+<span class="sig-name descname"><span class="pre">inverse_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.inverse_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.inverse_step" title="Link to this definition">#</a></dt>
+<dd><p>Undo one map iteration, for points of the square.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Points <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (…, 2)</em> – Preimages; <code class="docutils literal notranslate"><span class="pre">nan</span></code> for points outside <code class="docutils literal notranslate"><span class="pre">V0</span></code> and <code class="docutils literal notranslate"><span class="pre">V1</span></code>, which
+have no preimage in the square.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.lyapunov_exponents">
+<span class="sig-name descname"><span class="pre">lyapunov_exponents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.lyapunov_exponents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.lyapunov_exponents" title="Link to this definition">#</a></dt>
+<dd><p>Lyapunov exponents on the invariant set, in closed form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>lambda_expanding, lambda_contracting</strong> (<em>float</em>) – <code class="docutils literal notranslate"><span class="pre">ln(expansion)</span></code> and <code class="docutils literal notranslate"><span class="pre">ln(contraction)</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.periodic_points">
+<span class="sig-name descname"><span class="pre">periodic_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">period</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.periodic_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.periodic_points" title="Link to this definition">#</a></dt>
+<dd><p>All <code class="docutils literal notranslate"><span class="pre">2^period</span></code> fixed points of <code class="docutils literal notranslate"><span class="pre">f^period</span></code>, in closed form.</p>
+<p>Each branch acts separately and affinely on <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, so the
+composition along an itinerary <code class="docutils literal notranslate"><span class="pre">s_0</span> <span class="pre">...</span> <span class="pre">s_{n-1}</span></code> (<code class="docutils literal notranslate"><span class="pre">s_k</span> <span class="pre">=</span> <span class="pre">1</span></code> if the
+<code class="docutils literal notranslate"><span class="pre">k</span></code>-th iterate is in <code class="docutils literal notranslate"><span class="pre">H1</span></code>) is <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">-&gt;</span> <span class="pre">a</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">b</span></code>,
+<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">-&gt;</span> <span class="pre">c</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">d</span></code> with fixed point <code class="docutils literal notranslate"><span class="pre">(b</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">a),</span> <span class="pre">d</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">c))</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>period</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Period <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (2**period, 2)</em> – Row <code class="docutils literal notranslate"><span class="pre">k</span></code> is the point whose itinerary is the binary expansion of
+<code class="docutils literal notranslate"><span class="pre">k</span></code>, most significant digit first.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.step" title="Link to this definition">#</a></dt>
+<dd><p>Advance <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> by one map iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Current state <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float, shape (2,)</em> – Next state. It lies outside the square (on the bend) if <cite>state</cite>
+is between <code class="docutils literal notranslate"><span class="pre">H0</span></code> and <code class="docutils literal notranslate"><span class="pre">H1</span></code>, and is <code class="docutils literal notranslate"><span class="pre">nan</span></code> if <cite>state</cite> is
+already outside the square: the orbit has escaped.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.survives">
+<span class="sig-name descname"><span class="pre">survives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_forward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_backward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.survives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.survives" title="Link to this definition">#</a></dt>
+<dd><p>Whether points stay in the square for the given numbers of iterations.</p>
+<p>The points surviving <code class="docutils literal notranslate"><span class="pre">n</span></code> forward iterations fill <code class="docutils literal notranslate"><span class="pre">2^n</span></code> horizontal
+strips, those surviving <code class="docutils literal notranslate"><span class="pre">n</span></code> backward iterations <code class="docutils literal notranslate"><span class="pre">2^n</span></code> vertical
+strips; both together, <code class="docutils literal notranslate"><span class="pre">4^n</span></code> squares converging on the invariant
+Cantor set <code class="docutils literal notranslate"><span class="pre">Lambda</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Points <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>.</p></li>
+<li><p><strong>n_forward</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Numbers of forward and backward iterations.</p></li>
+<li><p><strong>n_backward</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Numbers of forward and backward iterations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bool" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of bool, shape (…)</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.chaos.SmaleHorseshoe.topological_entropy">
+<span class="sig-name descname"><span class="pre">topological_entropy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#SmaleHorseshoe.topological_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.SmaleHorseshoe.topological_entropy" title="Link to this definition">#</a></dt>
+<dd><p>Topological entropy of the map on its invariant set, <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">2</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="physicskit.chaos.StandardMap">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.chaos.</span></span><span class="sig-name descname"><span class="pre">StandardMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/chaos/systems/maps.html#StandardMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.chaos.StandardMap" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#physicskit.chaos.DiscreteMap" title="physicskit.chaos.core.base_system.DiscreteMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteMap</span></code></a></p>
@@ -2937,6 +3145,18 @@ kept.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SinaiBilliard"><code class="docutils literal notranslate"><span class="pre">SinaiBilliard</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SinaiBilliard.sample_interior_point"><code class="docutils literal notranslate"><span class="pre">SinaiBilliard.sample_interior_point()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.dim"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.fold"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.fold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.initial_state"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.initial_state()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.inverse_step"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.inverse_step()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.lyapunov_exponents"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.lyapunov_exponents()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.periodic_points"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.periodic_points()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.step"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.step()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.survives"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.survives()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.SmaleHorseshoe.topological_entropy"><code class="docutils literal notranslate"><span class="pre">SmaleHorseshoe.topological_entropy()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.chaos.StandardMap"><code class="docutils literal notranslate"><span class="pre">StandardMap</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
