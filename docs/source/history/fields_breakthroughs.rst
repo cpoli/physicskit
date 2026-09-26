@@ -9,11 +9,12 @@ Breakthroughs in Classical and Quantum Field Theory
    "For the great glory of research into that most excellent gift, light."
    -- inscription James Clerk Maxwell chose for a scientific instrument
 
-From a single solitary wave chased down a Scottish canal to quantized
-vortices spun up in a cloud of ultracold atoms, the physics behind
-:mod:`physicskit.fields` spans a century and a half of discovering that
-continuous media -- electromagnetic fields and macroscopic quantum
-wavefunctions alike -- support robust, localized, particle-like
+From Coulomb's torsion balance and a single solitary wave chased down a
+Scottish canal to quantized vortices spun up in a cloud of ultracold
+atoms, the physics behind :mod:`physicskit.fields` spans more than two
+centuries: first the static fields of charges and currents, then the
+discovery that continuous media -- electromagnetic fields and macroscopic
+quantum wavefunctions alike -- support robust, localized, particle-like
 excitations. (Fluid dynamics, once part of this same chronology, now has
 its own package and history: see :doc:`/history/fluid_breakthroughs`.)
 This chronology traces that thread. Every stop has a pointer
@@ -24,6 +25,161 @@ milestone's signature observable.
 .. contents:: Timeline
    :local:
    :depth: 1
+
+1782 -- 1785 -- Legendre, Laplace, and the Multipole Expansion
+------------------------------------------------------------------
+
+Adrien-Marie Legendre, computing the gravitational attraction of a
+spheroid, expanded the inverse distance :math:`1/|\mathbf r - \mathbf r'|`
+in powers of :math:`r'/r`. The coefficients were the polynomials
+:math:`P_\ell(\cos\gamma)` that now bear his name. Pierre-Simon Laplace
+generalized the angular dependence to the full set of spherical harmonics
+and showed that outside its sources the potential obeys
+:math:`\nabla^2\phi = 0`. Applied to charges, the result is the multipole
+expansion: far from any compact distribution the potential is fixed by
+its total charge, its dipole moment, and its quadrupole tensor, each
+successive term falling off one power of :math:`r` faster.
+
+*Implementation:* :func:`physicskit.fields.electrostatics.multipole_moments`
+computes the Cartesian monopole, dipole and traceless quadrupole moments
+of point charges or a gridded density, and
+:func:`~physicskit.fields.electrostatics.multipole_potential` sums the
+truncated far-field series.
+:func:`~physicskit.fields.electrostatics.dipole_field` gives the ideal
+dipole's field.
+
+*References:* A.-M. Legendre, "Recherches sur l'attraction des
+sphéroïdes homogènes," Mémoires de mathématique et de physique présentés
+à l'Académie royale des sciences 10, 411-434 (1785; read 1783); P.-S.
+Laplace, "Théorie des attractions des sphéroïdes et de la figure des
+planètes," Mém. Acad. Roy. Sci. Paris (1782, publ. 1785), 113-196;
+J. D. Jackson, *Classical Electrodynamics*, 3rd ed. (Wiley, 1999), §4.1.
+
+.. minigallery:: ../../examples/fields/statics/plot_laplace_legendre_multipole_expansion.py
+
+1785 -- Coulomb's Inverse-Square Law
+--------------------------------------
+
+Charles-Augustin de Coulomb measured the force between charged pith balls
+with a torsion balance of his own design and found it falls off as the
+inverse square of their separation,
+:math:`F = q_1 q_2/(4\pi\varepsilon_0 r^2)`. Together with the
+superposition principle, that the forces from several charges simply add
+as vectors, this is the whole of electrostatics in free space. Henry
+Cavendish had found the same law in 1773 by showing that no charge
+collects inside a charged conducting shell, but he never published it.
+Null experiments of that kind now fix the exponent to 2 within parts in
+:math:`10^{16}`.
+
+*Implementation:* :func:`physicskit.fields.electrostatics.coulomb_potential`
+and :func:`~physicskit.fields.electrostatics.coulomb_field` sum Coulomb's
+law over any set of point charges.
+
+*References:* C.-A. de Coulomb, "Premier mémoire sur l'électricité et le
+magnétisme," Histoire de l'Académie Royale des Sciences (1785, publ.
+1788), 569-577; E. R. Williams, J. E. Faller, and H. A. Hill, Phys. Rev.
+Lett. 26, 721 (1971).
+
+.. minigallery:: ../../examples/fields/statics/plot_coulomb_inverse_square_law.py
+
+1813 -- Poisson's Equation
+----------------------------
+
+Siméon Denis Poisson showed that inside a distribution of matter
+Laplace's equation acquires a source term,
+
+.. math::
+
+   \nabla^2\phi = -\rho/\varepsilon_0,
+
+first for gravitation and, in his 1812-1813 memoirs on electricity, for
+the charge on conductors. Poisson's equation turns electrostatics into a
+boundary-value problem: given the charges and the voltages on every
+conductor, the potential everywhere is fixed. Solving it on a grid became
+one of the first large computations on digital machines. Young's 1950
+successive over-relaxation (SOR) was designed for exactly this problem,
+and cut the work from :math:`O(N^2)` to :math:`O(N)` sweeps on an
+:math:`N\times N` grid.
+
+*Implementation:* :func:`physicskit.fields.electrostatics.solve_poisson`
+relaxes the finite-difference Poisson equation by Jacobi or SOR iteration
+in 2D or 3D, with fixed-voltage conductor cells.
+:func:`~physicskit.fields.electrostatics.solve_poisson_fft` solves it
+directly by FFT (periodic) or type-I sine transform (grounded box), and
+:func:`~physicskit.fields.electrostatics.electric_field_from_potential`
+takes :math:`\mathbf E = -\nabla\phi`.
+
+*References:* S. D. Poisson, "Remarques sur une équation qui se présente
+dans la théorie des attractions des sphéroïdes," Nouveau Bulletin de la
+Société Philomathique de Paris 3, 388-392 (1813); D. M. Young, "Iterative
+methods for solving partial difference equations of elliptic type,"
+Ph.D. thesis, Harvard University (1950).
+
+.. minigallery:: ../../examples/fields/statics/plot_poisson_equation_relaxation.py
+
+1820 -- The Biot-Savart Law
+------------------------------
+
+In April 1820 Hans Christian Ørsted saw a compass needle swing beside a
+current-carrying wire, the first link between electricity and magnetism.
+Within months Jean-Baptiste Biot and Félix Savart measured how the
+magnetic force on a needle falls off with its distance from a long
+straight wire: as :math:`1/s`. Laplace recast their result as a law for
+each current element,
+:math:`d\mathbf B = \mu_0 I\, d\boldsymbol\ell\times\hat{\mathbf r}/(4\pi r^2)`,
+which does for steady currents what Coulomb's law does for static
+charges. Integrated around a loop it gives
+:math:`B = \mu_0 I R^2/2(R^2+z^2)^{3/2}` on the axis. Stacked into a
+solenoid it gives the uniform interior field :math:`\mu_0 n I` behind
+every electromagnet.
+
+*Implementation:* :func:`physicskit.fields.magnetostatics.biot_savart_field`
+evaluates the Biot-Savart law for any polyline wire, integrating each
+straight segment in closed form.
+:func:`~physicskit.fields.magnetostatics.circular_loop_path` and
+:func:`~physicskit.fields.magnetostatics.solenoid_path` build the wires,
+and :func:`~physicskit.fields.magnetostatics.loop_axial_field`,
+:func:`~physicskit.fields.magnetostatics.solenoid_axial_field` and
+:func:`~physicskit.fields.magnetostatics.magnetic_dipole_field` give the
+closed forms it is tested against.
+
+*References:* J.-B. Biot and F. Savart, "Note sur le magnétisme de la
+pile de Volta," Annales de chimie et de physique 15, 222-223 (1820);
+H. C. Ørsted, "Experimenta circa effectum conflictus electrici in acum
+magneticam" (Copenhagen, 1820).
+
+.. minigallery:: ../../examples/fields/statics/plot_biot_savart_loop_and_solenoid.py
+
+1828 -- Green's Functions and the Method of Images
+-----------------------------------------------------
+
+George Green, a self-taught Nottingham miller, privately published *An
+Essay on the Application of Mathematical Analysis to the Theories of
+Electricity and Magnetism*. It introduced the word "potential," Green's
+theorem relating volume and surface integrals, and the idea that the
+potential inside any region follows from one function: the potential of
+a unit point charge that vanishes on the region's boundary. The essay
+went almost unread until William Thomson (later Lord Kelvin) found it in
+1845. In letters to Liouville published in 1847, Thomson showed how to
+build Green's function for a plane or a sphere directly: add fictitious
+"image" charges outside the region so that the boundary becomes an
+equipotential. The induced surface charge and the force on the real
+charge follow at once.
+
+*Implementation:* :func:`physicskit.fields.electrostatics.image_charges_plane`
+and :func:`~physicskit.fields.electrostatics.image_charges_sphere` return
+the image systems for a grounded plane and a grounded or isolated sphere.
+:func:`~physicskit.fields.electrostatics.induced_charge_density_plane` and
+:func:`~physicskit.fields.electrostatics.induced_charge_density_sphere`
+give the induced surface charge.
+
+*References:* G. Green, *An Essay on the Application of Mathematical
+Analysis to the Theories of Electricity and Magnetism* (Nottingham, 1828);
+W. Thomson, "Extrait d'une lettre de M. William Thomson à M. Liouville,"
+J. Math. Pures Appl. 12, 256-264 (1847); J. D. Jackson, *Classical
+Electrodynamics*, 3rd ed. (Wiley, 1999), §§1.10, 2.1-2.4.
+
+.. minigallery:: ../../examples/fields/statics/plot_green_method_of_images.py
 
 1834 -- Russell's Wave of Translation
 ------------------------------------------

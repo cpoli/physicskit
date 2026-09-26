@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.fields.electrostatics`: `coulomb_potential`/`coulomb_field`
+  (point-charge superposition), `solve_poisson` (Jacobi or SOR relaxation
+  on 2D/3D grids with fixed-voltage conductor cells, returning a
+  `PoissonSolution`), `solve_poisson_fft` (periodic FFT or grounded-box
+  type-I sine transform), `electric_field_from_potential`, the method of
+  images (`image_charges_plane`, `image_charges_sphere`,
+  `induced_charge_density_plane`, `induced_charge_density_sphere`), and
+  the multipole expansion (`multipole_moments` returning
+  `MultipoleMoments`, `multipole_potential`, `dipole_field`). SI units.
+- `physicskit.fields.magnetostatics`: `biot_savart_field` for polyline
+  wires (each straight segment integrated in closed form),
+  `circular_loop_path`, `solenoid_path`, and the closed forms
+  `loop_axial_field`, `solenoid_axial_field`, `infinite_wire_field`,
+  `magnetic_dipole_field`.
+- Fields history entries "1782 -- 1785 -- Legendre, Laplace, and the
+  Multipole Expansion", "1785 -- Coulomb's Inverse-Square Law", "1813 --
+  Poisson's Equation", "1820 -- The Biot-Savart Law" and "1828 -- Green's
+  Functions and the Method of Images", each with its own gallery example
+  in the new `examples/fields/statics/` section
+  (`plot_laplace_legendre_multipole_expansion.py`,
+  `plot_coulomb_inverse_square_law.py`,
+  `plot_poisson_equation_relaxation.py`,
+  `plot_biot_savart_loop_and_solenoid.py`,
+  `plot_green_method_of_images.py`).
 - `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
   `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
   `stroboscopic_map` that samples many trajectories once per forcing

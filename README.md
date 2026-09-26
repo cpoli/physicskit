@@ -59,7 +59,7 @@ Domain subpackages, each with runnable examples linked below:
 - [`physicskit.chaos`](https://cpoli.github.io/physicskit/api/gallery/chaos/) -- chaotic dynamical systems and 2D quantum billiards.
 - [`physicskit.classical`](https://cpoli.github.io/physicskit/api/gallery/classical/) -- classical mechanics: Newtonian, Lagrangian, Hamiltonian, lattice, and rigid-body dynamics.
 - [`physicskit.condensed`](https://cpoli.github.io/physicskit/api/gallery/condensed/) -- tight-binding models, topological band theory (Chern numbers, edge states), correlated-electron superconductivity.
-- [`physicskit.fields`](https://cpoli.github.io/physicskit/api/gallery/fields/) -- FDTD electrodynamics, KdV/NLS/Sine-Gordon solitons, BEC vortex lattices.
+- [`physicskit.fields`](https://cpoli.github.io/physicskit/api/gallery/fields/) -- electrostatics (Poisson solvers, method of images, multipoles), Biot-Savart magnetostatics, FDTD electrodynamics, KdV/NLS/Sine-Gordon solitons, BEC vortex lattices.
 - [`physicskit.fluids`](https://cpoli.github.io/physicskit/api/gallery/fluids/) -- potential flow, viscous exact solutions, point-vortex dynamics, Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks, and the 2D incompressible Navier-Stokes solver underlying them.
 - [`physicskit.optics`](https://cpoli.github.io/physicskit/api/gallery/optics/) -- ray, wave, and Gaussian-beam optics; quantum optics (squeezed states, Wigner functions).
 - [`physicskit.particle`](https://cpoli.github.io/physicskit/api/gallery/particle/) -- relativistic kinematics, particle decays and scattering, nuclear physics.

@@ -1,4 +1,4 @@
-"""Classical and quantum field theory: electrodynamics, solitons, and BEC vortex lattices.
+"""Classical and quantum field theory: electro- and magnetostatics, electrodynamics, solitons, and BEC vortex lattices.
 
 Typical usage::
 
@@ -8,6 +8,9 @@ Typical usage::
     # A dark soliton on a defocusing NLS background:
     x = np.linspace(-40, 40, 1024)
     psi0 = pk.fields.nls_dark_soliton(x, t=0.0)
+
+    # The field at the center of a 1 A current loop of radius 10 cm:
+    B = pk.fields.biot_savart_field(pk.fields.circular_loop_path(0.1), [[0, 0, 0]])
 """
 
 from .electrodynamics import (
@@ -27,6 +30,31 @@ from .electrodynamics import (
     pml_conductivity_profile_2d,
     poynting_vector_tmz,
     tmz_cavity_mode,
+)
+from .electrostatics import (
+    MultipoleMoments,
+    PoissonSolution,
+    coulomb_field,
+    coulomb_potential,
+    dipole_field,
+    electric_field_from_potential,
+    image_charges_plane,
+    image_charges_sphere,
+    induced_charge_density_plane,
+    induced_charge_density_sphere,
+    multipole_moments,
+    multipole_potential,
+    solve_poisson,
+    solve_poisson_fft,
+)
+from .magnetostatics import (
+    biot_savart_field,
+    circular_loop_path,
+    infinite_wire_field,
+    loop_axial_field,
+    magnetic_dipole_field,
+    solenoid_axial_field,
+    solenoid_path,
 )
 from .quantum_fields import (
     casimir_energy_1d,
@@ -80,6 +108,27 @@ __all__ = [
     "poynting_vector_tmz",
     "flux_tube_field_1d",
     "flux_tube_energy_density_2d",
+    "PoissonSolution",
+    "MultipoleMoments",
+    "coulomb_potential",
+    "coulomb_field",
+    "solve_poisson",
+    "solve_poisson_fft",
+    "electric_field_from_potential",
+    "image_charges_plane",
+    "image_charges_sphere",
+    "induced_charge_density_plane",
+    "induced_charge_density_sphere",
+    "multipole_moments",
+    "multipole_potential",
+    "dipole_field",
+    "biot_savart_field",
+    "circular_loop_path",
+    "solenoid_path",
+    "loop_axial_field",
+    "solenoid_axial_field",
+    "infinite_wire_field",
+    "magnetic_dipole_field",
     "kdv_soliton",
     "kdv_step",
     "kdv_evolve",
