@@ -357,6 +357,42 @@ in Z. Phys. 38, 803-827 (1926).
 
 .. minigallery:: ../../examples/quantum/measurement/plot_born_rule_measurement.py
 
+1926 -- Born's Collision Theory and the Born Approximation
+----------------------------------------------------------
+
+The same 1926 papers that introduced the probability interpretation (the
+entry above) were about *collisions*, and they introduced the method
+still used to calculate them. Born solved the scattering problem
+iteratively, treating the potential as a perturbation of the free
+incoming wave. To first order the scattering amplitude is the Fourier
+transform of the potential at the momentum transfer
+:math:`\mathbf q = \mathbf k' - \mathbf k`,
+
+.. math::
+
+   f_B(\theta) = -\frac{m}{2\pi\hbar^2}\int d^3r\,
+       e^{-i\mathbf q\cdot\mathbf r}\,V(\mathbf r),
+   \qquad q = 2k\sin\frac{\theta}{2},
+   \qquad \frac{d\sigma}{d\Omega} = |f_B|^2.
+
+For a Coulomb potential it gives *exactly* Rutherford's 1911 cross
+section, :math:`d\sigma/d\Omega = (Z_1Z_2e^2/4E)^2/\sin^4(\theta/2)`, a
+coincidence of the :math:`1/r` potential that explained why Rutherford's
+classical calculation had worked. The Born series is the ancestor of the
+perturbative expansions of quantum field theory, where the first Born
+approximation is a single Feynman diagram.
+
+*Implementation:* :func:`physicskit.quantum.chapters.scattering.born_amplitude`
+evaluates the Born integral numerically for any central potential;
+:func:`~physicskit.quantum.chapters.scattering.yukawa_born_amplitude` is
+the closed form for the screened Coulomb potential, whose unscreened limit
+reproduces :func:`physicskit.particle.scattering.rutherford_dsigma_domega`.
+
+*References:* M. Born, "Quantenmechanik der Stossvorgange," Z. Phys. 38,
+803-827 (1926); J. J. Sakurai, *Modern Quantum Mechanics*, Sec. 7.2.
+
+.. minigallery:: ../../examples/quantum/scattering/plot_born_approximation_rutherford.py
+
 1926 -- The WKB Approximation
 -----------------------------
 
@@ -507,6 +543,100 @@ Press, 1950), a textbook compiled from his lecture course.
 
 .. minigallery:: ../../examples/quantum/perturbation/plot_floquet_driven_box.py
 
+1927 -- Faxen and Holtsmark: Partial-Wave Analysis
+--------------------------------------------------
+
+Hilding Faxen and Johan Holtsmark, studying the anomalously low
+scattering of slow electrons by noble-gas atoms (the Ramsauer-Townsend
+effect), expanded the scattered wave of a central potential in angular
+momentum eigenstates. Rotational symmetry means each partial wave
+:math:`\ell` scatters independently, and the potential only changes its
+phase at large distances by a **phase shift** :math:`\delta_\ell`:
+
+.. math::
+
+   f(\theta) = \frac{1}{k}\sum_{\ell}(2\ell+1)\,e^{i\delta_\ell}\sin\delta_\ell\,
+       P_\ell(\cos\theta),
+   \qquad
+   \sigma = \frac{4\pi}{k^2}\sum_\ell (2\ell+1)\sin^2\delta_\ell.
+
+Only waves with :math:`\ell \lesssim ka` reach a potential of range
+:math:`a`, so at low energy a handful of phase shifts describe everything.
+Two classic consequences: a hard sphere scatters with cross section
+:math:`4\pi a^2` at low energy (four times its geometric area) and
+:math:`2\pi a^2` at high energy (the extra :math:`\pi a^2` is the
+diffraction shadow), and by Levinson's theorem (1949) the zero-energy
+phase shift counts the bound states. Phase-shift analysis is still how
+nuclear and particle scattering data are reported.
+
+*Implementation:* :func:`physicskit.quantum.chapters.scattering.partial_wave_phase_shifts`
+computes :math:`\delta_\ell(k)` for any short-range potential with
+Calogero's variable-phase equation;
+:func:`~physicskit.quantum.chapters.scattering.hard_sphere_phase_shifts`
+gives the exact hard-sphere result,
+:func:`~physicskit.quantum.chapters.scattering.born_phase_shifts` their
+weak-potential limit, and
+:func:`~physicskit.quantum.chapters.scattering.partial_wave_amplitude` and
+:func:`~physicskit.quantum.chapters.scattering.partial_wave_cross_section`
+resum the series.
+
+*References:* H. Faxen and J. Holtsmark, "Beitrag zur Theorie des
+Durchganges langsamer Elektronen durch Gase," Z. Phys. 45, 307-324 (1927);
+F. Calogero, *Variable Phase Approach to Potential Scattering* (Academic
+Press, 1967); N. Levinson, Kgl. Danske Videnskab. Selskab, Mat.-fys. Medd.
+25, No. 9 (1949).
+
+.. minigallery:: ../../examples/quantum/scattering/plot_partial_wave_phase_shifts.py
+
+1928 -- The Dirac Equation and the Fine Structure of Hydrogen
+-------------------------------------------------------------
+
+The Klein-Gordon equation, :math:`(\partial_t^2 - \nabla^2 + m^2)\phi = 0`
+(:math:`\hbar = c = 1`), the obvious relativistic wave equation, had two
+problems: it is second order in time, so :math:`|\phi|^2` is not a
+conserved probability density, and it has no place for spin. Paul Dirac
+looked for an equation *first* order in time and space whose square gives
+:math:`E^2 = p^2 + m^2`. This forced the coefficients to be
+:math:`4\times4` matrices obeying :math:`\{\gamma^\mu,\gamma^\nu\} =
+2g^{\mu\nu}`,
+
+.. math::
+
+   (i\gamma^\mu\partial_\mu - m)\,\psi = 0,
+
+acting on four-component spinors. The equation gave spin 1/2 and the
+electron's :math:`g = 2` magnetic moment without extra assumptions. Solved
+for the Coulomb potential (by Darwin and Gordon within the year), it gives
+hydrogen levels that depend only on :math:`n` and :math:`j`,
+
+.. math::
+
+   E_{nj} = mc^2\left[1 + \left(\frac{Z\alpha}{n - j - \tfrac12
+       + \sqrt{(j+\tfrac12)^2 - Z^2\alpha^2}}\right)^2\right]^{-1/2},
+
+reproducing Sommerfeld's 1916 fine-structure formula. The negative-energy
+solutions it also predicts led Dirac to the positron (1931), found by
+Anderson in 1932.
+
+*Implementation:* :func:`physicskit.quantum.chapters.relativistic.dirac_hydrogen_energy`
+evaluates the exact Dirac-Coulomb levels and
+:func:`~physicskit.quantum.chapters.relativistic.fine_structure_expansion`
+their :math:`(Z\alpha)^4` expansion;
+:func:`~physicskit.quantum.chapters.relativistic.gamma_matrices`,
+:func:`~physicskit.quantum.chapters.relativistic.dirac_hamiltonian` and
+:func:`~physicskit.quantum.chapters.relativistic.dirac_plane_wave_spinor`
+give the free equation and its positive- and negative-energy solutions,
+and :func:`~physicskit.quantum.chapters.relativistic.klein_gordon_dispersion`
+and :func:`~physicskit.quantum.chapters.relativistic.klein_gordon_plane_wave`
+the free Klein-Gordon ones.
+
+*References:* P. A. M. Dirac, "The Quantum Theory of the Electron," Proc.
+R. Soc. A 117, 610-624 (1928); C. G. Darwin, Proc. R. Soc. A 118, 654-680
+(1928); W. Gordon, Z. Phys. 48, 11-14 (1928); O. Klein, Z. Phys. 37,
+895-906 (1926); W. Gordon, Z. Phys. 40, 117-133 (1926).
+
+.. minigallery:: ../../examples/quantum/relativistic/plot_dirac_hydrogen_fine_structure.py
+
 1928 -- Gamow, Gurney and Condon: Quantum Tunneling
 ---------------------------------------------------
 
@@ -589,6 +719,42 @@ Rev. 81, 848-852 (1951); R. P. Feynman, "Space-Time Approach to
 Non-Relativistic Quantum Mechanics," Rev. Mod. Phys. 20, 367-387 (1948).
 
 .. minigallery:: ../../examples/semiclassical/propagators/plot_van_vleck_anharmonic_wavepacket.py
+
+1929 -- Klein's Paradox
+-----------------------
+
+Within a year of Dirac's equation, Oskar Klein solved it for an electron
+hitting a potential step :math:`V_0`. For a step higher than
+:math:`E + mc^2` he found that the electron is partly *transmitted*, and
+that the transmission stays finite even as :math:`V_0 \to \infty`, in
+contrast to non-relativistic quantum mechanics, where a tall barrier
+reflects almost everything. Matching Dirac spinors at the step gives
+
+.. math::
+
+   R = \left(\frac{1-\kappa}{1+\kappa}\right)^2,
+   \qquad \kappa = \frac{q}{p}\,\frac{E + m}{E - V_0 + m}.
+
+The explanation, which took decades to settle, is that the step lowers
+the negative-energy (antiparticle) continuum to the electron's energy:
+the transmitted wave is a positron, and the step creates electron-positron
+pairs. Choosing the transmitted momentum by its group velocity makes
+:math:`0 < R < 1` for fermions, while spin-0 Klein-Gordon particles have
+:math:`R > 1` (bosonic "superradiance"). Klein tunneling has been observed
+in graphene, whose electrons obey a massless Dirac equation.
+
+*Implementation:* :func:`physicskit.quantum.chapters.relativistic.dirac_step_scattering`
+and :func:`~physicskit.quantum.chapters.relativistic.klein_gordon_step_scattering`
+give :math:`R` and :math:`T` for all step heights, with either choice of
+the transmitted momentum's sign.
+
+*References:* O. Klein, "Die Reflexion von Elektronen an einem
+Potentialsprung nach der relativistischen Dynamik von Dirac," Z. Phys.
+53, 157-165 (1929); N. Dombey and A. Calogeracos, "Seventy years of the
+Klein paradox," Phys. Rep. 315, 41-58 (1999); M. I. Katsnelson, K. S.
+Novoselov, and A. K. Geim, Nature Phys. 2, 620-625 (2006).
+
+.. minigallery:: ../../examples/quantum/relativistic/plot_klein_paradox.py
 
 1930 -- Dirac's Operator Method and the Harmonic Oscillator
 -----------------------------------------------------------

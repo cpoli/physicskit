@@ -1,4 +1,4 @@
-"""physicskit.quantum: a visual and computational tour of quantum mechanics.
+r"""physicskit.quantum: a visual and computational tour of quantum mechanics.
 
 - :mod:`physicskit.quantum.core.eigensolvers` -- the Numerov shooting-method
   bound-state solver, plus ready-made potential wells (infinite, finite,
@@ -24,6 +24,11 @@
 - :mod:`physicskit.quantum.chapters.open_systems` -- the Lindblad master
   equation, Monte Carlo wavefunction quantum trajectories, and the
   amplitude-damping and dephasing channels.
+- :mod:`physicskit.quantum.chapters.relativistic` -- the Klein-Gordon and
+  Dirac equations (units :math:`\hbar = c = 1`): free solutions, the Dirac
+  hydrogen fine-structure levels, and Klein-paradox step scattering.
+- :mod:`physicskit.quantum.chapters.scattering` -- 3D potential scattering:
+  the Born approximation and partial-wave phase shifts.
 
 See :mod:`physicskit.semiclassical` for WKB/EBK quantization, Van
 Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace
@@ -82,6 +87,27 @@ from physicskit.quantum.chapters.potentials import (
     airy_wavefunction,
     asymmetric_well_states,
     gravitational_bouncer_states,
+)
+from physicskit.quantum.chapters.relativistic import (
+    dirac_hamiltonian,
+    dirac_hydrogen_energy,
+    dirac_plane_wave_spinor,
+    dirac_step_scattering,
+    fine_structure_expansion,
+    gamma_matrices,
+    klein_gordon_dispersion,
+    klein_gordon_plane_wave,
+    klein_gordon_step_scattering,
+)
+from physicskit.quantum.chapters.scattering import (
+    born_amplitude,
+    born_phase_shifts,
+    hard_sphere_phase_shifts,
+    momentum_transfer,
+    partial_wave_amplitude,
+    partial_wave_cross_section,
+    partial_wave_phase_shifts,
+    yukawa_born_amplitude,
 )
 from physicskit.quantum.chapters.spin import RabiProblem, SternGerlach
 from physicskit.quantum.chapters.wave_packets import (
@@ -207,4 +233,23 @@ __all__ = [
     "dephasing_kraus",
     "apply_kraus",
     "is_trace_preserving",
+    # chapters.relativistic
+    "klein_gordon_dispersion",
+    "klein_gordon_plane_wave",
+    "gamma_matrices",
+    "dirac_hamiltonian",
+    "dirac_plane_wave_spinor",
+    "dirac_hydrogen_energy",
+    "fine_structure_expansion",
+    "dirac_step_scattering",
+    "klein_gordon_step_scattering",
+    # chapters.scattering
+    "momentum_transfer",
+    "born_amplitude",
+    "yukawa_born_amplitude",
+    "partial_wave_phase_shifts",
+    "born_phase_shifts",
+    "hard_sphere_phase_shifts",
+    "partial_wave_amplitude",
+    "partial_wave_cross_section",
 ]

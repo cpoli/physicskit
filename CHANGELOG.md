@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.quantum` relativistic quantum mechanics
+  (`physicskit.quantum.chapters.relativistic`, units hbar = c = 1):
+  `klein_gordon_dispersion`, `klein_gordon_plane_wave`, `gamma_matrices`,
+  `dirac_hamiltonian`, `dirac_plane_wave_spinor`, the Dirac hydrogen
+  levels `dirac_hydrogen_energy` and `fine_structure_expansion`, and the
+  Klein-paradox step coefficients `dirac_step_scattering` and
+  `klein_gordon_step_scattering`.
+- `physicskit.quantum` 3D scattering theory
+  (`physicskit.quantum.chapters.scattering`): `momentum_transfer`,
+  `born_amplitude`, `yukawa_born_amplitude`, `partial_wave_phase_shifts`
+  (Calogero variable-phase method), `born_phase_shifts`,
+  `hard_sphere_phase_shifts`, `partial_wave_amplitude`,
+  `partial_wave_cross_section`.
+- Gallery examples "The Dirac equation and the fine structure of
+  hydrogen", "Klein's paradox: relativistic particles at a tall potential
+  step" (`examples/quantum/relativistic/`), "The Born approximation:
+  Rutherford scattering from quantum mechanics" and "Partial-wave
+  analysis: phase shifts of the hard sphere and the square well"
+  (`examples/quantum/scattering/`), with quantum history entries "1926 --
+  Born's Collision Theory and the Born Approximation", "1927 -- Faxen and
+  Holtsmark: Partial-Wave Analysis", "1928 -- The Dirac Equation and the
+  Fine Structure of Hydrogen", and "1929 -- Klein's Paradox".
 - `physicskit.condensed` exact diagonalization of spin-1/2 chains
   (`physicskit.condensed.spin_chains`): sparse `xxz_hamiltonian` and
   `tfim_hamiltonian` built in magnetization / parity symmetry sectors
