@@ -69,6 +69,7 @@ __all__ = [
     "NATURAL_CONSTANTS",
     "SUBPACKAGE_CONVENTIONS",
     "UnitSystem",
+    "SI",
     "natural_units",
     "astro_units",
     "geometrized_units",
@@ -163,7 +164,7 @@ DIMENSIONS: dict[str, Dimension] = {
 
 #: Constants that a natural-unit system can set to 1, as
 #: ``name -> (dimension, SI value)``. SI values are from
-#: :mod:`physicskit.constants` (CODATA 2018 via :mod:`scipy.constants`).
+#: :mod:`physicskit.constants` (CODATA values via :mod:`scipy.constants`).
 NATURAL_CONSTANTS: dict[str, tuple[Dimension, float]] = {
     "G": (_L**3 / (_M * _T**2), const.G),
     "c": (_L / _T, const.C),
@@ -409,6 +410,11 @@ class UnitSystem:
         """
         anchors = tuple((Dimension(*map(float, vec)), float(value)) for vec, value in data["anchors"])
         return cls(str(data["name"]), anchors)
+
+
+#: The SI system itself: one unit of every dimension is its SI unit.
+#: Converting to it is the identity.
+SI = UnitSystem("SI", ((_L, 1.0), (_M, 1.0), (_T, 1.0), (_K, 1.0)))
 
 
 def natural_units(

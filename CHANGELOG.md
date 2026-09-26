@@ -41,6 +41,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   default scales; `natural_units` builds any other combination.
   `to_si`/`from_si` convert values, and `to_pint`/`from_pint` interoperate
   with pint when it is installed (new `units` extra).
+- `physicskit.results.Result`, a shared container (`times`, `states`,
+  `metadata`, `units`, `unit_system`, extra named `arrays`) that converts
+  its dimensioned arrays between unit systems (`convert`, `to_si`).
+  Opt-in adapters wrap the result shapes subpackages already return:
+  `from_integrator` (shared integrators and chaos flows),
+  `from_simulation_result` (classical), `from_map_orbit` (chaos maps),
+  `from_eigen_result` (quantum) and `from_spectrum` (rmt). Subpackages
+  are unchanged.
+- `physicskit.io.save`/`load` for `Result`: `.npz` always (loaded with
+  `allow_pickle=False`), HDF5 when h5py is installed (new `hdf5` extra).
+  Files carry a format version.
+- `physicskit.units.SI`, the SI unit system.
 
 ### Changed
 
