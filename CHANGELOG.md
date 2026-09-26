@@ -53,6 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `allow_pickle=False`), HDF5 when h5py is installed (new `hdf5` extra).
   Files carry a format version.
 - `physicskit.units.SI`, the SI unit system.
+- `benchmarks/`: pytest-benchmark timings for the shared integrators
+  (`rk4`, `leapfrog`, `yoshida4`, `dopri5`) and three representative
+  solvers (`statphys.Ising2D`, `fluids.NavierStokes2D`,
+  `quantum.NumerovSolver`), each also checking a closed-form result. New
+  `bench` extra; CI smoke-runs them on PRs and keeps timed results from
+  `main` as artifacts.
 
 ### Changed
 
@@ -83,6 +89,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     numerical-relativity remnants, the Eddington eclipse, Maxwell's velocity
     distribution, Alder-Wainwright MD, Gibbs's ensemble, the Langevin
     equation, and the Metropolis algorithm.
+- CI tests Python 3.13 and 3.14 as well as 3.10-3.12, and installs the
+  `units`/`hdf5` extras so the pint and HDF5 paths are tested. Coverage is
+  written to each run's job summary and uploaded to Codecov, whose badge
+  replaces the hand-maintained README badge and coverage table.
+- `mypy` is now blocking in CI for the typed core (`constants`,
+  `integrators`, `units`, `results`, `io`), configured per module in
+  `pyproject.toml`; `mypy` with no arguments runs exactly that check.
+  Whole-package `mypy physicskit` stays advisory.
 
 ## [0.2.0] - 2026-09-25
 

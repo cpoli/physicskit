@@ -3,7 +3,7 @@
 | | |
 |:--|:-:|
 | Package | [![PyPI version](https://img.shields.io/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![Python versions](https://img.shields.io/pypi/pyversions/physicskit)](https://pypi.org/project/physicskit/) |
-| Quality | [![License](https://img.shields.io/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage (manual)](https://img.shields.io/badge/coverage-96%25-brightgreen)](#coverage) |
+| Quality | [![License](https://img.shields.io/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://codecov.io/gh/cpoli/physicskit/branch/main/graph/badge.svg)](https://codecov.io/gh/cpoli/physicskit) |
 | Documentation | [![Docs](https://img.shields.io/badge/docs-cpoli.github.io%2Fphysicskit-blue)](https://cpoli.github.io/physicskit/) |
 | Code style | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) |
 | Downloads | [![Downloads](https://static.pepy.tech/badge/physicskit)](https://pepy.tech/project/physicskit) [![Downloads/Month](https://static.pepy.tech/badge/physicskit/month)](https://pepy.tech/project/physicskit) |
@@ -92,8 +92,18 @@ MPLBACKEND=Agg pytest --doctest-modules physicskit \
 ```
 
 Both commands, plus `ruff check`/`ruff format --check`, run in CI on
-every PR (`.github/workflows/ci.yml`) across Python 3.10-3.12 on Linux and
-macOS. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
+every PR (`.github/workflows/ci.yml`) across Python 3.10-3.14 on Linux and
+macOS, as does `mypy` on the typed core (`constants`, `integrators`,
+`units`, `results`, `io`). See [CONTRIBUTING.md](CONTRIBUTING.md) before
+opening a PR.
+
+Performance benchmarks for the shared integrators and three representative
+solvers live in [`benchmarks/`](benchmarks/README.md):
+
+```bash
+pip install -e ".[bench]"
+pytest benchmarks
+```
 
 ### Coverage
 
@@ -101,29 +111,17 @@ macOS. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
 MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=term
 ```
 
-1,720 tests, 96% line coverage overall. Per-subpackage coverage:
-
-| Subpackage | Coverage | | Subpackage | Coverage |
-|:--|--:|---|:--|--:|
-| `astro` | 100% | | `plasma` | 99% |
-| `chaos` | 87% | | `quantum` | 96% |
-| `classical` | 100% | | `relativity` | 99% |
-| `condensed` | 100% | | `rmt` | 100% |
-| `fields` | 100% | | `semiclassical` | 99% |
-| `fluids` | 100% | | `statphys` | 86% |
-| `integrators` | 100% | | `constants` | 100% |
-| `optics` | 100% | | | |
-| `particle` | 100% | | | |
-
-Every subpackage is at 100% coverage outside `visualizers/` modules (99.9%
-in aggregate — six rare bootstrap-loop edge cases remain uncovered across
-`statphys.chapters.percolation` and `rmt.stats`). `chaos`, `quantum`, and
-`statphys` still sit lower overall because their `visualizers/` modules
-are smoke-tested only (correct return type/shape, or that `anim.save()`
-succeeds) rather than covered line-by-line, per the testing convention in
-[CLAUDE.md](CLAUDE.md). `@njit`-compiled lines are excluded from coverage
-entirely (`pyproject.toml`, `[tool.coverage.report]`) since
-`coverage.py` cannot trace into numba-compiled native code.
+CI measures coverage on every push and PR and uploads it to
+[Codecov](https://codecov.io/gh/cpoli/physicskit), which drives the badge
+above; the per-file table is also written to each CI run's job summary.
+Modules outside `visualizers/` aim for full line coverage. `visualizers/`
+modules are smoke-tested only (correct return type/shape, or that
+`anim.save()` succeeds) rather than covered line-by-line, per the testing
+convention in [CLAUDE.md](CLAUDE.md), so subpackages with large visualizer
+modules (`chaos`, `quantum`, `statphys`) report lower overall numbers.
+`@njit`-compiled lines are excluded from coverage entirely
+(`pyproject.toml`, `[tool.coverage.report]`) since `coverage.py` cannot
+trace into numba-compiled native code.
 
 ## Docs
 

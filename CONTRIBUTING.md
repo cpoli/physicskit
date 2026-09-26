@@ -24,11 +24,22 @@ MPLBACKEND=Agg pytest -q     # unit tests
 MPLBACKEND=Agg pytest --doctest-modules physicskit \
     --ignore-glob="*/tests/*" \
     --ignore=physicskit/chaos/visualizers/viewer3d.py   # docstring examples
+mypy                         # type check the typed core (blocking)
 ```
 
-All three run in CI (`.github/workflows/ci.yml`) on every PR, across
-Python 3.10-3.12 on Linux and macOS. `mypy` also runs in CI but is
-currently advisory (non-blocking) — see "Type checking" below.
+All of these run in CI (`.github/workflows/ci.yml`) on every PR, across
+Python 3.10-3.14 on Linux and macOS. `mypy` on the whole package also
+runs, but only as an advisory job — see "Type checking" below.
+
+If your change could affect performance (an integrator, a hot loop, a
+solver), compare the benchmarks before and after on your own machine —
+see [`benchmarks/README.md`](benchmarks/README.md):
+
+```bash
+pip install -e ".[bench]"
+pytest benchmarks --benchmark-autosave    # on main
+pytest benchmarks --benchmark-compare     # on your branch
+```
 
 If you touch anything under `docs/` or add/modify an example in
 `examples/`, also build the docs locally before opening a PR (this
@@ -59,11 +70,25 @@ cd docs && make html
 
 ## Type checking
 
-`mypy` is configured in `pyproject.toml` but not yet fully clean across
-the codebase (mostly matplotlib/numpy stub gaps around animation objects
-and array-typed arguments) — it currently runs in CI as an advisory,
-non-blocking job. New code should type-check cleanly where practical;
-fixing pre-existing errors in code you're not otherwise touching is
+Type checking is adopted module by module, configured in
+`pyproject.toml`:
+
+- **Typed core (blocking).** `mypy` with no arguments checks the modules
+  listed under `[tool.mypy] files` — `constants`, `integrators`, `units`,
+  `results` and `io` — with `check_untyped_defs` on, and `units`,
+  `results` and `io` held to near-`--strict` settings. A failure here
+  fails CI. Errors in other modules that the typed core merely imports
+  are silenced by a `follow_imports = "silent"` override.
+- **Whole package (advisory).** `mypy physicskit` checks everything. It
+  is not yet clean (mostly matplotlib/numpy stub gaps around animation
+  objects and array-typed arguments), so CI runs it as a non-blocking
+  job.
+
+New code should type-check cleanly. To promote a module to the typed
+core, fix its errors, then add it to `files` and to the first
+`[[tool.mypy.overrides]]` block (and remove its subpackage from the
+`follow_imports = "silent"` list if the whole subpackage is now clean).
+Fixing pre-existing errors in code you're not otherwise touching is
 welcome but not required.
 
 ## Tests

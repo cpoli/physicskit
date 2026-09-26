@@ -1,0 +1,37 @@
+name: Benchmarks
+
+# PRs: run every benchmark once, untimed, so they can't silently break.
+# main / manual: a timed run whose JSON is kept as an artifact. Shared
+# runners are too noisy to fail a build on timing; compare locally with
+# `pytest benchmarks --benchmark-compare` (see benchmarks/README.md).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  benchmarks:
+    name: Benchmarks (${{ github.event_name == 'pull_request' && 'smoke' || 'timed' }})
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[bench]"
+      - name: Smoke run
+        if: github.event_name == 'pull_request'
+        run: MPLBACKEND=Agg pytest benchmarks -q --benchmark-disable
+      - name: Timed run
+        if: github.event_name != 'pull_request'
+        run: MPLBACKEND=Agg pytest benchmarks -q --benchmark-json=benchmark.json
+      - name: Upload results
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmarks-${{ github.sha }}
+          path: benchmark.json

@@ -26,26 +26,50 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-      - run: pip install -e ".[test]"
-      - run: MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=xml
+      # units/hdf5 extras so the pint and HDF5 paths are tested, not skipped
+      - run: pip install -e ".[test,units,hdf5]"
+      - run: MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=xml --cov-report=term
+      # Coverage is measured on one matrix entry and published two ways:
+      # the job summary (always, no token needed) and Codecov, which
+      # drives the README badge.
+      - name: Coverage summary
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+        run: |
+          echo "## Coverage" >> "$GITHUB_STEP_SUMMARY"
+          coverage report --format=markdown >> "$GITHUB_STEP_SUMMARY"
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.xml
+          flags: unittests
           fail_ci_if_error: false
       - run: MPLBACKEND=Agg pytest --doctest-modules physicskit --ignore-glob="*/tests/*" --ignore=physicskit/chaos/visualizers/viewer3d.py -q
 
+  typecheck-core:
+    name: Type check (mypy, typed core, blocking)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      # No arguments: checks only the modules listed under [tool.mypy] files
+      # in pyproject.toml (constants, integrators, units, results, io).
+      - run: mypy
+
   typecheck:
-    name: Type check (mypy, advisory)
+    name: Type check (mypy, whole package, advisory)
     runs-on: ubuntu-latest
     continue-on-error: true # mypy adoption is incremental; see CONTRIBUTING.md
     steps:
@@ -53,5 +77,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
       - run: pip install -e ".[dev]"
       - run: mypy physicskit
