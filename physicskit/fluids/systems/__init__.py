@@ -1,7 +1,32 @@
+from physicskit.fluids.systems.acoustics import (
+    acoustic_wave_1d,
+    acoustic_wave_2d,
+    ideal_gas_sound_speed,
+    pipe_mode_frequencies,
+    pipe_mode_shape,
+    rectangular_room_mode_frequencies,
+)
 from physicskit.fluids.systems.compressible_flow import (
     normal_shock_relations,
     rankine_hugoniot_jump_conditions,
     sod_shock_tube,
+)
+from physicskit.fluids.systems.elasticity import (
+    PlaneElasticityResult,
+    annulus_mesh,
+    elasticity_matrix,
+    lame_parameters,
+    lame_thick_cylinder,
+    plane_elasticity_solve,
+    polar_stress,
+    pressure_load,
+    rectangle_mesh,
+)
+from physicskit.fluids.systems.heat_equation import (
+    gaussian_heat_solution,
+    heat_equation,
+    heat_equation_spectral,
+    laplacian_matrix,
 )
 from physicskit.fluids.systems.instabilities import (
     kelvin_helmholtz_growth_rate,
@@ -67,4 +92,23 @@ __all__ = [
     "stokes_drag",
     "uniform_flow_potential",
     "von_karman_vortex_street",
+    "PlaneElasticityResult",
+    "acoustic_wave_1d",
+    "acoustic_wave_2d",
+    "annulus_mesh",
+    "elasticity_matrix",
+    "gaussian_heat_solution",
+    "heat_equation",
+    "heat_equation_spectral",
+    "ideal_gas_sound_speed",
+    "lame_parameters",
+    "lame_thick_cylinder",
+    "laplacian_matrix",
+    "pipe_mode_frequencies",
+    "pipe_mode_shape",
+    "plane_elasticity_solve",
+    "polar_stress",
+    "pressure_load",
+    "rectangle_mesh",
+    "rectangular_room_mode_frequencies",
 ]

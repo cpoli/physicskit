@@ -104,6 +104,44 @@ Mémoires de l'Académie des Sciences de Berlin 11 (1757), 274-315.
 
 .. minigallery:: ../../examples/fluids/potential_flow/plot_source_sink_doublet.py
 
+1807 -- 1822 -- Fourier's Heat Equation
+---------------------------------------
+
+Joseph Fourier presented his theory of heat conduction to the Paris
+Academy in 1807 and published it in full as *Théorie analytique de la
+chaleur* in 1822. He derived the heat equation,
+
+.. math::
+
+   \frac{\partial u}{\partial t} = \alpha\,\nabla^2 u,
+
+from a local law, that heat flows down the temperature gradient at a rate
+proportional to it (Fourier's law), together with conservation of energy.
+To solve it he expanded the initial temperature in sines and cosines. Each
+mode decays independently as :math:`e^{-\alpha k^2 t}`, so fine detail
+disappears first and every temperature profile smooths toward equilibrium.
+Lagrange and Laplace objected that a discontinuous function could not be a
+sum of smooth sines. Settling that objection took most of the nineteenth
+century and produced the modern notions of function, convergence, and
+integral. The same equation governs momentum diffusion in the viscous term
+of the Navier-Stokes equations below, the spreading of a dye, and, as
+Einstein showed in 1905, the probability density of a Brownian particle.
+
+*Implementation:* :func:`physicskit.fluids.systems.heat_equation.heat_equation`
+solves the heat equation on 1D-3D grids with the explicit FTCS scheme (with
+its stability bound enforced) or with Crank-Nicolson;
+:func:`~physicskit.fluids.systems.heat_equation.heat_equation_spectral` is
+Fourier's own mode-by-mode solution on a periodic domain; and
+:func:`~physicskit.fluids.systems.heat_equation.gaussian_heat_solution` is
+the closed-form spreading Gaussian the solvers are checked against.
+
+*References:* J. Fourier, *Théorie analytique de la chaleur* (Firmin
+Didot, Paris, 1822); J. Crank and P. Nicolson, "A practical method for
+numerical evaluation of solutions of partial differential equations of the
+heat-conduction type," Proc. Camb. Phil. Soc. 43, 50-67 (1947).
+
+.. minigallery:: ../../examples/fluids/continuum_mechanics/plot_fourier_heat_equation.py
+
 1822 -- 1845 -- The Navier-Stokes Equations
 -----------------------------------------------
 

@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.fluids` continuum mechanics: `heat_equation` (explicit
+  FTCS with its stability bound enforced, or Crank-Nicolson; Dirichlet,
+  Neumann or periodic walls; 1D-3D), `heat_equation_spectral`,
+  `laplacian_matrix` and `gaussian_heat_solution`; linear acoustics with
+  `acoustic_wave_1d` (closed or open pipe ends) and `acoustic_wave_2d`
+  (rigid room), `pipe_mode_frequencies`, `pipe_mode_shape`,
+  `rectangular_room_mode_frequencies` and `ideal_gas_sound_speed`; and 2D
+  linear elasticity with `plane_elasticity_solve` (constant-strain
+  triangles, plane stress or strain, returning `PlaneElasticityResult`),
+  `elasticity_matrix`, `lame_parameters`, `rectangle_mesh`,
+  `annulus_mesh`, `pressure_load`, `polar_stress` and
+  `lame_thick_cylinder`.
+- Fluids history entry "1807 -- 1822 -- Fourier's Heat Equation" with its
+  gallery example `plot_fourier_heat_equation.py`, and the examples
+  `plot_acoustic_pipe_and_room_modes.py` and
+  `plot_lame_pressurized_cylinder.py`, in the new
+  `examples/fluids/continuum_mechanics/` section.
 - `physicskit.integrators.stochastic`: `euler_maruyama_step`/`_integrate`
   and `milstein_step`/`_integrate` for diagonal-noise Itô SDEs, using the
   shared `f(state, t, params)` callback convention and caller-supplied

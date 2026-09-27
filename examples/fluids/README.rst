@@ -44,3 +44,7 @@ Sections
   solver: viscous decay of a periodic vortex patch, and a decaying
   turbulence simulation whose energy spectrum is checked against
   Kolmogorov's -5/3 law.
+- **continuum_mechanics** -- linear continuum mechanics beyond flow:
+  Fourier's heat equation (explicit, Crank-Nicolson, and spectral),
+  standing sound waves in pipes and rooms, and Lamé's pressurized
+  thick-walled cylinder by plane-strain finite elements.
