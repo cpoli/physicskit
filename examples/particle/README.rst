@@ -34,7 +34,8 @@ Sections
   violation.
 - **electroweak** -- renormalized QED, the Higgs mechanism, and
   electroweak unification.
-- **qcd** -- asymptotic freedom and confinement.
+- **qcd** -- asymptotic freedom and confinement, and Wilson loops in
+  Monte Carlo lattice gauge theory.
 - **flavor_physics** -- the CKM quark-mixing matrix.
 - **collider_pipeline** -- from collision to detector: the hard 2-to-2
   vertex, its parton shower, and the curved tracks final-state particles

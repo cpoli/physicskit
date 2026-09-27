@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.particle` compact U(1) lattice gauge theory
+  (`physicskit.particle.lattice_gauge`): the numba Metropolis simulation
+  `U1LatticeGauge` (2D/3D, plaquettes, Wilson loops, gauge transforms,
+  binned measurements), the exact 2D results `u1_2d_wilson_loop_exact`
+  and `u1_2d_string_tension`, and `creutz_ratio`.
+- Gallery example "Wilson's lattice gauge theory: Wilson loops and the
+  confining area law" (`examples/particle/qcd/`) and particle history entry
+  "1974 -- Wilson's Lattice Gauge Theory and the Area Law".
 - `physicskit.quantum` restricted Hartree-Fock
   (`physicskit.quantum.chapters.hartree_fock`, atomic units):
   `restricted_hartree_fock` / `HartreeFockResult` (Roothaan SCF), the
