@@ -118,6 +118,82 @@ implements. Keep it that way:
   (enforced via `.github/CODEOWNERS`) even if the rest of the PR is
   otherwise approved.
 
+## Stability and deprecation policy
+
+physicskit follows [Semantic Versioning](https://semver.org/). It is
+pre-1.0, so the rules below are what contributors should follow now, and
+they become a guarantee to users at 1.0.
+
+### What counts as public API
+
+- Names exported in a module's `__all__`, or documented in the API
+  reference, tutorials or the example gallery. This includes
+  `physicskit.constants`, `physicskit.integrators`, `physicskit.units`,
+  `physicskit.results` and `physicskit.io`, and each subpackage's
+  top-level namespace.
+- **The unit convention of each subpackage** (see the "Units and
+  conventions" docs page). Silently switching a function from
+  `G = c = 1` to SI changes every number a caller gets, which is as
+  breaking as renaming it.
+- The on-disk format written by `physicskit.io.save`.
+
+Anything whose name starts with an underscore is private, as are
+`tests/` directories and anything undocumented. It can change at any
+time.
+
+### Deprecating something
+
+1. Keep the old name or behaviour working and have it emit a
+   `DeprecationWarning` (or `FutureWarning` when a default *value* or
+   *result* is going to change) that says what to use instead and in
+   which release the old form goes away. Use `stacklevel=2` so the
+   warning points at the caller.
+2. Add a test that asserts the warning (`pytest.warns`) and that the
+   old path still gives the right answer.
+3. Add a bullet under `### Deprecated` in `CHANGELOG.md`.
+4. Remove it no sooner than **one minor release** later while pre-1.0
+   (deprecated in 0.3, removed in 0.4 at the earliest), and no sooner
+   than **two minor releases** later after 1.0. Removals are listed
+   under `### Removed`.
+
+### Changes that don't need a deprecation cycle
+
+- **Physics fixes.** If a function returns a wrong value (a sign error,
+  a missing factor of 2), fix it immediately. A wrong answer shouldn't
+  stay available for another release. Because callers may depend on the
+  old number, list the fix in its own "these change results" block
+  under `### Changed` in the CHANGELOG, with the old and new behaviour,
+  as the 0.2.0 entry does.
+- **Numerical details.** Results are reproducible within documented
+  tolerances, not bit-for-bit, across releases. A change of integrator
+  internals, default grid resolution or RNG stream is allowed if the
+  documented accuracy still holds. Mention it in the CHANGELOG when it
+  visibly changes outputs, such as a seeded example's printed numbers.
+- **Additions:** new functions, new keyword arguments with defaults that
+  keep the old behaviour, and new fields at the end of result
+  dataclasses.
+
+### Saved files
+
+`physicskit.io` writes a `FORMAT_VERSION` into every file. A new release
+must still read files written by every earlier format version, and must
+refuse (with a clear error), not misread, files from a newer one. Bump
+`FORMAT_VERSION` whenever the layout changes, and add a round-trip test
+that loads a file written in the old layout.
+
+### Supported Python versions
+
+Supported versions are the ones in the CI test matrix (currently
+3.10-3.14). Dropping one happens in a minor release, is announced in the
+CHANGELOG, and updates `requires-python`, the classifiers and the CI
+matrix together.
+
+### Before 1.0
+
+1.0 will be tagged once the public API above has been through at least
+one release without a breaking change. The typed-core `mypy` job should
+also cover every subpackage's top-level namespace by then.
+
 ## Reporting bugs / requesting features
 
 Open a GitHub issue. For a physics bug specifically, include the formula

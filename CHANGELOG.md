@@ -59,6 +59,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `quantum.NumerovSolver`), each also checking a closed-form result. New
   `bench` extra; CI smoke-runs them on PRs and keeps timed results from
   `main` as artifacts.
+- Long-form tutorials for `chaos` ("Measuring Chaos"), `rmt` ("Random
+  Matrix Universality"), `plasma` ("Plasma Physics from One Particle to
+  Kinetic Theory"), `fluids` ("A Tour of Fluid Flow Regimes") and
+  `relativity` ("Black Holes, Orbits and Ringdowns in Geometrized
+  Units"), using only the public API. Every printed number was checked
+  by running the page's code, and each is compared against a closed-form
+  or published value.
+- A "Units and conventions" docs page (each subpackage's unit system,
+  plus `physicskit.units`/`results`/`io` usage and reference), and a
+  Tutorials section in the docs navigation listing every tutorial.
+- A stability and deprecation policy in `CONTRIBUTING.md` ahead of 1.0.
 
 ### Changed
 

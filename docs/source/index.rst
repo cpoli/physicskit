@@ -15,6 +15,9 @@ instead:
 :math:`G=1` for orbits, :math:`\hbar=1` for quantum states, :math:`k_B=1`
 for statistical mechanics, matching how the papers you're checking against
 actually write it, rather than forcing everything through SI.
+:doc:`Units and conventions </tutorials/units_and_conventions>` lists each
+subpackage's convention and shows how :mod:`physicskit.units` converts
+results to SI once you choose the physical scale.
 
 Every subpackage is grounded in the physics it implements, not just coded
 against it: public functions carry runnable, CI-checked examples, and each
@@ -72,6 +75,13 @@ Conventionally imported as ``pk``:
    :hidden:
 
    history/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+   :hidden:
+
+   tutorials/index
 
 .. toctree::
    :maxdepth: 2

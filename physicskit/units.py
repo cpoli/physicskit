@@ -11,9 +11,7 @@ module makes those remaining choices explicit. Every preset has keyword
 arguments you must supply for the free scales; none of them has a hidden
 default.
 
-How it works
-------------
-A :class:`UnitSystem` is defined by a set of *anchors*: pairs of a
+**How it works.** A :class:`UnitSystem` is defined by a set of *anchors*: pairs of a
 :class:`Dimension` and the SI value of one unit of that dimension. A
 constant set to 1 is an anchor (for :math:`c = 1`, one unit of velocity is
 :math:`c_{SI}` m/s), and so is each user-chosen scale (one unit of mass is

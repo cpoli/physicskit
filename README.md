@@ -75,6 +75,8 @@ standalone toolkits:
 
 - `physicskit.constants` -- SI physical constants shared across subpackages, plus a few well-defined unit conversions (energy/temperature, eV/joules, gravitational G=1 unit systems).
 - `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) used across the other subpackages.
+- `physicskit.units` -- explicit natural-unit systems (G=1, G=c=1, hbar=1, k_B=1, or any combination) with user-chosen scales, SI conversion, and optional pint interop.
+- `physicskit.results` / `physicskit.io` -- a shared, unit-aware `Result` container with adapters for existing subpackage outputs, saved to `.npz` or HDF5.
 
 ## Test
 
@@ -135,6 +137,8 @@ cd docs && make html
 
 See `docs/source/history/` for a chronology of each field's foundational
 breakthroughs, linked to the corresponding implementation at each step.
+Long-form tutorials, including a "Units and conventions" guide to each
+subpackage's natural units, are in `docs/source/tutorials/`.
 
 ## Citation
 
