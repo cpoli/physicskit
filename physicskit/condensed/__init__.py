@@ -1,4 +1,4 @@
-"""Condensed matter physics: tight-binding models, topological band theory, correlated electrons, and quantum spin chains.
+"""Condensed matter physics: tight-binding models, topological band theory, correlated electrons, quantum spin chains, phonons, and transport.
 
 Typical usage::
 
@@ -51,6 +51,15 @@ from .models import (
     ssh_hamiltonian,
     ssh_lattice_hamiltonian,
 )
+from .phonons import (
+    debye_heat_capacity,
+    debye_temperature,
+    diatomic_chain_dispersion,
+    lattice_heat_capacity,
+    monatomic_chain_dispersion,
+    square_lattice_dynamical_matrix,
+    square_lattice_phonon_dispersion,
+)
 from .spin_chains import (
     bethe_ansatz_xxx_ground_energy,
     calabrese_cardy_entropy,
@@ -73,6 +82,15 @@ from .topological_insulator_3d import (
     topological_insulator_3d_slab_hamiltonian,
 )
 from .topology import compute_berry_curvature, compute_chern_number, z2_invariant, zak_phase
+from .transport import (
+    BoltzmannTransport,
+    boltzmann_transport,
+    drude_ac_conductivity,
+    drude_conductivity,
+    drude_conductivity_tensor,
+    fermi_window,
+    hall_coefficient,
+)
 from .visualizers import (
     plot_band_structure,
     plot_berry_curvature,
@@ -147,4 +165,18 @@ __all__ = [
     "bethe_ansatz_xxx_ground_energy",
     "tfim_free_fermion_spectrum",
     "tfim_ground_state_energy",
+    "monatomic_chain_dispersion",
+    "diatomic_chain_dispersion",
+    "square_lattice_dynamical_matrix",
+    "square_lattice_phonon_dispersion",
+    "lattice_heat_capacity",
+    "debye_heat_capacity",
+    "debye_temperature",
+    "drude_conductivity",
+    "drude_ac_conductivity",
+    "drude_conductivity_tensor",
+    "hall_coefficient",
+    "fermi_window",
+    "BoltzmannTransport",
+    "boltzmann_transport",
 ]

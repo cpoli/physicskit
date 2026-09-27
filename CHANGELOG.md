@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.condensed` lattice dynamics (`physicskit.condensed.phonons`):
+  `monatomic_chain_dispersion`, `diatomic_chain_dispersion`,
+  `square_lattice_dynamical_matrix`, `square_lattice_phonon_dispersion`,
+  `lattice_heat_capacity`, `debye_heat_capacity`, `debye_temperature`.
+- `physicskit.condensed` electronic transport
+  (`physicskit.condensed.transport`): `drude_conductivity`,
+  `drude_ac_conductivity`, `drude_conductivity_tensor`,
+  `hall_coefficient`, `fermi_window`, and the relaxation-time Boltzmann
+  solver `boltzmann_transport` / `BoltzmannTransport` (conductivity,
+  Seebeck and electronic thermal conductivity for any sampled band).
+- Gallery examples "Born and von Karman: phonon dispersion of crystal
+  lattices", "Debye's heat capacity and the T³ law"
+  (`examples/condensed/phonons/`), "The Drude model: conductivity and the
+  Hall effect" and "Sommerfeld's electron gas: the Wiedemann-Franz law and
+  thermopower" (`examples/condensed/transport/`), with condensed history
+  entries "1900 -- Drude's Theory of Metals", "1912 -- Born and von
+  Karman: Lattice Dynamics and Phonons", "1912 -- Debye's Theory of the
+  Heat Capacity of Solids", and "1927-1928 -- Sommerfeld's Electron Gas
+  and Boltzmann Transport".
 - `physicskit.quantum` relativistic quantum mechanics
   (`physicskit.quantum.chapters.relativistic`, units hbar = c = 1):
   `klein_gordon_dispersion`, `klein_gordon_plane_wave`, `gamma_matrices`,

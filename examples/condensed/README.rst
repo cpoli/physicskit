@@ -30,6 +30,11 @@ Sections
   Hubbard model, and the short-range antiferromagnetic spin correlations
   that model develops at half filling and strong coupling -- the arena any
   theory of cuprate superconductivity has to live in.
+- **phonons** -- lattice vibrations: Born-von Karman phonon dispersion of
+  1D chains and the square lattice, and Debye's :math:`T^3` heat capacity.
+- **transport** -- electronic transport: the Drude model's conductivity
+  and Hall effect, and Sommerfeld-Boltzmann transport with the
+  Wiedemann-Franz law and the Mott thermopower.
 - **spin_chains** -- exact diagonalization of spin-1/2 chains in their
   symmetry sectors: Bethe's ansatz for the Heisenberg antiferromagnet, the
   free-fermion transverse-field Ising chain and its quantum critical

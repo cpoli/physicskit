@@ -12,14 +12,158 @@ Condensed matter physics is the study of what happens when enormous numbers
 of quantum particles are put together: emergent order, broken symmetries,
 and -- since the 1980s -- emergent *topology*. This chronology traces the
 major conceptual breakthroughs behind :mod:`physicskit.condensed`, from
-Bloch's 1928 theorem to the topological superconductors of the 21st
-century. Every stop has a pointer to the corresponding implementation in
+Drude's 1900 electron gas and Bloch's 1928 theorem to the topological
+superconductors of the 21st century. Every stop has a pointer to the corresponding implementation in
 this package, a structural diagram of the system it describes, and a
 short, runnable example reproducing the milestone's signature observable.
 
 .. contents:: Timeline
    :local:
    :depth: 1
+
+1900 -- Drude's Theory of Metals
+--------------------------------
+
+Three years after J. J. Thomson identified the electron, Paul Drude
+proposed that a metal's conduction electrons behave as a classical gas:
+free between collisions, accelerated by applied fields, and randomized by
+collisions with the ions every :math:`\tau` on average. The equation of
+motion
+
+.. math::
+
+   m\frac{d\mathbf v}{dt} = q(\mathbf E + \mathbf v\times\mathbf B) - \frac{m\mathbf v}{\tau}
+
+gives Ohm's law with :math:`\sigma_0 = nq^2\tau/m`, a frequency-dependent
+conductivity :math:`\sigma_0/(1 - i\omega\tau)` that explained the
+infrared reflectivity of metals, and a Hall resistivity
+:math:`\rho_{yx} = B/(nq)` whose sign reads off the carriers' charge.
+Using classical kinetic theory for the heat current, Drude also derived
+the Wiedemann-Franz law, :math:`\kappa/\sigma T` constant, with a value
+that agreed well with experiment only thanks to two compensating errors.
+The model's failures (the missing electronic heat capacity, and Hall
+coefficients of the wrong sign in some metals) had to wait for quantum
+statistics and band theory.
+
+*Implementation:* :func:`physicskit.condensed.transport.drude_conductivity`,
+:func:`~physicskit.condensed.transport.drude_ac_conductivity`,
+:func:`~physicskit.condensed.transport.drude_conductivity_tensor`, and
+:func:`~physicskit.condensed.transport.hall_coefficient` give the DC, AC,
+and magnetotransport response of the Drude gas.
+
+*References:* P. Drude, "Zur Elektronentheorie der Metalle," Ann. Phys.
+306, 566-613 (1900); N. W. Ashcroft and N. D. Mermin, *Solid State
+Physics* (1976), Ch. 1.
+
+.. minigallery:: ../../examples/condensed/transport/plot_drude_model.py
+
+1912 -- Born and von Karman: Lattice Dynamics and Phonons
+---------------------------------------------------------
+
+Max Born and Theodore von Karman modeled a crystal as atoms joined by
+springs and, to avoid the complications of surfaces, imposed *periodic*
+boundary conditions, an idea now used throughout solid-state physics. The
+normal modes are then plane waves labeled by a wavevector :math:`\mathbf k`
+in the Brillouin zone, with frequencies given by the eigenvalues of the
+dynamical matrix,
+
+.. math::
+
+   \omega^2(\mathbf k)\,\mathbf e = D(\mathbf k)\,\mathbf e, \qquad
+   \omega(k) = 2\sqrt{K/m}\,\bigl|\sin(ka/2)\bigr| \ \text{(monatomic chain)}.
+
+Every lattice has three (in 3D) *acoustic* branches with
+:math:`\omega \approx ck` at long wavelengths, the sound waves; a lattice
+with several atoms per cell adds *optical* branches, separated by a gap.
+The quanta of these modes were later named phonons.
+
+*Implementation:* :func:`physicskit.condensed.phonons.monatomic_chain_dispersion`
+and :func:`~physicskit.condensed.phonons.diatomic_chain_dispersion` give
+the 1D chains, and
+:func:`~physicskit.condensed.phonons.square_lattice_dynamical_matrix` and
+:func:`~physicskit.condensed.phonons.square_lattice_phonon_dispersion` a
+2D square lattice with nearest- and next-nearest-neighbor springs, whose
+longitudinal and transverse sound speeds follow from the spring constants.
+
+*References:* M. Born and T. von Karman, "Uber Schwingungen in
+Raumgittern," Phys. Z. 13, 297-309 (1912).
+
+.. minigallery:: ../../examples/condensed/phonons/plot_born_von_karman_phonon_dispersion.py
+
+1912 -- Debye's Theory of the Heat Capacity of Solids
+-----------------------------------------------------
+
+Classical equipartition gives every atom of a solid a heat capacity of
+:math:`3k_B` (the Dulong-Petit law), but by 1900 it was clear that
+diamond and other hard solids fall well below it at low temperature.
+Einstein's 1907 model, with all atoms oscillating at one quantized
+frequency, explained the drop but predicted an exponential decline that
+was too fast. Peter Debye instead quantized the *sound waves* of the
+solid, with :math:`\omega = ck` up to a cutoff chosen so the number of
+modes equals the number of degrees of freedom. The result,
+
+.. math::
+
+   \frac{C}{Nk_B} = 9\left(\frac{T}{\Theta_D}\right)^3
+       \int_0^{\Theta_D/T}\frac{x^4e^x}{(e^x-1)^2}\,dx
+   \;\xrightarrow{T\ll\Theta_D}\; \frac{12\pi^4}{5}\left(\frac{T}{\Theta_D}\right)^3,
+
+with the Debye temperature :math:`\Theta_D = \hbar c(6\pi^2n)^{1/3}/k_B`,
+fit experiment over the whole temperature range. The :math:`T^3` law holds
+for any 3D insulator because only the long-wavelength acoustic phonons are
+excited at low temperature.
+
+*Implementation:* :func:`physicskit.condensed.phonons.debye_heat_capacity`
+and :func:`~physicskit.condensed.phonons.debye_temperature` implement
+Debye's model; :func:`~physicskit.condensed.phonons.lattice_heat_capacity`
+sums Einstein's mode heat capacity over a sampled phonon dispersion,
+giving the :math:`T^d` law of a :math:`d`-dimensional lattice without the
+continuum approximation.
+
+*References:* P. Debye, "Zur Theorie der spezifischen Warmen," Ann. Phys.
+344, 789-839 (1912); A. Einstein, Ann. Phys. 327, 180-190 (1907).
+
+.. minigallery:: ../../examples/condensed/phonons/plot_debye_heat_capacity.py
+
+1927-1928 -- Sommerfeld's Electron Gas and Boltzmann Transport
+--------------------------------------------------------------
+
+Arnold Sommerfeld kept Drude's picture of free electrons but replaced the
+Maxwell-Boltzmann distribution with the Fermi-Dirac distribution that
+Pauli had just applied to electrons. Because of the exclusion principle
+only electrons within about :math:`k_BT` of the Fermi energy can be
+excited, which explained at once why the electrons contribute so little
+to the heat capacity. Combined with the Boltzmann equation in the
+relaxation-time approximation, the linear response to fields and
+temperature gradients depends only on the Fermi window
+:math:`-\partial f/\partial\varepsilon`, and the Sommerfeld expansion
+gives two universal results for degenerate metals: the Wiedemann-Franz
+law
+
+.. math::
+
+   \frac{\kappa}{\sigma T} = \frac{\pi^2}{3}\left(\frac{k_B}{e}\right)^2,
+
+and a thermopower (Seebeck coefficient) smaller than Drude's by a factor
+of order :math:`k_BT/E_F`, given by Mott's formula
+:math:`S = \frac{\pi^2k_B^2T}{3q}\,\frac{d\ln\sigma}{d\varepsilon}`.
+The same equations apply to Bloch electrons in any band, which is how
+transport is computed from band structures today.
+
+*Implementation:* :func:`physicskit.condensed.transport.boltzmann_transport`
+computes the conductivity, Seebeck, and electronic thermal conductivity
+tensors of any band sampled on a :math:`k`-grid, returning a
+:class:`~physicskit.condensed.transport.BoltzmannTransport` whose
+``lorenz_number`` is :math:`\pi^2/3` for a degenerate metal;
+:func:`~physicskit.condensed.transport.fermi_window` is the thermal
+factor :math:`-\partial f/\partial\varepsilon`.
+
+*References:* A. Sommerfeld, "Zur Elektronentheorie der Metalle auf Grund
+der Fermischen Statistik," Z. Phys. 47, 1-32 and 43-60 (1928); N. F. Mott
+and H. Jones, *The Theory of the Properties of Metals and Alloys* (1936);
+Ashcroft and Mermin, Ch. 2 and 13.
+
+.. minigallery:: ../../examples/condensed/transport/plot_sommerfeld_boltzmann_transport.py
 
 1928 -- Bloch's Theorem and Band Theory
 ------------------------------------------
