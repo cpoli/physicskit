@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.quantum` restricted Hartree-Fock
+  (`physicskit.quantum.chapters.hartree_fock`, atomic units):
+  `restricted_hartree_fock` / `HartreeFockResult` (Roothaan SCF), the
+  s-type Gaussian basis `GaussianS`, `sto3g_1s`, `STO3G_ZETA`,
+  `even_tempered_s_basis`, and the closed-form integrals `overlap_matrix`,
+  `kinetic_matrix`, `nuclear_attraction_matrix`,
+  `electron_repulsion_tensor`.
+- Gallery example "Hartree-Fock: the self-consistent field for H₂ and
+  helium" (`examples/quantum/atoms_molecules/`) and quantum history entry
+  "1928-1930 -- Hartree and Fock: The Self-Consistent Field".
 - `physicskit.optics.LaserRateEquations` (threshold, gain clamping, exact
   steady state with spontaneous emission, relaxation oscillations) and
   `physicskit.optics.MaxwellBloch` (Haken's single-mode Maxwell-Bloch

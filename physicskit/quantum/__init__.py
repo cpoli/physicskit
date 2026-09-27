@@ -27,6 +27,9 @@ r"""physicskit.quantum: a visual and computational tour of quantum mechanics.
 - :mod:`physicskit.quantum.chapters.relativistic` -- the Klein-Gordon and
   Dirac equations (units :math:`\hbar = c = 1`): free solutions, the Dirac
   hydrogen fine-structure levels, and Klein-paradox step scattering.
+- :mod:`physicskit.quantum.chapters.hartree_fock` -- restricted
+  Hartree-Fock (Roothaan SCF) for small atoms and molecules in s-type
+  Gaussian bases, in atomic units.
 - :mod:`physicskit.quantum.chapters.scattering` -- 3D potential scattering:
   the Born approximation and partial-wave phase shifts.
 
@@ -44,6 +47,18 @@ from physicskit.quantum.chapters.entanglement import (
     bell_state,
 )
 from physicskit.quantum.chapters.harmonic_spin import HarmonicOscillator, ThermalState
+from physicskit.quantum.chapters.hartree_fock import (
+    STO3G_ZETA,
+    GaussianS,
+    HartreeFockResult,
+    electron_repulsion_tensor,
+    even_tempered_s_basis,
+    kinetic_matrix,
+    nuclear_attraction_matrix,
+    overlap_matrix,
+    restricted_hartree_fock,
+    sto3g_1s,
+)
 from physicskit.quantum.chapters.hydrogen_am import (
     HydrogenOrbital,
     orbital_superposition_density,
@@ -252,4 +267,15 @@ __all__ = [
     "hard_sphere_phase_shifts",
     "partial_wave_amplitude",
     "partial_wave_cross_section",
+    # chapters.hartree_fock
+    "GaussianS",
+    "sto3g_1s",
+    "even_tempered_s_basis",
+    "STO3G_ZETA",
+    "overlap_matrix",
+    "kinetic_matrix",
+    "nuclear_attraction_matrix",
+    "electron_repulsion_tensor",
+    "HartreeFockResult",
+    "restricted_hartree_fock",
 ]

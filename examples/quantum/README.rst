@@ -41,6 +41,8 @@ Sections
   time: the double-slit experiment and Stern-Gerlach beam splitting.
 - **perturbation** -- Stark/Zeeman splitting from perturbation theory and
   Floquet driving.
+- **atoms_molecules** -- the Hartree-Fock self-consistent field for
+  helium and the hydrogen molecule.
 - **scattering** -- 3D potential scattering: Rutherford's formula from the
   Born approximation and partial-wave phase shifts of the hard sphere and
   square well.

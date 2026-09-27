@@ -756,6 +756,50 @@ Novoselov, and A. K. Geim, Nature Phys. 2, 620-625 (2006).
 
 .. minigallery:: ../../examples/quantum/relativistic/plot_klein_paradox.py
 
+1928-1930 -- Hartree and Fock: The Self-Consistent Field
+--------------------------------------------------------
+
+The Schrodinger equation for :math:`N` interacting electrons lives in
+:math:`3N` dimensions and cannot be solved directly for anything beyond
+the smallest atoms. Douglas Hartree proposed in 1928 that each electron
+moves in the average electrostatic field of the nucleus and all the other
+electrons, and that this field be computed from the electrons' own
+orbitals and iterated until it reproduces itself: a *self-consistent
+field*. Vladimir Fock and John Slater (1930) showed that writing the
+wavefunction as an antisymmetrized product, a Slater determinant, adds an
+**exchange** term with no classical analogue. The best single determinant
+satisfies the Hartree-Fock equations; expanding the orbitals in a finite
+basis turns them into the matrix Roothaan-Hall equations (1951),
+
+.. math::
+
+   F(C)\,C = S\,C\,\varepsilon,
+
+solved iteratively. Hartree-Fock recovers over 99% of an atom's total
+energy; the small remainder, the *correlation energy*, is what later
+methods of quantum chemistry set out to compute.
+
+*Implementation:* :func:`physicskit.quantum.chapters.hartree_fock.restricted_hartree_fock`
+runs the closed-shell Roothaan SCF procedure with the closed-form Gaussian
+integrals of :func:`~physicskit.quantum.chapters.hartree_fock.overlap_matrix`,
+:func:`~physicskit.quantum.chapters.hartree_fock.kinetic_matrix`,
+:func:`~physicskit.quantum.chapters.hartree_fock.nuclear_attraction_matrix`,
+and :func:`~physicskit.quantum.chapters.hartree_fock.electron_repulsion_tensor`,
+in STO-3G (:func:`~physicskit.quantum.chapters.hartree_fock.sto3g_1s`) or
+even-tempered (:func:`~physicskit.quantum.chapters.hartree_fock.even_tempered_s_basis`)
+s bases. It reproduces Szabo and Ostlund's textbook results for
+:math:`\mathrm H_2` and :math:`\mathrm{HeH^+}` and the helium Hartree-Fock
+limit.
+
+*References:* D. R. Hartree, "The Wave Mechanics of an Atom with a
+Non-Coulomb Central Field," Proc. Camb. Phil. Soc. 24, 89-110 (1928); V.
+Fock, "Naherungsmethode zur Losung des quantenmechanischen
+Mehrkorperproblems," Z. Phys. 61, 126-148 (1930); J. C. Slater, Phys. Rev.
+35, 210-211 (1930); C. C. J. Roothaan, Rev. Mod. Phys. 23, 69-89 (1951);
+A. Szabo and N. S. Ostlund, *Modern Quantum Chemistry* (1989), Ch. 3.
+
+.. minigallery:: ../../examples/quantum/atoms_molecules/plot_hartree_fock_self_consistent_field.py
+
 1930 -- Dirac's Operator Method and the Harmonic Oscillator
 -----------------------------------------------------------
 
