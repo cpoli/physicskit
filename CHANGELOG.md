@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.optics.LaserRateEquations` (threshold, gain clamping, exact
+  steady state with spontaneous emission, relaxation oscillations) and
+  `physicskit.optics.MaxwellBloch` (Haken's single-mode Maxwell-Bloch
+  laser, its lasing and second/chaotic thresholds), both integrated with
+  the shared numba `rk4_integrate` (`physicskit.optics.lasers`).
+- Gallery examples "Schawlow and Townes: the lasing threshold from the
+  laser rate equations" and "Haken's laser-Lorenz analogy: Maxwell-Bloch
+  dynamics and laser chaos" (`examples/optics/lasers/`), with optics
+  history entries "1958 -- Schawlow and Townes: The Optical Maser and the
+  Lasing Threshold" and "1975 -- Haken: The Laser-Lorenz Analogy and Laser
+  Chaos". The Maiman (1960) entry now points to the 1958 entry for the
+  gain medium.
 - `physicskit.condensed` lattice dynamics (`physicskit.condensed.phonons`):
   `monatomic_chain_dispersion`, `diatomic_chain_dispersion`,
   `square_lattice_dynamical_matrix`, `square_lattice_phonon_dispersion`,

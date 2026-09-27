@@ -25,6 +25,9 @@ Typical usage::
   coherent, squeezed) in a truncated photon-number basis, Wigner
   quasi-probability distributions, and the Jaynes-Cummings model of a
   two-level atom coupled to a quantized cavity mode.
+- :mod:`physicskit.optics.lasers` -- laser rate equations (threshold,
+  gain clamping, relaxation oscillations) and the Maxwell-Bloch
+  (Haken-Lorenz) single-mode laser with its chaotic second threshold.
 - :mod:`physicskit.optics.visualizers` -- ray-trace, beam-envelope,
   diffraction-pattern, and interactive Wigner-surface plots.
 """
@@ -37,6 +40,7 @@ from physicskit.optics.gaussian import (
     propagate_q,
     q_to_beam_params,
 )
+from physicskit.optics.lasers import LaserRateEquations, MaxwellBloch
 from physicskit.optics.quantum_optics import (
     JaynesCummingsModel,
     coherent_state,
@@ -121,4 +125,7 @@ __all__ = [
     "plot_diffraction_pattern",
     "interactive_wigner_surface",
     "animate_diffraction_propagation",
+    # lasers
+    "LaserRateEquations",
+    "MaxwellBloch",
 ]

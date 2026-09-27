@@ -29,6 +29,9 @@ Sections
 - **ray_optics** -- paraxial ABCD matrix optics: Gauss's composite-system
   matrix product, the two-mirror resonator stability behind Maiman's ruby
   laser cavity, and Kao's graded-index (GRIN) fiber guiding.
+- **lasers** -- inside the gain medium: Schawlow and Townes's lasing
+  threshold, gain clamping and relaxation oscillations from the rate
+  equations, and Haken's Maxwell-Bloch laser with its Lorenz chaos.
 - **gaussian_beams** -- complex-beam-parameter wave optics: Kogelnik and
   Li's ABCD transformation of a Gaussian beam through a thin lens,
   Siegman's :math:`M^2` beam-quality factor, and Allen et al.'s
