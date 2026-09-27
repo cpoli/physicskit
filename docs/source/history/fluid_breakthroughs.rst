@@ -571,6 +571,44 @@ and 15-17); A. M. Obukhov, Doklady Akademii Nauk SSSR 32 (1941), 22-24.
 
 .. minigallery:: ../../examples/fluids/navier_stokes/plot_turbulent_cascade.py
 
+1986 -- 1992 -- From Lattice Gases to the Lattice Boltzmann Method
+------------------------------------------------------------------
+
+Uriel Frisch, Brosl Hasslacher and Yves Pomeau (1986) showed that Boolean
+particles hopping between the sites of a hexagonal lattice and colliding
+by simple conserving rules obey the Navier-Stokes equations on large
+scales. The lattice only needs enough symmetry for the momentum-flux
+tensor to come out isotropic. That was a surprise, because the
+microscopic model has nothing in common with a real fluid except its
+conservation laws. The lattice gas was noisy, however, so Guy McNamara
+and Gianluigi Zanetti (1988) replaced the particles by their mean
+populations: the lattice Boltzmann equation. Yue-Hong Qian, Dominique
+d'Humières and Pierre Lallemand (1992) replaced the collision table by a
+single relaxation toward a local equilibrium, the Bhatnagar-Gross-Krook
+operator, on the nine-velocity square lattice D2Q9. A Chapman-Enskog
+expansion then gives a fluid with viscosity
+:math:`\nu = c_s^2(\tau - \tfrac12)` fixed by the relaxation time alone.
+The method is local, trivially parallel, and handles complex walls by
+simple bounce-back. It is now a workhorse for flows in porous media,
+multiphase flow and microfluidics.
+
+*Implementation:* :class:`physicskit.fluids.systems.lattice_boltzmann.LatticeBoltzmannD2Q9`
+is a D2Q9 BGK solver with Guo's body-force term and halfway bounce-back
+walls on a periodic lattice;
+:func:`~physicskit.fluids.systems.lattice_boltzmann.lbm_viscosity` and
+:func:`~physicskit.fluids.systems.lattice_boltzmann.lbm_equilibrium` give
+the viscosity law and the equilibrium distribution.
+
+*References:* U. Frisch, B. Hasslacher and Y. Pomeau, "Lattice-gas
+automata for the Navier-Stokes equation," Phys. Rev. Lett. 56, 1505-1508
+(1986); G. R. McNamara and G. Zanetti, "Use of the Boltzmann equation to
+simulate lattice-gas automata," Phys. Rev. Lett. 61, 2332-2335 (1988);
+Y. H. Qian, D. d'Humières and P. Lallemand, "Lattice BGK models for
+Navier-Stokes equation," Europhys. Lett. 17, 479-484 (1992); Z. Guo,
+C. Zheng and B. Shi, Phys. Rev. E 65, 046308 (2002).
+
+.. minigallery:: ../../examples/fluids/lattice_boltzmann/plot_lattice_boltzmann_bgk.py
+
 See Also
 --------
 

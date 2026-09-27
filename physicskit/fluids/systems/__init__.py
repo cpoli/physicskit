@@ -35,6 +35,15 @@ from physicskit.fluids.systems.instabilities import (
     rayleigh_taylor_ic,
     simulate_rayleigh_taylor,
 )
+from physicskit.fluids.systems.lattice_boltzmann import (
+    D2Q9_VELOCITIES,
+    D2Q9_WEIGHTS,
+    LBM_SOUND_SPEED_SQUARED,
+    LatticeBoltzmannD2Q9,
+    lbm_equilibrium,
+    lbm_relaxation_time,
+    lbm_viscosity,
+)
 from physicskit.fluids.systems.navier_stokes import NavierStokes2D, simulate_vorticity_streamfunction
 from physicskit.fluids.systems.potential_flow import (
     PotentialFlow,
@@ -111,4 +120,11 @@ __all__ = [
     "pressure_load",
     "rectangle_mesh",
     "rectangular_room_mode_frequencies",
+    "D2Q9_VELOCITIES",
+    "D2Q9_WEIGHTS",
+    "LBM_SOUND_SPEED_SQUARED",
+    "LatticeBoltzmannD2Q9",
+    "lbm_equilibrium",
+    "lbm_relaxation_time",
+    "lbm_viscosity",
 ]

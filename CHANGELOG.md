@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.fluids.LatticeBoltzmannD2Q9`: a D2Q9 BGK lattice Boltzmann
+  solver (numba collide-and-stream kernel, Guo body forcing, halfway
+  bounce-back solid nodes, periodic lattice), with `lbm_viscosity`,
+  `lbm_relaxation_time`, `lbm_equilibrium`, `D2Q9_VELOCITIES`,
+  `D2Q9_WEIGHTS` and `LBM_SOUND_SPEED_SQUARED`.
+- Fluids history entry "1986 -- 1992 -- From Lattice Gases to the Lattice
+  Boltzmann Method" with its gallery example
+  `examples/fluids/lattice_boltzmann/plot_lattice_boltzmann_bgk.py`.
 - `physicskit.fluids` continuum mechanics: `heat_equation` (explicit
   FTCS with its stability bound enforced, or Crank-Nicolson; Dirichlet,
   Neumann or periodic walls; 1D-3D), `heat_equation_spectral`,
