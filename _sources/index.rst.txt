@@ -39,6 +39,19 @@ re-deriving the plumbing every time:
 - :mod:`physicskit.semiclassical` -- WKB/EBK quantization, semiclassical propagators, the Gutzwiller trace formula, and quantum scarring
 - :mod:`physicskit.statphys` -- statistical mechanics: lattice models, molecular dynamics, criticality
 
+.. important::
+
+   Each domain is a teaching-depth subset of its field, not a complete
+   implementation. physicskit is not a replacement for specialist
+   libraries in production work: for that, use the dedicated tools
+   (`SciPy <https://scipy.org/>`__,
+   `QuTiP <https://qutip.org/>`__,
+   `Astropy <https://www.astropy.org/>`__,
+   `REBOUND <https://rebound.readthedocs.io/>`__,
+   `Kwant <https://kwant-project.org/>`__,
+   `PlasmaPy <https://www.plasmapy.org/>`__,
+   and the like) directly.
+
 **physicskit** is part of a family of packages -- **physicskit**,
 `mathematicskit <https://cpoli.github.io/mathematicskit/>`_ and
 `chemistrykit <https://cpoli.github.io/chemistrykit/>`_ -- that share the
