@@ -201,7 +201,7 @@ def z2_invariant(hamiltonian_func, grid_size: int = 30, spin_block: tuple = (0, 
     Examples
     --------
     >>> from physicskit.condensed.models import kane_mele_hamiltonian
-    >>> trivial = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0)
+    >>> trivial = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0, lambda_v=0.3)
     >>> topological = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.06)
     >>> z2_invariant(trivial, grid_size=20)
     0

@@ -190,7 +190,9 @@ class TestBuildFiniteCluster:
 
 class TestKaneMeleZ2:
     def test_trivial_when_soc_zero(self):
-        H = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0)
+        # lambda_so = lambda_v = 0 is gapless graphene (Z2 ill-defined); a sublattice
+        # mass opens a trivial gap.
+        H = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0, lambda_v=0.3)
         assert z2_invariant(H, grid_size=16) == 0
 
     def test_topological_when_soc_nonzero(self):

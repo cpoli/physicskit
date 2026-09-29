@@ -26,18 +26,19 @@ from physicskit.condensed.topology import compute_chern_number, z2_invariant
 # %%
 # Kane-Mele: turning on spin-orbit coupling drives a Z2 transition
 # ------------------------------------------------------------------------
-# With ``lambda_so=0`` the two spin sectors are decoupled trivial bands;
+# With ``lambda_so=0`` and a sublattice mass ``lambda_v`` (pristine graphene
+# would be gapless) the two spin sectors are decoupled trivial bands;
 # turning on intrinsic spin-orbit coupling makes each spin sector a Haldane
 # Chern insulator with opposite Chern number, so the total Chern number
 # stays zero (time-reversal symmetric) while the Z2 invariant -- the
 # spin-up Chern number mod 2 -- flips from trivial to topological.
 
-kane_mele_trivial = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0)
+kane_mele_trivial = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.0, lambda_v=0.3)
 kane_mele_topological = lambda k1, k2: kane_mele_hamiltonian(k1, k2, lambda_so=0.06)
 
 z2_km_trivial = z2_invariant(kane_mele_trivial, grid_size=20)
 z2_km_topological = z2_invariant(kane_mele_topological, grid_size=20)
-print(f"Kane-Mele Z2, lambda_so=0.00: {z2_km_trivial}  (trivial)")
+print(f"Kane-Mele Z2, lambda_so=0.00, lambda_v=0.3: {z2_km_trivial}  (trivial)")
 print(f"Kane-Mele Z2, lambda_so=0.06: {z2_km_topological}  (quantum spin Hall)")
 
 # %%
