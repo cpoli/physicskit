@@ -16,6 +16,10 @@ instead:
 for statistical mechanics, matching how the papers you're checking against
 actually write it, rather than forcing everything through SI.
 
+.. image:: _static/images/readme_hero.png
+   :alt: A ray-traced black hole shadow, the Hofstadter butterfly, and Kelvin-Helmholtz roll-up, all drawn with physicskit
+   :width: 100%
+
 Every subpackage is grounded in the physics it implements, not just coded
 against it: public functions carry runnable, CI-checked examples, and each
 subpackage's :doc:`history </history/index>` page traces the breakthroughs
@@ -25,19 +29,88 @@ goal is a toolkit you can trust to move between domains without
 re-deriving the plumbing every time:
 
 - :mod:`physicskit.astro` -- stellar structure, N-body dynamics, orbital mechanics, galactic dynamics
+
+  .. image:: _static/images/readme_astro.png
+     :alt: The figure-eight three-body choreography, Lane-Emden polytropes, and a flat galactic rotation curve
+     :width: 100%
+
 - :mod:`physicskit.chaos` -- chaotic dynamical systems and 2D quantum billiards
+
+  .. image:: _static/images/readme_chaos.png
+     :alt: A chaotic trajectory in the Bunimovich stadium, the Lorenz attractor, and the standard map
+     :width: 100%
+
 - :mod:`physicskit.classical` -- classical (Newtonian/Lagrangian/Hamiltonian) mechanics
+
+  .. image:: _static/images/readme_classical.png
+     :alt: The FPUT recurrence, a Hénon-Heiles Poincaré section, and the Dzhanibekov effect
+     :width: 100%
+
 - :mod:`physicskit.condensed` -- tight-binding models, topological band theory, superconductivity
+
+  .. image:: _static/images/readme_condensed.png
+     :alt: The Hofstadter butterfly, Haldane ribbon edge states, and SSH zero modes
+     :width: 100%
+
 - :mod:`physicskit.fields` -- electrodynamics (FDTD), solitons, BEC vortex lattices
+
+  .. image:: _static/images/readme_fields.png
+     :alt: KdV soliton fission, FDTD dipole radiation, and a BEC vortex-antivortex pair
+     :width: 100%
+
 - :mod:`physicskit.fluids` -- potential flow, viscous flow, vortex dynamics, instabilities, compressible flow, Navier-Stokes
+
+  .. image:: _static/images/readme_fluids.png
+     :alt: Kelvin-Helmholtz roll-up, a von Kármán vortex street, and flow past a spinning cylinder
+     :width: 100%
+
 - :mod:`physicskit.optics` -- ray/wave/Gaussian-beam optics, Wigner functions, Jaynes-Cummings dynamics
+
+  .. image:: _static/images/readme_optics.png
+     :alt: Young's double-slit fringes, a Laguerre-Gauss vortex beam, and the Wigner function of a Fock state
+     :width: 100%
+
 - :mod:`physicskit.particle` -- relativistic kinematics, two-body decays, scattering, nuclear physics
+
+  .. image:: _static/images/readme_particle.png
+     :alt: A Higgs diphoton bump, the semi-empirical mass formula, and the Rutherford cross section
+     :width: 100%
+
 - :mod:`physicskit.plasma` -- single-particle motion, magnetohydrodynamics, cold-plasma waves, kinetic theory
+
+  .. image:: _static/images/readme_plasma.png
+     :alt: The two-stream instability's phase-space vortex, Grad-Shafranov flux surfaces, and a magnetic-mirror orbit
+     :width: 100%
+
 - :mod:`physicskit.quantum` -- quantum mechanics: wave packets, potentials, entanglement
+
+  .. image:: _static/images/readme_quantum.png
+     :alt: A wave packet through a double slit, barrier transmission resonances, and hydrogen radial densities
+     :width: 100%
+
 - :mod:`physicskit.relativity` -- numerical general relativity: black holes, lensing, gravitational waves
+
+  .. image:: _static/images/readme_relativity.png
+     :alt: Light bending around a black hole, a ray-traced shadow, and the GW150914 chirp
+     :width: 100%
+
 - :mod:`physicskit.rmt` -- random matrix theory, organized around Dyson's threefold way
+
+  .. image:: _static/images/readme_rmt.png
+     :alt: Wigner's semicircle law, level-spacing distributions for the three ensembles, and Ginibre's circular law
+     :width: 100%
+
 - :mod:`physicskit.semiclassical` -- WKB/EBK quantization, semiclassical propagators, the Gutzwiller trace formula, and quantum scarring
+
+  .. image:: _static/images/readme_semiclassical.png
+     :alt: A quantum scar in the stadium, the Gutzwiller trace formula, and a Feynman phasor spiral
+     :width: 100%
+
 - :mod:`physicskit.statphys` -- statistical mechanics: lattice models, molecular dynamics, criticality
+
+  .. image:: _static/images/readme_statphys.png
+     :alt: The 2D Ising model at criticality, percolation clusters, and Lee-Yang zeros
+     :width: 100%
 
 .. important::
 
