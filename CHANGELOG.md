@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-29
+
 ### Added
 
 - `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
@@ -63,6 +65,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     numerical-relativity remnants, the Eddington eclipse, Maxwell's velocity
     distribution, Alder-Wainwright MD, Gibbs's ensemble, the Langevin
     equation, and the Metropolis algorithm.
+- README rewritten in the style of the sibling packages: a hero figure, a
+  three-panel figure per subpackage, PyPI install instructions, a plotting
+  quick start, per-subpackage numpy/scipy/numba notes and a Design section.
+  `docs/make_readme_figure.py` and `docs/make_readme_subpackage_figures.py`
+  regenerate the figures.
+
+### Fixed
+
+- The double-slit gallery example (`plot_double_slit_propagation.py`)
+  stopped at t = 0.24, before the packet reached the slits; it now runs to
+  t = 2.0 and reads the fringes on a screen inside the transmitted wave.
+- The trivial Kane-Mele case in the `z2_invariant` doctest, its test and
+  the Z2 gallery example was gapless graphene (`lambda_so = lambda_v = 0`),
+  where Z2 is ill-defined; it now uses a sublattice mass `lambda_v = 0.3`.
 
 ## [0.2.0] - 2026-09-25
 
@@ -329,7 +345,8 @@ Extensive Sphinx documentation, including a per-subpackage chronology of
 the field's foundational breakthroughs (`docs/source/history/`) linked to
 the corresponding implementation.
 
-[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/cpoli/physicskit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cpoli/physicskit/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cpoli/physicskit/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/cpoli/physicskit/releases/tag/v0.1.0
