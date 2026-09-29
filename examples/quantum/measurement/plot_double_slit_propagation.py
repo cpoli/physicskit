@@ -37,8 +37,8 @@ X, Y, frames, times = propagate_double_slit(
     slit_separation=3.0,
     slit_width=0.8,
     dt=1e-4,
-    n_steps=2400,
-    save_every=40,
+    n_steps=20000,
+    save_every=400,
 )
 
 dx, dy = x[1] - x[0], y[1] - y[0]
@@ -64,12 +64,14 @@ axes[0].set_ylabel("y")
 fig.suptitle("A wavepacket propagating through a two-slit wall")
 fig.tight_layout()
 
-screen_density = np.abs(frames[-1][-1, :]) ** 2  # density along the far x-edge (the "screen")
+x_screen = 7.0  # a "screen" inside the transmitted wave, downstream of the wall
+i_screen = int(np.argmin(np.abs(x - x_screen)))
+screen_density = np.abs(frames[-1][i_screen, :]) ** 2
 fig2, ax2 = plt.subplots(figsize=(7, 4))
 ax2.plot(y, screen_density)
 ax2.set_xlabel("y (screen position)")
-ax2.set_ylabel(r"$|\psi(x_\mathrm{max},y,t_\mathrm{final})|^2$")
-ax2.set_title("Interference fringes on the downstream edge of the grid")
+ax2.set_ylabel(rf"$|\psi(x={x[i_screen]:.1f},y,t_\mathrm{{final}})|^2$")
+ax2.set_title(f"Interference fringes on a screen at x = {x[i_screen]:.1f}")
 fig2.tight_layout()
 
 # %%
