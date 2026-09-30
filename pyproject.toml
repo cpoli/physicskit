@@ -68,9 +68,17 @@ Documentation = "https://cpoli.github.io/physicskit/"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["physicskit*"]
+# Tests live beside each subpackage; they ship in the sdist (see MANIFEST.in)
+# but not in the wheel.
+exclude = ["physicskit.tests", "physicskit.tests.*", "physicskit.*.tests", "physicskit.*.tests.*"]
 
 [tool.setuptools.dynamic]
 version = { attr = "physicskit.__version__" }
+
+# include-package-data (on by default) would otherwise re-add each
+# subpackage's tests/ directory as package data of its parent.
+[tool.setuptools.exclude-package-data]
+"*" = ["tests/*", "tests/**/*"]
 
 [tool.pytest.ini_options]
 testpaths = [

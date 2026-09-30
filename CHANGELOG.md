@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The wheel no longer ships the `tests/` packages (215 files). The sdist
+  still includes the full test suite, via a new `MANIFEST.in`, minus the
+  RMT test caches (`physicskit/rmt/tests/.physicskit.rmt_test_cache` and
+  `.rmtkit_test_cache`), which the tests regenerate on a cache miss; this
+  shrinks the sdist from about 43 MB to under 1 MB.
+
 ## [0.3.0] - 2026-09-30
 
 ### Added
