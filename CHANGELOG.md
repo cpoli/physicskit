@@ -7,8 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-30
+
 ### Added
 
+- `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
+  `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
+  `stroboscopic_map` that samples many trajectories once per forcing
+  period. Its defaults (`mu=10`, `omega=2.5`, `A = 0.58*omega*mu`) are in
+  the Cartwright-Littlewood regime where stable subharmonics of period
+  3T and 5T coexist.
+- Gallery example "Cartwright-Littlewood: Chaos in the Forced Van der Pol
+  Oscillator" (`plot_cartwright_littlewood_forced_van_der_pol.py`),
+  showing the two coexisting periodic motions, their interleaved basins,
+  and an orbit on the chaotic "bad" set tracked along the basin boundary.
+- Chaos history entry "1945 -- 1949 -- Cartwright, Littlewood, and
+  Levinson: Chaos in the Forced Van der Pol Oscillator", covering the 1927
+  van der Pol-van der Mark observation, the 1938 radar question, the 1945
+  result, Levinson's 1949 model and its route to Smale's horseshoe. The
+  Smale entry now points back to it.
+- `physicskit.chaos.SmaleHorseshoe`, the piecewise-linear horseshoe map
+  (contraction `lam < 1/2`, expansion `mu > 2`), with `fold` (image part-way
+  through the fold), `inverse_step`, `survives` (points that stay in the
+  square), closed-form `periodic_points`, `lyapunov_exponents` and
+  `topological_entropy`.
+- `physicskit.chaos.visualizers.animate_horseshoe_map`, animating the
+  stretch, fold and escape of each iteration.
+- Gallery example "Smale's Horseshoe Map: Stretch, Fold, and Return"
+  (`plot_smale_horseshoe.py`).
 - `physicskit.fluids.LatticeBoltzmannD2Q9`: a D2Q9 BGK lattice Boltzmann
   solver (numba collide-and-stream kernel, Guo body forcing, halfway
   bounce-back solid nodes, periodic lattice), with `lbm_viscosity`,
@@ -220,54 +246,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The statphys history entries "1905 -- Einstein's Explanation of
-  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
-  `BrownianMotion` and `LangevinDynamics`, and each links one more
-  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
-  `plot_langevin_fluctuation_dissipation.py`).
-- CI tests Python 3.13 and 3.14 as well as 3.10-3.12, and installs the
-  `units`/`hdf5` extras so the pint and HDF5 paths are tested. Coverage is
-  written to each run's job summary and uploaded to Codecov, whose badge
-  replaces the hand-maintained README badge and coverage table.
-- `mypy` is now blocking in CI for the typed core (`constants`,
-  `integrators`, `units`, `results`, `io`), configured per module in
-  `pyproject.toml`; `mypy` with no arguments runs exactly that check.
-  Whole-package `mypy physicskit` stays advisory.
-- `physicskit.fluids` is now exported from the top-level package
-  (`import physicskit as pk; pk.fluids`), like every other subpackage.
-  Previously it had to be imported explicitly.
-
-## [0.3.0] - 2026-09-29
-
-### Added
-
-- `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
-  `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
-  `stroboscopic_map` that samples many trajectories once per forcing
-  period. Its defaults (`mu=10`, `omega=2.5`, `A = 0.58*omega*mu`) are in
-  the Cartwright-Littlewood regime where stable subharmonics of period
-  3T and 5T coexist.
-- Gallery example "Cartwright-Littlewood: Chaos in the Forced Van der Pol
-  Oscillator" (`plot_cartwright_littlewood_forced_van_der_pol.py`),
-  showing the two coexisting periodic motions, their interleaved basins,
-  and an orbit on the chaotic "bad" set tracked along the basin boundary.
-- Chaos history entry "1945 -- 1949 -- Cartwright, Littlewood, and
-  Levinson: Chaos in the Forced Van der Pol Oscillator", covering the 1927
-  van der Pol-van der Mark observation, the 1938 radar question, the 1945
-  result, Levinson's 1949 model and its route to Smale's horseshoe. The
-  Smale entry now points back to it.
-- `physicskit.chaos.SmaleHorseshoe`, the piecewise-linear horseshoe map
-  (contraction `lam < 1/2`, expansion `mu > 2`), with `fold` (image part-way
-  through the fold), `inverse_step`, `survives` (points that stay in the
-  square), closed-form `periodic_points`, `lyapunov_exponents` and
-  `topological_entropy`.
-- `physicskit.chaos.visualizers.animate_horseshoe_map`, animating the
-  stretch, fold and escape of each iteration.
-- Gallery example "Smale's Horseshoe Map: Stretch, Fold, and Return"
-  (`plot_smale_horseshoe.py`).
-
-### Changed
-
 - The chaos history entry "1965 -- Smale's Horseshoe Map" now links the
   horseshoe example and `SmaleHorseshoe` instead of the Baker's map.
 - Every history breakthrough now links its own gallery example(s); no
@@ -300,6 +278,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   quick start, per-subpackage numpy/scipy/numba notes and a Design section.
   `docs/make_readme_figure.py` and `docs/make_readme_subpackage_figures.py`
   regenerate the figures.
+- The statphys history entries "1905 -- Einstein's Explanation of
+  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
+  `BrownianMotion` and `LangevinDynamics`, and each links one more
+  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
+  `plot_langevin_fluctuation_dissipation.py`).
+- CI tests Python 3.13 and 3.14 as well as 3.10-3.12, and installs the
+  `units`/`hdf5` extras so the pint and HDF5 paths are tested. Coverage is
+  written to each run's job summary and uploaded to Codecov, whose badge
+  replaces the hand-maintained README badge and coverage table.
+- `mypy` is now blocking in CI for the typed core (`constants`,
+  `integrators`, `units`, `results`, `io`), configured per module in
+  `pyproject.toml`; `mypy` with no arguments runs exactly that check.
+  Whole-package `mypy physicskit` stays advisory.
+- `physicskit.fluids` is now exported from the top-level package
+  (`import physicskit as pk; pk.fluids`), like every other subpackage.
+  Previously it had to be imported explicitly.
 
 ### Fixed
 
