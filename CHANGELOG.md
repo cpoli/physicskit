@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.3.0] - 2026-09-29
-
 ### Added
 
 - `physicskit.fluids.LatticeBoltzmannD2Q9`: a D2Q9 BGK lattice Boltzmann
@@ -59,7 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   section (`plot_fokker_planck_equation.py`,
   `plot_ornstein_uhlenbeck_process.py`,
   `plot_ito_euler_maruyama_milstein.py`).
-
 - `physicskit.fields.electrostatics`: `coulomb_potential`/`coulomb_field`
   (point-charge superposition), `solve_poisson` (Jacobi or SOR relaxation
   on 2D/3D grids with fixed-voltage conductor cells, returning a
@@ -84,6 +81,166 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `plot_poisson_equation_relaxation.py`,
   `plot_biot_savart_loop_and_solenoid.py`,
   `plot_green_method_of_images.py`).
+- `physicskit.units`: explicit natural-unit systems. `UnitSystem` is
+  fixed by anchors (constants set to 1 plus user-chosen scales) and
+  refuses to convert a dimension those anchors leave undetermined.
+  Presets `astro_units` (G=1), `geometrized_units` (G=c=1),
+  `quantum_units` (hbar=1) and `statphys_units` (k_B=1) have no hidden
+  default scales; `natural_units` builds any other combination.
+  `to_si`/`from_si` convert values, and `to_pint`/`from_pint` interoperate
+  with pint when it is installed (new `units` extra).
+- `physicskit.results.Result`, a shared container (`times`, `states`,
+  `metadata`, `units`, `unit_system`, extra named `arrays`) that converts
+  its dimensioned arrays between unit systems (`convert`, `to_si`).
+  Opt-in adapters wrap the result shapes subpackages already return:
+  `from_integrator` (shared integrators and chaos flows),
+  `from_simulation_result` (classical), `from_map_orbit` (chaos maps),
+  `from_eigen_result` (quantum) and `from_spectrum` (rmt). Subpackages
+  are unchanged.
+- `physicskit.io.save`/`load` for `Result`: `.npz` always (loaded with
+  `allow_pickle=False`), HDF5 when h5py is installed (new `hdf5` extra).
+  Files carry a format version.
+- `physicskit.units.SI`, the SI unit system.
+- `benchmarks/`: pytest-benchmark timings for the shared integrators
+  (`rk4`, `leapfrog`, `yoshida4`, `dopri5`) and three representative
+  solvers (`statphys.Ising2D`, `fluids.NavierStokes2D`,
+  `quantum.NumerovSolver`), each also checking a closed-form result. New
+  `bench` extra; CI smoke-runs them on PRs and keeps timed results from
+  `main` as artifacts.
+- Long-form tutorials for `chaos` ("Measuring Chaos"), `rmt` ("Random
+  Matrix Universality"), `plasma` ("Plasma Physics from One Particle to
+  Kinetic Theory"), `fluids` ("A Tour of Fluid Flow Regimes") and
+  `relativity` ("Black Holes, Orbits and Ringdowns in Geometrized
+  Units"), using only the public API. Every printed number was checked
+  by running the page's code, and each is compared against a closed-form
+  or published value.
+- A "Units and conventions" docs page (each subpackage's unit system,
+  plus `physicskit.units`/`results`/`io` usage and reference), and a
+  Tutorials section in the docs navigation listing every tutorial.
+- A stability and deprecation policy in `CONTRIBUTING.md` ahead of 1.0.
+- `physicskit.particle` compact U(1) lattice gauge theory
+  (`physicskit.particle.lattice_gauge`): the numba Metropolis simulation
+  `U1LatticeGauge` (2D/3D, plaquettes, Wilson loops, gauge transforms,
+  binned measurements), the exact 2D results `u1_2d_wilson_loop_exact`
+  and `u1_2d_string_tension`, and `creutz_ratio`.
+- Gallery example "Wilson's lattice gauge theory: Wilson loops and the
+  confining area law" (`examples/particle/qcd/`) and particle history entry
+  "1974 -- Wilson's Lattice Gauge Theory and the Area Law".
+- `physicskit.quantum` restricted Hartree-Fock
+  (`physicskit.quantum.chapters.hartree_fock`, atomic units):
+  `restricted_hartree_fock` / `HartreeFockResult` (Roothaan SCF), the
+  s-type Gaussian basis `GaussianS`, `sto3g_1s`, `STO3G_ZETA`,
+  `even_tempered_s_basis`, and the closed-form integrals `overlap_matrix`,
+  `kinetic_matrix`, `nuclear_attraction_matrix`,
+  `electron_repulsion_tensor`.
+- Gallery example "Hartree-Fock: the self-consistent field for H₂ and
+  helium" (`examples/quantum/atoms_molecules/`) and quantum history entry
+  "1928-1930 -- Hartree and Fock: The Self-Consistent Field".
+- `physicskit.optics.LaserRateEquations` (threshold, gain clamping, exact
+  steady state with spontaneous emission, relaxation oscillations) and
+  `physicskit.optics.MaxwellBloch` (Haken's single-mode Maxwell-Bloch
+  laser, its lasing and second/chaotic thresholds), both integrated with
+  the shared numba `rk4_integrate` (`physicskit.optics.lasers`).
+- Gallery examples "Schawlow and Townes: the lasing threshold from the
+  laser rate equations" and "Haken's laser-Lorenz analogy: Maxwell-Bloch
+  dynamics and laser chaos" (`examples/optics/lasers/`), with optics
+  history entries "1958 -- Schawlow and Townes: The Optical Maser and the
+  Lasing Threshold" and "1975 -- Haken: The Laser-Lorenz Analogy and Laser
+  Chaos". The Maiman (1960) entry now points to the 1958 entry for the
+  gain medium.
+- `physicskit.condensed` lattice dynamics (`physicskit.condensed.phonons`):
+  `monatomic_chain_dispersion`, `diatomic_chain_dispersion`,
+  `square_lattice_dynamical_matrix`, `square_lattice_phonon_dispersion`,
+  `lattice_heat_capacity`, `debye_heat_capacity`, `debye_temperature`.
+- `physicskit.condensed` electronic transport
+  (`physicskit.condensed.transport`): `drude_conductivity`,
+  `drude_ac_conductivity`, `drude_conductivity_tensor`,
+  `hall_coefficient`, `fermi_window`, and the relaxation-time Boltzmann
+  solver `boltzmann_transport` / `BoltzmannTransport` (conductivity,
+  Seebeck and electronic thermal conductivity for any sampled band).
+- Gallery examples "Born and von Karman: phonon dispersion of crystal
+  lattices", "Debye's heat capacity and the T³ law"
+  (`examples/condensed/phonons/`), "The Drude model: conductivity and the
+  Hall effect" and "Sommerfeld's electron gas: the Wiedemann-Franz law and
+  thermopower" (`examples/condensed/transport/`), with condensed history
+  entries "1900 -- Drude's Theory of Metals", "1912 -- Born and von
+  Karman: Lattice Dynamics and Phonons", "1912 -- Debye's Theory of the
+  Heat Capacity of Solids", and "1927-1928 -- Sommerfeld's Electron Gas
+  and Boltzmann Transport".
+- `physicskit.quantum` relativistic quantum mechanics
+  (`physicskit.quantum.chapters.relativistic`, units hbar = c = 1):
+  `klein_gordon_dispersion`, `klein_gordon_plane_wave`, `gamma_matrices`,
+  `dirac_hamiltonian`, `dirac_plane_wave_spinor`, the Dirac hydrogen
+  levels `dirac_hydrogen_energy` and `fine_structure_expansion`, and the
+  Klein-paradox step coefficients `dirac_step_scattering` and
+  `klein_gordon_step_scattering`.
+- `physicskit.quantum` 3D scattering theory
+  (`physicskit.quantum.chapters.scattering`): `momentum_transfer`,
+  `born_amplitude`, `yukawa_born_amplitude`, `partial_wave_phase_shifts`
+  (Calogero variable-phase method), `born_phase_shifts`,
+  `hard_sphere_phase_shifts`, `partial_wave_amplitude`,
+  `partial_wave_cross_section`.
+- Gallery examples "The Dirac equation and the fine structure of
+  hydrogen", "Klein's paradox: relativistic particles at a tall potential
+  step" (`examples/quantum/relativistic/`), "The Born approximation:
+  Rutherford scattering from quantum mechanics" and "Partial-wave
+  analysis: phase shifts of the hard sphere and the square well"
+  (`examples/quantum/scattering/`), with quantum history entries "1926 --
+  Born's Collision Theory and the Born Approximation", "1927 -- Faxen and
+  Holtsmark: Partial-Wave Analysis", "1928 -- The Dirac Equation and the
+  Fine Structure of Hydrogen", and "1929 -- Klein's Paradox".
+- `physicskit.condensed` exact diagonalization of spin-1/2 chains
+  (`physicskit.condensed.spin_chains`): sparse `xxz_hamiltonian` and
+  `tfim_hamiltonian` built in magnetization / parity symmetry sectors
+  (`spin_chain_basis`), `lowest_eigenstates` and `energy_gap` (Lanczos),
+  the entanglement tools `embed_state`, `entanglement_entropy`,
+  `entanglement_profile`, `calabrese_cardy_entropy`, `fit_central_charge`,
+  and the exact references `bethe_ansatz_xxx_ground_energy`,
+  `tfim_free_fermion_spectrum`, `tfim_ground_state_energy`.
+- Gallery examples "Bethe's ansatz for the Heisenberg antiferromagnetic
+  chain", "The transverse-field Ising chain as free fermions", and
+  "Calabrese-Cardy: logarithmic entanglement at criticality vs. the area
+  law" (`examples/condensed/spin_chains/`), with condensed history entries
+  "1931 -- Bethe's Ansatz for the Heisenberg Chain", "1961-1970 -- The
+  Transverse-Field Ising Chain as Free Fermions", and "2004 -- Calabrese
+  and Cardy: Entanglement Entropy at Criticality".
+- `physicskit.quantum` open quantum systems
+  (`physicskit.quantum.chapters.open_systems`): `lindblad_rhs`,
+  `lindblad_superoperator`, `solve_lindblad` (exact propagation of the
+  GKSL master equation), `lindblad_steady_state`, the Monte Carlo
+  wavefunction unravelling `QuantumTrajectories` / `TrajectoryResult`,
+  the Kraus channels `amplitude_damping_kraus`, `dephasing_kraus`,
+  `apply_kraus`, `is_trace_preserving`, and the qubit helpers
+  `sigma_minus`, `t1_t2_collapse_operators`.
+- Gallery examples "The Lindblad master equation: T1 relaxation and T2
+  dephasing" and "Quantum trajectories: the Monte Carlo wavefunction
+  method" (`examples/quantum/open_systems/`), and quantum history entries
+  "1976 -- Lindblad's Master Equation for Open Quantum Systems" and
+  "1992 -- Dalibard, Castin, and Molmer: Quantum Trajectories".
+
+### Changed
+
+- The statphys history entries "1905 -- Einstein's Explanation of
+  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
+  `BrownianMotion` and `LangevinDynamics`, and each links one more
+  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
+  `plot_langevin_fluctuation_dissipation.py`).
+- CI tests Python 3.13 and 3.14 as well as 3.10-3.12, and installs the
+  `units`/`hdf5` extras so the pint and HDF5 paths are tested. Coverage is
+  written to each run's job summary and uploaded to Codecov, whose badge
+  replaces the hand-maintained README badge and coverage table.
+- `mypy` is now blocking in CI for the typed core (`constants`,
+  `integrators`, `units`, `results`, `io`), configured per module in
+  `pyproject.toml`; `mypy` with no arguments runs exactly that check.
+  Whole-package `mypy physicskit` stays advisory.
+- `physicskit.fluids` is now exported from the top-level package
+  (`import physicskit as pk; pk.fluids`), like every other subpackage.
+  Previously it had to be imported explicitly.
+
+## [0.3.0] - 2026-09-29
+
+### Added
+
 - `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
   `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
   `stroboscopic_map` that samples many trajectories once per forcing
@@ -111,11 +268,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The statphys history entries "1905 -- Einstein's Explanation of
-  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
-  `BrownianMotion` and `LangevinDynamics`, and each links one more
-  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
-  `plot_langevin_fluctuation_dissipation.py`).
 - The chaos history entry "1965 -- Smale's Horseshoe Map" now links the
   horseshoe example and `SmaleHorseshoe` instead of the Baker's map.
 - Every history breakthrough now links its own gallery example(s); no
