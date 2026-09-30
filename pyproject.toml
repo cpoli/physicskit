@@ -54,7 +54,10 @@ docs = [
     "sphinx-gallery>=0.15",
     "sphinx-design>=0.6",
 ]
-dev = ["physicskit[test,docs]", "ruff>=0.6", "mypy>=1.10", "pre-commit>=3.7"]
+units = ["pint>=0.23"]
+hdf5 = ["h5py>=3.8"]
+bench = ["pytest-benchmark>=4.0"]
+dev = ["physicskit[test,docs,units,hdf5,bench]", "ruff>=0.6", "mypy>=1.10", "pre-commit>=3.7"]
 
 [project.urls]
 Homepage = "https://github.com/cpoli/physicskit"
@@ -129,6 +132,70 @@ warn_unused_ignores = true
 # type checking can be adopted incrementally rather than skipped entirely.
 # See CONTRIBUTING.md.
 check_untyped_defs = false
+# `mypy` with no arguments checks only the typed core below, and CI runs it
+# as a *blocking* job; `mypy physicskit` checks everything, advisory only.
+# The typed core imports physicskit/__init__, which imports every
+# subpackage, so errors in the rest of the package are silenced (not
+# skipped: they are still analysed for types) via follow_imports below.
+files = [
+    "physicskit/constants.py",
+    "physicskit/integrators/__init__.py",
+    "physicskit/integrators/fixed_step.py",
+    "physicskit/integrators/adaptive.py",
+    "physicskit/units.py",
+    "physicskit/results.py",
+    "physicskit/io.py",
+]
+
+[[tool.mypy.overrides]]
+# Typed core, blocking in CI: check the bodies of every function.
+module = [
+    "physicskit.constants",
+    "physicskit.integrators",
+    "physicskit.integrators.fixed_step",
+    "physicskit.integrators.adaptive",
+    "physicskit.units",
+    "physicskit.results",
+    "physicskit.io",
+]
+check_untyped_defs = true
+strict_equality = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+# New modules written fully typed from the start: hold them to (almost)
+# `--strict`. The integrators can't be, since numba's @njit dispatchers
+# aren't typed as the functions they wrap.
+module = ["physicskit.units", "physicskit.results", "physicskit.io"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_any_generics = true
+warn_return_any = true
+no_implicit_reexport = true
+
+[[tool.mypy.overrides]]
+# Everything outside the typed core: when `mypy` (typed core only) follows
+# an import into it, analyse it but don't report its errors.
+module = [
+    "physicskit.astro.*",
+    "physicskit.chaos.*",
+    "physicskit.classical.*",
+    "physicskit.condensed.*",
+    "physicskit.fields.*",
+    "physicskit.fluids.*",
+    "physicskit.optics.*",
+    "physicskit.particle.*",
+    "physicskit.plasma.*",
+    "physicskit.quantum.*",
+    "physicskit.relativity.*",
+    "physicskit.rmt.*",
+    "physicskit.semiclassical.*",
+    "physicskit.statphys.*",
+    "physicskit.integrators.tests.*",
+    "physicskit.tests.*",
+]
+follow_imports = "silent"
 
 [tool.coverage.report]
 # coverage.py cannot trace into @njit-compiled function bodies at all --

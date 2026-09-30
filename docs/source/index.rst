@@ -15,6 +15,9 @@ instead:
 :math:`G=1` for orbits, :math:`\hbar=1` for quantum states, :math:`k_B=1`
 for statistical mechanics, matching how the papers you're checking against
 actually write it, rather than forcing everything through SI.
+:doc:`Units and conventions </tutorials/units_and_conventions>` lists each
+subpackage's convention and shows how :mod:`physicskit.units` converts
+results to SI once you choose the physical scale.
 
 .. image:: _static/images/readme_hero.png
    :alt: A ray-traced black hole shadow, the Hofstadter butterfly, and Kelvin-Helmholtz roll-up, all drawn with physicskit
@@ -158,6 +161,13 @@ Conventionally imported as ``pk``:
    :hidden:
 
    history/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+   :hidden:
+
+   tutorials/index
 
 .. toctree::
    :maxdepth: 2

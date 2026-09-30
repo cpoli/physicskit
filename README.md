@@ -142,6 +142,8 @@ standalone toolkits:
 
 - `physicskit.constants` -- SI physical constants shared across subpackages, plus a few well-defined unit conversions (energy/temperature, eV/joules, gravitational G=1 unit systems).
 - `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) and SDE integrators (Euler-Maruyama, Milstein, BAOAB Langevin) used across the other subpackages.
+- `physicskit.units` -- explicit natural-unit systems (G=1, G=c=1, hbar=1, k_B=1, or any combination) with user-chosen scales, SI conversion, and optional pint interop.
+- `physicskit.results` / `physicskit.io` -- a shared, unit-aware `Result` container with adapters for existing subpackage outputs, saved to `.npz` or HDF5.
 
 ## Design
 
@@ -173,8 +175,18 @@ MPLBACKEND=Agg pytest --doctest-modules physicskit \
 ```
 
 Both commands, plus `ruff check`/`ruff format --check`, run in CI on
-every PR (`.github/workflows/ci.yml`) across Python 3.10-3.12 on Linux and
-macOS. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
+every PR (`.github/workflows/ci.yml`) across Python 3.10-3.14 on Linux and
+macOS, as does `mypy` on the typed core (`constants`, `integrators`,
+`units`, `results`, `io`). See [CONTRIBUTING.md](CONTRIBUTING.md) before
+opening a PR.
+
+Performance benchmarks for the shared integrators and three representative
+solvers live in [`benchmarks/`](benchmarks/README.md):
+
+```bash
+pip install -e ".[bench]"
+pytest benchmarks
+```
 
 ### Coverage
 
@@ -182,29 +194,17 @@ macOS. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
 MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=term
 ```
 
-1,720 tests, 96% line coverage overall. Per-subpackage coverage:
-
-| Subpackage | Coverage | | Subpackage | Coverage |
-|:--|--:|---|:--|--:|
-| `astro` | 100% | | `plasma` | 99% |
-| `chaos` | 87% | | `quantum` | 96% |
-| `classical` | 100% | | `relativity` | 99% |
-| `condensed` | 100% | | `rmt` | 100% |
-| `fields` | 100% | | `semiclassical` | 99% |
-| `fluids` | 100% | | `statphys` | 86% |
-| `integrators` | 100% | | `constants` | 100% |
-| `optics` | 100% | | | |
-| `particle` | 100% | | | |
-
-Every subpackage is at 100% coverage outside `visualizers/` modules (99.9%
-in aggregate — six rare bootstrap-loop edge cases remain uncovered across
-`statphys.chapters.percolation` and `rmt.stats`). `chaos`, `quantum`, and
-`statphys` still sit lower overall because their `visualizers/` modules
-are smoke-tested only (correct return type/shape, or that `anim.save()`
-succeeds) rather than covered line-by-line, per the testing convention in
-[CLAUDE.md](CLAUDE.md). `@njit`-compiled lines are excluded from coverage
-entirely (`pyproject.toml`, `[tool.coverage.report]`) since
-`coverage.py` cannot trace into numba-compiled native code.
+CI measures coverage on every push and PR and uploads it to
+[Codecov](https://codecov.io/gh/cpoli/physicskit), which drives the badge
+above; the per-file table is also written to each CI run's job summary.
+Modules outside `visualizers/` aim for full line coverage. `visualizers/`
+modules are smoke-tested only (correct return type/shape, or that
+`anim.save()` succeeds) rather than covered line-by-line, per the testing
+convention in [CLAUDE.md](CLAUDE.md), so subpackages with large visualizer
+modules (`chaos`, `quantum`, `statphys`) report lower overall numbers.
+`@njit`-compiled lines are excluded from coverage entirely
+(`pyproject.toml`, `[tool.coverage.report]`) since `coverage.py` cannot
+trace into numba-compiled native code.
 
 ## Docs
 
@@ -220,6 +220,9 @@ See `docs/source/history/` for a chronology of each field's foundational
 breakthroughs, linked to the corresponding implementation at each step.
 The README figures are regenerated with `python docs/make_readme_figure.py`
 and `python docs/make_readme_subpackage_figures.py`.
+
+Long-form tutorials, including a "Units and conventions" guide to each
+subpackage's natural units, are in `docs/source/tutorials/`.
 
 ## Citation
 

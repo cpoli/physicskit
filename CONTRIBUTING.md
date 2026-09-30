@@ -24,11 +24,22 @@ MPLBACKEND=Agg pytest -q     # unit tests
 MPLBACKEND=Agg pytest --doctest-modules physicskit \
     --ignore-glob="*/tests/*" \
     --ignore=physicskit/chaos/visualizers/viewer3d.py   # docstring examples
+mypy                         # type check the typed core (blocking)
 ```
 
-All three run in CI (`.github/workflows/ci.yml`) on every PR, across
-Python 3.10-3.12 on Linux and macOS. `mypy` also runs in CI but is
-currently advisory (non-blocking) — see "Type checking" below.
+All of these run in CI (`.github/workflows/ci.yml`) on every PR, across
+Python 3.10-3.14 on Linux and macOS. `mypy` on the whole package also
+runs, but only as an advisory job — see "Type checking" below.
+
+If your change could affect performance (an integrator, a hot loop, a
+solver), compare the benchmarks before and after on your own machine —
+see [`benchmarks/README.md`](benchmarks/README.md):
+
+```bash
+pip install -e ".[bench]"
+pytest benchmarks --benchmark-autosave    # on main
+pytest benchmarks --benchmark-compare     # on your branch
+```
 
 If you touch anything under `docs/` or add/modify an example in
 `examples/`, also build the docs locally before opening a PR (this
@@ -59,11 +70,25 @@ cd docs && make html
 
 ## Type checking
 
-`mypy` is configured in `pyproject.toml` but not yet fully clean across
-the codebase (mostly matplotlib/numpy stub gaps around animation objects
-and array-typed arguments) — it currently runs in CI as an advisory,
-non-blocking job. New code should type-check cleanly where practical;
-fixing pre-existing errors in code you're not otherwise touching is
+Type checking is adopted module by module, configured in
+`pyproject.toml`:
+
+- **Typed core (blocking).** `mypy` with no arguments checks the modules
+  listed under `[tool.mypy] files` — `constants`, `integrators`, `units`,
+  `results` and `io` — with `check_untyped_defs` on, and `units`,
+  `results` and `io` held to near-`--strict` settings. A failure here
+  fails CI. Errors in other modules that the typed core merely imports
+  are silenced by a `follow_imports = "silent"` override.
+- **Whole package (advisory).** `mypy physicskit` checks everything. It
+  is not yet clean (mostly matplotlib/numpy stub gaps around animation
+  objects and array-typed arguments), so CI runs it as a non-blocking
+  job.
+
+New code should type-check cleanly. To promote a module to the typed
+core, fix its errors, then add it to `files` and to the first
+`[[tool.mypy.overrides]]` block (and remove its subpackage from the
+`follow_imports = "silent"` list if the whole subpackage is now clean).
+Fixing pre-existing errors in code you're not otherwise touching is
 welcome but not required.
 
 ## Tests
@@ -92,6 +117,82 @@ implements. Keep it that way:
 - Changes to `docs/source/history/**` require a maintainer review
   (enforced via `.github/CODEOWNERS`) even if the rest of the PR is
   otherwise approved.
+
+## Stability and deprecation policy
+
+physicskit follows [Semantic Versioning](https://semver.org/). It is
+pre-1.0, so the rules below are what contributors should follow now, and
+they become a guarantee to users at 1.0.
+
+### What counts as public API
+
+- Names exported in a module's `__all__`, or documented in the API
+  reference, tutorials or the example gallery. This includes
+  `physicskit.constants`, `physicskit.integrators`, `physicskit.units`,
+  `physicskit.results` and `physicskit.io`, and each subpackage's
+  top-level namespace.
+- **The unit convention of each subpackage** (see the "Units and
+  conventions" docs page). Silently switching a function from
+  `G = c = 1` to SI changes every number a caller gets, which is as
+  breaking as renaming it.
+- The on-disk format written by `physicskit.io.save`.
+
+Anything whose name starts with an underscore is private, as are
+`tests/` directories and anything undocumented. It can change at any
+time.
+
+### Deprecating something
+
+1. Keep the old name or behaviour working and have it emit a
+   `DeprecationWarning` (or `FutureWarning` when a default *value* or
+   *result* is going to change) that says what to use instead and in
+   which release the old form goes away. Use `stacklevel=2` so the
+   warning points at the caller.
+2. Add a test that asserts the warning (`pytest.warns`) and that the
+   old path still gives the right answer.
+3. Add a bullet under `### Deprecated` in `CHANGELOG.md`.
+4. Remove it no sooner than **one minor release** later while pre-1.0
+   (deprecated in 0.3, removed in 0.4 at the earliest), and no sooner
+   than **two minor releases** later after 1.0. Removals are listed
+   under `### Removed`.
+
+### Changes that don't need a deprecation cycle
+
+- **Physics fixes.** If a function returns a wrong value (a sign error,
+  a missing factor of 2), fix it immediately. A wrong answer shouldn't
+  stay available for another release. Because callers may depend on the
+  old number, list the fix in its own "these change results" block
+  under `### Changed` in the CHANGELOG, with the old and new behaviour,
+  as the 0.2.0 entry does.
+- **Numerical details.** Results are reproducible within documented
+  tolerances, not bit-for-bit, across releases. A change of integrator
+  internals, default grid resolution or RNG stream is allowed if the
+  documented accuracy still holds. Mention it in the CHANGELOG when it
+  visibly changes outputs, such as a seeded example's printed numbers.
+- **Additions:** new functions, new keyword arguments with defaults that
+  keep the old behaviour, and new fields at the end of result
+  dataclasses.
+
+### Saved files
+
+`physicskit.io` writes a `FORMAT_VERSION` into every file. A new release
+must still read files written by every earlier format version, and must
+refuse (with a clear error), not misread, files from a newer one. Bump
+`FORMAT_VERSION` whenever the layout changes, and add a round-trip test
+that loads a file written in the old layout.
+
+### Supported Python versions
+
+Supported versions are the ones in the CI test matrix (currently
+3.10-3.14). Dropping one happens in a minor release, is announced in the
+CHANGELOG, and updates `requires-python`, the classifiers and the CI
+matrix together.
+
+### Before 1.0
+
+1.0 will be tagged once the public API above has been through at least
+one release without a breaking change. The typed-core `mypy` job should
+also cover every subpackage's top-level namespace by then.
 
 ## Reporting bugs / requesting features
 
