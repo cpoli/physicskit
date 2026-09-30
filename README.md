@@ -93,7 +93,7 @@ Domain subpackages, each with runnable examples linked below:
 
   ![The FPUT recurrence, a Hénon-Heiles Poincaré section, and the Dzhanibekov effect](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_classical.png)
 
-- [`physicskit.condensed`](https://cpoli.github.io/physicskit/api/gallery/condensed/) -- tight-binding models (Bloch bands, Slater-Koster, Peierls substitution and the Hofstadter butterfly), topological band theory (Chern numbers, Zak phase, Z2 invariants, the tenfold way, SSH/Haldane/Kane-Mele/Kitaev/Weyl edge and surface states), Anderson localization, Landau levels and the quantum Hall effects, and correlated electrons (BCS, Hubbard, Ginzburg-Landau) (diagonalization via `numpy.linalg.eigh`).
+- [`physicskit.condensed`](https://cpoli.github.io/physicskit/api/gallery/condensed/) -- tight-binding models (Bloch bands, Slater-Koster, Peierls substitution and the Hofstadter butterfly), topological band theory (Chern numbers, Zak phase, Z2 invariants, the tenfold way, SSH/Haldane/Kane-Mele/Kitaev/Weyl edge and surface states), Anderson localization, Landau levels and the quantum Hall effects, correlated electrons (BCS, Hubbard, Ginzburg-Landau), exact diagonalization of quantum spin chains (Bethe ansatz, transverse-field Ising, entanglement scaling), phonons and the Debye heat capacity, and Drude/Boltzmann transport (diagonalization via `numpy.linalg.eigh`).
 
   ![The Hofstadter butterfly, Haldane ribbon edge states, and SSH zero modes](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_condensed.png)
 
@@ -105,11 +105,11 @@ Domain subpackages, each with runnable examples linked below:
 
   ![Kelvin-Helmholtz roll-up, a von Kármán vortex street, and flow past a spinning cylinder](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_fluids.png)
 
-- [`physicskit.optics`](https://cpoli.github.io/physicskit/api/gallery/optics/) -- ray optics and ABCD matrices, Fresnel/Fraunhofer wave optics (`numpy.fft`), Gaussian and Laguerre-Gauss beams (`scipy.special`), and quantum optics (coherent and squeezed states, photon statistics, the Jaynes-Cummings model, Wigner functions).
+- [`physicskit.optics`](https://cpoli.github.io/physicskit/api/gallery/optics/) -- ray optics and ABCD matrices, Fresnel/Fraunhofer wave optics (`numpy.fft`), Gaussian and Laguerre-Gauss beams (`scipy.special`), and quantum optics (coherent and squeezed states, photon statistics, the Jaynes-Cummings model, Wigner functions), and lasers (rate equations and Maxwell-Bloch dynamics).
 
   ![Young's double-slit fringes, a Laguerre-Gauss vortex beam, and the Wigner function of a Fock state](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_optics.png)
 
-- [`physicskit.particle`](https://cpoli.github.io/physicskit/api/gallery/particle/) -- relativistic kinematics (four-vectors, boosts, Mandelstam variables), particle decays and scattering, detector signatures and resonance searches (from the J/psi to the Higgs), weak interactions and neutrino oscillations, radioactive decay chains, and nuclear physics (Rutherford scattering, the semi-empirical mass formula, fission).
+- [`physicskit.particle`](https://cpoli.github.io/physicskit/api/gallery/particle/) -- relativistic kinematics (four-vectors, boosts, Mandelstam variables), particle decays and scattering, detector signatures and resonance searches (from the J/psi to the Higgs), weak interactions and neutrino oscillations, radioactive decay chains, nuclear physics (Rutherford scattering, the semi-empirical mass formula, fission), and U(1) lattice gauge theory with Wilson loops.
 
   ![A Higgs diphoton bump, the semi-empirical mass formula, and the Rutherford cross section](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_particle.png)
 
@@ -117,7 +117,7 @@ Domain subpackages, each with runnable examples linked below:
 
   ![The two-stream instability's phase-space vortex, Grad-Shafranov flux surfaces, and a magnetic-mirror orbit](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_plasma.png)
 
-- [`physicskit.quantum`](https://cpoli.github.io/physicskit/api/gallery/quantum/) -- quantum mechanics: wave packets (split-operator propagation via `numpy.fft`), potentials and tunneling (matrix Numerov and sparse eigensolvers via `scipy.sparse.linalg.eigsh`), hydrogen and angular momentum, entanglement and Bell inequalities, measurement (Born rule, Stern-Gerlach, the double slit), and perturbation and Floquet theory.
+- [`physicskit.quantum`](https://cpoli.github.io/physicskit/api/gallery/quantum/) -- quantum mechanics: wave packets (split-operator propagation via `numpy.fft`), potentials and tunneling (matrix Numerov and sparse eigensolvers via `scipy.sparse.linalg.eigsh`), hydrogen and angular momentum, entanglement and Bell inequalities, measurement (Born rule, Stern-Gerlach, the double slit), perturbation and Floquet theory, open systems (Lindblad, quantum trajectories), the Dirac and Klein-Gordon equations, Born and partial-wave scattering, and Hartree-Fock.
 
   ![A wave packet through a double slit, barrier transmission resonances, and hydrogen radial densities](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_quantum.png)
 

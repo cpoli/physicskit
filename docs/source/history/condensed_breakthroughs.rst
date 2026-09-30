@@ -12,14 +12,158 @@ Condensed matter physics is the study of what happens when enormous numbers
 of quantum particles are put together: emergent order, broken symmetries,
 and -- since the 1980s -- emergent *topology*. This chronology traces the
 major conceptual breakthroughs behind :mod:`physicskit.condensed`, from
-Bloch's 1928 theorem to the topological superconductors of the 21st
-century. Every stop has a pointer to the corresponding implementation in
+Drude's 1900 electron gas and Bloch's 1928 theorem to the topological
+superconductors of the 21st century. Every stop has a pointer to the corresponding implementation in
 this package, a structural diagram of the system it describes, and a
 short, runnable example reproducing the milestone's signature observable.
 
 .. contents:: Timeline
    :local:
    :depth: 1
+
+1900 -- Drude's Theory of Metals
+--------------------------------
+
+Three years after J. J. Thomson identified the electron, Paul Drude
+proposed that a metal's conduction electrons behave as a classical gas:
+free between collisions, accelerated by applied fields, and randomized by
+collisions with the ions every :math:`\tau` on average. The equation of
+motion
+
+.. math::
+
+   m\frac{d\mathbf v}{dt} = q(\mathbf E + \mathbf v\times\mathbf B) - \frac{m\mathbf v}{\tau}
+
+gives Ohm's law with :math:`\sigma_0 = nq^2\tau/m`, a frequency-dependent
+conductivity :math:`\sigma_0/(1 - i\omega\tau)` that explained the
+infrared reflectivity of metals, and a Hall resistivity
+:math:`\rho_{yx} = B/(nq)` whose sign reads off the carriers' charge.
+Using classical kinetic theory for the heat current, Drude also derived
+the Wiedemann-Franz law, :math:`\kappa/\sigma T` constant, with a value
+that agreed well with experiment only thanks to two compensating errors.
+The model's failures (the missing electronic heat capacity, and Hall
+coefficients of the wrong sign in some metals) had to wait for quantum
+statistics and band theory.
+
+*Implementation:* :func:`physicskit.condensed.transport.drude_conductivity`,
+:func:`~physicskit.condensed.transport.drude_ac_conductivity`,
+:func:`~physicskit.condensed.transport.drude_conductivity_tensor`, and
+:func:`~physicskit.condensed.transport.hall_coefficient` give the DC, AC,
+and magnetotransport response of the Drude gas.
+
+*References:* P. Drude, "Zur Elektronentheorie der Metalle," Ann. Phys.
+306, 566-613 (1900); N. W. Ashcroft and N. D. Mermin, *Solid State
+Physics* (1976), Ch. 1.
+
+.. minigallery:: ../../examples/condensed/transport/plot_drude_model.py
+
+1912 -- Born and von Karman: Lattice Dynamics and Phonons
+---------------------------------------------------------
+
+Max Born and Theodore von Karman modeled a crystal as atoms joined by
+springs and, to avoid the complications of surfaces, imposed *periodic*
+boundary conditions, an idea now used throughout solid-state physics. The
+normal modes are then plane waves labeled by a wavevector :math:`\mathbf k`
+in the Brillouin zone, with frequencies given by the eigenvalues of the
+dynamical matrix,
+
+.. math::
+
+   \omega^2(\mathbf k)\,\mathbf e = D(\mathbf k)\,\mathbf e, \qquad
+   \omega(k) = 2\sqrt{K/m}\,\bigl|\sin(ka/2)\bigr| \ \text{(monatomic chain)}.
+
+Every lattice has three (in 3D) *acoustic* branches with
+:math:`\omega \approx ck` at long wavelengths, the sound waves; a lattice
+with several atoms per cell adds *optical* branches, separated by a gap.
+The quanta of these modes were later named phonons.
+
+*Implementation:* :func:`physicskit.condensed.phonons.monatomic_chain_dispersion`
+and :func:`~physicskit.condensed.phonons.diatomic_chain_dispersion` give
+the 1D chains, and
+:func:`~physicskit.condensed.phonons.square_lattice_dynamical_matrix` and
+:func:`~physicskit.condensed.phonons.square_lattice_phonon_dispersion` a
+2D square lattice with nearest- and next-nearest-neighbor springs, whose
+longitudinal and transverse sound speeds follow from the spring constants.
+
+*References:* M. Born and T. von Karman, "Uber Schwingungen in
+Raumgittern," Phys. Z. 13, 297-309 (1912).
+
+.. minigallery:: ../../examples/condensed/phonons/plot_born_von_karman_phonon_dispersion.py
+
+1912 -- Debye's Theory of the Heat Capacity of Solids
+-----------------------------------------------------
+
+Classical equipartition gives every atom of a solid a heat capacity of
+:math:`3k_B` (the Dulong-Petit law), but by 1900 it was clear that
+diamond and other hard solids fall well below it at low temperature.
+Einstein's 1907 model, with all atoms oscillating at one quantized
+frequency, explained the drop but predicted an exponential decline that
+was too fast. Peter Debye instead quantized the *sound waves* of the
+solid, with :math:`\omega = ck` up to a cutoff chosen so the number of
+modes equals the number of degrees of freedom. The result,
+
+.. math::
+
+   \frac{C}{Nk_B} = 9\left(\frac{T}{\Theta_D}\right)^3
+       \int_0^{\Theta_D/T}\frac{x^4e^x}{(e^x-1)^2}\,dx
+   \;\xrightarrow{T\ll\Theta_D}\; \frac{12\pi^4}{5}\left(\frac{T}{\Theta_D}\right)^3,
+
+with the Debye temperature :math:`\Theta_D = \hbar c(6\pi^2n)^{1/3}/k_B`,
+fit experiment over the whole temperature range. The :math:`T^3` law holds
+for any 3D insulator because only the long-wavelength acoustic phonons are
+excited at low temperature.
+
+*Implementation:* :func:`physicskit.condensed.phonons.debye_heat_capacity`
+and :func:`~physicskit.condensed.phonons.debye_temperature` implement
+Debye's model; :func:`~physicskit.condensed.phonons.lattice_heat_capacity`
+sums Einstein's mode heat capacity over a sampled phonon dispersion,
+giving the :math:`T^d` law of a :math:`d`-dimensional lattice without the
+continuum approximation.
+
+*References:* P. Debye, "Zur Theorie der spezifischen Warmen," Ann. Phys.
+344, 789-839 (1912); A. Einstein, Ann. Phys. 327, 180-190 (1907).
+
+.. minigallery:: ../../examples/condensed/phonons/plot_debye_heat_capacity.py
+
+1927-1928 -- Sommerfeld's Electron Gas and Boltzmann Transport
+--------------------------------------------------------------
+
+Arnold Sommerfeld kept Drude's picture of free electrons but replaced the
+Maxwell-Boltzmann distribution with the Fermi-Dirac distribution that
+Pauli had just applied to electrons. Because of the exclusion principle
+only electrons within about :math:`k_BT` of the Fermi energy can be
+excited, which explained at once why the electrons contribute so little
+to the heat capacity. Combined with the Boltzmann equation in the
+relaxation-time approximation, the linear response to fields and
+temperature gradients depends only on the Fermi window
+:math:`-\partial f/\partial\varepsilon`, and the Sommerfeld expansion
+gives two universal results for degenerate metals: the Wiedemann-Franz
+law
+
+.. math::
+
+   \frac{\kappa}{\sigma T} = \frac{\pi^2}{3}\left(\frac{k_B}{e}\right)^2,
+
+and a thermopower (Seebeck coefficient) smaller than Drude's by a factor
+of order :math:`k_BT/E_F`, given by Mott's formula
+:math:`S = \frac{\pi^2k_B^2T}{3q}\,\frac{d\ln\sigma}{d\varepsilon}`.
+The same equations apply to Bloch electrons in any band, which is how
+transport is computed from band structures today.
+
+*Implementation:* :func:`physicskit.condensed.transport.boltzmann_transport`
+computes the conductivity, Seebeck, and electronic thermal conductivity
+tensors of any band sampled on a :math:`k`-grid, returning a
+:class:`~physicskit.condensed.transport.BoltzmannTransport` whose
+``lorenz_number`` is :math:`\pi^2/3` for a degenerate metal;
+:func:`~physicskit.condensed.transport.fermi_window` is the thermal
+factor :math:`-\partial f/\partial\varepsilon`.
+
+*References:* A. Sommerfeld, "Zur Elektronentheorie der Metalle auf Grund
+der Fermischen Statistik," Z. Phys. 47, 1-32 and 43-60 (1928); N. F. Mott
+and H. Jones, *The Theory of the Properties of Metals and Alloys* (1936);
+Ashcroft and Mermin, Ch. 2 and 13.
+
+.. minigallery:: ../../examples/condensed/transport/plot_sommerfeld_boltzmann_transport.py
 
 1928 -- Bloch's Theorem and Band Theory
 ------------------------------------------
@@ -94,6 +238,51 @@ butterfly itself.
 
 .. minigallery:: ../../examples/condensed/landau_levels/plot_landau_levels.py
 .. minigallery:: ../../examples/condensed/tight_binding/plot_peierls_landau_levels.py
+
+1931 -- Bethe's Ansatz for the Heisenberg Chain
+-----------------------------------------------
+
+Heisenberg's 1928 exchange model explained ferromagnetism as a quantum
+effect of the Pauli principle, but even its simplest version -- a ring of
+spin-1/2 moments coupled antiferromagnetically,
+
+.. math::
+
+   H = J \sum_i \mathbf{S}_i \cdot \mathbf{S}_{i+1}, \qquad J > 0,
+
+-- resisted solution: the classical Neel state of alternating spins is
+not an eigenstate. Hans Bethe guessed the form of *every* eigenstate:
+with :math:`M` down spins ("magnons") of rapidities :math:`\lambda_j`,
+the amplitudes are sums of plane waves, and consistency under two-magnon
+scattering reduces the :math:`2^N`-dimensional problem to :math:`M`
+coupled algebraic equations,
+
+.. math::
+
+   \left(\frac{\lambda_j + i/2}{\lambda_j - i/2}\right)^{N}
+   = \prod_{k \ne j} \frac{\lambda_j - \lambda_k + i}{\lambda_j - \lambda_k - i},
+   \qquad
+   E = \frac{JN}{4} - \frac{J}{2}\sum_j \frac{1}{\lambda_j^2 + 1/4}.
+
+Lamek Hulthen solved them for the ground state in the thermodynamic limit
+in 1938, finding :math:`E_0/N = J(1/4 - \ln 2)`. The "Bethe ansatz" later
+solved the Lieb-Liniger Bose gas, the Hubbard chain, and the Kondo
+problem, and started the study of quantum integrability.
+
+*Implementation:* :func:`physicskit.condensed.spin_chains.bethe_ansatz_xxx_ground_energy`
+solves the logarithmic Bethe equations for the ground state of any even
+ring; :func:`~physicskit.condensed.spin_chains.xxz_hamiltonian` builds the
+sparse Heisenberg (XXZ) Hamiltonian in a fixed-magnetization sector, and
+:func:`~physicskit.condensed.spin_chains.lowest_eigenstates` diagonalizes
+it with Lanczos, reproducing Bethe's energies to machine precision.
+
+*References:* H. Bethe, "Zur Theorie der Metalle. I. Eigenwerte und
+Eigenfunktionen der linearen Atomkette," Z. Phys. 71, 205-226 (1931); L.
+Hulthen, Ark. Mat. Astron. Fys. 26A, No. 11 (1938); M. Karbach and G.
+Muller, "Introduction to the Bethe ansatz I," Computers in Physics 11,
+36-43 (1997).
+
+.. minigallery:: ../../examples/condensed/spin_chains/plot_bethe_ansatz_heisenberg_chain.py
 
 1950 -- Ginzburg-Landau Theory
 ------------------------------------
@@ -248,6 +437,47 @@ Proc. R. Soc. A 276, 238-257 (1963); M. C. Gutzwiller, Phys. Rev. Lett.
 10, 159-162 (1963); J. Kanamori, Prog. Theor. Phys. 30, 275-289 (1963).
 
 .. minigallery:: ../../examples/condensed/correlated/plot_hubbard_mott_transition.py
+
+1961-1970 -- The Transverse-Field Ising Chain as Free Fermions
+--------------------------------------------------------------
+
+Elliott Lieb, Theodore Schultz and Daniel Mattis showed in 1961 that the
+Jordan-Wigner transformation -- which writes each spin-1/2 as a fermion
+dressed by a string of signs from all the sites to its left -- turns
+certain spin chains into *non-interacting* fermions. Pierre Pfeuty applied
+it in 1970 to the Ising chain in a transverse field,
+
+.. math::
+
+   H = -J\sum_i \sigma^x_i\sigma^x_{i+1} - h\sum_i \sigma^z_i,
+
+the simplest model of a quantum phase transition: quantum fluctuations
+driven by :math:`h` destroy the ferromagnetic order at zero temperature.
+After a Bogoliubov transformation every eigenstate is a set of occupied
+fermion modes with energies
+
+.. math::
+
+   \varepsilon_k = 2\sqrt{J^2 + h^2 - 2Jh\cos k},
+
+whose gap :math:`2|h - J|` closes at the critical point :math:`h = J`.
+The model is equivalent to the classical 2D Ising model solved by Onsager
+and is still the standard test case for quantum critical behavior.
+
+*Implementation:* :func:`physicskit.condensed.spin_chains.tfim_hamiltonian`
+builds the Hamiltonian in either :math:`\mathbb{Z}_2` parity sector;
+:func:`~physicskit.condensed.spin_chains.tfim_free_fermion_spectrum`
+reproduces all :math:`2^N` eigenvalues from the fermion modes (with the
+periodic/antiperiodic boundary conditions fixed by the parity), and
+:func:`~physicskit.condensed.spin_chains.tfim_ground_state_energy` gives
+the exact ground-state energy.
+
+*References:* E. Lieb, T. Schultz, and D. Mattis, "Two soluble models of
+an antiferromagnetic chain," Ann. Phys. 16, 407-466 (1961); P. Pfeuty,
+"The one-dimensional Ising model with a transverse field," Ann. Phys. 57,
+79-90 (1970).
+
+.. minigallery:: ../../examples/condensed/spin_chains/plot_transverse_field_ising_free_fermions.py
 
 1973 -- The Kosterlitz-Thouless Phase Transition
 -------------------------------------------------------
@@ -533,6 +763,44 @@ Zhang, S. V. Dubonos, I. V. Grigorieva, and A. A. Firsov, "Electric Field
 Effect in Atomically Thin Carbon Films," Science 306, 666-669 (2004).
 
 .. minigallery:: ../../examples/condensed/topology/plot_graphene_dirac_cone.py
+
+2004 -- Calabrese and Cardy: Entanglement Entropy at Criticality
+----------------------------------------------------------------
+
+How much entanglement does a ground state carry? For a block of
+:math:`\ell` sites the answer is the von Neumann entropy
+:math:`S = -\operatorname{tr}\rho_A\ln\rho_A` of its reduced density
+matrix. In gapped systems entanglement is short-ranged and :math:`S`
+obeys an *area law*: it scales with the block's boundary, which in one
+dimension means it saturates. Building on Holzhey, Larsen and Wilczek
+(1994) and on numerics by Vidal, Latorre, Rico and Kitaev (2003),
+Pasquale Calabrese and John Cardy derived from conformal field theory
+that at a 1D quantum critical point the entropy instead grows
+logarithmically,
+
+.. math::
+
+   S(\ell) = \frac{c}{3}\ln\!\left[\frac{N}{\pi}\sin\frac{\pi\ell}{N}\right] + c',
+
+for a periodic chain of length :math:`N`, with the universal prefactor set
+by the central charge :math:`c`. Entanglement scaling has since become a
+standard way to detect criticality and measure :math:`c`, and the area
+law explains why matrix-product-state methods such as DMRG work so well
+for gapped chains.
+
+*Implementation:* :func:`physicskit.condensed.spin_chains.entanglement_entropy`
+and :func:`~physicskit.condensed.spin_chains.entanglement_profile` compute
+:math:`S(\ell)` from the Schmidt decomposition of an exact ground state;
+:func:`~physicskit.condensed.spin_chains.calabrese_cardy_entropy` is the
+formula above, and :func:`~physicskit.condensed.spin_chains.fit_central_charge`
+extracts :math:`c \approx 1/2` for the critical Ising chain.
+
+*References:* P. Calabrese and J. Cardy, "Entanglement entropy and
+quantum field theory," J. Stat. Mech. P06002 (2004); C. Holzhey, F.
+Larsen, and F. Wilczek, Nucl. Phys. B 424, 443-467 (1994); G. Vidal, J. I.
+Latorre, E. Rico, and A. Kitaev, Phys. Rev. Lett. 90, 227902 (2003).
+
+.. minigallery:: ../../examples/condensed/spin_chains/plot_calabrese_cardy_entanglement.py
 
 2005-2006 -- The Kane-Mele and BHZ Models: :math:`\mathbb{Z}_2` Topological Insulators
 -------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-"""Condensed matter physics: tight-binding models, topological band theory, and correlated electrons.
+"""Condensed matter physics: tight-binding models, topological band theory, correlated electrons, quantum spin chains, phonons, and transport.
 
 Typical usage::
 
@@ -51,6 +51,30 @@ from .models import (
     ssh_hamiltonian,
     ssh_lattice_hamiltonian,
 )
+from .phonons import (
+    debye_heat_capacity,
+    debye_temperature,
+    diatomic_chain_dispersion,
+    lattice_heat_capacity,
+    monatomic_chain_dispersion,
+    square_lattice_dynamical_matrix,
+    square_lattice_phonon_dispersion,
+)
+from .spin_chains import (
+    bethe_ansatz_xxx_ground_energy,
+    calabrese_cardy_entropy,
+    embed_state,
+    energy_gap,
+    entanglement_entropy,
+    entanglement_profile,
+    fit_central_charge,
+    lowest_eigenstates,
+    spin_chain_basis,
+    tfim_free_fermion_spectrum,
+    tfim_ground_state_energy,
+    tfim_hamiltonian,
+    xxz_hamiltonian,
+)
 from .tight_binding import Hamiltonian, Lattice, apply_peierls_phase, build_ribbon
 from .topological_insulator_3d import (
     surface_dirac_hamiltonian,
@@ -58,6 +82,15 @@ from .topological_insulator_3d import (
     topological_insulator_3d_slab_hamiltonian,
 )
 from .topology import compute_berry_curvature, compute_chern_number, z2_invariant, zak_phase
+from .transport import (
+    BoltzmannTransport,
+    boltzmann_transport,
+    drude_ac_conductivity,
+    drude_conductivity,
+    drude_conductivity_tensor,
+    fermi_window,
+    hall_coefficient,
+)
 from .visualizers import (
     plot_band_structure,
     plot_berry_curvature,
@@ -119,4 +152,31 @@ __all__ = [
     "weyl_semimetal_hamiltonian",
     "weyl_node_locations",
     "weyl_semimetal_slab_hamiltonian",
+    "spin_chain_basis",
+    "xxz_hamiltonian",
+    "tfim_hamiltonian",
+    "lowest_eigenstates",
+    "energy_gap",
+    "embed_state",
+    "entanglement_entropy",
+    "entanglement_profile",
+    "calabrese_cardy_entropy",
+    "fit_central_charge",
+    "bethe_ansatz_xxx_ground_energy",
+    "tfim_free_fermion_spectrum",
+    "tfim_ground_state_energy",
+    "monatomic_chain_dispersion",
+    "diatomic_chain_dispersion",
+    "square_lattice_dynamical_matrix",
+    "square_lattice_phonon_dispersion",
+    "lattice_heat_capacity",
+    "debye_heat_capacity",
+    "debye_temperature",
+    "drude_conductivity",
+    "drude_ac_conductivity",
+    "drude_conductivity_tensor",
+    "hall_coefficient",
+    "fermi_window",
+    "BoltzmannTransport",
+    "boltzmann_transport",
 ]

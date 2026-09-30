@@ -16,6 +16,9 @@ specifically uses MeV, the standard convention for its formulas).
   (particle showers, parton showers) and a schematic detector geometry.
 - :mod:`physicskit.particle.confinement` -- toy quark confinement and
   QCD string breaking.
+- :mod:`physicskit.particle.lattice_gauge` -- Monte Carlo compact U(1)
+  lattice gauge theory (Wilson action, lattice units), Wilson loops, the
+  exact 2D area law, and Creutz ratios.
 - :mod:`physicskit.particle.electroweak` -- toy classical symmetry
   breaking (Higgs mechanism), leading-order QED annihilation, and
   neutral-meson CP violation.
@@ -56,6 +59,12 @@ from physicskit.particle.electroweak import (
     qed_total_cross_section_mumu,
 )
 from physicskit.particle.kinematics import FourVector, boost, boost_generic, boost_to_com, invariant_mass, rapidity
+from physicskit.particle.lattice_gauge import (
+    U1LatticeGauge,
+    creutz_ratio,
+    u1_2d_string_tension,
+    u1_2d_wilson_loop_exact,
+)
 from physicskit.particle.neutrinos import oscillation_probability, survival_probability
 from physicskit.particle.nuclear import binding_energy_per_nucleon, q_value, semf_binding_energy
 from physicskit.particle.scattering import (
@@ -149,4 +158,9 @@ __all__ = [
     "animate_qed_angular_distribution",
     "animate_michel_histogram",
     "animate_cp_asymmetry",
+    # lattice_gauge
+    "U1LatticeGauge",
+    "u1_2d_wilson_loop_exact",
+    "u1_2d_string_tension",
+    "creutz_ratio",
 ]
