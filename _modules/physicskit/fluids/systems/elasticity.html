@@ -1,0 +1,1010 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.fluids.systems.elasticity &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/fluids/systems/elasticity';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.fluids.systems.elasticity</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.fluids.systems.elasticity</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Two-dimensional linear elasticity: plane stress and plane strain by finite elements.</span>
+
+<span class="sd">A linear elastic solid in equilibrium satisfies</span>
+<span class="sd">:math:`\\nabla\\cdot\\boldsymbol\\sigma + \\mathbf f = 0` with Hooke's law</span>
+<span class="sd">:math:`\\boldsymbol\\sigma = \\lambda\\,\\mathrm{tr}(\\boldsymbol\\varepsilon)\\mathbf I</span>
+<span class="sd">+ 2\\mu\\boldsymbol\\varepsilon` (Navier 1821, Cauchy 1822). In 2D two</span>
+<span class="sd">idealizations are standard:</span>
+
+<span class="sd">- *plane stress* -- a thin plate loaded in its plane,</span>
+<span class="sd">  :math:`\\sigma_{zz} = 0`;</span>
+<span class="sd">- *plane strain* -- a long body loaded uniformly along its length (a</span>
+<span class="sd">  pipe, a dam), :math:`\\varepsilon_{zz} = 0`.</span>
+
+<span class="sd">:func:`plane_elasticity_solve` discretizes either with linear</span>
+<span class="sd">(constant-strain) triangles, the element of Turner, Clough, Martin and Topp</span>
+<span class="sd">(1956) that started the finite element method, assembled into a sparse</span>
+<span class="sd">stiffness matrix. :func:`lame_thick_cylinder` gives Lamé's (1852)</span>
+<span class="sd">closed-form stresses in a pressurized thick-walled cylinder, the standard</span>
+<span class="sd">benchmark. Units are whatever the caller uses consistently (e.g. Pa and m).</span>
+<span class="sd">This module sits in :mod:`physicskit.fluids` with the package's other</span>
+<span class="sd">continuum-mechanics solvers (heat conduction and acoustics), although the</span>
+<span class="sd">material here is solid.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">spsolve</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"PlaneElasticityResult"</span><span class="p">,</span>
+    <span class="s2">"lame_parameters"</span><span class="p">,</span>
+    <span class="s2">"elasticity_matrix"</span><span class="p">,</span>
+    <span class="s2">"rectangle_mesh"</span><span class="p">,</span>
+    <span class="s2">"annulus_mesh"</span><span class="p">,</span>
+    <span class="s2">"pressure_load"</span><span class="p">,</span>
+    <span class="s2">"plane_elasticity_solve"</span><span class="p">,</span>
+    <span class="s2">"lame_thick_cylinder"</span><span class="p">,</span>
+    <span class="s2">"polar_stress"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="lame_parameters">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.lame_parameters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lame_parameters</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Lamé's first parameter :math:`\\lambda` and shear modulus :math:`\\mu` from :math:`E` and :math:`\\nu`.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\lambda = \\frac{E\\nu}{(1+\\nu)(1-2\\nu)}, \\qquad \\mu = \\frac{E}{2(1+\\nu)}</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E : float</span>
+<span class="sd">        Young's modulus.</span>
+<span class="sd">    nu : float</span>
+<span class="sd">        Poisson's ratio, in ``(-1, 1/2)``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    lam, mu : float</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; lame_parameters(2.5, 0.25)</span>
+<span class="sd">    (1.0, 1.0)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">E</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">&lt;</span> <span class="n">nu</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"need E &gt; 0 and -1 &lt; nu &lt; 1/2, got E=</span><span class="si">{</span><span class="n">E</span><span class="si">}</span><span class="s2">, nu=</span><span class="si">{</span><span class="n">nu</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">E</span> <span class="o">*</span> <span class="n">nu</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)),</span> <span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="elasticity_matrix">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.elasticity_matrix">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">elasticity_matrix</span><span class="p">(</span><span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">plane</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"stress"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Constitutive matrix :math:`D` with :math:`(\\sigma_{xx}, \\sigma_{yy}, \\sigma_{xy}) = D(\\varepsilon_{xx}, \\varepsilon_{yy}, \\gamma_{xy})`.</span>
+
+<span class="sd">    Plane stress:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        D = \\frac{E}{1-\\nu^2}\\begin{pmatrix}1&amp;\\nu&amp;0\\\\ \\nu&amp;1&amp;0\\\\ 0&amp;0&amp;\\tfrac{1-\\nu}{2}\\end{pmatrix}.</span>
+
+<span class="sd">    Plane strain:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        D = \\frac{E}{(1+\\nu)(1-2\\nu)}\\begin{pmatrix}1-\\nu&amp;\\nu&amp;0\\\\ \\nu&amp;1-\\nu&amp;0\\\\ 0&amp;0&amp;\\tfrac{1-2\\nu}{2}\\end{pmatrix}.</span>
+
+<span class="sd">    Engineering shear strain :math:`\\gamma_{xy} = 2\\varepsilon_{xy}`</span>
+<span class="sd">    (Zienkiewicz and Taylor, *The Finite Element Method*, 5th ed., vol. 1,</span>
+<span class="sd">    §4.2).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E : float</span>
+<span class="sd">        Young's modulus.</span>
+<span class="sd">    nu : float</span>
+<span class="sd">        Poisson's ratio.</span>
+<span class="sd">    plane : {"stress", "strain"}, default="stress"</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (3, 3)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; elasticity_matrix(1.0, 0.0).tolist()</span>
+<span class="sd">    [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.5]]</span>
+<span class="sd">    """</span>
+    <span class="n">lame_parameters</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>  <span class="c1"># validates</span>
+    <span class="k">if</span> <span class="n">plane</span> <span class="o">==</span> <span class="s2">"stress"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="n">nu</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">)]])</span>
+    <span class="k">if</span> <span class="n">plane</span> <span class="o">==</span> <span class="s2">"strain"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">E</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="n">nu</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)]])</span>
+    <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"plane must be 'stress' or 'strain', got </span><span class="si">{</span><span class="n">plane</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="rectangle_mesh">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.rectangle_mesh">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rectangle_mesh</span><span class="p">(</span><span class="n">Lx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Ly</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ny</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Structured triangulation of the rectangle :math:`[0, L_x]\\times[0, L_y]`.</span>
+
+<span class="sd">    Each of the ``nx * ny`` cells is split into two counter-clockwise</span>
+<span class="sd">    triangles.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Lx, Ly : float</span>
+<span class="sd">        Rectangle size.</span>
+<span class="sd">    nx, ny : int</span>
+<span class="sd">        Number of cells along each axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nodes : ndarray, shape ((nx + 1) * (ny + 1), 2)</span>
+<span class="sd">        Node coordinates; node ``i * (ny + 1) + j`` is at ``(i Lx/nx, j Ly/ny)``.</span>
+<span class="sd">    triangles : ndarray of int, shape (2 * nx * ny, 3)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; nodes, tris = rectangle_mesh(2.0, 1.0, 2, 1)</span>
+<span class="sd">    &gt;&gt;&gt; nodes.shape, tris.shape</span>
+<span class="sd">    ((6, 2), (4, 3))</span>
+<span class="sd">    """</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">nx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">ny</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">_grid_triangles</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_grid_triangles</span><span class="p">(</span><span class="n">n1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]:</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n2</span><span class="p">),</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">n2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">n2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">])])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="annulus_mesh">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.annulus_mesh">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">annulus_mesh</span><span class="p">(</span><span class="n">inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_r</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_theta</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">theta_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Structured triangulation of an annular sector :math:`a \\le r \\le b`, :math:`0 \\le \\theta \\le \\theta_{\\max}`.</span>
+
+<span class="sd">    A quarter annulus (the default) with symmetry conditions on its two</span>
+<span class="sd">    straight edges models a full pressurized cylinder at a quarter of the</span>
+<span class="sd">    cost.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inner_radius, outer_radius : float</span>
+<span class="sd">        Radii :math:`a &lt; b`.</span>
+<span class="sd">    n_r, n_theta : int</span>
+<span class="sd">        Number of cells radially and around.</span>
+<span class="sd">    theta_max : float, default=pi/2</span>
+<span class="sd">        Opening angle of the sector.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nodes : ndarray, shape ((n_r + 1) * (n_theta + 1), 2)</span>
+<span class="sd">    triangles : ndarray of int, shape (2 * n_r * n_theta, 3)</span>
+<span class="sd">    boundaries : dict</span>
+<span class="sd">        ``"inner"`` and ``"outer"``: arrays of shape ``(n_theta, 2)`` of</span>
+<span class="sd">        boundary edges, each directed with the solid on its right (the</span>
+<span class="sd">        convention of :func:`pressure_load`); ``"theta0"`` and</span>
+<span class="sd">        ``"theta_max"``: node indices on the two straight edges.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; nodes, tris, bnd = annulus_mesh(1.0, 2.0, 4, 8)</span>
+<span class="sd">    &gt;&gt;&gt; len(nodes), len(tris), bnd["inner"].shape</span>
+<span class="sd">    (45, 64, (8, 2))</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">inner_radius</span> <span class="o">&lt;</span> <span class="n">outer_radius</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"need 0 &lt; inner_radius &lt; outer_radius"</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">inner_radius</span><span class="p">,</span> <span class="n">outer_radius</span><span class="p">,</span> <span class="n">n_r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">theta_max</span><span class="p">,</span> <span class="n">n_theta</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([(</span><span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">tris</span> <span class="o">=</span> <span class="n">_grid_triangles</span><span class="p">(</span><span class="n">n_r</span><span class="p">,</span> <span class="n">n_theta</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_theta</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">inner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]])</span>  <span class="c1"># counter-clockwise: solid (larger r) on the right</span>
+    <span class="n">outer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>  <span class="c1"># clockwise: solid (smaller r) on the right</span>
+    <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">tris</span><span class="p">,</span> <span class="p">{</span><span class="s2">"inner"</span><span class="p">:</span> <span class="n">inner</span><span class="p">,</span> <span class="s2">"outer"</span><span class="p">:</span> <span class="n">outer</span><span class="p">,</span> <span class="s2">"theta0"</span><span class="p">:</span> <span class="n">idx</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">"theta_max"</span><span class="p">:</span> <span class="n">idx</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]}</span></div>
+
+
+
+<div class="viewcode-block" id="pressure_load">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.pressure_load">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pressure_load</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">thickness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Consistent nodal forces from a uniform pressure on boundary edges.</span>
+
+<span class="sd">    Each directed edge :math:`a \\to b` carries a normal traction of</span>
+<span class="sd">    magnitude ``pressure`` pushing to its right, i.e. into the solid when</span>
+<span class="sd">    edges are listed with the solid on their right (as</span>
+<span class="sd">    :func:`annulus_mesh` returns them). For a linear element the traction</span>
+<span class="sd">    splits equally between the two end nodes: each receives</span>
+<span class="sd">    :math:`\\tfrac12 p\\,t\\,\\ell\\,\\hat{\\mathbf n}`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nodes : array_like, shape (n_nodes, 2)</span>
+<span class="sd">    edges : array_like of int, shape (n_edges, 2)</span>
+<span class="sd">    pressure : float</span>
+<span class="sd">    thickness : float, default=1.0</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (n_nodes, 2)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; F = pressure_load([[0, 0], [1, 0]], [[0, 1]], 2.0)</span>
+<span class="sd">    &gt;&gt;&gt; F.tolist()  # pushes toward -y, the right of the edge direction +x</span>
+<span class="sd">    [[0.0, -1.0], [0.0, -1.0]]</span>
+<span class="sd">    """</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">edges</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">nodes</span><span class="p">[</span><span class="n">edges</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="n">right_normal_times_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">d</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">d</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">*</span> <span class="n">thickness</span> <span class="o">*</span> <span class="n">right_normal_times_length</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">edges</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">edges</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">F</span></div>
+
+
+
+<div class="viewcode-block" id="PlaneElasticityResult">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.PlaneElasticityResult">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlaneElasticityResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Solution of :func:`plane_elasticity_solve`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    displacement : ndarray, shape (n_nodes, 2)</span>
+<span class="sd">        Nodal displacements :math:`(u_x, u_y)`.</span>
+<span class="sd">    strain : ndarray, shape (n_triangles, 3)</span>
+<span class="sd">        Per-element :math:`(\\varepsilon_{xx}, \\varepsilon_{yy}, \\gamma_{xy})`.</span>
+<span class="sd">    stress : ndarray, shape (n_triangles, 3)</span>
+<span class="sd">        Per-element :math:`(\\sigma_{xx}, \\sigma_{yy}, \\sigma_{xy})`.</span>
+<span class="sd">    centroids : ndarray, shape (n_triangles, 2)</span>
+<span class="sd">        Element centroids, where the (constant) strain and stress apply best.</span>
+<span class="sd">    """</span>
+
+    <span class="n">displacement</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">strain</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">stress</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">centroids</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_strain_displacement</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tris</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">tris</span><span class="p">]</span>  <span class="c1"># (n_el, 3, 2)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">area2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">area2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"triangles must be non-degenerate and counter-clockwise"</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">tris</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">B</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="n">B</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+    <span class="n">B</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+    <span class="n">B</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">B</span> <span class="o">/</span> <span class="n">area2</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">area2</span>
+
+
+<div class="viewcode-block" id="plane_elasticity_solve">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.plane_elasticity_solve">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plane_elasticity_solve</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">triangles</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">plane</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"stress"</span><span class="p">,</span>
+    <span class="n">fixed</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fixed_values</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">forces</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">thickness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PlaneElasticityResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Solve 2D linear elasticity with constant-strain triangles.</span>
+
+<span class="sd">    Each triangle contributes the stiffness</span>
+<span class="sd">    :math:`K_e = t A_e B_e^{\\mathsf T} D B_e`, with :math:`B_e` the</span>
+<span class="sd">    (constant) strain-displacement matrix of linear shape functions and</span>
+<span class="sd">    :math:`D` from :func:`elasticity_matrix` (Zienkiewicz and Taylor §4.2).</span>
+<span class="sd">    The global system :math:`K\\mathbf u = \\mathbf f` is solved for the free</span>
+<span class="sd">    degrees of freedom after moving prescribed displacements to the</span>
+<span class="sd">    right-hand side. The element passes the patch test: any uniform strain</span>
+<span class="sd">    field is reproduced exactly.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nodes : array_like, shape (n_nodes, 2)</span>
+<span class="sd">        Node coordinates.</span>
+<span class="sd">    triangles : array_like of int, shape (n_triangles, 3)</span>
+<span class="sd">        Counter-clockwise node indices.</span>
+<span class="sd">    E, nu : float</span>
+<span class="sd">        Young's modulus and Poisson's ratio.</span>
+<span class="sd">    plane : {"stress", "strain"}, default="stress"</span>
+<span class="sd">        Plane idealization.</span>
+<span class="sd">    fixed : array_like of bool, shape (n_nodes, 2), optional</span>
+<span class="sd">        Which displacement components are prescribed. At least enough must</span>
+<span class="sd">        be fixed to remove rigid-body motion.</span>
+<span class="sd">    fixed_values : array_like, shape (n_nodes, 2), optional</span>
+<span class="sd">        Prescribed displacement values (zero by default).</span>
+<span class="sd">    forces : array_like, shape (n_nodes, 2), optional</span>
+<span class="sd">        External nodal forces, e.g. from :func:`pressure_load`.</span>
+<span class="sd">    thickness : float, default=1.0</span>
+<span class="sd">        Out-of-plane thickness (per unit length for plane strain).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    PlaneElasticityResult</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Uniaxial tension of a plate: :math:`\\sigma_{xx} = \\sigma` everywhere and</span>
+<span class="sd">    :math:`u_x = \\sigma x / E`. The loaded right edge is listed top to</span>
+<span class="sd">    bottom, so the plate lies on its right, and a negative pressure pulls:</span>
+
+<span class="sd">    &gt;&gt;&gt; nodes, tris = rectangle_mesh(2.0, 1.0, 4, 2)</span>
+<span class="sd">    &gt;&gt;&gt; fixed = np.zeros((len(nodes), 2), dtype=bool)</span>
+<span class="sd">    &gt;&gt;&gt; fixed[nodes[:, 0] == 0, 0] = True</span>
+<span class="sd">    &gt;&gt;&gt; fixed[0, 1] = True</span>
+<span class="sd">    &gt;&gt;&gt; right = np.flatnonzero(nodes[:, 0] == 2.0)</span>
+<span class="sd">    &gt;&gt;&gt; F = pressure_load(nodes, np.column_stack([right[1:], right[:-1]]), -3.0)</span>
+<span class="sd">    &gt;&gt;&gt; res = plane_elasticity_solve(nodes, tris, 100.0, 0.3, fixed=fixed, forces=F)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(res.stress[:, 0], 3.0)), round(float(res.displacement[right, 0].mean()), 6)</span>
+<span class="sd">    (True, 0.06)</span>
+<span class="sd">    """</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">tris</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">triangles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">n_dof</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nodes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">elasticity_matrix</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span>
+    <span class="n">B</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="n">_strain_displacement</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">tris</span><span class="p">)</span>
+    <span class="n">Ke</span> <span class="o">=</span> <span class="n">thickness</span> <span class="o">*</span> <span class="n">area</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"eki,kl,elj-&gt;eij"</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+    <span class="n">dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">tris</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">dofs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tris</span>
+    <span class="n">dofs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tris</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">dofs</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">dofs</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">Ke</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_dof</span><span class="p">,</span> <span class="n">n_dof</span><span class="p">))</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dof</span><span class="p">)</span> <span class="k">if</span> <span class="n">forces</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">forces</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">is_fixed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span> <span class="k">if</span> <span class="n">fixed</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_fixed</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"fix at least three displacement components to remove rigid-body motion"</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dof</span><span class="p">)</span> <span class="k">if</span> <span class="n">fixed_values</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fixed_values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">free</span> <span class="o">=</span> <span class="o">~</span><span class="n">is_fixed</span>
+    <span class="n">rhs</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">free</span><span class="p">]</span> <span class="o">-</span> <span class="n">K</span><span class="p">[</span><span class="n">free</span><span class="p">][:,</span> <span class="n">is_fixed</span><span class="p">]</span> <span class="o">@</span> <span class="n">u</span><span class="p">[</span><span class="n">is_fixed</span><span class="p">]</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">free</span><span class="p">]</span> <span class="o">=</span> <span class="n">spsolve</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">free</span><span class="p">][:,</span> <span class="n">free</span><span class="p">]</span><span class="o">.</span><span class="n">tocsc</span><span class="p">(),</span> <span class="n">rhs</span><span class="p">)</span>
+    <span class="n">u_el</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">dofs</span><span class="p">]</span>
+    <span class="n">strain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"eij,ej-&gt;ei"</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">u_el</span><span class="p">)</span>
+    <span class="n">stress</span> <span class="o">=</span> <span class="n">strain</span> <span class="o">@</span> <span class="n">D</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">centroids</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">tris</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">PlaneElasticityResult</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="polar_stress">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.polar_stress">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">polar_stress</span><span class="p">(</span><span class="n">stress</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Rotate Cartesian stresses to polar components about the origin.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\sigma_{rr} = \\sigma_{xx}\\cos^2\\theta + \\sigma_{yy}\\sin^2\\theta + 2\\sigma_{xy}\\sin\\theta\\cos\\theta,\\\\</span>
+<span class="sd">        \\sigma_{\\theta\\theta} = \\sigma_{xx}\\sin^2\\theta + \\sigma_{yy}\\cos^2\\theta - 2\\sigma_{xy}\\sin\\theta\\cos\\theta,\\\\</span>
+<span class="sd">        \\sigma_{r\\theta} = (\\sigma_{yy} - \\sigma_{xx})\\sin\\theta\\cos\\theta + \\sigma_{xy}(\\cos^2\\theta - \\sin^2\\theta).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    stress : array_like, shape (n, 3)</span>
+<span class="sd">        :math:`(\\sigma_{xx}, \\sigma_{yy}, \\sigma_{xy})`.</span>
+<span class="sd">    points : array_like, shape (n, 2)</span>
+<span class="sd">        Where each stress applies.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sigma_rr, sigma_tt, sigma_rt : ndarray, shape (n,)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; [round(float(v[0]), 12) for v in polar_stress([[1.0, 2.0, 0.0]], [[0.0, 1.0]])]</span>
+<span class="sd">    [2.0, 1.0, 0.0]</span>
+<span class="sd">    """</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">stress</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+    <span class="n">sxx</span><span class="p">,</span> <span class="n">syy</span><span class="p">,</span> <span class="n">sxy</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">srr</span> <span class="o">=</span> <span class="n">sxx</span> <span class="o">*</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">syy</span> <span class="o">*</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sxy</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">c</span>
+    <span class="n">stt</span> <span class="o">=</span> <span class="n">sxx</span> <span class="o">*</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">syy</span> <span class="o">*</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sxy</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">c</span>
+    <span class="n">srt</span> <span class="o">=</span> <span class="p">(</span><span class="n">syy</span> <span class="o">-</span> <span class="n">sxx</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">c</span> <span class="o">+</span> <span class="n">sxy</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">srr</span><span class="p">,</span> <span class="n">stt</span><span class="p">,</span> <span class="n">srt</span></div>
+
+
+
+<div class="viewcode-block" id="lame_thick_cylinder">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.lame_thick_cylinder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lame_thick_cylinder</span><span class="p">(</span>
+    <span class="n">r</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">p_in</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">p_out</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">plane</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"strain"</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Lamé's solution for a thick-walled cylinder under internal and external pressure.</span>
+
+<span class="sd">    With :math:`a, b` the inner and outer radii,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\sigma_{rr} = A - \\frac{B}{r^2}, \\quad \\sigma_{\\theta\\theta} = A + \\frac{B}{r^2}, \\quad</span>
+<span class="sd">        A = \\frac{p_i a^2 - p_o b^2}{b^2 - a^2}, \\quad B = \\frac{(p_i - p_o)a^2 b^2}{b^2 - a^2}</span>
+
+<span class="sd">    (Lamé, *Leçons sur la théorie mathématique de l'élasticité des corps</span>
+<span class="sd">    solides*, 1852; Timoshenko and Goodier, *Theory of Elasticity*, 3rd ed.,</span>
+<span class="sd">    §28), and the radial displacement</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        u_r = \\frac{1+\\nu}{E}\\left[(1-2\\nu)Ar + \\frac{B}{r}\\right] \\;\\text{(plane strain)}, \\qquad</span>
+<span class="sd">        u_r = \\frac{1}{E}\\left[(1-\\nu)Ar + (1+\\nu)\\frac{B}{r}\\right] \\;\\text{(plane stress)}.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : array_like</span>
+<span class="sd">        Radius, :math:`a \\le r \\le b`.</span>
+<span class="sd">    inner_radius, outer_radius : float</span>
+<span class="sd">        :math:`a` and :math:`b`.</span>
+<span class="sd">    p_in : float</span>
+<span class="sd">        Internal pressure :math:`p_i`.</span>
+<span class="sd">    p_out : float, default=0.0</span>
+<span class="sd">        External pressure :math:`p_o`.</span>
+<span class="sd">    E, nu : float, optional</span>
+<span class="sd">        Elastic constants; needed only for the displacement.</span>
+<span class="sd">    plane : {"strain", "stress"}, default="strain"</span>
+<span class="sd">        Idealization for the displacement (the in-plane stresses are the</span>
+<span class="sd">        same for both).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sigma_rr, sigma_tt : ndarray</span>
+<span class="sd">    u_r : ndarray or None</span>
+<span class="sd">        ``None`` when ``E`` or ``nu`` is not given.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The hoop stress at the bore of a cylinder with :math:`b = 2a`:</span>
+
+<span class="sd">    &gt;&gt;&gt; srr, stt, _ = lame_thick_cylinder([1.0, 2.0], 1.0, 2.0, p_in=3.0)</span>
+<span class="sd">    &gt;&gt;&gt; srr.tolist(), stt.tolist()</span>
+<span class="sd">    ([-3.0, 0.0], [5.0, 2.0])</span>
+<span class="sd">    """</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">inner_radius</span><span class="p">,</span> <span class="n">outer_radius</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"need 0 &lt; inner_radius &lt; outer_radius"</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_in</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">p_out</span> <span class="o">*</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">Bc</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_in</span> <span class="o">-</span> <span class="n">p_out</span><span class="p">)</span> <span class="o">*</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">srr</span> <span class="o">=</span> <span class="n">A</span> <span class="o">-</span> <span class="n">Bc</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">stt</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">Bc</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">E</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">nu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">srr</span><span class="p">,</span> <span class="n">stt</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">lame_parameters</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plane</span> <span class="o">==</span> <span class="s2">"strain"</span><span class="p">:</span>
+        <span class="n">ur</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span> <span class="o">/</span> <span class="n">E</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">Bc</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">plane</span> <span class="o">==</span> <span class="s2">"stress"</span><span class="p">:</span>
+        <span class="n">ur</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="n">Bc</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">E</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"plane must be 'stress' or 'strain', got </span><span class="si">{</span><span class="n">plane</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">srr</span><span class="p">,</span> <span class="n">stt</span><span class="p">,</span> <span class="n">ur</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,913 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.quantum.chapters.scattering &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/quantum/chapters/scattering';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.quantum.chapters.scattering</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.quantum.chapters.scattering</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">"""Potential scattering in three dimensions: the Born approximation and partial waves.</span>
+
+<span class="sd">Units :math:`\hbar = 1`. A particle of mass :math:`m` and wavenumber</span>
+<span class="sd">:math:`k` scatters off a central potential :math:`V(r)`; the scattering</span>
+<span class="sd">amplitude :math:`f(\theta)` gives the differential cross section</span>
+<span class="sd">:math:`d\sigma/d\Omega = |f(\theta)|^2`.</span>
+
+<span class="sd">- :func:`momentum_transfer`, :func:`born_amplitude`,</span>
+<span class="sd">  :func:`yukawa_born_amplitude` -- the first Born approximation (Born, Z.</span>
+<span class="sd">  Phys. 38, 803 (1926)), numerically for any central potential and in</span>
+<span class="sd">  closed form for the Yukawa/screened-Coulomb potential (whose unscreened</span>
+<span class="sd">  limit is Rutherford's formula).</span>
+<span class="sd">- :func:`partial_wave_phase_shifts`, :func:`born_phase_shifts`,</span>
+<span class="sd">  :func:`hard_sphere_phase_shifts` -- phase shifts :math:`\delta_\ell(k)`</span>
+<span class="sd">  from the variable-phase equation, the Born approximation, and the exact</span>
+<span class="sd">  hard-sphere result.</span>
+<span class="sd">- :func:`partial_wave_amplitude`, :func:`partial_wave_cross_section` --</span>
+<span class="sd">  resumming the partial-wave series.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span><span class="p">,</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">eval_legendre</span><span class="p">,</span> <span class="n">spherical_jn</span><span class="p">,</span> <span class="n">spherical_yn</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"momentum_transfer"</span><span class="p">,</span>
+    <span class="s2">"born_amplitude"</span><span class="p">,</span>
+    <span class="s2">"yukawa_born_amplitude"</span><span class="p">,</span>
+    <span class="s2">"partial_wave_phase_shifts"</span><span class="p">,</span>
+    <span class="s2">"born_phase_shifts"</span><span class="p">,</span>
+    <span class="s2">"hard_sphere_phase_shifts"</span><span class="p">,</span>
+    <span class="s2">"partial_wave_amplitude"</span><span class="p">,</span>
+    <span class="s2">"partial_wave_cross_section"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="momentum_transfer">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.momentum_transfer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">momentum_transfer</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Momentum transfer :math:`q = |\mathbf k' - \mathbf k| = 2k\sin(\theta/2)` for elastic scattering.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    theta : array_like</span>
+<span class="sd">        Scattering angle (radians).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; float(momentum_transfer(1.5, np.pi))</span>
+<span class="sd">    3.0</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="born_amplitude">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.born_amplitude">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">born_amplitude</span><span class="p">(</span><span class="n">potential</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""First Born approximation to the scattering amplitude of a central potential.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f_B(q) = -\frac{m}{2\pi}\int d^3r\, e^{-i\mathbf q\cdot\mathbf r} V(r)</span>
+<span class="sd">               = -\frac{2m}{q}\int_0^\infty r\,V(r)\sin(qr)\,dr</span>
+
+<span class="sd">    (Born 1926; Sakurai, *Modern Quantum Mechanics*, Eq. 7.2.10), with</span>
+<span class="sd">    :math:`q \to 0` limit :math:`-2m\int_0^\infty r^2 V\,dr`. The</span>
+<span class="sd">    oscillatory integral is done with QUADPACK's Fourier-integral routine</span>
+<span class="sd">    (:func:`scipy.integrate.quad` with ``weight="sin"``), which needs</span>
+<span class="sd">    :math:`rV(r)` to decay at large :math:`r`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    potential : callable</span>
+<span class="sd">        :math:`V(r)`, vectorized over ``r``.</span>
+<span class="sd">    q : array_like</span>
+<span class="sd">        Momentum transfer(s), :math:`q \ge 0`.</span>
+<span class="sd">    mass : float, default=1.0</span>
+<span class="sd">        Particle (reduced) mass.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Real Born amplitude :math:`f_B(q)`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A Gaussian well :math:`V = V_0 e^{-r^2}` has</span>
+<span class="sd">    :math:`f_B = -\tfrac{\sqrt\pi}{2} m V_0\,e^{-q^2/4}`:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; f = born_amplitude(lambda r: -0.3 * np.exp(-r**2), 1.2)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isclose(f, 0.5 * np.sqrt(np.pi) * 0.3 * np.exp(-0.36)))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">r_pow_V</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">power</span><span class="p">):</span>
+        <span class="c1"># the quadrature may sample r = 0, where e.g. a Coulomb-like 1/r is</span>
+        <span class="c1"># singular; that single point carries no weight in the integral</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="n">power</span> <span class="o">*</span> <span class="n">potential</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">val</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="n">q_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">q_arr</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">qi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">q_arr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">qi</span> <span class="o">&lt;</span> <span class="mf">1e-12</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">quad</span><span class="p">(</span><span class="n">r_pow_V</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">integral</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">r_pow_V</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">weight</span><span class="o">=</span><span class="s2">"sin"</span><span class="p">,</span> <span class="n">wvar</span><span class="o">=</span><span class="n">qi</span><span class="p">,</span> <span class="n">limlst</span><span class="o">=</span><span class="mi">200</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">integral</span> <span class="o">/</span> <span class="n">qi</span>
+    <span class="k">return</span> <span class="n">out</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">else</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="yukawa_born_amplitude">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.yukawa_born_amplitude">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">yukawa_born_amplitude</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Closed-form Born amplitude of the Yukawa potential :math:`V(r) = g\,e^{-\mu r}/r`.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f_B(q) = -\frac{2mg}{\mu^2 + q^2}</span>
+
+<span class="sd">    (Sakurai, Eq. 7.2.15). As :math:`\mu \to 0` (unscreened Coulomb,</span>
+<span class="sd">    :math:`g = Z_1Z_2\alpha`) :math:`|f_B|^2` becomes Rutherford's</span>
+<span class="sd">    classical cross section,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{d\sigma}{d\Omega} = \frac{4m^2g^2}{q^4}</span>
+<span class="sd">            = \left(\frac{g}{4E}\right)^2 \frac{1}{\sin^4(\theta/2)},</span>
+<span class="sd">        \qquad E = \frac{k^2}{2m}.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q : array_like</span>
+<span class="sd">        Momentum transfer.</span>
+<span class="sd">    g : float</span>
+<span class="sd">        Coupling strength (:math:`g &gt; 0` repulsive).</span>
+<span class="sd">    mu : float</span>
+<span class="sd">        Inverse screening length.</span>
+<span class="sd">    mass : float, default=1.0</span>
+<span class="sd">        Particle (reduced) mass.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; float(yukawa_born_amplitude(1.0, g=0.5, mu=1.0))</span>
+<span class="sd">    -0.5</span>
+<span class="sd">    """</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">g</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="partial_wave_phase_shifts">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.partial_wave_phase_shifts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">partial_wave_phase_shifts</span><span class="p">(</span>
+    <span class="n">potential</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">,</span>
+    <span class="n">r_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
+    <span class="n">breakpoints</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+    <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Phase shifts :math:`\delta_\ell(k)`, :math:`\ell = 0,\dots,\ell_{\max}`, of a short-range central potential.</span>
+
+<span class="sd">    Integrates Calogero's variable-phase equation</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{d\delta_\ell}{dr} = -\frac{U(r)}{k}\left[\hat\jmath_\ell(kr)\cos\delta_\ell(r)</span>
+<span class="sd">            - \hat n_\ell(kr)\sin\delta_\ell(r)\right]^2,</span>
+<span class="sd">        \qquad U = 2mV,</span>
+
+<span class="sd">    from :math:`\delta_\ell(0) = 0` out to ``r_max``, with the</span>
+<span class="sd">    Riccati-Bessel functions :math:`\hat\jmath_\ell(x) = x j_\ell(x)` and</span>
+<span class="sd">    :math:`\hat n_\ell(x) = x y_\ell(x)`. :math:`\delta_\ell(r)` is the</span>
+<span class="sd">    phase shift produced by the potential truncated at :math:`r`, so its</span>
+<span class="sd">    limit is the full phase shift (F. Calogero, *Variable Phase Approach</span>
+<span class="sd">    to Potential Scattering*, Academic Press, 1967, Eq. 3.4). Unlike</span>
+<span class="sd">    shooting and matching, it never overflows at large :math:`\ell` and</span>
+<span class="sd">    gives a continuous :math:`\delta_\ell` (not reduced modulo</span>
+<span class="sd">    :math:`\pi`).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    potential : callable</span>
+<span class="sd">        :math:`V(r)`, finite for :math:`r &gt; 0` and negligible beyond</span>
+<span class="sd">        ``r_max``.</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber, :math:`k &gt; 0`.</span>
+<span class="sd">    l_max : int</span>
+<span class="sd">        Highest partial wave.</span>
+<span class="sd">    mass : float, default=1.0</span>
+<span class="sd">        Particle (reduced) mass.</span>
+<span class="sd">    r_max : float, default=30.0</span>
+<span class="sd">        Outer integration radius.</span>
+<span class="sd">    r_min : float, default=1e-8</span>
+<span class="sd">        Inner starting radius.</span>
+<span class="sd">    breakpoints : sequence of float, optional</span>
+<span class="sd">        Radii where :math:`V` is discontinuous (e.g. a square well's</span>
+<span class="sd">        edge). The integration restarts there instead of shrinking its</span>
+<span class="sd">        step size to resolve the jump.</span>
+<span class="sd">    rtol : float, default=1e-10</span>
+<span class="sd">        Relative tolerance of the ODE solver (absolute tolerance is</span>
+<span class="sd">        ``rtol / 100``).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Shape ``(l_max + 1,)``, in radians.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    An attractive square well of depth :math:`V_0` and radius :math:`a`</span>
+<span class="sd">    has :math:`\tan(ka + \delta_0) = (k/K)\tan(Ka)`,</span>
+<span class="sd">    :math:`K = \sqrt{k^2 + 2mV_0}`:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; well = lambda r: np.where(r &lt; 1.0, -0.8, 0.0)</span>
+<span class="sd">    &gt;&gt;&gt; d0 = partial_wave_phase_shifts(well, k=0.7, l_max=0, r_max=1.5, breakpoints=[1.0])[0]</span>
+<span class="sd">    &gt;&gt;&gt; K = np.sqrt(0.49 + 1.6)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isclose(np.tan(0.7 + d0), 0.7 / K * np.tan(K)))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">ells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">r</span>
+        <span class="n">jh</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">spherical_jn</span><span class="p">(</span><span class="n">ells</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">nh</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">spherical_yn</span><span class="p">(</span><span class="n">ells</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">potential</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">jh</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">-</span> <span class="n">nh</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="n">r_min</span><span class="p">,</span> <span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breakpoints</span> <span class="k">if</span> <span class="n">r_min</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">r_max</span><span class="p">),</span> <span class="n">r_max</span><span class="p">]</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="c1"># evaluate V strictly inside each segment so a jump at r1 is never sampled</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">1e-15</span><span class="p">)),</span> <span class="n">delta</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"DOP853"</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">rtol</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">delta</span></div>
+
+
+
+<div class="viewcode-block" id="born_phase_shifts">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.born_phase_shifts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">born_phase_shifts</span><span class="p">(</span>
+    <span class="n">potential</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Phase shifts in the Born approximation, :math:`\delta_\ell \approx -2mk\int_0^\infty r^2 V(r)\,j_\ell(kr)^2\,dr`.</span>
+
+<span class="sd">    The small-:math:`V` limit of the variable-phase equation (Sakurai,</span>
+<span class="sd">    Eq. 7.6.22); valid when every :math:`|\delta_\ell| \ll 1`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    potential : callable</span>
+<span class="sd">        :math:`V(r)`.</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    l_max : int</span>
+<span class="sd">        Highest partial wave.</span>
+<span class="sd">    mass : float, default=1.0</span>
+<span class="sd">        Particle (reduced) mass.</span>
+<span class="sd">    r_max : float, default=30.0</span>
+<span class="sd">        Outer integration radius.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Shape ``(l_max + 1,)``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; weak = lambda r: -0.01 * np.exp(-r**2)</span>
+<span class="sd">    &gt;&gt;&gt; d_born = born_phase_shifts(weak, k=1.0, l_max=2)</span>
+<span class="sd">    &gt;&gt;&gt; d_exact = partial_wave_phase_shifts(weak, k=1.0, l_max=2, r_max=8.0)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(d_born, d_exact, rtol=0.02))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">potential</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">spherical_jn</span><span class="p">(</span><span class="n">ell</span><span class="p">,</span> <span class="n">k</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ell</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span></div>
+
+
+
+<div class="viewcode-block" id="hard_sphere_phase_shifts">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.hard_sphere_phase_shifts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">hard_sphere_phase_shifts</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Exact phase shifts of an impenetrable sphere of radius :math:`a`: :math:`\tan\delta_\ell = j_\ell(ka)/y_\ell(ka)`.</span>
+
+<span class="sd">    The radial wavefunction :math:`\propto \cos\delta_\ell\,j_\ell(kr) -</span>
+<span class="sd">    \sin\delta_\ell\,y_\ell(kr)` must vanish at :math:`r = a` (Sakurai,</span>
+<span class="sd">    Eq. 7.6.31); in particular :math:`\delta_0 = -ka` (modulo :math:`\pi`). The total cross</span>
+<span class="sd">    section tends to :math:`4\pi a^2` as :math:`ka \to 0` and to</span>
+<span class="sd">    :math:`2\pi a^2` as :math:`ka \to \infty` (the extra :math:`\pi a^2` is</span>
+<span class="sd">    the diffraction "shadow"), approached as</span>
+<span class="sd">    :math:`2\pi a^2[1 + 0.9962\,(ka)^{-2/3}]` (Nussenzveig, J. Math. Phys.</span>
+<span class="sd">    10, 82 (1969)).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    a : float</span>
+<span class="sd">        Sphere radius.</span>
+<span class="sd">    l_max : int</span>
+<span class="sd">        Highest partial wave.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Shape ``(l_max + 1,)``, in :math:`(-\pi/2, \pi/2]`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isclose(hard_sphere_phase_shifts(0.4, 1.0, 0)[0], -0.4))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">ells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">l_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">ells</span><span class="p">,</span> <span class="n">k</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">spherical_yn</span><span class="p">(</span><span class="n">ells</span><span class="p">,</span> <span class="n">k</span> <span class="o">*</span> <span class="n">a</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="partial_wave_amplitude">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.partial_wave_amplitude">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">partial_wave_amplitude</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Scattering amplitude from phase shifts, :math:`f(\theta) = \frac1k\sum_\ell (2\ell+1)e^{i\delta_\ell}\sin\delta_\ell\,P_\ell(\cos\theta)`.</span>
+
+<span class="sd">    (Faxen and Holtsmark, Z. Phys. 45, 307 (1927); Sakurai, Eq. 7.6.18.)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : array_like</span>
+<span class="sd">        Scattering angles (radians).</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    deltas : array_like</span>
+<span class="sd">        Phase shifts :math:`\delta_0, \delta_1, \dots`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Complex amplitude.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Pure s-wave scattering is isotropic:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; f = partial_wave_amplitude(np.array([0.0, np.pi]), 1.0, [np.pi / 2])</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(f, [1j, 1j]))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">cos_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+    <span class="n">deltas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deltas</span><span class="p">))</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ells</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">deltas</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">deltas</span><span class="p">)</span> <span class="o">/</span> <span class="n">k</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">eval_legendre</span><span class="p">(</span><span class="n">ell</span><span class="p">,</span> <span class="n">cos_t</span><span class="p">)</span> <span class="k">for</span> <span class="n">ell</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ells</span><span class="p">,</span> <span class="n">coeff</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="partial_wave_cross_section">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.partial_wave_cross_section">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">partial_wave_cross_section</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Total cross section :math:`\sigma = \frac{4\pi}{k^2}\sum_\ell (2\ell+1)\sin^2\delta_\ell`.</span>
+
+<span class="sd">    Equal, by the optical theorem, to :math:`\frac{4\pi}{k}\,\mathrm{Im}\,f(0)`</span>
+<span class="sd">    (Sakurai, Eq. 7.6.20).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    deltas : array_like</span>
+<span class="sd">        Phase shifts.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The unitarity limit of a resonant s wave is :math:`4\pi/k^2`:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.isclose(partial_wave_cross_section(2.0, [np.pi / 2]), np.pi))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">deltas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ells</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deltas</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ells</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">deltas</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1348 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.fields.electrostatics &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/fields/electrostatics';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.fields.electrostatics</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.fields.electrostatics</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Electrostatics: Coulomb's law, Poisson's equation, the method of images, and multipoles.</span>
+
+<span class="sd">Everything here solves (or sidesteps solving) Poisson's equation for the</span>
+<span class="sd">electrostatic potential,</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\nabla^2 \\phi = -\\rho / \\varepsilon_0, \\qquad \\mathbf E = -\\nabla\\phi,</span>
+
+<span class="sd">in SI units, like the rest of :mod:`physicskit.fields` (:data:`EPS0` is the</span>
+<span class="sd">vacuum permittivity):</span>
+
+<span class="sd">- :func:`coulomb_potential` / :func:`coulomb_field` -- the free-space Green's</span>
+<span class="sd">  function :math:`1/(4\\pi\\varepsilon_0 |\\mathbf r - \\mathbf r'|)` summed</span>
+<span class="sd">  over point charges (Coulomb 1785, plus superposition).</span>
+<span class="sd">- :func:`solve_poisson` -- Jacobi or successive-over-relaxation (SOR)</span>
+<span class="sd">  iteration of the second-order finite-difference Laplacian on a 2D or 3D</span>
+<span class="sd">  grid, with Dirichlet values on the box faces and on any interior</span>
+<span class="sd">  "conductor" cells (Press et al., *Numerical Recipes*, 3rd ed., §20.5).</span>
+<span class="sd">- :func:`solve_poisson_fft` -- a direct spectral solve, periodic (FFT) or</span>
+<span class="sd">  grounded-box (type-I discrete sine transform).</span>
+<span class="sd">- :func:`image_charges_plane` / :func:`image_charges_sphere` -- Green's</span>
+<span class="sd">  functions for a grounded plane and a sphere by the method of images</span>
+<span class="sd">  (Jackson, *Classical Electrodynamics*, 3rd ed., §2.1-2.4).</span>
+<span class="sd">- :func:`multipole_moments` / :func:`multipole_potential` -- the Cartesian</span>
+<span class="sd">  multipole expansion to quadrupole order (Jackson §4.1, eqs. 4.9-4.10).</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.fft</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fields.electrodynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">EPS0</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"PoissonSolution"</span><span class="p">,</span>
+    <span class="s2">"MultipoleMoments"</span><span class="p">,</span>
+    <span class="s2">"coulomb_potential"</span><span class="p">,</span>
+    <span class="s2">"coulomb_field"</span><span class="p">,</span>
+    <span class="s2">"solve_poisson"</span><span class="p">,</span>
+    <span class="s2">"solve_poisson_fft"</span><span class="p">,</span>
+    <span class="s2">"electric_field_from_potential"</span><span class="p">,</span>
+    <span class="s2">"image_charges_plane"</span><span class="p">,</span>
+    <span class="s2">"image_charges_sphere"</span><span class="p">,</span>
+    <span class="s2">"induced_charge_density_plane"</span><span class="p">,</span>
+    <span class="s2">"induced_charge_density_sphere"</span><span class="p">,</span>
+    <span class="s2">"multipole_moments"</span><span class="p">,</span>
+    <span class="s2">"multipole_potential"</span><span class="p">,</span>
+    <span class="s2">"dipole_field"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Coulomb's law</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_as_charge_arrays</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"got </span><span class="si">{</span><span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> charges but </span><span class="si">{</span><span class="n">pos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> positions"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q</span><span class="p">,</span> <span class="n">pos</span>
+
+
+<div class="viewcode-block" id="coulomb_potential">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.coulomb_potential">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">coulomb_potential</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Electrostatic potential of a set of point charges (Coulomb's law plus superposition).</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\phi(\\mathbf r) = \\frac{1}{4\\pi\\varepsilon}\\sum_i</span>
+<span class="sd">        \\frac{q_i}{|\\mathbf r - \\mathbf r_i|}</span>
+
+<span class="sd">    (Jackson, *Classical Electrodynamics*, 3rd ed., eq. 1.17).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    charges : array_like, shape (n,)</span>
+<span class="sd">        Point charges in coulombs.</span>
+<span class="sd">    positions : array_like, shape (n, d)</span>
+<span class="sd">        Charge positions in meters, ``d`` = 2 or 3 (2D positions are points</span>
+<span class="sd">        in the plane ``z = 0`` of ordinary 3D space).</span>
+<span class="sd">    points : array_like, shape (..., d)</span>
+<span class="sd">        Observation points.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the surrounding medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (...)</span>
+<span class="sd">        Potential in volts; ``inf`` exactly at a charge.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; phi = coulomb_potential([1e-9], [[0.0, 0.0, 0.0]], [[1.0, 0.0, 0.0]])</span>
+<span class="sd">    &gt;&gt;&gt; round(float(phi[0]), 3)  # 1 nC at 1 m: about 8.988 V</span>
+<span class="sd">    8.988</span>
+<span class="sd">    """</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">_as_charge_arrays</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">q</span> <span class="o">/</span> <span class="n">r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="coulomb_field">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.coulomb_field">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">coulomb_field</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Electric field of a set of point charges (Coulomb's inverse-square law).</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\mathbf E(\\mathbf r) = \\frac{1}{4\\pi\\varepsilon}\\sum_i</span>
+<span class="sd">        q_i \\frac{\\mathbf r - \\mathbf r_i}{|\\mathbf r - \\mathbf r_i|^3}</span>
+
+<span class="sd">    (Jackson eq. 1.5).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    charges : array_like, shape (n,)</span>
+<span class="sd">        Point charges in coulombs.</span>
+<span class="sd">    positions : array_like, shape (n, d)</span>
+<span class="sd">        Charge positions in meters.</span>
+<span class="sd">    points : array_like, shape (..., d)</span>
+<span class="sd">        Observation points.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the surrounding medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (..., d)</span>
+<span class="sd">        Electric field in V/m; ``nan`` exactly at a charge.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; E = coulomb_field([1e-9], [[0.0, 0.0, 0.0]], [[2.0, 0.0, 0.0]])</span>
+<span class="sd">    &gt;&gt;&gt; round(float(E[0, 0]), 4)  # a quarter of the field at 1 m</span>
+<span class="sd">    2.2469</span>
+<span class="sd">    """</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">_as_charge_arrays</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">pos</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">q</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">sep</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Poisson's equation on a grid</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="PoissonSolution">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.PoissonSolution">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PoissonSolution</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Result of :func:`solve_poisson`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    phi : ndarray</span>
+<span class="sd">        Converged (or last) potential on the grid, in volts.</span>
+<span class="sd">    n_iter : int</span>
+<span class="sd">        Number of sweeps performed.</span>
+<span class="sd">    converged : bool</span>
+<span class="sd">        Whether the relative update fell below ``tol`` within ``max_iter``.</span>
+<span class="sd">    """</span>
+
+    <span class="n">phi</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">converged</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_relax_2d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">jacobi</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">cx</span> <span class="o">+</span> <span class="n">cy</span><span class="p">)</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="mf">1e-300</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">jacobi</span><span class="p">:</span>
+            <span class="n">old</span><span class="p">[:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">phi</span>
+        <span class="n">max_delta</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">max_phi</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">fixed</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">jacobi</span><span class="p">:</span>
+                    <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">cx</span> <span class="o">*</span> <span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">old</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">+</span> <span class="n">cy</span> <span class="o">*</span> <span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="n">diag</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">gs</span> <span class="o">=</span> <span class="p">(</span><span class="n">cx</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">+</span> <span class="n">cy</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="n">diag</span>
+                    <span class="n">new</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">omega</span> <span class="o">*</span> <span class="p">(</span><span class="n">gs</span> <span class="o">-</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span> <span class="o">-</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="n">max_delta</span><span class="p">:</span>
+                    <span class="n">max_delta</span> <span class="o">=</span> <span class="n">delta</span>
+                <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_phi</span><span class="p">:</span>
+                    <span class="n">max_phi</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_delta</span> <span class="o">&lt;=</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">max_phi</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">it</span><span class="p">,</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">max_iter</span><span class="p">,</span> <span class="kc">False</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_relax_3d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">cz</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">jacobi</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">cx</span> <span class="o">+</span> <span class="n">cy</span> <span class="o">+</span> <span class="n">cz</span><span class="p">)</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="mf">1e-300</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">jacobi</span><span class="p">:</span>
+            <span class="n">old</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">phi</span>
+        <span class="n">max_delta</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">max_phi</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nz</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">fixed</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]:</span>
+                        <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">jacobi</span><span class="p">:</span>
+                        <span class="n">new</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="n">cx</span> <span class="o">*</span> <span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">old</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">cy</span> <span class="o">*</span> <span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">cz</span> <span class="o">*</span> <span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">old</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+                        <span class="p">)</span> <span class="o">/</span> <span class="n">diag</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">gs</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="n">cx</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">cy</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">cz</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+                        <span class="p">)</span> <span class="o">/</span> <span class="n">diag</span>
+                        <span class="n">new</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">omega</span> <span class="o">*</span> <span class="p">(</span><span class="n">gs</span> <span class="o">-</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                    <span class="n">delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span> <span class="o">-</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="n">max_delta</span><span class="p">:</span>
+                        <span class="n">max_delta</span> <span class="o">=</span> <span class="n">delta</span>
+                    <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>
+                    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_phi</span><span class="p">:</span>
+                        <span class="n">max_phi</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_delta</span> <span class="o">&lt;=</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">max_phi</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">it</span><span class="p">,</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">max_iter</span><span class="p">,</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_spacings</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">ndim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="p">(</span><span class="n">ndim</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">h</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="solve_poisson">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.solve_poisson">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_poisson</span><span class="p">(</span>
+    <span class="n">rho</span><span class="p">,</span>
+    <span class="n">spacing</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">phi0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">fixed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"sor"</span><span class="p">,</span>
+    <span class="n">omega</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100_000</span><span class="p">,</span>
+    <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoissonSolution</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Solve Poisson's equation on a 2D or 3D grid by Jacobi or SOR relaxation.</span>
+
+<span class="sd">    Iterates the standard second-order finite-difference form of</span>
+<span class="sd">    :math:`\\nabla^2\\phi = -\\rho/\\varepsilon`,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\phi_{ij}^{\\text{new}} = \\frac{(\\phi_{i+1,j}+\\phi_{i-1,j})/h_x^2</span>
+<span class="sd">        + (\\phi_{i,j+1}+\\phi_{i,j-1})/h_y^2 + \\rho_{ij}/\\varepsilon}</span>
+<span class="sd">        {2/h_x^2 + 2/h_y^2},</span>
+
+<span class="sd">    either all at once from the previous sweep (Jacobi) or in place with</span>
+<span class="sd">    over-relaxation :math:`\\phi \\leftarrow \\phi + \\omega(\\phi^{\\text{GS}} -</span>
+<span class="sd">    \\phi)` (SOR; Press et al., *Numerical Recipes*, 3rd ed., §20.5). For an</span>
+<span class="sd">    ``N x N`` grid SOR needs :math:`O(N)` sweeps at the optimal</span>
+<span class="sd">    :math:`\\omega = 2/(1+\\sin(\\pi/N))`, against Jacobi's :math:`O(N^2)`.</span>
+
+<span class="sd">    The outermost faces of the grid, and every cell where ``fixed`` is</span>
+<span class="sd">    true, are Dirichlet cells held at their ``phi0`` values -- a grounded</span>
+<span class="sd">    box by default, or electrodes/conductors at set voltages. In 2D the</span>
+<span class="sd">    geometry is invariant along ``z``, so ``rho`` is still a volume density</span>
+<span class="sd">    and point sources are really line charges.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : array_like, shape (nx, ny) or (nx, ny, nz)</span>
+<span class="sd">        Charge density in C/m^3.</span>
+<span class="sd">    spacing : float or sequence of float</span>
+<span class="sd">        Grid spacing in meters, one value or one per axis.</span>
+<span class="sd">    phi0 : array_like, optional</span>
+<span class="sd">        Initial guess and Dirichlet values (same shape as ``rho``). Defaults</span>
+<span class="sd">        to zero everywhere.</span>
+<span class="sd">    fixed : array_like of bool, optional</span>
+<span class="sd">        Interior cells to hold at ``phi0`` (conductors). The box faces are</span>
+<span class="sd">        always held.</span>
+<span class="sd">    method : {"sor", "jacobi"}, default="sor"</span>
+<span class="sd">        Relaxation scheme.</span>
+<span class="sd">    omega : float, optional</span>
+<span class="sd">        SOR over-relaxation factor in ``(0, 2)``; defaults to</span>
+<span class="sd">        ``2 / (1 + sin(pi / max(shape)))``. Ignored for Jacobi.</span>
+<span class="sd">    tol : float, default=1e-8</span>
+<span class="sd">        Stop once the largest single-sweep update is below ``tol`` times the</span>
+<span class="sd">        largest ``|phi|``.</span>
+<span class="sd">    max_iter : int, default=100000</span>
+<span class="sd">        Maximum number of sweeps.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    PoissonSolution</span>
+<span class="sd">        ``(phi, n_iter, converged)``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Two plates at +-1 V, grounded box: the potential is odd about the</span>
+<span class="sd">    midplane.</span>
+
+<span class="sd">    &gt;&gt;&gt; phi0 = np.zeros((41, 41))</span>
+<span class="sd">    &gt;&gt;&gt; fixed = np.zeros((41, 41), dtype=bool)</span>
+<span class="sd">    &gt;&gt;&gt; phi0[10:31, 15], phi0[10:31, 25] = 1.0, -1.0</span>
+<span class="sd">    &gt;&gt;&gt; fixed[10:31, 15] = fixed[10:31, 25] = True</span>
+<span class="sd">    &gt;&gt;&gt; sol = solve_poisson(np.zeros((41, 41)), 0.01, phi0=phi0, fixed=fixed)</span>
+<span class="sd">    &gt;&gt;&gt; sol.converged, round(float(sol.phi[20, 20]), 6)</span>
+<span class="sd">    (True, 0.0)</span>
+<span class="sd">    """</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">/</span> <span class="n">eps</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">if</span> <span class="n">ndim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho must be 2D or 3D, got ndim=</span><span class="si">{</span><span class="n">ndim</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">_spacings</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">if</span> <span class="n">phi0</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"phi0 shape </span><span class="si">{</span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> does not match rho shape </span><span class="si">{</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span> <span class="k">if</span> <span class="n">fixed</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"sor"</span><span class="p">,</span> <span class="s2">"jacobi"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"method must be 'sor' or 'jacobi'"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">omega</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">omega</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"omega must lie in (0, 2), got </span><span class="si">{</span><span class="n">omega</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">jacobi</span> <span class="o">=</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"jacobi"</span>
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">hk</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">hk</span> <span class="ow">in</span> <span class="n">h</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">n_iter</span><span class="p">,</span> <span class="n">converged</span> <span class="o">=</span> <span class="n">_relax_2d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="o">*</span><span class="n">coeffs</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">omega</span><span class="p">),</span> <span class="n">jacobi</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tol</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_iter</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_iter</span><span class="p">,</span> <span class="n">converged</span> <span class="o">=</span> <span class="n">_relax_3d</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="o">*</span><span class="n">coeffs</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">omega</span><span class="p">),</span> <span class="n">jacobi</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tol</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_iter</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">PoissonSolution</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_iter</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">converged</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="solve_poisson_fft">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.solve_poisson_fft">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_poisson_fft</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">spacing</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">bc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"periodic"</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Solve Poisson's equation directly with a fast Fourier or sine transform.</span>
+
+<span class="sd">    ``bc="periodic"`` treats the grid as one period of an infinite lattice</span>
+<span class="sd">    and solves :math:`\\hat\\phi(\\mathbf k) = \\hat\\rho(\\mathbf k) /</span>
+<span class="sd">    (\\varepsilon k^2)` with the exact continuum :math:`k^2` (spectral</span>
+<span class="sd">    accuracy for smooth sources). The :math:`\\mathbf k = 0` mode is set to</span>
+<span class="sd">    zero, which is the same as adding a uniform neutralizing background:</span>
+<span class="sd">    only a net-neutral periodic system has a periodic potential.</span>
+
+<span class="sd">    ``bc="dirichlet"`` holds every face of the box at :math:`\\phi = 0` (the</span>
+<span class="sd">    grid's first and last nodes along each axis are the grounded walls) and</span>
+<span class="sd">    diagonalizes the second-order finite-difference Laplacian with a</span>
+<span class="sd">    type-I discrete sine transform, whose eigenvalues are</span>
+<span class="sd">    :math:`\\sum_a (2 - 2\\cos(\\pi m_a/(n_a-1)))/h_a^2`. It therefore returns</span>
+<span class="sd">    the exact solution of the same linear system :func:`solve_poisson`</span>
+<span class="sd">    iterates towards with a zero ``phi0`` and no ``fixed`` cells, in one</span>
+<span class="sd">    :math:`O(N\\log N)` step (Press et al., *Numerical Recipes*, 3rd ed.,</span>
+<span class="sd">    §20.4).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : array_like</span>
+<span class="sd">        Charge density in C/m^3, any number of dimensions.</span>
+<span class="sd">    spacing : float or sequence of float</span>
+<span class="sd">        Grid spacing in meters, one value or one per axis.</span>
+<span class="sd">    bc : {"periodic", "dirichlet"}, default="periodic"</span>
+<span class="sd">        Boundary condition, as described above.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        Potential in volts, same shape as ``rho``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A sinusoidal charge wave has potential :math:`\\rho/(\\varepsilon k^2)`:</span>
+
+<span class="sd">    &gt;&gt;&gt; x = np.arange(64) * (2 * np.pi / 64)</span>
+<span class="sd">    &gt;&gt;&gt; phi = solve_poisson_fft(np.sin(x)[:, None] * np.ones((64, 8)), 2 * np.pi / 64, eps=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(phi[:, 0], np.sin(x)))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">/</span> <span class="n">eps</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">_spacings</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bc</span> <span class="o">==</span> <span class="s2">"periodic"</span><span class="p">:</span>
+        <span class="n">k2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">hk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">h</span><span class="p">)):</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">src</span><span class="o">.</span><span class="n">ndim</span>
+            <span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="n">k2</span> <span class="o">=</span> <span class="n">k2</span> <span class="o">+</span> <span class="n">k</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">k2</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">phi_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">/</span> <span class="n">k2</span>
+        <span class="n">phi_hat</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">phi_hat</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">if</span> <span class="n">bc</span> <span class="o">==</span> <span class="s2">"dirichlet"</span><span class="p">:</span>
+        <span class="n">interior</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">ndim</span><span class="p">))]</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">interior</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">hk</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">h</span><span class="p">)):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">src</span><span class="o">.</span><span class="n">ndim</span>
+            <span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="n">lam</span> <span class="o">=</span> <span class="n">lam</span> <span class="o">+</span> <span class="p">((</span><span class="mf">2.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">m</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">/</span> <span class="n">hk</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">phi</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">ndim</span><span class="p">))]</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">idstn</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">dstn</span><span class="p">(</span><span class="n">interior</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">lam</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">phi</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"bc must be 'periodic' or 'dirichlet'"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="electric_field_from_potential">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.electric_field_from_potential">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">electric_field_from_potential</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Electric field :math:`\\mathbf E = -\\nabla\\phi` from a gridded potential.</span>
+
+<span class="sd">    Uses second-order central differences in the interior (one-sided at</span>
+<span class="sd">    the faces), via :func:`numpy.gradient`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    phi : array_like</span>
+<span class="sd">        Potential on the grid, in volts.</span>
+<span class="sd">    spacing : float or sequence of float</span>
+<span class="sd">        Grid spacing in meters, one value or one per axis.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (phi.ndim, *phi.shape)</span>
+<span class="sd">        Field components ``E[0]`` (along axis 0), ``E[1]``, ... in V/m.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0.0, 1.0, 11)</span>
+<span class="sd">    &gt;&gt;&gt; E = electric_field_from_potential(np.outer(-5.0 * x, np.ones(4)), 0.1)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(E[0], 5.0)), bool(np.allclose(E[1], 0.0))</span>
+<span class="sd">    (True, True)</span>
+<span class="sd">    """</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">_spacings</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">phi</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">phi</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">grads</span><span class="p">]</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">grads</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Method of images (Green's functions for simple conductors)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="image_charges_plane">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.image_charges_plane">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">image_charges_plane</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Image charge making the grounded conducting plane ``z = 0`` an equipotential.</span>
+
+<span class="sd">    A charge :math:`q` at :math:`(x, y, d)` above a grounded plane sees,</span>
+<span class="sd">    in the region :math:`z &gt; 0`, exactly the potential of itself plus an</span>
+<span class="sd">    image :math:`-q` at :math:`(x, y, -d)` (Jackson §2.1). The pair is</span>
+<span class="sd">    Green's function for the half-space with Dirichlet boundary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q : float</span>
+<span class="sd">        The real charge, in coulombs.</span>
+<span class="sd">    position : array_like, shape (3,)</span>
+<span class="sd">        Its position ``(x, y, d)`` with ``d != 0``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    charges : ndarray, shape (1,)</span>
+<span class="sd">        The image charge ``[-q]``.</span>
+<span class="sd">    positions : ndarray, shape (1, 3)</span>
+<span class="sd">        The image position ``[[x, y, -d]]``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; qi, ri = image_charges_plane(1e-9, [0.0, 0.0, 0.5])</span>
+<span class="sd">    &gt;&gt;&gt; phi = coulomb_potential(np.r_[1e-9, qi], np.vstack([[0, 0, 0.5], ri]), [[0.3, -0.2, 0.0]])</span>
+<span class="sd">    &gt;&gt;&gt; abs(float(phi[0])) &lt; 1e-12</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r0</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span> <span class="ow">or</span> <span class="n">r0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"position must be (x, y, d) with d != 0"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">q</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">r0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">r0</span><span class="p">[</span><span class="mi">2</span><span class="p">]]])</span></div>
+
+
+
+<div class="viewcode-block" id="image_charges_sphere">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.image_charges_sphere">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">image_charges_sphere</span><span class="p">(</span>
+    <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">position</span><span class="p">,</span>
+    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">sphere_charge</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Image charge(s) for a point charge and a conducting sphere.</span>
+
+<span class="sd">    For a sphere of radius :math:`R` and a charge :math:`q` at distance</span>
+<span class="sd">    :math:`a` from its center, the image</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        q' = -q\\frac{R}{a} \\quad\\text{at distance}\\quad \\frac{R^2}{a}</span>
+
+<span class="sd">    along the same ray makes the sphere's surface an equipotential at zero</span>
+<span class="sd">    potential (Jackson §2.2, eq. 2.4). This holds with the charge outside</span>
+<span class="sd">    (:math:`a &gt; R`, image inside) or inside a spherical cavity</span>
+<span class="sd">    (:math:`a &lt; R`, image outside). For an *isolated* sphere carrying total</span>
+<span class="sd">    charge :math:`Q` (charge outside only), a second image</span>
+<span class="sd">    :math:`Q - q'` at the center restores the net charge while keeping the</span>
+<span class="sd">    surface an equipotential (Jackson §2.3).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q : float</span>
+<span class="sd">        The real charge, in coulombs.</span>
+<span class="sd">    position : array_like, shape (3,)</span>
+<span class="sd">        Its position, in meters.</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        Sphere radius ``R``.</span>
+<span class="sd">    center : array_like, shape (3,), default=(0, 0, 0)</span>
+<span class="sd">        Sphere center.</span>
+<span class="sd">    sphere_charge : float, optional</span>
+<span class="sd">        Total charge of an isolated sphere. ``None`` (default) means the</span>
+<span class="sd">        sphere is grounded.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    charges : ndarray, shape (1,) or (2,)</span>
+<span class="sd">        Image charge(s).</span>
+<span class="sd">    positions : ndarray, shape (1, 3) or (2, 3)</span>
+<span class="sd">        Image position(s).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; qi, ri = image_charges_sphere(1.0, [2.0, 0.0, 0.0], radius=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; float(qi[0]), float(ri[0, 0])</span>
+<span class="sd">    (-0.5, 0.5)</span>
+<span class="sd">    """</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">rel</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">-</span> <span class="n">c</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">rel</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"the charge must not sit at the center or on the sphere"</span><span class="p">)</span>
+    <span class="n">q_img</span> <span class="o">=</span> <span class="o">-</span><span class="n">q</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">/</span> <span class="n">a</span>
+    <span class="n">charges</span> <span class="o">=</span> <span class="p">[</span><span class="n">q_img</span><span class="p">]</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="n">rel</span> <span class="o">*</span> <span class="p">(</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">sphere_charge</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"sphere_charge applies only to a charge outside the sphere"</span><span class="p">)</span>
+        <span class="n">charges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sphere_charge</span> <span class="o">-</span> <span class="n">q_img</span><span class="p">)</span>
+        <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">charges</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="induced_charge_density_plane">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.induced_charge_density_plane">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">induced_charge_density_plane</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Surface charge induced on the grounded plane ``z = 0`` by a charge at height ``d``.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\sigma(\\varrho) = -\\frac{q\\, d}{2\\pi(\\varrho^2 + d^2)^{3/2}}</span>
+
+<span class="sd">    (Griffiths, *Introduction to Electrodynamics*, 4th ed., eq. 3.10),</span>
+<span class="sd">    which integrates to exactly :math:`-q` over the plane.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q : float</span>
+<span class="sd">        The real charge, in coulombs.</span>
+<span class="sd">    d : float</span>
+<span class="sd">        Its height above the plane, in meters.</span>
+<span class="sd">    rho : array_like</span>
+<span class="sd">        Distance along the plane from the foot of the perpendicular.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        Surface charge density in C/m^2.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; round(float(induced_charge_density_plane(1.0, 1.0, 0.0) * 2 * np.pi), 12)</span>
+<span class="sd">    -1.0</span>
+<span class="sd">    """</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">q</span> <span class="o">*</span> <span class="n">d</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">d</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">1.5</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="induced_charge_density_sphere">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.induced_charge_density_sphere">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">induced_charge_density_sphere</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Surface charge induced on a grounded sphere by an outside point charge.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\sigma(\\gamma) = -\\frac{q\\,(a^2 - R^2)}{4\\pi R\\,(R^2 + a^2 - 2aR\\cos\\gamma)^{3/2}}</span>
+
+<span class="sd">    (Jackson eq. 2.5, rewritten in the sphere radius :math:`R` and charge</span>
+<span class="sd">    distance :math:`a`), where :math:`\\gamma` is the angle from the ray</span>
+<span class="sd">    through the charge. It integrates to the image charge :math:`-qR/a`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    q : float</span>
+<span class="sd">        The real charge, in coulombs.</span>
+<span class="sd">    a : float</span>
+<span class="sd">        Distance of the charge from the center, ``a &gt; radius``.</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        Sphere radius ``R``.</span>
+<span class="sd">    theta : array_like</span>
+<span class="sd">        Polar angle(s) ``gamma`` on the sphere, measured from the charge's</span>
+<span class="sd">        direction.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        Surface charge density in C/m^2.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from scipy.integrate import trapezoid</span>
+<span class="sd">    &gt;&gt;&gt; th = np.linspace(0.0, np.pi, 20001)</span>
+<span class="sd">    &gt;&gt;&gt; sigma = induced_charge_density_sphere(1.0, 2.0, 1.0, th)</span>
+<span class="sd">    &gt;&gt;&gt; total = trapezoid(sigma * 2 * np.pi * np.sin(th), th)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(total), 6)  # the image charge -q R / a</span>
+<span class="sd">    -0.5</span>
+<span class="sd">    """</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">q</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="p">(</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">**</span> <span class="mf">1.5</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Multipole expansion</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="MultipoleMoments">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.MultipoleMoments">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultipoleMoments</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Cartesian multipole moments of a charge distribution about ``origin``.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    monopole : float</span>
+<span class="sd">        Total charge :math:`q = \\sum_i q_i`.</span>
+<span class="sd">    dipole : ndarray, shape (3,)</span>
+<span class="sd">        Dipole moment :math:`\\mathbf p = \\sum_i q_i \\mathbf x_i`.</span>
+<span class="sd">    quadrupole : ndarray, shape (3, 3)</span>
+<span class="sd">        Traceless quadrupole tensor</span>
+<span class="sd">        :math:`Q_{jk} = \\sum_i q_i (3x_{ij}x_{ik} - r_i^2\\delta_{jk})`.</span>
+<span class="sd">    origin : ndarray, shape (3,)</span>
+<span class="sd">        Expansion center the moments are taken about.</span>
+<span class="sd">    """</span>
+
+    <span class="n">monopole</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">dipole</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">quadrupole</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">origin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_to_3d</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arr</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"positions must have 2 or 3 components"</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="multipole_moments">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.multipole_moments">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multipole_moments</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">MultipoleMoments</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Monopole, dipole and (traceless) quadrupole moments of a charge distribution.</span>
+
+<span class="sd">    Uses Jackson's conventions (§4.1, eq. 4.9):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        q = \\sum_i q_i, \\quad</span>
+<span class="sd">        \\mathbf p = \\sum_i q_i \\mathbf x_i, \\quad</span>
+<span class="sd">        Q_{jk} = \\sum_i q_i\\,(3 x_{ij} x_{ik} - r_i^2 \\delta_{jk}),</span>
+
+<span class="sd">    with positions measured from ``origin``. A continuous density on a grid</span>
+<span class="sd">    is handled the same way: pass ``charges = rho * dV`` and the cell</span>
+<span class="sd">    centers as ``positions``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    charges : array_like, shape (n,)</span>
+<span class="sd">        Point charges, in coulombs.</span>
+<span class="sd">    positions : array_like, shape (n, 3) or (n, 2)</span>
+<span class="sd">        Positions in meters.</span>
+<span class="sd">    origin : array_like, shape (3,), default=(0, 0, 0)</span>
+<span class="sd">        Expansion center.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    MultipoleMoments</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A physical dipole +-q separated by d along z:</span>
+
+<span class="sd">    &gt;&gt;&gt; m = multipole_moments([1.0, -1.0], [[0, 0, 0.5], [0, 0, -0.5]])</span>
+<span class="sd">    &gt;&gt;&gt; float(m.monopole), m.dipole.tolist()</span>
+<span class="sd">    (0.0, [0.0, 0.0, 1.0])</span>
+<span class="sd">    """</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">_as_charge_arrays</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">_to_3d</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="n">c</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">monopole</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+    <span class="n">dipole</span> <span class="o">=</span> <span class="n">q</span> <span class="o">@</span> <span class="n">x</span>
+    <span class="n">quad</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"i,ij,ik-&gt;jk"</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="n">r2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MultipoleMoments</span><span class="p">(</span><span class="n">monopole</span><span class="p">,</span> <span class="n">dipole</span><span class="p">,</span> <span class="n">quad</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="multipole_potential">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.multipole_potential">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multipole_potential</span><span class="p">(</span><span class="n">moments</span><span class="p">:</span> <span class="n">MultipoleMoments</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Far-field potential from a truncated multipole expansion.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\phi(\\mathbf x) = \\frac{1}{4\\pi\\varepsilon}\\left[\\frac{q}{r}</span>
+<span class="sd">        + \\frac{\\mathbf p\\cdot\\mathbf x}{r^3}</span>
+<span class="sd">        + \\frac{1}{2}\\sum_{jk} Q_{jk}\\frac{x_j x_k}{r^5} + \\cdots\\right]</span>
+
+<span class="sd">    (Jackson eq. 4.10), with :math:`\\mathbf x` measured from</span>
+<span class="sd">    ``moments.origin``. The error of the order-:math:`\\ell` truncation falls</span>
+<span class="sd">    off as :math:`r^{-(\\ell+2)}`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moments : MultipoleMoments</span>
+<span class="sd">        From :func:`multipole_moments`.</span>
+<span class="sd">    points : array_like, shape (..., 3) or (..., 2)</span>
+<span class="sd">        Observation points.</span>
+<span class="sd">    order : {0, 1, 2}, default=2</span>
+<span class="sd">        Highest multipole kept: monopole, dipole, or quadrupole.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (...)</span>
+<span class="sd">        Potential in volts.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; m = multipole_moments([1.0, -1.0], [[0, 0, 0.5], [0, 0, -0.5]])</span>
+<span class="sd">    &gt;&gt;&gt; far = [[0.0, 0.0, 100.0]]</span>
+<span class="sd">    &gt;&gt;&gt; approx = multipole_potential(m, far, order=1, eps=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; exact = coulomb_potential([1.0, -1.0], [[0, 0, 0.5], [0, 0, -0.5]], far, eps=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(approx[0] / exact[0] - 1) &lt; 1e-4)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">order</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"order must be 0, 1 or 2"</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">_to_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span> <span class="o">-</span> <span class="n">moments</span><span class="o">.</span><span class="n">origin</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">moments</span><span class="o">.</span><span class="n">monopole</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="k">if</span> <span class="n">order</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">moments</span><span class="o">.</span><span class="n">dipole</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span>
+    <span class="k">if</span> <span class="n">order</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"...j,jk,...k-&gt;..."</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">moments</span><span class="o">.</span><span class="n">quadrupole</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">**</span><span class="mi">5</span>
+    <span class="k">return</span> <span class="n">phi</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="dipole_field">
+<a class="viewcode-back" href="../../../api/fields.html#physicskit.fields.dipole_field">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dipole_field</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">EPS0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Electric field of an ideal point dipole.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\mathbf E(\\mathbf x) = \\frac{1}{4\\pi\\varepsilon}</span>
+<span class="sd">        \\frac{3\\hat{\\mathbf n}(\\mathbf p\\cdot\\hat{\\mathbf n}) - \\mathbf p}{r^3}</span>
+
+<span class="sd">    (Jackson eq. 4.13, away from the origin). On the dipole axis this is</span>
+<span class="sd">    :math:`2p/(4\\pi\\varepsilon r^3)`, twice the equatorial magnitude.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p : array_like, shape (3,)</span>
+<span class="sd">        Dipole moment in C m.</span>
+<span class="sd">    points : array_like, shape (..., 3)</span>
+<span class="sd">        Observation points.</span>
+<span class="sd">    origin : array_like, shape (3,), default=(0, 0, 0)</span>
+<span class="sd">        Dipole location.</span>
+<span class="sd">    eps : float, default=EPS0</span>
+<span class="sd">        Permittivity of the medium.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (..., 3)</span>
+<span class="sd">        Field in V/m.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; E = dipole_field([0, 0, 1.0], [[0, 0, 1.0], [1.0, 0, 0]], eps=1 / (4 * np.pi))</span>
+<span class="sd">    &gt;&gt;&gt; E.round(12).tolist()</span>
+<span class="sd">    [[0.0, 0.0, 2.0], [0.0, 0.0, -1.0]]</span>
+<span class="sd">    """</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">p</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -46,6 +46,14 @@ Sections
   solver: viscous decay of a periodic vortex patch, and a decaying
   turbulence simulation whose energy spectrum is checked against
   Kolmogorov's -5/3 law.
+- **continuum_mechanics** -- linear continuum mechanics beyond flow:
+  Fourier's heat equation (explicit, Crank-Nicolson, and spectral),
+  standing sound waves in pipes and rooms, and Lamé's pressurized
+  thick-walled cylinder by plane-strain finite elements.
+- **lattice_boltzmann** -- the D2Q9 BGK lattice Boltzmann method:
+  Poiseuille flow measuring the viscosity law
+  :math:`\nu = c_s^2(\tau - 1/2)`, and a vortex street shed behind a
+  cylinder.
 
 
 .. raw:: html
@@ -134,6 +142,85 @@ its speed and downstream state right.
 
     </div>
 
+Continuum Mechanics
+-------------------
+
+Linear continuum mechanics beyond flow. Fourier's heat equation smooths a
+temperature field mode by mode. The explicit, Crank-Nicolson, and spectral
+solvers show how stability and accuracy trade off. Sound in a pipe or a
+room rings at a discrete set of standing-wave frequencies, recovered here
+from a single pressure pulse. A pressurized thick-walled cylinder, solved
+with plane-strain finite elements, reproduces Lamé's closed-form stresses.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Small pressure disturbances in air travel at c = \sqrt{\gamma p/\rho} and obey the wave equation. In a pipe, reflections at the two ends allow only a discrete set of frequencies to persist: its standing modes. An end closed by a rigid cap reflects a pressure maximum. An open end, to a good approximation, fixes the pressure at ambient. As a result a pipe open at both ends (a flute) sounds all harmonics f_n = nc/2L, while a pipe closed at one end (a clarinet, roughly) sounds only the odd ones, f_n = (2n-1)c/4L, an octave lower.">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/continuum_mechanics/images/thumb/sphx_glr_plot_acoustic_pipe_and_room_modes_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/continuum_mechanics/plot_acoustic_pipe_and_room_modes`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sound in pipes and rooms: standing modes from a single pulse</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Joseph Fourier&#x27;s Théorie analytique de la chaleur (1822) wrote heat conduction as">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/continuum_mechanics/images/thumb/sphx_glr_plot_fourier_heat_equation_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/continuum_mechanics/plot_fourier_heat_equation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fourier's heat equation: every mode decays on its own</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A gun barrel, a pressure vessel or a hydraulic pipe is a thick cylinder with pressure p inside. Gabriel Lamé (1852) found its stresses in closed form:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/continuum_mechanics/images/thumb/sphx_glr_plot_lame_pressurized_cylinder_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/continuum_mechanics/plot_lame_pressurized_cylinder`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Lamé's thick-walled cylinder: plane-strain finite elements</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
 Instabilities
 -------------
 
@@ -193,6 +280,51 @@ that linear theory stops applying, into the fully rolled-up nonlinear state.
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Rayleigh-Taylor plumes from a heavy-over-light interface</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Lattice Boltzmann
+-----------------
+
+A kinetic route to the Navier-Stokes equations. Instead of discretizing
+the equations of fluid motion, the D2Q9 lattice Boltzmann method moves
+populations of fictitious particles along nine lattice directions and
+relaxes them toward a local equilibrium. The viscosity is set entirely by
+the relaxation time, :math:`\nu = c_s^2(\tau - 1/2)`. Here it reproduces
+Poiseuille's parabola and sheds a vortex street behind a cylinder.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Lattice gas automata (Frisch, Hasslacher and Pomeau, 1986) showed that Boolean particles hopping and colliding on a hexagonal lattice obey the Navier-Stokes equations on large scales. They were noisy, though. The lattice Boltzmann method (McNamara and Zanetti, 1988) replaced the particles with their average populations f_i, one per lattice direction. Qian, d&#x27;Humières and Lallemand (1992) reduced the collisions to a single relaxation toward a local equilibrium, the BGK operator:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/lattice_boltzmann/images/thumb/sphx_glr_plot_lattice_boltzmann_bgk_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/lattice_boltzmann/plot_lattice_boltzmann_bgk`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The lattice Boltzmann method: Navier-Stokes from colliding populations</div>
     </div>
 
 
@@ -571,7 +703,9 @@ to the pairwise dynamics of the first example.
 
 
    /api/gallery/fluids/compressible_flow/index.rst
+   /api/gallery/fluids/continuum_mechanics/index.rst
    /api/gallery/fluids/instabilities/index.rst
+   /api/gallery/fluids/lattice_boltzmann/index.rst
    /api/gallery/fluids/navier_stokes/index.rst
    /api/gallery/fluids/potential_flow/index.rst
    /api/gallery/fluids/viscous_flow/index.rst

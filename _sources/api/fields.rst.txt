@@ -6,6 +6,12 @@ physicskit.fields
 
 .. automodule:: physicskit.fields
 
+.. automodule:: physicskit.fields.electrostatics
+   :members:
+
+.. automodule:: physicskit.fields.magnetostatics
+   :members:
+
 .. automodule:: physicskit.fields.electrodynamics
    :members:
 

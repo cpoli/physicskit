@@ -1382,6 +1382,46 @@ Lett. B 46, 138-140 (1973).
 
 .. minigallery:: ../../examples/particle/electroweak/plot_04_gargamelle_neutral_currents.py
 
+1974 -- Wilson's Lattice Gauge Theory and the Area Law
+------------------------------------------------------
+
+Asymptotic freedom (the 1973-1974 entry above) explained why quarks look free at
+short distances, but perturbation theory cannot follow the coupling as it
+grows at long distances, where confinement must happen. Kenneth Wilson
+made the question non-perturbative by putting the gauge theory on a
+discrete space-time lattice. Quark fields live on the sites, the gauge
+field lives on the links as group elements :math:`U_\mu(x)`, and the
+action is built from the smallest closed loops, the plaquettes,
+
+.. math::
+
+   S = \beta\sum_P\left(1 - \tfrac{1}{N}\,\mathrm{Re}\,\mathrm{tr}\,U_P\right),
+
+exactly gauge invariant at any lattice spacing. Wilson's criterion for
+confinement is the expectation value of a large closed loop of links: an
+*area law* :math:`W(R,T) \sim e^{-\sigma RT}` means a static quark and
+antiquark at distance :math:`R` feel a linearly rising potential
+:math:`\sigma R`. He showed the area law holds at strong coupling.
+Monte Carlo simulation of the lattice path integral, pioneered by Creutz
+in 1979-1980, turned the formulation into lattice QCD, now used to compute
+hadron masses from first principles.
+
+*Implementation:* :class:`physicskit.particle.lattice_gauge.U1LatticeGauge`
+simulates the simplest (abelian, compact U(1)) lattice gauge theory by
+Metropolis Monte Carlo in two or three dimensions and measures plaquettes
+and Wilson loops; in two dimensions
+:func:`~physicskit.particle.lattice_gauge.u1_2d_wilson_loop_exact` and
+:func:`~physicskit.particle.lattice_gauge.u1_2d_string_tension` give the
+exact area law, which :func:`~physicskit.particle.lattice_gauge.creutz_ratio`
+recovers from the simulated loops.
+
+*References:* K. G. Wilson, "Confinement of quarks," Phys. Rev. D 10,
+2445-2459 (1974); M. Creutz, "Monte Carlo study of quantized SU(2) gauge
+theory," Phys. Rev. D 21, 2308-2315 (1980); R. Balian, J. M. Drouffe, and
+C. Itzykson, Phys. Rev. D 11, 2098-2103 (1975).
+
+.. minigallery:: ../../examples/particle/qcd/plot_02_wilson_lattice_gauge_area_law.py
+
 1974 -- The November Revolution: Discovery of the J/psi
 ------------------------------------------------------------
 

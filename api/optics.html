@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>physicskit.optics &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.optics &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -58,7 +58,7 @@
     <link rel="prev" title="physicskit.fluids" href="fluids.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -154,6 +154,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -479,6 +493,9 @@ higher-order modes, and <span class="math notranslate nohighlight">\(M^2\)</span
 coherent, squeezed) in a truncated photon-number basis, Wigner
 quasi-probability distributions, and the Jaynes-Cummings model of a
 two-level atom coupled to a quantized cavity mode.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.lasers</span></code> – laser rate equations (threshold,
+gain clamping, relaxation oscillations) and the Maxwell-Bloch
+(Haken-Lorenz) single-mode laser with its chaotic second threshold.</p></li>
 <li><p><a class="reference internal" href="#module-physicskit.optics.visualizers" title="physicskit.optics.visualizers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.visualizers</span></code></a> – ray-trace, beam-envelope,
 diffraction-pattern, and interactive Wigner-surface plots.</p></li>
 </ul>
@@ -614,7 +631,7 @@ faster than exponentiating <span class="math notranslate nohighlight">\(\hat H\)
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>psi0</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>2*cutoff</em><em>,</em><em>)</em>) – Initial state.</p></li>
-<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.ScatteringResult.T" title="physicskit.quantum.ScatteringResult.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the evolved state.</p></li>
+<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="condensed.html#physicskit.condensed.BoltzmannTransport.T" title="physicskit.condensed.BoltzmannTransport.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the evolved state.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -637,7 +654,7 @@ this reduces to the textbook vacuum Rabi formula <span class="math notranslate n
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.ScatteringResult.T" title="physicskit.quantum.ScatteringResult.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the population.</p></li>
+<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="condensed.html#physicskit.condensed.BoltzmannTransport.T" title="physicskit.condensed.BoltzmannTransport.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the population.</p></li>
 <li><p><strong>n_photons</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=0</em>) – Initial photon number (with the atom excited).</p></li>
 </ul>
 </dd>
@@ -676,6 +693,301 @@ basis ordering documented on the class.</p>
 <span class="go">True</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">LaserRateEquations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pump</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#LaserRateEquations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.LaserRateEquations" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Single-mode laser rate equations for the inversion <span class="math notranslate nohighlight">\(N\)</span> and photon number <span class="math notranslate nohighlight">\(q\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{dN}{dt} = P - \frac{N}{\tau} - BNq, \qquad
+\frac{dq}{dt} = BNq - \frac{q}{\tau_c} + \beta\frac{N}{\tau},\]</div>
+<p>with pump rate <span class="math notranslate nohighlight">\(P\)</span>, upper-level lifetime <span class="math notranslate nohighlight">\(\tau\)</span>, cavity
+photon lifetime <span class="math notranslate nohighlight">\(\tau_c\)</span>, stimulated-emission coefficient
+<span class="math notranslate nohighlight">\(B\)</span>, and fraction <span class="math notranslate nohighlight">\(\beta\)</span> of spontaneous emission going into
+the lasing mode (Siegman, <em>Lasers</em>, Eqs. 24.8-24.9; Milonni and Eberly,
+<em>Laser Physics</em>, 2010, Sec. 6.3). Gain equals loss at the threshold
+inversion <span class="math notranslate nohighlight">\(N_\mathrm{th} = 1/(B\tau_c)\)</span>, reached at pump
+<span class="math notranslate nohighlight">\(P_\mathrm{th} = N_\mathrm{th}/\tau\)</span> – the condition first
+formulated by Schawlow and Townes (Phys. Rev. 112, 1940 (1958)). For
+<span class="math notranslate nohighlight">\(\beta = 0\)</span>, above threshold the inversion clamps at
+<span class="math notranslate nohighlight">\(N_\mathrm{th}\)</span> and every extra pumped excitation becomes a
+photon: <span class="math notranslate nohighlight">\(q = \tau_c(P - P_\mathrm{th})\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pump</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Pump rate <span class="math notranslate nohighlight">\(P\)</span>.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Upper-level (spontaneous) lifetime.</p></li>
+<li><p><strong>tau_c</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Cavity photon lifetime.</p></li>
+<li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Stimulated-emission coupling.</p></li>
+<li><p><strong>beta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Spontaneous-emission coupling into the mode, <span class="math notranslate nohighlight">\(0 \le \beta \le 1\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">laser</span> <span class="o">=</span> <span class="n">LaserRateEquations</span><span class="p">(</span><span class="n">pump</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tau_c</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">laser</span><span class="o">.</span><span class="n">threshold_pump</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">(100.0, 2.0)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.B">
+<span class="sig-name descname"><span class="pre">B</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.B" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.beta">
+<span class="sig-name descname"><span class="pre">beta</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.beta" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.integrate">
+<span class="sig-name descname"><span class="pre">integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#LaserRateEquations.integrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.LaserRateEquations.integrate" title="Link to this definition">#</a></dt>
+<dd><p>Integrate the rate equations with RK4 from <span class="math notranslate nohighlight">\((N_0, q_0)\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
+<p>A small seed <span class="math notranslate nohighlight">\(q_0 &gt; 0\)</span> stands in for spontaneous emission when
+<span class="math notranslate nohighlight">\(\beta = 0\)</span> (with no photons, stimulated emission never starts).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Final time.</p></li>
+<li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Step size (must resolve <span class="math notranslate nohighlight">\(\tau_c\)</span>).</p></li>
+<li><p><strong>N0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Initial inversion and photon number.</p></li>
+<li><p><strong>q0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Initial inversion and photon number.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t, N, q</strong> (<em>numpy.ndarray</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.params">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.params" title="Link to this definition">#</a></dt>
+<dd><p>Parameter vector passed to the njit right-hand side.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.pump">
+<span class="sig-name descname"><span class="pre">pump</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.pump" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.relaxation_oscillation">
+<span class="sig-name descname"><span class="pre">relaxation_oscillation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#LaserRateEquations.relaxation_oscillation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.LaserRateEquations.relaxation_oscillation" title="Link to this definition">#</a></dt>
+<dd><p>Frequency and damping rate of the relaxation oscillations (<span class="math notranslate nohighlight">\(\beta = 0\)</span>, above threshold).</p>
+<p>Linearizing about the lasing steady state, with pump ratio
+<span class="math notranslate nohighlight">\(r = P/P_\mathrm{th}\)</span>, perturbations evolve as
+<span class="math notranslate nohighlight">\(e^{-\Gamma t}\cos\Omega t\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\Gamma = \frac{r}{2\tau}, \qquad
+\Omega = \sqrt{\frac{r - 1}{\tau\tau_c} - \Gamma^2}\]</div>
+<p>(Siegman, Eq. 25.14).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Omega, Gamma</strong> (<em>float</em>)</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – Below threshold, or if the oscillations are overdamped.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#LaserRateEquations.steady_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.LaserRateEquations.steady_state" title="Link to this definition">#</a></dt>
+<dd><p>Stationary inversion and photon number <span class="math notranslate nohighlight">\((N_s, q_s)\)</span>.</p>
+<p>Setting both derivatives to zero gives <span class="math notranslate nohighlight">\(q = \tau_c[P - (1-\beta)N/\tau]\)</span>
+and the quadratic
+<span class="math notranslate nohighlight">\(\frac{(1-\beta)B\tau_c}{\tau}N^2 - \left(PB\tau_c + \frac1\tau\right)N + P = 0\)</span>,
+whose smaller root is the physical one. For <span class="math notranslate nohighlight">\(\beta = 0\)</span> it is
+<span class="math notranslate nohighlight">\((P\tau, 0)\)</span> below threshold and
+<span class="math notranslate nohighlight">\((N_\mathrm{th}, \tau_c(P - P_\mathrm{th}))\)</span> above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>N, q</strong> (<em>float</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.tau">
+<span class="sig-name descname"><span class="pre">tau</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.tau" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.tau_c">
+<span class="sig-name descname"><span class="pre">tau_c</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.tau_c" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.threshold_inversion">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">threshold_inversion</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.threshold_inversion" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(N_\mathrm{th} = 1/(B\tau_c)\)</span>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.LaserRateEquations.threshold_pump">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">threshold_pump</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.optics.LaserRateEquations.threshold_pump" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(P_\mathrm{th} = N_\mathrm{th}/\tau\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">MaxwellBloch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_perp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_par</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#MaxwellBloch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.MaxwellBloch" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Semiclassical single-mode laser: the resonant Maxwell-Bloch equations in Haken’s form.</p>
+<p>For the (real, resonant) field <span class="math notranslate nohighlight">\(E\)</span>, atomic polarization
+<span class="math notranslate nohighlight">\(P\)</span>, and inversion <span class="math notranslate nohighlight">\(D\)</span>, normalized so that lasing starts at
+pump parameter <span class="math notranslate nohighlight">\(r = 1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\dot E = \kappa(P - E), \qquad
+\dot P = \gamma_\perp(ED - P), \qquad
+\dot D = \gamma_\parallel(r - D - EP)\]</div>
+<p>(Haken 1975; Narducci and Abraham, <em>Laser Physics and Laser
+Instabilities</em>, 1988, Ch. 7). With <span class="math notranslate nohighlight">\(\sigma = \kappa/\gamma_\perp\)</span>,
+<span class="math notranslate nohighlight">\(b = \gamma_\parallel/\gamma_\perp\)</span>, time <span class="math notranslate nohighlight">\(\gamma_\perp t\)</span>,
+and <span class="math notranslate nohighlight">\(x = \sqrt b\,E\)</span>, <span class="math notranslate nohighlight">\(y = \sqrt b\,P\)</span>, <span class="math notranslate nohighlight">\(z = r - D\)</span>,
+these are exactly the Lorenz equations
+<span class="math notranslate nohighlight">\(\dot x = \sigma(y - x)\)</span>, <span class="math notranslate nohighlight">\(\dot y = x(r - z) - y\)</span>,
+<span class="math notranslate nohighlight">\(\dot z = xy - bz\)</span>. Below <span class="math notranslate nohighlight">\(r = 1\)</span> the field decays;
+above it the stable lasing state is <span class="math notranslate nohighlight">\(E = P = \pm\sqrt{r-1}\)</span>,
+<span class="math notranslate nohighlight">\(D = 1\)</span>. In the “bad cavity” regime <span class="math notranslate nohighlight">\(\sigma &gt; b + 1\)</span> that
+state loses stability at the second threshold</p>
+<div class="math notranslate nohighlight">
+\[r_H = \frac{\sigma(\sigma + b + 3)}{\sigma - b - 1},\]</div>
+<p>beyond which the laser output is chaotic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Cavity field decay rate.</p></li>
+<li><p><strong>gamma_perp</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Polarization (transverse) decay rate.</p></li>
+<li><p><strong>gamma_par</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Inversion (longitudinal) decay rate.</p></li>
+<li><p><strong>r</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Pump parameter (1 at threshold).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mb</span> <span class="o">=</span> <span class="n">MaxwellBloch</span><span class="p">(</span><span class="n">kappa</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">gamma_perp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma_par</span><span class="o">=</span><span class="mi">8</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">mb</span><span class="o">.</span><span class="n">second_threshold</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># the Lorenz value for sigma=10, b=8/3</span>
+<span class="go">24.7368</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.b">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">b</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.b" title="Link to this definition">#</a></dt>
+<dd><p>Lorenz <span class="math notranslate nohighlight">\(b = \gamma_\parallel/\gamma_\perp\)</span>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.gamma_par">
+<span class="sig-name descname"><span class="pre">gamma_par</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.25</span></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.gamma_par" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.gamma_perp">
+<span class="sig-name descname"><span class="pre">gamma_perp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.gamma_perp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.integrate">
+<span class="sig-name descname"><span class="pre">integrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#MaxwellBloch.integrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.MaxwellBloch.integrate" title="Link to this definition">#</a></dt>
+<dd><p>Integrate with RK4 from <code class="docutils literal notranslate"><span class="pre">state0</span> <span class="pre">=</span> <span class="pre">(E,</span> <span class="pre">P,</span> <span class="pre">D)</span></code> at <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Initial <span class="math notranslate nohighlight">\((E, P, D)\)</span>; a small <span class="math notranslate nohighlight">\(E \ne 0\)</span> seeds lasing.</p></li>
+<li><p><strong>t_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Final time.</p></li>
+<li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Step size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>t</strong> (<em>numpy.ndarray</em>) – Shape <code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">+</span> <span class="pre">1,)</span></code>.</p></li>
+<li><p><strong>states</strong> (<em>numpy.ndarray</em>) – Shape <code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">3)</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.jacobian">
+<span class="sig-name descname"><span class="pre">jacobian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#MaxwellBloch.jacobian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.MaxwellBloch.jacobian" title="Link to this definition">#</a></dt>
+<dd><p>Jacobian <span class="math notranslate nohighlight">\(\partial\dot{\mathbf y}/\partial\mathbf y\)</span> at <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">(E,</span> <span class="pre">P,</span> <span class="pre">D)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3.0</span></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.params">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.params" title="Link to this definition">#</a></dt>
+<dd><p>Parameter vector passed to the njit right-hand side.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.r">
+<span class="sig-name descname"><span class="pre">r</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.r" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.second_threshold">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">second_threshold</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.second_threshold" title="Link to this definition">#</a></dt>
+<dd><p>Haken’s second threshold <span class="math notranslate nohighlight">\(r_H\)</span>; <code class="docutils literal notranslate"><span class="pre">inf</span></code> in the good-cavity regime <span class="math notranslate nohighlight">\(\sigma \le b + 1\)</span>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.sigma">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sigma</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.optics.MaxwellBloch.sigma" title="Link to this definition">#</a></dt>
+<dd><p>Lorenz <span class="math notranslate nohighlight">\(\sigma = \kappa/\gamma_\perp\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.optics.MaxwellBloch.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/lasers.html#MaxwellBloch.steady_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.MaxwellBloch.steady_state" title="Link to this definition">#</a></dt>
+<dd><p>The stable-branch fixed point: <span class="math notranslate nohighlight">\((0, 0, r)\)</span> below threshold, <span class="math notranslate nohighlight">\((\sqrt{r-1}, \sqrt{r-1}, 1)\)</span> above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>numpy.ndarray</em> – <span class="math notranslate nohighlight">\((E, P, D)\)</span>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2853,7 +3165,7 @@ faster than exponentiating <span class="math notranslate nohighlight">\(\hat H\)
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>psi0</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>2*cutoff</em><em>,</em><em>)</em>) – Initial state.</p></li>
-<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.ScatteringResult.T" title="physicskit.quantum.ScatteringResult.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the evolved state.</p></li>
+<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="condensed.html#physicskit.condensed.BoltzmannTransport.T" title="physicskit.condensed.BoltzmannTransport.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the evolved state.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2876,7 +3188,7 @@ this reduces to the textbook vacuum Rabi formula <span class="math notranslate n
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.ScatteringResult.T" title="physicskit.quantum.ScatteringResult.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the population.</p></li>
+<li><p><strong>t_array</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="condensed.html#physicskit.condensed.BoltzmannTransport.T" title="physicskit.condensed.BoltzmannTransport.T"><em>T</em></a><em>,</em><em>)</em>) – Times at which to evaluate the population.</p></li>
 <li><p><strong>n_photons</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=0</em>) – Initial photon number (with the atom excited).</p></li>
 </ul>
 </dd>
@@ -3327,6 +3639,34 @@ fringes alongside the bright central peak.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.JaynesCummingsModel.evolve"><code class="docutils literal notranslate"><span class="pre">JaynesCummingsModel.evolve()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.JaynesCummingsModel.excited_state_population"><code class="docutils literal notranslate"><span class="pre">JaynesCummingsModel.excited_state_population()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.JaynesCummingsModel.hamiltonian"><code class="docutils literal notranslate"><span class="pre">JaynesCummingsModel.hamiltonian()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.B"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.B</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.beta"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.beta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.integrate"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.integrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.params"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.params</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.pump"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.pump</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.relaxation_oscillation"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.relaxation_oscillation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.steady_state"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.steady_state()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.tau"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.tau</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.tau_c"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.tau_c</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.threshold_inversion"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.threshold_inversion</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.LaserRateEquations.threshold_pump"><code class="docutils literal notranslate"><span class="pre">LaserRateEquations.threshold_pump</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.b"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.b</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.gamma_par"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.gamma_par</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.gamma_perp"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.gamma_perp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.integrate"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.integrate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.jacobian"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.jacobian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.kappa"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.params"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.params</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.r"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.r</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.second_threshold"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.second_threshold</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.sigma"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.sigma</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.MaxwellBloch.steady_state"><code class="docutils literal notranslate"><span class="pre">MaxwellBloch.steady_state()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.OpticalElement"><code class="docutils literal notranslate"><span class="pre">OpticalElement</span></code></a></li>

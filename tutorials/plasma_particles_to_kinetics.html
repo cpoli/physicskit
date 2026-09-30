@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Plasma Physics from One Particle to Kinetic Theory &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/plasma_particles_to_kinetics';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Simulating Wave Propagation with FDTD" href="fdtd_waveguide_simulation.html" />
+    <link rel="prev" title="Radioactive Decay Chains, Rutherford Scattering, and Nuclear Binding" href="nuclear_decay_chains_and_scattering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="units_and_conventions.html">Units and Conventions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mechanics &amp; Dynamics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="measuring_chaos.html">Measuring Chaos: Lyapunov Exponents and Fractal Dimensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="black_holes_in_geometrized_units.html">Black Holes, Orbits and Ringdowns in Geometrized Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polytropic_stellar_models.html">Polytropic Stellar Models and the Lane-Emden Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nbody_orbits_and_galactic_rotation_curves.html">N-Body Orbits, Hohmann Transfers, and Galactic Rotation Curves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relativistic_two_body_decay.html">Relativistic Two-Body Decay Kinematics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nuclear_decay_chains_and_scattering.html">Radioactive Decay Chains, Rutherford Scattering, and Nuclear Binding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Waves &amp; Fields</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Plasma Physics from One Particle to Kinetic Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fdtd_waveguide_simulation.html">Simulating Wave Propagation with FDTD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bec_vortex_lattice_creation.html">Creating a Quantized Vortex in a Rotating BEC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="laser_cavity_stability.html">Laser Cavity Stability and the Fundamental Gaussian Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wigner_function_squeezed_states.html">Wigner Functions and Squeezed Light</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Quantum &amp; Statistical</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="random_matrix_universality.html">Random Matrix Universality: Semicircles, Level Repulsion and the Edge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphene_and_haldane.html">Graphene and the Haldane Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ssh_topological_edge_states.html">The SSH Model and Topological Edge States</a></li>
+<li class="toctree-l1"><a class="reference internal" href="semiclassical_wavepacket_propagation.html">Semiclassical Wavepacket Propagation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gutzwiller_periodic_orbit_spectrum.html">Reconstructing a Spectrum from a Single Periodic Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statphys_deep_dives.html">Statistical Mechanics Deep Dives</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fluids</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fluid_flow_regimes.html">A Tour of Fluid Flow Regimes, Checked Against Exact Solutions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Plasma Physics from One Particle to Kinetic Theory</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="plasma-physics-from-one-particle-to-kinetic-theory">
+<h1>Plasma Physics from One Particle to Kinetic Theory<a class="headerlink" href="#plasma-physics-from-one-particle-to-kinetic-theory" title="Link to this heading">#</a></h1>
+<p>A plasma can be described at three levels: as individual charged
+particles gyrating in fields, as a conducting fluid (magnetohydrodynamics),
+or as a distribution function in phase space (kinetic theory). This
+tutorial works through all three with <a class="reference internal" href="../api/plasma.html#module-physicskit.plasma" title="physicskit.plasma"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.plasma</span></code></a>. It
+checks each numerical result against the formula it should reproduce,
+and ends with Landau damping, a collisionless effect that only the
+kinetic description captures.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Units.</strong> The single-particle and fluid functions take SI
+inputs and return SI outputs. <a class="reference internal" href="../api/plasma.html#physicskit.plasma.single_particle.QE" title="physicskit.plasma.single_particle.QE"><code class="xref py py-data docutils literal notranslate"><span class="pre">QE</span></code></a>,
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.single_particle.MP" title="physicskit.plasma.single_particle.MP"><code class="xref py py-data docutils literal notranslate"><span class="pre">MP</span></code></a> and <a class="reference internal" href="../api/plasma.html#physicskit.plasma.single_particle.ME" title="physicskit.plasma.single_particle.ME"><code class="xref py py-data docutils literal notranslate"><span class="pre">ME</span></code></a> are
+the elementary charge and the proton and electron masses in SI. The
+particle-in-cell (PIC) code instead uses the standard normalized
+units of plasma simulation: time in <span class="math notranslate nohighlight">\(1/\omega_{pe}\)</span>, length in
+Debye lengths <span class="math notranslate nohighlight">\(\lambda_D\)</span>, and velocity in thermal speeds
+<span class="math notranslate nohighlight">\(v_{th} = \omega_{pe}\lambda_D\)</span>. Keep the two conventions apart.</p>
+</div>
+<section id="gyration-the-cyclotron-frequency-and-larmor-radius">
+<h2>Gyration: the cyclotron frequency and Larmor radius<a class="headerlink" href="#gyration-the-cyclotron-frequency-and-larmor-radius" title="Link to this heading">#</a></h2>
+<p>A charge in a uniform magnetic field circles it at the cyclotron
+frequency <span class="math notranslate nohighlight">\(\omega_c = qB/m\)</span>, on a circle of Larmor radius
+<span class="math notranslate nohighlight">\(r_L = m v_\perp/(|q|B)\)</span>. The Boris pusher
+(<a class="reference internal" href="../api/plasma.html#physicskit.plasma.boris_integrate" title="physicskit.plasma.boris_integrate"><code class="xref py py-func docutils literal notranslate"><span class="pre">boris_integrate()</span></code></a>; Boris, 1970), the standard
+integrator in PIC codes, splits each step into half electric kicks and a
+pure rotation. The magnetic force does no work, and a pure rotation
+can’t change the particle’s speed either, so the kinetic energy is
+conserved to rounding error:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">plasma</span>
+
+<span class="n">B0</span><span class="p">,</span> <span class="n">v_perp</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0e5</span>  <span class="c1"># 1 T, 100 km/s proton</span>
+<span class="n">omega_c</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">cyclotron_frequency</span><span class="p">(</span><span class="n">plasma</span><span class="o">.</span><span class="n">QE</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">MP</span><span class="p">,</span> <span class="n">B0</span><span class="p">)</span>
+<span class="n">r_L</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">larmor_radius</span><span class="p">(</span><span class="n">v_perp</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">QE</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">MP</span><span class="p">,</span> <span class="n">B0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"omega_c = </span><span class="si">{</span><span class="n">omega_c</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2"> rad/s, period = </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">omega_c</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ns, r_L = </span><span class="si">{</span><span class="n">r_L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">)</span>
+<span class="c1"># omega_c = 9.5788e+07 rad/s, period = 65.59 ns, r_L = 1.0440 mm</span>
+
+<span class="n">pos</span><span class="p">,</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">boris_integrate</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">v_perp</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">plasma</span><span class="o">.</span><span class="n">QE</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">MP</span><span class="p">,</span>
+    <span class="n">E</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">B</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">B0</span><span class="p">]),</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"orbit radius = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">pos</span><span class="p">[:,</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mm, "</span>
+      <span class="sa">f</span><span class="s2">"max |speed error| = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span><span class="w"> </span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v_perp</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> m/s"</span><span class="p">)</span>
+<span class="c1"># orbit radius = 1.0440 mm, max |speed error| = 1.5e-10 m/s</span>
+</pre></div>
+</div>
+<p>The simulated orbit has exactly the Larmor radius. Over three gyrations
+the speed changes by <span class="math notranslate nohighlight">\(10^{-10}\)</span> m/s out of <span class="math notranslate nohighlight">\(10^5\)</span>, which is
+floating-point rounding.</p>
+</section>
+<section id="drifts-eb-is-the-same-for-every-species">
+<h2>Drifts: E×B is the same for every species<a class="headerlink" href="#drifts-eb-is-the-same-for-every-species" title="Link to this heading">#</a></h2>
+<p>Add a perpendicular electric field and the gyration centre drifts with</p>
+<div class="math notranslate nohighlight">
+\[\mathbf v_E = \frac{\mathbf E\times\mathbf B}{B^2},\]</div>
+<p>which contains neither the charge nor the mass. Electrons and ions drift
+together, so an <span class="math notranslate nohighlight">\(\mathbf E\times\mathbf B\)</span> drift carries the whole
+plasma without driving a current. To measure the drift cleanly, sample
+the position after a whole number of gyro-periods, where the gyration
+has returned to its starting phase:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">E</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0e3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">B0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">plasma</span><span class="o">.</span><span class="n">exb_drift</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>
+<span class="c1"># [1000.    0.    0.]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"proton"</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">QE</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">MP</span><span class="p">),</span> <span class="p">(</span><span class="s2">"electron"</span><span class="p">,</span> <span class="o">-</span><span class="n">plasma</span><span class="o">.</span><span class="n">QE</span><span class="p">,</span> <span class="n">plasma</span><span class="o">.</span><span class="n">ME</span><span class="p">)]:</span>
+    <span class="n">period</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">plasma</span><span class="o">.</span><span class="n">cyclotron_frequency</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">B0</span><span class="p">))</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">period</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">boris_integrate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">v_perp</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">20</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> drift over 20 gyro-periods: </span><span class="si">{</span><span class="n">pos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">period</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s"</span><span class="p">)</span>
+
+<span class="c1"># proton   drift over 20 gyro-periods: 999.7 m/s</span>
+<span class="c1"># electron drift over 20 gyro-periods: 999.7 m/s</span>
+</pre></div>
+</div>
+<p>The proton gyrates 1836 times more slowly than the electron and in the
+opposite direction, yet both guiding centres move at <span class="math notranslate nohighlight">\(E/B = 1000\)</span>
+m/s in <span class="math notranslate nohighlight">\(+x\)</span>. A drift that <em>does</em> depend on charge,
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.grad_b_drift" title="physicskit.plasma.grad_b_drift"><code class="xref py py-func docutils literal notranslate"><span class="pre">grad_b_drift()</span></code></a>, separates the species and
+drives the ring current in Earth’s magnetosphere.</p>
+</section>
+<section id="collective-scales-plasma-frequency-and-alfven-speed">
+<h2>Collective scales: plasma frequency and Alfvén speed<a class="headerlink" href="#collective-scales-plasma-frequency-and-alfven-speed" title="Link to this heading">#</a></h2>
+<p>Collective behaviour starts once there are many particles. Displace the
+electrons and they oscillate about the ions at the plasma frequency
+<span class="math notranslate nohighlight">\(\omega_{pe} = \sqrt{n e^2/(\varepsilon_0 m_e)}\)</span>, the natural
+frequency of a plasma. In the fluid (MHD) picture, magnetic field lines
+behave like strings under tension <span class="math notranslate nohighlight">\(B^2/\mu_0\)</span> loaded with the
+plasma’s mass density, and waves travel along them at the Alfvén speed
+<span class="math notranslate nohighlight">\(v_A = B/\sqrt{\mu_0\rho}\)</span> (Alfvén, <em>Nature</em> 150, 405, 1942):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omega_pe</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">plasma_frequency</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mf">1.0e12</span><span class="p">)</span>       <span class="c1"># ionospheric F-layer, m^-3</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"f_pe = </span><span class="si">{</span><span class="n">omega_pe</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> MHz"</span><span class="p">)</span>
+<span class="c1"># f_pe = 8.979 MHz</span>
+
+<span class="n">v_A</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">alfven_speed</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mf">5.0e-9</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">5.0e6</span> <span class="o">*</span> <span class="n">plasma</span><span class="o">.</span><span class="n">MP</span><span class="p">)</span>   <span class="c1"># solar wind at 1 AU</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"v_A = </span><span class="si">{</span><span class="n">v_A</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> km/s"</span><span class="p">)</span>
+<span class="c1"># v_A = 48.8 km/s</span>
+</pre></div>
+</div>
+<p>The first number is the familiar rule of thumb
+<span class="math notranslate nohighlight">\(f_{pe} \approx 8.98\sqrt{n}\)</span> Hz. It explains why the ionosphere
+reflects shortwave radio below about 9 MHz and is transparent above.
+The second is the typical Alfvén speed in the solar wind, around ten
+times slower than the wind itself, so the solar wind is super-Alfvénic.
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.cold_plasma_dispersion" title="physicskit.plasma.cold_plasma_dispersion"><code class="xref py py-func docutils literal notranslate"><span class="pre">cold_plasma_dispersion()</span></code></a> and
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.stix_parameters" title="physicskit.plasma.stix_parameters"><code class="xref py py-func docutils literal notranslate"><span class="pre">stix_parameters()</span></code></a> extend these two scales to
+the full set of cold-plasma waves (Stix, <em>Waves in Plasmas</em>, 1992).</p>
+</section>
+<section id="landau-damping-collisionless-decay-in-a-particle-simulation">
+<h2>Landau damping: collisionless decay in a particle simulation<a class="headerlink" href="#landau-damping-collisionless-decay-in-a-particle-simulation" title="Link to this heading">#</a></h2>
+<p>The fluid picture predicts that a Langmuir wave (an electron density
+oscillation) with wavenumber <span class="math notranslate nohighlight">\(k\)</span> oscillates forever at the
+Bohm-Gross frequency <span class="math notranslate nohighlight">\(\omega^2 = \omega_{pe}^2 + 3k^2v_{th}^2\)</span>.
+Landau (1946) showed that in a collisionless plasma the wave
+nevertheless <em>decays</em>. Electrons moving at nearly the wave’s phase
+velocity exchange energy with it, and a Maxwellian has slightly more
+slower electrons, which gain energy, than faster ones, which lose it. In
+the weak-damping limit the rate is</p>
+<div class="math notranslate nohighlight">
+\[\gamma = -\omega_{pe}\sqrt{\frac{\pi}{8}}\frac{1}{(k\lambda_D)^3}
+\exp\left(-\frac{1}{2(k\lambda_D)^2} - \frac32\right).\]</div>
+<p>A 1D electrostatic PIC simulation (<a class="reference internal" href="../api/plasma.html#physicskit.plasma.pic_simulate" title="physicskit.plasma.pic_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pic_simulate()</span></code></a>)
+contains no damping term at all. It only pushes particles through the
+self-consistent field, yet it reproduces the decay. Seed a small density
+perturbation with <a class="reference internal" href="../api/plasma.html#physicskit.plasma.landau_damping_ic" title="physicskit.plasma.landau_damping_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">landau_damping_ic()</span></code></a> (a
+“quiet start” that avoids random sampling noise in the seed) and follow
+the field energy, which oscillates at <span class="math notranslate nohighlight">\(2\omega\)</span> and decays at
+<span class="math notranslate nohighlight">\(2\gamma\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_peaks</span>
+
+<span class="n">k</span><span class="p">,</span> <span class="n">v_th</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span>                      <span class="c1"># k * lambda_D = 0.5, normalized units</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">k</span>                       <span class="c1"># one wavelength, periodic</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"gamma (Landau)  = </span><span class="si">{</span><span class="n">plasma</span><span class="o">.</span><span class="n">landau_damping_rate</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">v_th</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># gamma (Landau)  = -0.1514</span>
+
+<span class="n">x0</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">landau_damping_ic</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">k_mode</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">v_th</span><span class="o">=</span><span class="n">v_th</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">plasma</span><span class="o">.</span><span class="n">pic_simulate</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">ng</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s2">"field_energy"</span><span class="p">]</span>
+
+<span class="n">peaks</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_peaks</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+<span class="n">t_peaks</span><span class="p">,</span> <span class="n">W_peaks</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">peaks</span><span class="p">][:</span><span class="mi">6</span><span class="p">],</span> <span class="n">W</span><span class="p">[</span><span class="n">peaks</span><span class="p">][:</span><span class="mi">6</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"peak times"</span><span class="p">,</span> <span class="n">t_peaks</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># peak times [ 2.4   4.65  6.9   9.   11.3  12.6 ]</span>
+
+<span class="n">gamma_fit</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">t_peaks</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">W_peaks</span><span class="p">),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">omega_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">t_peaks</span><span class="p">[:</span><span class="mi">5</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"gamma (PIC fit) = </span><span class="si">{</span><span class="n">gamma_fit</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, omega (PIC fit) = </span><span class="si">{</span><span class="n">omega_fit</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, "</span>
+      <span class="sa">f</span><span class="s2">"Bohm-Gross = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># gamma (PIC fit) = -0.1377, omega (PIC fit) = 1.412, Bohm-Gross = 1.323</span>
+</pre></div>
+</div>
+<p>Two things come out of the simulation:</p>
+<ul class="simple">
+<li><p><strong>The damping rate</strong> is within about 10% of Landau’s formula, from
+100 000 particles and nothing but Newton’s and Gauss’s laws. The
+formula is itself the weak-damping approximation; the exact root of
+the kinetic dispersion relation at <span class="math notranslate nohighlight">\(k\lambda_D = 0.5\)</span> is
+<span class="math notranslate nohighlight">\(\gamma = -0.1533\)</span>. The remaining spread comes from particle
+noise, which scales as <span class="math notranslate nohighlight">\(1/\sqrt{N}\)</span>. Different <code class="docutils literal notranslate"><span class="pre">seed</span></code> values
+give fits between about <span class="math notranslate nohighlight">\(-0.14\)</span> and <span class="math notranslate nohighlight">\(-0.17\)</span>, and after
+roughly six peaks the field energy reaches the noise floor, which is
+why the fit stops there.</p></li>
+<li><p><strong>The frequency</strong> is 1.41, not the Bohm-Gross fluid value 1.32. It
+agrees with the real part of the exact kinetic root,
+<span class="math notranslate nohighlight">\(\omega = 1.4156\,\omega_{pe}\)</span>. At <span class="math notranslate nohighlight">\(k\lambda_D = 0.5\)</span>
+the fluid approximation is no longer accurate, and the particle
+simulation, which makes no fluid assumption, shows the kinetic answer.</p></li>
+</ul>
+</section>
+<section id="where-to-go-next">
+<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/plasma.html#physicskit.plasma.two_stream_ic" title="physicskit.plasma.two_stream_ic"><code class="xref py py-func docutils literal notranslate"><span class="pre">two_stream_ic()</span></code></a> with the same
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.pic_simulate" title="physicskit.plasma.pic_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">pic_simulate()</span></code></a> gives the opposite case: an
+<em>unstable</em>, growing wave, fed by two counter-streaming beams.</p></li>
+<li><p><a class="reference internal" href="../api/plasma.html#physicskit.plasma.simulate_reconnection" title="physicskit.plasma.simulate_reconnection"><code class="xref py py-func docutils literal notranslate"><span class="pre">simulate_reconnection()</span></code></a> and
+<a class="reference internal" href="../api/plasma.html#physicskit.plasma.sweet_parker_rate" title="physicskit.plasma.sweet_parker_rate"><code class="xref py py-func docutils literal notranslate"><span class="pre">sweet_parker_rate()</span></code></a> cover magnetic
+reconnection, and <a class="reference internal" href="../api/plasma.html#physicskit.plasma.solve_grad_shafranov" title="physicskit.plasma.solve_grad_shafranov"><code class="xref py py-func docutils literal notranslate"><span class="pre">solve_grad_shafranov()</span></code></a>
+covers tokamak equilibria.</p></li>
+<li><p>The plasma <a class="reference internal" href="../history/plasma_breakthroughs.html"><span class="doc">history</span></a> places each of
+these results in context, from Langmuir’s 1928 naming of “plasma” to
+modern wakefield accelerators.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nuclear_decay_chains_and_scattering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Radioactive Decay Chains, Rutherford Scattering, and Nuclear Binding</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="fdtd_waveguide_simulation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Simulating Wave Propagation with FDTD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gyration-the-cyclotron-frequency-and-larmor-radius">Gyration: the cyclotron frequency and Larmor radius</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drifts-eb-is-the-same-for-every-species">Drifts: E×B is the same for every species</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collective-scales-plasma-frequency-and-alfven-speed">Collective scales: plasma frequency and Alfvén speed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landau-damping-collisionless-decay-in-a-particle-simulation">Landau damping: collisionless decay in a particle simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-to-go-next">Where to go next</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/tutorials/plasma_particles_to_kinetics.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

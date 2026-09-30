@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>physicskit.statphys &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.statphys &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -57,7 +57,7 @@
     <link rel="prev" title="physicskit.semiclassical" href="semiclassical.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -153,6 +153,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -286,6 +293,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -469,6 +483,11 @@ H-function.</p></li>
 <li><p><strong>Diffusion</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.random_walk</span></code>): random walk
 ensembles illustrating the Einstein relation and the central limit
 theorem.</p></li>
+<li><p><strong>Stochastic dynamics</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.langevin</span></code>,
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.utils.fokker_planck</span></code>): overdamped Brownian
+motion and underdamped Langevin particles checking the Einstein relation
+<span class="math notranslate nohighlight">\(D = k_BT/\gamma\)</span>, the Ornstein-Uhlenbeck process, and a 1D
+Fokker-Planck solver for the probability density itself.</p></li>
 <li><p><strong>Critical phenomena</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.percolation</span></code>,
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.renormalization</span></code>, <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.sandpile</span></code>):
 site/bond percolation with Hoshen-Kopelman cluster labeling, Kadanoff
@@ -653,6 +672,138 @@ scale-invariant value at <span class="math notranslate nohighlight">\(T_c\)</spa
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">BrownianMotion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stiffness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#BrownianMotion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.BrownianMotion" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Overdamped Langevin (Brownian) particles, optionally driven and trapped.</p>
+<p>Each coordinate obeys</p>
+<div class="math notranslate nohighlight">
+\[dx = \frac{F - kx}{\gamma}\,dt + \sqrt{\frac{2k_BT}{\gamma}}\,dW,\]</div>
+<p>with constant force <span class="math notranslate nohighlight">\(F\)</span>, trap stiffness <span class="math notranslate nohighlight">\(k\)</span>, and friction
+<span class="math notranslate nohighlight">\(\gamma\)</span> (the inverse mobility). Free particles
+(<span class="math notranslate nohighlight">\(F = k = 0\)</span>) diffuse with <span class="math notranslate nohighlight">\(\langle \Delta x^2\rangle =
+2Dt\)</span> per dimension and <span class="math notranslate nohighlight">\(D = k_BT/\gamma\)</span> (Einstein 1905); a
+constant force adds a drift <span class="math notranslate nohighlight">\(F/\gamma\)</span> without changing the
+spread. Euler-Maruyama is exact in distribution for <span class="math notranslate nohighlight">\(k = 0\)</span>,
+since the drift is then constant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_particles</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1000</em>) – Number of independent particles.</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Spatial dimension.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Friction coefficient.</p></li>
+<li><p><strong>kT</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Temperature (<span class="math notranslate nohighlight">\(k_B = 1\)</span>).</p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>,</em><em>)</em><em>, </em><em>default=0.0</em>) – Constant external force.</p></li>
+<li><p><strong>stiffness</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.0</em>) – Harmonic trap stiffness <span class="math notranslate nohighlight">\(k\)</span> (trap centered at the origin).</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for the noise generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray</em><em> or </em><em>None</em>) – Recorded times, set by <a class="reference internal" href="#physicskit.statphys.BrownianMotion.run" title="physicskit.statphys.BrownianMotion.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>.</p></li>
+<li><p><strong>positions</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_frames + 1</em><em>, </em><em>n_particles</em><em>, </em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>) or </em><em>None</em>) – Recorded positions, set by <a class="reference internal" href="#physicskit.statphys.BrownianMotion.run" title="physicskit.statphys.BrownianMotion.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bm</span> <span class="o">=</span> <span class="n">BrownianMotion</span><span class="p">(</span><span class="n">n_particles</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">kT</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(51, 4000, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">bm</span><span class="o">.</span><span class="n">diffusion_coefficient</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">bm</span><span class="o">.</span><span class="n">measured_diffusion_coefficient</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">(0.5, 0.5)</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.diffusion_coefficient">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">diffusion_coefficient</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.statphys.BrownianMotion.diffusion_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Einstein’s <span class="math notranslate nohighlight">\(D = k_BT/\gamma\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.mean_squared_displacement">
+<span class="sig-name descname"><span class="pre">mean_squared_displacement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#BrownianMotion.mean_squared_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.BrownianMotion.mean_squared_displacement" title="Link to this definition">#</a></dt>
+<dd><p>Ensemble mean-squared displacement from the initial positions, summed over dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>msd</strong> (<em>ndarray</em>) – <span class="math notranslate nohighlight">\(\langle |\mathbf x(t) - \mathbf x(0)|^2\rangle\)</span>; for free
+particles, <span class="math notranslate nohighlight">\(2\,d\,D t\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.measured_diffusion_coefficient">
+<span class="sig-name descname"><span class="pre">measured_diffusion_coefficient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#BrownianMotion.measured_diffusion_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.BrownianMotion.measured_diffusion_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Diffusion coefficient from the growth of the displacement variance.</p>
+<p>Fits <span class="math notranslate nohighlight">\(\mathrm{Var}[\Delta x] = 2Dt\)</span> (per dimension, through
+the origin) so that a constant-force drift does not bias it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.measured_mobility">
+<span class="sig-name descname"><span class="pre">measured_mobility</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#BrownianMotion.measured_mobility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.BrownianMotion.measured_mobility" title="Link to this definition">#</a></dt>
+<dd><p>Mobility from the mean drift velocity along the applied force.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em> – <span class="math notranslate nohighlight">\(\langle \Delta\mathbf x\rangle\cdot\hat{\mathbf F} /
+(|\mathbf F|\, t)\)</span> at the last frame; <code class="docutils literal notranslate"><span class="pre">nan</span></code> without a force.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.mobility">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">mobility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.statphys.BrownianMotion.mobility" title="Link to this definition">#</a></dt>
+<dd><p>drift velocity per unit force.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mobility <span class="math notranslate nohighlight">\(\mu = 1/\gamma\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.BrownianMotion.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#BrownianMotion.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.BrownianMotion.run" title="Link to this definition">#</a></dt>
+<dd><p>Integrate every particle from <code class="docutils literal notranslate"><span class="pre">x0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_max</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total time (rounded to a whole number of steps per frame).</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time step.</p></li>
+<li><p><strong>n_frames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=200</em>) – Number of recorded frames after the initial one.</p></li>
+<li><p><strong>x0</strong> (<em>array_like</em><em> of </em><em>shape</em><em> (</em><em>n_particles</em><em>, </em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>)</em><em>, </em><em>optional</em>) – Initial positions; defaults to the origin.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray of shape (n_frames + 1,)</em>)</p></li>
+<li><p><strong>positions</strong> (<em>ndarray of shape (n_frames + 1, n_particles, dim)</em>)</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1107,6 +1258,120 @@ linearly spaced ones.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">LangevinDynamics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stiffness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#LangevinDynamics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LangevinDynamics" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Underdamped Langevin particles: inertia, friction, and thermal noise.</p>
+<div class="math notranslate nohighlight">
+\[dx = v\,dt, \qquad
+m\,dv = (F - kx - \gamma v)\,dt + \sqrt{2\gamma k_BT}\,dW\]</div>
+<p>(Langevin 1908). The noise amplitude is tied to the friction by the
+fluctuation-dissipation relation, so every velocity component
+thermalizes to <span class="math notranslate nohighlight">\(\langle v^2\rangle = k_BT/m\)</span> on the time scale
+<span class="math notranslate nohighlight">\(m/\gamma\)</span>, and at times long compared with it the particles
+diffuse with Einstein’s <span class="math notranslate nohighlight">\(D = k_BT/\gamma\)</span>.</p>
+<p>Integrated by default with the BAOAB splitting
+(<code class="xref py py-func docutils literal notranslate"><span class="pre">baoab_integrate()</span></code>), which
+stays at the bath temperature for weak friction. Plain Euler-Maruyama
+(<code class="docutils literal notranslate"><span class="pre">method=&quot;euler_maruyama&quot;</span></code>) heats a trapped particle of frequency
+<span class="math notranslate nohighlight">\(\omega\)</span> to roughly <span class="math notranslate nohighlight">\(k_BT\,\gamma/(\gamma - m\omega^2\Delta t)\)</span>,
+a large error once <span class="math notranslate nohighlight">\(\gamma/m\)</span> is comparable to
+<span class="math notranslate nohighlight">\(\omega^2\Delta t\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_particles</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1000</em>) – Number of independent particles.</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Spatial dimension.</p></li>
+<li><p><strong>mass</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Particle mass <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Friction coefficient.</p></li>
+<li><p><strong>kT</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Bath temperature (<span class="math notranslate nohighlight">\(k_B = 1\)</span>).</p></li>
+<li><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>,</em><em>)</em><em>, </em><em>default=0.0</em>) – Constant external force.</p></li>
+<li><p><strong>stiffness</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.0</em>) – Harmonic trap stiffness.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for the noise generator.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ld</span> <span class="o">=</span> <span class="n">LangevinDynamics</span><span class="p">(</span><span class="n">n_particles</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kT</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ld</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">ld</span><span class="o">.</span><span class="n">kinetic_temperature</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">0.5</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics.diffusion_coefficient">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">diffusion_coefficient</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.statphys.LangevinDynamics.diffusion_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Long-time Einstein diffusion coefficient <span class="math notranslate nohighlight">\(k_BT/\gamma\)</span> (free particles).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics.kinetic_temperature">
+<span class="sig-name descname"><span class="pre">kinetic_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#LangevinDynamics.kinetic_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LangevinDynamics.kinetic_temperature" title="Link to this definition">#</a></dt>
+<dd><p>Kinetic temperature <span class="math notranslate nohighlight">\(m\langle v^2\rangle\)</span> per component at one frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Frame index.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics.mean_squared_displacement">
+<span class="sig-name descname"><span class="pre">mean_squared_displacement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#LangevinDynamics.mean_squared_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LangevinDynamics.mean_squared_displacement" title="Link to this definition">#</a></dt>
+<dd><p>Ensemble mean-squared displacement, summed over dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray</em>)</p></li>
+<li><p><strong>msd</strong> (<em>ndarray</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'baoab'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#LangevinDynamics.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LangevinDynamics.run" title="Link to this definition">#</a></dt>
+<dd><p>Integrate every particle to <code class="docutils literal notranslate"><span class="pre">t_max</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total time.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time step, which should be small compared with <span class="math notranslate nohighlight">\(m/\gamma\)</span>.</p></li>
+<li><p><strong>n_frames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=200</em>) – Number of recorded frames after the initial one.</p></li>
+<li><p><strong>x0</strong> (<em>array_like</em><em> of </em><em>shape</em><em> (</em><em>n_particles</em><em>, </em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>)</em><em>, </em><em>optional</em>) – Initial positions and velocities; default zero (at rest at the
+origin).</p></li>
+<li><p><strong>v0</strong> (<em>array_like</em><em> of </em><em>shape</em><em> (</em><em>n_particles</em><em>, </em><a class="reference internal" href="chaos.html#physicskit.chaos.BakersMap.dim" title="physicskit.chaos.BakersMap.dim"><em>dim</em></a><em>)</em><em>, </em><em>optional</em>) – Initial positions and velocities; default zero (at rest at the
+origin).</p></li>
+<li><p><strong>method</strong> (<em>{&quot;baoab&quot;</em><em>, </em><em>&quot;euler_maruyama&quot;}</em><em>, </em><em>default=&quot;baoab&quot;</em>) – Integration scheme.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray of shape (n_frames + 1,)</em>)</p></li>
+<li><p><strong>positions, velocities</strong> (<em>ndarray of shape (n_frames + 1, n_particles, dim)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.statphys.LangevinDynamics.velocity_relaxation_time">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">velocity_relaxation_time</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.statphys.LangevinDynamics.velocity_relaxation_time" title="Link to this definition">#</a></dt>
+<dd><p>Momentum relaxation time <span class="math notranslate nohighlight">\(m/\gamma\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="physicskit.statphys.LennardJonesGas">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">LennardJonesGas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_velocity_distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/molecular_dynamics.html#LennardJonesGas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LennardJonesGas" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -1247,6 +1512,122 @@ for the fixed center-of-mass momentum.</p>
 <dt class="sig sig-object py" id="physicskit.statphys.LennardJonesGas.total_energy">
 <span class="sig-name descname"><span class="pre">total_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/molecular_dynamics.html#LennardJonesGas.total_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.LennardJonesGas.total_energy" title="Link to this definition">#</a></dt>
 <dd><p>Total (kinetic + potential) energy, conserved up to integration error.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">OrnsteinUhlenbeck</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#OrnsteinUhlenbeck"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>An ensemble of Ornstein-Uhlenbeck processes, <span class="math notranslate nohighlight">\(dX = \theta(\mu - X)\,dt + \sigma\,dW\)</span>.</p>
+<p>The unique stationary, Gaussian, Markov process (Doob 1942). Started
+at <span class="math notranslate nohighlight">\(x_0\)</span> it has</p>
+<div class="math notranslate nohighlight">
+\[\langle X_t\rangle = \mu + (x_0 - \mu)e^{-\theta t}, \qquad
+\mathrm{Var}\,X_t = \frac{\sigma^2}{2\theta}(1 - e^{-2\theta t}),\]</div>
+<p>and in the stationary state the autocovariance is
+<span class="math notranslate nohighlight">\(\frac{\sigma^2}{2\theta}e^{-\theta|\tau|}\)</span> (G. E. Uhlenbeck and
+L. S. Ornstein, Phys. Rev. 36, 823 (1930)). It is the velocity of a
+free Langevin particle (<span class="math notranslate nohighlight">\(\theta = \gamma/m\)</span>,
+<span class="math notranslate nohighlight">\(\sigma^2/2\theta = k_BT/m\)</span>) and the position of an overdamped
+particle in a harmonic trap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Relaxation rate <span class="math notranslate nohighlight">\(\theta &gt; 0\)</span>.</p></li>
+<li><p><strong>mu</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.0</em>) – Long-time mean.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Noise amplitude.</p></li>
+<li><p><strong>n_paths</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1000</em>) – Number of independent realizations.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for the noise generator.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ou</span> <span class="o">=</span> <span class="n">OrnsteinUhlenbeck</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_paths</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">ou</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">ou</span><span class="o">.</span><span class="n">stationary_variance</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">(0.25, 0.25)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck.autocovariance">
+<span class="sig-name descname"><span class="pre">autocovariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#OrnsteinUhlenbeck.autocovariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck.autocovariance" title="Link to this definition">#</a></dt>
+<dd><p>Stationary autocovariance <span class="math notranslate nohighlight">\(\frac{\sigma^2}{2\theta}e^{-\theta|\tau|}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tau</strong> (<em>array_like</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#OrnsteinUhlenbeck.mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck.mean" title="Link to this definition">#</a></dt>
+<dd><p>Exact ensemble mean at time <code class="docutils literal notranslate"><span class="pre">t</span></code> from a common start <code class="docutils literal notranslate"><span class="pre">x0</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>array_like</em>)</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'exact'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#OrnsteinUhlenbeck.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck.run" title="Link to this definition">#</a></dt>
+<dd><p>Sample every path from <code class="docutils literal notranslate"><span class="pre">x0</span></code> to <code class="docutils literal notranslate"><span class="pre">t_max</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Total time.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time step.</p></li>
+<li><p><strong>n_frames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=200</em>) – Number of recorded frames after the initial one.</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><em>n_paths</em><em>,</em><em>)</em><em>, </em><em>optional</em>) – Initial values; by default drawn from the stationary distribution.</p></li>
+<li><p><strong>method</strong> (<em>{&quot;exact&quot;</em><em>, </em><em>&quot;euler_maruyama&quot;}</em><em>, </em><em>default=&quot;exact&quot;</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;exact&quot;</span></code> uses the exact Gaussian transition
+<span class="math notranslate nohighlight">\(X_{t+\Delta t} = \mu + (X_t-\mu)e^{-\theta\Delta t} +
+\sigma\sqrt{(1-e^{-2\theta\Delta t})/2\theta}\;\mathcal N(0,1)\)</span>
+(Gillespie, Phys. Rev. E 54, 2084 (1996)), free of time-step
+error; <code class="docutils literal notranslate"><span class="pre">&quot;euler_maruyama&quot;</span></code> integrates the SDE, with stationary
+variance <span class="math notranslate nohighlight">\(\sigma^2/(\theta(2 - \theta\Delta t))\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray of shape (n_frames + 1,)</em>)</p></li>
+<li><p><strong>paths</strong> (<em>ndarray of shape (n_frames + 1, n_paths)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck.stationary_variance">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stationary_variance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck.stationary_variance" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\sigma^2 / (2\theta)\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.OrnsteinUhlenbeck.variance">
+<span class="sig-name descname"><span class="pre">variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#OrnsteinUhlenbeck.variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.OrnsteinUhlenbeck.variance" title="Link to this definition">#</a></dt>
+<dd><p>Exact ensemble variance at time <code class="docutils literal notranslate"><span class="pre">t</span></code> from a deterministic start.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<em>array_like</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1775,6 +2156,183 @@ a topological charge.</p>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.einstein_diffusion_coefficient">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">einstein_diffusion_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#einstein_diffusion_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.einstein_diffusion_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Einstein relation <span class="math notranslate nohighlight">\(D = \mu k_B T = k_B T / \gamma\)</span>.</p>
+<p>(A. Einstein, Ann. Phys. 322, 549 (1905), eq. for <span class="math notranslate nohighlight">\(D\)</span> in §4.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kT</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Temperature in energy units (<span class="math notranslate nohighlight">\(k_B = 1\)</span>).</p></li>
+<li><p><strong>gamma</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Friction coefficient, the inverse of the mobility <span class="math notranslate nohighlight">\(\mu\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – Diffusion coefficient.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">einstein_diffusion_coefficient</span><span class="p">(</span><span class="n">kT</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="go">0.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.fokker_planck_1d">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">fokker_planck_1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/utils/fokker_planck.html#fokker_planck_1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.fokker_planck_1d" title="Link to this definition">#</a></dt>
+<dd><p>Evolve a 1D probability density under the Fokker-Planck equation.</p>
+<p>Uses the finite-volume operator of <a class="reference internal" href="#physicskit.statphys.fokker_planck_operator" title="physicskit.statphys.fokker_planck_operator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fokker_planck_operator()</span></code></a> with
+the <span class="math notranslate nohighlight">\(\theta\)</span>-scheme
+<span class="math notranslate nohighlight">\((I - \theta\Delta t L)p^{n+1} = (I + (1-\theta)\Delta t L)p^n\)</span>:
+Crank-Nicolson (second order, <span class="math notranslate nohighlight">\(\theta = 1/2\)</span>) by default, or
+backward Euler (<span class="math notranslate nohighlight">\(\theta = 1\)</span>, strongly damping) for rough
+initial data. Both are unconditionally stable; the matrix is factored
+once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Initial density on the grid (normalized to unit mass on return).</p></li>
+<li><p><strong>x</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Uniform grid of cell centers; the walls sit half a cell outside
+the end points.</p></li>
+<li><p><strong>drift</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(A(x)\)</span> and <span class="math notranslate nohighlight">\(D(x)\)</span>, as in <a class="reference internal" href="#physicskit.statphys.fokker_planck_operator" title="physicskit.statphys.fokker_planck_operator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fokker_planck_operator()</span></code></a>.</p></li>
+<li><p><strong>diffusion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(A(x)\)</span> and <span class="math notranslate nohighlight">\(D(x)\)</span>, as in <a class="reference internal" href="#physicskit.statphys.fokker_planck_operator" title="physicskit.statphys.fokker_planck_operator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fokker_planck_operator()</span></code></a>.</p></li>
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Final time (rounded to a whole number of steps per frame).</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Time step.</p></li>
+<li><p><strong>n_frames</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=100</em>) – Number of recorded frames after the initial one.</p></li>
+<li><p><strong>theta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.5</em>) – Implicitness, in <code class="docutils literal notranslate"><span class="pre">[0.5,</span> <span class="pre">1]</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>times</strong> (<em>ndarray, shape (n_frames + 1,)</em>)</p></li>
+<li><p><strong>p</strong> (<em>ndarray, shape (n_frames + 1, n)</em>) – Density at each frame, each with <span class="math notranslate nohighlight">\(\sum p\,\Delta x = 1\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Free diffusion spreads a Gaussian as <span class="math notranslate nohighlight">\(\sigma^2(t) = \sigma_0^2 + 2Dt\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">fokker_planck_1d</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_frames</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># 1 + 2 * 0.5 * 2</span>
+<span class="go">3.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.fokker_planck_operator">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">fokker_planck_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/utils/fokker_planck.html#fokker_planck_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.fokker_planck_operator" title="Link to this definition">#</a></dt>
+<dd><p>Finite-volume Fokker-Planck operator <span class="math notranslate nohighlight">\(L\)</span> with <span class="math notranslate nohighlight">\(dp/dt = Lp\)</span> and zero-flux walls.</p>
+<p>Each grid point is the center of a cell of width <span class="math notranslate nohighlight">\(\Delta x\)</span>. The
+flux through the face between cells <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[J_{i+1/2} = A_{i+1/2}\,\frac{p_i + p_{i+1}}{2}
+- \frac{D_{i+1}p_{i+1} - D_i p_i}{\Delta x},\]</div>
+<p>with <span class="math notranslate nohighlight">\(J = 0\)</span> through the two outer walls, so
+<span class="math notranslate nohighlight">\(\sum_i p_i\,\Delta x\)</span> is conserved exactly. Central
+differencing of the drift needs a cell Péclet number
+<span class="math notranslate nohighlight">\(|A|\Delta x / D\)</span> below about 2 to keep <span class="math notranslate nohighlight">\(p \ge 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Uniform grid of cell centers.</p></li>
+<li><p><strong>drift</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(A(x)\)</span>. A callable is evaluated at the cell faces; an array is
+averaged onto them.</p></li>
+<li><p><strong>diffusion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(D(x) &gt; 0\)</span>, evaluated at the cell centers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">csr_matrix</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>scipy.sparse.csr_matrix, shape (n, n)</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Columns sum to zero: probability is conserved.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">fokker_planck_operator</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.fokker_planck_stationary">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">fokker_planck_stationary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/utils/fokker_planck.html#fokker_planck_stationary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.fokker_planck_stationary" title="Link to this definition">#</a></dt>
+<dd><p>Zero-flux stationary solution of the 1D Fokker-Planck equation.</p>
+<p>Setting <span class="math notranslate nohighlight">\(J = 0\)</span> gives</p>
+<div class="math notranslate nohighlight">
+\[p_{\text{st}}(x) = \frac{N}{D(x)}\exp\!\int^x \frac{A(y)}{D(y)}\,dy\]</div>
+<p>(Risken 1989, eq. 5.6). For <span class="math notranslate nohighlight">\(A = -U'/\gamma\)</span> and
+<span class="math notranslate nohighlight">\(D = k_BT/\gamma\)</span> this is the Boltzmann distribution
+<span class="math notranslate nohighlight">\(e^{-U/k_BT}/Z\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Grid.</p></li>
+<li><p><strong>drift</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(A(x)\)</span> and <span class="math notranslate nohighlight">\(D(x)\)</span>, evaluated on the grid.</p></li>
+<li><p><strong>diffusion</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>array_like</em><em> of </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em><em>, or </em><em>callable</em>) – <span class="math notranslate nohighlight">\(A(x)\)</span> and <span class="math notranslate nohighlight">\(D(x)\)</span>, evaluated on the grid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray, shape (n,)</em> – Stationary density normalized by the trapezoid rule on <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>An Ornstein-Uhlenbeck process, <span class="math notranslate nohighlight">\(A = -\theta x\)</span>,
+<span class="math notranslate nohighlight">\(D = \sigma^2/2\)</span>, is Gaussian with variance <span class="math notranslate nohighlight">\(\sigma^2/2\theta\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">fokker_planck_stationary</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.25</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.stokes_einstein_diffusion_coefficient">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">stokes_einstein_diffusion_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/langevin.html#stokes_einstein_diffusion_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.stokes_einstein_diffusion_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Stokes-Einstein diffusion coefficient of a sphere, <span class="math notranslate nohighlight">\(D = k_B T / (6\pi\eta a)\)</span>.</p>
+<p>Combines the Einstein relation with Stokes’ drag
+<span class="math notranslate nohighlight">\(\gamma = 6\pi\eta a\)</span> on a sphere of radius <span class="math notranslate nohighlight">\(a\)</span> in a
+fluid of viscosity <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kT</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Thermal energy <span class="math notranslate nohighlight">\(k_B T\)</span> (in joules for SI inputs).</p></li>
+<li><p><strong>viscosity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Dynamic viscosity <span class="math notranslate nohighlight">\(\eta\)</span>.</p></li>
+<li><p><strong>radius</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Sphere radius <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – Diffusion coefficient.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A 0.5 micron bead in room-temperature water diffuses about 0.43
+square microns per second:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">stokes_einstein_diffusion_coefficient</span><span class="p">(</span><span class="mf">1.380649e-23</span> <span class="o">*</span> <span class="mf">293.0</span><span class="p">,</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="mf">0.5e-6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">D</span> <span class="o">*</span> <span class="mf">1e12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">0.43</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -1827,6 +2385,15 @@ a topological charge.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BlockSpinRG.order_parameter"><code class="docutils literal notranslate"><span class="pre">BlockSpinRG.order_parameter()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion"><code class="docutils literal notranslate"><span class="pre">BrownianMotion</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.diffusion_coefficient</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.mean_squared_displacement"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.mean_squared_displacement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.measured_diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.measured_diffusion_coefficient()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.measured_mobility"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.measured_mobility()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.mobility"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.mobility</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.BrownianMotion.run"><code class="docutils literal notranslate"><span class="pre">BrownianMotion.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.EdwardsAndersonSpinGlass2D"><code class="docutils literal notranslate"><span class="pre">EdwardsAndersonSpinGlass2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.EdwardsAndersonSpinGlass2D.edwards_anderson_order_parameter"><code class="docutils literal notranslate"><span class="pre">EdwardsAndersonSpinGlass2D.edwards_anderson_order_parameter()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.EdwardsAndersonSpinGlass2D.energy"><code class="docutils literal notranslate"><span class="pre">EdwardsAndersonSpinGlass2D.energy()</span></code></a></li>
@@ -1861,6 +2428,14 @@ a topological charge.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.KPZInterface.width"><code class="docutils literal notranslate"><span class="pre">KPZInterface.width()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics.diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics.diffusion_coefficient</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics.kinetic_temperature"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics.kinetic_temperature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics.mean_squared_displacement"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics.mean_squared_displacement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics.run"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LangevinDynamics.velocity_relaxation_time"><code class="docutils literal notranslate"><span class="pre">LangevinDynamics.velocity_relaxation_time</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas.h_function"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas.h_function()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas.kinetic_energy"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas.kinetic_energy()</span></code></a></li>
@@ -1870,6 +2445,14 @@ a topological charge.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas.step"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas.step()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas.temperature"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas.temperature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.LennardJonesGas.total_energy"><code class="docutils literal notranslate"><span class="pre">LennardJonesGas.total_energy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.autocovariance"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.autocovariance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.mean"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.run"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.stationary_variance"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.stationary_variance</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.variance"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.variance()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.Percolation2D"><code class="docutils literal notranslate"><span class="pre">Percolation2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
@@ -1915,6 +2498,11 @@ a topological charge.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.XYModel2D.vorticity"><code class="docutils literal notranslate"><span class="pre">XYModel2D.vorticity()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.einstein_diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">einstein_diffusion_coefficient()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_1d"><code class="docutils literal notranslate"><span class="pre">fokker_planck_1d()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_operator"><code class="docutils literal notranslate"><span class="pre">fokker_planck_operator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_stationary"><code class="docutils literal notranslate"><span class="pre">fokker_planck_stationary()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.stokes_einstein_diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">stokes_einstein_diffusion_coefficient()</span></code></a></li>
 </ul>
   </nav></div>
 

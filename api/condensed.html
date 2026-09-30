@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>physicskit.condensed &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.condensed &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -58,7 +58,7 @@
     <link rel="prev" title="physicskit.classical" href="classical.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -154,6 +154,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -452,7 +466,7 @@
 <div class="subpkg-nav docutils container">
 <p><a class="reference internal" href="../_generated/subpackages/condensed.html"><span class="doc">physicskit.condensed hub</span></a> · <a class="reference internal" href="../history/condensed_breakthroughs.html"><span class="doc">History</span></a> · <a class="reference internal" href="gallery/condensed/index.html"><span class="doc">Examples</span></a> · <a class="reference internal" href="#"><span class="doc">API reference</span></a></p>
 </div>
-<p id="module-physicskit.condensed">Condensed matter physics: tight-binding models, topological band theory, and correlated electrons.</p>
+<p id="module-physicskit.condensed">Condensed matter physics: tight-binding models, topological band theory, correlated electrons, quantum spin chains, phonons, and transport.</p>
 <p>Typical usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">physicskit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -461,6 +475,65 @@
 <span class="n">chern_numbers</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">condensed</span><span class="o">.</span><span class="n">compute_chern_number</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">grid_size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 </div>
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">BoltzmannTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seebeck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#BoltzmannTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Transport coefficients returned by <a class="reference internal" href="#physicskit.condensed.boltzmann_transport" title="physicskit.condensed.boltzmann_transport"><code class="xref py py-func docutils literal notranslate"><span class="pre">boltzmann_transport()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – Electrical conductivity tensor, shape <code class="docutils literal notranslate"><span class="pre">(d,</span> <span class="pre">d)</span></code>.</p></li>
+<li><p><strong>seebeck</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – Seebeck (thermopower) tensor <span class="math notranslate nohighlight">\(S\)</span>, with <span class="math notranslate nohighlight">\(\mathbf E =
+S\nabla T\)</span> at zero current.</p></li>
+<li><p><strong>kappa</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>numpy.ndarray</em></a>) – Electronic thermal conductivity tensor at zero electric current.</p></li>
+<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Carrier density <span class="math notranslate nohighlight">\(\int f\,d^dk\,g_s/(2\pi)^d\)</span>.</p></li>
+<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Temperature.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>seebeck</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>kappa</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.T">
+<span class="sig-name descname"><span class="pre">T</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.T" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.density">
+<span class="sig-name descname"><span class="pre">density</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.density" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.lorenz_number">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">lorenz_number</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.lorenz_number" title="Link to this definition">#</a></dt>
+<dd><p>Lorenz ratio <span class="math notranslate nohighlight">\(L = \kappa_{xx}/(\sigma_{xx}T)\)</span>; <span class="math notranslate nohighlight">\(\pi^2/(3q^2)\)</span> for a degenerate metal.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.seebeck">
+<span class="sig-name descname"><span class="pre">seebeck</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.seebeck" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="physicskit.condensed.BoltzmannTransport.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#physicskit.condensed.BoltzmannTransport.sigma" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="physicskit.condensed.Hamiltonian">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">Hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">onsite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/tight_binding.html#Hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.Hamiltonian" title="Link to this definition">#</a></dt>
@@ -882,6 +955,44 @@ in the Nambu basis <span class="math notranslate nohighlight">\((c_k, c_{-k}^\da
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.bethe_ansatz_xxx_ground_energy">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">bethe_ansatz_xxx_ground_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#bethe_ansatz_xxx_ground_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.bethe_ansatz_xxx_ground_energy" title="Link to this definition">#</a></dt>
+<dd><p>Ground-state energy of the periodic spin-1/2 Heisenberg antiferromagnet from the Bethe ansatz.</p>
+<p>With <span class="math notranslate nohighlight">\(M = N/2\)</span> magnons of rapidities <span class="math notranslate nohighlight">\(\lambda_j\)</span>, the
+logarithmic Bethe equations for <span class="math notranslate nohighlight">\(H = J\sum_i \mathbf{S}_i\cdot
+\mathbf{S}_{i+1}\)</span> read</p>
+<div class="math notranslate nohighlight">
+\[2N \arctan(2\lambda_j) = 2\pi I_j
+    + 2\sum_{k \ne j} \arctan(\lambda_j - \lambda_k),\]</div>
+<p>with the ground state given by the consecutive quantum numbers
+<span class="math notranslate nohighlight">\(I_j = -\tfrac{M-1}{2}, \dots, \tfrac{M-1}{2}\)</span>, and</p>
+<div class="math notranslate nohighlight">
+\[E_0 = \frac{JN}{4} - \frac{J}{2}\sum_{j=1}^{M} \frac{1}{\lambda_j^2 + 1/4}\]</div>
+<p>(Bethe 1931; Karbach and Muller, Computers in Physics 11, 36 (1997),
+Eqs. 20-24). As <span class="math notranslate nohighlight">\(N \to \infty\)</span>, <span class="math notranslate nohighlight">\(E_0/N \to J(1/4 - \ln 2)\)</span>
+(Hulthen 1938).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Even number of sites, <span class="math notranslate nohighlight">\(N \ge 4\)</span>.</p></li>
+<li><p><strong>J</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Exchange coupling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">bethe_ansatz_xxx_ground_energy</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">-2.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.bhz_hamiltonian">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">bhz_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/models.html#bhz_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.bhz_hamiltonian" title="Link to this definition">#</a></dt>
 <dd><p>Bloch Hamiltonian of the Bernevig-Hughes-Zhang (BHZ) model for HgTe quantum wells.</p>
@@ -972,6 +1083,62 @@ modes – absent in the trivial regime (e.g. <span class="math notranslate nohig
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.boltzmann_transport">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">boltzmann_transport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spin_degeneracy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#boltzmann_transport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.boltzmann_transport" title="Link to this definition">#</a></dt>
+<dd><p>Boltzmann transport coefficients in the constant relaxation-time approximation.</p>
+<p>For a band <span class="math notranslate nohighlight">\(\varepsilon_{\mathbf k}\)</span> with velocities
+<span class="math notranslate nohighlight">\(\mathbf v_{\mathbf k} = \nabla_{\mathbf k}\varepsilon\)</span>, define the
+moments</p>
+<div class="math notranslate nohighlight">
+\[\mathcal K_n = \tau \int \frac{g_s\,d^dk}{(2\pi)^d}
+    \left(-\frac{\partial f}{\partial\varepsilon}\right)
+    \mathbf v_{\mathbf k}\mathbf v_{\mathbf k}^T
+    (\varepsilon_{\mathbf k} - \mu)^n.\]</div>
+<p>Then (Ashcroft and Mermin, Eqs. 13.37-13.47, for general charge
+<span class="math notranslate nohighlight">\(q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\sigma = q^2\mathcal K_0, \qquad
+S = \frac{1}{qT}\,\mathcal K_0^{-1}\mathcal K_1, \qquad
+\kappa = \frac{1}{T}\left(\mathcal K_2 - \mathcal K_1\mathcal K_0^{-1}\mathcal K_1\right).\]</div>
+<p>For a degenerate metal the Sommerfeld expansion gives the
+Wiedemann-Franz law <span class="math notranslate nohighlight">\(\kappa/(\sigma T) = \pi^2/(3q^2)\)</span> and Mott’s
+formula <span class="math notranslate nohighlight">\(S = \frac{\pi^2 T}{3q}\,\frac{d\ln\sigma(\varepsilon)}{d\varepsilon}\big|_\mu\)</span>;
+for a parabolic band <span class="math notranslate nohighlight">\(\sigma = nq^2\tau/m\)</span>, Drude’s result with
+<span class="math notranslate nohighlight">\(n\)</span> the actual carrier density.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Band energies on a uniform <span class="math notranslate nohighlight">\(k\)</span>-grid, shape <code class="docutils literal notranslate"><span class="pre">(M,)</span></code> (flatten
+multi-band or multi-dimensional grids).</p></li>
+<li><p><strong>velocities</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Group velocities at the same points, shape <code class="docutils literal notranslate"><span class="pre">(M,</span> <span class="pre">d)</span></code>.</p></li>
+<li><p><strong>cell_volume</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – <span class="math notranslate nohighlight">\(k\)</span>-space volume per grid point, <span class="math notranslate nohighlight">\(\Delta^d k\)</span>.</p></li>
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Chemical potential.</p></li>
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Temperature, <span class="math notranslate nohighlight">\(T &gt; 0\)</span>.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Relaxation time.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier charge.</p></li>
+<li><p><strong>spin_degeneracy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – <span class="math notranslate nohighlight">\(g_s\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#physicskit.condensed.BoltzmannTransport" title="physicskit.condensed.transport.BoltzmannTransport"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannTransport</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>BoltzmannTransport</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A 1D parabolic band at low temperature reproduces Drude’s
+<span class="math notranslate nohighlight">\(\sigma = nq^2\tau/m\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">40001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">boltzmann_transport</span><span class="p">(</span><span class="n">k</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="o">.</span><span class="n">density</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.build_ribbon">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">build_ribbon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hamiltonian</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/tight_binding.html#build_ribbon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.build_ribbon" title="Link to this definition">#</a></dt>
 <dd><p>Build a ribbon/slab: periodic in-plane, open (finite) along <code class="docutils literal notranslate"><span class="pre">open_direction</span></code>.</p>
@@ -1003,6 +1170,44 @@ component than the bulk lattice (the remaining periodic directions).</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">H_wire</span> <span class="o">=</span> <span class="n">build_ribbon</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">open_direction</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_cells</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H_wire</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.calabrese_cardy_entropy">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">calabrese_cardy_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#calabrese_cardy_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.calabrese_cardy_entropy" title="Link to this definition">#</a></dt>
+<dd><p>Calabrese-Cardy entanglement entropy of an interval in a critical (CFT) chain.</p>
+<div class="math notranslate nohighlight">
+\[S(\ell) = \frac{c}{3\eta}\,\ln\!\left[\frac{\eta N}{\pi}
+    \sin\frac{\pi\ell}{N}\right] + c',\]</div>
+<p>with <span class="math notranslate nohighlight">\(\eta = 1\)</span> for a periodic chain and <span class="math notranslate nohighlight">\(\eta = 2\)</span> for an
+open chain cut at distance <span class="math notranslate nohighlight">\(\ell\)</span> from an edge (Calabrese and
+Cardy, J. Stat. Mech. P06002 (2004), Eqs. 3 and 14). A gapped chain
+instead obeys an area law: <span class="math notranslate nohighlight">\(S(\ell)\)</span> saturates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ell</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Subsystem sizes.</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Chain length.</p></li>
+<li><p><strong>c</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Central charge (<span class="math notranslate nohighlight">\(1/2\)</span> for the critical Ising chain, <span class="math notranslate nohighlight">\(1\)</span>
+for the Heisenberg chain).</p></li>
+<li><p><strong>const</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Non-universal constant <span class="math notranslate nohighlight">\(c'\)</span>.</p></li>
+<li><p><strong>periodic</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Boundary conditions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">calabrese_cardy_entropy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]),</span> <span class="mi">16</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">16</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1112,6 +1317,355 @@ Hamiltonian, using the reduced-momentum convention of
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.debye_heat_capacity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">debye_heat_capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#debye_heat_capacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.debye_heat_capacity" title="Link to this definition">#</a></dt>
+<dd><p>Debye heat capacity per atom of a 3D solid, in units of <span class="math notranslate nohighlight">\(k_B\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{C}{Nk_B} = 9\left(\frac{T}{\Theta_D}\right)^3
+    \int_0^{\Theta_D/T}\frac{x^4 e^x}{(e^x - 1)^2}\,dx\]</div>
+<p>(Debye 1912; Kittel, Eq. 5.35), interpolating between the
+Dulong-Petit value 3 for <span class="math notranslate nohighlight">\(T \gg \Theta_D\)</span> and the Debye
+<span class="math notranslate nohighlight">\(T^3\)</span> law <span class="math notranslate nohighlight">\(\frac{12\pi^4}{5}(T/\Theta_D)^3\)</span> for
+<span class="math notranslate nohighlight">\(T \ll \Theta_D\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Temperature (same units as <span class="math notranslate nohighlight">\(\Theta_D\)</span>).</p></li>
+<li><p><strong>theta_D</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Debye temperature.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">debye_heat_capacity</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">T</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.debye_temperature">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">debye_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sound_speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_density</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#debye_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.debye_temperature" title="Link to this definition">#</a></dt>
+<dd><p>Debye temperature <span class="math notranslate nohighlight">\(\Theta_D = c\,(6\pi^2 n)^{1/3}\)</span> (units <span class="math notranslate nohighlight">\(\hbar = k_B = 1\)</span>).</p>
+<p>Cutting the linear dispersion <span class="math notranslate nohighlight">\(\omega = ck\)</span> off at the Debye
+wavenumber <span class="math notranslate nohighlight">\(k_D = (6\pi^2 n)^{1/3}\)</span>, which holds exactly
+<span class="math notranslate nohighlight">\(N\)</span> modes per polarization (Kittel, Eq. 5.30), with <span class="math notranslate nohighlight">\(c\)</span> the
+(suitably averaged) sound speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sound_speed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Sound speed <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p><strong>number_density</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Atoms per unit volume <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">debye_temperature</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="p">)),</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.diatomic_chain_dispersion">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">diatomic_chain_dispersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#diatomic_chain_dispersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.diatomic_chain_dispersion" title="Link to this definition">#</a></dt>
+<dd><p>Acoustic and optical branches of a diatomic harmonic chain.</p>
+<p>Alternating masses <span class="math notranslate nohighlight">\(m_1, m_2\)</span> joined by identical springs
+<span class="math notranslate nohighlight">\(K\)</span>, with unit-cell length <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\omega_\pm^2 = K\left(\frac{1}{m_1} + \frac{1}{m_2}\right)
+    \pm K\sqrt{\left(\frac{1}{m_1} + \frac{1}{m_2}\right)^2
+    - \frac{4\sin^2(ka/2)}{m_1 m_2}}\]</div>
+<p>(Kittel, <em>Introduction to Solid State Physics</em>, 8th ed., Eq. 4.20).
+The acoustic branch has sound speed <span class="math notranslate nohighlight">\(c = a\sqrt{K/(2(m_1+m_2))}\)</span>;
+the optical branch starts at <span class="math notranslate nohighlight">\(\sqrt{2K(1/m_1+1/m_2)}\)</span>, and a gap
+opens at the zone boundary between <span class="math notranslate nohighlight">\(\sqrt{2K/m_{\max}}\)</span> and
+<span class="math notranslate nohighlight">\(\sqrt{2K/m_{\min}}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavenumber.</p></li>
+<li><p><strong>K</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Spring constant.</p></li>
+<li><p><strong>m1</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The two atomic masses.</p></li>
+<li><p><strong>m2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The two atomic masses.</p></li>
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Unit-cell length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>acoustic, optical</strong> (<em>numpy.ndarray</em>)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ac</span><span class="p">,</span> <span class="n">op</span> <span class="o">=</span> <span class="n">diatomic_chain_dispersion</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">ac</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.drude_ac_conductivity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">drude_ac_conductivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#drude_ac_conductivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.drude_ac_conductivity" title="Link to this definition">#</a></dt>
+<dd><p>Drude AC conductivity <span class="math notranslate nohighlight">\(\sigma(\omega) = \sigma_0/(1 - i\omega\tau)\)</span>.</p>
+<p>For fields <span class="math notranslate nohighlight">\(\propto e^{-i\omega t}\)</span> (Ashcroft and Mermin, Eq.
+1.29). The real part is a Lorentzian of width <span class="math notranslate nohighlight">\(1/\tau\)</span>, whose
+integral obeys the f-sum rule
+<span class="math notranslate nohighlight">\(\int_0^\infty \mathrm{Re}\,\sigma\,d\omega = \pi nq^2/(2m)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>omega</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Angular frequency.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Complex conductivity.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="n">drude_ac_conductivity</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="go">(0.5+0.5j)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.drude_conductivity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">drude_conductivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#drude_conductivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.drude_conductivity" title="Link to this definition">#</a></dt>
+<dd><p>Drude DC conductivity <span class="math notranslate nohighlight">\(\sigma_0 = nq^2\tau/m\)</span>.</p>
+<p>Carriers of charge <span class="math notranslate nohighlight">\(q\)</span> and mass <span class="math notranslate nohighlight">\(m\)</span>, accelerated by the
+field and randomized by collisions every <span class="math notranslate nohighlight">\(\tau\)</span> on average
+(Drude 1900; Ashcroft and Mermin, Eq. 1.6).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier density.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Relaxation (mean free) time.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier charge.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier mass.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">drude_conductivity</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="go">6.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.drude_conductivity_tensor">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">drude_conductivity_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#drude_conductivity_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.drude_conductivity_tensor" title="Link to this definition">#</a></dt>
+<dd><p>In-plane Drude conductivity tensor in a perpendicular magnetic field <span class="math notranslate nohighlight">\(B\hat z\)</span>.</p>
+<p>Solving <span class="math notranslate nohighlight">\(m\dot{\mathbf v} = q(\mathbf E + \mathbf v\times\mathbf B)
+- m\mathbf v/\tau\)</span> in steady state gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma = \frac{\sigma_0}{1 + (\omega_c\tau)^2}
+    \begin{pmatrix} 1 &amp; \omega_c\tau \\ -\omega_c\tau &amp; 1 \end{pmatrix},
+\qquad \omega_c = \frac{qB}{m},\end{split}\]</div>
+<p>whose inverse, the resistivity, has <span class="math notranslate nohighlight">\(\rho_{xx} = 1/\sigma_0\)</span>
+independent of <span class="math notranslate nohighlight">\(B\)</span> (no magnetoresistance) and
+<span class="math notranslate nohighlight">\(\rho_{yx} = B/(nq)\)</span> (Ashcroft and Mermin, Eqs. 1.40-1.44).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>B</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Magnetic field along <span class="math notranslate nohighlight">\(z\)</span>.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – As in <a class="reference internal" href="#physicskit.condensed.drude_conductivity" title="physicskit.condensed.drude_conductivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">drude_conductivity_tensor</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.embed_state">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">embed_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#embed_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.embed_state" title="Link to this definition">#</a></dt>
+<dd><p>Embed a sector-basis state vector into the full <span class="math notranslate nohighlight">\(2^N\)</span>-dimensional space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Amplitudes on <code class="docutils literal notranslate"><span class="pre">basis</span></code>.</p></li>
+<li><p><strong>basis</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Sector basis states.</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">(2**N,)</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embed_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">array([0., 1., 0., 0.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.energy_gap">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">energy_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#energy_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.energy_gap" title="Link to this definition">#</a></dt>
+<dd><p>Gap <span class="math notranslate nohighlight">\(E_1 - E_0\)</span> between the two lowest eigenvalues of <code class="docutils literal notranslate"><span class="pre">H</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">spmatrix</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Hamiltonian (typically restricted to one symmetry sector).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The critical TFIM’s gap in the even sector is the two-quasiparticle
+energy <span class="math notranslate nohighlight">\(\varepsilon_{\pi/N} + \varepsilon_{-\pi/N}\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tfim_hamiltonian</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">parity</span><span class="o">=+</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">energy_gap</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">16</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.entanglement_entropy">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">entanglement_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#entanglement_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.entanglement_entropy" title="Link to this definition">#</a></dt>
+<dd><p>Von Neumann entanglement entropy of the first <code class="docutils literal notranslate"><span class="pre">n_A</span></code> sites.</p>
+<div class="math notranslate nohighlight">
+\[S_A = -\operatorname{tr}\rho_A \ln \rho_A = -\sum_\alpha s_\alpha^2 \ln s_\alpha^2,\]</div>
+<p>with <span class="math notranslate nohighlight">\(s_\alpha\)</span> the Schmidt coefficients – the singular values of
+<span class="math notranslate nohighlight">\(\psi\)</span> reshaped to a <span class="math notranslate nohighlight">\(2^{n_A} \times 2^{N - n_A}\)</span> matrix
+(Nielsen and Chuang, Sec. 2.5).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Normalized state, on the full space or on <code class="docutils literal notranslate"><span class="pre">basis</span></code>.</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>n_A</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of leading sites in subsystem <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><strong>basis</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Sector basis of <code class="docutils literal notranslate"><span class="pre">psi</span></code>, if it is not a full-space vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – <span class="math notranslate nohighlight">\(S_A\)</span> in nats.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A singlet carries <span class="math notranslate nohighlight">\(\ln 2\)</span> of entanglement:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">singlet</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">entanglement_entropy</span><span class="p">(</span><span class="n">singlet</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.entanglement_profile">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">entanglement_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#entanglement_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.entanglement_profile" title="Link to this definition">#</a></dt>
+<dd><p>Entanglement entropy <span class="math notranslate nohighlight">\(S(\ell)\)</span> for every cut <span class="math notranslate nohighlight">\(\ell = 1, \dots, N-1\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Normalized state.</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>basis</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Sector basis of <code class="docutils literal notranslate"><span class="pre">psi</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">(N</span> <span class="pre">-</span> <span class="pre">1,)</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A product state is unentangled across every cut:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span> <span class="n">psi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entanglement_profile</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">array([0., 0.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.fermi_window">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">fermi_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#fermi_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.fermi_window" title="Link to this definition">#</a></dt>
+<dd><p>The Fermi window <span class="math notranslate nohighlight">\(-\partial f/\partial\varepsilon = \dfrac{1}{4T\cosh^2[(\varepsilon - \mu)/2T]}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Energies.</p></li>
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Chemical potential.</p></li>
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Temperature, <span class="math notranslate nohighlight">\(T &gt; 0\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Integrates to 1 over energy.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">fermi_window</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.filling_factor">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">filling_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/landau_levels.html#filling_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.filling_factor" title="Link to this definition">#</a></dt>
 <dd><p>Landau-level filling factor <span class="math notranslate nohighlight">\(\nu = n_e / n_B = n_e h/(eB)\)</span>.</p>
@@ -1138,6 +1692,42 @@ an incompressible quantum Hall plateau in
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">filling_factor</span><span class="p">(</span><span class="n">density</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
 <span class="go">12.566371</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.fit_central_charge">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">fit_central_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#fit_central_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.fit_central_charge" title="Link to this definition">#</a></dt>
+<dd><p>Least-squares fit of <a class="reference internal" href="#physicskit.condensed.calabrese_cardy_entropy" title="physicskit.condensed.calabrese_cardy_entropy"><code class="xref py py-func docutils literal notranslate"><span class="pre">calabrese_cardy_entropy()</span></code></a> to an entanglement profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profile</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – <span class="math notranslate nohighlight">\(S(\ell)\)</span> for <span class="math notranslate nohighlight">\(\ell = 1, \dots, N-1\)</span>
+(from <a class="reference internal" href="#physicskit.condensed.entanglement_profile" title="physicskit.condensed.entanglement_profile"><code class="xref py py-func docutils literal notranslate"><span class="pre">entanglement_profile()</span></code></a>).</p></li>
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Chain length.</p></li>
+<li><p><strong>periodic</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Boundary conditions.</p></li>
+<li><p><strong>trim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of cuts dropped at each end, where lattice corrections are
+largest.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>c</strong> (<em>float</em>) – Fitted central charge.</p></li>
+<li><p><strong>const</strong> (<em>float</em>) – Fitted non-universal constant.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fit_central_charge</span><span class="p">(</span><span class="n">calabrese_cardy_entropy</span><span class="p">(</span><span class="n">ell</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">0.5</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1460,6 +2050,34 @@ and a trivial insulator otherwise.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">H_trivial</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">:</span> <span class="n">haldane_model</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">compute_chern_number</span><span class="p">(</span><span class="n">H_trivial</span><span class="p">,</span> <span class="n">grid_size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="go">[0, 0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.hall_coefficient">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">hall_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/transport.html#hall_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.hall_coefficient" title="Link to this definition">#</a></dt>
+<dd><p>Drude Hall coefficient <span class="math notranslate nohighlight">\(R_H = E_y/(j_x B) = 1/(nq)\)</span>.</p>
+<p>Negative for electrons; its measured sign revealed hole conduction in
+metals such as Be and Al that the free-electron model could not
+explain (Ashcroft and Mermin, Table 1.4).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier density.</p></li>
+<li><p><strong>q</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Carrier charge.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hall_coefficient</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="go">-4.0</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1892,6 +2510,40 @@ spacing <span class="math notranslate nohighlight">\(\hbar\omega_c\)</span>.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.lattice_heat_capacity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">lattice_heat_capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#lattice_heat_capacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.lattice_heat_capacity" title="Link to this definition">#</a></dt>
+<dd><p>Average heat capacity per phonon mode, <span class="math notranslate nohighlight">\(C/(N_\mathrm{modes} k_B)\)</span>.</p>
+<p>Each harmonic mode of frequency <span class="math notranslate nohighlight">\(\omega\)</span> contributes Einstein’s</p>
+<div class="math notranslate nohighlight">
+\[c(\omega, T) = \left(\frac{\omega}{T}\right)^2
+    \frac{e^{\omega/T}}{(e^{\omega/T} - 1)^2}\]</div>
+<p>(Einstein, Ann. Phys. 327, 180 (1907)), tending to 1 (equipartition)
+at high <span class="math notranslate nohighlight">\(T\)</span>. Summing over a Brillouin-zone sample of a phonon
+dispersion gives the lattice heat capacity without Debye’s continuum
+approximation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequencies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Mode frequencies (any shape; zero-frequency modes contribute 1).</p></li>
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Temperatures.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape of <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lattice_heat_capacity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]),</span> <span class="mf">1000.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.laughlin_metropolis_sweep">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">laughlin_metropolis_sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/laughlin.html#laughlin_metropolis_sweep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.laughlin_metropolis_sweep" title="Link to this definition">#</a></dt>
 <dd><p>Perform one Metropolis sweep sampling <span class="math notranslate nohighlight">\(|\Psi_m|^2\)</span>, in place.</p>
@@ -2080,6 +2732,40 @@ for the fit to detect exponential decay.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.lowest_eigenstates">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">lowest_eigenstates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#lowest_eigenstates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.lowest_eigenstates" title="Link to this definition">#</a></dt>
+<dd><p>The <span class="math notranslate nohighlight">\(k\)</span> lowest eigenpairs of a Hermitian (sparse) Hamiltonian.</p>
+<p>Uses dense <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eigh.html#numpy.linalg.eigh" title="(in NumPy v2.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.eigh()</span></code></a> for small matrices and the
+Lanczos method (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.eigsh.html#scipy.sparse.linalg.eigsh" title="(in SciPy v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.sparse.linalg.eigsh()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">which=&quot;SA&quot;</span></code>)
+otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">spmatrix</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Hamiltonian, shape <code class="docutils literal notranslate"><span class="pre">(dim,</span> <span class="pre">dim)</span></code>.</p></li>
+<li><p><strong>k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of eigenpairs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>energies</strong> (<em>numpy.ndarray</em>) – Ascending, shape <code class="docutils literal notranslate"><span class="pre">(k,)</span></code>.</p></li>
+<li><p><strong>vectors</strong> (<em>numpy.ndarray</em>) – Eigenvectors as columns, shape <code class="docutils literal notranslate"><span class="pre">(dim,</span> <span class="pre">k)</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">xxz_hamiltonian</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_up</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">lowest_eigenstates</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">E</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">-2.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.magnetic_length">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">magnetic_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/landau_levels.html#magnetic_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.magnetic_length" title="Link to this definition">#</a></dt>
 <dd><p>Magnetic length <span class="math notranslate nohighlight">\(\ell_B = \sqrt{\hbar/(eB)}\)</span>.</p>
@@ -2104,6 +2790,39 @@ for the fit to detect exponential decay.</p>
 <span class="go">1.0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">magnetic_length</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mf">4.0</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">0.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.monatomic_chain_dispersion">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">monatomic_chain_dispersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#monatomic_chain_dispersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.monatomic_chain_dispersion" title="Link to this definition">#</a></dt>
+<dd><p>Phonon dispersion of a monatomic harmonic chain, <span class="math notranslate nohighlight">\(\omega(k) = 2\sqrt{K/m}\,|\sin(ka/2)|\)</span>.</p>
+<p>Masses <span class="math notranslate nohighlight">\(m\)</span> joined by springs <span class="math notranslate nohighlight">\(K\)</span> at spacing <span class="math notranslate nohighlight">\(a\)</span>
+(Ashcroft and Mermin, <em>Solid State Physics</em>, Eq. 22.29). At long
+wavelengths <span class="math notranslate nohighlight">\(\omega \approx c|k|\)</span> with sound speed
+<span class="math notranslate nohighlight">\(c = a\sqrt{K/m}\)</span>; at the zone edge <span class="math notranslate nohighlight">\(k = \pi/a\)</span> the group
+velocity vanishes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavenumber.</p></li>
+<li><p><strong>K</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Spring constant.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Atomic mass.</p></li>
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Lattice spacing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">monatomic_chain_dispersion</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mf">4.0</span><span class="p">))</span>
+<span class="go">4.0</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2243,6 +2962,111 @@ as produced by <a class="reference internal" href="#physicskit.condensed.tight_b
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.spin_chain_basis">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">spin_chain_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_up</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#spin_chain_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.spin_chain_basis" title="Link to this definition">#</a></dt>
+<dd><p>Sorted computational basis states of an <span class="math notranslate nohighlight">\(N\)</span>-site spin-1/2 chain, optionally restricted to a sector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>n_up</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Keep only states with this many up spins, i.e. total
+<span class="math notranslate nohighlight">\(S^z = n_\uparrow - N/2\)</span>.</p></li>
+<li><p><strong>parity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Keep only states with this eigenvalue of
+<span class="math notranslate nohighlight">\(P = \prod_i \sigma^z_i = (-1)^{n_\downarrow}\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray of int64</em> – Sorted basis states.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spin_chain_basis</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_up</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([ 3,  5,  6,  9, 10, 12])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">spin_chain_basis</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">parity</span><span class="o">=+</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">32</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.square_lattice_dynamical_matrix">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">square_lattice_dynamical_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#square_lattice_dynamical_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.square_lattice_dynamical_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Dynamical matrix of a square lattice with nearest (<span class="math notranslate nohighlight">\(K_1\)</span>) and next-nearest (<span class="math notranslate nohighlight">\(K_2\)</span>) central springs.</p>
+<p>For central-force springs to neighbors <span class="math notranslate nohighlight">\(\mathbf R\)</span> with unit
+vectors <span class="math notranslate nohighlight">\(\hat{\mathbf e}\)</span>,
+<span class="math notranslate nohighlight">\(D(\mathbf k) = \sum_{\mathbf R} \frac{K_R}{m}(1 - \cos\mathbf k\cdot\mathbf R)\,
+\hat{\mathbf e}\hat{\mathbf e}^T\)</span> (Ashcroft and Mermin, Eq. 22.58),
+which here gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}D = \frac{2K_1}{m}\begin{pmatrix} 1 - \cos k_xa &amp; 0 \\ 0 &amp; 1 - \cos k_ya \end{pmatrix}
+  + \frac{K_2}{m}\left[(1 - \cos(k_x + k_y)a)\begin{pmatrix}1&amp;1\\1&amp;1\end{pmatrix}
+  + (1 - \cos(k_x - k_y)a)\begin{pmatrix}1&amp;-1\\-1&amp;1\end{pmatrix}\right].\end{split}\]</div>
+<p>The diagonal springs give the lattice its shear stiffness: with
+<span class="math notranslate nohighlight">\(K_2 = 0\)</span> the transverse branch is dispersionless along the axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavevector components (broadcast together).</p></li>
+<li><p><strong>ky</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavevector components (broadcast together).</p></li>
+<li><p><strong>K1</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Nearest- and next-nearest-neighbor spring constants.</p></li>
+<li><p><strong>K2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Nearest- and next-nearest-neighbor spring constants.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Atomic mass.</p></li>
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Lattice constant.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">broadcast(kx,</span> <span class="pre">ky).shape</span> <span class="pre">+</span> <span class="pre">(2,</span> <span class="pre">2)</span></code>, real symmetric.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">square_lattice_dynamical_matrix</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[[0.0, 0.0], [0.0, 0.0]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.square_lattice_phonon_dispersion">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">square_lattice_phonon_dispersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/phonons.html#square_lattice_phonon_dispersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.square_lattice_phonon_dispersion" title="Link to this definition">#</a></dt>
+<dd><p>Phonon frequencies <span class="math notranslate nohighlight">\(\omega_s(\mathbf k) = \sqrt{\lambda_s(D(\mathbf k))}\)</span> of the square lattice.</p>
+<p>Along <span class="math notranslate nohighlight">\(\mathbf k \parallel \hat x\)</span> the long-wavelength sound
+speeds are <span class="math notranslate nohighlight">\(c_L = a\sqrt{(K_1 + K_2)/m}\)</span> (longitudinal) and
+<span class="math notranslate nohighlight">\(c_T = a\sqrt{K_2/m}\)</span> (transverse).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavevector components.</p></li>
+<li><p><strong>ky</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Wavevector components.</p></li>
+<li><p><strong>K1</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Spring constants.</p></li>
+<li><p><strong>K2</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Spring constants.</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Atomic mass.</p></li>
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Lattice constant.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Shape <code class="docutils literal notranslate"><span class="pre">broadcast(kx,</span> <span class="pre">ky).shape</span> <span class="pre">+</span> <span class="pre">(2,)</span></code>, ascending per wavevector.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>At <span class="math notranslate nohighlight">\((\pi, \pi)/a\)</span> both branches have <span class="math notranslate nohighlight">\(\omega^2 = 4K_1/m\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">square_lattice_phonon_dispersion</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.condensed.ssh_hamiltonian">
 <span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">ssh_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/models.html#ssh_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.ssh_hamiltonian" title="Link to this definition">#</a></dt>
 <dd><p>Bloch Hamiltonian of the Su-Schrieffer-Heeger (SSH) dimerized chain.</p>
@@ -2343,6 +3167,120 @@ momentum (backscattering off nonmagnetic disorder is forbidden).</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">surface_dirac_hamiltonian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">v_f</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span>
 <span class="go">array([-1.,  1.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.tfim_free_fermion_spectrum">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">tfim_free_fermion_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#tfim_free_fermion_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.tfim_free_fermion_spectrum" title="Link to this definition">#</a></dt>
+<dd><p>Exact spectrum of the periodic TFIM from its Jordan-Wigner free-fermion solution.</p>
+<p>The Jordan-Wigner transformation maps <a class="reference internal" href="#physicskit.condensed.tfim_hamiltonian" title="physicskit.condensed.tfim_hamiltonian"><code class="xref py py-func docutils literal notranslate"><span class="pre">tfim_hamiltonian()</span></code></a> onto
+free fermions, <span class="math notranslate nohighlight">\(H = \sum_k \varepsilon_k (n_k - \tfrac12)\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\varepsilon_k = 2\sqrt{J^2 + h^2 - 2Jh\cos k}\]</div>
+<p>(Pfeuty 1970, Eq. 2.15; Lieb, Schultz and Mattis, Ann. Phys. 16, 407
+(1961)). The parity <span class="math notranslate nohighlight">\(P = +1\)</span> sector has antiperiodic fermions,
+<span class="math notranslate nohighlight">\(k = \pm\pi(2n+1)/N\)</span>, and an even number of excitations;
+<span class="math notranslate nohighlight">\(P = -1\)</span> has periodic fermions, <span class="math notranslate nohighlight">\(k = 2\pi n/N\)</span>, and an odd
+total fermion number. The unpaired modes <span class="math notranslate nohighlight">\(k = 0, \pi\)</span> carry the
+signed energy <span class="math notranslate nohighlight">\(2(h - J\cos k)\)</span> and count as bare fermions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites (keep <span class="math notranslate nohighlight">\(N \lesssim 16\)</span>: all <span class="math notranslate nohighlight">\(2^N\)</span>
+levels are enumerated).</p></li>
+<li><p><strong>J</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ising coupling.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Transverse field.</p></li>
+<li><p><strong>parity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Restrict to one sector (<code class="docutils literal notranslate"><span class="pre">None</span></code> for both).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em> – Sorted energies.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tfim_hamiltonian</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">tfim_free_fermion_spectrum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">toarray</span><span class="p">())))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.tfim_ground_state_energy">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">tfim_ground_state_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#tfim_ground_state_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.tfim_ground_state_energy" title="Link to this definition">#</a></dt>
+<dd><p>Exact ground-state energy of the periodic TFIM, the even-sector Bogoliubov vacuum.</p>
+<div class="math notranslate nohighlight">
+\[E_0 = -\frac12 \sum_{k = \pm\pi(2n+1)/N} \varepsilon_k,\]</div>
+<p>which tends to <span class="math notranslate nohighlight">\(-\tfrac{N}{2\pi}\int_{-\pi}^{\pi}\varepsilon_k\,dk/2\)</span>
+as <span class="math notranslate nohighlight">\(N \to \infty\)</span> (Pfeuty 1970, Eq. 3.2).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>J</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ising coupling.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Transverse field.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">tfim_ground_state_energy</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">16</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.tfim_hamiltonian">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">tfim_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#tfim_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.tfim_hamiltonian" title="Link to this definition">#</a></dt>
+<dd><p>Sparse transverse-field Ising chain Hamiltonian.</p>
+<div class="math notranslate nohighlight">
+\[H = -J \sum_{\langle ij \rangle} \sigma^x_i \sigma^x_j - h \sum_i \sigma^z_i\]</div>
+<p>(Pfeuty, Ann. Phys. 57, 79 (1970), in Pauli matrices). The
+Ising coupling acts along <span class="math notranslate nohighlight">\(x\)</span> so that the conserved
+<span class="math notranslate nohighlight">\(\mathbb{Z}_2\)</span> parity <span class="math notranslate nohighlight">\(P = \prod_i \sigma^z_i\)</span> is diagonal
+in the computational basis; <code class="docutils literal notranslate"><span class="pre">parity</span></code> selects its sector. The chain is
+critical at <span class="math notranslate nohighlight">\(h = J\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>J</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ising coupling.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Transverse field.</p></li>
+<li><p><strong>periodic</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Periodic (ring) or open boundary conditions.</p></li>
+<li><p><strong>parity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Parity sector (<code class="docutils literal notranslate"><span class="pre">None</span></code> for the full space).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">csr_matrix</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>H</strong> (<em>scipy.sparse.csr_matrix</em>) – The Hamiltonian in the sector basis.</p></li>
+<li><p><strong>basis</strong> (<em>numpy.ndarray</em>) – The sector’s basis states.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>At zero field the ground state is the doubly degenerate ferromagnet
+with energy <span class="math notranslate nohighlight">\(-NJ\)</span> on a ring:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tfim_hamiltonian</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">toarray</span><span class="p">())[:</span><span class="mi">2</span><span class="p">],</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">array([-4., -4.])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2543,6 +3481,51 @@ mode – absent outside the node range (<span class="math notranslate nohighligh
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gaps_outside</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">weyl_semimetal_slab_hamiltonian</span><span class="p">(</span><span class="n">ky</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">2.0</span><span class="p">))))</span> <span class="k">for</span> <span class="n">ky</span> <span class="ow">in</span> <span class="n">ky_grid</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">gaps_outside</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.condensed.xxz_hamiltonian">
+<span class="sig-prename descclassname"><span class="pre">physicskit.condensed.</span></span><span class="sig-name descname"><span class="pre">xxz_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_up</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/condensed/spin_chains.html#xxz_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.condensed.xxz_hamiltonian" title="Link to this definition">#</a></dt>
+<dd><p>Sparse spin-1/2 Heisenberg XXZ chain Hamiltonian.</p>
+<div class="math notranslate nohighlight">
+\[H = J \sum_{\langle ij \rangle} \left( S^x_i S^x_j + S^y_i S^y_j
+    + \Delta\, S^z_i S^z_j \right) - h \sum_i S^z_i,
+\qquad \mathbf{S} = \tfrac12 \boldsymbol{\sigma}.\]</div>
+<p>The flip-flop term <span class="math notranslate nohighlight">\(S^x S^x + S^y S^y = \tfrac12(S^+S^- +
+S^-S^+)\)</span> conserves total <span class="math notranslate nohighlight">\(S^z\)</span>, so passing <code class="docutils literal notranslate"><span class="pre">n_up</span></code> builds the
+Hamiltonian directly in that magnetization sector. <span class="math notranslate nohighlight">\(\Delta = 1\)</span>
+is the isotropic Heisenberg (XXX) antiferromagnet solved by Bethe
+(Z. Phys. 71, 205 (1931)).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of sites.</p></li>
+<li><p><strong>J</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Exchange coupling (<span class="math notranslate nohighlight">\(J &gt; 0\)</span> antiferromagnetic).</p></li>
+<li><p><strong>delta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ising anisotropy <span class="math notranslate nohighlight">\(\Delta\)</span>.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Longitudinal magnetic field.</p></li>
+<li><p><strong>periodic</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Periodic (ring) or open boundary conditions.</p></li>
+<li><p><strong>n_up</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of up spins of the sector (<code class="docutils literal notranslate"><span class="pre">None</span></code> for the full space).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">csr_matrix</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>H</strong> (<em>scipy.sparse.csr_matrix</em>) – The Hamiltonian in the sector basis.</p></li>
+<li><p><strong>basis</strong> (<em>numpy.ndarray</em>) – The sector’s basis states, from <a class="reference internal" href="#physicskit.condensed.spin_chain_basis" title="physicskit.condensed.spin_chain_basis"><code class="xref py py-func docutils literal notranslate"><span class="pre">spin_chain_basis()</span></code></a>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The two-site singlet has energy <span class="math notranslate nohighlight">\(-3J/4\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">xxz_hamiltonian</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_up</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="go">array([-0.75,  0.25])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -4766,6 +5749,15 @@ size. Defaults to uniform, unweighted markers.</p></li>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.T"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.T</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.density"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.density</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.kappa"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.lorenz_number"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.lorenz_number</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.seebeck"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.seebeck</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.BoltzmannTransport.sigma"><code class="docutils literal notranslate"><span class="pre">BoltzmannTransport.sigma</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.Hamiltonian"><code class="docutils literal notranslate"><span class="pre">Hamiltonian</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.Hamiltonian.add_hopping"><code class="docutils literal notranslate"><span class="pre">Hamiltonian.add_hopping()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.Hamiltonian.bands"><code class="docutils literal notranslate"><span class="pre">Hamiltonian.bands()</span></code></a></li>
@@ -4792,13 +5784,28 @@ size. Defaults to uniform, unweighted markers.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.apply_peierls_phase"><code class="docutils literal notranslate"><span class="pre">apply_peierls_phase()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.bdg_bcs_hamiltonian"><code class="docutils literal notranslate"><span class="pre">bdg_bcs_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.bdg_spectrum"><code class="docutils literal notranslate"><span class="pre">bdg_spectrum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.bethe_ansatz_xxx_ground_energy"><code class="docutils literal notranslate"><span class="pre">bethe_ansatz_xxx_ground_energy()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.bhz_hamiltonian"><code class="docutils literal notranslate"><span class="pre">bhz_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.bhz_ribbon_hamiltonian"><code class="docutils literal notranslate"><span class="pre">bhz_ribbon_hamiltonian()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.boltzmann_transport"><code class="docutils literal notranslate"><span class="pre">boltzmann_transport()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.build_ribbon"><code class="docutils literal notranslate"><span class="pre">build_ribbon()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.calabrese_cardy_entropy"><code class="docutils literal notranslate"><span class="pre">calabrese_cardy_entropy()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.compute_berry_curvature"><code class="docutils literal notranslate"><span class="pre">compute_berry_curvature()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.compute_chern_number"><code class="docutils literal notranslate"><span class="pre">compute_chern_number()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.cyclotron_frequency"><code class="docutils literal notranslate"><span class="pre">cyclotron_frequency()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.debye_heat_capacity"><code class="docutils literal notranslate"><span class="pre">debye_heat_capacity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.debye_temperature"><code class="docutils literal notranslate"><span class="pre">debye_temperature()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.diatomic_chain_dispersion"><code class="docutils literal notranslate"><span class="pre">diatomic_chain_dispersion()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.drude_ac_conductivity"><code class="docutils literal notranslate"><span class="pre">drude_ac_conductivity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.drude_conductivity"><code class="docutils literal notranslate"><span class="pre">drude_conductivity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.drude_conductivity_tensor"><code class="docutils literal notranslate"><span class="pre">drude_conductivity_tensor()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.embed_state"><code class="docutils literal notranslate"><span class="pre">embed_state()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.energy_gap"><code class="docutils literal notranslate"><span class="pre">energy_gap()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.entanglement_entropy"><code class="docutils literal notranslate"><span class="pre">entanglement_entropy()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.entanglement_profile"><code class="docutils literal notranslate"><span class="pre">entanglement_profile()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.fermi_window"><code class="docutils literal notranslate"><span class="pre">fermi_window()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.filling_factor"><code class="docutils literal notranslate"><span class="pre">filling_factor()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.fit_central_charge"><code class="docutils literal notranslate"><span class="pre">fit_central_charge()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.ginzburg_landau_parameter"><code class="docutils literal notranslate"><span class="pre">ginzburg_landau_parameter()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.gl_coherence_length"><code class="docutils literal notranslate"><span class="pre">gl_coherence_length()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.gl_equilibrium_order_parameter"><code class="docutils literal notranslate"><span class="pre">gl_equilibrium_order_parameter()</span></code></a></li>
@@ -4809,6 +5816,7 @@ size. Defaults to uniform, unweighted markers.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.graphene_lattice_hamiltonian"><code class="docutils literal notranslate"><span class="pre">graphene_lattice_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.haldane_lattice_hamiltonian"><code class="docutils literal notranslate"><span class="pre">haldane_lattice_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.haldane_model"><code class="docutils literal notranslate"><span class="pre">haldane_model()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.hall_coefficient"><code class="docutils literal notranslate"><span class="pre">hall_coefficient()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.harper_hofstadter_hamiltonian"><code class="docutils literal notranslate"><span class="pre">harper_hofstadter_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.hubbard_1d_exact_diagonalization"><code class="docutils literal notranslate"><span class="pre">hubbard_1d_exact_diagonalization()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.hubbard_spin_correlations"><code class="docutils literal notranslate"><span class="pre">hubbard_spin_correlations()</span></code></a></li>
@@ -4819,23 +5827,33 @@ size. Defaults to uniform, unweighted markers.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.landau_degeneracy"><code class="docutils literal notranslate"><span class="pre">landau_degeneracy()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.landau_density_of_states"><code class="docutils literal notranslate"><span class="pre">landau_density_of_states()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.landau_level_energies"><code class="docutils literal notranslate"><span class="pre">landau_level_energies()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.lattice_heat_capacity"><code class="docutils literal notranslate"><span class="pre">lattice_heat_capacity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.laughlin_metropolis_sweep"><code class="docutils literal notranslate"><span class="pre">laughlin_metropolis_sweep()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.laughlin_pair_correlation"><code class="docutils literal notranslate"><span class="pre">laughlin_pair_correlation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.laughlin_radial_density"><code class="docutils literal notranslate"><span class="pre">laughlin_radial_density()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.localization_length"><code class="docutils literal notranslate"><span class="pre">localization_length()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.lowest_eigenstates"><code class="docutils literal notranslate"><span class="pre">lowest_eigenstates()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.magnetic_length"><code class="docutils literal notranslate"><span class="pre">magnetic_length()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.monatomic_chain_dispersion"><code class="docutils literal notranslate"><span class="pre">monatomic_chain_dispersion()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.plot_band_structure"><code class="docutils literal notranslate"><span class="pre">plot_band_structure()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.plot_berry_curvature"><code class="docutils literal notranslate"><span class="pre">plot_berry_curvature()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.plot_edge_state_density"><code class="docutils literal notranslate"><span class="pre">plot_edge_state_density()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.plot_fermi_surface_3d"><code class="docutils literal notranslate"><span class="pre">plot_fermi_surface_3d()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.spin_chain_basis"><code class="docutils literal notranslate"><span class="pre">spin_chain_basis()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.square_lattice_dynamical_matrix"><code class="docutils literal notranslate"><span class="pre">square_lattice_dynamical_matrix()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.square_lattice_phonon_dispersion"><code class="docutils literal notranslate"><span class="pre">square_lattice_phonon_dispersion()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.ssh_hamiltonian"><code class="docutils literal notranslate"><span class="pre">ssh_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.ssh_lattice_hamiltonian"><code class="docutils literal notranslate"><span class="pre">ssh_lattice_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.surface_dirac_hamiltonian"><code class="docutils literal notranslate"><span class="pre">surface_dirac_hamiltonian()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.tfim_free_fermion_spectrum"><code class="docutils literal notranslate"><span class="pre">tfim_free_fermion_spectrum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.tfim_ground_state_energy"><code class="docutils literal notranslate"><span class="pre">tfim_ground_state_energy()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.tfim_hamiltonian"><code class="docutils literal notranslate"><span class="pre">tfim_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.topological_insulator_3d_hamiltonian"><code class="docutils literal notranslate"><span class="pre">topological_insulator_3d_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.topological_insulator_3d_slab_hamiltonian"><code class="docutils literal notranslate"><span class="pre">topological_insulator_3d_slab_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.weyl_node_locations"><code class="docutils literal notranslate"><span class="pre">weyl_node_locations()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.weyl_semimetal_hamiltonian"><code class="docutils literal notranslate"><span class="pre">weyl_semimetal_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.weyl_semimetal_slab_hamiltonian"><code class="docutils literal notranslate"><span class="pre">weyl_semimetal_slab_hamiltonian()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.xxz_hamiltonian"><code class="docutils literal notranslate"><span class="pre">xxz_hamiltonian()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.z2_invariant"><code class="docutils literal notranslate"><span class="pre">z2_invariant()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.condensed.zak_phase"><code class="docutils literal notranslate"><span class="pre">zak_phase()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convention">Convention</a></li>

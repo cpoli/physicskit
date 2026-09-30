@@ -430,6 +430,46 @@ Test of a New Type of Stellar Interferometer on Sirius," Nature 178,
 
 .. minigallery:: ../../examples/optics/quantum_optics/plot_hanbury_brown_twiss.py
 
+1958 -- Schawlow and Townes: The Optical Maser and the Lasing Threshold
+-----------------------------------------------------------------------
+
+Charles Townes had built the ammonia maser in 1954, amplifying microwaves
+by stimulated emission from molecules in an inverted state. In "Infrared
+and Optical Masers," Arthur Schawlow and Townes worked out how to carry
+the idea to visible light: use an open resonator of two parallel mirrors
+to select a few modes, and pump the medium hard enough that the gain from
+stimulated emission exceeds the losses of the cavity. The resulting
+**threshold condition** is captured by the single-mode rate equations for
+the inversion :math:`N` and photon number :math:`q`,
+
+.. math::
+
+   \dot N = P - \frac{N}{\tau} - BNq, \qquad
+   \dot q = BNq - \frac{q}{\tau_c},
+
+where lasing starts once the inversion reaches
+:math:`N_\mathrm{th} = 1/(B\tau_c)`. Above threshold the inversion is
+clamped at that value and every additional pumped excitation leaves the
+cavity as a photon, :math:`q = \tau_c(P - P_\mathrm{th})`; switched on
+suddenly, the laser overshoots and settles through damped relaxation
+oscillations, the spiking Maiman saw in the first ruby laser two years
+later.
+
+*Implementation:* :class:`physicskit.optics.lasers.LaserRateEquations`
+integrates the rate equations with the shared numba RK4 integrator and
+gives the threshold (``threshold_inversion``, ``threshold_pump``), the
+exact steady state including spontaneous emission into the mode
+(``steady_state``), and the small-signal relaxation-oscillation frequency
+and damping (``relaxation_oscillation``).
+
+*References:* A. L. Schawlow and C. H. Townes, "Infrared and Optical
+Masers," Phys. Rev. 112, 1940-1949 (1958); H. Statz and G. deMars, in
+*Quantum Electronics*, ed. C. H. Townes (Columbia University Press, 1960),
+pp. 530-537; A. E. Siegman, *Lasers* (University Science Books, 1986),
+Ch. 24-25.
+
+.. minigallery:: ../../examples/optics/lasers/plot_laser_threshold_rate_equations.py
+
 1960 -- Maiman's First Ruby Laser
 ---------------------------------
 
@@ -441,11 +481,11 @@ rod's own polished end faces. The demonstration, reported in a short 1960
 proved that Einstein's 1917 concept of stimulated emission could be
 harnessed to produce a coherent, directional, monochromatic beam of
 light -- and set off a race to build lasers from every gain medium and
-resonator geometry imaginable. This package does not model laser gain
-media or population inversion, but the resonator that made Maiman's ruby
-crystal lase, two mirrors bounding an amplifying medium, is precisely the
-kind of optical cavity that ray-transfer matrix theory was soon developed
-to analyze.
+resonator geometry imaginable. The gain medium's population inversion and
+threshold are the subject of the 1958 entry above; here the focus is the
+resonator that made Maiman's ruby crystal lase, two mirrors bounding an
+amplifying medium, precisely the kind of optical cavity that ray-transfer
+matrix theory was soon developed to analyze.
 
 *Connection:* :func:`physicskit.optics.ray.spherical_mirror` and
 :func:`physicskit.optics.ray.cavity_round_trip_matrix` build the ABCD
@@ -622,6 +662,44 @@ side is implemented by :func:`physicskit.optics.gaussian.propagate_q` and
 Opt. 5(10), 1550-1567 (1966) (also Proc. IEEE 54, 1312-1329, 1966).
 
 .. minigallery:: ../../examples/optics/gaussian_beams/plot_gaussian_beam_through_lens.py
+
+1975 -- Haken: The Laser-Lorenz Analogy and Laser Chaos
+-------------------------------------------------------
+
+Rate equations track only populations. The semiclassical laser theory
+developed by Haken, Lamb, and others in the 1960s also keeps the
+atomic polarization :math:`P` that the field induces, giving the
+Maxwell-Bloch equations. For a single resonant mode, in suitably scaled
+variables,
+
+.. math::
+
+   \dot E = \kappa(P - E), \qquad
+   \dot P = \gamma_\perp(ED - P), \qquad
+   \dot D = \gamma_\parallel(r - D - EP).
+
+Hermann Haken noticed in 1975 that these are exactly the Lorenz
+equations of convection, with :math:`\sigma = \kappa/\gamma_\perp`,
+:math:`b = \gamma_\parallel/\gamma_\perp`, and the pump :math:`r` playing
+the role of the Rayleigh number. The first threshold :math:`r = 1` is the
+usual onset of lasing. In a "bad cavity", :math:`\kappa > \gamma_\perp +
+\gamma_\parallel`, a second threshold
+:math:`r_H = \sigma(\sigma + b + 3)/(\sigma - b - 1)` destabilizes steady
+lasing and the output becomes chaotic. This was the first identification
+of deterministic chaos in a laser, later observed in far-infrared
+ammonia lasers by Weiss and coworkers in the mid-1980s.
+
+*Implementation:* :class:`physicskit.optics.lasers.MaxwellBloch`
+integrates the equations with the shared numba RK4 integrator; its
+``steady_state``, ``jacobian``, and ``second_threshold`` give the lasing
+fixed point, its stability, and Haken's instability threshold.
+
+*References:* H. Haken, "Analogy between higher instabilities in fluids
+and lasers," Phys. Lett. A 53, 77-78 (1975); C. O. Weiss and J. Brock,
+Phys. Rev. Lett. 57, 2804-2806 (1986); L. M. Narducci and N. B. Abraham,
+*Laser Physics and Laser Instabilities* (World Scientific, 1988).
+
+.. minigallery:: ../../examples/optics/lasers/plot_maxwell_bloch_laser_chaos.py
 
 1977 -- Kimble, Dagenais, and Mandel: Photon Antibunching
 ---------------------------------------------------------

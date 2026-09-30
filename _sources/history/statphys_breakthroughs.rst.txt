@@ -171,12 +171,23 @@ simulates exactly this process (lattice or continuous Gaussian steps);
 :meth:`~physicskit.statphys.chapters.random_walk.RandomWalk.mean_squared_displacement`
 and :meth:`~physicskit.statphys.chapters.random_walk.RandomWalk.diffusion_coefficient`
 recover the linear-in-time law and the diffusion coefficient directly
-from simulated trajectories.
+from simulated trajectories. :class:`physicskit.statphys.chapters.langevin.BrownianMotion`
+integrates the overdamped Langevin equation for driven and trapped
+particles, and its
+:meth:`~physicskit.statphys.chapters.langevin.BrownianMotion.measured_diffusion_coefficient`
+and :meth:`~physicskit.statphys.chapters.langevin.BrownianMotion.measured_mobility`
+test the Einstein relation :math:`D = \mu k_B T` itself: the spread of
+the particles against their drift under a force.
+:func:`~physicskit.statphys.chapters.langevin.stokes_einstein_diffusion_coefficient`
+gives Perrin's :math:`k_BT/6\pi\eta a`.
 
 *References:* A. Einstein, Ann. Phys. 322(8), 549-560 (1905); K.
-Pearson, Nature 72, 294 (1905).
+Pearson, Nature 72, 294 (1905); J. Perrin, Ann. Chim. Phys. 18, 5-114
+(1909).
 
-.. minigallery:: ../../examples/statphys/random_walk/plot_diffusion_and_clt.py
+.. minigallery::
+   ../../examples/statphys/random_walk/plot_diffusion_and_clt.py
+   ../../examples/statphys/stochastic_processes/plot_einstein_brownian_motion_mobility.py
 
 1907 -- The Ehrenfest Urn Model
 -------------------------------
@@ -237,11 +248,59 @@ Euler-Maruyama) for a Brownian particle in a moving harmonic trap,
 generating individual stochastic trajectories under a systematic drag
 and a Gaussian random force of the prescribed
 fluctuation-dissipation-balanced strength.
+:class:`physicskit.statphys.chapters.langevin.LangevinDynamics` keeps the
+inertia: it integrates the full equation for particles in a harmonic trap
+with the BAOAB splitting
+(:func:`physicskit.integrators.stochastic.baoab_integrate`), which holds
+the bath temperature for any friction, while the shared
+:func:`physicskit.integrators.stochastic.euler_maruyama_integrate`
+integrates any variant with a noise strength of your choosing.
 
 *References:* P. Langevin, "Sur la théorie du mouvement brownien,"
-C. R. Acad. Sci. 146, 530-533 (1908).
+C. R. Acad. Sci. 146, 530-533 (1908); B. Leimkuhler and C. Matthews,
+"Rational construction of stochastic numerical methods for molecular
+sampling," Appl. Math. Res. Express 2013, 34-56 (2013).
 
-.. minigallery:: ../../examples/statphys/random_walk/plot_langevin_equation.py
+.. minigallery::
+   ../../examples/statphys/random_walk/plot_langevin_equation.py
+   ../../examples/statphys/stochastic_processes/plot_langevin_fluctuation_dissipation.py
+
+1914-1917 -- The Fokker-Planck Equation
+---------------------------------------
+
+Adriaan Fokker, in his 1913 Leiden thesis on the Brownian motion of
+dipoles in a radiation field (published 1914), and Max Planck in 1917
+turned Langevin's picture around. Instead of following one random path,
+they wrote a deterministic equation for the probability density of all
+paths,
+
+.. math::
+
+   \frac{\partial p}{\partial t} = -\frac{\partial}{\partial x}\big[A(x)\,p\big]
+   + \frac{\partial^2}{\partial x^2}\big[D(x)\,p\big],
+
+with the drift :math:`A` and diffusion :math:`D` read off from the
+Langevin equation. Its zero-flux stationary state for a particle in a
+potential is the Boltzmann distribution, so the equation connects
+Langevin's trajectories to Gibbs's ensembles. Kolmogorov (1931) derived
+the same "forward equation" for general Markov diffusions, and Kramers
+(1940) used it to compute the rate at which thermal noise carries a
+particle over an energy barrier.
+
+*Implementation:* :func:`physicskit.statphys.utils.fokker_planck.fokker_planck_1d`
+solves the 1D equation with a mass-conserving finite-volume
+discretization, reflecting walls, and Crank-Nicolson time stepping, and
+:func:`~physicskit.statphys.utils.fokker_planck.fokker_planck_stationary`
+gives the closed-form zero-flux stationary density.
+
+*References:* A. D. Fokker, "Die mittlere Energie rotierender
+elektrischer Dipole im Strahlungsfeld," Ann. Phys. 348, 810-820 (1914);
+M. Planck, "Über einen Satz der statistischen Dynamik und seine
+Erweiterung in der Quantentheorie," Sitzungsber. Preuss. Akad. Wiss.,
+324-341 (1917); H. A. Kramers, Physica 7, 284-304 (1940); H. Risken,
+*The Fokker-Planck Equation*, 2nd ed. (Springer, 1989).
+
+.. minigallery:: ../../examples/statphys/stochastic_processes/plot_fokker_planck_equation.py
 
 1920-1925 -- The Ising Model
 ----------------------------
@@ -320,6 +379,39 @@ Fermi, Rend. Lincei 3, 145-149 (1926); P. A. M. Dirac, Proc. R. Soc. A
 
 .. minigallery:: ../../examples/statphys/quantum_statistics/plot_bose_fermi_distributions.py
 
+1930 -- The Ornstein-Uhlenbeck Process
+--------------------------------------
+
+George Uhlenbeck and Leonard Ornstein solved Langevin's equation exactly
+for the velocity of a free Brownian particle, and found that it is not
+white noise but a process with memory,
+
+.. math::
+
+   dX = \theta(\mu - X)\,dt + \sigma\,dW, \qquad
+   \langle \delta X(0)\,\delta X(\tau)\rangle = \frac{\sigma^2}{2\theta}e^{-\theta|\tau|}.
+
+The velocity forgets its initial value on the time scale
+:math:`1/\theta = m/\gamma` and settles to the stationary variance
+:math:`\sigma^2/2\theta = k_BT/m`, while the position diffuses
+ballistically at short times and with Einstein's :math:`2Dt` at long
+times. Doob (1942) proved it is the only process that is stationary,
+Gaussian, and Markov at once, which is why it reappears as the model of
+any linearly restored noisy variable: a particle in an optical trap, a
+thermally agitated circuit, an interest rate.
+
+*Implementation:* :class:`physicskit.statphys.chapters.langevin.OrnsteinUhlenbeck`
+samples ensembles of paths with the exact Gaussian transition or by
+Euler-Maruyama integration, and provides the closed-form mean, variance,
+and stationary autocovariance they are checked against.
+
+*References:* G. E. Uhlenbeck and L. S. Ornstein, "On the theory of the
+Brownian motion," Phys. Rev. 36, 823-841 (1930); J. L. Doob, "The
+Brownian movement and stochastic equations," Ann. Math. 43, 351-369
+(1942).
+
+.. minigallery:: ../../examples/statphys/stochastic_processes/plot_ornstein_uhlenbeck_process.py
+
 1937 -- Landau Mean-Field Theory
 ---------------------------------
 
@@ -393,6 +485,39 @@ Model with an Order-Disorder Transition," Phys. Rev. 65, 117-149
 (1944).
 
 .. minigallery:: ../../examples/statphys/ising/plot_ising_phase_transition.py
+
+1944-1955 -- Itô's Stochastic Calculus and the Euler-Maruyama Scheme
+--------------------------------------------------------------------
+
+Langevin's white-noise force has no ordinary meaning: Brownian paths are
+nowhere differentiable. Kiyosi Itô (1944) defined integrals against
+Brownian motion directly and built a calculus for them in which
+:math:`dW^2 = dt`, so that a function of a diffusing variable picks up an
+extra drift :math:`\tfrac12 f''\,b^2`. Gisiro Maruyama (1955) showed that
+the obvious time-stepping of an Itô equation,
+:math:`X_{n+1} = X_n + a\,\Delta t + b\,\Delta W_n`, converges to its
+solution. Path by path, though, the error only shrinks as
+:math:`\Delta t^{1/2}`. Grigori Milstein (1974) added the next term of
+Itô's expansion, :math:`\tfrac12 b b'(\Delta W^2 - \Delta t)`, and
+raised the order to 1. These schemes are what "simulating a Langevin
+equation" means in practice.
+
+*Implementation:* :func:`physicskit.integrators.stochastic.euler_maruyama_integrate`
+and :func:`~physicskit.integrators.stochastic.milstein_integrate` integrate
+diagonal-noise Itô equations with the package-wide
+``f(state, t, params)`` callback convention, driven by caller-supplied
+Wiener increments from
+:func:`~physicskit.integrators.stochastic.wiener_increments` so that one
+Brownian path can be replayed at several step sizes.
+
+*References:* K. Itô, "Stochastic integral," Proc. Imp. Acad. Tokyo 20,
+519-524 (1944); G. Maruyama, "Continuous Markov processes and stochastic
+equations," Rend. Circ. Mat. Palermo 4, 48-90 (1955); G. N. Milstein,
+Theory Probab. Appl. 19, 557-562 (1974); P. E. Kloeden and E. Platen,
+*Numerical Solution of Stochastic Differential Equations* (Springer,
+1992).
+
+.. minigallery:: ../../examples/statphys/stochastic_processes/plot_ito_euler_maruyama_milstein.py
 
 1952 -- The Yang-Lee Circle Theorem
 ------------------------------------

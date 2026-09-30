@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>physicskit.particle &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.particle &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -58,7 +58,7 @@
     <link rel="prev" title="physicskit.optics" href="optics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -154,6 +154,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -287,6 +294,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -469,6 +483,9 @@ and nuclear reaction Q-values.</p></li>
 (particle showers, parton showers) and a schematic detector geometry.</p></li>
 <li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.particle.confinement</span></code> – toy quark confinement and
 QCD string breaking.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.particle.lattice_gauge</span></code> – Monte Carlo compact U(1)
+lattice gauge theory (Wilson action, lattice units), Wilson loops, the
+exact 2D area law, and Creutz ratios.</p></li>
 <li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.particle.electroweak</span></code> – toy classical symmetry
 breaking (Higgs mechanism), leading-order QED annihilation, and
 neutral-meson CP violation.</p></li>
@@ -600,6 +617,131 @@ a final-state / leaf particle).</p></li>
 <dt class="sig sig-object py" id="physicskit.particle.ShowerParticle.parent">
 <span class="sig-name descname"><span class="pre">parent</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#physicskit.particle.ShowerParticle" title="physicskit.particle.collider.ShowerParticle"><span class="pre">ShowerParticle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#physicskit.particle.ShowerParticle.parent" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.particle.</span></span><span class="sig-name descname"><span class="pre">U1LatticeGauge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Monte Carlo simulation of compact U(1) lattice gauge theory on a periodic <span class="math notranslate nohighlight">\(L^d\)</span> lattice.</p>
+<p>Link angles are updated by Metropolis sweeps with the Wilson action
+(module docstring); the proposal width adapts during
+<a class="reference internal" href="#physicskit.particle.U1LatticeGauge.thermalize" title="physicskit.particle.U1LatticeGauge.thermalize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">thermalize()</span></code></a> towards roughly 50% acceptance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Linear lattice size.</p></li>
+<li><p><strong>beta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Inverse coupling <span class="math notranslate nohighlight">\(\beta = 1/g^2\)</span>.</p></li>
+<li><p><strong>dim</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Space-time dimension (2 or 3).</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Seed for numba’s random generator (reproducible runs).</p></li>
+<li><p><strong>hot_start</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Random initial links; otherwise all links zero (“cold”).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A cold (ordered) start has every plaquette equal to 1:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lat</span> <span class="o">=</span> <span class="n">U1LatticeGauge</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">hot_start</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lat</span><span class="o">.</span><span class="n">plaquette</span><span class="p">()</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.gauge_transform">
+<span class="sig-name descname"><span class="pre">gauge_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.gauge_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.gauge_transform" title="Link to this definition">#</a></dt>
+<dd><p>Apply <span class="math notranslate nohighlight">\(\theta_\mu(x) \to \theta_\mu(x) + \alpha(x) - \alpha(x + \hat\mu)\)</span>.</p>
+<p>Plaquettes and Wilson loops are invariant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>alpha</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – One angle per site, shape <code class="docutils literal notranslate"><span class="pre">(L**dim,)</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.measure">
+<span class="sig-name descname"><span class="pre">measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_measurements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sweeps_between</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.measure" title="Link to this definition">#</a></dt>
+<dd><p>Sample the plaquette and Wilson loops; return means and standard errors.</p>
+<p>Standard errors use 10 blocks of consecutive measurements
+(binning), which absorbs residual autocorrelation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loops</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span>) – Loop sizes <span class="math notranslate nohighlight">\((R, T)\)</span>.</p></li>
+<li><p><strong>n_measurements</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of measurements (a multiple of 10 is best).</p></li>
+<li><p><strong>sweeps_between</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Sweeps between measurements.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">{&quot;plaquette&quot;:</span> <span class="pre">(mean,</span> <span class="pre">err),</span> <span class="pre">(R,</span> <span class="pre">T):</span> <span class="pre">(mean,</span> <span class="pre">err),</span> <span class="pre">...}</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.plaquette">
+<span class="sig-name descname"><span class="pre">plaquette</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.plaquette"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.plaquette" title="Link to this definition">#</a></dt>
+<dd><p>Current average plaquette <span class="math notranslate nohighlight">\(\langle\cos\theta_P\rangle\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.sweep">
+<span class="sig-name descname"><span class="pre">sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_sweeps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_hits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.sweep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.sweep" title="Link to this definition">#</a></dt>
+<dd><p>Run Metropolis sweeps (<code class="docutils literal notranslate"><span class="pre">n_hits</span></code> trials per link per sweep); return the acceptance rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>n_sweeps</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>n_hits</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.thermalize">
+<span class="sig-name descname"><span class="pre">thermalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_sweeps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.thermalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.thermalize" title="Link to this definition">#</a></dt>
+<dd><p>Equilibrate, tuning the proposal width towards ~50% acceptance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>n_sweeps</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.particle.U1LatticeGauge.wilson_loop">
+<span class="sig-name descname"><span class="pre">wilson_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#U1LatticeGauge.wilson_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.U1LatticeGauge.wilson_loop" title="Link to this definition">#</a></dt>
+<dd><p>Current <span class="math notranslate nohighlight">\(R\times T\)</span> Wilson loop, averaged over positions, planes and orientations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>R</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1197,6 +1339,39 @@ violation).</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">cp_asymmetry</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">delta_m</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma_s</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">gamma_l</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 <span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.particle.creutz_ratio">
+<span class="sig-prename descclassname"><span class="pre">physicskit.particle.</span></span><span class="sig-name descname"><span class="pre">creutz_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">W</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#creutz_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.creutz_ratio" title="Link to this definition">#</a></dt>
+<dd><p>Creutz ratio <span class="math notranslate nohighlight">\(\chi(R,T) = -\ln\frac{W(R,T)\,W(R-1,T-1)}{W(R,T-1)\,W(R-1,T)}\)</span>.</p>
+<p>Perimeter and constant terms cancel, leaving the string tension
+<span class="math notranslate nohighlight">\(\sigma\)</span> for an area law (Creutz 1980).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>W</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – Maps <code class="docutils literal notranslate"><span class="pre">(R,</span> <span class="pre">T)</span></code> to the Wilson loop value (or <code class="docutils literal notranslate"><span class="pre">(value,</span> <span class="pre">error)</span></code>).
+A missing <code class="docutils literal notranslate"><span class="pre">(R,</span> <span class="pre">T)</span></code> falls back to <code class="docutils literal notranslate"><span class="pre">(T,</span> <span class="pre">R)</span></code> (equal for loops
+averaged over orientations, as <a class="reference internal" href="#physicskit.particle.U1LatticeGauge.measure" title="physicskit.particle.U1LatticeGauge.measure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">U1LatticeGauge.measure()</span></code></a>
+returns), and a <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">T)</span></code> or <code class="docutils literal notranslate"><span class="pre">(R,</span> <span class="pre">0)</span></code> loop counts as 1.</p></li>
+<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>)</p></li>
+<li><p><strong>T</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">W</span> <span class="o">=</span> <span class="p">{(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">t</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">creutz_ratio</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">0.3</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2130,6 +2305,68 @@ the instant it breaks), <code class="docutils literal notranslate"><span class="
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">two_body_decay_momentum</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
 <span class="go">0.3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.particle.u1_2d_string_tension">
+<span class="sig-prename descclassname"><span class="pre">physicskit.particle.</span></span><span class="sig-name descname"><span class="pre">u1_2d_string_tension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#u1_2d_string_tension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.u1_2d_string_tension" title="Link to this definition">#</a></dt>
+<dd><p>Exact 2D U(1) string tension <span class="math notranslate nohighlight">\(\sigma = -\ln[I_1(\beta)/I_0(\beta)]\)</span>, nonzero for every <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>beta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">u1_2d_string_tension</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">0.806562</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.particle.u1_2d_wilson_loop_exact">
+<span class="sig-prename descclassname"><span class="pre">physicskit.particle.</span></span><span class="sig-name descname"><span class="pre">u1_2d_wilson_loop_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/particle/lattice_gauge.html#u1_2d_wilson_loop_exact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.particle.u1_2d_wilson_loop_exact" title="Link to this definition">#</a></dt>
+<dd><p>Exact Wilson loop of 2D compact U(1) gauge theory with the Wilson action.</p>
+<p>In two dimensions the plaquette angles are independent variables (up
+to one global constraint on a torus), and a contractible loop is the
+product of the plaquettes it encloses. On an infinite lattice</p>
+<div class="math notranslate nohighlight">
+\[W(A) = \left(\frac{I_1(\beta)}{I_0(\beta)}\right)^{A},\]</div>
+<p>an exact area law, and on a periodic lattice of <span class="math notranslate nohighlight">\(V\)</span> plaquettes</p>
+<div class="math notranslate nohighlight">
+\[W(A) = \frac{\sum_{n\in\mathbb Z} I_{n+1}(\beta)^{A}\,I_n(\beta)^{V-A}}
+            {\sum_{n\in\mathbb Z} I_n(\beta)^{V}}\]</div>
+<p>(Balian, Drouffe and Itzykson, Phys. Rev. D 11, 2098 (1975); Rusakov,
+Mod. Phys. Lett. A 5, 693 (1990)).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Inverse coupling.</p></li>
+<li><p><strong>area</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span>) – Loop area <span class="math notranslate nohighlight">\(A = RT\)</span> in plaquettes.</p></li>
+<li><p><strong>volume</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of plaquettes <span class="math notranslate nohighlight">\(V = L^2\)</span> of a periodic lattice
+(<code class="docutils literal notranslate"><span class="pre">None</span></code>: infinite lattice).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>numpy.ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">iv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">u1_2d_wilson_loop_exact</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">iv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">iv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)))</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3314,6 +3551,15 @@ Rutherford formula’s steep small-angle divergence.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.ShowerParticle.parent"><code class="docutils literal notranslate"><span class="pre">ShowerParticle.parent</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.gauge_transform"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.gauge_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.measure"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.measure()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.plaquette"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.plaquette()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.sweep"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.sweep()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.thermalize"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.thermalize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.U1LatticeGauge.wilson_loop"><code class="docutils literal notranslate"><span class="pre">U1LatticeGauge.wilson_loop()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.activity"><code class="docutils literal notranslate"><span class="pre">activity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.animate_cp_asymmetry"><code class="docutils literal notranslate"><span class="pre">animate_cp_asymmetry()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.animate_decay_chain_bars"><code class="docutils literal notranslate"><span class="pre">animate_decay_chain_bars()</span></code></a></li>
@@ -3333,6 +3579,7 @@ Rutherford formula’s steep small-angle divergence.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.charged_track_points"><code class="docutils literal notranslate"><span class="pre">charged_track_points()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.cluster_into_jets"><code class="docutils literal notranslate"><span class="pre">cluster_into_jets()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.cp_asymmetry"><code class="docutils literal notranslate"><span class="pre">cp_asymmetry()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.creutz_ratio"><code class="docutils literal notranslate"><span class="pre">creutz_ratio()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.decay_constant"><code class="docutils literal notranslate"><span class="pre">decay_constant()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.flatten_shower"><code class="docutils literal notranslate"><span class="pre">flatten_shower()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.half_life"><code class="docutils literal notranslate"><span class="pre">half_life()</span></code></a></li>
@@ -3366,6 +3613,8 @@ Rutherford formula’s steep small-angle divergence.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.survival_probability"><code class="docutils literal notranslate"><span class="pre">survival_probability()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.two_body_decay"><code class="docutils literal notranslate"><span class="pre">two_body_decay()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.two_body_decay_momentum"><code class="docutils literal notranslate"><span class="pre">two_body_decay_momentum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.u1_2d_string_tension"><code class="docutils literal notranslate"><span class="pre">u1_2d_string_tension()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.u1_2d_wilson_loop_exact"><code class="docutils literal notranslate"><span class="pre">u1_2d_wilson_loop_exact()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.kinematics.FourVector"><code class="docutils literal notranslate"><span class="pre">FourVector</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.kinematics.FourVector.beta"><code class="docutils literal notranslate"><span class="pre">FourVector.beta</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.particle.kinematics.FourVector.gamma"><code class="docutils literal notranslate"><span class="pre">FourVector.gamma</span></code></a></li>
