@@ -11,6 +11,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `physicskit.fluids.LatticeBoltzmannD2Q9`: a D2Q9 BGK lattice Boltzmann
+  solver (numba collide-and-stream kernel, Guo body forcing, halfway
+  bounce-back solid nodes, periodic lattice), with `lbm_viscosity`,
+  `lbm_relaxation_time`, `lbm_equilibrium`, `D2Q9_VELOCITIES`,
+  `D2Q9_WEIGHTS` and `LBM_SOUND_SPEED_SQUARED`.
+- Fluids history entry "1986 -- 1992 -- From Lattice Gases to the Lattice
+  Boltzmann Method" with its gallery example
+  `examples/fluids/lattice_boltzmann/plot_lattice_boltzmann_bgk.py`.
+- `physicskit.fluids` continuum mechanics: `heat_equation` (explicit
+  FTCS with its stability bound enforced, or Crank-Nicolson; Dirichlet,
+  Neumann or periodic walls; 1D-3D), `heat_equation_spectral`,
+  `laplacian_matrix` and `gaussian_heat_solution`; linear acoustics with
+  `acoustic_wave_1d` (closed or open pipe ends) and `acoustic_wave_2d`
+  (rigid room), `pipe_mode_frequencies`, `pipe_mode_shape`,
+  `rectangular_room_mode_frequencies` and `ideal_gas_sound_speed`; and 2D
+  linear elasticity with `plane_elasticity_solve` (constant-strain
+  triangles, plane stress or strain, returning `PlaneElasticityResult`),
+  `elasticity_matrix`, `lame_parameters`, `rectangle_mesh`,
+  `annulus_mesh`, `pressure_load`, `polar_stress` and
+  `lame_thick_cylinder`.
+- Fluids history entry "1807 -- 1822 -- Fourier's Heat Equation" with its
+  gallery example `plot_fourier_heat_equation.py`, and the examples
+  `plot_acoustic_pipe_and_room_modes.py` and
+  `plot_lame_pressurized_cylinder.py`, in the new
+  `examples/fluids/continuum_mechanics/` section.
+- `physicskit.integrators.stochastic`: `euler_maruyama_step`/`_integrate`
+  and `milstein_step`/`_integrate` for diagonal-noise Itô SDEs, using the
+  shared `f(state, t, params)` callback convention and caller-supplied
+  Wiener increments (`wiener_increments`), with a `save_every` stride; and
+  `baoab_step`/`baoab_integrate`, the BAOAB splitting for underdamped
+  Langevin dynamics with a `force(pos, t, params)` callback.
+- `physicskit.statphys.BrownianMotion` (overdamped, optionally driven and
+  trapped, with `measured_diffusion_coefficient` and `measured_mobility`),
+  `LangevinDynamics` (underdamped; BAOAB by default, Euler-Maruyama
+  optional), `OrnsteinUhlenbeck` (exact or Euler-Maruyama sampling, with
+  closed-form mean, variance and autocovariance),
+  `einstein_diffusion_coefficient`, and
+  `stokes_einstein_diffusion_coefficient`. Units have `k_B = 1`.
+- `physicskit.statphys.utils.fokker_planck`: `fokker_planck_operator`,
+  `fokker_planck_1d` (mass-conserving finite volumes, reflecting walls,
+  Crank-Nicolson or backward Euler), and `fokker_planck_stationary`.
+- Statphys history entries "1914-1917 -- The Fokker-Planck Equation",
+  "1930 -- The Ornstein-Uhlenbeck Process" and "1944-1955 -- Itô's
+  Stochastic Calculus and the Euler-Maruyama Scheme", each with its own
+  gallery example in the new `examples/statphys/stochastic_processes/`
+  section (`plot_fokker_planck_equation.py`,
+  `plot_ornstein_uhlenbeck_process.py`,
+  `plot_ito_euler_maruyama_milstein.py`).
+
+- `physicskit.fields.electrostatics`: `coulomb_potential`/`coulomb_field`
+  (point-charge superposition), `solve_poisson` (Jacobi or SOR relaxation
+  on 2D/3D grids with fixed-voltage conductor cells, returning a
+  `PoissonSolution`), `solve_poisson_fft` (periodic FFT or grounded-box
+  type-I sine transform), `electric_field_from_potential`, the method of
+  images (`image_charges_plane`, `image_charges_sphere`,
+  `induced_charge_density_plane`, `induced_charge_density_sphere`), and
+  the multipole expansion (`multipole_moments` returning
+  `MultipoleMoments`, `multipole_potential`, `dipole_field`). SI units.
+- `physicskit.fields.magnetostatics`: `biot_savart_field` for polyline
+  wires (each straight segment integrated in closed form),
+  `circular_loop_path`, `solenoid_path`, and the closed forms
+  `loop_axial_field`, `solenoid_axial_field`, `infinite_wire_field`,
+  `magnetic_dipole_field`.
+- Fields history entries "1782 -- 1785 -- Legendre, Laplace, and the
+  Multipole Expansion", "1785 -- Coulomb's Inverse-Square Law", "1813 --
+  Poisson's Equation", "1820 -- The Biot-Savart Law" and "1828 -- Green's
+  Functions and the Method of Images", each with its own gallery example
+  in the new `examples/fields/statics/` section
+  (`plot_laplace_legendre_multipole_expansion.py`,
+  `plot_coulomb_inverse_square_law.py`,
+  `plot_poisson_equation_relaxation.py`,
+  `plot_biot_savart_loop_and_solenoid.py`,
+  `plot_green_method_of_images.py`).
 - `physicskit.chaos.ForcedVanDerPol`, the forced Van der Pol oscillator
   `x'' - mu(1 - x^2)x' + x = A cos(omega t)`, with a parallel
   `stroboscopic_map` that samples many trajectories once per forcing
@@ -38,6 +111,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The statphys history entries "1905 -- Einstein's Explanation of
+  Brownian Motion" and "1908 -- The Langevin Equation" now also point to
+  `BrownianMotion` and `LangevinDynamics`, and each links one more
+  dedicated example (`plot_einstein_brownian_motion_mobility.py`,
+  `plot_langevin_fluctuation_dissipation.py`).
 - The chaos history entry "1965 -- Smale's Horseshoe Map" now links the
   horseshoe example and `SmaleHorseshoe` instead of the Baker's map.
 - Every history breakthrough now links its own gallery example(s); no

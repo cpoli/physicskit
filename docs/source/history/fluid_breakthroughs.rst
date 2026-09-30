@@ -104,6 +104,44 @@ Mémoires de l'Académie des Sciences de Berlin 11 (1757), 274-315.
 
 .. minigallery:: ../../examples/fluids/potential_flow/plot_source_sink_doublet.py
 
+1807 -- 1822 -- Fourier's Heat Equation
+---------------------------------------
+
+Joseph Fourier presented his theory of heat conduction to the Paris
+Academy in 1807 and published it in full as *Théorie analytique de la
+chaleur* in 1822. He derived the heat equation,
+
+.. math::
+
+   \frac{\partial u}{\partial t} = \alpha\,\nabla^2 u,
+
+from a local law, that heat flows down the temperature gradient at a rate
+proportional to it (Fourier's law), together with conservation of energy.
+To solve it he expanded the initial temperature in sines and cosines. Each
+mode decays independently as :math:`e^{-\alpha k^2 t}`, so fine detail
+disappears first and every temperature profile smooths toward equilibrium.
+Lagrange and Laplace objected that a discontinuous function could not be a
+sum of smooth sines. Settling that objection took most of the nineteenth
+century and produced the modern notions of function, convergence, and
+integral. The same equation governs momentum diffusion in the viscous term
+of the Navier-Stokes equations below, the spreading of a dye, and, as
+Einstein showed in 1905, the probability density of a Brownian particle.
+
+*Implementation:* :func:`physicskit.fluids.systems.heat_equation.heat_equation`
+solves the heat equation on 1D-3D grids with the explicit FTCS scheme (with
+its stability bound enforced) or with Crank-Nicolson;
+:func:`~physicskit.fluids.systems.heat_equation.heat_equation_spectral` is
+Fourier's own mode-by-mode solution on a periodic domain; and
+:func:`~physicskit.fluids.systems.heat_equation.gaussian_heat_solution` is
+the closed-form spreading Gaussian the solvers are checked against.
+
+*References:* J. Fourier, *Théorie analytique de la chaleur* (Firmin
+Didot, Paris, 1822); J. Crank and P. Nicolson, "A practical method for
+numerical evaluation of solutions of partial differential equations of the
+heat-conduction type," Proc. Camb. Phil. Soc. 43, 50-67 (1947).
+
+.. minigallery:: ../../examples/fluids/continuum_mechanics/plot_fourier_heat_equation.py
+
 1822 -- 1845 -- The Navier-Stokes Equations
 -----------------------------------------------
 
@@ -532,6 +570,44 @@ randomly seeded vorticity field evolved under
 and 15-17); A. M. Obukhov, Doklady Akademii Nauk SSSR 32 (1941), 22-24.
 
 .. minigallery:: ../../examples/fluids/navier_stokes/plot_turbulent_cascade.py
+
+1986 -- 1992 -- From Lattice Gases to the Lattice Boltzmann Method
+------------------------------------------------------------------
+
+Uriel Frisch, Brosl Hasslacher and Yves Pomeau (1986) showed that Boolean
+particles hopping between the sites of a hexagonal lattice and colliding
+by simple conserving rules obey the Navier-Stokes equations on large
+scales. The lattice only needs enough symmetry for the momentum-flux
+tensor to come out isotropic. That was a surprise, because the
+microscopic model has nothing in common with a real fluid except its
+conservation laws. The lattice gas was noisy, however, so Guy McNamara
+and Gianluigi Zanetti (1988) replaced the particles by their mean
+populations: the lattice Boltzmann equation. Yue-Hong Qian, Dominique
+d'Humières and Pierre Lallemand (1992) replaced the collision table by a
+single relaxation toward a local equilibrium, the Bhatnagar-Gross-Krook
+operator, on the nine-velocity square lattice D2Q9. A Chapman-Enskog
+expansion then gives a fluid with viscosity
+:math:`\nu = c_s^2(\tau - \tfrac12)` fixed by the relaxation time alone.
+The method is local, trivially parallel, and handles complex walls by
+simple bounce-back. It is now a workhorse for flows in porous media,
+multiphase flow and microfluidics.
+
+*Implementation:* :class:`physicskit.fluids.systems.lattice_boltzmann.LatticeBoltzmannD2Q9`
+is a D2Q9 BGK solver with Guo's body-force term and halfway bounce-back
+walls on a periodic lattice;
+:func:`~physicskit.fluids.systems.lattice_boltzmann.lbm_viscosity` and
+:func:`~physicskit.fluids.systems.lattice_boltzmann.lbm_equilibrium` give
+the viscosity law and the equilibrium distribution.
+
+*References:* U. Frisch, B. Hasslacher and Y. Pomeau, "Lattice-gas
+automata for the Navier-Stokes equation," Phys. Rev. Lett. 56, 1505-1508
+(1986); G. R. McNamara and G. Zanetti, "Use of the Boltzmann equation to
+simulate lattice-gas automata," Phys. Rev. Lett. 61, 2332-2335 (1988);
+Y. H. Qian, D. d'Humières and P. Lallemand, "Lattice BGK models for
+Navier-Stokes equation," Europhys. Lett. 17, 479-484 (1992); Z. Guo,
+C. Zheng and B. Shi, Phys. Rev. E 65, 046308 (2002).
+
+.. minigallery:: ../../examples/fluids/lattice_boltzmann/plot_lattice_boltzmann_bgk.py
 
 See Also
 --------

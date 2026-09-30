@@ -97,11 +97,11 @@ Domain subpackages, each with runnable examples linked below:
 
   ![The Hofstadter butterfly, Haldane ribbon edge states, and SSH zero modes](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_condensed.png)
 
-- [`physicskit.fields`](https://cpoli.github.io/physicskit/api/gallery/fields/) -- FDTD electrodynamics on the Yee grid with perfectly matched layers, KdV/NLS/Sine-Gordon solitons (split-step spectral methods via `numpy.fft`), and Gross-Pitaevskii Bose-Einstein condensates with quantized vortices and vortex lattices.
+- [`physicskit.fields`](https://cpoli.github.io/physicskit/api/gallery/fields/) -- electrostatics (Poisson solvers, the method of images, multipole expansions) and Biot-Savart magnetostatics, FDTD electrodynamics on the Yee grid with perfectly matched layers, KdV/NLS/Sine-Gordon solitons (split-step spectral methods via `numpy.fft`), and Gross-Pitaevskii Bose-Einstein condensates with quantized vortices and vortex lattices.
 
   ![KdV soliton fission, FDTD dipole radiation, and a BEC vortex-antivortex pair](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_fields.png)
 
-- [`physicskit.fluids`](https://cpoli.github.io/physicskit/api/gallery/fluids/) -- potential flow (sources, doublets, Kutta-Joukowski lift), viscous exact solutions (Couette, Poiseuille, Blasius, Stokes drag), point-vortex dynamics and the von Kármán street, Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks (the Sod shock tube), and the 2D incompressible Navier-Stokes solver underlying them (pseudo-spectral via `numpy.fft`, numba-compiled vortex kernels).
+- [`physicskit.fluids`](https://cpoli.github.io/physicskit/api/gallery/fluids/) -- potential flow (sources, doublets, Kutta-Joukowski lift), viscous exact solutions (Couette, Poiseuille, Blasius, Stokes drag), point-vortex dynamics and the von Kármán street, Kelvin-Helmholtz and Rayleigh-Taylor instabilities, compressible shocks (the Sod shock tube), the 2D incompressible Navier-Stokes solver underlying them (pseudo-spectral via `numpy.fft`, numba-compiled vortex kernels), linear continuum mechanics (heat equation, acoustics, 2D elasticity), and a D2Q9 lattice Boltzmann solver.
 
   ![Kelvin-Helmholtz roll-up, a von Kármán vortex street, and flow past a spinning cylinder](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_fluids.png)
 
@@ -133,7 +133,7 @@ Domain subpackages, each with runnable examples linked below:
 
   ![A quantum scar in the stadium, the Gutzwiller trace formula, and a Feynman phasor spiral](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_semiclassical.png)
 
-- [`physicskit.statphys`](https://cpoli.github.io/physicskit/api/gallery/statphys/) -- statistical mechanics: Ising, Potts, and XY lattice models (numba-compiled Metropolis and Wolff cluster updates), molecular dynamics, criticality and the renormalization group, percolation, self-organized criticality, KPZ growth, spin glasses, Lee-Yang zeros, and nonequilibrium work relations.
+- [`physicskit.statphys`](https://cpoli.github.io/physicskit/api/gallery/statphys/) -- statistical mechanics: Ising, Potts, and XY lattice models (numba-compiled Metropolis and Wolff cluster updates), molecular dynamics, criticality and the renormalization group, percolation, self-organized criticality, KPZ growth, spin glasses, Lee-Yang zeros, nonequilibrium work relations, Langevin/Brownian dynamics, the Ornstein-Uhlenbeck process, and a 1D Fokker-Planck solver.
 
   ![The 2D Ising model at criticality, percolation clusters, and Lee-Yang zeros](https://raw.githubusercontent.com/cpoli/physicskit/main/docs/source/_static/images/readme_statphys.png)
 
@@ -141,7 +141,7 @@ Shared infrastructure, used across the subpackages above rather than
 standalone toolkits:
 
 - `physicskit.constants` -- SI physical constants shared across subpackages, plus a few well-defined unit conversions (energy/temperature, eV/joules, gravitational G=1 unit systems).
-- `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) used across the other subpackages.
+- `physicskit.integrators` -- shared numerical ODE integrators (RK4, leapfrog, Yoshida4, adaptive Dormand-Prince) and SDE integrators (Euler-Maruyama, Milstein, BAOAB Langevin) used across the other subpackages.
 
 ## Design
 

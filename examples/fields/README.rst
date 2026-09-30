@@ -1,8 +1,8 @@
 Examples
 ========
 
-This gallery walks through ``physicskit.fields``: electrodynamics on a Yee
-grid, soliton-bearing nonlinear wave equations, and Gross-Pitaevskii
+This gallery walks through ``physicskit.fields``: static fields of charges
+and currents, electrodynamics on a Yee grid, soliton-bearing nonlinear wave equations, and Gross-Pitaevskii
 Bose-Einstein condensates -- each script reproducing the signature
 observable of a specific breakthrough in :doc:`/history/fields_breakthroughs`.
 Fluid dynamics has since moved to its own package and gallery; see
@@ -23,6 +23,12 @@ of truth for what you see, not a copy of it.
 Sections
 --------
 
+- **statics** -- electrostatics and magnetostatics: Coulomb's
+  inverse-square law and superposition, the Laplace-Legendre multipole
+  expansion of a far field, Poisson's equation relaxed on a grid (Jacobi,
+  SOR, and a direct sine-transform solve), Green's method of images for a
+  grounded plane and sphere, and the Biot-Savart field of a current loop
+  and a finite solenoid.
 - **solitons** -- the Korteweg-de Vries, nonlinear Schrodinger, and
   Sine-Gordon equations: Russell's shape-preserving wave of translation,
   the elastic KdV soliton-soliton collision, Zabusky and Kruskal's fission

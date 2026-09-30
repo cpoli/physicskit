@@ -35,6 +35,11 @@ Sections
   Maxwell-Boltzmann distribution.
 - **random_walk** -- diffusion, the Einstein relation, and the central limit
   theorem.
+- **stochastic_processes** -- Langevin and Fokker-Planck dynamics: the
+  Einstein relation :math:`D = \mu k_BT` from drift and spread, the
+  fluctuation-dissipation balance in a trap, a double-well density relaxing
+  to Boltzmann, the Ornstein-Uhlenbeck process, and the strong convergence
+  of the Euler-Maruyama and Milstein schemes.
 - **ehrenfest_urn** -- the Ehrenfest urn: reversibility, recurrence, and the
   arrow of time.
 - **sandpile** -- self-organized criticality in the Bak-Tang-Wiesenfeld

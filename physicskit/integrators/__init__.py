@@ -16,6 +16,11 @@ across systems with different parameter values without recompiling (see
   RK5(4), for non-conservative or accuracy-sensitive systems (see
   :mod:`physicskit.integrators.adaptive` for why this isn't offered for the
   symplectic integrators).
+* :func:`euler_maruyama_integrate` and :func:`milstein_integrate` -- for Itô
+  stochastic differential equations with diagonal noise, driven by
+  caller-supplied Wiener increments from :func:`wiener_increments` (see
+  :mod:`physicskit.integrators.stochastic`); :func:`baoab_integrate` for
+  underdamped Langevin dynamics with a ``force(pos, t, params)`` callback.
 
 :mod:`physicskit.classical.core.integrators` uses its own closure-based
 calling convention (``force_func(q, t)`` plus a per-instance ``mass_inv``)
@@ -36,6 +41,15 @@ from physicskit.integrators.fixed_step import (
     yoshida4_integrate,
     yoshida4_step,
 )
+from physicskit.integrators.stochastic import (
+    baoab_integrate,
+    baoab_step,
+    euler_maruyama_integrate,
+    euler_maruyama_step,
+    milstein_integrate,
+    milstein_step,
+    wiener_increments,
+)
 
 __all__ = [
     "RHSFunc",
@@ -49,4 +63,11 @@ __all__ = [
     "yoshida4_integrate",
     "dopri5_step",
     "dopri5_integrate",
+    "wiener_increments",
+    "euler_maruyama_step",
+    "euler_maruyama_integrate",
+    "milstein_step",
+    "milstein_integrate",
+    "baoab_step",
+    "baoab_integrate",
 ]
