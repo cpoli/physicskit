@@ -103,3 +103,25 @@ ax.set_title("Innermost stable circular orbit vs. spin")
 ax.legend()
 plt.tight_layout()
 plt.show()
+
+
+# %%
+# Check
+# -----
+def isco_bpt(a, prograde=True):
+    # Bardeen, Press and Teukolsky (1972), M = 1.
+    z1 = 1 + (1 - a**2) ** (1 / 3) * ((1 + a) ** (1 / 3) + (1 - a) ** (1 / 3))
+    z2 = np.sqrt(3 * a**2 + z1**2)
+    return 3 + z2 - np.sqrt((3 - z1) * (3 + z1 + 2 * z2)) * (1 if prograde else -1)
+
+
+# r_E(theta) = M + sqrt(M^2 - a^2 cos^2 theta) touches the horizon at the
+# poles and reaches 2M at the equator; the ISCO follows Bardeen-Press-Teukolsky
+# (6M at a = 0, toward M prograde and 9M retrograde as a -> M).
+for a in (0.5, 0.9, 0.998):
+    bh = KerrBlackHole(M=1.0, a=a)
+    np.testing.assert_allclose(bh.ergosphere_radius(theta), 1 + np.sqrt(1 - a**2 * np.cos(theta) ** 2), atol=1e-12)
+    assert abs(bh.outer_horizon_radius - (1 + np.sqrt(1 - a**2))) < 1e-12
+np.testing.assert_allclose(isco_pro, [isco_bpt(a) for a in a_values], rtol=1e-6)
+np.testing.assert_allclose(isco_retro, [isco_bpt(a, prograde=False) for a in a_values], rtol=1e-6)
+assert abs(isco_pro[0] - 6) < 1e-9 and isco_retro[-1] > 8.9

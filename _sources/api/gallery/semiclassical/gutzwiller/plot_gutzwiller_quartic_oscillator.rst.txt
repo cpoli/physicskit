@@ -145,7 +145,7 @@ classical orbit at that energy closes, at multiples of
 :math:`T(E_{n_0})`, the same periods the trace formula summed over. At
 higher energy the period is shorter.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-94
+.. GENERATED FROM PYTHON SOURCE LINES 75-95
 
 .. code-block:: Python
 
@@ -171,6 +171,7 @@ higher energy the period is shorter.
 
 
 
+
 .. image-sg:: /api/gallery/semiclassical/gutzwiller/images/sphx_glr_plot_gutzwiller_quartic_oscillator_002.png
    :alt: Revivals at the classical period (dotted: multiples of T(E))
    :srcset: /api/gallery/semiclassical/gutzwiller/images/sphx_glr_plot_gutzwiller_quartic_oscillator_002.png
@@ -187,10 +188,36 @@ higher energy the period is shorter.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+Check
+-----
+The periodic-orbit sum reproduces the quartic levels, better as n grows,
+and wave packets revive at the classical period T(E).
+
+.. GENERATED FROM PYTHON SOURCE LINES 100-108
+
+.. code-block:: Python
+
+    rel = np.abs(E_sc / exact[: len(E_sc)] - 1)
+    assert np.all(rel[2:] < 5e-3) and rel[1] < 0.02
+    for n0 in (10, 30):
+        w = np.exp(-0.5 * ((np.arange(len(exact)) - n0) / 2.0) ** 2)
+        C = np.abs(np.exp(-1j * np.outer(t, exact)) @ (w / w.sum())) ** 2
+        T = classical_period(exact[n0], V, 1.0, -5, 5)
+        window = (t > 0.5 * T) & (t < 1.5 * T)
+        assert abs(t[window][np.argmax(C[window])] / T - 1) < 0.01
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.740 seconds)
+   **Total running time of the script:** (0 minutes 9.306 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_gutzwiller_plot_gutzwiller_quartic_oscillator.py:

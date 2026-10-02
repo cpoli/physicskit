@@ -15,6 +15,7 @@ that settle through damped relaxation oscillations.
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.signal import find_peaks
 
 from physicskit.optics.lasers import LaserRateEquations
 
@@ -77,3 +78,21 @@ fig2.tight_layout()
 
 print(f"threshold pump P_th = {P_th:g}, steady state (N, q) = ({N_s:g}, {q_s:g})")
 print(f"relaxation oscillation period 2pi/Omega = {2 * np.pi / Omega:.4f}")
+
+# %%
+# Check
+# -----
+# Above threshold the inversion clamps at N_th and q = (P - P_th) tau_c;
+# relaxation oscillations e^(-Gamma t) cos(Omega t) with Gamma = r / 2 tau,
+# Omega = sqrt((r - 1) / (tau tau_c) - Gamma^2), r = P / P_th -- the
+# (nonlinear) turn-on spikes come ever closer until, near steady state, they
+# are spaced 2 pi / Omega -- and their heights decay toward the steady state.
+assert abs(N_s - laser.threshold_inversion) < 1e-9 and abs(q_s - 2 * P_th * tau_c) < 1e-9
+for x in (1.5, 2.0, 3.0):
+    N_x, _ = LaserRateEquations(pump=x * P_th, tau=tau, tau_c=tau_c, B=B).steady_state()
+    assert abs(N_x / laser.threshold_inversion - 1) < 1e-9
+assert abs(Gamma - 3 / (2 * tau)) < 1e-12 and abs(Omega - np.sqrt(2 / (tau * tau_c) - Gamma**2)) < 1e-9 * Omega
+spikes, _ = find_peaks(q, prominence=0.01 * q.max())
+late = spikes[t[spikes] > 2.5]
+assert len(late) >= 3 and abs(np.diff(t[late]).mean() / (2 * np.pi / Omega) - 1) < 0.1
+assert np.all(np.diff(q[spikes]) < 0) and q[spikes[-1]] < 0.2 * q[spikes[0]]

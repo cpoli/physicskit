@@ -174,7 +174,7 @@ of lead (:math:`X_0=0.56` cm) a 300 MeV electron keeps
 :math:`e^{-x/X_0}` of its energy on average; a muon loses only about
 13 MeV to ionization.
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-128
+.. GENERATED FROM PYTHON SOURCE LINES 109-129
 
 .. code-block:: Python
 
@@ -200,6 +200,7 @@ of lead (:math:`X_0=0.56` cm) a 300 MeV electron keeps
 
 
 
+
 .. image-sg:: /api/gallery/particle/detector_signatures/images/sphx_glr_plot_03_muon_mass_from_tracks_002.png
    :alt: Curvature + ionization: a new mass
    :srcset: /api/gallery/particle/detector_signatures/images/sphx_glr_plot_03_muon_mass_from_tracks_002.png
@@ -216,10 +217,31 @@ of lead (:math:`X_0=0.56` cm) a 300 MeV electron keeps
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 130-134
+
+Check
+-----
+Curvature (momentum) plus ionization (beta gamma) give the mass: ~207
+electron masses; and a muon, unlike an electron, does not shower in lead.
+
+.. GENERATED FROM PYTHON SOURCE LINES 134-137
+
+.. code-block:: Python
+
+    assert abs(np.median(m_fit) / masses["muon"] - 1) < 0.05
+    assert E_mu > 0.9 * E0 and E_e < 0.2 * E0
+    assert 3.0 < bg_min < 4.0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.151 seconds)
+   **Total running time of the script:** (0 minutes 0.150 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_detector_signatures_plot_03_muon_mass_from_tracks.py:

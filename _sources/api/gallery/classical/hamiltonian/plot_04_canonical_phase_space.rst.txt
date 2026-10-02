@@ -153,7 +153,7 @@ The same qualitative split shows up directly in q(t): the librating
 pendulum oscillates within fixed bounds forever, while the rotating
 one's angle grows without bound as it keeps going over the top.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-97
+.. GENERATED FROM PYTHON SOURCE LINES 87-98
 
 .. code-block:: Python
 
@@ -170,6 +170,7 @@ one's angle grows without bound as it keeps going over the top.
 
 
 
+
 .. image-sg:: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_04_canonical_phase_space_002.png
    :alt: plot 04 canonical phase space
    :srcset: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_04_canonical_phase_space_002.png
@@ -179,10 +180,31 @@ one's angle grows without bound as it keeps going over the top.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 99-103
+
+Check
+-----
+H is conserved; the orbit below the separatrix (H < g/l) librates, the one
+above rotates.
+
+.. GENERATED FROM PYTHON SOURCE LINES 103-106
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(H_final, H0, rtol=1e-6)
+    assert H0[0] < g_over_l < H0[1]
+    assert np.ptp(result.q[:, 0]) < 2 * np.pi and np.ptp(result.q[:, 1]) > 4 * np.pi
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.117 seconds)
+   **Total running time of the script:** (0 minutes 0.115 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_hamiltonian_plot_04_canonical_phase_space.py:

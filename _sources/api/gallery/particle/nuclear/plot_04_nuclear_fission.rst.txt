@@ -170,7 +170,7 @@ Stretching a liquid drop slightly raises its surface energy by
 :math:`Z^2/A\approx50`. Uranium sits at :math:`x\approx0.7`: close enough
 for a captured neutron's energy to push it over.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-103
+.. GENERATED FROM PYTHON SOURCE LINES 82-104
 
 .. code-block:: Python
 
@@ -198,6 +198,7 @@ for a captured neutron's energy to push it over.
 
 
 
+
 .. image-sg:: /api/gallery/particle/nuclear/images/sphx_glr_plot_04_nuclear_fission_001.png
    :alt: Splitting $^{236}$U: liquid-drop Q for every split, Only the heaviest drops are close to splitting
    :srcset: /api/gallery/particle/nuclear/images/sphx_glr_plot_04_nuclear_fission_001.png
@@ -218,10 +219,31 @@ for a captured neutron's energy to push it over.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 105-109
+
+Check
+-----
+U-235 + n -> Ba-141 + Kr-92 + 3n releases ~173 MeV (7e10 J per gram,
+~3e7 times a chemical bond); fissility grows with Z^2 / A.
+
+.. GENERATED FROM PYTHON SOURCE LINES 109-112
+
+.. code-block:: Python
+
+    assert 170 < Q_masses < 177 and abs(energy_per_gram / 7.1e10 - 1) < 0.02
+    fissility = np.array(list(x.values()))
+    assert np.all(np.diff(fissility) > 0) and 0.7 < x["U-236"] < 0.75
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.078 seconds)
+   **Total running time of the script:** (0 minutes 0.069 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_nuclear_plot_04_nuclear_fission.py:

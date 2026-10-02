@@ -104,3 +104,16 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Only Gaussian components give a rotation-invariant joint distribution
+# (Maxwell's argument); the speed distribution is normalized, and the
+# sampled mean and rms speeds match sqrt(8/pi) sigma and sqrt(3) sigma.
+phi_gauss = components["Gaussian"]
+on_circle = phi_gauss(2.0 * np.cos(th)) * phi_gauss(2.0 * np.sin(th))
+assert on_circle.std() / on_circle.mean() < 1e-12
+assert abs(norm - 1) < 1e-6
+assert abs(sample.mean() / (np.sqrt(8 / np.pi) * sigma) - 1) < 0.005
+assert abs(np.sqrt(np.mean(sample**2)) / (np.sqrt(3) * sigma) - 1) < 0.005

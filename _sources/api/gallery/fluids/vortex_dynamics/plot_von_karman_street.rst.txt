@@ -155,7 +155,7 @@ final configurations, shows the staggered street translating as a
 whole -- each vortex tracing a wavy but unbroken path -- which is exactly
 what "holds its shape" means for a finite street's interior.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-99
+.. GENERATED FROM PYTHON SOURCE LINES 82-100
 
 .. code-block:: Python
 
@@ -179,6 +179,7 @@ what "holds its shape" means for a finite street's interior.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/vortex_dynamics/images/sphx_glr_plot_von_karman_street_002.png
    :alt: Full vortex trajectories over the run
    :srcset: /api/gallery/fluids/vortex_dynamics/images/sphx_glr_plot_von_karman_street_002.png
@@ -194,10 +195,33 @@ what "holds its shape" means for a finite street's interior.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-106
+
+Check
+-----
+Karman's street starts at his ratio h/l = arccosh(sqrt 2) / pi = 0.281 and
+drifts at U = (Gamma / 2l) tanh(pi h / l) (this finite street's interior
+moves within ~15% of the infinite-street speed).
+
+.. GENERATED FROM PYTHON SOURCE LINES 106-110
+
+.. code-block:: Python
+
+    assert abs(2 * h_over_l_initial - np.arccosh(np.sqrt(2)) / np.pi) < 1e-3
+    U_street = 1 / 2 * np.tanh(np.pi * 2 * h_over_l_initial)
+    U_interior = np.mean(trajectory[50, interior, 0] - positions0[interior, 0]) / (50 * dt)
+    assert 0.85 < abs(U_interior) / U_street < 1.05
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.076 seconds)
+   **Total running time of the script:** (0 minutes 0.082 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_vortex_dynamics_plot_von_karman_street.py:

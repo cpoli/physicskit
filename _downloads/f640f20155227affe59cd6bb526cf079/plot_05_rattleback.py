@@ -83,3 +83,11 @@ plt.show()
 
 print(f"sign changes with gamma=1.0: {np.sum(np.diff(np.sign(result.y[:, 2])) != 0)}")
 print(f"sign changes with gamma=0.0: {np.sum(np.diff(np.sign(result_no_reversal.y[:, 2])) != 0)}")
+
+# %%
+# Check
+# -----
+# The rattleback reverses its spin only through the symmetry-breaking
+# coupling gamma.
+assert np.sum(np.diff(np.sign(result.y[:, 2])) != 0) > 0
+assert np.sum(np.diff(np.sign(result_no_reversal.y[:, 2])) != 0) == 0

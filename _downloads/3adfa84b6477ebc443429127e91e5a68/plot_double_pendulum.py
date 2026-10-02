@@ -89,3 +89,9 @@ ax2.set_ylabel("relative energy drift")
 ax2.set_title(f"Double pendulum energy drift (max |drift| = {np.max(np.abs(drift)):.2e})")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The (chaotic) motion still conserves energy, to RK4's truncation error.
+assert np.max(np.abs(drift)) < 1e-4

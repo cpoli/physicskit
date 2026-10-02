@@ -85,7 +85,7 @@ Asymmetric step well, finite square well, and the gravitational bouncer
 
     # Finite square well: bound states plus evanescent tails outside the well.
     fsw = FiniteSquareWell(V0=20.0, width=2.0)
-    bound = fsw.bound_states(n_states=6)
+    bound = fsw.bound_states(x_extent=10.0, n_points=2000, n_states=6)
     V_fsw = np.where(np.abs(bound.x) <= fsw.width / 2, -fsw.V0, 0.0)
     plot_well(
         axes[1], bound.x, V_fsw, bound.energies, bound.wavefunctions, scale=3, title=f"Finite square well\n({len(bound.energies)} bound states, evanescent tails)"
@@ -117,7 +117,7 @@ Asymmetric step well, finite square well, and the gravitational bouncer
 
 
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_bound_states_numerov_001.png
-   :alt: Asymmetric step well (unequal decay left/right), Finite square well (4 bound states, evanescent tails), Gravitational bouncer V=alpha|x| (Airy eigenstates)
+   :alt: Asymmetric step well (unequal decay left/right), Finite square well (5 bound states, evanescent tails), Gravitational bouncer V=alpha|x| (Airy eigenstates)
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_bound_states_numerov_001.png
    :class: sphx-glr-single-img
 
@@ -164,7 +164,7 @@ than above, just to keep the Numerov solve cheap at each point) maps out
 how many bound states the well supports, a genuine 2D map in place of a
 single well's fixed-depth wavefunctions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-118
+.. GENERATED FROM PYTHON SOURCE LINES 97-119
 
 .. code-block:: Python
 
@@ -192,6 +192,7 @@ single well's fixed-depth wavefunctions.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_bound_states_numerov_002.png
    :alt: Finite square well: number of bound states
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_bound_states_numerov_002.png
@@ -202,7 +203,34 @@ single well's fixed-depth wavefunctions.
 
  .. code-block:: none
 
-    bound states at the well used above (V0=20.0, width=2.0): 4
+    bound states at the well used above (V0=20.0, width=2.0): 5
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-127
+
+Check
+-----
+Numerov reproduces the Airy-zero bouncer levels. A square well of depth V0
+and width w holds floor(2 z0 / pi) + 1 bound states, z0 = (w/2) sqrt(2 V0):
+5 for the well above (the fifth only just bound, at E = -0.03), and the
+map agrees away from the thresholds, where a coarse grid can lose a
+barely bound state.
+
+.. GENERATED FROM PYTHON SOURCE LINES 127-133
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(bouncer.energies, analytic, rtol=1e-4)
+    z0 = width_grid[:, None] / 2 * np.sqrt(2 * V0_grid[None, :])
+    n_expected = np.floor(2 * z0 / np.pi) + 1
+    frac = (2 * z0 / np.pi) % 1
+    assert len(bound.energies) == 5
+    assert np.all(n_bound_map[(frac > 0.15) & (frac < 0.95)] == n_expected[(frac > 0.15) & (frac < 0.95)])
+
+
+
 
 
 
@@ -210,7 +238,7 @@ single well's fixed-depth wavefunctions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.016 seconds)
+   **Total running time of the script:** (0 minutes 4.089 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_potentials_plot_bound_states_numerov.py:

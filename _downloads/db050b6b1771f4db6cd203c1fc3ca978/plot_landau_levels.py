@@ -102,3 +102,12 @@ ax.set_ylabel("Landau level energy $E_n$")
 ax.set_title("Landau fan: every level linear in B")
 
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# E_n = (n + 1/2) omega_c with omega_c = B, n_B = B / 2 pi, and nu = 2 pi n / B.
+np.testing.assert_allclose(energies, np.arange(n_max + 1) + 0.5)
+np.testing.assert_allclose(degeneracies, B_values / (2 * np.pi))
+assert np.isclose(nu, 3.5)
+np.testing.assert_allclose(fan_energies[:, 0], B_fan / 2)

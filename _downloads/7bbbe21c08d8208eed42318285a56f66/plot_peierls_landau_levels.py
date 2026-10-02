@@ -16,6 +16,7 @@ lattice remnant of the continuum Landau tower.
 import matplotlib.pyplot as plt
 import numpy as np
 
+from physicskit.condensed.models import harper_hofstadter_hamiltonian
 from physicskit.condensed.tight_binding import apply_peierls_phase
 
 # %%
@@ -100,3 +101,17 @@ fig.tight_layout()
 
 gaps = np.diff(energies[:40])
 print(f"largest gaps among the lowest 40 states: {np.sort(gaps)[-4:]}")
+
+# %%
+# Check
+# -----
+# The patch's lowest states sit in the lowest Hofstadter (Harper) band of
+# the infinite lattice at the same flux (a flat band at -3.29, the lattice
+# Landau level -4 + omega_c/2 - omega_c^2/32 with omega_c = 4 pi phi),
+# and the spectrum is symmetric under phi -> 1 - phi.
+ks = np.linspace(0, 2 * np.pi, 13)
+harper = np.array([np.linalg.eigvalsh(harper_hofstadter_hamiltonian(k1, k2, 1, 8)) for k1 in ks for k2 in ks])
+assert np.all((energies[:9] > harper[:, 0].min() - 1e-3) & (energies[:9] < harper[:, 0].max() + 1e-3))
+omega_c = 4 * np.pi * flux
+assert abs(energies[0] - (-4 + omega_c / 2 - omega_c**2 / 32)) < 0.01
+np.testing.assert_allclose(butterfly, butterfly[::-1], atol=1e-9)

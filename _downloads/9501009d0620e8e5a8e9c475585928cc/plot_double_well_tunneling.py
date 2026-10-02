@@ -94,3 +94,13 @@ fig2.tight_layout()
 
 print(f"splitting at the (lambda, a) used above: {result.splitting:.4e}")
 print(f"splitting range over the grid: [{splitting_map.min():.2e}, {splitting_map.max():.2e}]")
+
+# %%
+# Check
+# -----
+# The particle tunnels back and forth with period 2 pi / Delta E; the
+# splitting falls exponentially as the wells move apart.
+assert abs(result.tunneling_period - 2 * np.pi / result.splitting) < 1e-9
+P = dw.left_well_probability(result, np.array([0.0, result.tunneling_period / 2, result.tunneling_period]), side="left")
+assert P[0] > 0.95 and P[1] < 0.05 and P[2] > 0.95
+assert np.all(np.diff(splitting_map, axis=0) < 0)

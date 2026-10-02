@@ -1,0 +1,822 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.fluids.systems.shallow_water &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/fluids/systems/shallow_water';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.fluids.systems.shallow_water</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.fluids.systems.shallow_water</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""The shallow-water (Saint-Venant) equations: dam breaks and geostrophic adjustment.</span>
+
+<span class="sd">When the horizontal scale of a flow is much larger than its depth</span>
+<span class="sd">:math:`h`, vertical accelerations are negligible, the pressure is</span>
+<span class="sd">hydrostatic, and depth-averaging the Euler equations gives (Saint-Venant,</span>
+<span class="sd">C. R. Acad. Sci. 73, 147 (1871))</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\partial_t h + \\partial_x(hu) = 0, \\qquad</span>
+<span class="sd">    \\partial_t(hu) + \\partial_x\\left(hu^2 + \\tfrac12 g h^2\\right) = 0,</span>
+
+<span class="sd">a hyperbolic system with wave speed :math:`c = \\sqrt{gh}`, isomorphic to</span>
+<span class="sd">1D isentropic gas dynamics with :math:`\\gamma = 2`. A dam break, the</span>
+<span class="sd">Riemann problem of these equations, is solved exactly by a rarefaction</span>
+<span class="sd">fan and a bore (Ritter 1892 for a dry bed, Stoker 1957 for a wet one).</span>
+
+<span class="sd">On a rotating planet the linearized equations about rest depth :math:`H`</span>
+<span class="sd">pick up the Coriolis terms,</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\partial_t u - fv = -g\\partial_x\\eta, \\qquad \\partial_t v + fu = 0,</span>
+<span class="sd">    \\qquad \\partial_t\\eta + H\\partial_x u = 0,</span>
+
+<span class="sd">and an initial step in the surface height :math:`\\eta` does not spread</span>
+<span class="sd">out completely, as it would without rotation. Instead it adjusts to a</span>
+<span class="sd">geostrophically balanced front of width the Rossby radius</span>
+<span class="sd">:math:`L_d = \\sqrt{gH}/f`, fixed by conservation of potential vorticity</span>
+<span class="sd">:math:`\\partial_x v - f\\eta/H` (Rossby, J. Mar. Res. 1, 239 (1938);</span>
+<span class="sd">Gill, *Atmosphere-Ocean Dynamics*, 1982, sec. 7.2).</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">brentq</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.fluids.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidParameterError</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"dam_break_exact"</span><span class="p">,</span>
+    <span class="s2">"geostrophic_adjustment_steady"</span><span class="p">,</span>
+    <span class="s2">"rotating_shallow_water_1d"</span><span class="p">,</span>
+    <span class="s2">"shallow_water_1d"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_hll_flux</span><span class="p">(</span><span class="n">hL</span><span class="p">,</span> <span class="n">qL</span><span class="p">,</span> <span class="n">hR</span><span class="p">,</span> <span class="n">qR</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="n">uL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hL</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">qL</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">hL</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">uR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hR</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">qR</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">hR</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">cL</span><span class="p">,</span> <span class="n">cR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">hL</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">hR</span><span class="p">)</span>
+    <span class="n">sL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">uL</span> <span class="o">-</span> <span class="n">cL</span><span class="p">,</span> <span class="n">uR</span> <span class="o">-</span> <span class="n">cR</span><span class="p">)</span>
+    <span class="n">sR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">uL</span> <span class="o">+</span> <span class="n">cL</span><span class="p">,</span> <span class="n">uR</span> <span class="o">+</span> <span class="n">cR</span><span class="p">)</span>
+    <span class="n">FL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">qL</span><span class="p">,</span> <span class="n">qL</span> <span class="o">*</span> <span class="n">uL</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">hL</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">FR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">qR</span><span class="p">,</span> <span class="n">qR</span> <span class="o">*</span> <span class="n">uR</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">hR</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">UL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hL</span><span class="p">,</span> <span class="n">qL</span><span class="p">])</span>
+    <span class="n">UR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hR</span><span class="p">,</span> <span class="n">qR</span><span class="p">])</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sR</span> <span class="o">-</span> <span class="n">sL</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sR</span> <span class="o">-</span> <span class="n">sL</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">F_hll</span> <span class="o">=</span> <span class="p">(</span><span class="n">sR</span> <span class="o">*</span> <span class="n">FL</span> <span class="o">-</span> <span class="n">sL</span> <span class="o">*</span> <span class="n">FR</span> <span class="o">+</span> <span class="n">sL</span> <span class="o">*</span> <span class="n">sR</span> <span class="o">*</span> <span class="p">(</span><span class="n">UR</span> <span class="o">-</span> <span class="n">UL</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sL</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">FL</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sR</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">FR</span><span class="p">,</span> <span class="n">F_hll</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sL</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sR</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="shallow_water_1d">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.shallow_water_1d">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">shallow_water_1d</span><span class="p">(</span>
+    <span class="n">h0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">u0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">t_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span>
+    <span class="n">cfl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Solve the 1D shallow-water equations with a finite-volume HLL scheme.</span>
+
+<span class="sd">    Second order in space (minmod-limited MUSCL reconstruction of</span>
+<span class="sd">    :math:`h` and :math:`hu`) and time (Heun), with transmissive boundaries.</span>
+<span class="sd">    Dry cells (:math:`h = 0`) are allowed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    h0, u0 : ndarray of float, shape (n,)</span>
+<span class="sd">        Initial depth and velocity at the cell centres ``x``.</span>
+<span class="sd">    x : ndarray of float, shape (n,)</span>
+<span class="sd">        Uniformly spaced cell centres.</span>
+<span class="sd">    t_max : float</span>
+<span class="sd">        Final time.</span>
+<span class="sd">    g : float, default 9.81</span>
+<span class="sd">    cfl : float, default 0.45</span>
+<span class="sd">        Courant number.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``"h"`` and ``"u"`` at ``t_max``, and the number of ``"steps"``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-1, 1, 200)</span>
+<span class="sd">    &gt;&gt;&gt; out = shallow_water_1d(np.where(x &lt; 0, 1.0, 0.5), np.zeros_like(x), x, t_max=0.1)</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(out["h"].mean() - 0.75) &lt; 1e-2)  # mass is conserved away from the ends</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">h0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"depth must be non-negative"</span><span class="p">)</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">minmod</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rhs</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">h</span><span class="p">,</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+        <span class="n">qp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+        <span class="n">sh</span> <span class="o">=</span> <span class="n">minmod</span><span class="p">(</span><span class="n">hp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">hp</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">hp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">-</span> <span class="n">hp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">sq</span> <span class="o">=</span> <span class="n">minmod</span><span class="p">(</span><span class="n">qp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">qp</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">qp</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">-</span> <span class="n">qp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># left and right states at each of the n + 1 interfaces</span>
+        <span class="n">hL</span> <span class="o">=</span> <span class="n">hp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sh</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">hR</span> <span class="o">=</span> <span class="n">hp</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">qL</span> <span class="o">=</span> <span class="n">qp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sq</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">qR</span> <span class="o">=</span> <span class="n">qp</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">hL</span><span class="p">,</span> <span class="n">hR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">hL</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">hR</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">qL</span><span class="p">,</span> <span class="n">qR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hL</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="n">qL</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hR</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="n">qR</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">F</span><span class="p">,</span> <span class="n">smax</span> <span class="o">=</span> <span class="n">_hll_flux</span><span class="p">(</span><span class="n">hL</span><span class="p">,</span> <span class="n">qL</span><span class="p">,</span> <span class="n">hR</span><span class="p">,</span> <span class="n">qR</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">F</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="n">smax</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_max</span><span class="p">:</span>
+        <span class="n">dh1</span><span class="p">,</span> <span class="n">dq1</span><span class="p">,</span> <span class="n">smax</span> <span class="o">=</span> <span class="n">rhs</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cfl</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">smax</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">),</span> <span class="n">t_max</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">h1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dh1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">q1</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dq1</span>
+        <span class="n">dh2</span><span class="p">,</span> <span class="n">dq2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rhs</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">q1</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">+</span> <span class="n">h1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dh2</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">h</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="n">q1</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">dq2</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">+=</span> <span class="n">dt</span>
+        <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">h</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="n">q</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"h"</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span> <span class="s2">"u"</span><span class="p">:</span> <span class="n">u</span><span class="p">,</span> <span class="s2">"steps"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">steps</span><span class="p">)}</span></div>
+
+
+
+<div class="viewcode-block" id="dam_break_exact">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.dam_break_exact">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dam_break_exact</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h_left</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h_right</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Exact solution of the dam break at :math:`x = 0`, released at :math:`t = 0`.</span>
+
+<span class="sd">    A rarefaction fan :math:`h = (2c_L - x/t)^2/(9g)`,</span>
+<span class="sd">    :math:`u = \\tfrac23(c_L + x/t)` connects the reservoir to a uniform</span>
+<span class="sd">    state :math:`(h_m, u_m)`, which is joined to the tailwater by a bore of</span>
+<span class="sd">    speed :math:`s = h_m u_m/(h_m - h_R)`. :math:`h_m` solves</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        2(c_L - c_m) = (h_m - h_R)\\sqrt{\\frac{g(h_m + h_R)}{2h_mh_R}}</span>
+
+<span class="sd">    (Stoker, *Water Waves*, 1957). For a dry bed, :math:`h_R = 0`, the fan</span>
+<span class="sd">    reaches the wet front :math:`x = 2c_Lt` (Ritter 1892).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : ndarray of float</span>
+<span class="sd">        Positions.</span>
+<span class="sd">    t : float</span>
+<span class="sd">        Time after the release, positive.</span>
+<span class="sd">    h_left : float</span>
+<span class="sd">        Reservoir depth.</span>
+<span class="sd">    h_right : float, default 0.0</span>
+<span class="sd">        Tailwater depth, ``0 &lt;= h_right &lt; h_left``.</span>
+<span class="sd">    g : float, default 9.81</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    h, u : ndarray of float</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; h, u = dam_break_exact(np.array([0.0]), t=1.0, h_left=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(h[0]), 6)  # Ritter: h = 4 h_L / 9 at the dam site</span>
+<span class="sd">    0.444444</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">h_right</span> <span class="o">&lt;</span> <span class="n">h_left</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span><span class="s2">"need 0 &lt;= h_right &lt; h_left"</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">cL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">h_left</span><span class="p">)</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">t</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">h_left</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+    <span class="n">fan</span> <span class="o">=</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">cL</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cL</span><span class="p">)</span>
+    <span class="n">h_fan</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cL</span> <span class="o">-</span> <span class="n">xi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">9</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">u_fan</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">cL</span> <span class="o">+</span> <span class="n">xi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">h_right</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">fan</span><span class="p">]</span> <span class="o">=</span> <span class="n">h_fan</span><span class="p">[</span><span class="n">fan</span><span class="p">]</span>
+        <span class="n">u</span><span class="p">[</span><span class="n">fan</span><span class="p">]</span> <span class="o">=</span> <span class="n">u_fan</span><span class="p">[</span><span class="n">fan</span><span class="p">]</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">xi</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cL</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="n">u</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">mismatch</span><span class="p">(</span><span class="n">hm</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">cL</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">hm</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">hm</span> <span class="o">-</span> <span class="n">h_right</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="n">hm</span> <span class="o">+</span> <span class="n">h_right</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">hm</span> <span class="o">*</span> <span class="n">h_right</span><span class="p">))</span>
+
+    <span class="n">hm</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">mismatch</span><span class="p">,</span> <span class="n">h_right</span><span class="p">,</span> <span class="n">h_left</span><span class="p">)</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">hm</span><span class="p">)</span>
+    <span class="n">um</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">cL</span> <span class="o">-</span> <span class="n">cm</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">hm</span> <span class="o">*</span> <span class="n">um</span> <span class="o">/</span> <span class="p">(</span><span class="n">hm</span> <span class="o">-</span> <span class="n">h_right</span><span class="p">)</span>
+    <span class="n">in_fan</span> <span class="o">=</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">cL</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&lt;</span> <span class="n">um</span> <span class="o">-</span> <span class="n">cm</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">[</span><span class="n">in_fan</span><span class="p">]</span> <span class="o">=</span> <span class="n">h_fan</span><span class="p">[</span><span class="n">in_fan</span><span class="p">]</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">in_fan</span><span class="p">]</span> <span class="o">=</span> <span class="n">u_fan</span><span class="p">[</span><span class="n">in_fan</span><span class="p">]</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&gt;=</span> <span class="n">um</span> <span class="o">-</span> <span class="n">cm</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xi</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">=</span> <span class="n">hm</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">=</span> <span class="n">um</span>
+    <span class="n">h</span><span class="p">[</span><span class="n">xi</span> <span class="o">&gt;=</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">h_right</span>
+    <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="n">u</span></div>
+
+
+
+<div class="viewcode-block" id="rotating_shallow_water_1d">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.rotating_shallow_water_1d">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rotating_shallow_water_1d</span><span class="p">(</span>
+    <span class="n">eta0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">times</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span>
+    <span class="n">H</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">f</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Exact evolution of the linear rotating shallow-water equations on a periodic line.</span>
+
+<span class="sd">    Each Fourier mode of :math:`(u, v, \\eta)`, starting from rest, splits</span>
+<span class="sd">    into a steady geostrophic part and inertia-gravity (Poincaré) waves of</span>
+<span class="sd">    frequency :math:`\\omega_k = \\sqrt{f^2 + gHk^2}`, whose evolution is</span>
+<span class="sd">    computed exactly:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\hat\\eta_k(t) = \\hat\\eta_k(0)\\,\\frac{f^2 + gHk^2\\cos\\omega_k t}{\\omega_k^2},\\quad</span>
+<span class="sd">        \\hat u_k = -\\frac{igk\\hat\\eta_k(0)}{\\omega_k}\\sin\\omega_k t,\\quad</span>
+<span class="sd">        \\hat v_k = \\frac{igkf\\hat\\eta_k(0)}{\\omega_k^2}(1 - \\cos\\omega_k t).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta0 : ndarray of float, shape (n,)</span>
+<span class="sd">        Initial surface displacement, fluid at rest.</span>
+<span class="sd">    x : ndarray of float, shape (n,)</span>
+<span class="sd">        Uniform periodic grid.</span>
+<span class="sd">    times : array_like</span>
+<span class="sd">        Output times.</span>
+<span class="sd">    g, H, f : float</span>
+<span class="sd">        Gravity, mean depth and Coriolis parameter.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``"eta"``, ``"u"``, ``"v"``, each of shape ``(len(times), n)``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 10, 64, endpoint=False)</span>
+<span class="sd">    &gt;&gt;&gt; out = rotating_shallow_water_1d(np.cos(2 * np.pi * x / 10), x, [0.0], g=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(out["eta"][0], np.cos(2 * np.pi * x / 10)))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+    <span class="n">eh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">eta0</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">H</span> <span class="o">*</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">times</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">times</span><span class="p">)</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">eh</span> <span class="o">*</span> <span class="p">(</span><span class="n">f</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">H</span> <span class="o">*</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">eh</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">eh</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"eta"</span><span class="p">:</span> <span class="n">eta</span><span class="p">,</span> <span class="s2">"u"</span><span class="p">:</span> <span class="n">u</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="geostrophic_adjustment_steady">
+<a class="viewcode-back" href="../../../../api/fluids.html#physicskit.fluids.geostrophic_adjustment_steady">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">geostrophic_adjustment_steady</span><span class="p">(</span>
+    <span class="n">eta0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span> <span class="n">H</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Balanced end state of Rossby's adjustment problem, from potential-vorticity conservation.</span>
+
+<span class="sd">    The linear potential vorticity :math:`\\partial_x v - f\\eta/H` is</span>
+<span class="sd">    conserved, and the final state is in geostrophic balance, :math:`fv =</span>
+<span class="sd">    g\\partial_x\\eta`, :math:`u = 0`, so</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\eta - L_d^2\\,\\partial_x^2\\eta = \\eta_0, \\qquad L_d = \\sqrt{gH}/f.</span>
+
+<span class="sd">    For a step of height :math:`2\\eta_0` this gives the front</span>
+<span class="sd">    :math:`\\eta = \\eta_0\\,\\mathrm{sgn}(x)(1 - e^{-|x|/L_d})`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eta0 : ndarray of float, shape (n,)</span>
+<span class="sd">        Initial displacement on the periodic grid ``x``.</span>
+<span class="sd">    x : ndarray of float, shape (n,)</span>
+<span class="sd">    g, H, f : float</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``"eta"`` and ``"v"`` of the adjusted state, and the Rossby radius</span>
+<span class="sd">        ``"L_d"``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 100, 512, endpoint=False)</span>
+<span class="sd">    &gt;&gt;&gt; out = geostrophic_adjustment_steady(np.cos(2 * np.pi * x / 100), x, g=1.0)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(out["eta"].max()), 4)  # 1 / (1 + (L_d k)^2)</span>
+<span class="sd">    0.9961</span>
+<span class="sd">    """</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">L_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span>
+    <span class="n">eh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">eta0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">L_d</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">eh</span><span class="p">))</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">eh</span><span class="p">))</span> <span class="o">*</span> <span class="n">g</span> <span class="o">/</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"eta"</span><span class="p">:</span> <span class="n">eta</span><span class="p">,</span> <span class="s2">"v"</span><span class="p">:</span> <span class="n">v</span><span class="p">,</span> <span class="s2">"L_d"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">L_d</span><span class="p">)}</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

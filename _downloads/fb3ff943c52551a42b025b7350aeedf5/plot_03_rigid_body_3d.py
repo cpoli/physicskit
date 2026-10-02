@@ -25,6 +25,7 @@ about either other principal axis and it just spins.
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.classical.systems.rotations import EulerTop
 from physicskit.classical.visualizers.animations import animate_rigid_body_tumble
@@ -50,3 +51,12 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("rigid_body_tumble_animation.gif", writer="pillow", fps=30)
+
+# %%
+# Check
+# -----
+# Spun near the intermediate axis, the body flips within the animated 30 s
+# while keeping its energy and |L|^2.
+assert np.sum(np.diff(np.sign(result.y[:, 1])) != 0) >= 1
+assert abs(top.energy(result.y[-1]) - top.energy()) < 1e-12 * top.energy()
+assert abs(top.angular_momentum_squared(result.y[-1]) - top.angular_momentum_squared()) < 1e-12 * top.angular_momentum_squared()

@@ -39,18 +39,7 @@ quasi-periodic). As :math:`E` approaches and exceeds :math:`1/6`, more
 and more of those tori break up into a chaotic sea -- one of the
 classic numerical demonstrations of the KAM theorem's limits.
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-53
-
-
-
-.. image-sg:: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_01_henon_heiles_001.png
-   :alt: Poincare sections (y=0, py>0): smooth tori give way to chaos as E rises, Poincare section, Poincare section, Poincare section
-   :srcset: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_01_henon_heiles_001.png
-   :class: sphx-glr-single-img
-
-
-
-
+.. GENERATED FROM PYTHON SOURCE LINES 25-54
 
 .. code-block:: Python
 
@@ -84,9 +73,51 @@ classic numerical demonstrations of the KAM theorem's limits.
     plt.show()
 
 
+
+
+.. image-sg:: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_01_henon_heiles_001.png
+   :alt: Poincare sections (y=0, py>0): smooth tori give way to chaos as E rises, Poincare section, Poincare section, Poincare section
+   :srcset: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_01_henon_heiles_001.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
+
+Check
+-----
+Energy is conserved along each orbit; below E = 1/12 nearby orbits stay
+together (tori), near E = 1/6 they separate exponentially (chaos).
+
+.. GENERATED FROM PYTHON SOURCE LINES 59-71
+
+.. code-block:: Python
+
+    assert np.ptp(result.energy) < 1e-6 * abs(result.energy[0])
+
+
+    def separation(E_val, t_end=200):
+        x0, px0 = 0.0, 0.1
+        py0 = np.sqrt(2 * E_val - px0**2)
+        a = HenonHeilesSystem(np.array([x0, 0.0]), np.array([px0, py0])).integrate((0, t_end), dt=0.01, method="yoshida4")
+        b = HenonHeilesSystem(np.array([x0 + 1e-8, 0.0]), np.array([px0, py0])).integrate((0, t_end), dt=0.01, method="yoshida4")
+        return np.max(np.abs(a.q[-100:] - b.q[-100:]))
+
+
+    assert separation(0.05) < 1e-5 and separation(0.16) > 1e-3
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.400 seconds)
+   **Total running time of the script:** (0 minutes 1.520 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_hamiltonian_plot_01_henon_heiles.py:

@@ -80,3 +80,9 @@ plt.show()
 # displaying it interactively, use e.g.::
 #
 #     anim.save("nls_optical_soliton.gif", writer="pillow", fps=20)
+
+# %%
+# Check
+# -----
+# The bright soliton's envelope is unchanged by propagation.
+assert shape_error < 1e-3 and abs(np.abs(psi).max() - 1) < 1e-3

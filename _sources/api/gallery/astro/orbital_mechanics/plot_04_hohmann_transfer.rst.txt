@@ -101,7 +101,7 @@ r1, apoapsis at r2), and the final circular orbit at r2 -- the
 spacecraft only ever traverses the *lower half* of the transfer
 ellipse, from periapsis to apoapsis, so that half is highlighted.
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-76
+.. GENERATED FROM PYTHON SOURCE LINES 52-77
 
 .. code-block:: Python
 
@@ -132,6 +132,7 @@ ellipse, from periapsis to apoapsis, so that half is highlighted.
 
 
 
+
 .. image-sg:: /api/gallery/astro/orbital_mechanics/images/sphx_glr_plot_04_hohmann_transfer_001.png
    :alt: Hohmann transfer: initial orbit -> transfer ellipse -> final orbit
    :srcset: /api/gallery/astro/orbital_mechanics/images/sphx_glr_plot_04_hohmann_transfer_001.png
@@ -141,10 +142,31 @@ ellipse, from periapsis to apoapsis, so that half is highlighted.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 78-82
+
+Check
+-----
+dv1 = sqrt(mu/r1) (sqrt(2 r2 / (r1 + r2)) - 1), dv2 = sqrt(mu/r2) (1 - sqrt(2 r1 / (r1 + r2))),
+and the transfer takes half the ellipse's period, pi sqrt(a_t^3 / mu).
+
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
+
+.. code-block:: Python
+
+    assert abs(dv1 - np.sqrt(mu / r1) * (np.sqrt(2 * r2 / (r1 + r2)) - 1)) < 1e-12
+    assert abs(dv2 - np.sqrt(mu / r2) * (1 - np.sqrt(2 * r1 / (r1 + r2)))) < 1e-12
+    assert abs(t_transfer - np.pi * np.sqrt(a_t**3 / mu)) < 1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.054 seconds)
+   **Total running time of the script:** (0 minutes 0.060 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_orbital_mechanics_plot_04_hohmann_transfer.py:

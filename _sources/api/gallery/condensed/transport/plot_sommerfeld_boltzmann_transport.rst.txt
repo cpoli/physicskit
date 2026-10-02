@@ -133,7 +133,7 @@ an error of a factor 2 in his original paper, roughly the measured value).
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x121d05fa0>
+    <matplotlib.legend.Legend object at 0x370a85e20>
 
 
 
@@ -146,7 +146,7 @@ Mott formula for the thermopower
 :math:`T/E_F`), and changing sign where the carriers change from
 electron-like to hole-like, at half filling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-84
+.. GENERATED FROM PYTHON SOURCE LINES 74-85
 
 .. code-block:: Python
 
@@ -168,9 +168,32 @@ electron-like to hole-like, at half filling.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 86-90
+
+Check
+-----
+Wiedemann-Franz: L = pi^2/3 inside the band; the Mott formula matches the
+Boltzmann thermopower; S changes sign at half filling.
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-94
+
+.. code-block:: Python
+
+    inside = np.abs(mus) < 3.0
+    np.testing.assert_allclose(lorenz[inside], np.pi**2 / 3, rtol=0.01)
+    assert np.max(np.abs(seebeck[inside] - mott[inside])) < 0.05 * np.max(np.abs(seebeck[inside]))
+    assert np.sign(seebeck[mus < -0.5][0]) == -np.sign(seebeck[mus > 0.5][-1])
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.142 seconds)
+   **Total running time of the script:** (0 minutes 1.109 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_transport_plot_sommerfeld_boltzmann_transport.py:

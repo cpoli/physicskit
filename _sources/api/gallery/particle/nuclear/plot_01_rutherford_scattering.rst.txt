@@ -110,7 +110,7 @@ alpha particle to pass almost dead-center through the nucleus. The
 impact parameter for a 90-degree deflection already sets the scale of
 how close an approach is needed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-77
+.. GENERATED FROM PYTHON SOURCE LINES 59-78
 
 .. code-block:: Python
 
@@ -132,6 +132,7 @@ how close an approach is needed.
     fig2.tight_layout()
 
     plt.show()
+
 
 
 
@@ -159,10 +160,30 @@ how close an approach is needed.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+Check
+-----
+d sigma / d Omega ~ 1 / sin^4(theta/2), and the impact parameter
+b ~ cot(theta/2): large angles need nearly head-on collisions.
+
+.. GENERATED FROM PYTHON SOURCE LINES 83-85
+
+.. code-block:: Python
+
+    assert np.ptp(flat_check) < 1e-10 * flat_check.mean()
+    assert abs(b_values[-1] / b_values[0] - 1 / np.tan(np.radians(179) / 2) / (1 / np.tan(np.radians(1) / 2))) < 1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.152 seconds)
+   **Total running time of the script:** (0 minutes 0.140 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_nuclear_plot_01_rutherford_scattering.py:

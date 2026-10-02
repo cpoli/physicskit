@@ -39,9 +39,11 @@ post-Newtonian perturbation :math:`c_\mathrm{pn}/r^3` in :math:`V(r)`
 that drives the perihelion precession (see
 :doc:`/api/gallery/classical/newtonian/plot_02_kepler_precession`).
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-46
+.. GENERATED FROM PYTHON SOURCE LINES 25-48
 
 .. code-block:: Python
+
+    import numpy as np
 
     from physicskit.classical.core.base_system import SimulationResult
     from physicskit.classical.systems.newtonian import KeplerSystem
@@ -71,12 +73,12 @@ that drives the perihelion precession (see
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 SO(3) momentum sphere for a tumbling (intermediate-axis) Euler top
 --------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-54
+.. GENERATED FROM PYTHON SOURCE LINES 51-56
 
 .. code-block:: Python
 
@@ -92,12 +94,12 @@ SO(3) momentum sphere for a tumbling (intermediate-axis) Euler top
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-57
+.. GENERATED FROM PYTHON SOURCE LINES 57-59
 
 A precessing Kepler orbit with its LRL vector rotating
 ------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-61
+.. GENERATED FROM PYTHON SOURCE LINES 59-64
 
 .. code-block:: Python
 
@@ -113,9 +115,32 @@ A precessing Kepler orbit with its LRL vector rotating
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 65-69
+
+Check
+-----
+The tumbling top keeps its energy and |L|^2; the perturbed orbit keeps its
+energy while it precesses.
+
+.. GENERATED FROM PYTHON SOURCE LINES 69-73
+
+.. code-block:: Python
+
+    energies_top = [top.energy(y) for y in result_top.y]
+    assert np.ptp(energies_top) < 1e-10 * energies_top[0]
+    energies_orbit = np.array([kepler.kinetic_energy(p) + kepler.potential_energy(q) for q, p in zip(result_orbit.q, result_orbit.p)])
+    assert np.ptp(energies_orbit) < 1e-9 * abs(energies_orbit[0])
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.458 seconds)
+   **Total running time of the script:** (0 minutes 0.457 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_visualizers_plot_02_interactive_plotly.py:

@@ -152,7 +152,7 @@ nucleus of mass number :math:`A` a maximum recoil energy
 both the proton and nitrogen recoils; the photon hypothesis needs a
 different energy for each target.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-104
+.. GENERATED FROM PYTHON SOURCE LINES 83-105
 
 .. code-block:: Python
 
@@ -180,6 +180,7 @@ different energy for each target.
 
 
 
+
 .. image-sg:: /api/gallery/particle/nuclear/images/sphx_glr_plot_05_chadwick_neutron_001.png
    :alt: One neutron energy fits every target, The gamma-ray hypothesis needs a different energy per target
    :srcset: /api/gallery/particle/nuclear/images/sphx_glr_plot_05_chadwick_neutron_001.png
@@ -196,10 +197,32 @@ different energy for each target.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-111
+
+Check
+-----
+No single photon energy explains both recoils (55 vs 89 MeV), while one
+neutron energy does (4A / (1+A)^2 E_n); the Compton kinematics conserve
+four-momentum.
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-114
+
+.. code-block:: Python
+
+    assert E_for_N > 1.5 * E_for_p
+    assert abs(4 * 14 / 15**2 * E_n / T_N_obs - 1) < 0.25
+    assert abs(invariant_mass([k, p_in]) - invariant_mass([k_out, p_out])) < 1e-6 and abs(p_out.mass - m_p) < 1e-6
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.062 seconds)
+   **Total running time of the script:** (0 minutes 0.059 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_nuclear_plot_05_chadwick_neutron.py:

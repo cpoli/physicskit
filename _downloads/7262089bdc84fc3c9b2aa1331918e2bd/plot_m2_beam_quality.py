@@ -85,3 +85,12 @@ ax2.set_xlabel("z")
 ax2.set_ylabel(r"$M^2$")
 ax2.set_title("Beam envelope w(z) swept continuously over M^2 (dashed: curves above)")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# An M^2 beam spreads as w0 sqrt(1 + (M^2 z / zR)^2), zR = pi w0^2 / lambda;
+# M^2 = 1 is the ideal Gaussian.
+assert np.allclose(w_ideal, w_m2_one)
+zR = np.pi * w0**2 / wavelength
+np.testing.assert_allclose(W, w0 * np.sqrt(1 + (M2G * Z / zR) ** 2), rtol=1e-12)

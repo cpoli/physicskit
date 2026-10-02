@@ -156,7 +156,7 @@ Without the neutrino the visible products don't reconstruct the parent
 mass, and the electron and recoil nucleus aren't back to back as a
 two-body decay requires.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-108
+.. GENERATED FROM PYTHON SOURCE LINES 87-109
 
 .. code-block:: Python
 
@@ -184,6 +184,7 @@ two-body decay requires.
 
 
 
+
 .. image-sg:: /api/gallery/particle/weak_interaction/images/sphx_glr_plot_05_pauli_neutrino_hypothesis_001.png
    :alt: $^{210}$Bi $\beta$ decay: a continuous spectrum, Momentum balance needs a third body too
    :srcset: /api/gallery/particle/weak_interaction/images/sphx_glr_plot_05_pauli_neutrino_hypothesis_001.png
@@ -201,10 +202,33 @@ two-body decay requires.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 110-115
+
+Check
+-----
+A two-body decay would give every electron T ~ Q; with Pauli's neutrino the
+spectrum is continuous, energy and momentum balance in every event, and on
+average the neutrino carries the missing energy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 115-119
+
+.. code-block:: Python
+
+    assert abs(T_two - Q) < 1e-5
+    assert T_e.min() < 0.05 * Q and T_e.max() > 0.95 * Q
+    assert np.max(np.abs(T_e + T_B + E_nu - Q)) < 1e-5
+    assert abs(M_A - invariant_mass([B0, e0, nu0])) < 1e-5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.579 seconds)
+   **Total running time of the script:** (0 minutes 0.518 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_weak_interaction_plot_05_pauli_neutrino_hypothesis.py:

@@ -34,13 +34,14 @@ from their mean squared displacement, and separately shows the central
 limit theorem in action: however non-Gaussian the individual steps are,
 the distribution of the walkers' displacement after many steps is Gaussian.
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-29
+.. GENERATED FROM PYTHON SOURCE LINES 18-30
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
     import numpy as np
+    from scipy.stats import kurtosis
 
     from physicskit.statphys.chapters.random_walk import RandomWalk
     from physicskit.statphys.visualizers.random_walk_render import (
@@ -56,12 +57,12 @@ the distribution of the walkers' displacement after many steps is Gaussian.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-32
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 Trajectories and the Einstein relation
 --------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-40
+.. GENERATED FROM PYTHON SOURCE LINES 33-41
 
 .. code-block:: Python
 
@@ -85,7 +86,7 @@ Trajectories and the Einstein relation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-47
+.. GENERATED FROM PYTHON SOURCE LINES 42-48
 
 The central limit theorem
 --------------------------------------------
@@ -94,7 +95,7 @@ Even though each lattice-walk step is a discrete jump along a random axis
 the distribution of the walker's position after many steps is
 indistinguishable from a Gaussian.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-52
+.. GENERATED FROM PYTHON SOURCE LINES 48-53
 
 .. code-block:: Python
 
@@ -115,7 +116,7 @@ indistinguishable from a Gaussian.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-61
+.. GENERATED FROM PYTHON SOURCE LINES 54-62
 
 The central limit theorem, caught in the act
 --------------------------------------------------
@@ -126,7 +127,7 @@ discrete spikes (+1, -1, or 0 along this axis, from the two other lattice
 directions), and it visibly smooths into the continuous bell curve
 predicted by the CLT as more steps accumulate.
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-73
+.. GENERATED FROM PYTHON SOURCE LINES 62-75
 
 .. code-block:: Python
 
@@ -145,6 +146,7 @@ predicted by the CLT as more steps accumulate.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/random_walk/images/sphx_glr_plot_diffusion_and_clt_003.png
    :alt: Lattice-walk displacement distribution converging to a Gaussian, t = 1, t = 5, t = 50, t = 2000
    :srcset: /api/gallery/statphys/random_walk/images/sphx_glr_plot_diffusion_and_clt_003.png
@@ -154,10 +156,32 @@ predicted by the CLT as more steps accumulate.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 76-80
+
+Check
+-----
+A unit-step lattice walk diffuses with <r^2> = t, and by the central
+limit theorem each final coordinate is Gaussian with variance t/2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 80-84
+
+.. code-block:: Python
+
+    final = walk.trajectories[-1]
+    assert abs(np.mean(np.sum(final**2, axis=1)) / walk.n_steps - 1) < 0.1
+    assert abs(np.var(final[:, 0]) / (walk.n_steps / 2) - 1) < 0.15
+    assert abs(kurtosis(final[:, 0])) < 0.5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.262 seconds)
+   **Total running time of the script:** (0 minutes 0.253 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_random_walk_plot_diffusion_and_clt.py:

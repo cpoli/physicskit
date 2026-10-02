@@ -103,7 +103,7 @@ Maximum extractable energy fraction vs. spin
 A single split: the escaping fragment gains energy
 --------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-61
+.. GENERATED FROM PYTHON SOURCE LINES 56-62
 
 .. code-block:: Python
 
@@ -112,6 +112,7 @@ A single split: the escaping fragment gains energy
     print("Particle falls in with E=1.0, splits inside the ergosphere;")
     print("one fragment falls in with E=-0.1 (negative energy, only possible there);")
     print(f"the escaping fragment carries away E={e_out:.3f} -- more than it started with.")
+
 
 
 
@@ -127,10 +128,31 @@ A single split: the escaping fragment gains energy
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 63-67
+
+Check
+-----
+Maximum efficiency 1 - M_irr / M = 1 - sqrt((1 + sqrt(1 - a^2)) / 2), 29.3% at a = M;
+a negative-energy fragment lets the escaping one leave with E > E_in.
+
+.. GENERATED FROM PYTHON SOURCE LINES 67-70
+
+.. code-block:: Python
+
+    expected = 1 - np.sqrt((1 + np.sqrt(1 - a_values**2)) / 2)
+    np.testing.assert_allclose(efficiency, expected, atol=1e-12)
+    assert abs(e_out - 1.1) < 1e-12
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.031 seconds)
+   **Total running time of the script:** (0 minutes 0.032 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_kerr_plot_penrose_energy_extraction.py:

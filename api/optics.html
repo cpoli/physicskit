@@ -496,6 +496,12 @@ two-level atom coupled to a quantized cavity mode.</p></li>
 <li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.lasers</span></code> – laser rate equations (threshold,
 gain clamping, relaxation oscillations) and the Maxwell-Bloch
 (Haken-Lorenz) single-mode laser with its chaotic second threshold.</p></li>
+<li><p><a class="reference internal" href="#module-physicskit.optics.thin_films" title="physicskit.optics.thin_films"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.thin_films</span></code></a> – interference in layered media by
+the characteristic-matrix method: antireflection coatings, Bragg mirrors,
+Fabry-Pérot cavities and the band gaps of 1D photonic crystals.</p></li>
+<li><p><a class="reference internal" href="#module-physicskit.optics.nonlinear" title="physicskit.optics.nonlinear"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.nonlinear</span></code></a> – second-harmonic generation: the
+coupled-amplitude equations, phase mismatch, quasi-phase matching and
+birefringent phase matching.</p></li>
 <li><p><a class="reference internal" href="#module-physicskit.optics.visualizers" title="physicskit.optics.visualizers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.optics.visualizers</span></code></a> – ray-trace, beam-envelope,
 diffraction-pattern, and interactive Wigner-surface plots.</p></li>
 </ul>
@@ -1097,6 +1103,34 @@ it acts on the incoming ray state before any later element.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.airy_transmission">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">airy_transmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#airy_transmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.airy_transmission" title="Link to this definition">#</a></dt>
+<dd><p>Fabry-Pérot (Airy) transmission of two lossless mirrors of reflectance <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[T = \frac{1}{1 + F\sin^2(\delta/2)}, \qquad \delta = \frac{4\pi n L\cos\theta}{\lambda},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta\)</span> is the round-trip phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Round-trip phase.</p></li>
+<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Mirror reflectance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">airy_transmission</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">))</span>  <span class="c1"># every resonance transmits fully</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.optics.angular_spectrum_propagate">
 <span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">angular_spectrum_propagate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/wave.html#angular_spectrum_propagate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.angular_spectrum_propagate" title="Link to this definition">#</a></dt>
 <dd><p>Exact scalar diffraction propagation via the angular spectrum method.</p>
@@ -1178,6 +1212,39 @@ wavefronts visibly evolve into the far-field interference fringes as
 <span class="gp">&gt;&gt;&gt; </span><span class="n">z_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">anim</span> <span class="o">=</span> <span class="n">animate_diffraction_propagation</span><span class="p">(</span><span class="n">ap</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mf">0.5e-3</span><span class="p">,</span> <span class="n">z_values</span><span class="o">=</span><span class="n">z_values</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">anim</span><span class="p">,</span> <span class="n">FuncAnimation</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.bloch_wavenumber">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">bloch_wavenumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#bloch_wavenumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.bloch_wavenumber" title="Link to this definition">#</a></dt>
+<dd><p>Bloch wavenumber <span class="math notranslate nohighlight">\(K\)</span> of an infinite periodic stack at normal incidence.</p>
+<p>For one period of layers, <span class="math notranslate nohighlight">\(\cos(K\Lambda) = \tfrac12
+\operatorname{tr} M_{\text{period}}\)</span>; for two layers this is</p>
+<div class="math notranslate nohighlight">
+\[\cos(K\Lambda) = \cos\delta_1\cos\delta_2
+- \tfrac12\left(\frac{n_1}{n_2} + \frac{n_2}{n_1}\right)\sin\delta_1\sin\delta_2.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Indices and thicknesses of the layers of one period.</p></li>
+<li><p><strong>d_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Indices and thicknesses of the layers of one period.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Vacuum wavelength(s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.cdouble" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">cdouble</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of complex</em> – <span class="math notranslate nohighlight">\(K\Lambda\)</span>, with real part in <span class="math notranslate nohighlight">\([0, \pi]\)</span> and a nonzero
+imaginary part (the decay per period) inside band gaps.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">KL</span> <span class="o">=</span> <span class="n">bloch_wavenumber</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># uniform medium: K = 2 pi n / lambda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">KL</span><span class="o">.</span><span class="n">real</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1266,6 +1333,23 @@ or <a class="reference internal" href="#physicskit.optics.OpticalSystem.system_m
 <span class="go">0.0</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.coefficient_of_finesse">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">coefficient_of_finesse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#coefficient_of_finesse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.coefficient_of_finesse" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(F = 4R/(1 - R)^2\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Mirror power reflectance, <span class="math notranslate nohighlight">\(0 \le R &lt; 1\)</span>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -1397,6 +1481,51 @@ curvature lies on the outgoing (transmitted) side of the surface.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.extraordinary_index">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">extraordinary_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_e</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#extraordinary_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.extraordinary_index" title="Link to this definition">#</a></dt>
+<dd><p>Index of the extraordinary wave at angle <span class="math notranslate nohighlight">\(\theta\)</span> to the optic axis of a uniaxial crystal.</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{n_e(\theta)^2} = \frac{\cos^2\theta}{n_o^2} + \frac{\sin^2\theta}{n_e^2}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Angle in radians.</p></li>
+<li><p><strong>n_o</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and principal extraordinary indices.</p></li>
+<li><p><strong>n_e</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and principal extraordinary indices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.fabry_perot_free_spectral_range">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">fabry_perot_free_spectral_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#fabry_perot_free_spectral_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.fabry_perot_free_spectral_range" title="Link to this definition">#</a></dt>
+<dd><p>Free spectral range <span class="math notranslate nohighlight">\(c/2nL\)</span> in frequency, or <span class="math notranslate nohighlight">\(\lambda^2/2nL\)</span> in wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Mirror spacing <span class="math notranslate nohighlight">\(L\)</span>.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Index between the mirrors.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – If given, return the range in wavelength units near this
+wavelength; otherwise in units of <span class="math notranslate nohighlight">\(c\)</span> per length unit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.optics.field_grid">
 <span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">field_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/wave.html#field_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.field_grid" title="Link to this definition">#</a></dt>
 <dd><p>Centered physical-coordinate grid for an array of the given <code class="docutils literal notranslate"><span class="pre">shape</span></code>.</p>
@@ -1416,6 +1545,28 @@ module).</p></li>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">field_grid</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="go">[-2.0, -1.0, 0.0, 1.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.finesse">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">finesse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#finesse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.finesse" title="Link to this definition">#</a></dt>
+<dd><p>Reflectance finesse <span class="math notranslate nohighlight">\(\mathcal F = \pi\sqrt R/(1 - R)\)</span>: free spectral range over linewidth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Mirror power reflectance.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finesse</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">29.8</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1794,6 +1945,45 @@ so a real beam of the same waist diverges faster than the ideal case.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.multilayer_response">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">multilayer_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_incident</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_substrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#multilayer_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.multilayer_response" title="Link to this definition">#</a></dt>
+<dd><p>Reflection and transmission of a stack of thin layers by the characteristic-matrix method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Refractive index of each layer, from the incident side; complex
+values <span class="math notranslate nohighlight">\(n + i\kappa\)</span> with <span class="math notranslate nohighlight">\(\kappa &gt; 0\)</span> describe
+absorption (time dependence <span class="math notranslate nohighlight">\(e^{-i\omega t}\)</span>).</p></li>
+<li><p><strong>d_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Physical thickness of each layer, in the units of <code class="docutils literal notranslate"><span class="pre">wavelength</span></code>.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Vacuum wavelength(s).</p></li>
+<li><p><strong>n_incident</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Index of the incident medium.</p></li>
+<li><p><strong>n_substrate</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Index of the exit medium.</p></li>
+<li><p><strong>angle</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Angle of incidence in radians.</p></li>
+<li><p><strong>polarization</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – Complex amplitude coefficients <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code> and the power
+reflectance <code class="docutils literal notranslate"><span class="pre">&quot;R&quot;</span></code> and transmittance <code class="docutils literal notranslate"><span class="pre">&quot;T&quot;</span></code>, each shaped like
+<code class="docutils literal notranslate"><span class="pre">wavelength</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Bare glass reflects <span class="math notranslate nohighlight">\(((1 - 1.5)/(1 + 1.5))^2 = 4\%\)</span>; a quarter-wave
+film of index <span class="math notranslate nohighlight">\(\sqrt{1.5}\)</span> removes it at the design wavelength:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">multilayer_response</span><span class="p">([],</span> <span class="p">[],</span> <span class="mf">550.0</span><span class="p">)[</span><span class="s2">"R"</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.04</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">multilayer_response</span><span class="p">([</span><span class="n">n_ar</span><span class="p">],</span> <span class="p">[</span><span class="mf">550.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_ar</span><span class="p">)],</span> <span class="mf">550.0</span><span class="p">)[</span><span class="s2">"R"</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-12</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.optics.plot_beam_envelope">
 <span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">plot_beam_envelope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/visualizers.html#plot_beam_envelope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.plot_beam_envelope" title="Link to this definition">#</a></dt>
 <dd><p>Plot a Gaussian beam’s <span class="math notranslate nohighlight">\(\pm w(z)\)</span> waist envelope over a propagation range.</p>
@@ -1962,6 +2152,152 @@ instead of raising or silently producing <code class="docutils literal notransla
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.quarter_wave_band_gap">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">quarter_wave_band_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_low</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#quarter_wave_band_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.quarter_wave_band_gap" title="Link to this definition">#</a></dt>
+<dd><p>Relative width <span class="math notranslate nohighlight">\(\Delta\omega/\omega_0\)</span> of the first gap of a quarter-wave stack.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta\omega}{\omega_0} = \frac4\pi\arcsin\frac{n_H - n_L}{n_H + n_L}\]</div>
+<p>(Yariv and Yeh, <em>Optical Waves in Crystals</em>, 1984, sec. 6.3).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_high</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>n_low</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">quarter_wave_band_gap</span><span class="p">(</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.3217</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.quarter_wave_stack">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">quarter_wave_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cavity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#quarter_wave_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.quarter_wave_stack" title="Link to this definition">#</a></dt>
+<dd><p>Layer indices and thicknesses of a quarter-wave (Bragg) mirror, or of a Fabry-Pérot cavity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_high</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Indices of the two materials; the stack starts with <code class="docutils literal notranslate"><span class="pre">n_high</span></code>.</p></li>
+<li><p><strong>n_low</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Indices of the two materials; the stack starts with <code class="docutils literal notranslate"><span class="pre">n_high</span></code>.</p></li>
+<li><p><strong>n_pairs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of high/low pairs.</p></li>
+<li><p><strong>design_wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Wavelength at which every layer is a quarter wave thick.</p></li>
+<li><p><strong>cavity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – If True, return two such mirrors separated by a half-wave
+(<span class="math notranslate nohighlight">\(\lambda/2n_{\text{low}}\)</span>) spacer of the low index: a
+Fabry-Pérot cavity with a resonance at <code class="docutils literal notranslate"><span class="pre">design_wavelength</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_layers, d_layers</strong> (<em>ndarray</em>)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">quarter_wave_stack</span><span class="p">(</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">600.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">([2.3, 1.38, 2.3, 1.38], [150.0, 150.0, 150.0, 150.0])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.shg_coupled_amplitudes">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">shg_coupled_amplitudes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpm_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_coupled_amplitudes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.shg_coupled_amplitudes" title="Link to this definition">#</a></dt>
+<dd><p>Integrate the SHG coupled-amplitude equations, with optional quasi-phase matching.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Increasing output positions, starting at 0.</p></li>
+<li><p><strong>delta_k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Phase mismatch <span class="math notranslate nohighlight">\(\Delta k\)</span>.</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Nonlinear coupling.</p></li>
+<li><p><strong>A0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Fundamental amplitude at <span class="math notranslate nohighlight">\(z = 0\)</span>; the harmonic starts at 0.</p></li>
+<li><p><strong>qpm_period</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – If given, <span class="math notranslate nohighlight">\(\kappa\)</span> changes sign every half period
+(periodically poled crystal); first-order QPM uses
+<span class="math notranslate nohighlight">\(2\pi/\Delta k\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – Complex <code class="docutils literal notranslate"><span class="pre">&quot;A1&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;A2&quot;</span></code> at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">shg_coupled_amplitudes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"A2"</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.shg_phase_matched_efficiency">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">shg_phase_matched_efficiency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_phase_matched_efficiency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.shg_phase_matched_efficiency" title="Link to this definition">#</a></dt>
+<dd><p>Conversion efficiency <span class="math notranslate nohighlight">\(|A_2|^2/|A_0|^2 = \tanh^2(\kappa A_0 z)\)</span> with pump depletion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Propagation distance(s).</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>A0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Input fundamental amplitude.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">shg_phase_matched_efficiency</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.shg_undepleted_power">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">shg_undepleted_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_undepleted_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.shg_undepleted_power" title="Link to this definition">#</a></dt>
+<dd><p>Second-harmonic power for an undepleted pump.</p>
+<div class="math notranslate nohighlight">
+\[|A_2(L)|^2 = \kappa^2 |A_1|^4 L^2 \operatorname{sinc}^2(\Delta k L / 2)
+= \frac{4\kappa^2|A_1|^4}{\Delta k^2}\sin^2\frac{\Delta k L}{2}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Crystal length(s).</p></li>
+<li><p><strong>delta_k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Phase mismatch.</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Coupling constant.</p></li>
+<li><p><strong>A1</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Pump amplitude.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">shg_undepleted_power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">delta_k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)),</span> <span class="mi">12</span><span class="p">)</span>  <span class="c1"># one coherence length: 4/dk^2</span>
+<span class="go">4.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.optics.single_slit_aperture">
 <span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">single_slit_aperture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/wave.html#single_slit_aperture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.single_slit_aperture" title="Link to this definition">#</a></dt>
 <dd><p>A single slit of the given <code class="docutils literal notranslate"><span class="pre">width</span></code> along x, open along the full height in y.</p>
@@ -2100,6 +2436,40 @@ diverging).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">thin_lens</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="go">array([[ 1.,  0.],</span>
 <span class="go">       [-2.,  1.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.type_i_phase_matching_angle">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.</span></span><span class="sig-name descname"><span class="pre">type_i_phase_matching_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_o_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_o_2w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_e_2w</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#type_i_phase_matching_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.type_i_phase_matching_angle" title="Link to this definition">#</a></dt>
+<dd><p>Type-I (ooe) phase-matching angle of a negative uniaxial crystal.</p>
+<p>Solves <span class="math notranslate nohighlight">\(n_e^{2\omega}(\theta) = n_o^{\omega}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\sin^2\theta_m = \frac{(n_o^{\omega})^{-2} - (n_o^{2\omega})^{-2}}
+                       {(n_e^{2\omega})^{-2} - (n_o^{2\omega})^{-2}}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_o_w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary index at the fundamental.</p></li>
+<li><p><strong>n_o_2w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and extraordinary indices at the harmonic.</p></li>
+<li><p><strong>n_e_2w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and extraordinary indices at the harmonic.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – <span class="math notranslate nohighlight">\(\theta_m\)</span> in radians.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the birefringence cannot compensate the dispersion.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>KDP doubling 1064 nm (Sellmeier indices from Zernike, JOSA 54, 1215 (1964)):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">type_i_phase_matching_angle</span><span class="p">(</span><span class="mf">1.4942</span><span class="p">,</span> <span class="mf">1.5129</span><span class="p">,</span> <span class="mf">1.4709</span><span class="p">))),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">41.3</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3396,6 +3766,419 @@ genuinely non-classical states such as Fock states with <span class="math notran
 </div>
 </dd></dl>
 
+<p id="module-physicskit.optics.thin_films">Interference in layered media: thin films, Fabry-Pérot cavities and 1D photonic crystals.</p>
+<p>A plane wave crossing a stack of homogeneous layers is described exactly by
+the characteristic matrix of each layer (Abelès, Ann. Phys. (Paris) 5, 596
+(1950); Born and Wolf, <em>Principles of Optics</em>, sec. 1.6),</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}M_j = \begin{pmatrix} \cos\delta_j &amp; i\sin\delta_j/\eta_j \\
+                       i\eta_j\sin\delta_j &amp; \cos\delta_j \end{pmatrix},
+\qquad \delta_j = \frac{2\pi}{\lambda} n_j d_j \cos\theta_j,\end{split}\]</div>
+<p>with tilted admittance <span class="math notranslate nohighlight">\(\eta_j = n_j\cos\theta_j\)</span> (s polarization)
+or <span class="math notranslate nohighlight">\(n_j/\cos\theta_j\)</span> (p). The product of the layer matrices gives the
+reflection and transmission of the whole stack. Three classic results
+follow:</p>
+<ul class="simple">
+<li><p>a single quarter-wave film of index <span class="math notranslate nohighlight">\(\sqrt{n_0 n_s}\)</span> cancels
+reflection at one wavelength (antireflection coating);</p></li>
+<li><p>two mirrors of reflectance <span class="math notranslate nohighlight">\(R\)</span> facing each other transmit the Airy
+function <span class="math notranslate nohighlight">\(T = 1/(1 + F\sin^2(\delta/2))\)</span>, <span class="math notranslate nohighlight">\(F = 4R/(1-R)^2\)</span>
+(Fabry and Pérot, 1899);</p></li>
+<li><p>a periodic stack has Bloch modes with <span class="math notranslate nohighlight">\(\cos(K\Lambda) =
+\tfrac12\operatorname{tr} M_{\text{period}}\)</span>, and where
+<span class="math notranslate nohighlight">\(|\tfrac12\operatorname{tr} M| &gt; 1\)</span> light cannot propagate: a
+photonic band gap (Rayleigh 1887; Yablonovitch 1987).</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.airy_transmission">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">airy_transmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#airy_transmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.airy_transmission" title="Link to this definition">#</a></dt>
+<dd><p>Fabry-Pérot (Airy) transmission of two lossless mirrors of reflectance <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[T = \frac{1}{1 + F\sin^2(\delta/2)}, \qquad \delta = \frac{4\pi n L\cos\theta}{\lambda},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta\)</span> is the round-trip phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Round-trip phase.</p></li>
+<li><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Mirror reflectance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">airy_transmission</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">))</span>  <span class="c1"># every resonance transmits fully</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.bloch_wavenumber">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">bloch_wavenumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#bloch_wavenumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.bloch_wavenumber" title="Link to this definition">#</a></dt>
+<dd><p>Bloch wavenumber <span class="math notranslate nohighlight">\(K\)</span> of an infinite periodic stack at normal incidence.</p>
+<p>For one period of layers, <span class="math notranslate nohighlight">\(\cos(K\Lambda) = \tfrac12
+\operatorname{tr} M_{\text{period}}\)</span>; for two layers this is</p>
+<div class="math notranslate nohighlight">
+\[\cos(K\Lambda) = \cos\delta_1\cos\delta_2
+- \tfrac12\left(\frac{n_1}{n_2} + \frac{n_2}{n_1}\right)\sin\delta_1\sin\delta_2.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Indices and thicknesses of the layers of one period.</p></li>
+<li><p><strong>d_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Indices and thicknesses of the layers of one period.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Vacuum wavelength(s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.cdouble" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">cdouble</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of complex</em> – <span class="math notranslate nohighlight">\(K\Lambda\)</span>, with real part in <span class="math notranslate nohighlight">\([0, \pi]\)</span> and a nonzero
+imaginary part (the decay per period) inside band gaps.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">KL</span> <span class="o">=</span> <span class="n">bloch_wavenumber</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># uniform medium: K = 2 pi n / lambda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">KL</span><span class="o">.</span><span class="n">real</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.coefficient_of_finesse">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">coefficient_of_finesse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#coefficient_of_finesse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.coefficient_of_finesse" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(F = 4R/(1 - R)^2\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Mirror power reflectance, <span class="math notranslate nohighlight">\(0 \le R &lt; 1\)</span>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.fabry_perot_free_spectral_range">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">fabry_perot_free_spectral_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#fabry_perot_free_spectral_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.fabry_perot_free_spectral_range" title="Link to this definition">#</a></dt>
+<dd><p>Free spectral range <span class="math notranslate nohighlight">\(c/2nL\)</span> in frequency, or <span class="math notranslate nohighlight">\(\lambda^2/2nL\)</span> in wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Mirror spacing <span class="math notranslate nohighlight">\(L\)</span>.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Index between the mirrors.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – If given, return the range in wavelength units near this
+wavelength; otherwise in units of <span class="math notranslate nohighlight">\(c\)</span> per length unit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.finesse">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">finesse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#finesse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.finesse" title="Link to this definition">#</a></dt>
+<dd><p>Reflectance finesse <span class="math notranslate nohighlight">\(\mathcal F = \pi\sqrt R/(1 - R)\)</span>: free spectral range over linewidth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>R</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Mirror power reflectance.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finesse</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">29.8</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.multilayer_response">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">multilayer_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_incident</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_substrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#multilayer_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.multilayer_response" title="Link to this definition">#</a></dt>
+<dd><p>Reflection and transmission of a stack of thin layers by the characteristic-matrix method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Refractive index of each layer, from the incident side; complex
+values <span class="math notranslate nohighlight">\(n + i\kappa\)</span> with <span class="math notranslate nohighlight">\(\kappa &gt; 0\)</span> describe
+absorption (time dependence <span class="math notranslate nohighlight">\(e^{-i\omega t}\)</span>).</p></li>
+<li><p><strong>d_layers</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Physical thickness of each layer, in the units of <code class="docutils literal notranslate"><span class="pre">wavelength</span></code>.</p></li>
+<li><p><strong>wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Vacuum wavelength(s).</p></li>
+<li><p><strong>n_incident</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Index of the incident medium.</p></li>
+<li><p><strong>n_substrate</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Index of the exit medium.</p></li>
+<li><p><strong>angle</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Angle of incidence in radians.</p></li>
+<li><p><strong>polarization</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – Complex amplitude coefficients <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code> and the power
+reflectance <code class="docutils literal notranslate"><span class="pre">&quot;R&quot;</span></code> and transmittance <code class="docutils literal notranslate"><span class="pre">&quot;T&quot;</span></code>, each shaped like
+<code class="docutils literal notranslate"><span class="pre">wavelength</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Bare glass reflects <span class="math notranslate nohighlight">\(((1 - 1.5)/(1 + 1.5))^2 = 4\%\)</span>; a quarter-wave
+film of index <span class="math notranslate nohighlight">\(\sqrt{1.5}\)</span> removes it at the design wavelength:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">multilayer_response</span><span class="p">([],</span> <span class="p">[],</span> <span class="mf">550.0</span><span class="p">)[</span><span class="s2">"R"</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.04</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">multilayer_response</span><span class="p">([</span><span class="n">n_ar</span><span class="p">],</span> <span class="p">[</span><span class="mf">550.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n_ar</span><span class="p">)],</span> <span class="mf">550.0</span><span class="p">)[</span><span class="s2">"R"</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-12</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.quarter_wave_band_gap">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">quarter_wave_band_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_low</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#quarter_wave_band_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.quarter_wave_band_gap" title="Link to this definition">#</a></dt>
+<dd><p>Relative width <span class="math notranslate nohighlight">\(\Delta\omega/\omega_0\)</span> of the first gap of a quarter-wave stack.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta\omega}{\omega_0} = \frac4\pi\arcsin\frac{n_H - n_L}{n_H + n_L}\]</div>
+<p>(Yariv and Yeh, <em>Optical Waves in Crystals</em>, 1984, sec. 6.3).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_high</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>n_low</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">quarter_wave_band_gap</span><span class="p">(</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.3217</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.thin_films.quarter_wave_stack">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.thin_films.</span></span><span class="sig-name descname"><span class="pre">quarter_wave_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cavity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/thin_films.html#quarter_wave_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.thin_films.quarter_wave_stack" title="Link to this definition">#</a></dt>
+<dd><p>Layer indices and thicknesses of a quarter-wave (Bragg) mirror, or of a Fabry-Pérot cavity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_high</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Indices of the two materials; the stack starts with <code class="docutils literal notranslate"><span class="pre">n_high</span></code>.</p></li>
+<li><p><strong>n_low</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Indices of the two materials; the stack starts with <code class="docutils literal notranslate"><span class="pre">n_high</span></code>.</p></li>
+<li><p><strong>n_pairs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of high/low pairs.</p></li>
+<li><p><strong>design_wavelength</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Wavelength at which every layer is a quarter wave thick.</p></li>
+<li><p><strong>cavity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – If True, return two such mirrors separated by a half-wave
+(<span class="math notranslate nohighlight">\(\lambda/2n_{\text{low}}\)</span>) spacer of the low index: a
+Fabry-Pérot cavity with a resonance at <code class="docutils literal notranslate"><span class="pre">design_wavelength</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_layers, d_layers</strong> (<em>ndarray</em>)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">quarter_wave_stack</span><span class="p">(</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">600.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">real</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">([2.3, 1.38, 2.3, 1.38], [150.0, 150.0, 150.0, 150.0])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p id="module-physicskit.optics.nonlinear">Second-harmonic generation and phase matching.</p>
+<p>In a medium with a second-order susceptibility <span class="math notranslate nohighlight">\(\chi^{(2)}\)</span>, a field at
+frequency <span class="math notranslate nohighlight">\(\omega\)</span> drives a polarization at <span class="math notranslate nohighlight">\(2\omega\)</span> (Franken
+et al., Phys. Rev. Lett. 7, 118 (1961)). For collinear plane waves with slowly
+varying amplitudes <span class="math notranslate nohighlight">\(A_1\)</span> (fundamental) and <span class="math notranslate nohighlight">\(A_2\)</span> (second
+harmonic), normalized so that <span class="math notranslate nohighlight">\(|A_1|^2 + |A_2|^2\)</span> is the conserved
+power, the coupled-amplitude equations are (Armstrong, Bloembergen, Ducuing
+and Pershan, Phys. Rev. 127, 1918 (1962); Boyd, <em>Nonlinear Optics</em>, ch. 2)</p>
+<div class="math notranslate nohighlight">
+\[\frac{dA_1}{dz} = -i\kappa A_2 A_1^* e^{-i\Delta k z}, \qquad
+\frac{dA_2}{dz} = -i\kappa A_1^2 e^{i\Delta k z},
+\qquad \Delta k = k_{2\omega} - 2k_\omega.\]</div>
+<p>Three regimes are solved in closed form:</p>
+<ul class="simple">
+<li><p>undepleted pump, <span class="math notranslate nohighlight">\(|A_2(L)|^2 = \kappa^2|A_1|^4 L^2
+\operatorname{sinc}^2(\Delta k L/2)\)</span>, which oscillates with the coherence
+length <span class="math notranslate nohighlight">\(L_c = \pi/\Delta k\)</span>;</p></li>
+<li><p>perfect phase matching with pump depletion,
+<span class="math notranslate nohighlight">\(|A_2|^2 = |A_0|^2\tanh^2(\kappa A_0 z)\)</span>;</p></li>
+<li><p>quasi-phase matching, where the sign of <span class="math notranslate nohighlight">\(\kappa\)</span> is flipped every
+<span class="math notranslate nohighlight">\(L_c\)</span> and the harmonic grows linearly at <span class="math notranslate nohighlight">\(2/\pi\)</span> of the
+phase-matched rate.</p></li>
+</ul>
+<p>Birefringent phase matching uses the extraordinary index
+<span class="math notranslate nohighlight">\(n_e(\theta)\)</span> to make <span class="math notranslate nohighlight">\(n_e^{2\omega}(\theta) = n_o^{\omega}\)</span>
+(Giordmaine 1962; Maker et al. 1962).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.nonlinear.extraordinary_index">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.nonlinear.</span></span><span class="sig-name descname"><span class="pre">extraordinary_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_e</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#extraordinary_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.nonlinear.extraordinary_index" title="Link to this definition">#</a></dt>
+<dd><p>Index of the extraordinary wave at angle <span class="math notranslate nohighlight">\(\theta\)</span> to the optic axis of a uniaxial crystal.</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{n_e(\theta)^2} = \frac{\cos^2\theta}{n_o^2} + \frac{\sin^2\theta}{n_e^2}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Angle in radians.</p></li>
+<li><p><strong>n_o</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and principal extraordinary indices.</p></li>
+<li><p><strong>n_e</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and principal extraordinary indices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.nonlinear.shg_coupled_amplitudes">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.nonlinear.</span></span><span class="sig-name descname"><span class="pre">shg_coupled_amplitudes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpm_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_coupled_amplitudes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.nonlinear.shg_coupled_amplitudes" title="Link to this definition">#</a></dt>
+<dd><p>Integrate the SHG coupled-amplitude equations, with optional quasi-phase matching.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Increasing output positions, starting at 0.</p></li>
+<li><p><strong>delta_k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Phase mismatch <span class="math notranslate nohighlight">\(\Delta k\)</span>.</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Nonlinear coupling.</p></li>
+<li><p><strong>A0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#complex" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a></span>) – Fundamental amplitude at <span class="math notranslate nohighlight">\(z = 0\)</span>; the harmonic starts at 0.</p></li>
+<li><p><strong>qpm_period</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – If given, <span class="math notranslate nohighlight">\(\kappa\)</span> changes sign every half period
+(periodically poled crystal); first-order QPM uses
+<span class="math notranslate nohighlight">\(2\pi/\Delta k\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – Complex <code class="docutils literal notranslate"><span class="pre">&quot;A1&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;A2&quot;</span></code> at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">shg_coupled_amplitudes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"A2"</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.nonlinear.shg_phase_matched_efficiency">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.nonlinear.</span></span><span class="sig-name descname"><span class="pre">shg_phase_matched_efficiency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_phase_matched_efficiency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.nonlinear.shg_phase_matched_efficiency" title="Link to this definition">#</a></dt>
+<dd><p>Conversion efficiency <span class="math notranslate nohighlight">\(|A_2|^2/|A_0|^2 = \tanh^2(\kappa A_0 z)\)</span> with pump depletion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Propagation distance(s).</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>A0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Input fundamental amplitude.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">shg_phase_matched_efficiency</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.nonlinear.shg_undepleted_power">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.nonlinear.</span></span><span class="sig-name descname"><span class="pre">shg_undepleted_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#shg_undepleted_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.nonlinear.shg_undepleted_power" title="Link to this definition">#</a></dt>
+<dd><p>Second-harmonic power for an undepleted pump.</p>
+<div class="math notranslate nohighlight">
+\[|A_2(L)|^2 = \kappa^2 |A_1|^4 L^2 \operatorname{sinc}^2(\Delta k L / 2)
+= \frac{4\kappa^2|A_1|^4}{\Delta k^2}\sin^2\frac{\Delta k L}{2}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Crystal length(s).</p></li>
+<li><p><strong>delta_k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Phase mismatch.</p></li>
+<li><p><strong>kappa</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Coupling constant.</p></li>
+<li><p><strong>A1</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Pump amplitude.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">shg_undepleted_power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">delta_k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)),</span> <span class="mi">12</span><span class="p">)</span>  <span class="c1"># one coherence length: 4/dk^2</span>
+<span class="go">4.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.optics.nonlinear.type_i_phase_matching_angle">
+<span class="sig-prename descclassname"><span class="pre">physicskit.optics.nonlinear.</span></span><span class="sig-name descname"><span class="pre">type_i_phase_matching_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_o_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_o_2w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_e_2w</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/optics/nonlinear.html#type_i_phase_matching_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.optics.nonlinear.type_i_phase_matching_angle" title="Link to this definition">#</a></dt>
+<dd><p>Type-I (ooe) phase-matching angle of a negative uniaxial crystal.</p>
+<p>Solves <span class="math notranslate nohighlight">\(n_e^{2\omega}(\theta) = n_o^{\omega}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\sin^2\theta_m = \frac{(n_o^{\omega})^{-2} - (n_o^{2\omega})^{-2}}
+                       {(n_e^{2\omega})^{-2} - (n_o^{2\omega})^{-2}}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_o_w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary index at the fundamental.</p></li>
+<li><p><strong>n_o_2w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and extraordinary indices at the harmonic.</p></li>
+<li><p><strong>n_e_2w</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Ordinary and extraordinary indices at the harmonic.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – <span class="math notranslate nohighlight">\(\theta_m\)</span> in radians.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If the birefringence cannot compensate the dispersion.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>KDP doubling 1064 nm (Sellmeier indices from Zernike, JOSA 54, 1215 (1964)):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">type_i_phase_matching_angle</span><span class="p">(</span><span class="mf">1.4942</span><span class="p">,</span> <span class="mf">1.5129</span><span class="p">,</span> <span class="mf">1.4709</span><span class="p">))),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">41.3</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <p id="module-physicskit.optics.visualizers">Plotting helpers: ray traces, Gaussian beam envelopes, diffraction patterns, Wigner surfaces.</p>
 <p>Matplotlib is used for 2D plots (ray traces through an optical system, beam
 waist envelopes, diffraction-pattern heatmaps), and Plotly for the
@@ -3677,16 +4460,22 @@ fringes alongside the bright central peak.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.OpticalSystem.trace_ray"><code class="docutils literal notranslate"><span class="pre">OpticalSystem.trace_ray()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.airy_transmission"><code class="docutils literal notranslate"><span class="pre">airy_transmission()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.angular_spectrum_propagate"><code class="docutils literal notranslate"><span class="pre">angular_spectrum_propagate()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.animate_diffraction_propagation"><code class="docutils literal notranslate"><span class="pre">animate_diffraction_propagation()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.bloch_wavenumber"><code class="docutils literal notranslate"><span class="pre">bloch_wavenumber()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.cavity_round_trip_matrix"><code class="docutils literal notranslate"><span class="pre">cavity_round_trip_matrix()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.cavity_stability"><code class="docutils literal notranslate"><span class="pre">cavity_stability()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.circular_aperture"><code class="docutils literal notranslate"><span class="pre">circular_aperture()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.coefficient_of_finesse"><code class="docutils literal notranslate"><span class="pre">coefficient_of_finesse()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.coherent_state"><code class="docutils literal notranslate"><span class="pre">coherent_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.compute_wigner_function"><code class="docutils literal notranslate"><span class="pre">compute_wigner_function()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.curved_interface"><code class="docutils literal notranslate"><span class="pre">curved_interface()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.double_slit_aperture"><code class="docutils literal notranslate"><span class="pre">double_slit_aperture()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.extraordinary_index"><code class="docutils literal notranslate"><span class="pre">extraordinary_index()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.fabry_perot_free_spectral_range"><code class="docutils literal notranslate"><span class="pre">fabry_perot_free_spectral_range()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.field_grid"><code class="docutils literal notranslate"><span class="pre">field_grid()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.finesse"><code class="docutils literal notranslate"><span class="pre">finesse()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.flat_interface"><code class="docutils literal notranslate"><span class="pre">flat_interface()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.fock_state"><code class="docutils literal notranslate"><span class="pre">fock_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.fraunhofer_diffraction"><code class="docutils literal notranslate"><span class="pre">fraunhofer_diffraction()</span></code></a></li>
@@ -3698,16 +4487,23 @@ fringes alongside the bright central peak.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.interactive_wigner_surface"><code class="docutils literal notranslate"><span class="pre">interactive_wigner_surface()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.laguerre_gaussian_mode"><code class="docutils literal notranslate"><span class="pre">laguerre_gaussian_mode()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.m2_beam_waist"><code class="docutils literal notranslate"><span class="pre">m2_beam_waist()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.multilayer_response"><code class="docutils literal notranslate"><span class="pre">multilayer_response()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.plot_beam_envelope"><code class="docutils literal notranslate"><span class="pre">plot_beam_envelope()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.plot_diffraction_pattern"><code class="docutils literal notranslate"><span class="pre">plot_diffraction_pattern()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.plot_ray_trace"><code class="docutils literal notranslate"><span class="pre">plot_ray_trace()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.propagate_q"><code class="docutils literal notranslate"><span class="pre">propagate_q()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.q_to_beam_params"><code class="docutils literal notranslate"><span class="pre">q_to_beam_params()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.quarter_wave_band_gap"><code class="docutils literal notranslate"><span class="pre">quarter_wave_band_gap()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.quarter_wave_stack"><code class="docutils literal notranslate"><span class="pre">quarter_wave_stack()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.shg_coupled_amplitudes"><code class="docutils literal notranslate"><span class="pre">shg_coupled_amplitudes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.shg_phase_matched_efficiency"><code class="docutils literal notranslate"><span class="pre">shg_phase_matched_efficiency()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.shg_undepleted_power"><code class="docutils literal notranslate"><span class="pre">shg_undepleted_power()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.single_slit_aperture"><code class="docutils literal notranslate"><span class="pre">single_slit_aperture()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.spherical_mirror"><code class="docutils literal notranslate"><span class="pre">spherical_mirror()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.squeezed_state"><code class="docutils literal notranslate"><span class="pre">squeezed_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thick_lens"><code class="docutils literal notranslate"><span class="pre">thick_lens()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_lens"><code class="docutils literal notranslate"><span class="pre">thin_lens()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.type_i_phase_matching_angle"><code class="docutils literal notranslate"><span class="pre">type_i_phase_matching_angle()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.wigner_negativity"><code class="docutils literal notranslate"><span class="pre">wigner_negativity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.ray.OpticalElement"><code class="docutils literal notranslate"><span class="pre">OpticalElement</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.ray.OpticalSystem"><code class="docutils literal notranslate"><span class="pre">OpticalSystem</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
@@ -3759,6 +4555,19 @@ fringes alongside the bright central peak.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.quantum_optics.fock_state"><code class="docutils literal notranslate"><span class="pre">fock_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.quantum_optics.squeezed_state"><code class="docutils literal notranslate"><span class="pre">squeezed_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.quantum_optics.wigner_negativity"><code class="docutils literal notranslate"><span class="pre">wigner_negativity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.airy_transmission"><code class="docutils literal notranslate"><span class="pre">airy_transmission()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.bloch_wavenumber"><code class="docutils literal notranslate"><span class="pre">bloch_wavenumber()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.coefficient_of_finesse"><code class="docutils literal notranslate"><span class="pre">coefficient_of_finesse()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.fabry_perot_free_spectral_range"><code class="docutils literal notranslate"><span class="pre">fabry_perot_free_spectral_range()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.finesse"><code class="docutils literal notranslate"><span class="pre">finesse()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.multilayer_response"><code class="docutils literal notranslate"><span class="pre">multilayer_response()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.quarter_wave_band_gap"><code class="docutils literal notranslate"><span class="pre">quarter_wave_band_gap()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.thin_films.quarter_wave_stack"><code class="docutils literal notranslate"><span class="pre">quarter_wave_stack()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.nonlinear.extraordinary_index"><code class="docutils literal notranslate"><span class="pre">extraordinary_index()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.nonlinear.shg_coupled_amplitudes"><code class="docutils literal notranslate"><span class="pre">shg_coupled_amplitudes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.nonlinear.shg_phase_matched_efficiency"><code class="docutils literal notranslate"><span class="pre">shg_phase_matched_efficiency()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.nonlinear.shg_undepleted_power"><code class="docutils literal notranslate"><span class="pre">shg_undepleted_power()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.nonlinear.type_i_phase_matching_angle"><code class="docutils literal notranslate"><span class="pre">type_i_phase_matching_angle()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.visualizers.animate_diffraction_propagation"><code class="docutils literal notranslate"><span class="pre">animate_diffraction_propagation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.visualizers.interactive_wigner_surface"><code class="docutils literal notranslate"><span class="pre">interactive_wigner_surface()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.optics.visualizers.plot_beam_envelope"><code class="docutils literal notranslate"><span class="pre">plot_beam_envelope()</span></code></a></li>

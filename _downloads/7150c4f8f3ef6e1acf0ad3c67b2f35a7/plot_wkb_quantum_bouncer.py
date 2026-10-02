@@ -103,3 +103,14 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# With the Maslov phases (1/4 at the soft turning point, 1/2 at the hard
+# floor) WKB is within 1% even for the ground state, the error falls with n,
+# and it is ten times smaller than the uncorrected rule's.
+assert abs(check - 3.75) < 1e-6
+rel_err = np.abs(E_wkb / E_exact - 1)
+assert rel_err[0] < 1e-2 and np.all(np.diff(rel_err) < 0) and rel_err[-1] < 1e-4
+assert np.all(np.abs(E_naive / E_exact - 1) > 10 * np.abs(E_wkb / E_exact - 1))

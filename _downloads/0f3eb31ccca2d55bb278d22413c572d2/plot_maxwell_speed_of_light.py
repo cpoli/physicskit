@@ -88,3 +88,10 @@ ax2.set_ylabel("t")
 ax2.set_title("space-time diagram: a single straight ridge of slope c0")
 ax2.legend(loc="upper left")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Maxwell's equations propagate the pulse at c0 = 1/sqrt(mu0 eps0).
+assert abs(C0 - 1 / np.sqrt(MU0 * EPS0)) < 1e-6 * C0
+assert abs(measured_speed / C0 - 1) < 0.005

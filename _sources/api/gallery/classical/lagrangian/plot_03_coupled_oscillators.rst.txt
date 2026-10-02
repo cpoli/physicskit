@@ -107,7 +107,7 @@ closed-form :math:`\omega_k` above.
 Energy conservation and phase portrait for one mass
 ----------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-81
+.. GENERATED FROM PYTHON SOURCE LINES 69-82
 
 .. code-block:: Python
 
@@ -126,6 +126,7 @@ Energy conservation and phase portrait for one mass
 
 
 
+
 .. image-sg:: /api/gallery/classical/lagrangian/images/sphx_glr_plot_03_coupled_oscillators_002.png
    :alt: Phase portrait of mass 1: a clean ellipse (single-frequency motion)
    :srcset: /api/gallery/classical/lagrangian/images/sphx_glr_plot_03_coupled_oscillators_002.png
@@ -141,10 +142,33 @@ Energy conservation and phase portrait for one mass
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
+
+Check
+-----
+A pure normal mode: every mass moves at omega_k = 2 sqrt(k/m) sin(k pi / 2(n+1)),
+keeping the mode shape, so the state repeats after one period.
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-92
+
+.. code-block:: Python
+
+    assert drift < 1e-10
+    i_period = np.argmin(np.abs(result.t - period))
+    np.testing.assert_allclose(result.q[i_period], q0, atol=1e-4)
+    ratios = result.q[:, 1:][np.abs(result.q[:, 0]) > 0.05] / result.q[:, :1][np.abs(result.q[:, 0]) > 0.05]
+    np.testing.assert_allclose(ratios, np.broadcast_to(q0[1:] / q0[0], ratios.shape), atol=1e-6)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.461 seconds)
+   **Total running time of the script:** (0 minutes 1.412 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_lagrangian_plot_03_coupled_oscillators.py:

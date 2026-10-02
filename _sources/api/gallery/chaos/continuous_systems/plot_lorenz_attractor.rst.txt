@@ -38,12 +38,13 @@ integrates a trajectory with
 :meth:`physicskit.chaos.systems.continuous.Lorenz.trajectory` (the
 Numba-accelerated RK4 integrator) and plots it in 3D.
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-30
+.. GENERATED FROM PYTHON SOURCE LINES 22-31
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Lorenz
     from physicskit.chaos.visualizers.section import plot_poincare_map
@@ -57,14 +58,14 @@ Numba-accelerated RK4 integrator) and plots it in 3D.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-35
+.. GENERATED FROM PYTHON SOURCE LINES 32-36
 
 Integrate
 ---------
 We discard a short initial transient so the plotted trajectory starts
 already on the attractor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-38
+.. GENERATED FROM PYTHON SOURCE LINES 36-39
 
 .. code-block:: Python
 
@@ -78,12 +79,12 @@ already on the attractor.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-42
 
 Plot
 ----
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-51
+.. GENERATED FROM PYTHON SOURCE LINES 42-52
 
 .. code-block:: Python
 
@@ -109,7 +110,7 @@ Plot
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-63
+.. GENERATED FROM PYTHON SOURCE LINES 53-64
 
 Poincare section: slicing the butterfly
 --------------------------------------------
@@ -123,7 +124,7 @@ curved bands -- one per lobe -- whose thickness reveals the attractor's
 fine, sheet-like layered structure directly, without the 3D projection's
 self-occlusion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-78
+.. GENERATED FROM PYTHON SOURCE LINES 64-80
 
 .. code-block:: Python
 
@@ -145,6 +146,7 @@ self-occlusion.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_lorenz_attractor_002.png
    :alt: Lorenz Poincare section at $z = \rho - 1 = 27$
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_lorenz_attractor_002.png
@@ -154,10 +156,32 @@ self-occlusion.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
+
+Check
+-----
+The orbit winds around both unstable fixed points C+- = (+-sqrt(beta (rho - 1)), ., rho - 1),
+switching lobes; it is bounded, with the long-time mean <z> ~ 23.6.
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-89
+
+.. code-block:: Python
+
+    c_plus = np.sqrt(system.beta * (system.rho - 1))
+    assert states[:, 0].min() < -c_plus and states[:, 0].max() > c_plus
+    assert np.all(np.abs(states[:, :2]) < 30) and 0 < states[:, 2].min() and states[:, 2].max() < 50
+    assert abs(states[:, 2].mean() - 23.6) < 0.5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.076 seconds)
+   **Total running time of the script:** (0 minutes 0.071 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_lorenz_attractor.py:

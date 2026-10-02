@@ -103,3 +103,11 @@ axes[1].set_title("Precession (steady climb)")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Nutation and precession at the frequencies of small oscillations about the
+# V_eff minimum.
+assert abs(measured_nutation / predicted_nutation - 1) < 0.01
+assert abs(measured_precession / predicted_precession - 1) < 0.02

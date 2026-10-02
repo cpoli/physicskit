@@ -1485,7 +1485,7 @@ exponentially as the barrier separating the two wells grows taller
 (larger :math:`\lambda`) or wider (larger :math:`a`) -- a genuine 2D map
 in place of the single well used for the wavepacket dynamics above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-97
+.. GENERATED FROM PYTHON SOURCE LINES 76-98
 
 .. code-block:: Python
 
@@ -1513,6 +1513,7 @@ in place of the single well used for the wavepacket dynamics above.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_double_well_tunneling_003.png
    :alt: $\log_{10}(\Delta E)$: tunneling splitting collapses with barrier size
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_double_well_tunneling_003.png
@@ -1529,10 +1530,32 @@ in place of the single well used for the wavepacket dynamics above.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 99-103
+
+Check
+-----
+The particle tunnels back and forth with period 2 pi / Delta E; the
+splitting falls exponentially as the wells move apart.
+
+.. GENERATED FROM PYTHON SOURCE LINES 103-107
+
+.. code-block:: Python
+
+    assert abs(result.tunneling_period - 2 * np.pi / result.splitting) < 1e-9
+    P = dw.left_well_probability(result, np.array([0.0, result.tunneling_period / 2, result.tunneling_period]), side="left")
+    assert P[0] > 0.95 and P[1] < 0.05 and P[2] > 0.95
+    assert np.all(np.diff(splitting_map, axis=0) < 0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 22.537 seconds)
+   **Total running time of the script:** (2 minutes 21.888 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_potentials_plot_double_well_tunneling.py:

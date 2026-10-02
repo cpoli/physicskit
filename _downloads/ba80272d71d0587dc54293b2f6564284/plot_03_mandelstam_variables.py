@@ -113,3 +113,11 @@ ax.legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# s + t + u = sum of m_i^2, and s, t, u are Lorentz invariant; s = 2m^2 + 2mE.
+assert abs(s + t + u - mass_sum) < 1e-9
+assert abs(s - (2 * m**2 + 2 * m * E_beam)) < 1e-9
+np.testing.assert_allclose([s_boosted, t_boosted, u_boosted], [s, t, u], atol=1e-9)

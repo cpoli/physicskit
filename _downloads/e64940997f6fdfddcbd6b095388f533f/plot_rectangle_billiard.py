@@ -54,3 +54,10 @@ fig, ax = plot_billiard_trajectory(billiard, pos=billiard.sample_interior_point(
 fig, ax = plot_poincare_section(billiard, n_rays=25, n_bounces=150)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The rectangle is integrable: |v_x| and |v_y| are separately conserved.
+run = billiard.simulate(billiard.sample_interior_point(), (1.0, 0.35), n_bounces=100)
+assert np.ptp(np.abs(run["vx"])) < 1e-12 and np.ptp(np.abs(run["vy"])) < 1e-12

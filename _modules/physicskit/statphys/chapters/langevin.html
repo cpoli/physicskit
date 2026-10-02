@@ -717,9 +717,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_require_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_require_run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"call run() first"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span>
 
 <div class="viewcode-block" id="BrownianMotion.mean_squared_displacement">
 <a class="viewcode-back" href="../../../../api/statphys.html#physicskit.statphys.BrownianMotion.mean_squared_displacement">[docs]</a>
@@ -733,9 +734,9 @@
 <span class="sd">            :math:`\\langle |\\mathbf x(t) - \\mathbf x(0)|^2\\rangle`; for free</span>
 <span class="sd">            particles, :math:`2\\,d\\,D t`.</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
-        <span class="n">disp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">disp</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+        <span class="n">times</span><span class="p">,</span> <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">positions</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">disp</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BrownianMotion.measured_diffusion_coefficient">
@@ -750,10 +751,9 @@
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
-        <span class="n">disp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">t</span><span class="p">,</span> <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">positions</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">var</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">t</span><span class="p">)))</span></div>
 
 
@@ -768,12 +768,12 @@
 <span class="sd">            :math:`\\langle \\Delta\\mathbf x\\rangle\\cdot\\hat{\\mathbf F} /</span>
 <span class="sd">            (|\\mathbf F|\\, t)` at the last frame; ``nan`` without a force.</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
+        <span class="n">times</span><span class="p">,</span> <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_require_run</span><span class="p">()</span>
         <span class="n">fnorm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fnorm</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"nan"</span><span class="p">)</span>
-        <span class="n">drift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force</span> <span class="o">/</span> <span class="n">fnorm</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">drift</span> <span class="o">/</span> <span class="p">(</span><span class="n">fnorm</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
+        <span class="n">drift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force</span> <span class="o">/</span> <span class="n">fnorm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">drift</span> <span class="o">/</span> <span class="p">(</span><span class="n">fnorm</span> <span class="o">*</span> <span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
 </div>
 
 

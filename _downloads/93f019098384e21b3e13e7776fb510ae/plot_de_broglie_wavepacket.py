@@ -80,3 +80,11 @@ ax_w.legend(fontsize=8)
 fig2.tight_layout()
 
 print(f"Wigner peak location (x,p) index vs. expected ({x0}, {k0}): min W={W.min():.2e} (Gaussian states have W>=0)")
+
+# %%
+# Check
+# -----
+# The momentum distribution peaks at hbar k0 (to the FFT grid spacing), so
+# lambda = 2 pi / k0; a Gaussian packet has a non-negative Wigner function.
+assert abs(p_peak - k0) <= np.abs(np.diff(p)).max()
+assert W.min() > -1e-10

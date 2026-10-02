@@ -96,3 +96,14 @@ fig.tight_layout()
 # quantized Hall plateau itself possible.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The correlation hole: g(r) ~ r^(2m) vanishes at contact and climbs to
+# about 1 within a few magnetic lengths (beyond that, the finite droplet
+# pulls it down again); the interior density is the bulk value.
+assert g[r_g < 1].max() < 0.01
+assert 0.85 < g[(r_g > 3) & (r_g < 6)].max() < 1.1
+interior = r_n < 0.6 * R0
+assert abs(np.mean(density[interior]) / bulk_density - 1) < 0.15

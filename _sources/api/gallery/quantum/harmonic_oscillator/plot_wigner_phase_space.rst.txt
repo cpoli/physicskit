@@ -134,7 +134,7 @@ with no classical counterpart -- built here with
 and rendered with the (previously unused)
 :meth:`~physicskit.quantum.visualizers.phase_space.WignerVisualizer.plot_contour`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-78
+.. GENERATED FROM PYTHON SOURCE LINES 68-79
 
 .. code-block:: Python
 
@@ -148,6 +148,7 @@ and rendered with the (previously unused)
     fig2.tight_layout()
 
     print(f"min W of the superposition (non-classicality): {W_super.min():.4f}")
+
 
 
 
@@ -166,10 +167,33 @@ and rendered with the (previously unused)
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 80-85
+
+Check
+-----
+The position marginal of W is |psi|^2; the first excited state has
+W_1 = (2 rho^2 - 1) exp(-rho^2) / pi with rho^2 = x^2 + p^2 (hbar = m =
+omega = 1), negative near the origin; so is the superposition's.
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-89
+
+.. code-block:: Python
+
+    assert np.max(np.abs(marginal - psi1**2)) < 1e-8
+    rho2 = xg[:, None] ** 2 + p[None, :] ** 2
+    assert np.max(np.abs(W1 - (2 * rho2 - 1) * np.exp(-rho2) / np.pi)) < 1e-3
+    assert W_super.min() < -0.1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.419 seconds)
+   **Total running time of the script:** (0 minutes 0.375 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_harmonic_oscillator_plot_wigner_phase_space.py:

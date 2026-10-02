@@ -124,7 +124,7 @@ J(E) and T(E) across the librating energy range
 Validate T(E) against an actually-integrated trajectory
 ---------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-96
+.. GENERATED FROM PYTHON SOURCE LINES 73-97
 
 .. code-block:: Python
 
@@ -154,6 +154,7 @@ Validate T(E) against an actually-integrated trajectory
 
 
 
+
 .. image-sg:: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_03_action_angle_002.png
    :alt: Each closed curve is one invariant torus, labeled by J
    :srcset: /api/gallery/classical/hamiltonian/images/sphx_glr_plot_03_action_angle_002.png
@@ -171,10 +172,31 @@ Validate T(E) against an actually-integrated trajectory
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
+
+Check
+-----
+The small-oscillation period is 2 pi / sqrt(g/l); the predicted periods
+match the integrated orbits; and the frequency is dH/dJ = 2 pi / T.
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-105
+
+.. code-block:: Python
+
+    assert abs(periods[0] / sho_period - 1) < 5e-3 and np.all(np.diff(actions) > 0) and np.all(np.diff(periods) > 0)
+    omega_from_J = np.gradient(energies, actions)
+    np.testing.assert_allclose(omega_from_J[5:-5], 2 * np.pi / periods[5:-5], rtol=0.01)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.489 seconds)
+   **Total running time of the script:** (0 minutes 0.528 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_hamiltonian_plot_03_action_angle.py:

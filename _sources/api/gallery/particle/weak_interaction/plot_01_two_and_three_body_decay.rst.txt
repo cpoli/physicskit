@@ -182,7 +182,7 @@ Side by side
 Building up the spectrum event by event
 ---------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-98
+.. GENERATED FROM PYTHON SOURCE LINES 94-99
 
 .. code-block:: Python
 
@@ -190,6 +190,7 @@ Building up the spectrum event by event
     anim = animate_michel_histogram(x_samples_anim, batch_size=40)
 
     plt.show()
+
 
 
 
@@ -913,10 +914,31 @@ Building up the spectrum event by event
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 100-104
+
+Check
+-----
+Two-body: p* = (m_pi^2 - m_mu^2) / 2 m_pi exactly. Three-body: a continuous
+Michel spectrum with <x> = 0.7, and four-momentum conserved.
+
+.. GENERATED FROM PYTHON SOURCE LINES 104-107
+
+.. code-block:: Python
+
+    assert abs(p_star - (m_pi**2 - m_mu**2) / (2 * m_pi)) < 1e-9
+    assert abs(x_samples.mean() - 0.7) < 0.005
+    assert abs(invariant_mass([p_e, p_numu_bar, p_nue]) - m_mu) < 1e-9
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.004 seconds)
+   **Total running time of the script:** (0 minutes 3.831 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_weak_interaction_plot_01_two_and_three_body_decay.py:

@@ -81,3 +81,11 @@ fig2.tight_layout()
 anim = animate_neutrino_oscillation(L, E, theta, delta_m2)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# P = sin^2(2 theta) sin^2(1.267 dm^2 L / E) (dm^2 in eV^2, L in km, E in GeV),
+# and probability is conserved.
+np.testing.assert_allclose(P_mu, np.sin(2 * theta) ** 2 * np.sin(1.267 * delta_m2 * L / E) ** 2, atol=1e-3)
+assert np.allclose(P_e + P_mu, 1.0) and P_mu[0] == 0

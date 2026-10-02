@@ -160,7 +160,7 @@ conserved energy :math:`E = \tfrac{1}{2}v^2 + \tfrac{1}{2}\omega^2 x^2` far
 better than RK4 over long integrations because it exactly preserves
 phase-space volume.
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-135
+.. GENERATED FROM PYTHON SOURCE LINES 107-136
 
 .. code-block:: Python
 
@@ -195,6 +195,7 @@ phase-space volume.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/advanced/images/sphx_glr_plot_custom_system_002.png
    :alt: Harmonic oscillator (leapfrog), Leapfrog conserves energy far better than RK4
    :srcset: /api/gallery/chaos/advanced/images/sphx_glr_plot_custom_system_002.png
@@ -204,10 +205,30 @@ phase-space volume.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 137-141
+
+Check
+-----
+The Van der Pol limit cycle has amplitude ~2 whatever mu; leapfrog keeps the
+oscillator's energy error bounded at ~(omega dt)^2 / 8 instead of drifting.
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-143
+
+.. code-block:: Python
+
+    assert abs(np.abs(states[2500:, 0]).max() - 2.02) < 0.03
+    assert np.ptp(energy) / energy[0] < (omega * 0.05) ** 2 / 4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.145 seconds)
+   **Total running time of the script:** (0 minutes 1.089 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_advanced_plot_custom_system.py:

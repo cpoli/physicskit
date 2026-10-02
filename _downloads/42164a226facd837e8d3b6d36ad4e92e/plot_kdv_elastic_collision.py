@@ -78,3 +78,9 @@ ax2.set_xlabel("x")
 ax2.set_ylabel("t")
 ax2.set_title("Space-time diagram: fast soliton overtakes and passes through the slow one")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Solitons collide elastically: both emerge with their amplitudes c/2.
+assert surviving == [2.0, 4.5]

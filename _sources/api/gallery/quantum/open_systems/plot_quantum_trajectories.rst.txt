@@ -147,7 +147,7 @@ delays measured in photon-counting experiments; none are near zero
 because an atom just reset to its ground state cannot emit again
 immediately -- photon antibunching.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-84
+.. GENERATED FROM PYTHON SOURCE LINES 76-85
 
 .. code-block:: Python
 
@@ -162,6 +162,7 @@ immediately -- photon antibunching.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/open_systems/images/sphx_glr_plot_quantum_trajectories_003.png
    :alt: Waiting-time distribution between emitted photons
    :srcset: /api/gallery/quantum/open_systems/images/sphx_glr_plot_quantum_trajectories_003.png
@@ -171,10 +172,32 @@ immediately -- photon antibunching.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 86-91
+
+Check
+-----
+The trajectory average reproduces the master equation within its
+statistical error, and the driven two-level atom settles at the
+resonance-fluorescence steady state rho_ee = (Omega^2/4) / (Omega^2/2 + gamma^2/4).
+
+.. GENERATED FROM PYTHON SOURCE LINES 91-94
+
+.. code-block:: Python
+
+    assert err < 3 / np.sqrt(2000)
+    rho_ee_ss = (Omega**2 / 4) / (Omega**2 / 2 + gamma**2 / 4)
+    assert abs(rho_exact[-50:, 1, 1].real.mean() - rho_ee_ss) < 0.01
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.309 seconds)
+   **Total running time of the script:** (0 minutes 0.308 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_open_systems_plot_quantum_trajectories.py:

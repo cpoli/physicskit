@@ -57,7 +57,7 @@ x0, v0 = pk.plasma.two_stream_ic(20000, L=L, v_drift=3.0, v_th=0.5, seed=0)
 # The same deposit-solve-gather-push PIC loop used for Landau damping
 # now amplifies the seeded ripple instead of damping it.
 
-result = pk.plasma.pic_simulate(x0, v0, L=L, ng=64, dt=0.05, steps=400)
+result = pk.plasma.pic_simulate(x0, v0, L=L, ng=64, dt=0.05, steps=800)
 
 fig, axes = plt.subplots(1, 2, figsize=(11, 4))
 pk.plasma.plot_field_energy_history(result["t"], result["field_energy"], ax=axes[0])
@@ -83,6 +83,20 @@ plt.show()
 
 x0, v0 = pk.plasma.two_stream_ic(8000, L=L, v_drift=3.0, v_th=0.5, seed=0)
 
-anim = pk.plasma.animate_two_stream_phase_space(x0, v0, L=L, ng=64, dt=0.05, steps_per_frame=4, n_frames=60)
+anim = pk.plasma.animate_two_stream_phase_space(x0, v0, L=L, ng=64, dt=0.05, steps_per_frame=8, n_frames=70)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Cold counter-streaming beams (omega_b^2 = omega_p^2 / 2): the k = 0.3 mode
+# grows at gamma = sqrt(omega_b sqrt(4 k^2 v0^2 + omega_b^2) - k^2 v0^2 - omega_b^2) = 0.240
+# (slightly less with the beams' thermal spread), then saturates by trapping.
+t, log_fe = result["t"], np.log(result["field_energy"])
+early = (t > 5) & (t < 12)
+gamma_fit = np.polyfit(t[early], log_fe[early], 1)[0] / 2
+kv0, wb2 = 0.3 * 3.0, 0.5
+gamma_cold = np.sqrt(np.sqrt(wb2) * np.sqrt(4 * kv0**2 + wb2) - kv0**2 - wb2)
+assert 0.85 * gamma_cold < gamma_fit <= gamma_cold
+assert 20 < t[np.argmax(log_fe)] < 30 and log_fe[-1] > log_fe.max() - 2

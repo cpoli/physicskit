@@ -105,3 +105,10 @@ ax2.set_ylabel("total field energy")
 ax2.set_title("Confinement signature: energy grows linearly with separation")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# A confined flux tube costs energy linear in the separation (constant
+# string tension), unlike the Coulomb field's.
+assert fit[0] > 0 and linfit_error < 1e-5 * total_energy.max()

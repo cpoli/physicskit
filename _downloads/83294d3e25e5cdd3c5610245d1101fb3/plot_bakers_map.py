@@ -179,3 +179,11 @@ ax3.set_title(rf"Exact doubling every step: $\lambda = \ln 2 \approx {lam_plus:.
 ax3.legend()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The baker's map doubles horizontal separations exactly (lambda = ln 2),
+# halves vertical ones, and preserves area (exponents sum to zero).
+assert abs(lam_plus - np.log(2)) < 1e-12 and abs(lam_plus + lam_minus) < 1e-12
+np.testing.assert_allclose(separations[1:15] / separations[:14], 2.0, rtol=1e-4)

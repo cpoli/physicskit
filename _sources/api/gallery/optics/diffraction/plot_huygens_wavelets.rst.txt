@@ -54,12 +54,13 @@ of the aperture at every distance :math:`z`, while Huygens' picture
 predicts the diffractive spreading seen below as :math:`z` grows from
 0.05 mm to 2.0 mm.
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-44
+.. GENERATED FROM PYTHON SOURCE LINES 38-45
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.optics.visualizers import plot_diffraction_pattern
     from physicskit.optics.wave import angular_spectrum_propagate, circular_aperture
@@ -71,12 +72,12 @@ predicts the diffractive spreading seen below as :math:`z` grows from
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-47
+.. GENERATED FROM PYTHON SOURCE LINES 46-48
 
 A pinhole a few wavelengths across: an array of Huygens point sources
 -----------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-53
+.. GENERATED FROM PYTHON SOURCE LINES 48-54
 
 .. code-block:: Python
 
@@ -93,13 +94,13 @@ A pinhole a few wavelengths across: an array of Huygens point sources
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-57
+.. GENERATED FROM PYTHON SOURCE LINES 55-58
 
 Every open pixel re-radiates a spherical wavelet; angular_spectrum_propagate
 sums their interference at each successive plane -- Huygens' principle,
 computed exactly rather than approximated.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-72
+.. GENERATED FROM PYTHON SOURCE LINES 58-74
 
 .. code-block:: Python
 
@@ -121,6 +122,7 @@ computed exactly rather than approximated.
 
 
 
+
 .. image-sg:: /api/gallery/optics/diffraction/images/sphx_glr_plot_huygens_wavelets_001.png
    :alt: z = 0.05 mm close to the aperture's geometric shadow, z = 2.0 mm diffractive spreading well beyond the shadow
    :srcset: /api/gallery/optics/diffraction/images/sphx_glr_plot_huygens_wavelets_001.png
@@ -139,10 +141,32 @@ computed exactly rather than approximated.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 75-79
+
+Check
+-----
+Near the aperture (Fresnel number a^2 / lambda z = 4) the light stays in the
+geometric shadow's opening; far away (0.1) most of it has spread outside.
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+.. code-block:: Python
+
+    coords = (np.arange(256) - 128) * dx
+    outside = np.hypot(*np.meshgrid(coords, coords)) > radius
+    fraction_outside = [np.sum(np.abs(U[outside]) ** 2) / np.sum(np.abs(U) ** 2) for U in (U_near, U_far)]
+    assert fraction_outside[0] < 0.2 and fraction_outside[1] > 0.8
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.098 seconds)
+   **Total running time of the script:** (0 minutes 0.102 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_diffraction_plot_huygens_wavelets.py:

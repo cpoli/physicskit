@@ -12,13 +12,11 @@ space and 4th-order accurate in time. The first example shows its most basic
 signature -- a vortex patch's peak vorticity bleeding away under viscous
 diffusion, at a rate no inviscid simulation could reproduce. Another follows
 Richardson's qualitative cascade -- a few large eddies folding into ever
-finer filaments until viscosity takes over. The last pushes the same solver into a genuinely turbulent regime: many vortices of
-mixed sign interacting nonlinearly, cascading kinetic energy from the large
-scales they were seeded at down to small scales where viscosity finally
-dissipates it. Watch, in the energy spectrum plot, how a real inertial range
-lines up with Kolmogorov's predicted -5/3 power law over more than a decade
-of wavenumber -- one of the most-tested predictions in classical physics,
-reproduced here from nothing but the bare incompressible equations.
+finer filaments until viscosity takes over. The last adds steady random forcing and a large-scale drag, so that the
+flow reaches a statistically steady state with a constant energy flux
+through the scales. Its time-averaged energy spectrum follows Kolmogorov's
+predicted -5/3 power law over the range between the forcing scale and the
+drag scale.
 
 
 .. raw:: html
@@ -51,6 +49,23 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Kolmogorov&#x27;s picture is three-dimensional: energy fed in at large scales is handed down a chain of ever smaller eddies, at a rate \varepsilon independent of scale, until viscosity removes it. In that inertial range the spectrum can only depend on \varepsilon and k, so">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/navier_stokes/images/thumb/sphx_glr_plot_kolmogorov_cascade_3d_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/navier_stokes/plot_kolmogorov_cascade_3d`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kolmogorov's 1941 cascade in forced 3D turbulence</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Richardson (1922) pictured turbulence as a hierarchy of eddies:">
 
 .. only:: html
@@ -68,7 +83,7 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="NavierStokes2D integrates the 2D incompressible vorticity-transport equation \partial_t \omega + (\mathbf{u}\cdot\nabla)\omega = \nu \nabla^2 \omega pseudo-spectrally on a doubly periodic domain, with no external forcing: once set going, the flow&#x27;s kinetic energy only decays, redistributed across scales by the nonlinear advection term before viscosity ultimately dissipates it. Kolmogorov&#x27;s 1941 (K41) theory predicts that, in the &quot;inertial range&quot; of scales between where the flow was initially seeded and where viscosity dissipates it, the kinetic energy spectrum follows a universal power law,">
+    <div class="sphx-glr-thumbcontainer" tooltip="Kolmogorov&#x27;s 1941 theory concerns turbulence in a statistical steady state: energy is injected at some scale at a rate \varepsilon, passed through an &quot;inertial range&quot; of scales by the nonlinear terms alone, and removed elsewhere. If the statistics there depend only on \varepsilon and the wavenumber k, dimensional analysis fixes the energy spectrum,">
 
 .. only:: html
 
@@ -79,7 +94,7 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">The Kolmogorov -5/3 cascade in decaying 2D turbulence</div>
+      <div class="sphx-glr-thumbnail-title">The Kolmogorov -5/3 cascade in forced 2D turbulence</div>
     </div>
 
 
@@ -94,6 +109,7 @@ reproduced here from nothing but the bare incompressible equations.
    :hidden:
 
    /api/gallery/fluids/navier_stokes/plot_decaying_vortex_patch
+   /api/gallery/fluids/navier_stokes/plot_kolmogorov_cascade_3d
    /api/gallery/fluids/navier_stokes/plot_richardson_cascade
    /api/gallery/fluids/navier_stokes/plot_turbulent_cascade
 

@@ -109,7 +109,7 @@ Continuous flows
     Lorenz Lyapunov spectrum: [  0.88601347   0.01735502 -14.56993363] (sum = -13.667)
     Rossler Lyapunov spectrum: [ 0.07105687  0.00997877 -5.43497703] (sum = -5.354)
 
-    <matplotlib.legend.Legend object at 0x11f08cf80>
+    <matplotlib.legend.Legend object at 0x142bd0f20>
 
 
 
@@ -124,7 +124,7 @@ to exactly ``ln|b|``; the standard map is exactly area-preserving, so its
 spectrum must sum to exactly zero -- both hold regardless of how precisely
 the *individual* exponents are estimated.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-89
+.. GENERATED FROM PYTHON SOURCE LINES 69-90
 
 .. code-block:: Python
 
@@ -151,6 +151,7 @@ the *individual* exponents are estimated.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_lyapunov_spectrum_002.png
    :alt: Lyapunov spectra: Henon (dissipative) vs. Standard map (conservative)
    :srcset: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_lyapunov_spectrum_002.png
@@ -167,10 +168,34 @@ the *individual* exponents are estimated.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 91-96
+
+Check
+-----
+Lorenz: (0.906, 0, -14.57), summing to the divergence -(sigma + 1 + beta);
+Rossler: lambda_1 ~ 0.071; Henon: exponents sum to ln|b|, lambda_1 ~ 0.42;
+the area-preserving standard map: lambda_1 + lambda_2 = 0.
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-101
+
+.. code-block:: Python
+
+    lorenz_sum = -(systems["Lorenz"].sigma + 1 + systems["Lorenz"].beta)
+    assert abs(spectra["Lorenz"].sum() - lorenz_sum) < 1e-2 and abs(spectra["Lorenz"][0] - 0.906) < 0.05 and abs(spectra["Lorenz"][1]) < 0.05
+    assert abs(spectra["Rossler"][0] - 0.071) < 0.01 and abs(spectra["Rossler"][1]) < 0.02
+    assert abs(henon_spectrum.sum() - np.log(0.3)) < 1e-9 and abs(henon_spectrum[0] - 0.42) < 0.02
+    assert abs(standard_spectrum.sum()) < 1e-9 and standard_spectrum[0] > 0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.420 seconds)
+   **Total running time of the script:** (0 minutes 1.291 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_chaos_metrics_plot_lyapunov_spectrum.py:

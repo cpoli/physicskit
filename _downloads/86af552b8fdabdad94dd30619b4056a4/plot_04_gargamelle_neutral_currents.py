@@ -109,3 +109,12 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Llewellyn Smith ratio: subtracting missed muons recovers R_nu; the
+# data favour sin^2(theta_W) ~ 0.4, and R_nu = 0 (no neutral currents) is far excluded.
+assert abs(R_corr - R_nu(s2_true)) < 3 * np.sqrt(R_nu(s2_true) / n_muon)
+assert 0.3 < best < 0.5 and allowed.min() < 0.38 < allowed.max()
+assert R_nu_obs / R_nu_err > 5

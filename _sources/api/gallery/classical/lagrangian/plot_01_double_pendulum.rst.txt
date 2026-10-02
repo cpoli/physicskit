@@ -157,7 +157,7 @@ by Poincare).
 
     energy drift over 1e5 steps: 1.791e-07 (chaos below is real dynamics, not numerical error)
 
-    <matplotlib.legend.Legend object at 0x341c6b1a0>
+    <matplotlib.legend.Legend object at 0x1769cde20>
 
 
 
@@ -169,7 +169,7 @@ the divergence above is the real chaotic dynamics, not integration
 error. See also :doc:`plot_02_bead_on_rotating_hoop` and
 :doc:`plot_03_coupled_oscillators`, built the same symbolic way.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-101
+.. GENERATED FROM PYTHON SOURCE LINES 99-102
 
 .. code-block:: Python
 
@@ -183,9 +183,30 @@ error. See also :doc:`plot_02_bead_on_rotating_hoop` and
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 103-107
+
+Check
+-----
+The implicit midpoint rule conserves energy to 1e-6, so the rapid
+divergence of two pendulums 0.01 rad apart is genuine chaos.
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-109
+
+.. code-block:: Python
+
+    assert drift1 < 1e-6
+    assert np.abs(r1.q[-1, 0] - r2.q[-1, 0]) > 10 * 0.01
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.780 seconds)
+   **Total running time of the script:** (0 minutes 1.772 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_lagrangian_plot_01_double_pendulum.py:

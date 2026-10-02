@@ -163,7 +163,7 @@ advection term :math:`(\mathbf{u}\cdot\nabla)\omega` vanishes identically
 and only viscous diffusion acts: the peak vorticity should decay as
 :math:`e^{-2\nu t}`, with no free parameters to fit.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-99
+.. GENERATED FROM PYTHON SOURCE LINES 84-100
 
 .. code-block:: Python
 
@@ -185,6 +185,7 @@ and only viscous diffusion acts: the peak vorticity should decay as
 
 
 
+
 .. image-sg:: /api/gallery/fluids/navier_stokes/images/sphx_glr_plot_decaying_vortex_patch_002.png
    :alt: Peak-vorticity decay matches pure diffusion exactly
    :srcset: /api/gallery/fluids/navier_stokes/images/sphx_glr_plot_decaying_vortex_patch_002.png
@@ -200,10 +201,29 @@ and only viscous diffusion acts: the peak vorticity should decay as
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
+
+Check
+-----
+sin x sin y is an exact steady Euler solution, so Navier-Stokes only
+diffuses it: omega(t) = omega(0) e^(-2 nu t).
+
+.. GENERATED FROM PYTHON SOURCE LINES 105-106
+
+.. code-block:: Python
+
+    assert np.max(np.abs(peaks - analytic_decay) / analytic_decay) < 1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.381 seconds)
+   **Total running time of the script:** (0 minutes 0.401 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_navier_stokes_plot_decaying_vortex_patch.py:

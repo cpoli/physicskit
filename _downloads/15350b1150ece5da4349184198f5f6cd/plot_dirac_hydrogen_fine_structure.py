@@ -89,3 +89,15 @@ ax2[1].set_xlabel(r"$p_z / mc$")
 ax2[1].set_ylabel(r"$E / mc^2$")
 ax2[1].set_title(r"Free Dirac spectrum $E = \pm\sqrt{p^2 + m^2}$")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The 2P3/2 - 2P1/2 splitting is 10.95 GHz; at Z = 1 the alpha^4 expansion
+# matches the exact Dirac energy to order alpha^6; the free Dirac bands are
+# E = +-sqrt(p^2 + m^2), each doubly degenerate.
+assert abs(split_2p / 4.135667696e-15 / 1e9 - 10.95) < 0.01
+for n, j in ((1, 0.5), (2, 0.5), (2, 1.5)):
+    assert abs(dirac_hydrogen_energy(n, j, 1) - 1 - fine_structure_expansion(n, j, 1)) < alpha**6
+E_free = np.sqrt(1 + p**2)
+np.testing.assert_allclose(bands, np.column_stack([-E_free, -E_free, E_free, E_free]), atol=1e-12)

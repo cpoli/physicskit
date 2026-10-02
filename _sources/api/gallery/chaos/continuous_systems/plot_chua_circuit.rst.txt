@@ -47,12 +47,13 @@ itself, :func:`physicskit.chaos.visualizers.divergence.plot_lyapunov_divergence`
 quantifies the "chaotic" claim directly, by tracking how fast two initially
 nearby trajectories separate.
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-39
+.. GENERATED FROM PYTHON SOURCE LINES 31-40
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Chua
     from physicskit.chaos.visualizers.divergence import plot_lyapunov_divergence
@@ -66,12 +67,12 @@ nearby trajectories separate.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-42
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
 
 Integrate
 ---------
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-45
+.. GENERATED FROM PYTHON SOURCE LINES 43-46
 
 .. code-block:: Python
 
@@ -85,7 +86,7 @@ Integrate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-54
+.. GENERATED FROM PYTHON SOURCE LINES 47-55
 
 The double scroll, and the divergence that makes it chaotic
 -----------------------------------------------------------------
@@ -96,7 +97,7 @@ makes the "chaotic" claim quantitative: two trajectories launched an
 infinitesimal distance apart separate exponentially, at a rate
 :math:`\lambda_{\max} > 0`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-68
+.. GENERATED FROM PYTHON SOURCE LINES 55-70
 
 .. code-block:: Python
 
@@ -117,6 +118,7 @@ infinitesimal distance apart separate exponentially, at a rate
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_chua_circuit_001.png
    :alt: Chua's circuit: double-scroll attractor, Trajectory divergence: $\lambda_{max} \approx 0.706 > 0$
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_chua_circuit_001.png
@@ -126,10 +128,30 @@ infinitesimal distance apart separate exponentially, at a rate
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
+
+Check
+-----
+The double scroll is a bounded, chaotic attractor: positive lambda_max,
+and the orbit visits both scrolls (x changes sign).
+
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
+
+.. code-block:: Python
+
+    assert lam > 0.2
+    assert np.all(np.abs(states) < 5) and states[:, 0].min() < -1 < 1 < states[:, 0].max()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.540 seconds)
+   **Total running time of the script:** (0 minutes 0.399 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_chua_circuit.py:

@@ -152,7 +152,7 @@ once the chaotic trajectory is actually run out to the full
 ``target_steps``, which is exactly why the verification-and-shrink
 stage exists.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-123
+.. GENERATED FROM PYTHON SOURCE LINES 85-124
 
 .. code-block:: Python
 
@@ -197,6 +197,7 @@ stage exists.
 
 
 
+
 .. image-sg:: /api/gallery/classical/integrators/images/sphx_glr_plot_02_estimate_dt_001.png
    :alt: Kepler orbit: probe crossing = estimate_dt's answer, Double pendulum: probe crossing overshoots the answer
    :srcset: /api/gallery/classical/integrators/images/sphx_glr_plot_02_estimate_dt_001.png
@@ -206,10 +207,29 @@ stage exists.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 125-128
+
+Check
+-----
+estimate_dt meets the tolerance; Yoshida4's energy error falls as dt^4.
+
+.. GENERATED FROM PYTHON SOURCE LINES 128-130
+
+.. code-block:: Python
+
+    assert est_kepler.achieved_drift <= 1e-6 and est_dp.achieved_drift <= 1e-6
+    assert abs(np.polyfit(np.log(dts_kepler[:6]), np.log(drift_kepler[:6]), 1)[0] - 4) < 0.2
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.480 seconds)
+   **Total running time of the script:** (0 minutes 5.427 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_integrators_plot_02_estimate_dt.py:

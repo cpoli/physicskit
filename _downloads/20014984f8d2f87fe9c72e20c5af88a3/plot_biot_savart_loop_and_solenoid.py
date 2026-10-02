@@ -91,3 +91,14 @@ axes[2].set_ylabel("z (cm)")
 axes[2].set_title("solenoid field lines (xz plane)")
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Loop: B = mu0 I / 2R at the center. Finite solenoid on axis, in units of
+# mu0 n I: (L/2) / sqrt(R^2 + L^2/4) at the center, L / (2 sqrt(R^2 + L^2))
+# at either end (just under half the infinite-solenoid value).
+assert abs(B_loop[40] / (MU0 * I / (2 * R)) - 1) < 1e-4
+assert np.max(np.abs(B_loop / loop_axial_field(I, R, z) - 1)) < 1e-4
+assert abs(B_sol[40] / B_inf - (Ls / 2) / np.hypot(Rs, Ls / 2)) < 2e-3
+assert abs(B_sol[60] / B_inf - Ls / (2 * np.hypot(Rs, Ls))) < 2e-3

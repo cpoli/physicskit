@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from physicskit.chaos.systems.billiards import BunimovichStadium
+from physicskit.chaos.visualizers import billiard_trajectory_divergence
 from physicskit.chaos.visualizers.phase_space import plot_billiard_trajectory, plot_poincare_section
 
 billiard = BunimovichStadium(radius=1.0, straight_length=2.0)
@@ -37,3 +38,10 @@ fig, ax = plot_billiard_trajectory(billiard, pos=billiard.sample_interior_point(
 fig, ax = plot_poincare_section(billiard, n_rays=40, n_bounces=200)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Bunimovich's stadium is chaotic: neighbouring rays separate exponentially.
+_, separation = billiard_trajectory_divergence(billiard, pos=billiard.sample_interior_point(), vel=(0.5, 0.9), delta_0=1e-8, n_bounces=60)
+assert separation.max() > 1e4 * separation[0]

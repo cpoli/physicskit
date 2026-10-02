@@ -181,7 +181,7 @@ rescaled temperature axis -- should collapse all four lattice sizes onto
 a single universal curve near T_C if the fitted exponents are correct;
 how well the curves overlap is itself a visual check on the exponent fit.
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-134
+.. GENERATED FROM PYTHON SOURCE LINES 108-135
 
 .. code-block:: Python
 
@@ -214,6 +214,7 @@ how well the curves overlap is itself a visual check on the exponent fit.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ising/images/sphx_glr_plot_finite_size_scaling_002.png
    :alt: Susceptibility collapse, Order parameter collapse
    :srcset: /api/gallery/statphys/ising/images/sphx_glr_plot_finite_size_scaling_002.png
@@ -238,10 +239,33 @@ how well the curves overlap is itself a visual check on the exponent fit.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 136-141
+
+Check
+-----
+Onsager's exponents gamma/nu = 7/4 and beta/nu = 1/8, and the Binder
+crossing at T_C = 2 / ln(1 + sqrt 2). (nu itself is too noisy at these
+sizes to check, as noted above.)
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-145
+
+.. code-block:: Python
+
+    assert abs(gamma_over_nu - 1.75) < 0.1
+    assert abs(beta_over_nu - 0.125) < 0.03
+    assert abs(T_c_exact - 2 / np.log(1 + np.sqrt(2))) < 1e-12
+    assert abs(T_c_fss / T_c_exact - 1) < 0.02
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.535 seconds)
+   **Total running time of the script:** (0 minutes 0.514 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ising_plot_finite_size_scaling.py:

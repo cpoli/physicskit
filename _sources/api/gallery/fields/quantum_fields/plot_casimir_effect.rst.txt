@@ -980,7 +980,7 @@ plates separate, and the regularized zero-point energy is negative
 (attractive) everywhere, growing less negative -- weaker confinement of
 vacuum energy -- as the separation grows.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-71
+.. GENERATED FROM PYTHON SOURCE LINES 62-72
 
 .. code-block:: Python
 
@@ -997,6 +997,7 @@ vacuum energy -- as the separation grows.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -1009,10 +1010,31 @@ vacuum energy -- as the separation grows.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 73-77
+
+Check
+-----
+1D Casimir energy between mirrors: E(d) = -pi / (24 d) (hbar = c = 1), from
+modes omega_n = n pi / d: attractive at every separation.
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-80
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(energies, -np.pi / (24 * d_values), rtol=1e-6)
+    np.testing.assert_allclose(modes_at_small_d, np.arange(1, 6) * np.pi / d_values[0], rtol=1e-12)
+    assert np.all(np.diff(energies) > 0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.788 seconds)
+   **Total running time of the script:** (0 minutes 2.698 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_quantum_fields_plot_casimir_effect.py:

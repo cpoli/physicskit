@@ -146,7 +146,7 @@ for heavy ions the higher orders matter, and the ground state approaches
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x169dfd7c0>
+    <matplotlib.legend.Legend object at 0x3706b71d0>
 
 
 
@@ -160,7 +160,7 @@ has two doubly degenerate branches :math:`\pm\sqrt{p^2+m^2}`, separated by a
 gap of :math:`2mc^2`. Dirac interpreted the filled negative-energy "sea"
 as the origin of antiparticles.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-92
+.. GENERATED FROM PYTHON SOURCE LINES 83-93
 
 .. code-block:: Python
 
@@ -181,9 +181,34 @@ as the origin of antiparticles.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 94-99
+
+Check
+-----
+The 2P3/2 - 2P1/2 splitting is 10.95 GHz; at Z = 1 the alpha^4 expansion
+matches the exact Dirac energy to order alpha^6; the free Dirac bands are
+E = +-sqrt(p^2 + m^2), each doubly degenerate.
+
+.. GENERATED FROM PYTHON SOURCE LINES 99-104
+
+.. code-block:: Python
+
+    assert abs(split_2p / 4.135667696e-15 / 1e9 - 10.95) < 0.01
+    for n, j in ((1, 0.5), (2, 0.5), (2, 1.5)):
+        assert abs(dirac_hydrogen_energy(n, j, 1) - 1 - fine_structure_expansion(n, j, 1)) < alpha**6
+    E_free = np.sqrt(1 + p**2)
+    np.testing.assert_allclose(bands, np.column_stack([-E_free, -E_free, E_free, E_free]), atol=1e-12)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.117 seconds)
+   **Total running time of the script:** (0 minutes 0.118 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_relativistic_plot_dirac_hydrogen_fine_structure.py:

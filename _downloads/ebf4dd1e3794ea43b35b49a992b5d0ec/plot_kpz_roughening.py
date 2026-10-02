@@ -75,3 +75,10 @@ plt.show()
 
 print(f"Growth exponent beta = {beta_fit:.3f} (KPZ theory: 1/3)")
 print(f"Roughness exponent alpha = {alpha_fit:.3f} (KPZ theory: 1/2)")
+
+# %%
+# Check
+# -----
+# KPZ exponents in 1+1 dimensions: beta = 1/3, alpha = 1/2.
+assert abs(beta_fit - 1 / 3) < 0.03
+assert abs(alpha_fit - 1 / 2) < 0.05

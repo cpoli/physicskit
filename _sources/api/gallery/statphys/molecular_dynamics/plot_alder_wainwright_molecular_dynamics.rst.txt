@@ -134,7 +134,7 @@ The dense system starts on a square lattice, which is not its lowest
 energy state; as it rearranges into a triangular one it releases energy
 and warms up, so its temperature is reported as measured.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-127
+.. GENERATED FROM PYTHON SOURCE LINES 87-128
 
 .. code-block:: Python
 
@@ -181,6 +181,7 @@ and warms up, so its temperature is reported as measured.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/molecular_dynamics/images/sphx_glr_plot_alder_wainwright_molecular_dynamics_001.png
    :alt: Microcanonical energy conservation, Pair distribution function, Dense system: a crystal
    :srcset: /api/gallery/statphys/molecular_dynamics/images/sphx_glr_plot_alder_wainwright_molecular_dynamics_001.png
@@ -198,10 +199,32 @@ and warms up, so its temperature is reported as measured.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 129-134
+
+Check
+-----
+Velocity Verlet conserves energy to < 2%; forward Euler explodes. The
+dilute gas keeps its temperature; the dense system crystallizes with
+its first neighbour at the triangular-lattice spacing sqrt(2 / (sqrt(3) rho)).
+
+.. GENERATED FROM PYTHON SOURCE LINES 134-137
+
+.. code-block:: Python
+
+    assert abs(E_verlet[-1] - E_verlet[0]) / abs(E_verlet[0]) < 0.02
+    assert abs(E_euler[-1] - E_euler[0]) / abs(E_euler[0]) > 1
+    assert abs(r1 - np.sqrt(2 / (np.sqrt(3) * 0.9))) < 0.07
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.454 seconds)
+   **Total running time of the script:** (0 minutes 0.433 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_molecular_dynamics_plot_alder_wainwright_molecular_dynamics.py:

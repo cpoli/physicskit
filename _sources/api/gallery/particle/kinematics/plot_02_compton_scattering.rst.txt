@@ -135,7 +135,7 @@ form via :math:`E=1/\lambda`:
     max |numeric - formula| across all angles: 8.41e-14 MeV
     at theta=180 deg (backscatter): E' numeric = 0.071871 MeV, formula = 0.071871 MeV
 
-    <matplotlib.legend.Legend object at 0x16bcd1700>
+    <matplotlib.legend.Legend object at 0x34ff3de20>
 
 
 
@@ -144,7 +144,7 @@ form via :math:`E=1/\lambda`:
 The wavelength shift itself
 ---------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-87
+.. GENERATED FROM PYTHON SOURCE LINES 77-88
 
 .. code-block:: Python
 
@@ -166,9 +166,30 @@ The wavelength shift itself
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+Check
+-----
+Four-momentum conservation alone gives Compton's formula
+E' = E / (1 + (E/m)(1 - cos theta)), i.e. a wavelength shift (1 - cos theta) / m.
+
+.. GENERATED FROM PYTHON SOURCE LINES 93-95
+
+.. code-block:: Python
+
+    assert np.max(np.abs(E_numeric - E_formula)) < 1e-10
+    np.testing.assert_allclose(lambda_shift, lambda_shift_formula, atol=1e-8)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.063 seconds)
+   **Total running time of the script:** (0 minutes 0.060 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_kinematics_plot_02_compton_scattering.py:

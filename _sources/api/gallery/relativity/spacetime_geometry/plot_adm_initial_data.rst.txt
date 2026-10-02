@@ -153,7 +153,7 @@ Evaluated on spheres of growing radius it converges to
 holes momentarily at rest (their negative interaction energy is
 already hidden in the bare masses :math:`m_i`).
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-128
+.. GENERATED FROM PYTHON SOURCE LINES 86-129
 
 .. code-block:: Python
 
@@ -202,6 +202,7 @@ already hidden in the bare masses :math:`m_i`).
 
 
 
+
 .. image-sg:: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_adm_initial_data_001.png
    :alt: Schwarzschild slice: a wormhole throat, Brill-Lindquist $\ln\psi$ on the z = 0 plane, ADM mass from the falloff of the metric
    :srcset: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_adm_initial_data_001.png
@@ -223,10 +224,33 @@ already hidden in the bare masses :math:`m_i`).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 130-135
+
+Check
+-----
+Isotropic Schwarzschild: the areal radius has a minimum 2M at the throat
+r = M/2; Brill-Lindquist data satisfy the Hamiltonian constraint to O(h^2),
+and the ADM mass is m1 + m2 at every extraction radius.
+
+.. GENERATED FROM PYTHON SOURCE LINES 135-139
+
+.. code-block:: Python
+
+    assert abs(R_areal.min() - 2 * M) < 1e-3 and abs(r[np.argmin(R_areal)] - M / 2) < 0.01
+    assert np.max(np.abs(alpha**2 - (1 - 2 * M / R_areal))) < 1e-12
+    assert np.abs(lap[far]).max() < 1e-2
+    np.testing.assert_allclose(M_adm, 1.6, rtol=1e-4)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.157 seconds)
+   **Total running time of the script:** (0 minutes 0.149 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_spacetime_geometry_plot_adm_initial_data.py:

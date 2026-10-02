@@ -70,3 +70,16 @@ for ax, (label, M) in zip(axes, [("topological (M=0)", 0.0), ("trivial (M=2.0)",
 
 fig.suptitle("Haldane model: a chiral edge state needs a Chern number, not a special edge")
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# The last loop iteration is the trivial phase: its near-gap states sit in
+# the bulk. Redo the topological one: its in-gap states hug the edge.
+assert mean_r_weighted < mean_r_sites
+H, positions, _ = build_finite_cluster(haldane_lattice_hamiltonian(t=1.0, t2=0.2, phi=np.pi / 2, M=0.0), n_cells=(n_cells, n_cells), keep=in_disk)
+_, eigenvectors = np.linalg.eigh(H)
+mid = H.shape[0] // 2
+density = np.sum(np.abs(eigenvectors[:, mid - 3 : mid + 3]) ** 2, axis=1)
+r = np.linalg.norm(positions - center, axis=1)
+assert np.sum(r * density) / density.sum() > 0.85 * radius

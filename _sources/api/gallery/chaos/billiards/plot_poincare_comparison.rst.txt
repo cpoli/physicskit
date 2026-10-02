@@ -38,12 +38,13 @@ section for every billiard shape ``physicskit.chaos`` ships, from fully
 integrable (Circle, Rectangle) through mixed (Truncated Circle) to fully
 chaotic (Sinai, Bunimovich Stadium).
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-34
+.. GENERATED FROM PYTHON SOURCE LINES 22-35
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.billiards import (
         BunimovichStadium,
@@ -61,14 +62,14 @@ chaotic (Sinai, Bunimovich Stadium).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-39
+.. GENERATED FROM PYTHON SOURCE LINES 36-40
 
 Build one instance of each billiard and plot its Poincare section into its
 own subplot, using the ``ax=`` parameter of
 :func:`physicskit.chaos.visualizers.phase_space.plot_poincare_section` to draw into
 a shared figure.
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-55
+.. GENERATED FROM PYTHON SOURCE LINES 40-57
 
 .. code-block:: Python
 
@@ -91,6 +92,7 @@ a shared figure.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/billiards/images/sphx_glr_plot_poincare_comparison_001.png
    :alt: Circle (integrable), Rectangle (integrable), Truncated Circle (mixed), Sinai (chaotic), Bunimovich Stadium (chaotic)
    :srcset: /api/gallery/chaos/billiards/images/sphx_glr_plot_poincare_comparison_001.png
@@ -100,10 +102,36 @@ a shared figure.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 58-62
+
+Check
+-----
+Along one ray, an integrable billiard keeps |sin(phi)| on one or two
+values (one per wall orientation); a chaotic one visits hundreds.
+
+.. GENERATED FROM PYTHON SOURCE LINES 62-70
+
+.. code-block:: Python
+
+    n_values = {}
+    for name, billiard in billiards.items():
+        run = billiard.simulate(billiard.sample_interior_point(), (0.37, 0.93), n_bounces=400)
+        n_values[name] = len(np.unique(np.round(np.abs(run["sin_phi"]), 6)))
+    integrable = [name for name in billiards if isinstance(billiards[name], (CircleBilliard, RectangleBilliard))]
+    chaotic = [name for name in billiards if isinstance(billiards[name], (BunimovichStadium, SinaiBilliard))]
+    assert max(n_values[name] for name in integrable) <= 2
+    assert min(n_values[name] for name in chaotic) > 100
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.178 seconds)
+   **Total running time of the script:** (0 minutes 0.191 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_billiards_plot_poincare_comparison.py:

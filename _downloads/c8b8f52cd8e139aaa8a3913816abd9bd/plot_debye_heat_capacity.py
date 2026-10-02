@@ -85,3 +85,15 @@ ax2.set_ylabel(r"$C$ per mode ($k_B$)")
 ax2.set_title("Lattice heat capacity from the full phonon dispersion")
 ax2.legend(fontsize=8)
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Dulong-Petit at high T, the Debye T^3 law at low T, and the 1D chain's
+# linear law C = pi T / 3c with c = 1.
+assert abs(C_debye[-1] - 3) < 0.05
+low = T < 0.03
+np.testing.assert_allclose(C_debye[low], 12 * np.pi**4 / 5 * T[low] ** 3, rtol=0.01)
+C1 = lattice_heat_capacity(w1, T_lat)
+assert abs(C1[0] / (np.pi * T_lat[0] / 3) - 1) < 0.02
+assert abs(C1[-1] - 1) < 0.01

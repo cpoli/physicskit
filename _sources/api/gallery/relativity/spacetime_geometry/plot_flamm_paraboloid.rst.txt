@@ -45,12 +45,13 @@ proper distance as walking through the real curved space around the black
 hole -- for masses :math:`M` of increasing size (and correspondingly larger
 horizons :math:`r=2M`).
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-35
+.. GENERATED FROM PYTHON SOURCE LINES 29-36
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
     from physicskit.relativity.visualizers.spacetime_3d import plot_flamm_paraboloid
@@ -62,12 +63,12 @@ horizons :math:`r=2M`).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-38
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 The embedding surface for black holes of increasing mass
 ------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-46
+.. GENERATED FROM PYTHON SOURCE LINES 39-48
 
 .. code-block:: Python
 
@@ -82,6 +83,7 @@ The embedding surface for black holes of increasing mass
 
 
 
+
 .. image-sg:: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_flamm_paraboloid_001.png
    :alt: M=0.5 (horizon at r=1.0M), M=1.0 (horizon at r=2.0M), M=2.0 (horizon at r=4.0M)
    :srcset: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_flamm_paraboloid_001.png
@@ -91,10 +93,35 @@ The embedding surface for black holes of increasing mass
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 49-54
+
+Check
+-----
+Flamm's paraboloid z = sqrt(8M (r - 2M)) embeds the t = const equatorial
+slice: its arc length from the throat equals the proper radial distance
+integral of dr / sqrt(1 - 2M/r) = sqrt(r (r - 2M)) + 2M ln(sqrt(r/2M) + sqrt(r/2M - 1)).
+
+.. GENERATED FROM PYTHON SOURCE LINES 54-60
+
+.. code-block:: Python
+
+    z_flamm = np.linspace(0, np.sqrt(8 * (15.0 - 2)), 20001)
+    r_flamm = 2 + z_flamm**2 / 8
+    arc = np.sum(np.hypot(np.diff(r_flamm), np.diff(z_flamm)))
+    proper = np.sqrt(15.0 * 13.0) + 2 * np.log(np.sqrt(15.0 / 2) + np.sqrt(15.0 / 2 - 1))
+    assert abs(arc / proper - 1) < 1e-6
+    assert SchwarzschildBlackHole(M=2.0).horizon_radius == 4.0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.168 seconds)
+   **Total running time of the script:** (0 minutes 0.166 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_spacetime_geometry_plot_flamm_paraboloid.py:

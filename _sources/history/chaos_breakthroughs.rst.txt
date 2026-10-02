@@ -66,6 +66,50 @@ mecanique celeste* (Gauthier-Villars, 1892-1899).
 
 .. minigallery:: ../../examples/chaos/continuous_systems/plot_restricted_three_body.py
 
+1929 -- 1942 -- Andronov, Hopf, and the Birth of a Limit Cycle
+--------------------------------------------------------------
+
+Van der Pol's 1926 relaxation oscillator showed that a nonlinear circuit
+settles onto a self-sustained oscillation, a limit cycle, whatever its
+starting point. Aleksandr Andronov recognized in 1929 that Poincaré's
+limit cycles were the mathematical form of such self-oscillations, and
+with his school in Gorky worked out how one is born in a planar system:
+when the fixed point's two complex eigenvalues :math:`\mu \pm i\omega`
+cross the imaginary axis, a cycle appears around it. Eberhard Hopf proved
+the general :math:`n`-dimensional theorem in 1942. Near onset every such
+system reduces to the normal form
+
+.. math::
+
+   \dot r = \mu r + a r^3, \qquad \dot\phi = \omega,
+
+whose cycle radius :math:`\sqrt{-\mu/a}` grows continuously from zero when
+the first Lyapunov coefficient :math:`a` is negative (supercritical). When
+:math:`a > 0` (subcritical), the fixed point instead loses stability by
+merging with an unstable cycle, and the system jumps to a distant
+large-amplitude oscillation, with hysteresis when :math:`\mu` is lowered
+again. The Hopf bifurcation is the generic way oscillations start, in
+chemical clocks such as the Brusselator (Prigogine and Lefever, 1968),
+lasers, neurons and the vortex shedding behind a cylinder. It is also the
+first step of the Landau and Ruelle-Takens routes to turbulence below, a
+route to complexity distinct from Feigenbaum's period-doubling cascade.
+
+*Implementation:* :class:`physicskit.chaos.systems.bifurcations.HopfNormalForm`
+integrates the normal form with optional quintic term, and
+:meth:`~physicskit.chaos.systems.bifurcations.HopfNormalForm.limit_cycle_radii`
+gives its cycles and their stability in closed form;
+:class:`~physicskit.chaos.systems.bifurcations.Brusselator` has its Hopf
+point at :math:`b_c = 1 + a^2`, where its Jacobian's eigenvalues are
+:math:`\pm ia`.
+
+*References:* A. A. Andronov, *C. R. Acad. Sci. Paris* **189**, 559-561
+(1929); E. Hopf, *Ber. Math.-Phys. Kl. Sächs. Akad. Wiss. Leipzig* **94**,
+1-22 (1942); I. Prigogine and R. Lefever, *J. Chem. Phys.* **48**,
+1695-1700 (1968); J. E. Marsden and M. McCracken, *The Hopf Bifurcation
+and Its Applications* (Springer, 1976).
+
+.. minigallery:: ../../examples/chaos/bifurcations/plot_hopf_bifurcation.py
+
 1945 -- 1949 -- Cartwright, Littlewood, and Levinson: Chaos in the Forced Van der Pol Oscillator
 ------------------------------------------------------------------------------------------------
 
@@ -312,6 +356,53 @@ mechanism directly visible.
 Rossler, *Phys. Lett. A* **57**\(5), 397-398 (1976).
 
 .. minigallery:: ../../examples/chaos/continuous_systems/plot_rossler_attractor.py
+
+1975 -- Kuramoto and the Onset of Synchronization
+-------------------------------------------------
+
+Huygens noticed in 1665 that two pendulum clocks hung on the same beam fell
+into step. Fireflies flashing in unison, pacemaker cells in the heart and
+applauding audiences show the same collective synchronization of
+oscillators with different natural frequencies. Arthur Winfree (1967)
+modelled it as a phase transition in a population of weakly coupled
+limit-cycle oscillators. Yoshiki Kuramoto (1975) reduced each oscillator to
+its phase, coupled every pair with the same strength :math:`K`,
+
+.. math::
+
+   \dot\theta_i = \omega_i + \frac{K}{N}\sum_j \sin(\theta_j - \theta_i)
+   = \omega_i + K r \sin(\psi - \theta_i),
+
+and solved the model exactly as :math:`N \to \infty`. The mean field
+:math:`r e^{i\psi} = \langle e^{i\theta_j} \rangle` stays at zero until the
+critical coupling :math:`K_c = 2/(\pi g(0))`, set by the density of natural
+frequencies at their centre. Above it, the oscillators with
+:math:`|\omega_i| < Kr` lock to the mean field, and for a Lorentzian
+:math:`g(\omega)` of half-width :math:`\gamma`
+
+.. math::
+
+   r = \sqrt{1 - 2\gamma/K}.
+
+The model became the reference for synchronization in physics, biology
+and engineering (Josephson junction arrays, power grids), and the exact
+reduction found by Ott and Antonsen in 2008 later explained why the
+Lorentzian case is solvable in closed form.
+
+*Implementation:* :class:`physicskit.chaos.systems.synchronization.Kuramoto`
+integrates :math:`N` oscillators through the mean field, in :math:`O(N)`
+per step, with natural frequencies at the quantiles of a Lorentzian or
+Gaussian distribution;
+:func:`~physicskit.chaos.systems.synchronization.kuramoto_order_parameter_lorentzian`
+is the closed-form :math:`r(K)`.
+
+*References:* A. T. Winfree, *J. Theor. Biol.* **16**, 15-42 (1967); Y.
+Kuramoto, in *International Symposium on Mathematical Problems in
+Theoretical Physics*, Lecture Notes in Physics **39**, 420-422 (Springer,
+1975); S. H. Strogatz, *Physica D* **143**, 1-20 (2000); E. Ott and T. M.
+Antonsen, *Chaos* **18**, 037113 (2008).
+
+.. minigallery:: ../../examples/chaos/synchronization/plot_kuramoto_synchronization.py
 
 1975 -- 1978 -- Feigenbaum Universality
 ---------------------------------------

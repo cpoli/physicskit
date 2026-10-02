@@ -125,3 +125,12 @@ axes[2].set_title("the Itô drift correction")
 axes[2].legend(fontsize=8)
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Strong orders 1/2 (Euler-Maruyama) and 1 (Milstein); the Ito drift
+# correction: <ln X_T> = (mu - sigma^2/2) T, while <X_T> = e^(mu T).
+assert abs(order_em - 0.5) < 0.1 and abs(order_mil - 1.0) < 0.1
+assert abs(np.mean(np.log(exact_T)) - (mu - 0.5 * sigma**2) * T) < 3 * se_log
+assert abs(np.mean(exact_T) - np.exp(mu * T)) < 3 * se_x

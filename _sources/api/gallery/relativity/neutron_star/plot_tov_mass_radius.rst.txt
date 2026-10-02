@@ -116,7 +116,7 @@ The mass-radius relation and its maximum-mass turning point
 Interior structure profile of one representative star
 ------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-80
+.. GENERATED FROM PYTHON SOURCE LINES 63-81
 
 .. code-block:: Python
 
@@ -140,6 +140,7 @@ Interior structure profile of one representative star
 
 
 
+
 .. image-sg:: /api/gallery/relativity/neutron_star/images/sphx_glr_plot_tov_mass_radius_002.png
    :alt: Interior mass profile (M=1.400, R=9.586), Interior pressure profile
    :srcset: /api/gallery/relativity/neutron_star/images/sphx_glr_plot_tov_mass_radius_002.png
@@ -149,10 +150,31 @@ Interior structure profile of one representative star
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 82-86
+
+Check
+-----
+The Gamma = 2, K = 100 polytrope's maximum mass is the textbook 1.637 M
+(radius 7.7 M); beyond it dM/drho_c < 0, the unstable branch.
+
+.. GENERATED FROM PYTHON SOURCE LINES 86-89
+
+.. code-block:: Python
+
+    assert abs(masses[idx_max] - 1.637) < 0.005 and abs(radii[idx_max] - 7.7) < 0.1
+    assert np.all(np.diff(masses[: idx_max - 1]) > 0) and np.all(np.diff(masses[idx_max + 1 :]) < 0)
+    assert abs(m_profile[-1] - M) < 1e-6 and P_profile[0] > P_profile[-1] >= 0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.338 seconds)
+   **Total running time of the script:** (0 minutes 1.235 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_neutron_star_plot_tov_mass_radius.py:

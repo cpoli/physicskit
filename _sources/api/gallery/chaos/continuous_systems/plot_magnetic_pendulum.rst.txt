@@ -114,7 +114,7 @@ which magnet the bob settles near, and color each pixel accordingly. The
 resulting boundary between colors is a fractal -- zooming into any edge
 reveals more fine structure, forever.
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-72
+.. GENERATED FROM PYTHON SOURCE LINES 61-73
 
 .. code-block:: Python
 
@@ -132,6 +132,7 @@ reveals more fine structure, forever.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_magnetic_pendulum_002.png
    :alt: Magnetic pendulum: basin of attraction
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_magnetic_pendulum_002.png
@@ -141,10 +142,29 @@ reveals more fine structure, forever.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 74-77
+
+Check
+-----
+With friction the bob comes to rest above one of the three magnets.
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-79
+
+.. code-block:: Python
+
+    distance = np.min(np.linalg.norm(system.magnet_positions - states[-1, :2], axis=1))
+    assert distance < 0.05 and np.hypot(*states[-1, 2:]) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.308 seconds)
+   **Total running time of the script:** (0 minutes 8.797 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_magnetic_pendulum.py:

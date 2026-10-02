@@ -19,6 +19,7 @@ by point, as each new bounce occurs (right panel).
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.billiards import BunimovichStadium
 from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
@@ -40,3 +41,12 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("stadium_animation.gif", writer="pillow", fps=30)
+
+# %%
+# Check
+# -----
+# The stadium ray keeps its speed but visits a continuum of incidence angles
+# (chaotic), unlike an integrable billiard.
+run = billiard.simulate(billiard.sample_interior_point(), (0.5, 0.9), n_bounces=400)
+assert np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12
+assert len(np.unique(np.round(np.abs(run["sin_phi"]), 6))) > 100

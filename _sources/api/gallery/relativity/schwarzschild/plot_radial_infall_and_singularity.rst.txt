@@ -171,7 +171,7 @@ than the proper time to the horizon found above, exactly as it must be
 (the particle keeps falling, and keeps accumulating proper time, after
 crossing the horizon).
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-101
+.. GENERATED FROM PYTHON SOURCE LINES 91-102
 
 .. code-block:: Python
 
@@ -185,6 +185,7 @@ crossing the horizon).
     print("coordinate-bound precursor puzzle that made a fully coordinate-free proof necessary in the first place.")
 
     plt.show()
+
 
 
 
@@ -206,10 +207,32 @@ crossing the horizon).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 103-108
+
+Check
+-----
+Proper time from rest at R0: tau(r) = sqrt(R0^3 / 8M) (eta + sin eta) with
+r = R0 (1 + cos eta) / 2 -- finite at the horizon (and at r = 0), while
+dt/dtau grows without bound as r -> 2M.
+
+.. GENERATED FROM PYTHON SOURCE LINES 108-111
+
+.. code-block:: Python
+
+    eta = np.arccos(2 * r[-1] / R0 - 1)
+    assert abs(tau[-1] - np.sqrt(R0**3 / (8 * M)) * (eta + np.sin(eta))) < 1e-3
+    assert tau[-1] < tau_r0 and dt_dtau[-10] > 100 * dt_dtau[10]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.120 seconds)
+   **Total running time of the script:** (0 minutes 0.106 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_schwarzschild_plot_radial_infall_and_singularity.py:

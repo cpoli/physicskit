@@ -71,3 +71,13 @@ fig.tight_layout()
 min_over_k = np.min(np.abs(ribbon_bands), axis=1)
 print(f"bulk gap (away from edge crossings): ~{np.median(min_over_k[min_over_k > 0.5]):.3f}")
 print(f"minimum |E| reached by an edge-crossing state: {min_over_k.min():.4f}")
+
+# %%
+# Check
+# -----
+# C = 1 below M_c = 3 sqrt(3) t2 |sin phi| and 0 above it; the edge bands
+# of the C = 1 ribbon cross the bulk gap.
+chern = np.array(chern)
+assert np.all(chern[M_values < 0.95 * M_c] == 1)
+assert np.all(chern[M_values > 1.05 * M_c] == 0)
+assert min_over_k.min() < 0.05 < 0.5 < np.median(min_over_k[min_over_k > 0.5])

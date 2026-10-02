@@ -128,3 +128,12 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The peak width is the photon resolution, 1.2% x M_H / sqrt(2); the median
+# significance grows as sqrt(L) and passes 5 sigma within the scan.
+assert abs(np.std(signal_pool) / (0.012 * M_H / np.sqrt(2)) - 1) < 0.15
+assert abs(Z_median[-1] / (Z_median[2] * np.sqrt(lumis[-1] / lumis[2])) - 1) < 0.25
+assert Z_median[0] < 5 < Z_median[-1]

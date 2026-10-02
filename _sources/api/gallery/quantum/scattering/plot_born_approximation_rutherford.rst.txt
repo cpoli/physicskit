@@ -98,7 +98,7 @@ Different potentials with the same strength scatter differently because
 their Fourier transforms differ: a Gaussian well cuts off large momentum
 transfers exponentially, a Yukawa potential only as a power law.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-66
+.. GENERATED FROM PYTHON SOURCE LINES 51-67
 
 .. code-block:: Python
 
@@ -120,6 +120,7 @@ transfers exponentially, a Yukawa potential only as a power law.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/scattering/images/sphx_glr_plot_born_approximation_rutherford_002.png
    :alt: Born amplitudes of three attractive potentials
    :srcset: /api/gallery/quantum/scattering/images/sphx_glr_plot_born_approximation_rutherford_002.png
@@ -129,10 +130,30 @@ transfers exponentially, a Yukawa potential only as a power law.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 68-72
+
+Check
+-----
+The Yukawa Born amplitude is -2 m g / (q^2 + mu^2); the numerical Born
+integral reproduces it, and as mu -> 0 |f|^2 becomes Rutherford's formula.
+
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(f_num, yukawa_born_amplitude(momentum_transfer(k, theta_num), g, 0.5, mass), rtol=1e-4)
+    np.testing.assert_allclose(yukawa_born_amplitude(q, g, 1e-8, mass) ** 2, rutherford_dsigma_domega(theta, 1, 1, E_kin, alpha=g), rtol=1e-8)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.217 seconds)
+   **Total running time of the script:** (0 minutes 0.195 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_scattering_plot_born_approximation_rutherford.py:

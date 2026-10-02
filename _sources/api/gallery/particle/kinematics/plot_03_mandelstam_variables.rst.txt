@@ -184,7 +184,7 @@ the momentum-transfer invariants move while s (fixed by the beam
 energy alone) stays put -- t=0 at theta=0 (forward, no momentum
 transferred to particle 3) and u=0 at theta=180 (backward).
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-116
+.. GENERATED FROM PYTHON SOURCE LINES 97-117
 
 .. code-block:: Python
 
@@ -210,6 +210,7 @@ transferred to particle 3) and u=0 at theta=180 (backward).
 
 
 
+
 .. image-sg:: /api/gallery/particle/kinematics/images/sphx_glr_plot_03_mandelstam_variables_001.png
    :alt: t and u vs. scattering angle, at fixed s=8.000
    :srcset: /api/gallery/particle/kinematics/images/sphx_glr_plot_03_mandelstam_variables_001.png
@@ -219,10 +220,30 @@ transferred to particle 3) and u=0 at theta=180 (backward).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 118-121
+
+Check
+-----
+s + t + u = sum of m_i^2, and s, t, u are Lorentz invariant; s = 2m^2 + 2mE.
+
+.. GENERATED FROM PYTHON SOURCE LINES 121-124
+
+.. code-block:: Python
+
+    assert abs(s + t + u - mass_sum) < 1e-9
+    assert abs(s - (2 * m**2 + 2 * m * E_beam)) < 1e-9
+    np.testing.assert_allclose([s_boosted, t_boosted, u_boosted], [s, t, u], atol=1e-9)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.046 seconds)
+   **Total running time of the script:** (0 minutes 0.040 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_kinematics_plot_03_mandelstam_variables.py:

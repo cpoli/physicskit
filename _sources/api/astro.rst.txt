@@ -18,5 +18,11 @@ physicskit.astro
 .. automodule:: physicskit.astro.galactic_dynamics
    :members:
 
+.. automodule:: physicskit.astro.sph
+   :members:
+
+.. automodule:: physicskit.astro.radiative_transfer
+   :members:
+
 .. automodule:: physicskit.astro.visualizers
    :members:

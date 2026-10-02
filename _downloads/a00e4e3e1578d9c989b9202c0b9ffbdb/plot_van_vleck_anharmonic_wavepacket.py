@@ -135,3 +135,11 @@ for hbar, F in fidelity.items():
     print(f"hbar = {hbar}: 1 - fidelity = {1 - F:.2e}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# In an anharmonic well the Van Vleck-Morette packet converges to the exact
+# one as hbar -> 0.
+infidelity = [1 - fidelity[h] for h in (1.0, 0.3, 0.1)]
+assert np.all(np.diff(infidelity) < 0) and infidelity[-1] < 5e-3

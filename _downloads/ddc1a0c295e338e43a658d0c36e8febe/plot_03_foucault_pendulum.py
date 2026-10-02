@@ -96,3 +96,12 @@ ax3.set_title("Energy conserved despite the precessing swing plane")
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The swing plane turns once per sidereal day / sin(latitude) (31.8 h in
+# Paris); the integration matches the analytic solution and conserves energy.
+sidereal_day = 86164.1
+assert abs(system.precession_period() - sidereal_day / np.sin(np.radians(48.85))) < 1e-3 * system.precession_period()
+assert np.max(np.abs(x - x_analytic)) < 1e-5 and np.max(drift) < 1e-10

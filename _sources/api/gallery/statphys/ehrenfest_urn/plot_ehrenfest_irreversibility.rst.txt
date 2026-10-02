@@ -122,7 +122,7 @@ grows -- the same law of large numbers that makes a macroscopic urn's
 approach to equilibrium look deterministic even though the underlying
 per-ball dynamics is exactly reversible.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-95
+.. GENERATED FROM PYTHON SOURCE LINES 68-96
 
 .. code-block:: Python
 
@@ -156,6 +156,7 @@ per-ball dynamics is exactly reversible.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ehrenfest_urn/images/sphx_glr_plot_ehrenfest_irreversibility_002.png
    :alt: Relaxation collapses onto one curve in t/N, Larger N: relatively smaller entropy fluctuations
    :srcset: /api/gallery/statphys/ehrenfest_urn/images/sphx_glr_plot_ehrenfest_irreversibility_002.png
@@ -172,10 +173,32 @@ per-ball dynamics is exactly reversible.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 97-101
+
+Check
+-----
+The urn relaxes to the maximum-entropy state N/2 per box, and the late-time
+fluctuations of n_left/N are binomial, sqrt(N/4)/N = 1/(2 sqrt(N)).
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
+
+.. code-block:: Python
+
+    S_max = EhrenfestUrn(n_balls=500, n_left_init=250).entropy()
+    assert history["entropy"][0] == 0 and history["entropy"][-1] > 0.99 * S_max
+    late_std = np.std(scan_history["n_left"][int(0.8 * n_steps) :] / N)
+    assert abs(late_std / (1 / (2 * np.sqrt(N))) - 1) < 0.3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.220 seconds)
+   **Total running time of the script:** (0 minutes 0.210 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ehrenfest_urn_plot_ehrenfest_irreversibility.py:

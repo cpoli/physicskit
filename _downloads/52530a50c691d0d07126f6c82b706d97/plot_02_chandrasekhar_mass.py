@@ -87,3 +87,13 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# M_Ch = 1.457 Msun (2 / mu_e)^2; an n = 3 polytrope's mass is independent
+# of rho_c, while an n = 1.5 one scales as rho_c^((3 - n) / 2n) = rho_c^(1/2).
+assert abs(chandrasekhar_mass(2.0) - 1.457) < 0.005
+np.testing.assert_allclose(M_ch, chandrasekhar_mass(2.0) * (2.0 / mu_e_values) ** 2, rtol=1e-10)
+np.testing.assert_allclose(masses_n3, star_low.mass, rtol=1e-10)
+assert abs(star15_high.mass / star15_low.mass - 1000**0.5) < 1e-6 * 1000**0.5

@@ -103,7 +103,7 @@ whatever :math:`\tau` is.
     tau = 1.0: sum-rule integral = 1.5703 (pi n q^2 / 2m = 1.5708)
     tau = 3.0: sum-rule integral = 1.5706 (pi n q^2 / 2m = 1.5708)
 
-    <matplotlib.legend.Legend object at 0x123c2b170>
+    <matplotlib.legend.Legend object at 0x3706ca390>
 
 
 
@@ -149,7 +149,7 @@ With :math:`\mathbf E = E\hat x`, the Hall angle
 :math:`\tan\theta_H = \omega_c\tau` rotates the current away from the
 field direction.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-92
+.. GENERATED FROM PYTHON SOURCE LINES 80-93
 
 .. code-block:: Python
 
@@ -168,6 +168,7 @@ field direction.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/transport/images/sphx_glr_plot_drude_model_002.png
    :alt: Hall angle vs. field
    :srcset: /api/gallery/condensed/transport/images/sphx_glr_plot_drude_model_002.png
@@ -177,10 +178,33 @@ field direction.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 94-98
+
+Check
+-----
+f-sum rule; rho_xx = 1/sigma_0 independent of B (no magnetoresistance);
+R_H = 1/(nq); Hall angle arctan(omega_c tau).
+
+.. GENERATED FROM PYTHON SOURCE LINES 98-103
+
+.. code-block:: Python
+
+    assert abs(area - np.pi / 2) < 1e-3
+    np.testing.assert_allclose(rho[:, 0, 0], 1 / sigma0, rtol=1e-12)
+    np.testing.assert_allclose(np.abs(rho[:, 1, 0]), np.abs(B) / n, rtol=1e-12, atol=1e-12)
+    assert np.isclose(hall_coefficient(n, q), 1 / (n * q))
+    np.testing.assert_allclose(np.arctan2(-sigma_yx, sigma_xx), np.arctan(wct), atol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.103 seconds)
+   **Total running time of the script:** (0 minutes 0.106 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_transport_plot_drude_model.py:

@@ -75,3 +75,9 @@ plt.show()
 # displaying it interactively, use e.g.::
 #
 #     anim.save("kdv_translation.gif", writer="pillow", fps=20)
+
+# %%
+# Check
+# -----
+# The soliton translates at speed c without changing shape (amplitude c/2).
+assert shape_error < 1e-4 and abs(u.max() - c / 2) < 0.01

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>physicskit.semiclassical.core.wkb &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.semiclassical.core.wkb &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -54,7 +54,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../../../../_static/searchtools.js"></script>
@@ -150,6 +150,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -281,6 +288,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -435,6 +449,11 @@
 <span class="sd">:math:`\int_{x_1}^{x_2}p\,dx=(n+\tfrac12)\pi\hbar` -- is the</span>
 <span class="sd">one-dimensional Einstein-Brillouin-Keller (EBK) rule implemented by</span>
 <span class="sd">:func:`bohr_sommerfeld_energies`.</span>
+
+<span class="sd">For the radial motion of a central-force problem the same rule fails</span>
+<span class="sd">unless the centrifugal term is changed: :func:`langer_corrected_wkb`</span>
+<span class="sd">applies Langer's (1937) replacement :math:`l(l+1)\to(l+\tfrac12)^2`,</span>
+<span class="sd">which makes radial WKB give the exact hydrogen spectrum.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
@@ -451,6 +470,7 @@
     <span class="s2">"wkb_action"</span><span class="p">,</span>
     <span class="s2">"bohr_sommerfeld_energies"</span><span class="p">,</span>
     <span class="s2">"wkb_wavefunction"</span><span class="p">,</span>
+    <span class="s2">"langer_corrected_wkb"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -731,6 +751,131 @@
     <span class="k">if</span> <span class="n">norm</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">/</span> <span class="n">norm</span>
     <span class="k">return</span> <span class="n">psi</span></div>
+
+
+
+<div class="viewcode-block" id="langer_corrected_wkb">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.langer_corrected_wkb">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">langer_corrected_wkb</span><span class="p">(</span>
+    <span class="n">V</span><span class="p">,</span>
+    <span class="n">l</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">r_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">n_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">langer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">E_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">r_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
+    <span class="n">n_search</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Radial WKB bound-state energies, with or without the Langer correction.</span>
+
+<span class="sd">    The radial Schrodinger equation for :math:`u(r)=rR(r)` is a 1D problem</span>
+<span class="sd">    on :math:`r&gt;0` with effective potential</span>
+<span class="sd">    :math:`V(r)+\hbar^2 l(l+1)/(2mr^2)`. Applying the WKB rule</span>
+<span class="sd">    :math:`\int_{r_1}^{r_2}p\,dr=(n_r+\tfrac12)\pi\hbar` to it directly</span>
+<span class="sd">    gives wrong energies, because the WKB phase near :math:`r=0` is not</span>
+<span class="sd">    the phase of the true solution :math:`u\sim r^{l+1}`. Langer (1937)</span>
+<span class="sd">    showed that the substitution :math:`r=e^x` turns the radial problem</span>
+<span class="sd">    into one on the whole line, where WKB applies cleanly, and that the</span>
+<span class="sd">    result is the same as using</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       V_{\rm eff}(r) = V(r) + \frac{\hbar^2(l+\tfrac12)^2}{2mr^2}</span>
+
+<span class="sd">    in the ordinary WKB rule. With this correction WKB gives the exact</span>
+<span class="sd">    hydrogen levels :math:`E=-mk^2/(2\hbar^2(n_r+l+1)^2)` for</span>
+<span class="sd">    :math:`V=-k/r`, and the exact 3D harmonic-oscillator levels</span>
+<span class="sd">    :math:`\hbar\omega(2n_r+l+\tfrac32)`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    V : callable</span>
+<span class="sd">        Radial potential ``V(r)``, vectorized over a NumPy array.</span>
+<span class="sd">    l : int</span>
+<span class="sd">        Orbital angular momentum quantum number.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    r_max : float</span>
+<span class="sd">        Outer edge of the radial domain; every outer turning point must</span>
+<span class="sd">        lie inside it.</span>
+<span class="sd">    n_max : int</span>
+<span class="sd">        Number of radial levels to compute (:math:`n_r=0,\dots,n_{max}-1`).</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+<span class="sd">    langer : bool, default=True</span>
+<span class="sd">        Use :math:`(l+\tfrac12)^2`; if False, use the uncorrected</span>
+<span class="sd">        :math:`l(l+1)`.</span>
+<span class="sd">    E_max : float, optional</span>
+<span class="sd">        Upper bracket for the root search. Defaults to</span>
+<span class="sd">        :math:`V_{\rm eff}(r_{max})`, the highest energy whose outer</span>
+<span class="sd">        turning point is still inside the domain.</span>
+<span class="sd">    r_min : float, default=1e-8</span>
+<span class="sd">        Inner edge of the radial domain. If :math:`V_{\rm eff}` has no</span>
+<span class="sd">        inner turning point (:math:`l=0` without the Langer correction,</span>
+<span class="sd">        for a Coulomb potential), the action integral starts here.</span>
+<span class="sd">    n_search : int, default=4000</span>
+<span class="sd">        Number of log-spaced grid points used to bracket turning points.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape (n_max,)</span>
+<span class="sd">        Energies for :math:`n_r=0,\dots,n_{max}-1`, ascending.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If a level lies above ``E_max`` (increase ``r_max``).</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    bohr_sommerfeld_energies : The same rule for a potential on the whole line.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    R. E. Langer, "On the Connection Formulas and the Solutions of the</span>
+<span class="sd">    Wave Equation," Phys. Rev. **51**, 669-676 (1937).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    With the correction, WKB reproduces the hydrogen 2p, 3p, 4p levels</span>
+<span class="sd">    :math:`-1/(2n^2)` exactly; without it, it does not:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; V = lambda r: -1.0 / r</span>
+<span class="sd">    &gt;&gt;&gt; np.round(langer_corrected_wkb(V, l=1, m=1.0, r_max=200.0, n_max=3), 6)</span>
+<span class="sd">    array([-0.125   , -0.055556, -0.03125 ])</span>
+<span class="sd">    &gt;&gt;&gt; np.round(langer_corrected_wkb(V, l=1, m=1.0, r_max=200.0, n_max=3, langer=False), 4)</span>
+<span class="sd">    array([-0.1365, -0.0589, -0.0326])</span>
+<span class="sd">    """</span>
+    <span class="n">centrifugal</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">langer</span> <span class="k">else</span> <span class="n">l</span> <span class="o">*</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">V_eff</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">V</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">hbar</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">centrifugal</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">n_search</span><span class="p">)</span>
+    <span class="n">V_grid</span> <span class="o">=</span> <span class="n">V_eff</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+    <span class="n">E_lo</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">V_grid</span><span class="p">))</span>
+    <span class="n">E_hi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">V_grid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">E_max</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">E_max</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">action</span><span class="p">(</span><span class="n">E</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">E</span> <span class="o">-</span> <span class="n">V_eff</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="p">[</span><span class="n">brentq</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">E</span> <span class="o">-</span> <span class="n">V_eff</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">rs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">rs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">f</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">roots</span> <span class="ow">and</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">r_min</span> <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">roots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">r_max</span> <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">roots</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">S</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">-</span> <span class="n">V_eff</span><span class="p">(</span><span class="n">r</span><span class="p">)),</span> <span class="mf">0.0</span><span class="p">)),</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">S</span>
+
+    <span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_max</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">hbar</span>
+        <span class="k">if</span> <span class="n">action</span><span class="p">(</span><span class="n">E_hi</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"level n_r=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> lies above E_max=</span><span class="si">{</span><span class="n">E_hi</span><span class="si">:</span><span class="s2">.6g</span><span class="si">}</span><span class="s2">; increase r_max."</span><span class="p">)</span>
+        <span class="n">energies</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="k">lambda</span> <span class="n">E</span><span class="p">:</span> <span class="n">action</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="o">-</span> <span class="n">target</span><span class="p">,</span> <span class="n">E_lo</span> <span class="o">+</span> <span class="mf">1e-12</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">E_lo</span><span class="p">),</span> <span class="n">E_hi</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-13</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">energies</span></div>
 
 </pre></div>
 

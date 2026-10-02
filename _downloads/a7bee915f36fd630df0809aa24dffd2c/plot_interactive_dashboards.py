@@ -65,3 +65,11 @@ fig = interactive_particle_snapshot(gas)
 fig.write_html("lj_gas_interactive.html")
 
 print("Wrote 3 standalone interactive HTML files.")
+
+# %%
+# Check
+# -----
+# The Wolff sweep is ordered below T_C and disordered above it.
+m = np.asarray(result["M"])
+assert m[result["T"] < model.T_C - 0.5].min() > 0.8
+assert m[result["T"] > model.T_C + 0.5].max() < 0.35

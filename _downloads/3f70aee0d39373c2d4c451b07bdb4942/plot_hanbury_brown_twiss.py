@@ -101,3 +101,9 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# g2(0) = 2 (thermal), 1 (coherent), 1 - 1/k (Fock |k>).
+assert abs(g2_thermal - 2) < 1e-3 and abs(g2_coherent - 1) < 1e-6 and abs(g2_fock - (1 - 1 / k)) < 1e-12

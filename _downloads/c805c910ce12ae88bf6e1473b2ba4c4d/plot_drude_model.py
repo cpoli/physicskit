@@ -89,3 +89,14 @@ ax2.set_ylabel("Hall angle (degrees)")
 ax2.set_title("Hall angle vs. field")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# f-sum rule; rho_xx = 1/sigma_0 independent of B (no magnetoresistance);
+# R_H = 1/(nq); Hall angle arctan(omega_c tau).
+assert abs(area - np.pi / 2) < 1e-3
+np.testing.assert_allclose(rho[:, 0, 0], 1 / sigma0, rtol=1e-12)
+np.testing.assert_allclose(np.abs(rho[:, 1, 0]), np.abs(B) / n, rtol=1e-12, atol=1e-12)
+assert np.isclose(hall_coefficient(n, q), 1 / (n * q))
+np.testing.assert_allclose(np.arctan2(-sigma_yx, sigma_xx), np.arctan(wct), atol=1e-12)

@@ -42,7 +42,7 @@ the same trajectory is also drawn with a plain Matplotlib ``mplot3d`` axes
 side by side with the PyVista render, so the two can be compared directly on
 the same attractor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-40
+.. GENERATED FROM PYTHON SOURCE LINES 26-41
 
 .. code-block:: Python
 
@@ -50,6 +50,7 @@ the same attractor.
     from __future__ import annotations
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Rossler
 
@@ -67,14 +68,14 @@ the same attractor.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-45
+.. GENERATED FROM PYTHON SOURCE LINES 42-46
 
 Render the Rossler attractor
 ---------------------------------
 Colored by sample index (time), so the direction of travel around the
 attractor's two lobes is visible at a glance.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
+.. GENERATED FROM PYTHON SOURCE LINES 46-49
 
 .. code-block:: Python
 
@@ -88,7 +89,7 @@ attractor's two lobes is visible at a glance.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-58
+.. GENERATED FROM PYTHON SOURCE LINES 50-59
 
 Side by side: projected depth vs. a real 3D scene
 -------------------------------------------------------
@@ -100,7 +101,7 @@ is only a static screenshot, but even that single frame already shows a
 cleaner separation of near/far strands than the ``mplot3d`` panel, thanks
 to PyVista's real depth-buffered rendering.
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-93
+.. GENERATED FROM PYTHON SOURCE LINES 59-95
 
 .. code-block:: Python
 
@@ -142,6 +143,7 @@ to PyVista's real depth-buffered rendering.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/advanced/images/sphx_glr_plot_pyvista_3d_001.png
    :alt: Rossler attractor: projected (mplot3d) vs. real (PyVista) 3D depth, Matplotlib mplot3d (projected depth, fixed camera)
    :srcset: /api/gallery/chaos/advanced/images/sphx_glr_plot_pyvista_3d_001.png
@@ -157,10 +159,31 @@ to PyVista's real depth-buffered rendering.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+Check
+-----
+The Rossler attractor is a bounded band in x, y with occasional large
+excursions in z (the fold that makes it chaotic).
+
+.. GENERATED FROM PYTHON SOURCE LINES 100-103
+
+.. code-block:: Python
+
+    late = states[2000:]
+    assert np.all(np.abs(late[:, :2]) < 15) and late[:, 2].min() > 0
+    assert late[:, 2].max() > 10 and np.median(late[:, 2]) < 1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.269 seconds)
+   **Total running time of the script:** (0 minutes 0.262 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_advanced_plot_pyvista_3d.py:

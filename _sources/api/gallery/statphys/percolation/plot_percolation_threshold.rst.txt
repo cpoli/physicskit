@@ -85,18 +85,31 @@ The spanning probability curve sharpens with system size
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 41-46
 
 The spanning cluster at criticality is a fractal
 -----------------------------------------------------
+At p_c the largest cluster's mass grows as M ~ L^{d_f} with d_f < 2: it
+fills a vanishing fraction of an ever larger lattice. The slope of
+log M against log L over several sizes gives d_f.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-51
+.. GENERATED FROM PYTHON SOURCE LINES 46-64
 
 .. code-block:: Python
 
+    L_mass = np.array([32, 64, 128, 256])
+    M_largest = []
+    for L in L_mass:
+        perc = Percolation2D(L=int(L), mode="site", seed=2)
+        masses = []
+        for _trial in range(30):
+            perc.generate(Percolation2D.P_C_SITE)
+            masses.append(perc.cluster_size_distribution().max())
+        M_largest.append(np.mean(masses))
+    d_f = np.polyfit(np.log(L_mass), np.log(M_largest), 1)[0]
+    print(f"Fractal dimension from M ~ L^d_f at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f})")
+
     perc = Percolation2D(L=128, p=Percolation2D.P_C_SITE, mode="site", seed=1)
-    d_f = perc.fractal_dimension(n_trials=10)
-    print(f"Estimated fractal dimension at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f}; finite-size bias is significant at L=128)")
 
     fig, ax = plt.subplots(figsize=(6, 6))
     plot_percolation_clusters(perc, ax=ax)
@@ -115,12 +128,12 @@ The spanning cluster at criticality is a fractal
 
  .. code-block:: none
 
-    Estimated fractal dimension at p_c: 2.258 (theory: 91/48 = 1.896; finite-size bias is significant at L=128)
+    Fractal dimension from M ~ L^d_f at p_c: 1.872 (theory: 91/48 = 1.896)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-59
+.. GENERATED FROM PYTHON SOURCE LINES 65-72
 
 Cluster sizes follow a power law at criticality
 -----------------------------------------------------
@@ -130,7 +143,7 @@ scale diverges and n_s ~ s^{-tau} instead, with the Fisher exponent
 tau = 187/91 for 2D percolation -- the geometric analogue of a diverging
 susceptibility at a thermal critical point.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-70
+.. GENERATED FROM PYTHON SOURCE LINES 72-84
 
 .. code-block:: Python
 
@@ -148,6 +161,7 @@ susceptibility at a thermal critical point.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/percolation/images/sphx_glr_plot_percolation_threshold_003.png
    :alt: Percolation cluster size distribution at $p_c$
    :srcset: /api/gallery/statphys/percolation/images/sphx_glr_plot_percolation_threshold_003.png
@@ -157,10 +171,29 @@ susceptibility at a thermal critical point.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 85-88
+
+Check
+-----
+No spanning far below p_c, certain spanning far above; d_f = 91/48.
+
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
+
+.. code-block:: Python
+
+    assert P_span[0] < 0.05 and P_span[-1] > 0.95
+    assert abs(d_f - 91 / 48) < 0.1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.157 seconds)
+   **Total running time of the script:** (0 minutes 6.357 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_percolation_plot_percolation_threshold.py:

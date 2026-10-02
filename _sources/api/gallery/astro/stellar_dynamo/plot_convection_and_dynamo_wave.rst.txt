@@ -6852,13 +6852,14 @@ showing the diagonal migrating stripes that are the whole point of the
 alpha-omega mechanism -- the same phenomenology behind the real Sun's
 sunspot-latitude butterfly diagram.
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-196
+.. GENERATED FROM PYTHON SOURCE LINES 193-197
 
 .. code-block:: Python
 
 
     fig_bf, ax_bf = plot_dynamo_butterfly_diagram(times_dynamo, B_snaps, x)
     plt.show()
+
 
 
 
@@ -6871,10 +6872,31 @@ sunspot-latitude butterfly diagram.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 198-202
+
+Check
+-----
+Convective instability amplifies the noise by many orders of magnitude;
+the alpha-omega dynamo grows at the analytic dispersion-relation rate.
+
+.. GENERATED FROM PYTHON SOURCE LINES 202-205
+
+.. code-block:: Python
+
+    assert KE_final / KE_initial > 1e6
+    assert abs(sigma_observed / sigma_predicted - 1) < 1e-3
+    assert sigma_predicted > 0 and alpha_omega_growth_rate(alpha, shear, k0, 10 * eta) < sigma_predicted
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 24.003 seconds)
+   **Total running time of the script:** (0 minutes 24.089 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_stellar_dynamo_plot_convection_and_dynamo_wave.py:

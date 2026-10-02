@@ -166,7 +166,7 @@ Integrating the exact null geodesic around a unit-mass black hole shows
 :math:`b_c=3\sqrt3M\approx5.2M`, the exact deflection grows without
 bound.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-108
+.. GENERATED FROM PYTHON SOURCE LINES 100-109
 
 .. code-block:: Python
 
@@ -182,16 +182,39 @@ bound.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
 
-    b =    6.0 M: exact 1.71998 rad, weak-field 0.66667 rad, ratio 2.580
-    b =    8.0 M: exact 0.85864 rad, weak-field 0.50000 rad, ratio 1.717
-    b =   12.0 M: exact 0.45251 rad, weak-field 0.33333 rad, ratio 1.358
-    b =   20.0 M: exact 0.23599 rad, weak-field 0.20000 rad, ratio 1.180
-    b =   50.0 M: exact 0.08471 rad, weak-field 0.08000 rad, ratio 1.059
+    b =    6.0 M: exact 1.72003 rad, weak-field 0.66667 rad, ratio 2.580
+    b =    8.0 M: exact 0.85870 rad, weak-field 0.50000 rad, ratio 1.717
+    b =   12.0 M: exact 0.45260 rad, weak-field 0.33333 rad, ratio 1.358
+    b =   20.0 M: exact 0.23614 rad, weak-field 0.20000 rad, ratio 1.181
+    b =   50.0 M: exact 0.08508 rad, weak-field 0.08000 rad, ratio 1.064
     the Sun's limb: b = 4.711e+05 M, so the next-order correction is of relative size ~ M/b = 2.1e-06
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-114
+
+Check
+-----
+4 G M_sun / c^2 R_sun = 1.75 arcsec (Newton: half); the exact deflection
+approaches 4M/b from above as b grows.
+
+.. GENERATED FROM PYTHON SOURCE LINES 114-118
+
+.. code-block:: Python
+
+    assert abs(delta_gr - 1.751) < 0.002
+    assert np.all(exact / (4 / b_vals) > 1) and np.all(np.diff(exact / (4 / b_vals)) < 0)
+    series = 4 / b_vals + 15 * np.pi / (4 * b_vals**2) + 128 / (3 * b_vals**3) + 3465 * np.pi / (64 * b_vals**4)
+    assert abs(exact[-1] / series[-1] - 1) < 1e-4
+
+
+
 
 
 
@@ -199,7 +222,7 @@ bound.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.551 seconds)
+   **Total running time of the script:** (0 minutes 0.504 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_schwarzschild_plot_eddington_eclipse_deflection.py:

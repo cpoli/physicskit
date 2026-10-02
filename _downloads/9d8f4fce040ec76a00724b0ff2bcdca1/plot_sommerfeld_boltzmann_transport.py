@@ -81,3 +81,13 @@ axes[2].set_ylabel("Seebeck coefficient S")
 axes[2].set_title("Thermopower changes sign at half filling")
 axes[2].legend(fontsize=8)
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Wiedemann-Franz: L = pi^2/3 inside the band; the Mott formula matches the
+# Boltzmann thermopower; S changes sign at half filling.
+inside = np.abs(mus) < 3.0
+np.testing.assert_allclose(lorenz[inside], np.pi**2 / 3, rtol=0.01)
+assert np.max(np.abs(seebeck[inside] - mott[inside])) < 0.05 * np.max(np.abs(seebeck[inside]))
+assert np.sign(seebeck[mus < -0.5][0]) == -np.sign(seebeck[mus > 0.5][-1])

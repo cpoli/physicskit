@@ -115,7 +115,7 @@ The electron is measured (3%); the neutrino's transverse momentum is
 the missing transverse momentum, with an extra 3 GeV of smearing from
 the rest of the event. Its longitudinal momentum is never used.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-107
+.. GENERATED FROM PYTHON SOURCE LINES 69-108
 
 .. code-block:: Python
 
@@ -160,6 +160,7 @@ the rest of the event. Its longitudinal momentum is never used.
 
 
 
+
 .. image-sg:: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_02_w_z_discovery_001.png
    :alt: $Z^0 \to e^+e^-$, $W \to e\nu$: Jacobian edge at $M_W$, Electron $p_T$: Jacobian peak at $M_W/2$
    :srcset: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_02_w_z_discovery_001.png
@@ -177,10 +178,31 @@ the rest of the event. Its longitudinal momentum is never used.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 109-113
+
+Check
+-----
+The Z is a dilepton peak at M_Z; the W shows a Jacobian edge in m_T at
+M_W and a Jacobian peak in the electron p_T near M_W / 2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 113-116
+
+.. code-block:: Python
+
+    assert abs(np.median(m_ee) - M_Z) < 0.5
+    assert M_W - 4 < centres[np.argmax(smooth)] < M_W and np.mean(m_T > M_W) < 0.2
+    assert abs(0.5 * (pt_edges[np.argmax(pt_counts)] + pt_edges[np.argmax(pt_counts) + 1]) - M_W / 2) < 3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.333 seconds)
+   **Total running time of the script:** (0 minutes 0.321 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_resonance_discovery_plot_02_w_z_discovery.py:

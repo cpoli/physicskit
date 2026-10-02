@@ -160,7 +160,7 @@ in vacuum -- a single impulsive point source is not perfectly bandlimited,
 so this front tracking is noisier, cell-by-cell, than the smooth Gaussian
 pulses used elsewhere in this gallery.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-96
+.. GENERATED FROM PYTHON SOURCE LINES 81-97
 
 .. code-block:: Python
 
@@ -182,6 +182,7 @@ pulses used elsewhere in this gallery.
 
 
 
+
 .. image-sg:: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_yee_fdtd_point_source_002.png
    :alt: Isotropic wavefront speed on the Yee grid: measured vs. c0
    :srcset: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_yee_fdtd_point_source_002.png
@@ -191,10 +192,33 @@ pulses used elsewhere in this gallery.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
+
+Check
+-----
+A point source's wavefront expands at (numerically just below) c0, and the
+energy flux (Poynting vector) points away from the source.
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-107
+
+.. code-block:: Python
+
+    assert 0.85 < np.polyfit(times[5:], front_radius[5:], 1)[0] / C0 <= 1.0
+    r_vec = np.stack([X - Nx // 2, Y - Ny // 2], axis=-1)
+    radial_flux = Sx * r_vec[..., 0] + Sy * r_vec[..., 1]
+    assert np.all(radial_flux[flux_mag > 0.5 * flux_mag.max()] > 0)
+    assert np.sum(radial_flux) > 0.7 * np.sum(np.abs(radial_flux))  # the 2D wake carries a little back
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.067 seconds)
+   **Total running time of the script:** (0 minutes 0.076 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_electrodynamics_plot_yee_fdtd_point_source.py:

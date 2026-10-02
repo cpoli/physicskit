@@ -103,7 +103,7 @@ As :math:`V_0 \to \infty` the Dirac transmission tends to
 always gets through, the transmitted current being carried by
 antiparticles created at the step.
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-70
+.. GENERATED FROM PYTHON SOURCE LINES 56-71
 
 .. code-block:: Python
 
@@ -124,6 +124,7 @@ antiparticles created at the step.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/relativistic/images/sphx_glr_plot_klein_paradox_002.png
    :alt: Klein tunneling persists for arbitrarily tall steps
    :srcset: /api/gallery/quantum/relativistic/images/sphx_glr_plot_klein_paradox_002.png
@@ -139,10 +140,36 @@ antiparticles created at the step.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 72-78
+
+Check
+-----
+Probability flux is conserved; there is total reflection for
+|E - V0| < m; in the Klein zone the spin-0 particle shows superradiant
+reflection (R > 1) while the Dirac particle never does; and Dirac
+transmission tends to 4 kappa / (1 + kappa)^2 for an infinite step.
+
+.. GENERATED FROM PYTHON SOURCE LINES 78-84
+
+.. code-block:: Python
+
+    assert np.allclose(R_d + T_d, 1) and np.allclose(R_kg + T_kg, 1)
+    gap = (V0 > E - m + 0.01) & (V0 < E + m - 0.01)
+    assert np.allclose(R_d[gap], 1) and np.allclose(R_kg[gap], 1)
+    klein = V0 > E + m + 0.01
+    assert np.all(R_kg[klein] > 1) and np.all(R_d[klein] <= 1)
+    assert abs(T_big[-1] - 4 * kinf / (1 + kinf) ** 2) < 1e-4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.132 seconds)
+   **Total running time of the script:** (0 minutes 0.110 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_relativistic_plot_klein_paradox.py:

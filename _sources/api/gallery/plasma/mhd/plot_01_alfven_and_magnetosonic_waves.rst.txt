@@ -47,7 +47,7 @@ which reduce to :math:`\max(v_A,c_s)`/:math:`\min(v_A,c_s)` along
 :math:`\sqrt{v_A^2+c_s^2}` (fast) with a vanishing slow mode across it
 (:math:`\theta=\pi/2`).
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-38
+.. GENERATED FROM PYTHON SOURCE LINES 33-39
 
 .. code-block:: Python
 
@@ -55,6 +55,7 @@ which reduce to :math:`\max(v_A,c_s)`/:math:`\min(v_A,c_s)` along
     import numpy as np
 
     import physicskit as pk
+    from physicskit.constants import VACUUM_PERMEABILITY
 
 
 
@@ -63,12 +64,12 @@ which reduce to :math:`\max(v_A,c_s)`/:math:`\min(v_A,c_s)` along
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-42
 
 A magnetized coronal-loop-like plasma
 ------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-46
+.. GENERATED FROM PYTHON SOURCE LINES 42-47
 
 .. code-block:: Python
 
@@ -84,14 +85,14 @@ A magnetized coronal-loop-like plasma
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-51
+.. GENERATED FROM PYTHON SOURCE LINES 48-52
 
 Fast/slow magnetosonic speeds at every angle to B0
 -------------------------------------------------------
 Alfven's own purely transverse wave is the limit these two
 compressive modes build on: it sits exactly between them, along B0.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-65
+.. GENERATED FROM PYTHON SOURCE LINES 52-66
 
 .. code-block:: Python
 
@@ -121,7 +122,7 @@ compressive modes build on: it sits exactly between them, along B0.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-81
+.. GENERATED FROM PYTHON SOURCE LINES 67-82
 
 A plucked field line: the Alfven pulse propagating and splitting
 ------------------------------------------------------------------------
@@ -139,7 +140,7 @@ which combine into the non-dispersive wave equation
 in half and travel outward at :math:`\pm v_A` in each direction -- the
 picture reproduced dynamically rather than just asserted.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-88
+.. GENERATED FROM PYTHON SOURCE LINES 82-90
 
 .. code-block:: Python
 
@@ -150,6 +151,7 @@ picture reproduced dynamically rather than just asserted.
     anim = pk.plasma.animate_alfven_wave(By0, vy0, x, dt=0.01, steps_per_frame=20, n_frames=40, B0=1.0, rho0=1.0)
 
     plt.show()
+
 
 
 
@@ -527,10 +529,33 @@ picture reproduced dynamically rather than just asserted.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 91-95
+
+Check
+-----
+v_A = B / sqrt(mu0 rho), c_s = sqrt(gamma p / rho); the fast and slow speeds
+satisfy v_f^2 + v_s^2 = v_A^2 + c_s^2 and v_f v_s = v_A c_s |cos(theta)|.
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-100
+
+.. code-block:: Python
+
+    assert abs(vA - B / np.sqrt(VACUUM_PERMEABILITY * rho)) < 1e-9 * vA
+    assert abs(cs - np.sqrt(5 / 3 * 10.0 / rho)) < 1e-9 * cs
+    vf, vs = np.array(vf), np.array(vs)
+    np.testing.assert_allclose(vf**2 + vs**2, vA**2 + cs**2, rtol=1e-10)
+    np.testing.assert_allclose(vf * vs, vA * cs * np.abs(np.cos(theta)), rtol=1e-8, atol=1e-6 * vA * cs)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.294 seconds)
+   **Total running time of the script:** (0 minutes 1.713 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_mhd_plot_01_alfven_and_magnetosonic_waves.py:

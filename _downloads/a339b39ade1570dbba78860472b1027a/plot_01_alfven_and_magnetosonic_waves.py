@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import physicskit as pk
+from physicskit.constants import VACUUM_PERMEABILITY
 
 # %%
 # A magnetized coronal-loop-like plasma
@@ -85,3 +86,14 @@ By0, vy0 = pk.plasma.alfven_wave_pulse_ic(x, x0=0.0, width=1.0, amplitude=0.1)
 anim = pk.plasma.animate_alfven_wave(By0, vy0, x, dt=0.01, steps_per_frame=20, n_frames=40, B0=1.0, rho0=1.0)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# v_A = B / sqrt(mu0 rho), c_s = sqrt(gamma p / rho); the fast and slow speeds
+# satisfy v_f^2 + v_s^2 = v_A^2 + c_s^2 and v_f v_s = v_A c_s |cos(theta)|.
+assert abs(vA - B / np.sqrt(VACUUM_PERMEABILITY * rho)) < 1e-9 * vA
+assert abs(cs - np.sqrt(5 / 3 * 10.0 / rho)) < 1e-9 * cs
+vf, vs = np.array(vf), np.array(vs)
+np.testing.assert_allclose(vf**2 + vs**2, vA**2 + cs**2, rtol=1e-10)
+np.testing.assert_allclose(vf * vs, vA * cs * np.abs(np.cos(theta)), rtol=1e-8, atol=1e-6 * vA * cs)

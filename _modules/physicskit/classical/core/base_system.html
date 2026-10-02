@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>physicskit.classical.core.base_system &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.classical.core.base_system &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -54,7 +54,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../../../../_static/searchtools.js"></script>
@@ -150,6 +150,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -281,6 +288,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -436,7 +450,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -592,7 +606,7 @@
 <span class="sd">    and angular-momentum-squared invariants).</span>
 <span class="sd">    """</span>
 
-    <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_deriv_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ODESystem.derivatives">
 <a class="viewcode-back" href="../../../../api/classical.html#physicskit.classical.ODESystem.derivatives">[docs]</a>
@@ -666,8 +680,8 @@
     <span class="n">mass_inv</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="w">    </span><span class="sd">"""float or ndarray: 1/m per coordinate; ``dq/dt = mass_inv * p``."""</span>
 
-    <span class="n">_force_njit</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_force_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_deriv_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">):</span>
         <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -817,8 +831,8 @@
         <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"implicit_midpoint"</span><span class="p">,</span> <span class="s2">"rk4"</span><span class="p">):</span>
             <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">])</span>
             <span class="n">deriv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_deriv_njit</span><span class="p">()</span>
-            <span class="n">integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"implicit_midpoint"</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span>
-            <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">integ</span><span class="p">(</span><span class="n">deriv</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+            <span class="n">ode_integ</span> <span class="o">=</span> <span class="n">intg</span><span class="o">.</span><span class="n">implicit_midpoint_integrate</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"implicit_midpoint"</span> <span class="k">else</span> <span class="n">intg</span><span class="o">.</span><span class="n">rk4_integrate</span>
+            <span class="n">ts</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">ode_integ</span><span class="p">(</span><span class="n">deriv</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
             <span class="n">qs</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:,</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span><span class="p">],</span> <span class="n">ys</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndof</span> <span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown method '</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">' for HamiltonianSystem"</span><span class="p">)</span>
@@ -857,11 +871,11 @@
     <span class="n">ndof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="w">    </span><span class="sd">"""int: Number of degrees of freedom, inferred from ``q0``."""</span>
 
-    <span class="n">_accel_njit</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_momentum_njit</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">_canonical_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,p]) -&gt; [dq, dp] = [dH/dp, -dH/dq]</span>
-    <span class="n">_velocity_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (q, p) -&gt; qdot = dH/dp, used to report qdot after integration</span>
-    <span class="n">_deriv_njit</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,qdot]) -&gt; [qdot, qddot], used only by method='rk4'</span>
+    <span class="n">_accel_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_momentum_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_canonical_deriv_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,p]) -&gt; [dq, dp] = [dH/dp, -dH/dq]</span>
+    <span class="n">_velocity_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (q, p) -&gt; qdot = dH/dp, used to report qdot after integration</span>
+    <span class="n">_deriv_njit</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (t, [q,qdot]) -&gt; [qdot, qddot], used only by method='rk4'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">qdot0</span><span class="p">):</span>
         <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>

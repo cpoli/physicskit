@@ -104,7 +104,7 @@ orbit/pan/zoom-able 3D view; coloring by local speed highlights where the
 Lorenz attractor's flow accelerates (near the "wing crossings") versus
 where it lingers (spiraling within a wing).
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-60
+.. GENERATED FROM PYTHON SOURCE LINES 51-61
 
 .. code-block:: Python
 
@@ -125,9 +125,37 @@ where it lingers (spiraling within a wing).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 62-67
+
+Check
+-----
+The billiard path stays inside the stadium (|y| <= R; within the caps
+(|x| - a)^2 + y^2 <= R^2), and the plotted speed is the Lorenz vector
+field's magnitude (at each step's midpoint).
+
+.. GENERATED FROM PYTHON SOURCE LINES 67-75
+
+.. code-block:: Python
+
+    x_path, y_path = path[:, 0], path[:, 1]
+    a_half = 1.0
+    assert np.all(np.abs(y_path) <= 1.0 + 1e-9)
+    caps = np.abs(x_path) > a_half
+    assert np.all((np.abs(x_path[caps]) - a_half) ** 2 + y_path[caps] ** 2 <= 1.0 + 1e-9)
+    midpoints = 0.5 * (states[:-1:50] + states[1::50])
+    field_speed = np.linalg.norm([system.rhs(m, 0.0) for m in midpoints], axis=1)
+    assert np.max(np.abs(speed[::50] / field_speed - 1)) < 0.01
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.533 seconds)
+   **Total running time of the script:** (0 minutes 0.292 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_interactive_and_animation_plot_colored_trajectories.py:

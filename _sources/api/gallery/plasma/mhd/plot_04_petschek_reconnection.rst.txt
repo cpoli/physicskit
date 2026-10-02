@@ -92,7 +92,7 @@ pi/(8 ln S) stays observationally plausible.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x16bb35bb0>
+    <matplotlib.legend.Legend object at 0x176acbe60>
 
 
 
@@ -105,7 +105,7 @@ underestimate; plotting their ratio directly shows Petschek's rate
 pulling ahead by many orders of magnitude precisely where it matters --
 solar-flare-scale Lundquist numbers.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-67
+.. GENERATED FROM PYTHON SOURCE LINES 54-68
 
 .. code-block:: Python
 
@@ -130,9 +130,30 @@ solar-flare-scale Lundquist numbers.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 69-73
+
+Check
+-----
+Petschek: v_in / v_A = pi / (8 ln S), about 10^4 times Sweet-Parker's rate
+at solar-flare S ~ 1e12.
+
+.. GENERATED FROM PYTHON SOURCE LINES 73-75
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(pet_rate, np.pi / (8 * np.log(S_vals)), rtol=1e-12)
+    assert 1e4 < ratio[s_flare_idx] < 2e4
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.151 seconds)
+   **Total running time of the script:** (0 minutes 0.152 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_mhd_plot_04_petschek_reconnection.py:

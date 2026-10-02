@@ -177,7 +177,7 @@ Kepler's laws as consequences
 * **Third law.** The measured period matches
   :math:`2\pi\sqrt{a^3/G(M+m)}`, the constant Kepler could only fit.
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-135
+.. GENERATED FROM PYTHON SOURCE LINES 107-136
 
 .. code-block:: Python
 
@@ -212,6 +212,7 @@ Kepler's laws as consequences
 
 
 
+
 .. image-sg:: /api/gallery/astro/orbital_mechanics/images/sphx_glr_plot_02_newton_universal_gravitation_003.png
    :alt: Equal areas from a central force
    :srcset: /api/gallery/astro/orbital_mechanics/images/sphx_glr_plot_02_newton_universal_gravitation_003.png
@@ -233,10 +234,33 @@ Kepler's laws as consequences
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 137-141
+
+Check
+-----
+Inverse-square force, action = reaction, and the conserved Kepler
+elements, areal velocity and period of the resulting two-body orbit.
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-146
+
+.. code-block:: Python
+
+    assert abs(slope + 2) < 1e-9
+    assert np.allclose(masses_pair[0] * acc_pair[0] + masses_pair[1] * acc_pair[1], 0, atol=1e-12)
+    assert np.ptp(elements[:, 0]) < 1e-5 and np.ptp(elements[:, 1]) < 1e-5
+    assert np.ptp(areal) / areal.mean() < 1e-10
+    assert abs(T_measured / orbital_period(a_fit, mu) - 1) < 1e-4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.519 seconds)
+   **Total running time of the script:** (0 minutes 0.573 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_orbital_mechanics_plot_02_newton_universal_gravitation.py:

@@ -76,3 +76,15 @@ plt.title("Estimator convergence: the fast protocol needs more samples")
 plt.legend(fontsize=8)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Dragging a harmonic trap leaves Delta F = 0, so <W> is pure dissipation:
+# <W> = (gamma dL^2 / tau) [1 - (gamma / k tau)(1 - e^(-k tau / gamma))] >= 0,
+# while the Jarzynski average <exp(-W/kT)> recovers Delta F = 0.
+for label, tau in (("fast (tau=0.3)", 0.3), ("slow (tau=8.0)", 8.0)):
+    model, work = work_by_protocol[label]
+    W_mean = (4.0 / tau) * (1 - (1 / tau) * (1 - np.exp(-tau)))
+    assert abs(work.mean() / W_mean - 1) < 0.05
+    assert abs(model.jarzynski_free_energy_estimate(work)) < 0.1

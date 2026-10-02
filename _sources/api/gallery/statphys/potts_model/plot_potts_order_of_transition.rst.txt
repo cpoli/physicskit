@@ -94,38 +94,46 @@ Sweep both models across their respective critical points
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-59
+.. GENERATED FROM PYTHON SOURCE LINES 50-60
 
 Energy histograms at T_C: the microscopic fingerprint of the order
 ------------------------------------------------------------------------
 A first-order transition means the ordered and disordered phases coexist
-at T_C with a nonzero latent heat between them, so a system held exactly
-at T_C spends time in *both* phases and its energy histogram is bimodal
-(two peaks separated by a gap, one per phase). A continuous transition has
-no latent heat and no phase coexistence, so its energy histogram at T_C
-stays a single, unimodal peak. Sampling many energies at each model's own
-T_C makes this qualitative distinction directly visible.
+at T_C with a nonzero latent heat between them. On a lattice this small a
+Metropolis run at T_C rarely crosses from one phase to the other, so start
+two runs at T_C, one from a disordered and one from a fully ordered
+configuration: for q = 8 each stays in its own phase, and the two energy
+histograms sit apart by the latent heat (Baxter: 0.486 J per site). A
+continuous transition has no latent heat and no coexistence, so for
+q = 3 both starts settle into one and the same peak.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-75
+.. GENERATED FROM PYTHON SOURCE LINES 60-83
 
 .. code-block:: Python
 
+    mean_energy = {}
     fig, axes = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
     for ax, q in zip(axes, [3, 8]):
-        model = PottsModel2D(L=32, q=q, J=1.0, kB=1.0, seed=1)
-        beta_c = 1.0 / model.T_C
-        model.sweep(beta_c, n_sweeps=300)  # equilibrate at T_C
-        energies = np.empty(400)
-        for i in range(400):
-            model.sweep(beta_c, n_sweeps=5)
-            energies[i] = model.energy() / model.n_sites
-        ax.hist(energies, bins=30, color="steelblue", edgecolor="white")
+        for start, color in (("disordered", "steelblue"), ("ordered", "firebrick")):
+            model = PottsModel2D(L=32, q=q, J=1.0, kB=1.0, seed=1)
+            if start == "ordered":
+                model.spins[:] = 0
+            beta_c = 1.0 / model.T_C
+            model.sweep(beta_c, n_sweeps=300)  # equilibrate at T_C
+            energies = np.empty(400)
+            for i in range(400):
+                model.sweep(beta_c, n_sweeps=5)
+                energies[i] = model.energy() / model.n_sites
+            mean_energy[q, start] = energies.mean()
+            ax.hist(energies, bins=30, range=(-1.9, -0.8), color=color, alpha=0.6, label=f"{start} start")
         ax.set_xlabel("energy per site")
         ax.set_title(f"q = {q} ({'2nd order' if q <= 4 else '1st order'}) at $T_C$")
+        ax.legend(fontsize=8)
     axes[0].set_ylabel("count")
     plt.suptitle("Energy distribution at $T_C$: coexistence signature of a first-order transition")
     plt.tight_layout()
     plt.show()
+
 
 
 
@@ -138,10 +146,40 @@ T_C makes this qualitative distinction directly visible.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 84-91
+
+Check
+-----
+T_C = J / ln(1 + sqrt(q)). For q = 8 the two phases sit at Baxter's
+coexistence energies e = -(1 + 1/sqrt(q)) -+ L/2 (up to finite-size shifts
+of the ordered phase), with
+L = 2 (1 + 1/sqrt(q)) tanh(theta/2) prod_n tanh^2(n theta), cosh theta = sqrt(q)/2;
+for q = 3 the gap between the two starts is several times smaller.
+
+.. GENERATED FROM PYTHON SOURCE LINES 91-100
+
+.. code-block:: Python
+
+    for q in (3, 8):
+        assert abs(PottsModel2D(L=8, q=q).T_C - 1 / np.log(1 + np.sqrt(q))) < 1e-12
+    theta = np.arccosh(np.sqrt(8) / 2)
+    latent = 2 * (1 + 1 / np.sqrt(8)) * np.tanh(theta / 2) * np.prod(np.tanh(np.arange(1, 50) * theta) ** 2)
+    assert abs(latent - 0.486) < 1e-3
+    assert abs(mean_energy[8, "disordered"] - (-(1 + 1 / np.sqrt(8)) + latent / 2)) < 0.05
+    assert abs(mean_energy[8, "ordered"] - (-(1 + 1 / np.sqrt(8)) - latent / 2)) < 0.1
+    gap = {q: mean_energy[q, "disordered"] - mean_energy[q, "ordered"] for q in (3, 8)}
+    assert gap[8] > 0.4 and gap[8] > 4 * gap[3]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.638 seconds)
+   **Total running time of the script:** (0 minutes 0.759 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_potts_model_plot_potts_order_of_transition.py:

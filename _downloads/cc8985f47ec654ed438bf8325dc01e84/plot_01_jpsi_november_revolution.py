@@ -101,3 +101,12 @@ ax2.set_title("Brookhaven: a narrow peak at 3.1 GeV")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Beam spread hides the 93 keV width but not the peak's area, which gives
+# Gamma_ee (Breit-Wigner); the dilepton mass peaks at 3.097 GeV.
+assert abs(Gamma_ee_fit / Gamma_ee - 1) < 0.01
+assert abs(np.median(masses) / M - 1) < 0.005
+assert sigma_bw.max() > 10 * sigma_obs.max()

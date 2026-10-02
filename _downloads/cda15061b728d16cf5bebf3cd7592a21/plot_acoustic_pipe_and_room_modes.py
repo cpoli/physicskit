@@ -19,6 +19,7 @@ room with :func:`~physicskit.fluids.acoustic_wave_2d`.
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.signal import find_peaks
 
 from physicskit.fluids import (
     acoustic_wave_1d,
@@ -98,3 +99,18 @@ axes[1, 1].set_title(f"room pressure at t = {t2[8] * 1e3:.1f} ms")
 fig.colorbar(im, ax=axes[1, 1])
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# c = sqrt(gamma p / rho); pipe resonances n c / 2L (open-open) and
+# (2n - 1) c / 4L (closed-open); room modes (c/2) sqrt((m/Lx)^2 + (n/Ly)^2).
+assert abs(c - np.sqrt(1.4 * 101325.0 / 1.204)) < 1e-9
+for ends, n_modes in ((("open", "open"), np.arange(1, 5)), (("closed", "open"), 2 * np.arange(1, 5) - 1)):
+    _, _, f, S = results[ends]
+    expected = n_modes * c / (2 * L if ends[0] == "open" else 4 * L)
+    np.testing.assert_allclose(pipe_mode_frequencies(L, c, 4, ends), expected, rtol=1e-12)
+    peaks = f[find_peaks(S, prominence=0.05)[0]][:4]
+    np.testing.assert_allclose(peaks, expected, atol=3.0)
+room_peaks = f2[find_peaks(S2, prominence=0.05)[0]][:3]
+np.testing.assert_allclose(room_peaks, [r[2] for r in room[:3]], atol=1.5)

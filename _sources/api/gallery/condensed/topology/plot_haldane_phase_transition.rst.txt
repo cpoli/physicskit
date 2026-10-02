@@ -90,7 +90,7 @@ finite-width, open ribbon with :func:`build_ribbon` and plotting its
 spectrum vs. the remaining periodic momentum shows exactly this: bands
 that thread the bulk gap rather than staying confined to the bulk bands.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-74
+.. GENERATED FROM PYTHON SOURCE LINES 48-75
 
 .. code-block:: Python
 
@@ -123,6 +123,7 @@ that thread the bulk gap rather than staying confined to the bulk bands.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_haldane_phase_transition_001.png
    :alt: Haldane model: Chern insulator from zero net flux, Topological phase transition, Ribbon spectrum: chiral edge states cross the bulk gap
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_haldane_phase_transition_001.png
@@ -139,10 +140,32 @@ that thread the bulk gap rather than staying confined to the bulk bands.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 76-80
+
+Check
+-----
+C = 1 below M_c = 3 sqrt(3) t2 |sin phi| and 0 above it; the edge bands
+of the C = 1 ribbon cross the bulk gap.
+
+.. GENERATED FROM PYTHON SOURCE LINES 80-84
+
+.. code-block:: Python
+
+    chern = np.array(chern)
+    assert np.all(chern[M_values < 0.95 * M_c] == 1)
+    assert np.all(chern[M_values > 1.05 * M_c] == 0)
+    assert min_over_k.min() < 0.05 < 0.5 < np.median(min_over_k[min_over_k > 0.5])
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.298 seconds)
+   **Total running time of the script:** (0 minutes 0.293 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_haldane_phase_transition.py:

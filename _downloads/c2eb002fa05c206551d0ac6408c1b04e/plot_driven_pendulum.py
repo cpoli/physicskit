@@ -76,3 +76,11 @@ ax2.set_ylabel(r"$\omega$ (stroboscopic samples)")
 ax2.set_title("Driven pendulum: period-doubling route to chaos")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# At A = 1.5 (Baker and Gollub's parameters) the stroboscopic samples never
+# repeat -- chaos; at A = 1.30 they sit on a single value, a period-1 orbit.
+assert len(np.unique(np.round(sampler(1.5), 4))) == 16
+assert len(np.unique(np.round(sampler(1.30), 4))) == 1

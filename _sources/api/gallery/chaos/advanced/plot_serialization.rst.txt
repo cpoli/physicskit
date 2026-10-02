@@ -42,7 +42,7 @@ with the classic parameters :math:`\sigma=10`, :math:`\rho=28`,
 :math:`\beta=8/3` -- but the save/load round-trip below works identically
 for any :class:`~physicskit.chaos.core.base_system.DynamicalSystem`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-37
+.. GENERATED FROM PYTHON SOURCE LINES 26-38
 
 .. code-block:: Python
 
@@ -53,6 +53,7 @@ for any :class:`~physicskit.chaos.core.base_system.DynamicalSystem`.
     from pathlib import Path
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Lorenz
     from physicskit.chaos.utils.io import load_arrays, load_system_config, save_arrays, save_system_config
@@ -64,7 +65,7 @@ for any :class:`~physicskit.chaos.core.base_system.DynamicalSystem`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-43
+.. GENERATED FROM PYTHON SOURCE LINES 39-44
 
 Saving a system's configuration
 -----------------------------------
@@ -72,7 +73,7 @@ Only the class and its constructor parameters are saved -- not the
 trajectory itself -- so the file is tiny and the system can be
 re-integrated identically (or with different `n_steps`/`dt`) later.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-53
+.. GENERATED FROM PYTHON SOURCE LINES 44-54
 
 .. code-block:: Python
 
@@ -108,14 +109,14 @@ re-integrated identically (or with different `n_steps`/`dt`) later.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-58
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 Saving trajectory data
 ---------------------------
 `save_arrays` accepts any set of named arrays and stores them together in
 one ``.npz`` file; `load_arrays` hands them back as a plain dict.
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-72
+.. GENERATED FROM PYTHON SOURCE LINES 59-74
 
 .. code-block:: Python
 
@@ -136,6 +137,7 @@ one ``.npz`` file; `load_arrays` hands them back as a plain dict.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/advanced/images/sphx_glr_plot_serialization_001.png
    :alt: Trajectory reloaded from disk, unchanged
    :srcset: /api/gallery/chaos/advanced/images/sphx_glr_plot_serialization_001.png
@@ -151,10 +153,29 @@ one ``.npz`` file; `load_arrays` hands them back as a plain dict.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 75-78
+
+Check
+-----
+Round trip: parameters and trajectories come back unchanged.
+
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
+
+.. code-block:: Python
+
+    assert restored.beta == system.beta
+    assert np.array_equal(loaded["states"], states) and np.array_equal(loaded["t"], t)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.242 seconds)
+   **Total running time of the script:** (0 minutes 0.231 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_advanced_plot_serialization.py:

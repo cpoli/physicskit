@@ -107,3 +107,13 @@ ax.set_title("Full guiding-center orbit: gyration + mirror bounce")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The magnetic moment is conserved, so the ion reflects where
+# B / B0 = v^2 / v_perp0^2 (here 1.0625, at z = 6.25 mm) and v_par reverses.
+v2 = 2e4**2 + 8e4**2
+z_mirror = 0.05 * np.sqrt((v2 / 8e4**2 - 1) / 4.0)
+assert abs(z_hist.max() / z_mirror - 1) < 0.01
+assert v_par_hist.max() > 0 > v_par_hist.min()

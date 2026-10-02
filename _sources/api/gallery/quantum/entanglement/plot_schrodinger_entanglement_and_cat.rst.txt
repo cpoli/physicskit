@@ -152,7 +152,7 @@ state is diagonal, with no alive/dead coherence at all. Its
 entanglement with the atom peaks at one full bit when :math:`p = 1/2`,
 after one half-life.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-114
+.. GENERATED FROM PYTHON SOURCE LINES 84-115
 
 .. code-block:: Python
 
@@ -189,6 +189,7 @@ after one half-life.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/entanglement/images/sphx_glr_plot_schrodinger_entanglement_and_cat_001.png
    :alt: $\Phi^+$: pure, with coherence between $|00\rangle$ and $|11\rangle$, Schrödinger's cat: entangled with the atom
    :srcset: /api/gallery/quantum/entanglement/images/sphx_glr_plot_schrodinger_entanglement_and_cat_001.png
@@ -208,10 +209,33 @@ after one half-life.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 116-121
+
+Check
+-----
+A Bell state is pure, yet each qubit is maximally mixed (one bit of
+entropy); the atom-cat entanglement peaks at one bit when p = 1/2, i.e.
+at t = tau ln 2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 121-125
+
+.. code-block:: Python
+
+    assert abs(np.trace(rho_full @ rho_full).real - 1) < 1e-12 and entropy(rho_full) < 1e-9
+    assert np.allclose(rho_1, np.eye(2) / 2) and abs(entropy(rho_1) - 1) < 1e-12
+    assert min(fidelities) > 1 - 1e-12
+    assert abs(S_cat.max() - 1) < 1e-4 and abs(t[np.argmax(S_cat)] - np.log(2)) < t[1] - t[0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.064 seconds)
+   **Total running time of the script:** (0 minutes 0.065 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_entanglement_plot_schrodinger_entanglement_and_cat.py:

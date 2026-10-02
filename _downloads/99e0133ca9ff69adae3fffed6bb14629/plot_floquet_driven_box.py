@@ -95,3 +95,12 @@ fig2.tight_layout()
 
 print(f"unperturbed 1->2 box gap: {omega_gap:.4f}")
 print(f"peak P_1->2 in the chevron: {P_chevron.max():.4f} at omega={omega_values[np.argmax(P_chevron.max(axis=1))]:.4f}")
+
+# %%
+# Check
+# -----
+# Box levels E_n = n^2 pi^2 / 2 (L = 1), and the drive transfers population
+# most strongly at resonance with the 1 -> 2 gap 3 pi^2 / 2.
+assert abs(omega_gap - 3 * np.pi**2 / 2) < 1e-10
+assert abs(omega_values[np.argmax(P_chevron.max(axis=1))] - omega_gap) < omega_values[1] - omega_values[0]
+assert P_chevron.max() > 3 * P_chevron[[0, -1]].max()

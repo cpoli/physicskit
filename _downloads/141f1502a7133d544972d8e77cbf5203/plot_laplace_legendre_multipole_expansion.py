@@ -88,3 +88,12 @@ fig.colorbar(im, ax=ax2, label="potential (V)")
 fig.tight_layout()
 print(f"max deviation on the r = 3 sphere, relative to max |phi|: {np.max(np.abs(approx_s - exact_s)) / np.max(np.abs(exact_s)):.3f}")
 plt.show()
+
+# %%
+# Check
+# -----
+# Truncating after order l leaves an error falling as r^-(l + 1) relative to
+# the monopole; the quadrupole tensor is traceless.
+for order, err in errors.items():
+    assert abs(np.polyfit(np.log(r[20:]), np.log(err[20:]), 1)[0] + (order + 1)) < 0.1
+assert abs(m.monopole - charges.sum()) < 1e-20 and abs(np.trace(m.quadrupole)) < 1e-20

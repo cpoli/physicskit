@@ -113,7 +113,7 @@ curve rises steeply from hydrogen, peaks near iron, and falls slowly
 for heavier nuclei -- explaining why fusing light nuclei (up to iron)
 and fissioning heavy ones (down to iron) both release energy.
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-90
+.. GENERATED FROM PYTHON SOURCE LINES 64-91
 
 .. code-block:: Python
 
@@ -146,6 +146,7 @@ and fissioning heavy ones (down to iron) both release energy.
 
 
 
+
 .. image-sg:: /api/gallery/astro/stellar_structure/images/sphx_glr_plot_04_bethe_nucleosynthesis_001.png
    :alt: The binding-energy curve: why hydrogen fusion is exothermic
    :srcset: /api/gallery/astro/stellar_structure/images/sphx_glr_plot_04_bethe_nucleosynthesis_001.png
@@ -166,10 +167,31 @@ and fissioning heavy ones (down to iron) both release energy.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 92-96
+
+Check
+-----
+4 p -> He4 releases 26.73 MeV (0.7% of the rest mass); binding per nucleon
+peaks near iron.
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-99
+
+.. code-block:: Python
+
+    assert abs(Q_nuclear - (4 * m_proton - m_alpha - 2 * m_positron)) < 1e-9
+    assert abs(Q_total - 26.73) < 0.01 and abs(Q_total / (4 * m_proton) - 0.0071) < 1e-4
+    assert 54 <= A_values[i_peak] <= 64 and bpn_fe56 > bpn_he4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.044 seconds)
+   **Total running time of the script:** (0 minutes 0.043 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_stellar_structure_plot_04_bethe_nucleosynthesis.py:

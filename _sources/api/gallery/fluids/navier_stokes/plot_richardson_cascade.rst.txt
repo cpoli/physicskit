@@ -152,7 +152,7 @@ the bottom of the cascade, on the small whorls, not on the large eddies
 the flow started with. Once the small scales are drained, the few
 surviving large vortices decay slowly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-117
+.. GENERATED FROM PYTHON SOURCE LINES 94-118
 
 .. code-block:: Python
 
@@ -182,6 +182,7 @@ surviving large vortices decay slowly.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/navier_stokes/images/sphx_glr_plot_richardson_cascade_002.png
    :alt: Spreading to small scales, Whorls shrink, then viscosity wins
    :srcset: /api/gallery/fluids/navier_stokes/images/sphx_glr_plot_richardson_cascade_002.png
@@ -198,10 +199,30 @@ surviving large vortices decay slowly.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 119-123
+
+Check
+-----
+Whorls break into smaller whorls (the mean enstrophy wavenumber doubles)
+while total enstrophy can only decrease in 2D viscous flow.
+
+.. GENERATED FROM PYTHON SOURCE LINES 123-125
+
+.. code-block:: Python
+
+    assert k_mean[i_peak] > 1.8 * k_mean[0]
+    assert np.all(np.diff(Z_total) <= 1e-9)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.049 seconds)
+   **Total running time of the script:** (0 minutes 7.529 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_navier_stokes_plot_richardson_cascade.py:

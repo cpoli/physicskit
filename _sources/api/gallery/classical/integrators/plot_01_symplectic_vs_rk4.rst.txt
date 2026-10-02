@@ -52,30 +52,7 @@ This qualitative difference (bounded oscillation vs. unbounded drift),
 not just "smaller numbers," is the actual reason physicskit.classical
 defaults every conservative system to a symplectic backend.
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-81
-
-
-
-.. image-sg:: /api/gallery/classical/integrators/images/sphx_glr_plot_01_symplectic_vs_rk4_001.png
-   :alt: RK4 drifts monotonically; symplectic methods stay bounded, Zoomed in: both symplectic methods, no RK4
-   :srcset: /api/gallery/classical/integrators/images/sphx_glr_plot_01_symplectic_vs_rk4_001.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    RK4 (non-symplectic): final relative drift = -0.0436, max |drift| = 0.0436
-    Verlet (2nd-order symplectic): final relative drift = +0.0181, max |drift| = 0.0188
-    Yoshida4 (4th-order symplectic): final relative drift = -0.0006, max |drift| = 0.0006
-
-
-
-
-
-
-|
+.. GENERATED FROM PYTHON SOURCE LINES 38-82
 
 .. code-block:: Python
 
@@ -124,9 +101,53 @@ defaults every conservative system to a symplectic backend.
     plt.show()
 
 
+
+
+.. image-sg:: /api/gallery/classical/integrators/images/sphx_glr_plot_01_symplectic_vs_rk4_001.png
+   :alt: RK4 drifts monotonically; symplectic methods stay bounded, Zoomed in: both symplectic methods, no RK4
+   :srcset: /api/gallery/classical/integrators/images/sphx_glr_plot_01_symplectic_vs_rk4_001.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    RK4 (non-symplectic): final relative drift = -0.0436, max |drift| = 0.0436
+    Verlet (2nd-order symplectic): final relative drift = +0.0181, max |drift| = 0.0188
+    Yoshida4 (4th-order symplectic): final relative drift = -0.0006, max |drift| = 0.0006
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
+
+Check
+-----
+RK4's energy error drifts in one direction; Verlet's and Yoshida4's stay
+bounded (Yoshida4 two orders of magnitude smaller), however long the run.
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-93
+
+.. code-block:: Python
+
+    _, d_rk4 = results["rk4"]
+    _, d_y4 = results["yoshida4"]
+    assert abs(d_rk4[-1]) > 0.04 and abs(d_rk4[-1]) == np.max(np.abs(d_rk4))
+    assert np.max(np.abs(d_y4)) < 1e-3
+    _, d_v = results["verlet"]
+    assert np.max(np.abs(d_v[len(d_v) // 2 :])) < 1.1 * np.max(np.abs(d_v[: len(d_v) // 2]))
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.792 seconds)
+   **Total running time of the script:** (0 minutes 1.682 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_integrators_plot_01_symplectic_vs_rk4.py:

@@ -280,6 +280,42 @@ Field," Phil. Trans. R. Soc. Lond. 155, 459-512 (1865).
 
 .. minigallery:: ../../examples/optics/diffraction/plot_maxwell_electromagnetic_light.py
 
+1899 -- The Fabry-Pérot Interferometer
+--------------------------------------
+
+Charles Fabry and Alfred Pérot built an interferometer from two parallel,
+partially silvered glass plates. Light bouncing between them many times
+leaves through the second plate as a series of beams, each delayed by the
+round-trip phase :math:`\delta = 4\pi nL\cos\theta/\lambda`, and summing
+them gives the Airy transmission function
+
+.. math::
+
+   T = \frac{1}{1 + F\sin^2(\delta/2)}, \qquad F = \frac{4R}{(1 - R)^2}.
+
+The resonances transmit fully whatever the mirror reflectance :math:`R`,
+and as :math:`R \to 1` they narrow, so that the ratio of their spacing to
+their width, the finesse :math:`\mathcal F \approx \pi\sqrt R/(1 - R)`,
+reaches tens or hundreds. Unlike the two-beam Michelson interferometer,
+this gave fringes sharp enough to resolve the hyperfine structure of
+spectral lines and to compare wavelengths with the metre. The same two
+mirrors are the resonator of every laser, the frequency reference of
+atomic clocks, and the arms of gravitational-wave detectors.
+
+*Implementation:* :func:`physicskit.optics.thin_films.airy_transmission`
+and :func:`~physicskit.optics.thin_films.finesse` give the ideal
+interferometer, and
+:func:`~physicskit.optics.thin_films.quarter_wave_stack` with
+``cavity=True`` builds an all-dielectric cavity whose spectrum
+:func:`~physicskit.optics.thin_films.multilayer_response` computes layer by
+layer.
+
+*References:* C. Fabry and A. Pérot, *Ann. Chim. Phys.* **16**, 115-144
+(1899); G. B. Airy, *Phil. Mag.* **2**, 20-30 (1833); M. Born and E. Wolf,
+*Principles of Optics*, 7th ed. (Cambridge, 1999), sec. 7.6.
+
+.. minigallery:: ../../examples/optics/interference/plot_fabry_perot_interferometer.py
+
 1905 -- Einstein's Light-Quantum Hypothesis
 ---------------------------------------------
 
@@ -381,6 +417,44 @@ quantifies the negative volume that marks a state as nonclassical.
 Equilibrium," Phys. Rev. 40, 749-759 (1932).
 
 .. minigallery:: ../../examples/optics/quantum_optics/plot_wigner_function_fock_state.py
+
+1935 -- 1950 -- Antireflection Coatings and Abelès's Characteristic Matrix
+--------------------------------------------------------------------------
+
+Thin-film colours had been explained since Young and Fresnel as
+interference between the reflections from a film's two faces. In 1935
+Alexander Smakula at Carl Zeiss used it to make glass less reflective: a
+film a quarter-wave thick returns two reflections half a wave apart, and
+with index :math:`n_1 = \sqrt{n_0 n_s}` their amplitudes cancel,
+
+.. math::
+
+   R(\lambda_0) = \left(\frac{n_0 n_s - n_1^2}{n_0 n_s + n_1^2}\right)^2.
+
+Coated lenses, kept secret until after the war, cut the losses of
+multi-element optics such as periscopes and rangefinders. Florin Abelès
+(1950) showed that any stack of homogeneous layers is described exactly by
+a product of :math:`2\times2` characteristic matrices, one per layer,
+
+.. math::
+
+   M_j = \begin{pmatrix} \cos\delta_j & i\sin\delta_j/\eta_j \\
+   i\eta_j\sin\delta_j & \cos\delta_j \end{pmatrix},
+
+which turned coating design into matrix algebra. Broadband antireflection
+coatings, dielectric mirrors, beam splitters and the filters in every
+camera are designed this way.
+
+*Implementation:* :func:`physicskit.optics.thin_films.multilayer_response`
+multiplies the characteristic matrices of an arbitrary stack, at any angle
+and for either polarization, including absorbing layers, and returns
+:math:`r`, :math:`t`, :math:`R` and :math:`T`.
+
+*References:* A. Smakula, German patent DRP 685767 (1935); F. Abelès,
+*Ann. Phys. (Paris)* **5**, 596-640 and 706-782 (1950); H. A. Macleod,
+*Thin-Film Optical Filters*, 4th ed. (CRC, 2010).
+
+.. minigallery:: ../../examples/optics/interference/plot_thin_film_antireflection.py
 
 1956 -- The Hanbury Brown-Twiss Effect
 ----------------------------------------
@@ -500,6 +574,50 @@ the resonator.
 Nature 187, 493-494 (1960).
 
 .. minigallery:: ../../examples/optics/ray_optics/plot_laser_cavity_stability.py
+
+1961 -- Franken's Second-Harmonic Generation and Phase Matching
+---------------------------------------------------------------
+
+The first laser gave fields strong enough for the polarization of a medium
+to respond nonlinearly, :math:`P = \epsilon_0(\chi^{(1)}E + \chi^{(2)}E^2 +
+\dots)`. Peter Franken and co-workers focused a ruby laser into quartz in
+1961 and recorded light at twice its frequency, 347 nm, at a conversion of
+about :math:`10^{-8}`. The efficiency was low because the fundamental and
+the harmonic travel at different phase velocities: with mismatch
+:math:`\Delta k = k_{2\omega} - 2k_\omega`, the harmonic grows only over a
+coherence length :math:`\pi/\Delta k` before it is converted back,
+
+.. math::
+
+   P_{2\omega}(L) \propto L^2\,\mathrm{sinc}^2\left(\frac{\Delta k L}{2}\right).
+
+In 1962 Giordmaine and Maker et al. matched the phases with the
+birefringence of KDP, propagating at the angle where
+:math:`n_e^{2\omega}(\theta) = n_o^\omega`, and conversion rose by orders
+of magnitude. The same year Armstrong, Bloembergen, Ducuing and Pershan
+derived the coupled-amplitude equations, including complete conversion
+:math:`\tanh^2(\kappa A_0 z)` with pump depletion, and proposed
+quasi-phase matching by reversing the sign of :math:`\chi^{(2)}` every
+coherence length. Periodically poled crystals made that practical in the
+1990s, and frequency-doubled lasers are now everywhere, from green laser
+pointers to the pumps of ultrafast lasers.
+
+*Implementation:* :func:`physicskit.optics.nonlinear.shg_coupled_amplitudes`
+integrates the coupled-amplitude equations with optional periodic poling;
+:func:`~physicskit.optics.nonlinear.shg_undepleted_power` and
+:func:`~physicskit.optics.nonlinear.shg_phase_matched_efficiency` are the
+closed forms, and
+:func:`~physicskit.optics.nonlinear.type_i_phase_matching_angle` the
+birefringent matching angle.
+
+*References:* P. A. Franken, A. E. Hill, C. W. Peters and G. Weinreich,
+*Phys. Rev. Lett.* **7**, 118-119 (1961); J. A. Giordmaine, *Phys. Rev.
+Lett.* **8**, 19-20 (1962); P. D. Maker, R. W. Terhune, M. Nisenoff and C.
+M. Savage, *Phys. Rev. Lett.* **8**, 21-22 (1962); J. A. Armstrong, N.
+Bloembergen, J. Ducuing and P. S. Pershan, *Phys. Rev.* **127**,
+1918-1939 (1962).
+
+.. minigallery:: ../../examples/optics/nonlinear_optics/plot_second_harmonic_phase_matching.py
 
 1963 -- Glauber's Quantum Theory of Optical Coherence
 -----------------------------------------------------
@@ -775,6 +893,44 @@ J. F. Valley, "Observation of Squeezed States Generated by Four-Wave
 Mixing in an Optical Cavity," Phys. Rev. Lett. 55, 2409-2412 (1985).
 
 .. minigallery:: ../../examples/optics/quantum_optics/plot_squeezed_light.py
+
+1987 -- Yablonovitch and John: Photonic Band Gaps
+-------------------------------------------------
+
+Lord Rayleigh had shown in 1887 that a periodic stack of layers reflects
+light completely over a band of wavelengths. A century later Eli
+Yablonovitch, looking to suppress spontaneous emission, and Sajeev John,
+looking for the localization of light, independently proposed that a
+dielectric periodic in three dimensions could have a *photonic band gap*:
+a range of frequencies in which no light can propagate in any direction,
+just as electrons in a semiconductor have energies that no Bloch state
+reaches. In one dimension Bloch's theorem gives the modes exactly,
+
+.. math::
+
+   \cos(K\Lambda) = \tfrac12\operatorname{tr}M_{\text{period}},
+
+and the gap is the frequency band where the right side exceeds 1 in
+magnitude, so that the Bloch wavenumber :math:`K` is complex and the field
+decays from period to period. For a quarter-wave stack its relative width
+is :math:`(4/\pi)\arcsin\left((n_H - n_L)/(n_H + n_L)\right)`.
+Yablonovitch's group made the first full 3D gap at microwave
+frequencies in 1991. Photonic crystals now guide light in hollow-core
+fibres, form the cavities of nanolasers, and make the colours of opals and
+butterfly wings.
+
+*Implementation:* :func:`physicskit.optics.thin_films.bloch_wavenumber`
+gives the complex Bloch wavenumber of a periodic stack,
+:func:`~physicskit.optics.thin_films.quarter_wave_band_gap` the closed-form
+gap width, and :func:`~physicskit.optics.thin_films.multilayer_response`
+the reflectance of finite stacks (Bragg mirrors) that approach it.
+
+*References:* Lord Rayleigh, *Phil. Mag.* **24**, 145-159 (1887); E.
+Yablonovitch, *Phys. Rev. Lett.* **58**, 2059-2062 (1987); S. John, *Phys.
+Rev. Lett.* **58**, 2486-2489 (1987); P. Yeh, A. Yariv and C.-S. Hong, *J.
+Opt. Soc. Am.* **67**, 423-438 (1977).
+
+.. minigallery:: ../../examples/optics/interference/plot_photonic_crystal_band_gap.py
 
 1990 -- Siegman's :math:`M^2` Beam-Quality Factor
 -------------------------------------------------

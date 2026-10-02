@@ -170,13 +170,14 @@ Falling as 1/s with center-of-mass energy
 The angular shape's overall normalization, swept across sqrt(s)
 ------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-80
+.. GENERATED FROM PYTHON SOURCE LINES 77-81
 
 .. code-block:: Python
 
     anim = animate_qed_angular_distribution(np.linspace(5.0, 30.0, 20))
 
     plt.show()
+
 
 
 
@@ -1728,10 +1729,31 @@ The angular shape's overall normalization, swept across sqrt(s)
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 82-86
+
+Check
+-----
+e+e- -> mu+mu- through a photon: d sigma / d Omega ~ 1 + cos^2(theta), so
+forward / transverse = 2, and sigma = 4 pi alpha^2 / 3s.
+
+.. GENERATED FROM PYTHON SOURCE LINES 86-89
+
+.. code-block:: Python
+
+    assert abs(ratio_fwd_transverse - 2) < 1e-12
+    assert abs(sigma_numeric / sigma_formula - 1) < 1e-8
+    np.testing.assert_allclose(sigma_values * sqrt_s_values**2, sigma_values[0] * sqrt_s_values[0] ** 2, rtol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.372 seconds)
+   **Total running time of the script:** (0 minutes 1.283 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_electroweak_plot_01_qed_annihilation.py:

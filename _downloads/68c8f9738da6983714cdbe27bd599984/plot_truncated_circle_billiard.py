@@ -20,7 +20,7 @@ chaotic Sinai/Stadium billiards.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physicskit.chaos.systems.billiards import TruncatedCircleBilliard
+from physicskit.chaos.systems.billiards import CircleBilliard, TruncatedCircleBilliard
 from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
 from physicskit.chaos.visualizers.phase_space import plot_billiard_trajectory, plot_poincare_section
 
@@ -79,3 +79,13 @@ fig2.suptitle("Truncated circle: regular islands give way to chaotic sea as the 
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The flat cut destroys the circle's conserved angular momentum: along one
+# ray sin(phi) no longer stays fixed (as it does in the full circle), and it
+# wanders more as the cut deepens.
+full = CircleBilliard(radius=1.0).simulate((0.3, 0.1), (0.2, 1.0), n_bounces=400)["sin_phi"]
+spread = [np.std(TruncatedCircleBilliard(radius=1.0, cut=cut).simulate((0.3, 0.1), (0.2, 1.0), n_bounces=400)["sin_phi"]) for cut in cut_values]
+assert np.std(full) < 1e-12 and min(spread) > 0.1 and np.all(np.diff(spread) > 0)

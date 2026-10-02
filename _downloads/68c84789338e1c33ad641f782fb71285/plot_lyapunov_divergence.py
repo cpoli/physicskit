@@ -31,6 +31,11 @@ from physicskit.chaos.visualizers.divergence import plot_lyapunov_divergence
 # Chaotic case: Lorenz
 # ---------------------
 lorenz = Lorenz()
+# Start on the attractor: from the default (1, 1, 1) the pair first spends
+# several time units relaxing onto it, and that transient pulls the fitted
+# slope far below the attractor's exponent.
+_, transient = lorenz.trajectory(n_steps=2000, dt=0.01)
+on_attractor = transient[-1]
 
 # %%
 # Non-chaotic case: an undriven, damped (linear) oscillator
@@ -42,10 +47,18 @@ lorenz = Lorenz()
 damped = Duffing(delta=0.3, alpha=1.0, beta=0.0, gamma=0.0, omega=1.0)
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
-_, _, lam_lorenz = plot_lyapunov_divergence(lorenz, t_max=20.0, n_points=1000, ax=ax1, seed=0)
+_, _, lam_lorenz = plot_lyapunov_divergence(lorenz, t_max=40.0, n_points=1000, state0=on_attractor, ax=ax1, seed=0)
 _, _, lam_damped = plot_lyapunov_divergence(damped, t_max=20.0, n_points=1000, ax=ax2, seed=0)
 ax1.set_title(f"Lorenz (chaotic): $\\lambda_{{max}} \\approx {lam_lorenz:.3f} > 0$")
 ax2.set_title(f"Damped oscillator: $\\lambda_{{max}} \\approx {lam_damped:.3f} < 0$")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Lorenz: lambda_max ~ 0.906 (a finite-time estimate from one pair of
+# trajectories); the damped oscillator: nearby states converge at delta / 2.
+assert abs(lam_lorenz - 0.906) < 0.1
+assert abs(lam_damped + 0.15) < 0.01

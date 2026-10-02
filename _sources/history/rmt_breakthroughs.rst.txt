@@ -54,7 +54,7 @@ complex, and quaternion entries respectively.
 in samples from a normal multivariate population," Biometrika 20A(1/2),
 32-52 (1928).
 
-.. minigallery:: ../../examples/rmt/paper_replications/wishart_demo.py
+.. minigallery:: ../../examples/rmt/wishart/plot_wishart_sample_covariance.py
 
 1955-1958 -- Wigner's Semicircle Law
 ------------------------------------
@@ -91,7 +91,7 @@ With Infinite Dimensions," Ann. Math. 62(3), 548-564 (1955); "On the
 Distribution of the Roots of Certain Symmetric Matrices," Ann. Math.
 67(2), 325-327 (1958).
 
-.. minigallery:: ../../examples/rmt/paper_replications/wigner_semicircle_demo.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_wigner_semicircle_law.py
 
 1956-1957 -- The Wigner Surmise for Level Spacings
 ---------------------------------------------------
@@ -135,7 +135,7 @@ Fluctuations*, Academic Press, New York, 1965 (the standard citable
 reference, reproducing Wigner's original 1956-1957 argument, which was
 never separately published).
 
-.. minigallery:: ../../examples/rmt/paper_replications/wigner_surmise_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_wigner_surmise.py
 
 1958 -- Anderson Localization
 -----------------------------
@@ -173,7 +173,7 @@ Fyodorov, F.-M. Dittes, J. Quezada, and T. H. Seligman, "Transition from
 localized to extended eigenstates in the ensemble of power-law random
 banded matrices," Phys. Rev. E 54, 3221-3230 (1996).
 
-.. minigallery:: ../../examples/rmt/paper_replications/localization_demo.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_anderson_localization.py
 
 1962 -- Dyson's Threefold Way and the Circular Ensembles
 --------------------------------------------------------
@@ -211,7 +211,7 @@ Symmetry Groups and Ensembles in Quantum Mechanics," J. Math. Phys. 3,
 J. Math. Phys. 3, 140-156, 157-165, 166-175 (1962) (the circular
 ensembles) -- two distinct papers published the same year, not one.
 
-.. minigallery:: ../../examples/rmt/paper_replications/circular_ensembles_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_dyson_circular_ensembles.py
 
 1965 -- Ginibre's Circular Law for Non-Hermitian Matrices
 ---------------------------------------------------------
@@ -251,7 +251,7 @@ and Real Matrices," J. Math. Phys. 6, 440-449 (1965); V. L. Girko,
 "Circular law," Theory Probab. Appl. 29, 694-706 (1984); Z. D. Bai,
 "Circular law," Ann. Probab. 25, 494-529 (1997).
 
-.. minigallery:: ../../examples/rmt/paper_replications/circular_law_demo.py
+.. minigallery:: ../../examples/rmt/non_hermitian/plot_ginibre_circular_law.py
 
 1967 -- The Marchenko-Pastur Law
 --------------------------------
@@ -279,7 +279,7 @@ ensembles (:class:`~physicskit.rmt.ensembles.LOE`,
 eigenvalues for some sets of random matrices," Mat. Sb. 72(114),
 507-536 (1967).
 
-.. minigallery:: ../../examples/rmt/paper_replications/marchenko_pastur_demo.py
+.. minigallery:: ../../examples/rmt/wishart/plot_marchenko_pastur_law.py
 
 1970-1971 -- French, Wong, and Bohigas-Flores: Embedded Random Matrix Ensembles
 -------------------------------------------------------------------------------
@@ -324,7 +324,7 @@ distinction the ensemble exists to demonstrate.
 (1970); Phys. Lett. B 35, 5-8 (1971); O. Bohigas and J. Flores, Phys.
 Lett. B 34, 261-263 (1971); Phys. Lett. B 35, 383-386 (1971).
 
-.. minigallery:: ../../examples/rmt/paper_replications/embedded_ensemble_demo.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_embedded_two_body_ensemble.py
 
 1973-2000 -- Montgomery's Pair Correlation Conjecture and the Riemann Zeta Connection
 -------------------------------------------------------------------------------------
@@ -372,7 +372,7 @@ function," Math. Comp. 48(177), 273-308 (1987); J. P. Keating and N. C.
 Snaith, "Random matrix theory and zeta(1/2+it)," Commun. Math. Phys.
 214, 57-89 (2000).
 
-.. minigallery:: ../../examples/rmt/paper_replications/keating_snaith_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_riemann_zeta_keating_snaith_moments.py
 
 1977 -- The Berry-Tabor Conjecture: Poisson Statistics for Integrable Systems
 -----------------------------------------------------------------------------
@@ -405,7 +405,7 @@ Bohigas-Giannoni-Schmit entry below is checked against.
 *References:* M. V. Berry and M. Tabor, "Level clustering in the
 regular spectrum," Proc. R. Soc. Lond. A 356, 375-394 (1977).
 
-.. minigallery:: ../../examples/rmt/paper_replications/poisson_berry_tabor_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_berry_tabor_poisson_statistics.py
 
 1980 -- The Wachter Law for the Jacobi (MANOVA) Ensembles
 ---------------------------------------------------------
@@ -432,7 +432,7 @@ validated by :class:`physicskit.rmt.validation.Wachter`.
 *References:* K. W. Wachter, "The limiting empirical measure of
 multiple discriminant ratios," Ann. Statist. 8(5), 937-957 (1980).
 
-.. minigallery:: ../../examples/rmt/paper_replications/wachter_demo.py
+.. minigallery:: ../../examples/rmt/wishart/plot_wachter_law.py
 
 1983 -- The Pandey-Mehta GOE-GUE Crossover
 ------------------------------------------
@@ -472,7 +472,7 @@ via the consecutive-spacing-ratio statistic (no unfolding required) as
 Hermitian matrices intermediate between orthogonal and unitary ones,"
 Commun. Math. Phys. 87, 449-468 (1983).
 
-.. minigallery:: ../../examples/rmt/paper_replications/goe_gue_crossover_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_pandey_mehta_goe_gue_crossover.py
 
 1984 -- The Bohigas-Giannoni-Schmit Conjecture
 ----------------------------------------------
@@ -511,7 +511,7 @@ robustness BGS's conjecture requires of the "chaotic" side.
 "Characterization of Chaotic Quantum Spectra and Universality of Level
 Fluctuation Laws," Phys. Rev. Lett. 52, 1-4 (1984).
 
-.. minigallery:: ../../examples/rmt/paper_replications/rigidity_universality_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_bohigas_giannoni_schmit_rigidity.py
 
 1993 -- Page's Conjecture: the Average Entanglement Entropy of a Random State
 -----------------------------------------------------------------------------
@@ -562,7 +562,7 @@ Page's exact closed form above for direct comparison.
 *References:* D. N. Page, "Average entropy of a subsystem," Phys. Rev.
 Lett. 71, 1291-1294 (1993).
 
-.. minigallery:: ../../examples/rmt/paper_replications/page_curve_demo.py
+.. minigallery:: ../../examples/rmt/wishart/plot_page_entanglement_entropy.py
 
 1994 -- Tracy-Widom Soft-Edge Laws
 ----------------------------------
@@ -591,7 +591,7 @@ and the Airy kernel," Commun. Math. Phys. 159, 151-174 (1994)
 (:math:`\beta=2`); "On orthogonal and symplectic matrix ensembles,"
 Commun. Math. Phys. 177, 727-754 (1996) (:math:`\beta=1,4`).
 
-.. minigallery:: ../../examples/rmt/paper_replications/tracy_widom_demo.py
+.. minigallery:: ../../examples/rmt/edge_statistics/plot_tracy_widom_soft_edge.py
 
 1997 -- The Feinberg-Zee Single Ring Theorem
 --------------------------------------------
@@ -649,7 +649,7 @@ Theory: Method of Hermitian Reduction," Nucl. Phys. B 504, 579-608
 (1997); A. Guionnet, M. Krishnapur, and O. Zeitouni, "The single ring
 theorem," Ann. Math. 174(2), 1189-1217 (2011).
 
-.. minigallery:: ../../examples/rmt/paper_replications/single_ring_demo.py
+.. minigallery:: ../../examples/rmt/non_hermitian/plot_feinberg_zee_single_ring.py
 
 1997 -- The Altland-Zirnbauer Tenfold Way
 -----------------------------------------
@@ -680,7 +680,7 @@ specializations.
 classes in mesoscopic normal-superconducting hybrid structures," Phys.
 Rev. B 55, 1142-1161 (1997).
 
-.. minigallery:: ../../examples/rmt/paper_replications/bdg_classes_demo.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_altland_zirnbauer_bdg_classes.py
 
 1998 -- Bender-Boettcher PT-Symmetric Quantum Mechanics
 -------------------------------------------------------
@@ -732,7 +732,7 @@ Non-Hermitian Hamiltonians Having PT Symmetry," Phys. Rev. Lett. 80,
 symmetry: The necessary condition for the reality of the spectrum of a
 non-Hermitian Hamiltonian," J. Math. Phys. 43, 205-214 (2002).
 
-.. minigallery:: ../../examples/rmt/paper_replications/pt_symmetric_demo.py
+.. minigallery:: ../../examples/rmt/non_hermitian/plot_bender_boettcher_pt_symmetry.py
 
 2002 -- The Dumitriu-Edelman Tridiagonal Model: a Computational Breakthrough
 ----------------------------------------------------------------------------
@@ -781,7 +781,7 @@ at any continuum :math:`\beta`, not only 1, 2, 4.
 *References:* I. Dumitriu and A. Edelman, "Matrix Models for Beta
 Ensembles," J. Math. Phys. 43, 5830-5847 (2002).
 
-.. minigallery:: ../../examples/rmt/paper_replications/tridiagonal_demo.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_dumitriu_edelman_tridiagonal.py
 
 2015 -- Kitaev's SYK Model and Maximal Quantum Chaos
 ----------------------------------------------------
@@ -833,7 +833,7 @@ spin-liquid model); J. Maldacena, S. H. Shenker, and D. Stanford, "A
 bound on chaos," JHEP 2016, 106 (2016) (the rigorous maximal-chaos
 bound).
 
-.. minigallery:: ../../examples/rmt/paper_replications/syk_demo.py
+.. minigallery:: ../../examples/rmt/spacings/plot_kitaev_syk_model.py
 
 See Also
 --------

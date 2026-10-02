@@ -80,3 +80,12 @@ print(f"pair separation: started at {d:.3f}, ended at {separation_pair:.3f} (con
 print(f"dipole separation: started at {d:.3f}, ended at {separation_dipole:.3f} (conserved by rigid translation)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Equal vortices orbit with period 2 pi^2 d^2 / Gamma and return to their
+# start; an opposite-sign pair translates rigidly at Gamma / 2 pi d.
+np.testing.assert_allclose(trajectory_pair[-1], trajectory_pair[0], atol=1e-8)
+np.testing.assert_allclose(trajectory_dipole[-1] - trajectory_dipole[0], [[4 * d, 0.0], [4 * d, 0.0]], atol=1e-8)
+assert abs(separation_pair - d) < 1e-10 and abs(separation_dipole - d) < 1e-10

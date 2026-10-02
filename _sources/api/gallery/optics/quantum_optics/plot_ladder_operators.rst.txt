@@ -195,7 +195,7 @@ no photons to remove). This asymmetry -- a direct consequence of
 emission: an excited atom, coupled to the quantized field, is never
 coupled to "nothing" even when the field starts in vacuum.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-96
+.. GENERATED FROM PYTHON SOURCE LINES 86-97
 
 .. code-block:: Python
 
@@ -213,6 +213,7 @@ coupled to "nothing" even when the field starts in vacuum.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -226,10 +227,34 @@ coupled to "nothing" even when the field starts in vacuum.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 98-103
+
+Check
+-----
+[a, a^dagger] = 1 below the truncation; a|n> = sqrt(n)|n-1>,
+a^dagger|n> = sqrt(n+1)|n+1>; N = a^dagger a has spectrum 0, 1, 2, ...;
+and <0| a a^dagger |0> = 1 is the vacuum fluctuation behind spontaneous emission.
+
+.. GENERATED FROM PYTHON SOURCE LINES 103-108
+
+.. code-block:: Python
+
+    assert np.max(np.abs(comm[:-1, :-1] - np.eye(n_max - 1))) < 1e-12
+    assert (lowered_idx, raised_idx) == (n_test - 1, n_test + 1)
+    assert abs(lowered_amp - np.sqrt(n_test)) < 1e-12 and abs(raised_amp - np.sqrt(n_test + 1)) < 1e-12
+    np.testing.assert_allclose(eigenvalues, np.arange(n_max), atol=1e-12)
+    assert abs(n_expectation_vacuum) < 1e-12 and abs(a_adag_expectation - 1) < 1e-12
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.031 seconds)
+   **Total running time of the script:** (0 minutes 0.030 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_quantum_optics_plot_ladder_operators.py:

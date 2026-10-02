@@ -83,3 +83,9 @@ ax2.legend()
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# RK4 is fourth order: the energy error falls as dt^4.
+assert abs(slope - 4) < 0.2

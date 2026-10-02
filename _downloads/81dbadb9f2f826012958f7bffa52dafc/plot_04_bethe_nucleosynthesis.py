@@ -87,3 +87,12 @@ ax.legend(fontsize=8, loc="lower right")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# 4 p -> He4 releases 26.73 MeV (0.7% of the rest mass); binding per nucleon
+# peaks near iron.
+assert abs(Q_nuclear - (4 * m_proton - m_alpha - 2 * m_positron)) < 1e-9
+assert abs(Q_total - 26.73) < 0.01 and abs(Q_total / (4 * m_proton) - 0.0071) < 1e-4
+assert 54 <= A_values[i_peak] <= 64 and bpn_fe56 > bpn_he4

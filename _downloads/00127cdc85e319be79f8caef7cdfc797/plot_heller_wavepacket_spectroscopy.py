@@ -139,3 +139,17 @@ axes[0].legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Fourier transform of C(t) resolves the Morse levels
+# E_n = omega (n + 1/2) - [omega (n + 1/2)]^2 / 4 D_e; |C(t)| recurs at the
+# classical period at the packet's energy, T(E) = 2 pi / (omega sqrt(1 - E/D_e)),
+# longer than the harmonic 2 pi / omega; Herman-Kluk tracks the packet.
+np.testing.assert_allclose(peak_E[:3], E_exact[:3], atol=0.01)
+E_packet = 0.5 * gamma + np.sum(np.abs(psi0) ** 2 * D_e * (1 - np.exp(-a_m * x)) ** 2) * dx
+window = (times > 0.5 * T_cl) & (times < 1.6 * T_cl)
+t_recur = times[window][np.argmax(np.abs(C[window]))]
+assert abs(t_recur / (T_cl / np.sqrt(1 - E_packet / D_e)) - 1) < 0.02
+assert fid > 0.999

@@ -82,3 +82,10 @@ fig.tight_layout()
 mid = coulomb_field([q, q], pos, [[0.0, 0.0]])[0]
 print(f"field at the midpoint of two like charges: {np.linalg.norm(mid):.2e} V/m")
 plt.show()
+
+# %%
+# Check
+# -----
+# Coulomb: |E| = q / 4 pi eps0 r^2; like charges cancel at their midpoint.
+assert abs(slope + 2) < 1e-9 and abs(E_1m - q / (4 * np.pi * EPS0)) < 1e-9 * E_1m
+assert np.linalg.norm(mid) < 1e-9

@@ -102,3 +102,12 @@ fig2.tight_layout()
 
 print(f"\nray-fan image heights at the final plane (should all coincide): {image_heights}")
 print(f"spread of image heights across the fan: {image_heights.max() - image_heights.min():.2e}")
+
+# %%
+# Check
+# -----
+# 1/d1 + 1/d2 = 1/f is an imaging condition: B = 0, so every ray from one
+# object point meets at the image, with magnification -d2/d1.
+assert matrices_agree and abs(1 / d1 + 1 / d2 - 1 / f) < 1e-12
+assert abs(M_system[0, 1]) < 1e-12
+np.testing.assert_allclose(image_heights, -d2 / d1 * object_height, atol=1e-15)

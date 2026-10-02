@@ -1179,7 +1179,7 @@ position and draw electrons from it. A handful look random; thousands
 reproduce the fringes. With one slit blocked the same number of
 electrons gives a single smooth band.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-89
+.. GENERATED FROM PYTHON SOURCE LINES 73-90
 
 .. code-block:: Python
 
@@ -1202,6 +1202,7 @@ electrons gives a single smooth band.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_twin_slit_interference_003.png
    :alt: 50 electrons, both slits open, 500 electrons, both slits open, 20000 electrons, both slits open, 20000 electrons, one slit
    :srcset: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_twin_slit_interference_003.png
@@ -1211,10 +1212,37 @@ electrons gives a single smooth band.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 91-95
+
+Check
+-----
+Fringes spaced by lambda L / d, and a free packet's width grows as
+sigma(t) = sigma0 sqrt(1 + (t / 2 sigma0^2)^2) (hbar = m = 1).
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-104
+
+.. code-block:: Python
+
+    spacing = np.diff(y[peaks]).mean()
+    assert abs(spacing / (2 * np.pi / 10.0 * 50 / 4.0) - 1) < 0.02
+    x_wide = np.linspace(-30, 60, 6000)
+    rho = gd.density(x_wide, 5.0)
+    rho /= np.trapezoid(rho, x_wide)
+    mean = np.trapezoid(x_wide * rho, x_wide)
+    width = np.sqrt(np.trapezoid((x_wide - mean) ** 2 * rho, x_wide))
+    assert abs(mean - 3.0 * 5.0) < 1e-3
+    assert abs(width - np.sqrt(1 + (5.0 / 2) ** 2)) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 7.450 seconds)
+   **Total running time of the script:** (1 minutes 6.835 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_wave_packets_plot_twin_slit_interference.py:

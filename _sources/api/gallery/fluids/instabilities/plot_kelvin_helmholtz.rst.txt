@@ -183,7 +183,7 @@ Rather than a single before/after comparison, redrawing the vorticity
 field every few RK4 steps shows the ripple rolling up into discrete
 "cat's eye" vortex cores as it happens.
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-108
+.. GENERATED FROM PYTHON SOURCE LINES 104-109
 
 .. code-block:: Python
 
@@ -191,6 +191,7 @@ field every few RK4 steps shows the ripple rolling up into discrete
     anim = animate_kelvin_helmholtz(omega0, nu=0.0005, dt=0.002, steps_per_frame=10, n_frames=40, length=length)
 
     plt.show()
+
 
 
 
@@ -454,10 +455,31 @@ field every few RK4 steps shows the ripple rolling up into discrete
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 110-114
+
+Check
+-----
+The shear layer is unstable: it grows at least at the fundamental mode's
+vortex-sheet rate k dU / 2 and rolls up into vortex cores.
+
+.. GENERATED FROM PYTHON SOURCE LINES 114-117
+
+.. code-block:: Python
+
+    assert abs(sigma_predicted - k0 * 2.0 / 2) < 1e-12
+    assert sigma_measured > sigma_predicted
+    assert len(peaksf) > len(peaks0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.728 seconds)
+   **Total running time of the script:** (0 minutes 6.512 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_instabilities_plot_kelvin_helmholtz.py:

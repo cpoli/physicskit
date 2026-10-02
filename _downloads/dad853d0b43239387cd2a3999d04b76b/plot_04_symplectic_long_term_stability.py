@@ -100,3 +100,12 @@ ax.legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Leapfrog's energy error stays bounded over 1000 orbits; Euler's drifts to
+# order one within a few periods (and saturates once the orbit is unbound).
+assert rel_err_symplectic.max() < 5e-3
+assert rel_err_symplectic[-100:].max() < 1.5 * rel_err_symplectic[1:101].max()
+assert rel_err_euler[-1] > 0.5 and rel_err_euler[10] > 100 * rel_err_symplectic.max()

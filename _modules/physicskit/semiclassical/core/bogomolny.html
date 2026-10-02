@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.semiclassical.core.bogomolny &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/semiclassical/core/bogomolny';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.semiclassical.core.bogomolny</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.semiclassical.core.bogomolny</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">"""Bogomolny's semiclassical transfer operator on a billiard boundary.</span>
+
+<span class="sd">Bogomolny (1992) replaced the Gutzwiller sum over periodic orbits with a</span>
+<span class="sd">finite operator on a Poincare surface of section. Its kernel is the</span>
+<span class="sd">semiclassical propagator from one point of the section to the next,</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">   T(q,q';E) = \frac{1}{\sqrt{2\pi i\hbar}}</span>
+<span class="sd">   \sqrt{\left|\frac{\partial^2 S}{\partial q\,\partial q'}\right|}\,</span>
+<span class="sd">   \exp\!\left[\frac{i}{\hbar}S(q,q';E) - i\frac{\pi\nu}{2}\right],</span>
+
+<span class="sd">summed over the classical paths that go from :math:`q'` to :math:`q`</span>
+<span class="sd">without crossing the section in between. Quantized energies are the</span>
+<span class="sd">zeros of :math:`\det[1-T(E)]`. Expanding :math:`\log\det[1-T]` in</span>
+<span class="sd">traces of powers of :math:`T` gives back the Gutzwiller trace formula,</span>
+<span class="sd">but the determinant needs only short orbits (one crossing of the</span>
+<span class="sd">section) and a matrix whose size is set by the number of wavelengths</span>
+<span class="sd">across the section.</span>
+
+<span class="sd">For a convex billiard the boundary itself is the natural section. With</span>
+<span class="sd">arc length :math:`s` along it, the path from :math:`s'` to :math:`s` is</span>
+<span class="sd">the straight chord of length :math:`\ell`, :math:`S=\hbar k\ell`, and</span>
+<span class="sd">:math:`|\partial^2\ell/\partial s\,\partial s'|=\cos\theta\cos\theta'/\ell`,</span>
+<span class="sd">where :math:`\theta,\theta'` are the angles between the chord and the</span>
+<span class="sd">inward normals. A Dirichlet wall adds a phase :math:`\pi` per bounce</span>
+<span class="sd">(:math:`\nu=2`), a Neumann wall none.</span>
+<span class="sd">:func:`bogomolny_transfer_operator` builds the discretized kernel and</span>
+<span class="sd">:func:`bogomolny_quantization_function` the quantity whose minima give</span>
+<span class="sd">the levels.</span>
+
+<span class="sd">References</span>
+<span class="sd">----------</span>
+<span class="sd">E. B. Bogomolny, "Semiclassical quantization of multidimensional</span>
+<span class="sd">systems," Nonlinearity **5**, 805-866 (1992).</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"bogomolny_transfer_operator"</span><span class="p">,</span>
+    <span class="s2">"bogomolny_quantization_function"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="bogomolny_transfer_operator">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.bogomolny_transfer_operator">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bogomolny_transfer_operator</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">normals</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">boundary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"dirichlet"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Discretized Bogomolny transfer operator :math:`T(k)` on the boundary of a convex billiard.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       T_{ij} = \sqrt{\frac{k\,\cos\theta_i\cos\theta_j}{2\pi i\,\ell_{ij}}}\;</span>
+<span class="sd">       e^{ik\ell_{ij} - i\pi\nu/2}\,\sqrt{\Delta s_i\,\Delta s_j},</span>
+
+<span class="sd">    with :math:`\ell_{ij}` the chord between boundary points :math:`i` and</span>
+<span class="sd">    :math:`j`. The symmetric weight :math:`\sqrt{\Delta s_i\Delta s_j}`</span>
+<span class="sd">    turns the integral kernel into a matrix whose eigenvalues approximate</span>
+<span class="sd">    those of the operator. Use at least a few points per wavelength</span>
+<span class="sd">    :math:`2\pi/k`; extra points only resolve the evanescent part of</span>
+<span class="sd">    :math:`T` better.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : ndarray, shape (N, 2)</span>
+<span class="sd">        Boundary points, ordered along the boundary.</span>
+<span class="sd">    normals : ndarray, shape (N, 2)</span>
+<span class="sd">        Unit inward normals at ``points``.</span>
+<span class="sd">    ds : ndarray, shape (N,)</span>
+<span class="sd">        Arc-length weight of each point.</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wavenumber.</span>
+<span class="sd">    boundary : {"dirichlet", "neumann"}, default="dirichlet"</span>
+<span class="sd">        Wall boundary condition (Maslov phase :math:`\nu=2` or 0 per bounce).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of complex, shape (N, N)</span>
+<span class="sd">        The matrix :math:`T(k)`.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``boundary`` is not recognized.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Every chord must lie inside the billiard, so the boundary must be</span>
+<span class="sd">    convex. Grazing chords (:math:`\cos\theta\to0`) carry whispering-gallery</span>
+<span class="sd">    states, which this leading-order kernel describes least accurately.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    On a boundary of length :math:`L` there are about :math:`kL/\pi`</span>
+<span class="sd">    propagating directions. :math:`T` is close to unitary on them and</span>
+<span class="sd">    close to zero on the rest; for the unit circle at :math:`k=20` that is</span>
+<span class="sd">    about 40 singular values near 1:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; N = 200</span>
+<span class="sd">    &gt;&gt;&gt; phi = 2 * np.pi * np.arange(N) / N</span>
+<span class="sd">    &gt;&gt;&gt; pts = np.column_stack([np.cos(phi), np.sin(phi)])</span>
+<span class="sd">    &gt;&gt;&gt; T = bogomolny_transfer_operator(pts, -pts, np.full(N, 2 * np.pi / N), k=20.0)</span>
+<span class="sd">    &gt;&gt;&gt; T.shape</span>
+<span class="sd">    (200, 200)</span>
+<span class="sd">    &gt;&gt;&gt; sv = np.linalg.svd(T, compute_uv=False)</span>
+<span class="sd">    &gt;&gt;&gt; int(np.sum(sv &gt; 0.5))</span>
+<span class="sd">    41</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">boundary</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"dirichlet"</span><span class="p">,</span> <span class="s2">"neumann"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'boundary must be "dirichlet" or "neumann", got </span><span class="si">{</span><span class="n">boundary</span><span class="si">!r}</span><span class="s1">.'</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">normals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">chord</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">points</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># chord[i, j] = r_j - r_i</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">cos_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"ik,ijk-&gt;ij"</span><span class="p">,</span> <span class="n">normals</span><span class="p">,</span> <span class="n">chord</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span>
+    <span class="n">cos_j</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"jk,ijk-&gt;ij"</span><span class="p">,</span> <span class="n">normals</span><span class="p">,</span> <span class="n">chord</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span>
+    <span class="n">maslov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="k">if</span> <span class="n">boundary</span> <span class="o">==</span> <span class="s2">"dirichlet"</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">amplitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cos_i</span> <span class="o">*</span> <span class="n">cos_j</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">length</span> <span class="o">-</span> <span class="n">maslov</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ds</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ds</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">T</span></div>
+
+
+
+<div class="viewcode-block" id="bogomolny_quantization_function">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.bogomolny_quantization_function">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bogomolny_quantization_function</span><span class="p">(</span><span class="n">k_grid</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">normals</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">boundary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"dirichlet"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Smallest singular value of :math:`1-T(k)` on a grid of wavenumbers.</span>
+
+<span class="sd">    Bogomolny's quantization condition is :math:`\det[1-T(k)]=0`. The</span>
+<span class="sd">    determinant of the discretized operator is never exactly zero, and its</span>
+<span class="sd">    magnitude varies by orders of magnitude with :math:`k`; the smallest</span>
+<span class="sd">    singular value of :math:`1-T(k)` is a better-scaled measure of how close</span>
+<span class="sd">    :math:`T` is to having an eigenvalue 1. Its sharp minima are the</span>
+<span class="sd">    semiclassical levels, and a near-degenerate pair shows up as a single</span>
+<span class="sd">    minimum.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    k_grid : ndarray</span>
+<span class="sd">        Wavenumbers at which to evaluate.</span>
+<span class="sd">    points, normals, ds : ndarray</span>
+<span class="sd">        Boundary discretization, as in :func:`bogomolny_transfer_operator`.</span>
+<span class="sd">    boundary : {"dirichlet", "neumann"}, default="dirichlet"</span>
+<span class="sd">        Wall boundary condition.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray, shape matching ``k_grid``</span>
+<span class="sd">        :math:`\sigma_{\min}[1-T(k)]`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The lowest Dirichlet level of the unit disk is the first zero of</span>
+<span class="sd">    :math:`J_0`, :math:`k=2.4048`:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; N = 120</span>
+<span class="sd">    &gt;&gt;&gt; phi = 2 * np.pi * np.arange(N) / N</span>
+<span class="sd">    &gt;&gt;&gt; pts = np.column_stack([np.cos(phi), np.sin(phi)])</span>
+<span class="sd">    &gt;&gt;&gt; ks = np.linspace(2.2, 2.6, 81)</span>
+<span class="sd">    &gt;&gt;&gt; f = bogomolny_quantization_function(ks, pts, -pts, np.full(N, 2 * np.pi / N))</span>
+<span class="sd">    &gt;&gt;&gt; round(float(ks[np.argmin(f)]), 1)</span>
+<span class="sd">    2.4</span>
+<span class="sd">    """</span>
+    <span class="n">k_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">k_grid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">k_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">k_grid</span><span class="p">):</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">bogomolny_transfer_operator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">normals</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">boundary</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">identity</span> <span class="o">-</span> <span class="n">T</span><span class="p">,</span> <span class="n">compute_uv</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

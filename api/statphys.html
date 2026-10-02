@@ -471,7 +471,8 @@ physics, critical phenomena, molecular dynamics, and disordered systems into
 a visual, computational Python framework:</p>
 <ul class="simple">
 <li><p><strong>Lattice models</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.ising_lattice</span></code>): the 2D Ising
-model with Metropolis and Wolff-cluster dynamics, the q-state Potts model,
+model with Metropolis, Wolff and Swendsen-Wang cluster dynamics, the
+q-state Potts model,
 and the XY model’s topological Kosterlitz-Thouless transition.</p></li>
 <li><p><strong>Disordered systems</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.spin_glass</span></code>): the
 Edwards-Anderson Ising spin glass, with quenched bond disorder,
@@ -505,6 +506,12 @@ deposition.</p></li>
 <li><p><strong>Nonequilibrium work</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.nonequilibrium_work</span></code>):
 Jarzynski’s equality, recovering exact equilibrium free energies from
 irreversible, finite-speed work measurements.</p></li>
+<li><p><strong>Flat-histogram sampling</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.wang_landau</span></code>):
+Wang-Landau estimation of the Ising density of states, giving the
+thermodynamics at every temperature from one run.</p></li>
+<li><p><strong>Quantum Monte Carlo</strong> (<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.path_integral</span></code>):
+path-integral Monte Carlo of a particle in a harmonic or anharmonic
+well, as a classical ring polymer in imaginary time.</p></li>
 </ul>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">physicskit.statphys.chapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ising2D</span>
@@ -1050,7 +1057,7 @@ exploit annealing.</p></li>
 <li><p><strong>n_equil</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=200</em>) – Equilibration sweeps discarded before measuring at each
 temperature.</p></li>
 <li><p><strong>n_measure</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=500</em>) – Number of measurements collected at each temperature.</p></li>
-<li><p><strong>algorithm</strong> (<em>{&quot;metropolis&quot;</em><em>, </em><em>&quot;wolff&quot;}</em><em>, </em><em>default=&quot;metropolis&quot;</em>) – Update rule, see <a class="reference internal" href="#physicskit.statphys.Ising2D.sweep" title="physicskit.statphys.Ising2D.sweep"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sweep()</span></code></a>.</p></li>
+<li><p><strong>algorithm</strong> (<em>{&quot;metropolis&quot;</em><em>, </em><em>&quot;wolff&quot;</em><em>, </em><em>&quot;swendsen-wang&quot;}</em><em>, </em><em>default=&quot;metropolis&quot;</em>) – Update rule, see <a class="reference internal" href="#physicskit.statphys.Ising2D.sweep" title="physicskit.statphys.Ising2D.sweep"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sweep()</span></code></a>.</p></li>
 <li><p><strong>measure_every</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of sweeps between successive measurements.</p></li>
 </ul>
 </dd>
@@ -1079,15 +1086,18 @@ per-site averages; <code class="docutils literal notranslate"><span class="pre">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Inverse temperature <span class="math notranslate nohighlight">\(1/(k_B T)\)</span>.</p></li>
-<li><p><strong>algorithm</strong> (<em>{&quot;metropolis&quot;</em><em>, </em><em>&quot;wolff&quot;}</em><em>, </em><em>default=&quot;metropolis&quot;</em>) – Update rule. Metropolis flips single spins; Wolff grows and flips
-whole clusters, which decorrelates much faster near <span class="math notranslate nohighlight">\(T_c\)</span>.</p></li>
-<li><p><strong>n_sweeps</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of sweeps (Metropolis) or cluster updates (Wolff) to
-perform.</p></li>
+<li><p><strong>algorithm</strong> (<em>{&quot;metropolis&quot;</em><em>, </em><em>&quot;wolff&quot;</em><em>, </em><em>&quot;swendsen-wang&quot;}</em><em>, </em><em>default=&quot;metropolis&quot;</em>) – Update rule. Metropolis flips single spins; Wolff grows and flips
+one cluster, and Swendsen-Wang partitions the whole lattice into
+clusters and flips each with probability 1/2. Both cluster
+rules decorrelate much faster near <span class="math notranslate nohighlight">\(T_c\)</span>.</p></li>
+<li><p><strong>n_sweeps</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of sweeps (Metropolis) or cluster updates (Wolff,
+Swendsen-Wang) to perform.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>int or None</em> – For <code class="docutils literal notranslate"><span class="pre">&quot;wolff&quot;</span></code>, the size of the last cluster flipped; <code class="docutils literal notranslate"><span class="pre">None</span></code>
-for <code class="docutils literal notranslate"><span class="pre">&quot;metropolis&quot;</span></code>.</p>
+<dd class="field-even"><p><em>int or None</em> – For <code class="docutils literal notranslate"><span class="pre">&quot;wolff&quot;</span></code>, the size of the last cluster flipped; for
+<code class="docutils literal notranslate"><span class="pre">&quot;swendsen-wang&quot;</span></code>, the number of clusters in the last update;
+<code class="docutils literal notranslate"><span class="pre">None</span></code> for <code class="docutils literal notranslate"><span class="pre">&quot;metropolis&quot;</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1633,6 +1643,54 @@ variance <span class="math notranslate nohighlight">\(\sigma^2/(\theta(2 - \thet
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="physicskit.statphys.PathIntegralParticle">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">PathIntegralParticle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_beads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lam</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/path_integral.html#PathIntegralParticle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.PathIntegralParticle" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Ring-polymer path-integral Monte Carlo for <span class="math notranslate nohighlight">\(V(x) = \tfrac12\omega^2x^2 + \lambda x^4\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Inverse temperature (<span class="math notranslate nohighlight">\(\hbar = m = k_B = 1\)</span>).</p></li>
+<li><p><strong>n_beads</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=32</em>) – Number of imaginary-time slices <span class="math notranslate nohighlight">\(P\)</span>.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Harmonic frequency.</p></li>
+<li><p><strong>lam</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.0</em>) – Quartic anharmonicity <span class="math notranslate nohighlight">\(\lambda \ge 0\)</span>.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for reproducible sampling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>path</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_beads</em><em>,</em><em>)</em>) – Current bead positions.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pimc</span> <span class="o">=</span> <span class="n">PathIntegralParticle</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">n_beads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">pimc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">n_equil</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_measure</span><span class="o">=</span><span class="mi">4000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"x2"</span><span class="p">]</span> <span class="o">-</span> <span class="n">harmonic_x2_primitive</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.PathIntegralParticle.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_equil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/path_integral.html#PathIntegralParticle.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.PathIntegralParticle.run" title="Link to this definition">#</a></dt>
+<dd><p>Equilibrate, then sample the ring polymer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_equil</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1000</em>) – Discarded sweeps.</p></li>
+<li><p><strong>n_measure</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=10000</em>) – Measured sweeps (one sample per sweep of <span class="math notranslate nohighlight">\(P\)</span> bead moves).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;x2&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;energy&quot;</span></code> (means of <span class="math notranslate nohighlight">\(\langle x^2\rangle\)</span>
+and of the virial energy estimator), their per-sweep series
+<code class="docutils literal notranslate"><span class="pre">&quot;x2_series&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;energy_series&quot;</span></code>, and the bead-move
+<code class="docutils literal notranslate"><span class="pre">&quot;acceptance&quot;</span></code> rate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="physicskit.statphys.Percolation2D">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">Percolation2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'site'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/percolation.html#Percolation2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.Percolation2D" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -2064,6 +2122,60 @@ a hierarchy of pure states.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="physicskit.statphys.WangLandauIsing">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">WangLandauIsing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/wang_landau.html#WangLandauIsing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.WangLandauIsing" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wang-Landau estimate of the density of states of the 2D Ising model.</p>
+<p>The walk proposes single-spin flips accepted with probability
+<span class="math notranslate nohighlight">\(\min(1, g(E_{\text{old}})/g(E_{\text{new}}))\)</span> and raises
+<span class="math notranslate nohighlight">\(\ln g\)</span> of the current level by <span class="math notranslate nohighlight">\(\ln f\)</span> after every
+proposal. Whenever the visit histogram is flat (every visited level
+within <code class="docutils literal notranslate"><span class="pre">flatness</span></code> of the mean), it is reset and <span class="math notranslate nohighlight">\(\ln f\)</span> is
+halved, until <span class="math notranslate nohighlight">\(\ln f\)</span> falls below <code class="docutils literal notranslate"><span class="pre">log_f_final</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=8</em>) – Linear lattice size.</p></li>
+<li><p><strong>J</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Ferromagnetic coupling.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Seed for the initial configuration and the walk.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wl</span> <span class="o">=</span> <span class="n">WangLandauIsing</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="p">,</span> <span class="n">log_g</span> <span class="o">=</span> <span class="n">wl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">log_f_final</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_g</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># normalized to the two ground states</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.statphys.WangLandauIsing.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_f_initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_f_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sweeps_per_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/wang_landau.html#WangLandauIsing.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.WangLandauIsing.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the walk to convergence and return the normalized <span class="math notranslate nohighlight">\(\ln g(E)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_f_initial</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Starting modification factor <span class="math notranslate nohighlight">\(\ln f_0\)</span>.</p></li>
+<li><p><strong>log_f_final</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1e-6</em>) – Stop once <span class="math notranslate nohighlight">\(\ln f\)</span> falls below this.</p></li>
+<li><p><strong>flatness</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=0.8</em>) – A histogram is flat when its minimum over the accessible levels
+is at least this fraction of its mean.</p></li>
+<li><p><strong>sweeps_per_check</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1000</em>) – Sweeps between flatness checks.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>energies</strong> (<em>ndarray</em>) – Energy levels <span class="math notranslate nohighlight">\(E_k\)</span>.</p></li>
+<li><p><strong>log_g</strong> (<em>ndarray</em>) – <span class="math notranslate nohighlight">\(\ln g(E)\)</span>, normalized so that <span class="math notranslate nohighlight">\(g(E_0) = 2\)</span> (the
+two ground states), with <code class="docutils literal notranslate"><span class="pre">-inf</span></code> on the inaccessible levels.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="physicskit.statphys.XYModel2D">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">XYModel2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/ising_lattice.html#XYModel2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.XYModel2D" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -2154,6 +2266,38 @@ a topological charge.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.canonical_from_density_of_states">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">canonical_from_density_of_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_sites</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/wang_landau.html#canonical_from_density_of_states"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.canonical_from_density_of_states" title="Link to this definition">#</a></dt>
+<dd><p>Canonical energy and specific heat per site from a density of states.</p>
+<div class="math notranslate nohighlight">
+\[\langle E^n \rangle_\beta = \frac{\sum_E E^n g(E) e^{-\beta E}}{\sum_E g(E) e^{-\beta E}},
+\qquad
+C_v = \frac{\langle E^2 \rangle - \langle E \rangle^2}{k_B T^2 N}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energies</strong> (<em>array_like</em>) – Energy levels.</p></li>
+<li><p><strong>log_g</strong> (<em>array_like</em>) – <span class="math notranslate nohighlight">\(\ln g(E)\)</span> on those levels; <code class="docutils literal notranslate"><span class="pre">-inf</span></code> marks an empty level.</p></li>
+<li><p><strong>temperatures</strong> (<em>array_like</em>) – Temperatures at which to evaluate.</p></li>
+<li><p><strong>n_sites</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of sites, to report per-site quantities.</p></li>
+<li><p><strong>kB</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Boltzmann constant.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict of str -&gt; ndarray</em> – Keys <code class="docutils literal notranslate"><span class="pre">&quot;T&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;E&quot;</span></code> (per site), <code class="docutils literal notranslate"><span class="pre">&quot;C_v&quot;</span></code> (per site) and
+<code class="docutils literal notranslate"><span class="pre">&quot;log_Z&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">ising_density_of_states_exact</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">canonical_from_density_of_states</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">],</span> <span class="n">n_sites</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"E"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">-2.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -2297,6 +2441,92 @@ averaged onto them.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">fokker_planck_stationary</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="mi">4</span><span class="p">)</span>
 <span class="go">0.25</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.harmonic_x2_exact">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">harmonic_x2_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/path_integral.html#harmonic_x2_exact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.harmonic_x2_exact" title="Link to this definition">#</a></dt>
+<dd><p>Exact thermal <span class="math notranslate nohighlight">\(\langle x^2 \rangle\)</span> of a quantum harmonic oscillator.</p>
+<div class="math notranslate nohighlight">
+\[\langle x^2 \rangle = \frac{1}{2\omega} \coth\frac{\beta\omega}{2}
+\quad (\hbar = m = 1).\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Oscillator frequency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">harmonic_x2_exact</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># ground state: 1/(2 omega)</span>
+<span class="go">0.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.harmonic_x2_primitive">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">harmonic_x2_primitive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_beads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/path_integral.html#harmonic_x2_primitive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.harmonic_x2_primitive" title="Link to this definition">#</a></dt>
+<dd><p>Exact <span class="math notranslate nohighlight">\(\langle x^2 \rangle\)</span> of the <span class="math notranslate nohighlight">\(P\)</span>-bead primitive-action ring polymer.</p>
+<p>For a harmonic well the discretized action is a Gaussian
+<span class="math notranslate nohighlight">\(\tfrac12 x^T A x\)</span> with <span class="math notranslate nohighlight">\(A = \tfrac{P}{\beta}(2I - S -
+S^T) + \tfrac{\beta\omega^2}{P} I\)</span> (<span class="math notranslate nohighlight">\(S\)</span> the cyclic shift), so
+<span class="math notranslate nohighlight">\(\langle x^2 \rangle_P = \operatorname{tr}(A^{-1})/P\)</span>. This is
+the exact target of a <a class="reference internal" href="#physicskit.statphys.PathIntegralParticle" title="physicskit.statphys.PathIntegralParticle"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathIntegralParticle</span></code></a> run with
+<code class="docutils literal notranslate"><span class="pre">lam=0</span></code>, and tends to <a class="reference internal" href="#physicskit.statphys.harmonic_x2_exact" title="physicskit.statphys.harmonic_x2_exact"><code class="xref py py-func docutils literal notranslate"><span class="pre">harmonic_x2_exact()</span></code></a> as <span class="math notranslate nohighlight">\(P \to
+\infty\)</span>; the gap is the <span class="math notranslate nohighlight">\(O(\tau^2)\)</span> Trotter error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>n_beads</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of imaginary-time slices <span class="math notranslate nohighlight">\(P\)</span>.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Oscillator frequency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exact</span> <span class="o">=</span> <span class="n">harmonic_x2_exact</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">harmonic_x2_primitive</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">-</span> <span class="n">exact</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">exact</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.statphys.ising_density_of_states_exact">
+<span class="sig-prename descclassname"><span class="pre">physicskit.statphys.</span></span><span class="sig-name descname"><span class="pre">ising_density_of_states_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/statphys/chapters/wang_landau.html#ising_density_of_states_exact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.statphys.ising_density_of_states_exact" title="Link to this definition">#</a></dt>
+<dd><p>Exact density of states of a periodic <span class="math notranslate nohighlight">\(L \times L\)</span> Ising lattice, by enumeration.</p>
+<p>All <span class="math notranslate nohighlight">\(2^{L^2}\)</span> configurations are enumerated, so this is only
+practical up to <span class="math notranslate nohighlight">\(L = 4\)</span> (65536 states).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Linear lattice size, at most 4.</p></li>
+<li><p><strong>J</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default=1.0</em>) – Ferromagnetic coupling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>energies</strong> (<em>ndarray of shape (L*L + 1,)</em>) – Energy levels <span class="math notranslate nohighlight">\(E_k = -2JN + 4Jk\)</span>.</p></li>
+<li><p><strong>g</strong> (<em>ndarray of shape (L*L + 1,)</em>) – Number of configurations at each level (zero for the inaccessible
+levels <span class="math notranslate nohighlight">\(E = \pm(2JN - 4J)\)</span>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">ising_density_of_states_exact</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">(16, 2)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2455,6 +2685,10 @@ square microns per second:</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.OrnsteinUhlenbeck.variance"><code class="docutils literal notranslate"><span class="pre">OrnsteinUhlenbeck.variance()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.PathIntegralParticle"><code class="docutils literal notranslate"><span class="pre">PathIntegralParticle</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.PathIntegralParticle.run"><code class="docutils literal notranslate"><span class="pre">PathIntegralParticle.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.Percolation2D"><code class="docutils literal notranslate"><span class="pre">Percolation2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.Percolation2D.P_C_BOND"><code class="docutils literal notranslate"><span class="pre">Percolation2D.P_C_BOND</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.Percolation2D.P_C_SITE"><code class="docutils literal notranslate"><span class="pre">Percolation2D.P_C_SITE</span></code></a></li>
@@ -2489,6 +2723,10 @@ square microns per second:</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.SherringtonKirkpatrick.sweep"><code class="docutils literal notranslate"><span class="pre">SherringtonKirkpatrick.sweep()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.WangLandauIsing"><code class="docutils literal notranslate"><span class="pre">WangLandauIsing</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.WangLandauIsing.run"><code class="docutils literal notranslate"><span class="pre">WangLandauIsing.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.XYModel2D"><code class="docutils literal notranslate"><span class="pre">XYModel2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.XYModel2D.T_KT"><code class="docutils literal notranslate"><span class="pre">XYModel2D.T_KT</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.XYModel2D.energy"><code class="docutils literal notranslate"><span class="pre">XYModel2D.energy()</span></code></a></li>
@@ -2498,10 +2736,14 @@ square microns per second:</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.XYModel2D.vorticity"><code class="docutils literal notranslate"><span class="pre">XYModel2D.vorticity()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.canonical_from_density_of_states"><code class="docutils literal notranslate"><span class="pre">canonical_from_density_of_states()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.einstein_diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">einstein_diffusion_coefficient()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_1d"><code class="docutils literal notranslate"><span class="pre">fokker_planck_1d()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_operator"><code class="docutils literal notranslate"><span class="pre">fokker_planck_operator()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.fokker_planck_stationary"><code class="docutils literal notranslate"><span class="pre">fokker_planck_stationary()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.harmonic_x2_exact"><code class="docutils literal notranslate"><span class="pre">harmonic_x2_exact()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.harmonic_x2_primitive"><code class="docutils literal notranslate"><span class="pre">harmonic_x2_primitive()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.ising_density_of_states_exact"><code class="docutils literal notranslate"><span class="pre">ising_density_of_states_exact()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.statphys.stokes_einstein_diffusion_coefficient"><code class="docutils literal notranslate"><span class="pre">stokes_einstein_diffusion_coefficient()</span></code></a></li>
 </ul>
   </nav></div>

@@ -95,3 +95,14 @@ ax.set_title("Light neutron stars chirp far more slowly than heavy black holes")
 ax.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Chirp mass 1.186 Msun; the time-to-coalescence formula and the inspiral
+# frequency evolution agree (24 Hz at -tau); a neutron-star pair stays in
+# band ~200 times longer than GW150914 (tau ~ M_c^(-5/3)).
+assert abs(chirp_mass_Msun - 1.186) < 0.002
+assert abs(f_170817_Hz[0] / f_low_hz - 1) < 1e-6
+ratio_mc = gw150914.chirp_mass / gw170817.chirp_mass
+assert abs(tau_170817 / tau_150914 - ratio_mc ** (5 / 3)) < 1e-6 * ratio_mc ** (5 / 3)

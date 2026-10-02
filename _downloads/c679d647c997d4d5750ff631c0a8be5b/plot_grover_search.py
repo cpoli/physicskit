@@ -1,0 +1,82 @@
+r"""
+Grover's quantum search: a square-root speed-up
+===============================================
+
+Lov Grover (1996) showed that finding a marked item among :math:`N`
+unsorted ones takes about :math:`\tfrac{\pi}{4}\sqrt N` queries of a
+quantum oracle, against :math:`N/2` on average classically, and Bennett,
+Bernstein, Brassard and Vazirani had just proved that no quantum algorithm
+can do better. Each Grover iteration reflects the state about the unmarked
+subspace (the oracle) and then about the uniform superposition :math:`|s\rangle`
+(the diffusion operator :math:`2|s\rangle\langle s| - I`). Together they
+rotate it by :math:`2\theta` toward the marked state, where
+:math:`\sin\theta = \sqrt{M/N}`, so after :math:`k` iterations
+
+.. math::
+
+    P_{\text{success}} = \sin^2\bigl((2k + 1)\theta\bigr).
+
+Iterating past the optimum rotates the state away again. This example
+follows the amplitudes through the iterations, checks the rotation
+formula, and measures the :math:`\sqrt N` scaling.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.quantum.chapters.quantum_circuits import grover_circuit, grover_optimal_iterations, grover_success_probability
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+# %%
+# Amplitude amplification, n = 6 qubits, one marked item
+# ------------------------------------------------------
+n, marked = 6, 42
+N = 2**n
+k_opt = grover_optimal_iterations(N)
+for k, color in [(0, "#c6dbef"), (2, "#6baed6"), (k_opt, "#08306b")]:
+    psi = grover_circuit(n, [marked], iterations=k).run()
+    axes[0].plot(np.arange(N), psi.real, ".-", ms=4, lw=0.5, color=color, label=f"{k} iterations")
+axes[0].set_xlabel("basis state x")
+axes[0].set_ylabel("amplitude")
+axes[0].set_title(f"N = {N}, marked x = {marked}")
+axes[0].legend(fontsize=8)
+
+# %%
+# Success probability against the rotation formula
+# ------------------------------------------------
+ks = np.arange(0, 3 * k_opt + 1)
+p_sim = [abs(grover_circuit(n, [marked], iterations=k).run()[marked]) ** 2 for k in ks]
+kf = np.linspace(0, ks[-1], 400)
+axes[1].plot(kf, grover_success_probability(kf, N), "k-", lw=1, label=r"$\sin^2((2k+1)\theta)$")
+axes[1].plot(ks, p_sim, "o", color="crimson", label="simulated")
+axes[1].axvline(k_opt, color="gray", ls="--", lw=1)
+axes[1].set_xlabel("Grover iterations k")
+axes[1].set_ylabel("P(marked)")
+axes[1].set_title(rf"Optimum at $k = \lfloor\pi/4\theta\rfloor = {k_opt}$")
+axes[1].legend(fontsize=8)
+
+# %%
+# Query scaling
+# -------------
+n_values = np.arange(2, 13)
+queries = np.array([grover_optimal_iterations(2**nn) for nn in n_values])
+success = np.array([abs(grover_circuit(nn, [1], iterations=q).run()[1]) ** 2 for nn, q in zip(n_values, queries)])
+axes[2].loglog(2.0**n_values, queries, "o", color="crimson", label="Grover iterations")
+axes[2].loglog(2.0**n_values, np.pi / 4 * np.sqrt(2.0**n_values), "k-", lw=1, label=r"$\frac{\pi}{4}\sqrt{N}$")
+axes[2].loglog(2.0**n_values, 2.0**n_values / 2, color="gray", ls="--", label="classical average, N/2")
+axes[2].set_xlabel("N")
+axes[2].set_ylabel("oracle queries")
+axes[2].set_title("Square-root speed-up")
+axes[2].legend(fontsize=8)
+plt.tight_layout()
+plt.show()
+print("success probability at the optimum:", np.round(success, 4))
+
+# %%
+# Check
+# -----
+np.testing.assert_allclose(p_sim, grover_success_probability(ks, N), atol=1e-12)
+assert np.all(success > 0.9) and success[-1] > 0.999
+# floor(pi / 4 theta) is within one iteration of pi sqrt(N) / 4
+assert np.all(np.abs(queries - np.pi / 4 * np.sqrt(2.0**n_values)) <= 1)

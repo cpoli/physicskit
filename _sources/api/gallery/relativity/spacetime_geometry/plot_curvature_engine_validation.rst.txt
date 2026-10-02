@@ -145,7 +145,7 @@ radius-dependent (and here, theta-independent, since :math:`Q` couples
 only through :math:`r`) curvature everywhere -- not just at the three
 sampled radii above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-94
+.. GENERATED FROM PYTHON SOURCE LINES 64-95
 
 .. code-block:: Python
 
@@ -182,6 +182,7 @@ sampled radii above.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_curvature_engine_validation_001.png
    :alt: Schwarzschild (vacuum), Kerr, a=0.8M (vacuum), Reissner-Nordstrom, Q=0.5M
    :srcset: /api/gallery/relativity/spacetime_geometry/images/sphx_glr_plot_curvature_engine_validation_001.png
@@ -191,10 +192,37 @@ sampled radii above.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-102
+
+Check
+-----
+Vacuum: G_munu = 0 for Schwarzschild and Kerr, to the finite-difference
+floor (~1e-4 here); Reissner-Nordstrom: the Maxwell stress-energy gives
+G_theta_theta = Q^2 / r^2, checked where it stands well above that floor
+(r <= 10M) and away from the poles, where differencing in theta is worst.
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-109
+
+.. code-block:: Python
+
+    floor = max(G_schwarzschild.max(), G_kerr.max())
+    assert floor < 1e-3
+    close = r_grid <= 10.0
+    mid = np.abs(theta_grid - np.pi / 2) < 1.0
+    signal = G_reissner_nordstrom[np.ix_(mid, close)]
+    np.testing.assert_allclose(signal, np.broadcast_to(0.25 / r_grid[close] ** 2, signal.shape), rtol=0.05)
+    assert signal.min() > 10 * floor
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.240 seconds)
+   **Total running time of the script:** (0 minutes 3.002 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_spacetime_geometry_plot_curvature_engine_validation.py:

@@ -99,7 +99,7 @@ Plot terminal velocity and its Reynolds number
 The Reynolds number rises sharply with radius; Stokes' law is only
 self-consistent while it stays well below 1.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-76
+.. GENERATED FROM PYTHON SOURCE LINES 57-77
 
 .. code-block:: Python
 
@@ -125,6 +125,7 @@ self-consistent while it stays well below 1.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_stokes_drag_001.png
    :alt: Stokes terminal velocity, Validity of Stokes' law
    :srcset: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_stokes_drag_001.png
@@ -140,10 +141,29 @@ self-consistent while it stays well below 1.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 78-81
+
+Check
+-----
+Stokes' law F = 6 pi mu R v gives v_t = 2 drho g R^2 / 9 mu.
+
+.. GENERATED FROM PYTHON SOURCE LINES 81-83
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(v_terminal, 2 * (rho_sphere - rho_fluid) * g * radii**2 / (9 * mu), rtol=1e-12)
+    assert 50e-6 < radii[valid][-1] < 56e-6
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.148 seconds)
+   **Total running time of the script:** (0 minutes 0.212 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_viscous_flow_plot_stokes_drag.py:

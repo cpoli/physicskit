@@ -94,3 +94,12 @@ ax2.legend()
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# H is conserved; the orbit below the separatrix (H < g/l) librates, the one
+# above rotates.
+np.testing.assert_allclose(H_final, H0, rtol=1e-6)
+assert H0[0] < g_over_l < H0[1]
+assert np.ptp(result.q[:, 0]) < 2 * np.pi and np.ptp(result.q[:, 1]) > 4 * np.pi

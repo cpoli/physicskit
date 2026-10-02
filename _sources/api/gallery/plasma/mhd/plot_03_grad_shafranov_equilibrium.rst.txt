@@ -124,7 +124,7 @@ counts how many times a field line winds the long way (toroidally)
 around the torus for each time it winds the short way (poloidally);
 :math:`q=1` marks the sawtooth-unstable surface at the core.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-79
+.. GENERATED FROM PYTHON SOURCE LINES 72-80
 
 .. code-block:: Python
 
@@ -143,9 +143,30 @@ around the torus for each time it winds the short way (poloidally);
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
+
+Check
+-----
+The numerical Grad-Shafranov solution matches Solov'ev's analytic one; in
+the large-aspect-ratio limit q = r B_t / (R0 B_p).
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-87
+
+.. code-block:: Python
+
+    assert np.max(np.abs(psi - psi_exact)) < 1e-5
+    np.testing.assert_allclose(q, r_minor * 2.0 / (1.0 * 0.2), rtol=1e-12)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.116 seconds)
+   **Total running time of the script:** (0 minutes 0.100 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_mhd_plot_03_grad_shafranov_equilibrium.py:

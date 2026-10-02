@@ -83,3 +83,12 @@ slope_end = (E0[-1] - E0[-2]) / (U_values[-1] - U_values[-2])
 print(f"dE0/dU near U=0: {slope_start:.4f}   dE0/dU near U=12: {slope_end:.4f} (flattening as U grows)")
 ratio = charge_gap[-1] / charge_gap[0]
 print(f"charge gap at U=0: {charge_gap[0]:.4f} (finite-size baseline, not a Mott gap)   at U=12: {charge_gap[-1]:.4f} ({ratio:.1f}x above baseline)")
+
+# %%
+# Check
+# -----
+# E0 is concave in U (Hellmann-Feynman: dE0/dU = <double occupancy>, which
+# falls as U grows), and the charge gap opens well past its U = 0 value.
+assert slope_end < 0.2 * slope_start
+assert np.all(np.diff(E0, 2) <= 1e-9)
+assert ratio > 3

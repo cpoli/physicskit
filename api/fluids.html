@@ -467,7 +467,7 @@
 <p><a class="reference internal" href="../_generated/subpackages/fluids.html"><span class="doc">physicskit.fluids hub</span></a> · <a class="reference internal" href="../history/fluid_breakthroughs.html"><span class="doc">History</span></a> · <a class="reference internal" href="gallery/fluids/index.html"><span class="doc">Examples</span></a> · <a class="reference internal" href="#"><span class="doc">API reference</span></a></p>
 </div>
 <p id="module-physicskit.fluids">physicskit.fluids: fluid dynamics from inviscid potential flow to compressible shocks, plus heat, sound, and elasticity.</p>
-<p>Six physical regimes, each a module of <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.fluids.systems</span></code>,
+<p>Physical regimes, each a module of <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.fluids.systems</span></code>,
 sharing the doubly-periodic pseudo-spectral grid and RK4 time-stepping core
 in <code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.fluids.core</span></code> wherever a grid-based simulation is needed:</p>
 <ul class="simple">
@@ -488,6 +488,15 @@ equations, Rankine-Hugoniot shock relations, and the Sod shock tube.</p></li>
 <li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">navier_stokes</span></code> – the 2D incompressible
 vorticity-streamfunction solver underlying the instability and
 turbulence-spectrum tools.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">turbulence</span></code> – statistically stationary,
+forced 2D turbulence and its Kolmogorov-Kraichnan <span class="math notranslate nohighlight">\(k^{-5/3}\)</span>
+inverse energy cascade.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">convection</span></code> – Rayleigh-Bénard
+convection: the onset of convection for rigid and stress-free walls, and
+nonlinear convection rolls.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">shallow_water</span></code> – the Saint-Venant
+shallow-water equations: the exact and simulated dam break, and Rossby’s
+geostrophic adjustment on a rotating planet.</p></li>
 <li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">lattice_boltzmann</span></code> – the D2Q9 BGK
 lattice Boltzmann method, a kinetic route to the same Navier-Stokes
 dynamics with walls and obstacles by bounce-back.</p></li>
@@ -516,6 +525,207 @@ pressurized cylinder.</p></li>
 <span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">FluidskitError</span></span><a class="reference internal" href="../_modules/physicskit/fluids/exceptions.html#FluidskitError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.FluidskitError" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#Exception" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Base class for all exceptions raised intentionally by physicskit.fluids.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence2D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">ForcedTurbulence2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forcing_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperviscosity_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence2D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Forced, dissipative 2D turbulence on a <span class="math notranslate nohighlight">\(2\pi\)</span>-periodic square.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Grid points per side.</p></li>
+<li><p><strong>kf</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Forcing wavenumber. Must lie well inside the dealiased range
+<span class="math notranslate nohighlight">\(k &lt; n/3\)</span>.</p></li>
+<li><p><strong>forcing_width</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Half-width <span class="math notranslate nohighlight">\(\Delta k\)</span> of the forced shell.</p></li>
+<li><p><strong>epsilon</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Energy injection rate.</p></li>
+<li><p><strong>drag</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Linear (Ekman) drag <span class="math notranslate nohighlight">\(\alpha\)</span>.</p></li>
+<li><p><strong>hyperviscosity_order</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Power <span class="math notranslate nohighlight">\(p\)</span> of the hyperviscous Laplacian.</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Seed for the random forcing.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flow</span> <span class="o">=</span> <span class="n">ForcedTurbulence2D</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kf</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">t_average</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="p">[</span><span class="s2">"k"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">out</span><span class="p">[</span><span class="s2">"E"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">out</span><span class="p">[</span><span class="s2">"energy"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># about epsilon * t early on</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence2D.kinetic_energy">
+<span class="sig-name descname"><span class="pre">kinetic_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence2D.kinetic_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence2D.kinetic_energy" title="Link to this definition">#</a></dt>
+<dd><p>Kinetic energy per unit area, <span class="math notranslate nohighlight">\(\tfrac12\langle|\mathbf u|^2\rangle\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence2D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence2D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence2D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance the flow and time-average its spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Integration time from the current state.</p></li>
+<li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time step.</p></li>
+<li><p><strong>t_average</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Average the spectrum over the last <code class="docutils literal notranslate"><span class="pre">t_average</span></code> time units.</p></li>
+<li><p><strong>sample_every</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Steps between energy and spectrum samples.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;k&quot;</span></code>, time-averaged <code class="docutils literal notranslate"><span class="pre">&quot;E&quot;</span></code>, the sampled <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;energy&quot;</span></code> series, and the final <code class="docutils literal notranslate"><span class="pre">&quot;omega&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence2D.spectrum">
+<span class="sig-name descname"><span class="pre">spectrum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence2D.spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence2D.spectrum" title="Link to this definition">#</a></dt>
+<dd><p>Shell-summed energy spectrum <span class="math notranslate nohighlight">\(E(k)\)</span> of the current state, with <span class="math notranslate nohighlight">\(\sum_k E(k)\)</span> the energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>k</strong> (<em>ndarray of float, shape (n//2,)</em>) – Integer shell wavenumbers.</p></li>
+<li><p><strong>E</strong> (<em>ndarray of float, shape (n//2,)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence2D.vorticity">
+<span class="sig-name descname"><span class="pre">vorticity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence2D.vorticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence2D.vorticity" title="Link to this definition">#</a></dt>
+<dd><p>Real-space vorticity field, shape <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">n)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">ForcedTurbulence3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperviscosity_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping_at_kmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Forced, statistically steady 3D turbulence on a <span class="math notranslate nohighlight">\((2\pi)^3\)</span>-periodic cube.</p>
+<p>The incompressible Navier-Stokes equations are integrated in rotational
+form,</p>
+<div class="math notranslate nohighlight">
+\[\partial_t\hat{\mathbf u} = \mathsf P\,\widehat{\mathbf u\times\boldsymbol\omega}
+    - \nu_p k^{2p}\hat{\mathbf u} + \hat{\mathbf f},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathsf P\)</span> projects onto divergence-free fields, with 2/3-rule
+dealiasing, an exact integrating factor for the (hyper)viscosity and a
+second-order Runge-Kutta step. The forcing
+<span class="math notranslate nohighlight">\(\hat{\mathbf f} = \varepsilon\,\hat{\mathbf u}/(2E_f)\)</span> on the
+shell <span class="math notranslate nohighlight">\(0 &lt; k &lt; k_f\)</span>, with <span class="math notranslate nohighlight">\(E_f\)</span> that shell’s energy, injects
+energy at exactly the rate <span class="math notranslate nohighlight">\(\varepsilon\)</span> (Lundgren 2003; Alvelius
+1999 for random variants). In 3D the energy cascades to small scales,
+and in the inertial range Kolmogorov’s 1941 law
+<span class="math notranslate nohighlight">\(E(k) = C_K\varepsilon^{2/3}k^{-5/3}\)</span>, <span class="math notranslate nohighlight">\(C_K \approx 1.5\)</span>, holds.
+On a <span class="math notranslate nohighlight">\(64^3\)</span> grid that range spans only <span class="math notranslate nohighlight">\(3 \lesssim k \lesssim 10\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>)</p></li>
+<li><p><strong>kf</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Forcing cutoff.</p></li>
+<li><p><strong>epsilon</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>hyperviscosity_order</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Power <span class="math notranslate nohighlight">\(p\)</span>; <code class="docutils literal notranslate"><span class="pre">1</span></code> is ordinary viscosity.</p></li>
+<li><p><strong>damping_at_kmax</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – <span class="math notranslate nohighlight">\(\nu_p k_{\max}^{2p}\)</span>, the damping rate at the dealiasing cutoff.</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Seed for the random initial field.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flow</span> <span class="o">=</span> <span class="n">ForcedTurbulence3D</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">flow</span><span class="o">.</span><span class="n">max_divergence</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D.dissipation_rate">
+<span class="sig-name descname"><span class="pre">dissipation_rate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D.dissipation_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D.dissipation_rate" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\sum_k 2\nu_p k^{2p}E(\mathbf k)\)</span>, the rate the (hyper)viscosity removes energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D.kinetic_energy">
+<span class="sig-name descname"><span class="pre">kinetic_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D.kinetic_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D.kinetic_energy" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(\tfrac12\langle|\mathbf u|^2\rangle\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D.max_divergence">
+<span class="sig-name descname"><span class="pre">max_divergence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D.max_divergence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D.max_divergence" title="Link to this definition">#</a></dt>
+<dd><p>Largest <span class="math notranslate nohighlight">\(|\nabla\cdot\mathbf u|\)</span> on the grid (zero up to roundoff).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance and time-average the spectrum over the last <code class="docutils literal notranslate"><span class="pre">t_average</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;k&quot;</span></code>, time-averaged <code class="docutils literal notranslate"><span class="pre">&quot;E&quot;</span></code>, sampled <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;energy&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;dissipation&quot;</span></code>.</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>t_average</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>sample_every</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.ForcedTurbulence3D.spectrum">
+<span class="sig-name descname"><span class="pre">spectrum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#ForcedTurbulence3D.spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.ForcedTurbulence3D.spectrum" title="Link to this definition">#</a></dt>
+<dd><p>Shell-summed energy spectrum, with <span class="math notranslate nohighlight">\(\sum_k E(k)\)</span> the kinetic energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py exception">
@@ -1041,6 +1251,227 @@ separate closed-form velocity expression for every element type.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">RayleighBenard2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Pr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">np.float64(2.8284271247461903)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Nonlinear 2D Rayleigh-Bénard convection between stress-free, isothermal walls.</p>
+<p>The layer <span class="math notranslate nohighlight">\(0 &lt; z &lt; 1\)</span> is extended to <span class="math notranslate nohighlight">\(-1 &lt; z &lt; 1\)</span> with
+<span class="math notranslate nohighlight">\(\theta\)</span>, <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span> odd in <span class="math notranslate nohighlight">\(z\)</span>, which
+satisfies <span class="math notranslate nohighlight">\(w = \theta = \partial_z u = 0\)</span> at both walls and makes
+the problem periodic in <span class="math notranslate nohighlight">\(z\)</span> with period 2. It is then solved
+pseudo-spectrally like <a class="reference internal" href="#physicskit.fluids.NavierStokes2D" title="physicskit.fluids.systems.navier_stokes.NavierStokes2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">NavierStokes2D</span></code></a>,
+with 2/3-rule dealiasing, an exact integrating factor for diffusion,
+RK4 for the remaining terms, and the odd symmetry re-imposed at every
+sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ra</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Rayleigh number.</p></li>
+<li><p><strong>Pr</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Prandtl number.</p></li>
+<li><p><strong>aspect</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Box width over depth; the default fits one critical wavelength
+<span class="math notranslate nohighlight">\(2\pi/a_c\)</span> of the stress-free problem.</p></li>
+<li><p><strong>nx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Grid points in <span class="math notranslate nohighlight">\(x\)</span> and over the doubled depth.</p></li>
+<li><p><strong>nz</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Grid points in <span class="math notranslate nohighlight">\(x\)</span> and over the doubled depth.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>omega</strong> (<em>theta</em><em>,</em>) – Temperature perturbation and vorticity on the doubled domain.</p></li>
+<li><p><strong>z</strong> (<a class="reference internal" href="quantum.html#physicskit.quantum.DoubleWellResult.x" title="physicskit.quantum.DoubleWellResult.x"><em>x</em></a><em>,</em>) – Grid coordinates; <span class="math notranslate nohighlight">\(z \in [-1, 1)\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rb</span> <span class="o">=</span> <span class="n">RayleighBenard2D</span><span class="p">(</span><span class="n">Ra</span><span class="o">=</span><span class="mf">2000.0</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rb</span><span class="o">.</span><span class="n">seed_mode</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"kinetic_energy"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">out</span><span class="p">[</span><span class="s2">"kinetic_energy"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># supercritical: grows</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D.kinetic_energy">
+<span class="sig-name descname"><span class="pre">kinetic_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D.kinetic_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D.kinetic_energy" title="Link to this definition">#</a></dt>
+<dd><p>Mean kinetic energy <span class="math notranslate nohighlight">\(\tfrac12\langle u^2 + w^2\rangle\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D.nusselt">
+<span class="sig-name descname"><span class="pre">nusselt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D.nusselt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D.nusselt" title="Link to this definition">#</a></dt>
+<dd><p>Nusselt number <span class="math notranslate nohighlight">\(Nu = 1 + \langle w\theta\rangle\)</span> (conductive heat flux is 1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance the convection with RK4.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time to integrate, in thermal diffusion times <span class="math notranslate nohighlight">\(d^2/\kappa\)</span>.</p></li>
+<li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>sample_every</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Steps between samples.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – Sampled <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;kinetic_energy&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;nusselt&quot;</span></code> and the
+amplitude <code class="docutils literal notranslate"><span class="pre">&quot;theta_mode&quot;</span></code> of the seeded <span class="math notranslate nohighlight">\(\sin(\pi z)
+\cos(2\pi x/\Gamma)\)</span> mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D.seed_mode">
+<span class="sig-name descname"><span class="pre">seed_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D.seed_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D.seed_mode" title="Link to this definition">#</a></dt>
+<dd><p>Set <span class="math notranslate nohighlight">\(\theta = A\sin(\pi z)\cos(2\pi x/\Gamma)\)</span> plus optional odd noise, at rest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amplitude</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>noise</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Amplitude of additional random temperature perturbations.</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenard2D.velocity">
+<span class="sig-name descname"><span class="pre">velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenard2D.velocity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenard2D.velocity" title="Link to this definition">#</a></dt>
+<dd><p>Velocity <span class="math notranslate nohighlight">\((u, w)\)</span> from the vorticity, via <span class="math notranslate nohighlight">\(\nabla^2\psi = -\omega\)</span>, <span class="math notranslate nohighlight">\(u = \partial_z\psi\)</span>, <span class="math notranslate nohighlight">\(w = -\partial_x\psi\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>omega</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenardWalls2D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">RayleighBenardWalls2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Pr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rigid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">24</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenardWalls2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenardWalls2D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>2D Rayleigh-Bénard convection between rigid or stress-free walls, Fourier-Chebyshev.</p>
+<p>The streamfunction <span class="math notranslate nohighlight">\(\psi\)</span> (<span class="math notranslate nohighlight">\(u = \partial_z\psi\)</span>,
+<span class="math notranslate nohighlight">\(w = -\partial_x\psi\)</span>, vorticity <span class="math notranslate nohighlight">\(\omega = -\nabla^2\psi\)</span>) and
+the temperature perturbation <span class="math notranslate nohighlight">\(\theta\)</span> are expanded in Fourier modes
+<span class="math notranslate nohighlight">\(e^{ikx}\)</span> across a periodic box and collocated on Chebyshev points
+in <span class="math notranslate nohighlight">\(0 \le z \le 1\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[\partial_t\nabla^2\psi = Pr\,\nabla^4\psi - Pr\,Ra\,\partial_x\theta
+    + (\mathbf u\cdot\nabla)\omega,
+\qquad
+\partial_t\theta = \nabla^2\theta + w - (\mathbf u\cdot\nabla)\theta.\]</div>
+<p>Diffusion is treated implicitly (Crank-Nicolson) and the rest explicitly
+(second-order Adams-Bashforth). The walls are isothermal,
+<span class="math notranslate nohighlight">\(\theta = 0\)</span>, impermeable, <span class="math notranslate nohighlight">\(\psi = 0\)</span>, and either no-slip,
+<span class="math notranslate nohighlight">\(\partial_z\psi = 0\)</span> (<code class="docutils literal notranslate"><span class="pre">&quot;rigid&quot;</span></code>), or stress-free,
+<span class="math notranslate nohighlight">\(\partial_z^2\psi = 0\)</span> (<code class="docutils literal notranslate"><span class="pre">&quot;free&quot;</span></code>), imposed by replacing the
+collocation equations at the two points next to each wall (Canuto et al.,
+<em>Spectral Methods</em>, 2006, sec. 3.7).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ra</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>Pr</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>aspect</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Box width; defaults to one critical wavelength <span class="math notranslate nohighlight">\(2\pi/a_c\)</span> for
+the chosen walls.</p></li>
+<li><p><strong>boundaries</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p></li>
+<li><p><strong>nx</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Fourier points across the box.</p></li>
+<li><p><strong>nz</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Chebyshev polynomial degree (<code class="docutils literal notranslate"><span class="pre">nz</span> <span class="pre">+</span> <span class="pre">1</span></code> points).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rb</span> <span class="o">=</span> <span class="n">RayleighBenardWalls2D</span><span class="p">(</span><span class="n">Ra</span><span class="o">=</span><span class="mf">2500.0</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rb</span><span class="o">.</span><span class="n">seed_mode</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">t_max</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">2e-3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"theta_mode"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">out</span><span class="p">[</span><span class="s2">"theta_mode"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># above 1708: grows</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenardWalls2D.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenardWalls2D.fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenardWalls2D.fields" title="Link to this definition">#</a></dt>
+<dd><p>Real-space <code class="docutils literal notranslate"><span class="pre">&quot;u&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;theta&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;omega&quot;</span></code>, shape <code class="docutils literal notranslate"><span class="pre">(nx,</span> <span class="pre">nz</span> <span class="pre">+</span> <span class="pre">1)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenardWalls2D.nusselt">
+<span class="sig-name descname"><span class="pre">nusselt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenardWalls2D.nusselt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenardWalls2D.nusselt" title="Link to this definition">#</a></dt>
+<dd><p>Nusselt number <span class="math notranslate nohighlight">\(1 + \langle w\theta\rangle\)</span>, averaged over the layer (Clenshaw-Curtis).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenardWalls2D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenardWalls2D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenardWalls2D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance with CN-AB2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – Sampled <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;nusselt&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;theta_mode&quot;</span></code>, the amplitude of
+the first Fourier mode of <span class="math notranslate nohighlight">\(\theta\)</span> at mid-depth.</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>sample_every</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.fluids.RayleighBenardWalls2D.seed_mode">
+<span class="sig-name descname"><span class="pre">seed_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#RayleighBenardWalls2D.seed_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.RayleighBenardWalls2D.seed_mode" title="Link to this definition">#</a></dt>
+<dd><p>Set <span class="math notranslate nohighlight">\(\theta = A\sin(\pi z)\cos(2\pi x/\Gamma)\)</span> with the fluid at rest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>amplitude</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.fluids.acoustic_wave_1d">
 <span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">acoustic_wave_1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ends</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('closed',</span> <span class="pre">'closed')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/acoustics.html#acoustic_wave_1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.acoustic_wave_1d" title="Link to this definition">#</a></dt>
@@ -1328,6 +1759,43 @@ walls is the linear profile below – shear stress
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.dam_break_exact">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">dam_break_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.81</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/shallow_water.html#dam_break_exact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.dam_break_exact" title="Link to this definition">#</a></dt>
+<dd><p>Exact solution of the dam break at <span class="math notranslate nohighlight">\(x = 0\)</span>, released at <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
+<p>A rarefaction fan <span class="math notranslate nohighlight">\(h = (2c_L - x/t)^2/(9g)\)</span>,
+<span class="math notranslate nohighlight">\(u = \tfrac23(c_L + x/t)\)</span> connects the reservoir to a uniform
+state <span class="math notranslate nohighlight">\((h_m, u_m)\)</span>, which is joined to the tailwater by a bore of
+speed <span class="math notranslate nohighlight">\(s = h_m u_m/(h_m - h_R)\)</span>. <span class="math notranslate nohighlight">\(h_m\)</span> solves</p>
+<div class="math notranslate nohighlight">
+\[2(c_L - c_m) = (h_m - h_R)\sqrt{\frac{g(h_m + h_R)}{2h_mh_R}}\]</div>
+<p>(Stoker, <em>Water Waves</em>, 1957). For a dry bed, <span class="math notranslate nohighlight">\(h_R = 0\)</span>, the fan
+reaches the wet front <span class="math notranslate nohighlight">\(x = 2c_Lt\)</span> (Ritter 1892).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Positions.</p></li>
+<li><p><strong>t</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time after the release, positive.</p></li>
+<li><p><strong>h_left</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Reservoir depth.</p></li>
+<li><p><strong>h_right</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Tailwater depth, <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">h_right</span> <span class="pre">&lt;</span> <span class="pre">h_left</span></code>.</p></li>
+<li><p><strong>g</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>h, u</strong> (<em>ndarray of float</em>)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">dam_break_exact</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]),</span> <span class="n">t</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">h_left</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># Ritter: h = 4 h_L / 9 at the dam site</span>
+<span class="go">0.444444</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.fluids.doublet_potential">
 <span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">doublet_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/potential_flow.html#doublet_potential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.doublet_potential" title="Link to this definition">#</a></dt>
 <dd><p>Complex potential of a doublet (a source-sink pair in the zero-separation limit).</p>
@@ -1441,6 +1909,44 @@ domain-averaged kinetic energy per unit mass (Parseval’s theorem).</p>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">E</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># = mean of (u**2 + v**2) / 2</span>
 <span class="go">0.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.exact_riemann_solution">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">exact_riemann_solution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.125,</span> <span class="pre">0.0,</span> <span class="pre">0.1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/compressible_flow.html#exact_riemann_solution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.exact_riemann_solution" title="Link to this definition">#</a></dt>
+<dd><p>Exact solution of the Riemann problem for the 1D Euler equations of an ideal gas.</p>
+<p>The star-region pressure <span class="math notranslate nohighlight">\(p_*\)</span> is the root of
+<span class="math notranslate nohighlight">\(f_L(p_*) + f_R(p_*) + u_R - u_L = 0\)</span>, where <span class="math notranslate nohighlight">\(f_K\)</span> is the
+shock (Rankine-Hugoniot) or rarefaction (isentropic) relation for side
+<span class="math notranslate nohighlight">\(K\)</span>, found by Newton iteration; the solution is then sampled in
+the similarity variable <span class="math notranslate nohighlight">\((x - x_0)/t\)</span> (Toro, <em>Riemann Solvers and
+Numerical Methods for Fluid Dynamics</em>, 3rd ed., 2009, ch. 4). Vacuum
+generation is not handled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Positions.</p></li>
+<li><p><strong>t</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time, positive.</p></li>
+<li><p><strong>left</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">u,</span> <span class="pre">p)</span></code> on either side of the initial discontinuity.</p></li>
+<li><p><strong>right</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">u,</span> <span class="pre">p)</span></code> on either side of the initial discontinuity.</p></li>
+<li><p><strong>x0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Initial position of the discontinuity.</p></li>
+<li><p><strong>gamma</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;rho&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;u&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;p&quot;</span></code>, the specific internal energy <code class="docutils literal notranslate"><span class="pre">&quot;e&quot;</span></code>
+at <code class="docutils literal notranslate"><span class="pre">x</span></code>, and the star-region <code class="docutils literal notranslate"><span class="pre">&quot;p_star&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;u_star&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">exact_riemann_solution</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]),</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"p_star"</span><span class="p">]),</span> <span class="mi">5</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"u_star"</span><span class="p">]),</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Sod: Toro Table 4.3</span>
+<span class="go">(0.30313, 0.92745)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1569,6 +2075,44 @@ ed., 1975, eq. 3.5a).</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">gaussian_heat_solution</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]),</span> <span class="n">t</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 <span class="go">0.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.geostrophic_adjustment_steady">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">geostrophic_adjustment_steady</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eta0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.81</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/shallow_water.html#geostrophic_adjustment_steady"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.geostrophic_adjustment_steady" title="Link to this definition">#</a></dt>
+<dd><p>Balanced end state of Rossby’s adjustment problem, from potential-vorticity conservation.</p>
+<p>The linear potential vorticity <span class="math notranslate nohighlight">\(\partial_x v - f\eta/H\)</span> is
+conserved, and the final state is in geostrophic balance, <span class="math notranslate nohighlight">\(fv =
+g\partial_x\eta\)</span>, <span class="math notranslate nohighlight">\(u = 0\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[\eta - L_d^2\,\partial_x^2\eta = \eta_0, \qquad L_d = \sqrt{gH}/f.\]</div>
+<p>For a step of height <span class="math notranslate nohighlight">\(2\eta_0\)</span> this gives the front
+<span class="math notranslate nohighlight">\(\eta = \eta_0\,\mathrm{sgn}(x)(1 - e^{-|x|/L_d})\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eta0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Initial displacement on the periodic grid <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>)</p></li>
+<li><p><strong>g</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>f</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;eta&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;v&quot;</span></code> of the adjusted state, and the Rossby radius
+<code class="docutils literal notranslate"><span class="pre">&quot;L_d&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">geostrophic_adjustment_steady</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">100</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"eta"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 1 / (1 + (L_d k)^2)</span>
+<span class="go">0.9961</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1762,6 +2306,33 @@ a row of discrete “cat’s eye” vortices.</p>
 <span class="go">(64, 64)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">omega0</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.kolmogorov_kraichnan_spectrum">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">kolmogorov_kraichnan_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/turbulence.html#kolmogorov_kraichnan_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.kolmogorov_kraichnan_spectrum" title="Link to this definition">#</a></dt>
+<dd><p>Inertial-range energy spectrum <span class="math notranslate nohighlight">\(E(k) = C\varepsilon^{2/3}k^{-5/3}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Wavenumbers.</p></li>
+<li><p><strong>epsilon</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Energy flux through the inertial range.</p></li>
+<li><p><strong>C</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Kolmogorov constant; about 1.5 in 3D, and about 6 for the 2D inverse
+cascade.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">kolmogorov_kraichnan_spectrum</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="go">6.0</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2659,6 +3230,94 @@ zero for an exactly satisfied jump.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.rayleigh_benard_critical">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rayleigh_benard_critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rigid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#rayleigh_benard_critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rayleigh_benard_critical" title="Link to this definition">#</a></dt>
+<dd><p>Critical Rayleigh number and wavenumber for the onset of convection.</p>
+<p>Minimizes <a class="reference internal" href="#physicskit.fluids.rayleigh_benard_marginal_rayleigh" title="physicskit.fluids.rayleigh_benard_marginal_rayleigh"><code class="xref py py-func docutils literal notranslate"><span class="pre">rayleigh_benard_marginal_rayleigh()</span></code></a> over <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>boundaries</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – No-slip or stress-free horizontal walls (both isothermal).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Ra_c, a_c</strong> (<em>float</em>) – <span class="math notranslate nohighlight">\((27\pi^4/4, \pi/\sqrt2)\)</span> exactly for <code class="docutils literal notranslate"><span class="pre">&quot;free&quot;</span></code>; about
+<code class="docutils literal notranslate"><span class="pre">(1707.76,</span> <span class="pre">3.117)</span></code> for <code class="docutils literal notranslate"><span class="pre">&quot;rigid&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Ra_c</span><span class="p">,</span> <span class="n">a_c</span> <span class="o">=</span> <span class="n">rayleigh_benard_critical</span><span class="p">(</span><span class="s2">"rigid"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">Ra_c</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">a_c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">(1707.76, 3.116)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.rayleigh_benard_growth_rate_free">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rayleigh_benard_growth_rate_free</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Pr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#rayleigh_benard_growth_rate_free"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rayleigh_benard_growth_rate_free" title="Link to this definition">#</a></dt>
+<dd><p>Exact linear growth rate of the stress-free mode <span class="math notranslate nohighlight">\(\sin(m\pi z)e^{iax}\)</span>.</p>
+<p>With <span class="math notranslate nohighlight">\(q^2 = m^2\pi^2 + a^2\)</span>, the growth rate is the larger root of</p>
+<div class="math notranslate nohighlight">
+\[\sigma^2 + (1 + Pr)q^2\sigma + Pr\left(q^4 - Ra\,\frac{a^2}{q^2}\right) = 0.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ra</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Horizontal wavenumber.</p></li>
+<li><p><strong>Pr</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>m</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Vertical mode number.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – Growth rate, in units of <span class="math notranslate nohighlight">\(\kappa/d^2\)</span>; zero at the marginal
+<span class="math notranslate nohighlight">\(Ra = q^6/a^2\)</span>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="n">rayleigh_benard_growth_rate_free</span><span class="p">(</span><span class="mi">27</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">1e-9</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.rayleigh_benard_marginal_rayleigh">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rayleigh_benard_marginal_rayleigh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rigid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/convection.html#rayleigh_benard_marginal_rayleigh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rayleigh_benard_marginal_rayleigh" title="Link to this definition">#</a></dt>
+<dd><p>Rayleigh number at which the mode of horizontal wavenumber <span class="math notranslate nohighlight">\(a\)</span> is marginally stable.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">&quot;free&quot;</span></code> (stress-free) walls this is <span class="math notranslate nohighlight">\((\pi^2 + a^2)^3/a^2\)</span>.
+For <code class="docutils literal notranslate"><span class="pre">&quot;rigid&quot;</span></code> (no-slip) walls the lowest, even mode is
+<span class="math notranslate nohighlight">\(W = \sum_{j=0}^2 A_j \cosh(q_j z)\)</span> on <span class="math notranslate nohighlight">\(-\tfrac12 &lt; z &lt; \tfrac12\)</span>,
+with <span class="math notranslate nohighlight">\((q_j^2 - a^2)^3 = -Ra\,a^2\)</span>, and <span class="math notranslate nohighlight">\(Ra\)</span> is the smallest
+root of the <span class="math notranslate nohighlight">\(3\times3\)</span> determinant imposing <span class="math notranslate nohighlight">\(W = W' =
+\theta = 0\)</span> at the wall (Chandrasekhar 1961, sec. 15).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Horizontal wavenumber (in units of <span class="math notranslate nohighlight">\(1/d\)</span>).</p></li>
+<li><p><strong>boundaries</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">rayleigh_benard_marginal_rayleigh</span><span class="p">(</span><span class="mf">3.117</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">1707.8</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="physicskit.fluids.rayleigh_taylor_growth_rate">
 <span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rayleigh_taylor_growth_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atwood_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/instabilities.html#rayleigh_taylor_growth_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rayleigh_taylor_growth_rate" title="Link to this definition">#</a></dt>
 <dd><p>Linear growth rate of the Rayleigh-Taylor instability.</p>
@@ -2844,6 +3503,79 @@ reasoning in fluid mechanics.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reynolds_number</span><span class="p">(</span><span class="n">velocity</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
 <span class="go">1000000.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.rotating_shallow_water_1d">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">rotating_shallow_water_1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eta0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.81</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/shallow_water.html#rotating_shallow_water_1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.rotating_shallow_water_1d" title="Link to this definition">#</a></dt>
+<dd><p>Exact evolution of the linear rotating shallow-water equations on a periodic line.</p>
+<p>Each Fourier mode of <span class="math notranslate nohighlight">\((u, v, \eta)\)</span>, starting from rest, splits
+into a steady geostrophic part and inertia-gravity (Poincaré) waves of
+frequency <span class="math notranslate nohighlight">\(\omega_k = \sqrt{f^2 + gHk^2}\)</span>, whose evolution is
+computed exactly:</p>
+<div class="math notranslate nohighlight">
+\[\hat\eta_k(t) = \hat\eta_k(0)\,\frac{f^2 + gHk^2\cos\omega_k t}{\omega_k^2},\quad
+\hat u_k = -\frac{igk\hat\eta_k(0)}{\omega_k}\sin\omega_k t,\quad
+\hat v_k = \frac{igkf\hat\eta_k(0)}{\omega_k^2}(1 - \cos\omega_k t).\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eta0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Initial surface displacement, fluid at rest.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Uniform periodic grid.</p></li>
+<li><p><strong>times</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Output times.</p></li>
+<li><p><strong>g</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Gravity, mean depth and Coriolis parameter.</p></li>
+<li><p><strong>H</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Gravity, mean depth and Coriolis parameter.</p></li>
+<li><p><strong>f</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Gravity, mean depth and Coriolis parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;eta&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;u&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;v&quot;</span></code>, each of shape <code class="docutils literal notranslate"><span class="pre">(len(times),</span> <span class="pre">n)</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">rotating_shallow_water_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">g</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"eta"</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.fluids.shallow_water_1d">
+<span class="sig-prename descclassname"><span class="pre">physicskit.fluids.</span></span><span class="sig-name descname"><span class="pre">shallow_water_1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.81</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.45</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/fluids/systems/shallow_water.html#shallow_water_1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.fluids.shallow_water_1d" title="Link to this definition">#</a></dt>
+<dd><p>Solve the 1D shallow-water equations with a finite-volume HLL scheme.</p>
+<p>Second order in space (minmod-limited MUSCL reconstruction of
+<span class="math notranslate nohighlight">\(h\)</span> and <span class="math notranslate nohighlight">\(hu\)</span>) and time (Heun), with transmissive boundaries.
+Dry cells (<span class="math notranslate nohighlight">\(h = 0\)</span>) are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Initial depth and velocity at the cell centres <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><strong>u0</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Initial depth and velocity at the cell centres <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Uniformly spaced cell centres.</p></li>
+<li><p><strong>t_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Final time.</p></li>
+<li><p><strong>g</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+<li><p><strong>cfl</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Courant number.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>dict</em> – <code class="docutils literal notranslate"><span class="pre">&quot;h&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;u&quot;</span></code> at <code class="docutils literal notranslate"><span class="pre">t_max</span></code>, and the number of <code class="docutils literal notranslate"><span class="pre">&quot;steps&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">shallow_water_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">"h"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.75</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-2</span><span class="p">)</span>  <span class="c1"># mass is conserved away from the ends</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3248,6 +3980,21 @@ into droplets.</p>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.FluidskitError"><code class="docutils literal notranslate"><span class="pre">FluidskitError</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence2D"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence2D.kinetic_energy"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence2D.kinetic_energy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence2D.run"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence2D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence2D.spectrum"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence2D.spectrum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence2D.vorticity"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence2D.vorticity()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D.dissipation_rate"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D.dissipation_rate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D.kinetic_energy"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D.kinetic_energy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D.max_divergence"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D.max_divergence()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D.run"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ForcedTurbulence3D.spectrum"><code class="docutils literal notranslate"><span class="pre">ForcedTurbulence3D.spectrum()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.InvalidParameterError"><code class="docutils literal notranslate"><span class="pre">InvalidParameterError</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.LatticeBoltzmannD2Q9"><code class="docutils literal notranslate"><span class="pre">LatticeBoltzmannD2Q9</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.LatticeBoltzmannD2Q9.density"><code class="docutils literal notranslate"><span class="pre">LatticeBoltzmannD2Q9.density</span></code></a></li>
@@ -3285,6 +4032,21 @@ into droplets.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.PotentialFlow.velocity"><code class="docutils literal notranslate"><span class="pre">PotentialFlow.velocity()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D.kinetic_energy"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D.kinetic_energy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D.nusselt"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D.nusselt()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D.run"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D.seed_mode"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D.seed_mode()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenard2D.velocity"><code class="docutils literal notranslate"><span class="pre">RayleighBenard2D.velocity()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenardWalls2D"><code class="docutils literal notranslate"><span class="pre">RayleighBenardWalls2D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenardWalls2D.fields"><code class="docutils literal notranslate"><span class="pre">RayleighBenardWalls2D.fields()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenardWalls2D.nusselt"><code class="docutils literal notranslate"><span class="pre">RayleighBenardWalls2D.nusselt()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenardWalls2D.run"><code class="docutils literal notranslate"><span class="pre">RayleighBenardWalls2D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.RayleighBenardWalls2D.seed_mode"><code class="docutils literal notranslate"><span class="pre">RayleighBenardWalls2D.seed_mode()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.acoustic_wave_1d"><code class="docutils literal notranslate"><span class="pre">acoustic_wave_1d()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.acoustic_wave_2d"><code class="docutils literal notranslate"><span class="pre">acoustic_wave_2d()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.annulus_mesh"><code class="docutils literal notranslate"><span class="pre">annulus_mesh()</span></code></a></li>
@@ -3292,17 +4054,21 @@ into droplets.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.blasius_skin_friction_coefficient"><code class="docutils literal notranslate"><span class="pre">blasius_skin_friction_coefficient()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.blasius_solve"><code class="docutils literal notranslate"><span class="pre">blasius_solve()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.couette_flow_velocity"><code class="docutils literal notranslate"><span class="pre">couette_flow_velocity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.dam_break_exact"><code class="docutils literal notranslate"><span class="pre">dam_break_exact()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.doublet_potential"><code class="docutils literal notranslate"><span class="pre">doublet_potential()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.elasticity_matrix"><code class="docutils literal notranslate"><span class="pre">elasticity_matrix()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.energy_spectrum"><code class="docutils literal notranslate"><span class="pre">energy_spectrum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.exact_riemann_solution"><code class="docutils literal notranslate"><span class="pre">exact_riemann_solution()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.flow_past_cylinder"><code class="docutils literal notranslate"><span class="pre">flow_past_cylinder()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.froude_number"><code class="docutils literal notranslate"><span class="pre">froude_number()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.gaussian_heat_solution"><code class="docutils literal notranslate"><span class="pre">gaussian_heat_solution()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.geostrophic_adjustment_steady"><code class="docutils literal notranslate"><span class="pre">geostrophic_adjustment_steady()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.heat_equation"><code class="docutils literal notranslate"><span class="pre">heat_equation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.heat_equation_spectral"><code class="docutils literal notranslate"><span class="pre">heat_equation_spectral()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.ideal_gas_sound_speed"><code class="docutils literal notranslate"><span class="pre">ideal_gas_sound_speed()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.kelvin_helmholtz_growth_rate"><code class="docutils literal notranslate"><span class="pre">kelvin_helmholtz_growth_rate()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.kelvin_helmholtz_ic"><code class="docutils literal notranslate"><span class="pre">kelvin_helmholtz_ic()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.kolmogorov_kraichnan_spectrum"><code class="docutils literal notranslate"><span class="pre">kolmogorov_kraichnan_spectrum()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.kolmogorov_reference_slope"><code class="docutils literal notranslate"><span class="pre">kolmogorov_reference_slope()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.kutta_joukowski_lift"><code class="docutils literal notranslate"><span class="pre">kutta_joukowski_lift()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.lame_parameters"><code class="docutils literal notranslate"><span class="pre">lame_parameters()</span></code></a></li>
@@ -3329,11 +4095,16 @@ into droplets.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.pressure_coefficient"><code class="docutils literal notranslate"><span class="pre">pressure_coefficient()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.pressure_load"><code class="docutils literal notranslate"><span class="pre">pressure_load()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rankine_hugoniot_jump_conditions"><code class="docutils literal notranslate"><span class="pre">rankine_hugoniot_jump_conditions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rayleigh_benard_critical"><code class="docutils literal notranslate"><span class="pre">rayleigh_benard_critical()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rayleigh_benard_growth_rate_free"><code class="docutils literal notranslate"><span class="pre">rayleigh_benard_growth_rate_free()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rayleigh_benard_marginal_rayleigh"><code class="docutils literal notranslate"><span class="pre">rayleigh_benard_marginal_rayleigh()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rayleigh_taylor_growth_rate"><code class="docutils literal notranslate"><span class="pre">rayleigh_taylor_growth_rate()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rayleigh_taylor_ic"><code class="docutils literal notranslate"><span class="pre">rayleigh_taylor_ic()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rectangle_mesh"><code class="docutils literal notranslate"><span class="pre">rectangle_mesh()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rectangular_room_mode_frequencies"><code class="docutils literal notranslate"><span class="pre">rectangular_room_mode_frequencies()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.reynolds_number"><code class="docutils literal notranslate"><span class="pre">reynolds_number()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.rotating_shallow_water_1d"><code class="docutils literal notranslate"><span class="pre">rotating_shallow_water_1d()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.shallow_water_1d"><code class="docutils literal notranslate"><span class="pre">shallow_water_1d()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.simulate_rayleigh_taylor"><code class="docutils literal notranslate"><span class="pre">simulate_rayleigh_taylor()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.simulate_vorticity_streamfunction"><code class="docutils literal notranslate"><span class="pre">simulate_vorticity_streamfunction()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.fluids.sod_shock_tube"><code class="docutils literal notranslate"><span class="pre">sod_shock_tube()</span></code></a></li>

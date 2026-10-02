@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>physicskit.relativity.chapters.lensing &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.relativity.chapters.lensing &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -54,7 +54,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../../../../_static/searchtools.js"></script>
@@ -150,6 +150,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -281,6 +288,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -582,6 +596,14 @@
 <span class="sd">    photon sphere (where the deflection formally diverges as</span>
 <span class="sd">    :math:`b \\to b_c = 3\\sqrt{3}M`).</span>
 
+<span class="sd">    The ray starts and ends at finite radii :math:`r_0, r_1`, where it has</span>
+<span class="sd">    not yet reached its asymptotic direction, so the swept angle</span>
+<span class="sd">    :math:`\\Delta\\phi` is corrected by the flat-space angles still to go,</span>
+<span class="sd">    :math:`\\delta = \\Delta\\phi - \\pi + \\arcsin(b/r_0) + \\arcsin(b/r_1)`;</span>
+<span class="sd">    the remaining error is :math:`O(Mb/r^2)`. Without this correction the</span>
+<span class="sd">    result would be low by about :math:`1.5\\,b/r_0`, larger than the</span>
+<span class="sd">    :math:`(M/b)^2` term at large :math:`b`.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    bh : SchwarzschildBlackHole</span>
@@ -616,7 +638,8 @@
         <span class="n">dtau</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">r_far</span> <span class="o">/</span> <span class="n">n_steps</span>
     <span class="n">y0</span> <span class="o">=</span> <span class="n">bh</span><span class="o">.</span><span class="n">null_geodesic_initial_state</span><span class="p">(</span><span class="n">r0</span><span class="o">=</span><span class="n">r_far</span><span class="p">,</span> <span class="n">impact_parameter</span><span class="o">=</span><span class="n">impact_parameter</span><span class="p">,</span> <span class="n">ingoing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">traj</span> <span class="o">=</span> <span class="n">bh</span><span class="o">.</span><span class="n">integrate_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">dtau</span><span class="o">=</span><span class="n">dtau</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">swept</span> <span class="o">=</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"phi"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">swept</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">impact_parameter</span> <span class="o">/</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"r"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">impact_parameter</span> <span class="o">/</span> <span class="n">traj</span><span class="p">[</span><span class="s2">"r"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
                 </article>

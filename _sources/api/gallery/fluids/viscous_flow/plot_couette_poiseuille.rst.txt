@@ -151,7 +151,7 @@ into a 2D map: reversing the pressure gradient's sign reverses the flow
 direction while the no-slip walls keep every profile exactly parabolic in
 shape, and its magnitude alone sets the peak speed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-102
+.. GENERATED FROM PYTHON SOURCE LINES 85-103
 
 .. code-block:: Python
 
@@ -175,6 +175,7 @@ shape, and its magnitude alone sets the peak speed.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_couette_poiseuille_002.png
    :alt: Poiseuille velocity profile vs. pressure gradient
    :srcset: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_couette_poiseuille_002.png
@@ -184,10 +185,31 @@ shape, and its magnitude alone sets the peak speed.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 104-108
+
+Check
+-----
+Couette: linear; Poiseuille: parabola u = -(dp/dx) y (h - y) / 2 mu,
+flow rate Q = -(dp/dx) h^3 / 12 mu.
+
+.. GENERATED FROM PYTHON SOURCE LINES 108-111
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(u_couette, U_wall * y / h, atol=1e-12)
+    np.testing.assert_allclose(u_poiseuille, -dpdx * y * (h - y) / (2 * mu), atol=1e-12)
+    assert abs(Q + dpdx * h**3 / (12 * mu)) < 1e-12 and abs(u_poiseuille.max() - U_wall) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.125 seconds)
+   **Total running time of the script:** (0 minutes 0.127 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_viscous_flow_plot_couette_poiseuille.py:

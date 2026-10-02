@@ -113,7 +113,7 @@ shows how strongly the chirp mass alone controls the inspiral's duration:
 a lighter chirp mass spends far longer sweeping through the same
 frequency band, since :math:`\tau \propto \mathcal{M}^{-5/3}`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-98
+.. GENERATED FROM PYTHON SOURCE LINES 65-99
 
 .. code-block:: Python
 
@@ -153,6 +153,7 @@ frequency band, since :math:`\tau \propto \mathcal{M}^{-5/3}`.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/gravitational_waves/images/sphx_glr_plot_gw170817_neutron_star_merger_001.png
    :alt: Light neutron stars chirp far more slowly than heavy black holes
    :srcset: /api/gallery/relativity/gravitational_waves/images/sphx_glr_plot_gw170817_neutron_star_merger_001.png
@@ -168,10 +169,33 @@ frequency band, since :math:`\tau \propto \mathcal{M}^{-5/3}`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 100-105
+
+Check
+-----
+Chirp mass 1.186 Msun; the time-to-coalescence formula and the inspiral
+frequency evolution agree (24 Hz at -tau); a neutron-star pair stays in
+band ~200 times longer than GW150914 (tau ~ M_c^(-5/3)).
+
+.. GENERATED FROM PYTHON SOURCE LINES 105-109
+
+.. code-block:: Python
+
+    assert abs(chirp_mass_Msun - 1.186) < 0.002
+    assert abs(f_170817_Hz[0] / f_low_hz - 1) < 1e-6
+    ratio_mc = gw150914.chirp_mass / gw170817.chirp_mass
+    assert abs(tau_170817 / tau_150914 - ratio_mc ** (5 / 3)) < 1e-6 * ratio_mc ** (5 / 3)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.056 seconds)
+   **Total running time of the script:** (0 minutes 0.054 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_gravitational_waves_plot_gw170817_neutron_star_merger.py:

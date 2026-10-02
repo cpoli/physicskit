@@ -95,3 +95,12 @@ x_samples_anim = sample_michel_electron_energies(2000, rng=np.random.default_rng
 anim = animate_michel_histogram(x_samples_anim, batch_size=40)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Two-body: p* = (m_pi^2 - m_mu^2) / 2 m_pi exactly. Three-body: a continuous
+# Michel spectrum with <x> = 0.7, and four-momentum conserved.
+assert abs(p_star - (m_pi**2 - m_mu**2) / (2 * m_pi)) < 1e-9
+assert abs(x_samples.mean() - 0.7) < 0.005
+assert abs(invariant_mass([p_e, p_numu_bar, p_nue]) - m_mu) < 1e-9

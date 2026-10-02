@@ -69,3 +69,12 @@ fig.tight_layout()
 
 max_error = np.max(np.abs(bands[:, 0] - (-2 * np.cos(k_grid))))
 print(f"max deviation from exact dispersion: {max_error:.2e}")
+
+# %%
+# Check
+# -----
+# The Bloch band is -2t cos k exactly, and the open 10-site segment has the
+# standing-wave spectrum -2t cos(pi j / 11).
+assert max_error < 1e-12
+j = np.arange(1, 11)
+np.testing.assert_allclose(np.linalg.eigvalsh(H_finite), np.sort(-2 * np.cos(np.pi * j / 11)), atol=1e-12)

@@ -21,6 +21,7 @@ onto a strange attractor in the ``(x, v)`` phase plane.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Duffing
 from physicskit.chaos.utils.dimension import box_counting_dimension, correlation_dimension
@@ -75,3 +76,11 @@ fig2.suptitle("Duffing attractor: fractal dimension between 1 (curve) and 2 (pla
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A strange attractor: its projection has a non-integer dimension between a
+# curve (1) and an area (2).
+assert 1.05 < d0 < 1.95 and 1.05 < d2 < 1.95
+assert np.all(np.isfinite(states)) and np.abs(states[:, 0]).max() < 2

@@ -92,3 +92,11 @@ plt.title("Sherrington-Kirkpatrick freezing transition")
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Paramagnet: P(q) is a narrow peak at q = 0 (width ~ 1/sqrt(N)). Spin
+# glass: the overlap spreads out to |q| ~ 0.5 (Parisi's broad P(q)).
+assert abs(samples_hot).mean() < 0.15 and samples_cold.std() > 0.4
+assert mean_abs_q[0] > 2 * mean_abs_q[-1]

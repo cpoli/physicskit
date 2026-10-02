@@ -99,3 +99,13 @@ plt.show()
 anim = pk.plasma.animate_wakefield_acceleration(x0=0.0, v0=0.9, q=1.0, m=1.0, E0=0.05, k=1.0, v_phase=1.0, dt=0.01, steps=4000, frame_stride=40)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The electron is trapped in the wake: it stays within one wavelength of the
+# co-moving frame, its velocity swinging symmetrically about v_phase, so
+# its kinetic energy more than doubles at the top of the swing.
+assert np.ptp(x - 1.0 * t) < 2 * np.pi / 1.0
+assert abs((v.max() - 1.0) - (1.0 - v.min())) < 1e-3
+assert ke.max() > 2 * ke[0]

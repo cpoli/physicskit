@@ -74,3 +74,11 @@ ax2.set_title("Larger deflection requires a closer approach")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# d sigma / d Omega ~ 1 / sin^4(theta/2), and the impact parameter
+# b ~ cot(theta/2): large angles need nearly head-on collisions.
+assert np.ptp(flat_check) < 1e-10 * flat_check.mean()
+assert abs(b_values[-1] / b_values[0] - 1 / np.tan(np.radians(179) / 2) / (1 / np.tan(np.radians(1) / 2))) < 1e-10

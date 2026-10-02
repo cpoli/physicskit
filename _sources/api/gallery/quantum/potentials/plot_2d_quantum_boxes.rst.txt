@@ -80,7 +80,7 @@ does not appear in :math:`\lvert\psi\rvert^2`). Right: a higher stadium
 eigenstate colored by :math:`\lvert\psi\rvert^2`, in the chaotic-billiard
 regime where scarring can occur.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-89
+.. GENERATED FROM PYTHON SOURCE LINES 51-90
 
 .. code-block:: Python
 
@@ -125,6 +125,7 @@ regime where scarring can occur.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_2d_quantum_boxes_001.png
    :alt: Square box: |psi_{1,2}|^2 (degenerate with (2,1)), Circular dot: |psi_(m=2,n=2)|^2 (nodal rings; angular momentum m sets the phase e^{im*phi}, not visible in |psi|^2), Stadium billiard state 4 (E=26.03, chaotic -- possible scarring)
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_2d_quantum_boxes_001.png
@@ -145,10 +146,33 @@ regime where scarring can occur.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 91-95
+
+Check
+-----
+Square box: E = pi^2 (nx^2 + ny^2) / 2, so (1, 2) and (2, 1) are degenerate.
+Circular box: the eigenstate vanishes on the wall.
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-100
+
+.. code-block:: Python
+
+    E12, pairs12 = list(degeneracies.items())[0]
+    assert abs(E12 - 5 * np.pi**2 / 2) < 1e-9 and sorted(pairs12) == [(1, 2), (2, 1)]
+    phi_wall = np.linspace(0, 2 * np.pi, 50)
+    assert np.max(np.abs(cb.eigenstate(m=2, n=2).psi(np.full_like(phi_wall, cb.R), phi_wall, cb.R))) < 1e-10
+    assert np.all(np.diff(energies) >= 0) and energies[0] > 0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.633 seconds)
+   **Total running time of the script:** (0 minutes 0.639 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_potentials_plot_2d_quantum_boxes.py:

@@ -72,3 +72,13 @@ print(f"  sum of individual masses:      {p1.mass + p2.mass:.6f}")
 print(f"  invariant mass of the SYSTEM:  {system_mass:.6f}  (larger -- it also carries the collision's kinetic energy)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# m^2 = E^2 - p^2 is invariant: E = gamma m, p = gamma beta m; two masses
+# colliding at +-0.6c make a system of mass 2 gamma m = 2.5 m.
+assert np.max(np.abs(mass_recovered - m0)) < 1e-12
+gamma = 1 / np.sqrt(1 - betas**2)
+np.testing.assert_allclose(E_values, gamma * m0, rtol=1e-12)
+assert abs(system_mass - 2 / np.sqrt(1 - 0.6**2)) < 1e-12

@@ -137,7 +137,7 @@ From the all-up state and from a random state the running average of
 the energy converges to the same exact value, and the histogram of
 visited energies matches Boltzmann's distribution.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-96
+.. GENERATED FROM PYTHON SOURCE LINES 62-97
 
 .. code-block:: Python
 
@@ -178,6 +178,7 @@ visited energies matches Boltzmann's distribution.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ising/images/sphx_glr_plot_metropolis_algorithm_001.png
    :alt: Any start converges to the same ensemble, 3x3 Ising at T = 2.5
    :srcset: /api/gallery/statphys/ising/images/sphx_glr_plot_metropolis_algorithm_001.png
@@ -194,10 +195,30 @@ visited energies matches Boltzmann's distribution.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 98-101
+
+Check
+-----
+Detailed balance makes Metropolis sample exp(-beta E) from any start.
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-104
+
+.. code-block:: Python
+
+    assert np.sum(degeneracy) == 2**N
+    assert np.max(np.abs(hist["random start"] - p_exact)) < 0.01
+    assert abs(traces["random start"][-1] - E_exact) < 0.15 and abs(traces["ordered start"][-1] - E_exact) < 0.15
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.184 seconds)
+   **Total running time of the script:** (0 minutes 0.176 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ising_plot_metropolis_algorithm.py:

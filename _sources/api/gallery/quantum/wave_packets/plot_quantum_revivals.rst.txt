@@ -151,7 +151,7 @@ Evaluating the wavefunction on a full :math:`(x,t)` grid shows the web
 of diagonal fractional-revival ridges between the sharp replicas at
 :math:`t=0`, :math:`t_\text{rev}/2` and :math:`t_\text{rev}`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-91
+.. GENERATED FROM PYTHON SOURCE LINES 76-92
 
 .. code-block:: Python
 
@@ -173,6 +173,7 @@ of diagonal fractional-revival ridges between the sharp replicas at
 
 
 
+
 .. image-sg:: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_quantum_revivals_003.png
    :alt: Quantum carpet: $|\psi(x,t)|^2$ in the infinite well
    :srcset: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_quantum_revivals_003.png
@@ -182,10 +183,30 @@ of diagonal fractional-revival ridges between the sharp replicas at
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 93-97
+
+Check
+-----
+Full revival at t_rev, the mirror image (no overlap) at t_rev/2, and a
+fractional revival into two copies (fidelity 1/2) at t_rev/4.
+
+.. GENERATED FROM PYTHON SOURCE LINES 97-99
+
+.. code-block:: Python
+
+    fid = {frac: qr.fidelity_to_initial(x, frac * t_rev, coeffs, psi0) for frac in (0.25, 0.5, 1.0)}
+    assert fid[1.0] > 0.999 and fid[0.5] < 1e-3 and abs(fid[0.25] - 0.5) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.500 seconds)
+   **Total running time of the script:** (0 minutes 1.387 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_wave_packets_plot_quantum_revivals.py:

@@ -91,3 +91,18 @@ for ax, G_map, title in zip(
     ax.set_title(title)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Vacuum: G_munu = 0 for Schwarzschild and Kerr, to the finite-difference
+# floor (~1e-4 here); Reissner-Nordstrom: the Maxwell stress-energy gives
+# G_theta_theta = Q^2 / r^2, checked where it stands well above that floor
+# (r <= 10M) and away from the poles, where differencing in theta is worst.
+floor = max(G_schwarzschild.max(), G_kerr.max())
+assert floor < 1e-3
+close = r_grid <= 10.0
+mid = np.abs(theta_grid - np.pi / 2) < 1.0
+signal = G_reissner_nordstrom[np.ix_(mid, close)]
+np.testing.assert_allclose(signal, np.broadcast_to(0.25 / r_grid[close] ** 2, signal.shape), rtol=0.05)
+assert signal.min() > 10 * floor

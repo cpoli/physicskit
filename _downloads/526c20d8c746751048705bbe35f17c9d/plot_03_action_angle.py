@@ -93,3 +93,12 @@ ax2.legend(fontsize=9)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The small-oscillation period is 2 pi / sqrt(g/l); the predicted periods
+# match the integrated orbits; and the frequency is dH/dJ = 2 pi / T.
+assert abs(periods[0] / sho_period - 1) < 5e-3 and np.all(np.diff(actions) > 0) and np.all(np.diff(periods) > 0)
+omega_from_J = np.gradient(energies, actions)
+np.testing.assert_allclose(omega_from_J[5:-5], 2 * np.pi / periods[5:-5], rtol=0.01)

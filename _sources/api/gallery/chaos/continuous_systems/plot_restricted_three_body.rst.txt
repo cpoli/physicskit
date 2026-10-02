@@ -1143,7 +1143,7 @@ is a good check that the (fixed-step) RK4 integration is accurate enough to
 trust, especially near the Arenstorf orbit's close approach to the smaller
 primary.
 
-.. GENERATED FROM PYTHON SOURCE LINES 232-241
+.. GENERATED FROM PYTHON SOURCE LINES 232-242
 
 .. code-block:: Python
 
@@ -1159,6 +1159,7 @@ primary.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_restricted_three_body_006.png
    :alt: Arenstorf orbit integration fidelity (max |drift| = 3.5e-09)
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_restricted_three_body_006.png
@@ -1168,10 +1169,33 @@ primary.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 243-248
+
+Check
+-----
+The Arenstorf orbit closes after one period with the Jacobi constant held
+fixed; L4 sits at (1/2 - mu, sqrt(3)/2) and C_L1 > C_L2 > C_L3 > C_L4; the
+perturbed orbit is chaotic.
+
+.. GENERATED FROM PYTHON SOURCE LINES 248-252
+
+.. code-block:: Python
+
+    assert np.max(np.abs(states[-1] - states[0])) < 1e-2 and np.max(np.abs(drift)) < 1e-7
+    np.testing.assert_allclose(lagrange_pts[3], [0.5 - mu, np.sqrt(3) / 2], atol=1e-9)
+    assert c_l1 > c_l2 > c_l3 > c_l4
+    assert lam > 0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 31.075 seconds)
+   **Total running time of the script:** (0 minutes 31.010 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_restricted_three_body.py:

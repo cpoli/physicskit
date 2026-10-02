@@ -85,3 +85,12 @@ fig2.suptitle(r"Reduced single-qubit $|\rho_1|$: pure $\to$ maximally mixed $\to
 
 print(f"|rho_1| at Jt=0 (pure product state): off-diagonal = {np.abs(ising.reduced_density_matrix(ising.state(0.0)))[0, 1]:.4f}")
 print(f"|rho_1| at Jt=pi/4 (max entangled): off-diagonal = {np.abs(ising.reduced_density_matrix(ising.state(t_max / 2)))[0, 1]:.4f}")
+
+# %%
+# Check
+# -----
+# C(t) = |sin(2Jt)| for the Ising entangler: a maximally entangled state at
+# Jt = pi/4 (C = 1, single-qubit purity 1/2), back to a product at pi/2.
+np.testing.assert_allclose(concurrence, np.abs(np.sin(2 * ising.J * times)), atol=1e-9)
+np.testing.assert_allclose(purity, 1 - concurrence**2 / 2, atol=1e-9)
+assert concurrence[-1] < 1e-9

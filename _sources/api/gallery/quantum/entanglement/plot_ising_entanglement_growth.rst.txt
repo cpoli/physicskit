@@ -807,7 +807,7 @@ everywhere, while the maximally entangled point leaves a purely diagonal,
 maximally mixed :math:`\rho_1=I/2` -- and regains it as the qubits
 disentangle again on the way back to :math:`Jt=\pi/2`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-88
+.. GENERATED FROM PYTHON SOURCE LINES 73-89
 
 .. code-block:: Python
 
@@ -829,6 +829,7 @@ disentangle again on the way back to :math:`Jt=\pi/2`.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/entanglement/images/sphx_glr_plot_ising_entanglement_growth_003.png
    :alt: Reduced single-qubit $|\rho_1|$: pure $\to$ maximally mixed $\to$ pure, Jt=0.00 C=0.00, Jt=0.26 C=0.50, Jt=0.52 C=0.87, Jt=0.79 C=1.00
    :srcset: /api/gallery/quantum/entanglement/images/sphx_glr_plot_ising_entanglement_growth_003.png
@@ -845,10 +846,31 @@ disentangle again on the way back to :math:`Jt=\pi/2`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 90-94
+
+Check
+-----
+C(t) = |sin(2Jt)| for the Ising entangler: a maximally entangled state at
+Jt = pi/4 (C = 1, single-qubit purity 1/2), back to a product at pi/2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 94-97
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(concurrence, np.abs(np.sin(2 * ising.J * times)), atol=1e-9)
+    np.testing.assert_allclose(purity, 1 - concurrence**2 / 2, atol=1e-9)
+    assert concurrence[-1] < 1e-9
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.432 seconds)
+   **Total running time of the script:** (0 minutes 7.185 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_entanglement_plot_ising_entanglement_growth.py:

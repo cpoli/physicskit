@@ -134,3 +134,14 @@ axes[2].set_aspect("equal")
 axes[2].set_title("capacitor: potential and field lines")
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Uniform ball: phi(0) = 3Q / 8 pi R (eps0 = 1). Relaxation cost: Jacobi
+# sweeps ~ N^2, optimal SOR ~ N. The sine transform solves the same problem
+# directly; the capacitor's central field is V/d.
+assert abs(ball.phi[c, c, c] / (3 * Q / (8 * np.pi * R)) - 1) < 0.01
+assert np.polyfit(np.log(sizes), np.log(sweeps["jacobi"]), 1)[0] > 1.6 and abs(np.polyfit(np.log(sizes), np.log(sweeps["sor"]), 1)[0] - 1) < 0.15
+assert np.max(np.abs(direct - cap.phi)) < 1e-10
+assert abs(E[1][N // 2, N // 2] - 1.0 / gap) < 1e-3 / gap

@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_bvp
 
-from physicskit.constants import ELECTRON_MASS, ELEMENTARY_CHARGE, K_B
+from physicskit.constants import ELECTRON_MASS, ELEMENTARY_CHARGE, K_B, VACUUM_PERMITTIVITY
 from physicskit.plasma.waves import plasma_frequency
 
 # %%
@@ -119,3 +119,15 @@ ax3.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Weak charges are screened as Debye-Hückel's e^(-r/lambda_D)/r; strong ones
+# beyond it (nonlinear Poisson-Boltzmann). lambda_D = sqrt(eps0 k T / n e^2), N_D = (4/3) pi n lambda_D^3.
+i1 = np.argmin(np.abs(x - 1))
+ratios = {Q: solve(Q)[i1] / (Q * np.exp(-x[i1]) / x[i1]) for Q in (0.01, 3.0)}
+assert abs(ratios[0.01] - 1) < 0.005 and ratios[3.0] < 0.6
+for name, (n, T) in plasmas.items():
+    assert abs(lam[name] / np.sqrt(VACUUM_PERMITTIVITY * K_B * T / (n * ELEMENTARY_CHARGE**2)) - 1) < 1e-10
+    assert abs(ND[name] - 4 / 3 * np.pi * n * lam[name] ** 3) < 1e-9 * ND[name]

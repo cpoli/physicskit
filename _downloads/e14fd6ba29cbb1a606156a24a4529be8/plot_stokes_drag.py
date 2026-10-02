@@ -73,3 +73,10 @@ valid = Re < 1.0
 print(f"Stokes' law is self-consistent (Re < 1) for radii up to {radii[valid][-1] * 1e6:.1f} microns")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Stokes' law F = 6 pi mu R v gives v_t = 2 drho g R^2 / 9 mu.
+np.testing.assert_allclose(v_terminal, 2 * (rho_sphere - rho_fluid) * g * radii**2 / (9 * mu), rtol=1e-12)
+assert 50e-6 < radii[valid][-1] < 56e-6

@@ -31,10 +31,12 @@ circular scatterer of radius :math:`r_s` removed from its center,
 reflection, :math:`\mathbf{v}' = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})
 \,\mathbf{n}`, whenever it strikes the boundary.
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-21
+.. GENERATED FROM PYTHON SOURCE LINES 15-23
 
 .. code-block:: Python
 
+
+    import numpy as np
 
     from physicskit.chaos.systems.billiards import SinaiBilliard
     from physicskit.chaos.visualizers.dynamic_plots import plotly_billiard_trajectory, plotly_poincare_section
@@ -48,12 +50,12 @@ reflection, :math:`\mathbf{v}' = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-24
+.. GENERATED FROM PYTHON SOURCE LINES 24-26
 
 Trajectory
 ----------
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-27
+.. GENERATED FROM PYTHON SOURCE LINES 26-29
 
 .. code-block:: Python
 
@@ -67,12 +69,12 @@ Trajectory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-30
+.. GENERATED FROM PYTHON SOURCE LINES 30-32
 
 Poincare section
 -----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-32
+.. GENERATED FROM PYTHON SOURCE LINES 32-35
 
 .. code-block:: Python
 
@@ -86,9 +88,33 @@ Poincare section
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 36-40
+
+Check
+-----
+Every bounce of Sinai's billiard lands on the cell wall or on the
+scatterer, never inside it, and the speed is conserved.
+
+.. GENERATED FROM PYTHON SOURCE LINES 40-45
+
+.. code-block:: Python
+
+    run = billiard.simulate(billiard.sample_interior_point(), (0.4, 0.9), n_bounces=150)
+    assert np.hypot(run["x"], run["y"]).min() >= 0.5 - 1e-9
+    on_wall = np.isclose(np.abs(run["x"]), 1.0) | np.isclose(np.abs(run["y"]), 1.0)
+    on_disk = np.isclose(np.hypot(run["x"], run["y"]), 0.5)
+    assert np.all(on_wall | on_disk) and np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.518 seconds)
+   **Total running time of the script:** (0 minutes 0.434 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_interactive_and_animation_plot_plotly_trajectory.py:

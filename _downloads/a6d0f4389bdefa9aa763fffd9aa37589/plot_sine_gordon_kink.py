@@ -85,3 +85,11 @@ plt.show()
 # displaying it interactively, use e.g.::
 #
 #     anim.save("sine_gordon_kink.gif", writer="pillow", fps=20)
+
+# %%
+# Check
+# -----
+# The kink interpolates 0 -> 2 pi (one topological charge) and moves rigidly
+# at v, Lorentz-contracted by gamma.
+assert abs(u[0]) < 1e-6 and abs(u[-1] - 2 * np.pi) < 1e-6
+assert max_dev < 5e-3

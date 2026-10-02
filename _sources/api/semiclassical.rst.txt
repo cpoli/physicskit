@@ -15,6 +15,12 @@ physicskit.semiclassical
 .. automodule:: physicskit.semiclassical.core.gutzwiller
    :members:
 
+.. automodule:: physicskit.semiclassical.core.bogomolny
+   :members:
+
+.. automodule:: physicskit.semiclassical.core.path_integral
+   :members:
+
 .. automodule:: physicskit.semiclassical.systems.scarring
    :members:
 

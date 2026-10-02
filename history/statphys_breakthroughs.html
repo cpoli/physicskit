@@ -505,12 +505,15 @@ stop.</p>
 <li><p><a class="reference internal" href="#vortex-unbinding-in-the-2d-xy-model" id="id20">1971-1973 – Vortex Unbinding in the 2D XY Model</a></p></li>
 <li><p><a class="reference internal" href="#the-edwards-anderson-spin-glass" id="id21">1975 – The Edwards-Anderson Spin Glass</a></p></li>
 <li><p><a class="reference internal" href="#the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking" id="id22">1975-1980 – The Sherrington-Kirkpatrick Model and Parisi’s Replica Symmetry Breaking</a></p></li>
-<li><p><a class="reference internal" href="#the-binder-cumulant-and-finite-size-scaling" id="id23">1981 – The Binder Cumulant and Finite-Size Scaling</a></p></li>
-<li><p><a class="reference internal" href="#the-kardar-parisi-zhang-equation" id="id24">1986 – The Kardar-Parisi-Zhang Equation</a></p></li>
-<li><p><a class="reference internal" href="#self-organized-criticality-and-the-btw-sandpile" id="id25">1987 – Self-Organized Criticality and the BTW Sandpile</a></p></li>
-<li><p><a class="reference internal" href="#the-wolff-cluster-algorithm" id="id26">1989 – The Wolff Cluster Algorithm</a></p></li>
-<li><p><a class="reference internal" href="#the-jarzynski-equality" id="id27">1997 – The Jarzynski Equality</a></p></li>
-<li><p><a class="reference internal" href="#see-also" id="id28">See Also</a></p></li>
+<li><p><a class="reference internal" href="#path-integral-monte-carlo" id="id23">1979-1981 – Path-Integral Monte Carlo</a></p></li>
+<li><p><a class="reference internal" href="#the-binder-cumulant-and-finite-size-scaling" id="id24">1981 – The Binder Cumulant and Finite-Size Scaling</a></p></li>
+<li><p><a class="reference internal" href="#the-kardar-parisi-zhang-equation" id="id25">1986 – The Kardar-Parisi-Zhang Equation</a></p></li>
+<li><p><a class="reference internal" href="#self-organized-criticality-and-the-btw-sandpile" id="id26">1987 – Self-Organized Criticality and the BTW Sandpile</a></p></li>
+<li><p><a class="reference internal" href="#the-swendsen-wang-cluster-algorithm" id="id27">1987 – The Swendsen-Wang Cluster Algorithm</a></p></li>
+<li><p><a class="reference internal" href="#the-wolff-cluster-algorithm" id="id28">1989 – The Wolff Cluster Algorithm</a></p></li>
+<li><p><a class="reference internal" href="#the-jarzynski-equality" id="id29">1997 – The Jarzynski Equality</a></p></li>
+<li><p><a class="reference internal" href="#wang-landau-flat-histogram-sampling" id="id30">2001 – Wang-Landau Flat-Histogram Sampling</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id31">See Also</a></p></li>
 </ul>
 </nav>
 <section id="maxwell-s-distribution-of-molecular-velocities">
@@ -1246,8 +1249,45 @@ and J. Phys. A 13, L115-L121 (1980); F. Guerra, Commun. Math. Phys.
 <p><a class="reference internal" href="../api/gallery/statphys/spin_glass/plot_sk_overlap_distribution.html"><span class="doc">The Sherrington-Kirkpatrick model and Parisi’s replica overlap</span></a></p>
   <div class="sphx-glr-thumbnail-title">The Sherrington-Kirkpatrick model and Parisi's replica overlap</div>
 </div></div></section>
+<section id="path-integral-monte-carlo">
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">1979-1981 – Path-Integral Monte Carlo</a><a class="headerlink" href="#path-integral-monte-carlo" title="Link to this heading">#</a></h2>
+<p>Feynman had shown in 1953 that the partition function of quantum
+particles is a path integral in imaginary time, and that each quantum
+particle then behaves like a classical closed polymer. Barker (1979)
+turned this into an algorithm: slice the imaginary-time interval
+<span class="math notranslate nohighlight">\(\beta\hbar\)</span> into <span class="math notranslate nohighlight">\(P\)</span> steps of width <span class="math notranslate nohighlight">\(\tau = \beta/P\)</span>,
+and in the primitive (Trotter) approximation</p>
+<div class="math notranslate nohighlight">
+\[Z \approx \left(\frac{mP}{2\pi\beta\hbar^2}\right)^{P/2} \int dx_1 \cdots dx_P\,
+\exp\left[-\sum_{j=1}^{P}\left(\frac{mP}{2\beta\hbar^2}(x_{j+1}-x_j)^2
++ \frac{\beta}{P}V(x_j)\right)\right], \qquad x_{P+1} = x_1,\]</div>
+<p>a classical ring polymer of <span class="math notranslate nohighlight">\(P\)</span> beads joined by harmonic springs,
+which ordinary Metropolis moves can sample. The error is
+<span class="math notranslate nohighlight">\(O(\tau^2)\)</span>, so the result becomes exact as <span class="math notranslate nohighlight">\(P \to \infty\)</span>.
+Chandler and Wolynes (1981) made the quantum-classical isomorphism
+explicit, including the cross-linking of polymers by exchange for
+bosons. Ceperley’s later work on liquid helium-4, where the polymers
+wind around the periodic box to give a superfluid fraction, made
+path-integral Monte Carlo the standard exact method for bosons at finite
+temperature.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/statphys.html#physicskit.statphys.PathIntegralParticle" title="physicskit.statphys.chapters.path_integral.PathIntegralParticle"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.path_integral.PathIntegralParticle</span></code></a>
+samples the ring polymer of one particle in the well
+<span class="math notranslate nohighlight">\(V = \tfrac12\omega^2 x^2 + \lambda x^4\)</span> with bead and centroid
+moves, measuring <span class="math notranslate nohighlight">\(\langle x^2 \rangle\)</span> and the virial energy;
+<code class="xref py py-func docutils literal notranslate"><span class="pre">harmonic_x2_primitive()</span></code>
+gives the exact <span class="math notranslate nohighlight">\(P\)</span>-bead target for the harmonic case, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">harmonic_x2_exact()</span></code> its
+<span class="math notranslate nohighlight">\(P \to \infty\)</span> limit.</p>
+<p><em>References:</em> R. P. Feynman, Phys. Rev. 91, 1291-1301 (1953); J. A.
+Barker, J. Chem. Phys. 70, 2914-2918 (1979); D. Chandler and P. G.
+Wolynes, J. Chem. Phys. 74, 4078-4095 (1981); D. M. Ceperley, Rev. Mod.
+Phys. 67, 279-355 (1995).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Feynman&#x27;s path integral in imaginary time turns the partition function of one quantum particle into that of a classical closed chain of P beads joined by springs (Barker 1979; Chandler and Wolynes 1981). In units \hbar = m = k_B = 1, with \tau = \beta / P,"><img alt="" src="../_images/sphx_glr_plot_path_integral_monte_carlo_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/statphys/path_integral/plot_path_integral_monte_carlo.html"><span class="doc">Path-integral Monte Carlo: a quantum particle as a classical ring polymer</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Path-integral Monte Carlo: a quantum particle as a classical ring polymer</div>
+</div></div></section>
 <section id="the-binder-cumulant-and-finite-size-scaling">
-<h2><a class="toc-backref" href="#id23" role="doc-backlink">1981 – The Binder Cumulant and Finite-Size Scaling</a><a class="headerlink" href="#the-binder-cumulant-and-finite-size-scaling" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">1981 – The Binder Cumulant and Finite-Size Scaling</a><a class="headerlink" href="#the-binder-cumulant-and-finite-size-scaling" title="Link to this heading">#</a></h2>
 <p>Kurt Binder introduced a scale-independent diagnostic for locating a
 continuous phase transition from necessarily finite simulations: the
 fourth-order cumulant of the order parameter, dimensionless by
@@ -1284,7 +1324,7 @@ laws.</p>
   <div class="sphx-glr-thumbnail-title">Finite-size scaling: extracting critical exponents</div>
 </div></div></section>
 <section id="the-kardar-parisi-zhang-equation">
-<h2><a class="toc-backref" href="#id24" role="doc-backlink">1986 – The Kardar-Parisi-Zhang Equation</a><a class="headerlink" href="#the-kardar-parisi-zhang-equation" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">1986 – The Kardar-Parisi-Zhang Equation</a><a class="headerlink" href="#the-kardar-parisi-zhang-equation" title="Link to this heading">#</a></h2>
 <p>Mehran Kardar, Giorgio Parisi, and Yi-Cheng Zhang proposed a stochastic
 partial differential equation for a generic growing interface – crystal
 surfaces, bacterial colonies, burning paper fronts – driven by
@@ -1319,7 +1359,7 @@ recovers both the <span class="math notranslate nohighlight">\(\beta=1/3\)</span
   <div class="sphx-glr-thumbnail-title">Universal interface roughening: the Kardar-Parisi-Zhang universality class</div>
 </div></div></section>
 <section id="self-organized-criticality-and-the-btw-sandpile">
-<h2><a class="toc-backref" href="#id25" role="doc-backlink">1987 – Self-Organized Criticality and the BTW Sandpile</a><a class="headerlink" href="#self-organized-criticality-and-the-btw-sandpile" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">1987 – Self-Organized Criticality and the BTW Sandpile</a><a class="headerlink" href="#self-organized-criticality-and-the-btw-sandpile" title="Link to this heading">#</a></h2>
 <p>Per Bak, Chao Tang, and Kurt Wiesenfeld asked whether a system could
 reach a critical state – power-law-distributed fluctuations at every
 scale – <em>without</em> anyone fine-tuning a parameter to a special value,
@@ -1349,22 +1389,50 @@ recovers the finite-size cutoff’s own scaling with <span class="math notransla
 <p><a class="reference internal" href="../api/gallery/statphys/sandpile/plot_btw_avalanches.html"><span class="doc">Self-organized criticality: the Bak-Tang-Wiesenfeld sandpile</span></a></p>
   <div class="sphx-glr-thumbnail-title">Self-organized criticality: the Bak-Tang-Wiesenfeld sandpile</div>
 </div></div></section>
-<section id="the-wolff-cluster-algorithm">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">1989 – The Wolff Cluster Algorithm</a><a class="headerlink" href="#the-wolff-cluster-algorithm" title="Link to this heading">#</a></h2>
+<section id="the-swendsen-wang-cluster-algorithm">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">1987 – The Swendsen-Wang Cluster Algorithm</a><a class="headerlink" href="#the-swendsen-wang-cluster-algorithm" title="Link to this heading">#</a></h2>
 <p>Even Metropolis dynamics suffers from <em>critical slowing down</em>: single-spin
 flips decorrelate a configuration only diffusively, so the autocorrelation
-time diverges as a power of the correlation length exactly where accurate
-statistics matter most, right at <span class="math notranslate nohighlight">\(T_C\)</span>. Robert Swendsen and Jian-Sheng
-Wang’s 1987 cluster algorithm broke this bottleneck by growing and flipping
-whole clusters of bond-activated, same-sign spins in a single move; Ulli
-Wolff’s 1989 refinement grows and flips just one such cluster per update,
-seeded at a random site, with each bond added independently with
-probability <span class="math notranslate nohighlight">\(p_{\text{add}} = 1 - e^{-2\beta J}\)</span>. Because a Wolff
-cluster is, on average, exactly a correlated domain, flipping it is a
-genuinely global Monte Carlo move rather than a local one; the algorithm’s
-dynamical critical exponent is dramatically smaller than Metropolis’s,
-turning simulations right at <span class="math notranslate nohighlight">\(T_C\)</span> – previously the hardest regime to
-sample – into one of the easiest.</p>
+time diverges as a power of the lattice size, <span class="math notranslate nohighlight">\(\tau \sim L^z\)</span> with
+<span class="math notranslate nohighlight">\(z \approx 2.17\)</span>, exactly where accurate statistics matter most, at
+<span class="math notranslate nohighlight">\(T_C\)</span>. Robert Swendsen and Jian-Sheng Wang broke this bottleneck
+with the first cluster algorithm. They used the Fortuin-Kasteleyn
+representation (1972), which writes the Ising partition function as a sum
+over bond configurations: every bond between two aligned neighbors is
+activated with probability</p>
+<div class="math notranslate nohighlight">
+\[p = 1 - e^{-2\beta J},\]</div>
+<p>and, given the activated bonds, the spins of each connected cluster are
+free to take either sign. One Swendsen-Wang update therefore draws the
+bonds, labels the clusters, and flips each cluster independently with
+probability 1/2, resampling the whole lattice at once. Because the
+clusters are the physical correlated domains, the update is a global move
+and the dynamical exponent drops to <span class="math notranslate nohighlight">\(z \approx 0.2\)</span>. The same idea
+carries over to the Potts model and, through embedding, to continuous
+spins.</p>
+<p><em>Implementation:</em> <code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.statphys.core.monte_carlo.swendsen_wang_step_ising()</span></code>
+activates the bonds, labels the clusters with union-find and flips each
+with probability 1/2; it backs
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.ising_lattice.Ising2D.sweep()</span></code>
+(<code class="docutils literal notranslate"><span class="pre">algorithm=&quot;swendsen-wang&quot;</span></code>).</p>
+<p><em>References:</em> C. M. Fortuin and P. W. Kasteleyn, Physica 57, 536-564
+(1972); R. H. Swendsen and J.-S. Wang, Phys. Rev. Lett. 58, 86-88 (1987).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Swendsen and Wang (1987) used the Fortuin-Kasteleyn mapping of the Ising model onto bond percolation to build the first cluster Monte Carlo move. Every bond between two aligned neighbors is activated with probability"><img alt="" src="../_images/sphx_glr_plot_swendsen_wang_cluster_algorithm_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/statphys/ising/plot_swendsen_wang_cluster_algorithm.html"><span class="doc">The Swendsen-Wang algorithm: flipping every Fortuin-Kasteleyn cluster at once</span></a></p>
+  <div class="sphx-glr-thumbnail-title">The Swendsen-Wang algorithm: flipping every Fortuin-Kasteleyn cluster at once</div>
+</div></div></section>
+<section id="the-wolff-cluster-algorithm">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">1989 – The Wolff Cluster Algorithm</a><a class="headerlink" href="#the-wolff-cluster-algorithm" title="Link to this heading">#</a></h2>
+<p>Swendsen and Wang’s update partitions the whole lattice into clusters,
+including many small ones whose flips barely change anything. Ulli Wolff’s
+1989 refinement grows and flips just one cluster per update, seeded at a
+random site, with each bond added independently with probability
+<span class="math notranslate nohighlight">\(p_{\text{add}} = 1 - e^{-2\beta J}\)</span>. A random site is more likely to
+lie in a large cluster, so the moves Wolff makes are, on average, the large
+correlated domains that matter; the algorithm’s dynamical critical exponent
+is dramatically smaller than Metropolis’s, turning simulations right at
+<span class="math notranslate nohighlight">\(T_C\)</span> – previously the hardest regime to sample – into one of the
+easiest.</p>
 <div class="math notranslate nohighlight">
 \[p_{\text{add}} = 1 - e^{-2\beta J}.\]</div>
 <p><em>Implementation:</em> <code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.statphys.core.monte_carlo.wolff_step_ising()</span></code>
@@ -1382,7 +1450,7 @@ domain-wall coarsening.</p>
   <div class="sphx-glr-thumbnail-title">The Wolff cluster algorithm: beating critical slowing down</div>
 </div></div></section>
 <section id="the-jarzynski-equality">
-<h2><a class="toc-backref" href="#id27" role="doc-backlink">1997 – The Jarzynski Equality</a><a class="headerlink" href="#the-jarzynski-equality" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">1997 – The Jarzynski Equality</a><a class="headerlink" href="#the-jarzynski-equality" title="Link to this heading">#</a></h2>
 <p>The second law only bounds the <em>average</em> work needed to drive a system
 between two equilibrium states, <span class="math notranslate nohighlight">\(\langle W \rangle \ge \Delta F\)</span>,
 with equality only in the reversible, infinitely slow limit – any
@@ -1416,8 +1484,40 @@ E. Crooks, Phys. Rev. E 60, 2721-2726 (1999).</p>
 <p><a class="reference internal" href="../api/gallery/statphys/nonequilibrium_work/plot_jarzynski_equality.html"><span class="doc">Jarzynski’s equality: exact free energies from irreversible work</span></a></p>
   <div class="sphx-glr-thumbnail-title">Jarzynski's equality: exact free energies from irreversible work</div>
 </div></div></section>
+<section id="wang-landau-flat-histogram-sampling">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">2001 – Wang-Landau Flat-Histogram Sampling</a><a class="headerlink" href="#wang-landau-flat-histogram-sampling" title="Link to this heading">#</a></h2>
+<p>Metropolis sampling, cluster or not, works at one temperature, and a
+first-order transition or a rugged energy landscape traps it in one basin.
+Fugao Wang and David Landau proposed estimating the density of states
+<span class="math notranslate nohighlight">\(g(E)\)</span> directly instead, by a random walk in energy space. A move
+from <span class="math notranslate nohighlight">\(E_1\)</span> to <span class="math notranslate nohighlight">\(E_2\)</span> is accepted with probability</p>
+<div class="math notranslate nohighlight">
+\[P(E_1 \to E_2) = \min\left(1, \frac{g(E_1)}{g(E_2)}\right),\]</div>
+<p>and after every step the estimate of the current level is raised,
+<span class="math notranslate nohighlight">\(\ln g(E) \to \ln g(E) + \ln f\)</span>. The walk is thus driven away from
+levels it has already visited until its histogram is flat; then
+<span class="math notranslate nohighlight">\(\ln f\)</span> is halved and the walk restarts, and the estimate converges
+as <span class="math notranslate nohighlight">\(\ln f \to 0\)</span>. With <span class="math notranslate nohighlight">\(g(E)\)</span> in hand, the partition function
+<span class="math notranslate nohighlight">\(Z(\beta) = \sum_E g(E) e^{-\beta E}\)</span>, the free energy and the
+entropy, quantities that canonical sampling cannot give directly, follow
+at every temperature from one run. The method spread quickly to protein
+folding, liquids and quantum systems.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/statphys.html#physicskit.statphys.WangLandauIsing" title="physicskit.statphys.chapters.wang_landau.WangLandauIsing"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.statphys.chapters.wang_landau.WangLandauIsing</span></code></a>
+runs the walk on the 2D Ising lattice (kernel
+<code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.statphys.core.monte_carlo.wang_landau_sweeps_ising()</span></code>);
+<code class="xref py py-func docutils literal notranslate"><span class="pre">ising_density_of_states_exact()</span></code>
+enumerates the exact <span class="math notranslate nohighlight">\(g(E)\)</span> of a <span class="math notranslate nohighlight">\(4\times4\)</span> lattice to check
+it against, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">canonical_from_density_of_states()</span></code>
+turns either into canonical averages.</p>
+<p><em>References:</em> F. Wang and D. P. Landau, Phys. Rev. Lett. 86, 2050-2053
+(2001); Phys. Rev. E 64, 056101 (2001).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Wang and Landau (2001) replaced sampling at a fixed temperature by a random walk in energy. A spin flip from E_1 to E_2 is accepted with probability \min(1, g(E_1)/g(E_2)), and every visit raises the current estimate \ln g(E) \to \ln g(E) + \ln f. The walk is pushed toward rarely visited levels until the histogram is flat; then \ln f is halved and the walk continues. When \ln f is small, g(E) is the density of states, and"><img alt="" src="../_images/sphx_glr_plot_wang_landau_density_of_states_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/statphys/wang_landau/plot_wang_landau_density_of_states.html"><span class="doc">Wang-Landau sampling of the Ising density of states</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Wang-Landau sampling of the Ising density of states</div>
+</div></div></section>
 <section id="see-also">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../api/statphys.html"><span class="doc">physicskit.statphys</span></a></p></li>
 <li><p><a class="reference internal" href="../api/gallery/statphys/index.html"><span class="doc">Examples</span></a></p></li>
@@ -1496,11 +1596,14 @@ E. Crooks, Phys. Rev. E 60, 2721-2726 (1999).</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vortex-unbinding-in-the-2d-xy-model">1971-1973 – Vortex Unbinding in the 2D XY Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-edwards-anderson-spin-glass">1975 – The Edwards-Anderson Spin Glass</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sherrington-kirkpatrick-model-and-parisi-s-replica-symmetry-breaking">1975-1980 – The Sherrington-Kirkpatrick Model and Parisi’s Replica Symmetry Breaking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-integral-monte-carlo">1979-1981 – Path-Integral Monte Carlo</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-binder-cumulant-and-finite-size-scaling">1981 – The Binder Cumulant and Finite-Size Scaling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kardar-parisi-zhang-equation">1986 – The Kardar-Parisi-Zhang Equation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-organized-criticality-and-the-btw-sandpile">1987 – Self-Organized Criticality and the BTW Sandpile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-swendsen-wang-cluster-algorithm">1987 – The Swendsen-Wang Cluster Algorithm</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-wolff-cluster-algorithm">1989 – The Wolff Cluster Algorithm</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-jarzynski-equality">1997 – The Jarzynski Equality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wang-landau-flat-histogram-sampling">2001 – Wang-Landau Flat-Histogram Sampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
 </ul>
   </nav></div>

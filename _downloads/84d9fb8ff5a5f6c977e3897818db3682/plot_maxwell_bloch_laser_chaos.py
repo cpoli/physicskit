@@ -82,3 +82,12 @@ ax3.set_xlabel("field E")
 ax3.set_ylabel("polarization P")
 ax3.set_zlabel("inversion D")
 ax3.set_title("Maxwell-Bloch laser at r = 28: the Lorenz attractor")
+
+# %%
+# Check
+# -----
+# Good cavity: lasing threshold at r = 1 with E^2 = r - 1 above it; bad
+# cavity: Haken's second threshold r_H = sigma (sigma + b + 3) / (sigma - b - 1).
+np.testing.assert_allclose(I_final, np.maximum(r_grid - 1, 0), atol=0.02)
+sigma_l, b_l = 10.0, 8 / 3
+assert abs(mb.second_threshold - sigma_l * (sigma_l + b_l + 3) / (sigma_l - b_l - 1)) < 1e-9

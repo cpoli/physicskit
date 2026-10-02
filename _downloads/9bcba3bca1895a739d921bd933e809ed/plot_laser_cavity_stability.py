@@ -104,3 +104,14 @@ fig2.tight_layout()
 
 fraction_stable = stability_map.mean()
 print(f"\nfull (d, R2) stability map: {fraction_stable * 100:.1f}% of the scanned grid is a stable resonator")
+
+# %%
+# Check
+# -----
+# A two-mirror resonator is stable when 0 <= g1 g2 <= 1, g_i = 1 - d/R_i:
+# for R1 = R2 = 2 m, up to d = 2R; the scan agrees away from the edges.
+assert lengths[boundary_index - 1] < 2 * R1 < lengths[boundary_index]
+D, R2G = np.meshgrid(d_values, R2_values)
+g1g2 = (1 - D / R1) * (1 - D / R2G)
+clear = (np.abs(g1g2) > 0.02) & (np.abs(g1g2 - 1) > 0.02)
+assert np.all(stability_map[clear] == ((g1g2 > 0) & (g1g2 < 1))[clear])

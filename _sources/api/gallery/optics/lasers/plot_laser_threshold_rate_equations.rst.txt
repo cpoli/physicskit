@@ -31,13 +31,14 @@ the inversion is clamped there and the output grows linearly with the
 pump. When the laser is switched on, it overshoots in a train of spikes
 that settle through damped relaxation oscillations.
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-24
+.. GENERATED FROM PYTHON SOURCE LINES 15-25
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
     import numpy as np
+    from scipy.signal import find_peaks
 
     from physicskit.optics.lasers import LaserRateEquations
 
@@ -51,7 +52,7 @@ that settle through damped relaxation oscillations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-30
+.. GENERATED FROM PYTHON SOURCE LINES 26-31
 
 Threshold and gain clamping
 ---------------------------
@@ -59,7 +60,7 @@ Threshold and gain clamping
 A small spontaneous-emission fraction :math:`\beta` into the lasing mode
 rounds the threshold; with :math:`\beta \to 0` it becomes a sharp kink.
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-49
+.. GENERATED FROM PYTHON SOURCE LINES 31-50
 
 .. code-block:: Python
 
@@ -94,7 +95,7 @@ rounds the threshold; with :math:`\beta \to 0` it becomes a sharp kink.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-58
+.. GENERATED FROM PYTHON SOURCE LINES 51-59
 
 Turn-on: spiking and relaxation oscillations
 ---------------------------------------------
@@ -105,7 +106,7 @@ photon, catches up. The system then relaxes to the steady state with
 frequency :math:`\Omega` and damping :math:`\Gamma` from
 :meth:`~physicskit.optics.lasers.LaserRateEquations.relaxation_oscillation`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-80
+.. GENERATED FROM PYTHON SOURCE LINES 59-82
 
 .. code-block:: Python
 
@@ -134,6 +135,7 @@ frequency :math:`\Omega` and damping :math:`\Gamma` from
 
 
 
+
 .. image-sg:: /api/gallery/optics/lasers/images/sphx_glr_plot_laser_threshold_rate_equations_002.png
    :alt: Laser turn-on at $P = 3P_{\rm th}$: $\Omega = 44.7$, $\Gamma = 1.50$
    :srcset: /api/gallery/optics/lasers/images/sphx_glr_plot_laser_threshold_rate_equations_002.png
@@ -150,10 +152,40 @@ frequency :math:`\Omega` and damping :math:`\Gamma` from
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 83-90
+
+Check
+-----
+Above threshold the inversion clamps at N_th and q = (P - P_th) tau_c;
+relaxation oscillations e^(-Gamma t) cos(Omega t) with Gamma = r / 2 tau,
+Omega = sqrt((r - 1) / (tau tau_c) - Gamma^2), r = P / P_th -- the
+(nonlinear) turn-on spikes come ever closer until, near steady state, they
+are spaced 2 pi / Omega -- and their heights decay toward the steady state.
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-99
+
+.. code-block:: Python
+
+    assert abs(N_s - laser.threshold_inversion) < 1e-9 and abs(q_s - 2 * P_th * tau_c) < 1e-9
+    for x in (1.5, 2.0, 3.0):
+        N_x, _ = LaserRateEquations(pump=x * P_th, tau=tau, tau_c=tau_c, B=B).steady_state()
+        assert abs(N_x / laser.threshold_inversion - 1) < 1e-9
+    assert abs(Gamma - 3 / (2 * tau)) < 1e-12 and abs(Omega - np.sqrt(2 / (tau * tau_c) - Gamma**2)) < 1e-9 * Omega
+    spikes, _ = find_peaks(q, prominence=0.01 * q.max())
+    late = spikes[t[spikes] > 2.5]
+    assert len(late) >= 3 and abs(np.diff(t[late]).mean() / (2 * np.pi / Omega) - 1) < 0.1
+    assert np.all(np.diff(q[spikes]) < 0) and q[spikes[-1]] < 0.2 * q[spikes[0]]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.464 seconds)
+   **Total running time of the script:** (0 minutes 0.469 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_lasers_plot_laser_threshold_rate_equations.py:

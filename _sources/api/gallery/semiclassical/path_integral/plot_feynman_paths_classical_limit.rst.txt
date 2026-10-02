@@ -9330,10 +9330,33 @@ it interactively, use e.g.::
 
     anim.save("feynman_phasor_spiral.gif", writer="pillow", fps=20)
 
+.. GENERATED FROM PYTHON SOURCE LINES 181-186
+
+Check
+-----
+Classical actions: m (xf - x0)^2 / 2T for the free particle and
+m omega [(x0^2 + xf^2) cos(omega T) - 2 x0 xf] / (2 sin(omega T)) for the
+oscillator; as hbar shrinks the paths near the classical one dominate.
+
+.. GENERATED FROM PYTHON SOURCE LINES 186-190
+
+.. code-block:: Python
+
+    assert abs(S_cl - m * (xf - x0) ** 2 / (2 * T)) < 1e-3
+    S_ho = m * omega * ((x0**2 + xf**2) * np.cos(omega * T) - 2 * x0 * xf) / (2 * np.sin(omega * T))
+    assert abs(S_cl_h - S_ho) < 1e-2
+    assert frac_small > 3 * frac_large and frac_h_small > 3 * frac_h_large
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 3.269 seconds)
+   **Total running time of the script:** (1 minutes 2.951 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_path_integral_plot_feynman_paths_classical_limit.py:

@@ -103,3 +103,15 @@ for ax, branch, name in zip(axes3, (0, 1), ("lower", "upper")):
     ax.set_title(f"{name} branch")
     fig3.colorbar(im, ax=ax, label=r"$\omega$")
 fig3.tight_layout()
+
+# %%
+# Check
+# -----
+# Zone-edge gap of the diatomic chain: omega = sqrt(2K/m2), sqrt(2K/m1);
+# sound speeds of the square lattice along Gamma-X: c_L = sqrt(K1 + K2),
+# c_T = sqrt(K2).
+edge = np.argmin(np.abs(k - np.pi))
+assert np.isclose(ac[edge], np.sqrt(2 * K / m2), rtol=1e-4)
+assert np.isclose(op[edge], np.sqrt(2 * K / m1), rtol=1e-4)
+small = 3
+np.testing.assert_allclose(omega[small] / path[small, 0], [np.sqrt(K2), np.sqrt(K1 + K2)], rtol=1e-3)

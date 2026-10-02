@@ -139,7 +139,7 @@ The left-well population approaches 1/2 as
 hopping rate :math:`k \approx \frac{\sqrt{U''(x_{\min})|U''(x_{\max})|}}{2\pi\gamma}
 e^{-\Delta U/k_BT}`, with barrier :math:`\Delta U = 1` here.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-117
+.. GENERATED FROM PYTHON SOURCE LINES 88-118
 
 .. code-block:: Python
 
@@ -175,6 +175,7 @@ e^{-\Delta U/k_BT}`, with barrier :math:`\Delta U = 1` here.
 
 
 
+
 .. rst-class:: sphx-glr-horizontal
 
 
@@ -202,10 +203,35 @@ e^{-\Delta U/k_BT}`, with barrier :math:`\Delta U = 1` here.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 119-125
+
+Check
+-----
+Trajectories and the Fokker-Planck solution agree; the well populations
+relax as 1/2 (1 - e^(-2kt)) toward the symmetric Boltzmann state; the
+hopping rate matches Kramers' estimate
+sqrt(U''(min) |U''(max)|) / (2 pi gamma) e^(-Delta U / kT) to ~15%.
+
+.. GENERATED FROM PYTHON SOURCE LINES 125-130
+
+.. code-block:: Python
+
+    for xs, p in zip(samples, densities):
+        assert abs(np.mean(xs < 0) - np.sum(p[x < 0]) * (x[1] - x[0])) < 0.01
+    assert np.max(np.abs(left[fit] - 0.5 * (1 - np.exp(-2 * rate * t_long[fit])))) < 0.01
+    assert abs(np.sum(boltzmann[x < 0]) / np.sum(boltzmann) - 0.5) < 0.01
+    assert abs(rate / kramers - 1) < 0.15
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.945 seconds)
+   **Total running time of the script:** (0 minutes 2.972 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_stochastic_processes_plot_fokker_planck_equation.py:

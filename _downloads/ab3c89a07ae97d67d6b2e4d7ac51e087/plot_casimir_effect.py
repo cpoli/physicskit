@@ -68,3 +68,12 @@ print(f"first 5 mode frequencies at d={d_values[0]:.2f}: {np.round(modes_at_smal
 print(f"first 5 mode frequencies at d={d_values[-1]:.2f}: {np.round(modes_at_large_d, 3)} (denser -> continuum)")
 print(f"Casimir energy: E(d={d_values[0]:.2f})={energies[0]:.4f}, E(d={d_values[-1]:.2f})={energies[-1]:.4f}")
 print(f"force is attractive everywhere (energy increases monotonically with d): {bool(np.all(np.diff(energies) > 0))}")
+
+# %%
+# Check
+# -----
+# 1D Casimir energy between mirrors: E(d) = -pi / (24 d) (hbar = c = 1), from
+# modes omega_n = n pi / d: attractive at every separation.
+np.testing.assert_allclose(energies, -np.pi / (24 * d_values), rtol=1e-6)
+np.testing.assert_allclose(modes_at_small_d, np.arange(1, 6) * np.pi / d_values[0], rtol=1e-12)
+assert np.all(np.diff(energies) > 0)

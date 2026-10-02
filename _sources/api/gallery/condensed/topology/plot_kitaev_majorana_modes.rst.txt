@@ -96,7 +96,7 @@ rather than the two spatially separated Majoranas individually; each
 basis vector it happens to return is still fully localized at one end
 or the other, and the two together account for the whole subspace.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-79
+.. GENERATED FROM PYTHON SOURCE LINES 48-80
 
 .. code-block:: Python
 
@@ -134,6 +134,7 @@ or the other, and the two together account for the whole subspace.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_kitaev_majorana_modes_001.png
    :alt: Kitaev chain: gapped bulk, unpaired Majorana modes at open ends, Bulk BdG spectrum (periodic chain, fully gapped), Combined Majorana weight, |E| ~ 8.3e-16
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_kitaev_majorana_modes_001.png
@@ -150,10 +151,32 @@ or the other, and the two together account for the whole subspace.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
+
+Check
+-----
+At mu = 0, t = Delta the bulk band is flat at |E| = 2t; the open chain has
+two exact zero modes, each localized on one end.
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-89
+
+.. code-block:: Python
+
+    assert abs(np.min(np.abs(bulk_bands)) - 2 * t) < 1e-12
+    assert np.max(np.abs(energies[zero_idx])) < 1e-10
+    assert min(max(left_a, right_a), max(left_b, right_b)) > 0.99
+    assert abs((left_a + left_b) - 1) < 0.01
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.078 seconds)
+   **Total running time of the script:** (0 minutes 0.075 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_kitaev_majorana_modes.py:

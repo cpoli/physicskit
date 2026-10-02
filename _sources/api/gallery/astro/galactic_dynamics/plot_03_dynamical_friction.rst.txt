@@ -108,7 +108,7 @@ rate :math:`dE/dt=-a_{\rm drag}(r)\,v_{\rm circ}(r)`; converting that
 to a radius-decay rate needs :math:`dE/dr`, evaluated here by a simple
 centered finite difference on :func:`specific_energy`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-114
+.. GENERATED FROM PYTHON SOURCE LINES 68-115
 
 .. code-block:: Python
 
@@ -161,6 +161,7 @@ centered finite difference on :func:`specific_energy`.
 
 
 
+
 .. image-sg:: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_03_dynamical_friction_001.png
    :alt: Dynamical friction: a satellite's orbit decaying inward, Drag strengthens as the satellite sinks inward
    :srcset: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_03_dynamical_friction_001.png
@@ -180,10 +181,31 @@ centered finite difference on :func:`specific_energy`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 116-120
+
+Check
+-----
+Chandrasekhar drag ~ rho / v^2 grows inward, so the orbit decays all the
+way to the floor in a finite time.
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-123
+
+.. code-block:: Python
+
+    assert sol.status == 1 and abs(r_plot[-1] - r_floor) < 1e-6
+    assert np.all(np.diff(r_plot) <= 1e-12)
+    assert np.all(np.diff(drag_deceleration(r_grid)) < 0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.096 seconds)
+   **Total running time of the script:** (0 minutes 0.088 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_galactic_dynamics_plot_03_dynamical_friction.py:

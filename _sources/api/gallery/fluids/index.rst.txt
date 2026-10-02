@@ -43,9 +43,13 @@ Sections
   across a range of Mach numbers, and the classic Sod shock tube resolving
   a rarefaction fan, contact discontinuity, and shock in one Riemann problem.
 - **navier_stokes** -- the 2D incompressible vorticity-streamfunction
-  solver: viscous decay of a periodic vortex patch, and a decaying
-  turbulence simulation whose energy spectrum is checked against
-  Kolmogorov's -5/3 law.
+  solver: viscous decay of a periodic vortex patch, Richardson's cascade,
+  and forced, statistically steady turbulence whose energy spectrum is
+  checked against Kolmogorov's -5/3 law.
+- **convection** -- Rayleigh-Bénard convection: the onset for rigid and
+  stress-free walls, growth rates, and the heat flux of convection rolls.
+- **shallow_water** -- the Saint-Venant equations: the dam break against
+  its exact solution, and Rossby's geostrophic adjustment.
 - **continuum_mechanics** -- linear continuum mechanics beyond flow:
   Fourier's heat equation (explicit, Crank-Nicolson, and spectral),
   standing sound waves in pipes and rooms, and Lamé's pressurized
@@ -221,6 +225,48 @@ with plane-strain finite elements, reproduces Lamé's closed-form stresses.
 
     </div>
 
+Convection
+----------
+
+Rayleigh-Bénard convection in a layer heated from below: the linear onset
+of convection for stress-free and rigid walls, and the nonlinear
+convection rolls that carry heat above it.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A fluid layer heated from below stays at rest, carrying heat by conduction, until the Rayleigh number">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/convection/images/thumb/sphx_glr_plot_rayleigh_benard_onset_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/convection/plot_rayleigh_benard_onset`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rayleigh-Bénard convection: the onset at a critical Rayleigh number</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
 Instabilities
 -------------
 
@@ -344,13 +390,11 @@ space and 4th-order accurate in time. The first example shows its most basic
 signature -- a vortex patch's peak vorticity bleeding away under viscous
 diffusion, at a rate no inviscid simulation could reproduce. Another follows
 Richardson's qualitative cascade -- a few large eddies folding into ever
-finer filaments until viscosity takes over. The last pushes the same solver into a genuinely turbulent regime: many vortices of
-mixed sign interacting nonlinearly, cascading kinetic energy from the large
-scales they were seeded at down to small scales where viscosity finally
-dissipates it. Watch, in the energy spectrum plot, how a real inertial range
-lines up with Kolmogorov's predicted -5/3 power law over more than a decade
-of wavenumber -- one of the most-tested predictions in classical physics,
-reproduced here from nothing but the bare incompressible equations.
+finer filaments until viscosity takes over. The last adds steady random forcing and a large-scale drag, so that the
+flow reaches a statistically steady state with a constant energy flux
+through the scales. Its time-averaged energy spectrum follows Kolmogorov's
+predicted -5/3 power law over the range between the forcing scale and the
+drag scale.
 
 
 .. raw:: html
@@ -383,6 +427,23 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Kolmogorov&#x27;s picture is three-dimensional: energy fed in at large scales is handed down a chain of ever smaller eddies, at a rate \varepsilon independent of scale, until viscosity removes it. In that inertial range the spectrum can only depend on \varepsilon and k, so">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/navier_stokes/images/thumb/sphx_glr_plot_kolmogorov_cascade_3d_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/navier_stokes/plot_kolmogorov_cascade_3d`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Kolmogorov's 1941 cascade in forced 3D turbulence</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Richardson (1922) pictured turbulence as a hierarchy of eddies:">
 
 .. only:: html
@@ -400,7 +461,7 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="NavierStokes2D integrates the 2D incompressible vorticity-transport equation \partial_t \omega + (\mathbf{u}\cdot\nabla)\omega = \nu \nabla^2 \omega pseudo-spectrally on a doubly periodic domain, with no external forcing: once set going, the flow&#x27;s kinetic energy only decays, redistributed across scales by the nonlinear advection term before viscosity ultimately dissipates it. Kolmogorov&#x27;s 1941 (K41) theory predicts that, in the &quot;inertial range&quot; of scales between where the flow was initially seeded and where viscosity dissipates it, the kinetic energy spectrum follows a universal power law,">
+    <div class="sphx-glr-thumbcontainer" tooltip="Kolmogorov&#x27;s 1941 theory concerns turbulence in a statistical steady state: energy is injected at some scale at a rate \varepsilon, passed through an &quot;inertial range&quot; of scales by the nonlinear terms alone, and removed elsewhere. If the statistics there depend only on \varepsilon and the wavenumber k, dimensional analysis fixes the energy spectrum,">
 
 .. only:: html
 
@@ -411,7 +472,7 @@ reproduced here from nothing but the bare incompressible equations.
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">The Kolmogorov -5/3 cascade in decaying 2D turbulence</div>
+      <div class="sphx-glr-thumbnail-title">The Kolmogorov -5/3 cascade in forced 2D turbulence</div>
     </div>
 
 
@@ -516,6 +577,65 @@ shifts its stagnation points -- the geometric signature of lift.
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Source, sink, and doublet: building blocks of potential flow</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Shallow Water
+-------------
+
+The Saint-Venant shallow-water equations: a dam break solved numerically
+and compared with its exact solution, and Rossby's geostrophic adjustment
+of a height front on a rotating planet.
+
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Without rotation, a step in the height of a shallow layer collapses completely, radiating its energy away as gravity waves. Rossby (1938) showed that on a rotating planet it does not. The linear rotating shallow-water equations">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/shallow_water/images/thumb/sphx_glr_plot_rossby_geostrophic_adjustment_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/shallow_water/plot_rossby_geostrophic_adjustment`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rossby's geostrophic adjustment: a front that does not spread</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Saint-Venant&#x27;s shallow-water equations (1871) describe flows much wider than they are deep, such as rivers, tides, tsunamis and floods, by the depth h and the depth-averaged velocity u alone:">
+
+.. only:: html
+
+  .. image:: /api/gallery/fluids/shallow_water/images/thumb/sphx_glr_plot_saint_venant_dam_break_thumb.png
+    :alt:
+
+  :doc:`/api/gallery/fluids/shallow_water/plot_saint_venant_dam_break`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The Saint-Venant equations: a dam break</div>
     </div>
 
 
@@ -704,10 +824,12 @@ to the pairwise dynamics of the first example.
 
    /api/gallery/fluids/compressible_flow/index.rst
    /api/gallery/fluids/continuum_mechanics/index.rst
+   /api/gallery/fluids/convection/index.rst
    /api/gallery/fluids/instabilities/index.rst
    /api/gallery/fluids/lattice_boltzmann/index.rst
    /api/gallery/fluids/navier_stokes/index.rst
    /api/gallery/fluids/potential_flow/index.rst
+   /api/gallery/fluids/shallow_water/index.rst
    /api/gallery/fluids/viscous_flow/index.rst
    /api/gallery/fluids/vortex_dynamics/index.rst
 

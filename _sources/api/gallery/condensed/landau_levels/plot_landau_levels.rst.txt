@@ -157,7 +157,7 @@ out a fan of straight lines radiating from the origin -- the standard
 experimental "Landau fan diagram" used to read the cyclotron mass
 directly off the fan's slope.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-105
+.. GENERATED FROM PYTHON SOURCE LINES 76-106
 
 .. code-block:: Python
 
@@ -193,6 +193,7 @@ directly off the fan's slope.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/landau_levels/images/sphx_glr_plot_landau_levels_001.png
    :alt: Landau degeneracy grows linearly with B, Broadened Landau levels (B=1.0), Landau fan: every level linear in B
    :srcset: /api/gallery/condensed/landau_levels/images/sphx_glr_plot_landau_levels_001.png
@@ -202,10 +203,31 @@ directly off the fan's slope.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 107-110
+
+Check
+-----
+E_n = (n + 1/2) omega_c with omega_c = B, n_B = B / 2 pi, and nu = 2 pi n / B.
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-114
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(energies, np.arange(n_max + 1) + 0.5)
+    np.testing.assert_allclose(degeneracies, B_values / (2 * np.pi))
+    assert np.isclose(nu, 3.5)
+    np.testing.assert_allclose(fan_energies[:, 0], B_fan / 2)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.092 seconds)
+   **Total running time of the script:** (0 minutes 0.089 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_landau_levels_plot_landau_levels.py:

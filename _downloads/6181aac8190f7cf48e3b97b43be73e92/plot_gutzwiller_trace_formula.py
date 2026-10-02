@@ -101,3 +101,11 @@ fig.tight_layout()
 
 print("Reconstructed peaks:      ", np.round(peak_E, 3))
 print("Bohr-Sommerfeld spectrum: ", np.round(bohr_sommerfeld, 3))
+
+# %%
+# Check
+# -----
+# For the harmonic oscillator T(E) = 2 pi / omega for every E, and the trace
+# formula's peaks sit at the exact levels (n + 1/2) hbar omega.
+np.testing.assert_allclose(periods, 2 * np.pi / ho.omega, rtol=1e-4)
+np.testing.assert_allclose(peak_E, bohr_sommerfeld, atol=0.01)

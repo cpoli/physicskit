@@ -116,3 +116,16 @@ fig.tight_layout(rect=[0, 0, 1, 0.92])
 # respective symmetry classes.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Class A: |C| = 1 for |M| < 3 sqrt(3) t2, 0 beyond. Class AII: Z2 = 0, 1.
+# Class D: an exact zero mode for |mu| < 2t, a gap for |mu| > 2t.
+M_c = 3 * np.sqrt(3) * 0.2
+chern = np.abs(np.array(chern))
+assert np.all(chern[np.abs(M_values) < M_c] == 1) and np.all(chern[np.abs(M_values) > M_c] == 0)
+assert list(z2) == [0, 1]
+min_gap = np.array(min_gap)
+assert np.all(min_gap[np.abs(mu_values) < 1.9] < 1e-6)
+assert np.all(min_gap[np.abs(mu_values) > 2.1] > 0.4)

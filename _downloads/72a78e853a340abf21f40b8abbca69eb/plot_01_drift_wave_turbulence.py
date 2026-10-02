@@ -74,3 +74,12 @@ plt.show()
 anim = pk.plasma.animate_drift_wave_turbulence(phi0, dt=0.02, steps_per_frame=40, n_frames=40, length=length)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Hasegawa-Mima turbulence moves energy to large scales: the power-weighted
+# mean wavenumber drops by an order of magnitude from the initial noise.
+kk = np.hypot(*np.meshgrid(np.fft.fftfreq(n) * n, np.fft.fftfreq(n) * n))
+k_mean = [np.sum(kk * np.abs(np.fft.fft2(f)) ** 2) / np.sum(np.abs(np.fft.fft2(f)) ** 2) for f in (phi0, phi)]
+assert k_mean[1] < 0.1 * k_mean[0]

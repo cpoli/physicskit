@@ -22,6 +22,7 @@ section.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.billiards import EllipseBilliard
 from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
@@ -35,7 +36,7 @@ f1, f2 = billiard.foci()
 # ---------
 # Watch the ray trace out its confocal elliptical caustic -- the envelope of
 # lines it stays perpetually tangent to -- one bounce at a time.
-anim = animate_billiard_trajectory(billiard, pos=(0.0, 0.0), vel=(1.0, 0.15), n_bounces=100, interval=50)
+anim = animate_billiard_trajectory(billiard, pos=(0.0, 0.8), vel=(1.0, 0.15), n_bounces=100, interval=50)
 
 plt.show()
 
@@ -53,7 +54,7 @@ plt.show()
 # confocal *hyperbola* (right).
 fig, axes = plt.subplots(1, 2, figsize=(12, 6))
 
-plot_billiard_trajectory(billiard, pos=(0.0, 0.0), vel=(1.0, 0.15), n_bounces=100, ax=axes[0])
+plot_billiard_trajectory(billiard, pos=(0.0, 0.8), vel=(1.0, 0.15), n_bounces=100, ax=axes[0])
 axes[0].plot(*f1, "k.", *f2, "k.")
 axes[0].set_title("Elliptical caustic")
 
@@ -72,3 +73,20 @@ fig.tight_layout()
 fig2, ax2 = plot_poincare_section(billiard, n_rays=15, n_bounces=200)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The product of the angular momenta about the two foci (Joachimsthal's
+# integral) is conserved -- here to the accuracy of the 2000-sided polygon
+# standing in for the ellipse -- and its sign tells the caustics apart:
+# positive for the elliptical caustic, negative for the hyperbolic one.
+invariant = []
+for pos, vel in (((0.0, 0.8), (1.0, 0.15)), ((0.0, 0.0), (0.15, 1.0))):
+    run = billiard.simulate(pos, vel, n_bounces=100)
+    L1 = (run["x"] - f1[0]) * run["vy"] - (run["y"] - f1[1]) * run["vx"]
+    L2 = (run["x"] - f2[0]) * run["vy"] - (run["y"] - f2[1]) * run["vx"]
+    product = L1 * L2 / (run["vx"] ** 2 + run["vy"] ** 2)
+    assert np.ptp(product) < 0.15 * np.abs(product).mean()
+    invariant.append(product.mean())
+assert invariant[0] > 0 > invariant[1]

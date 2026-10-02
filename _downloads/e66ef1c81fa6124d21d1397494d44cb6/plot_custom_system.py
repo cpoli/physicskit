@@ -132,3 +132,11 @@ ax2.set_title("Leapfrog conserves energy far better than RK4")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Van der Pol limit cycle has amplitude ~2 whatever mu; leapfrog keeps the
+# oscillator's energy error bounded at ~(omega dt)^2 / 8 instead of drifting.
+assert abs(np.abs(states[2500:, 0]).max() - 2.02) < 0.03
+assert np.ptp(energy) / energy[0] < (omega * 0.05) ** 2 / 4

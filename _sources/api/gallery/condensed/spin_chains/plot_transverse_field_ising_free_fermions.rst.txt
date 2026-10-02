@@ -147,7 +147,7 @@ Summing :math:`-\varepsilon_k/2` over the Brillouin zone gives the exact
 ground-state energy, whose second derivative diverges logarithmically at
 :math:`h = J` -- the Ising universality class specific-heat singularity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-95
+.. GENERATED FROM PYTHON SOURCE LINES 81-96
 
 .. code-block:: Python
 
@@ -168,6 +168,7 @@ ground-state energy, whose second derivative diverges logarithmically at
 
 
 
+
 .. image-sg:: /api/gallery/condensed/spin_chains/images/sphx_glr_plot_transverse_field_ising_free_fermions_002.png
    :alt: Exact ground-state energy per site (N = 400), Non-analyticity at the critical point
    :srcset: /api/gallery/condensed/spin_chains/images/sphx_glr_plot_transverse_field_ising_free_fermions_002.png
@@ -177,10 +178,33 @@ ground-state energy, whose second derivative diverges logarithmically at
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 97-101
+
+Check
+-----
+Every level is a free-fermion level; the even-sector gap closes only at
+h = J, and the exact energy per site at h = J is -4/pi.
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-106
+
+.. code-block:: Python
+
+    assert err < 1e-10
+    gaps16 = np.array([energy_gap(tfim_hamiltonian(16, J=1.0, h=h, parity=+1)[0]) for h in (0.5, 1.0, 1.5)])
+    assert gaps16[1] < 0.5 * min(gaps16[0], gaps16[2])
+    assert abs(e0[np.argmin(np.abs(h_values - 1))] + 4 / np.pi) < 1e-4
+    assert np.argmax(-d2e) == np.argmin(np.abs(h_values - 1))
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.785 seconds)
+   **Total running time of the script:** (0 minutes 2.878 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_spin_chains_plot_transverse_field_ising_free_fermions.py:

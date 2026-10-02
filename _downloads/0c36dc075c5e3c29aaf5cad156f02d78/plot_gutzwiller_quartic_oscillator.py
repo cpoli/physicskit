@@ -91,3 +91,17 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The periodic-orbit sum reproduces the quartic levels, better as n grows,
+# and wave packets revive at the classical period T(E).
+rel = np.abs(E_sc / exact[: len(E_sc)] - 1)
+assert np.all(rel[2:] < 5e-3) and rel[1] < 0.02
+for n0 in (10, 30):
+    w = np.exp(-0.5 * ((np.arange(len(exact)) - n0) / 2.0) ** 2)
+    C = np.abs(np.exp(-1j * np.outer(t, exact)) @ (w / w.sum())) ** 2
+    T = classical_period(exact[n0], V, 1.0, -5, 5)
+    window = (t > 0.5 * T) & (t < 1.5 * T)
+    assert abs(t[window][np.argmax(C[window])] / T - 1) < 0.01

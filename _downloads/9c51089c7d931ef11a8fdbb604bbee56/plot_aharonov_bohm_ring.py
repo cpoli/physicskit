@@ -45,3 +45,16 @@ fig.tight_layout()
 
 print(f"ground-state energy at Phi=0: {ring.energy(0, 0.0):.6f}")
 print(f"ground-state energy at Phi=Phi0/2: {min(ring.energy(n, 0.5 * ring.flux_quantum) for n in range(-2, 3)):.6f}")
+
+# %%
+# Check
+# -----
+# E_n(Phi) = (n - Phi/Phi0)^2 / 2 m R^2: the spectrum is periodic in Phi0,
+# and at Phi0/2 the ground state is degenerate with energy 1/8.
+assert ring.energy(0, 0.0) == 0
+assert np.isclose(min(ring.energy(n, 0.5 * ring.flux_quantum) for n in range(-2, 3)), 0.125)
+assert np.isclose(ring.energy(0, 0.5 * ring.flux_quantum), ring.energy(1, 0.5 * ring.flux_quantum))
+for f in (0.2, 0.7):
+    E_f = sorted(ring.energy(n, f * ring.flux_quantum) for n in range(-3, 4))
+    E_f1 = sorted(ring.energy(n, (f + 1) * ring.flux_quantum) for n in range(-2, 5))
+    np.testing.assert_allclose(E_f, E_f1, atol=1e-12)

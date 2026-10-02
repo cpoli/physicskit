@@ -112,7 +112,7 @@ traces out :math:`|S(b,b')|` as a 2D landscape: it peaks at the Tsirelson
 bound :math:`2\sqrt2` exactly at :math:`(b,b')=(\pi/4,3\pi/4)`, and a
 broad region around it still violates the classical bound :math:`|S|\le2`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-77
+.. GENERATED FROM PYTHON SOURCE LINES 59-78
 
 .. code-block:: Python
 
@@ -137,6 +137,7 @@ broad region around it still violates the classical bound :math:`|S|\le2`.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/entanglement/images/sphx_glr_plot_entanglement_and_topology_002.png
    :alt: CHSH |S(b,b')| with (a,a')=(0,pi/2) fixed
    :srcset: /api/gallery/quantum/entanglement/images/sphx_glr_plot_entanglement_and_topology_002.png
@@ -152,10 +153,31 @@ broad region around it still violates the classical bound :math:`|S|\le2`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+Check
+-----
+E(a, b) = -cos(theta_a - theta_b); the CHSH value reaches Tsirelson's bound
+2 sqrt(2) and never exceeds it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 83-86
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(E, -np.cos(dtheta), atol=1e-12)
+    assert abs(bc.chsh_optimal() - 2 * np.sqrt(2)) < 1e-12
+    assert 2 < S_grid.max() <= 2 * np.sqrt(2) + 1e-12
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.964 seconds)
+   **Total running time of the script:** (0 minutes 0.920 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_entanglement_plot_entanglement_and_topology.py:

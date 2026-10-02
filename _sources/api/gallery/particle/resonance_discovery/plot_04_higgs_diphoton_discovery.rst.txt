@@ -130,7 +130,7 @@ Signal and background both grow in proportion to it. Any one data set
 fluctuates, so each luminosity is repeated in 25 pseudo-experiments;
 the median significance grows as :math:`\sqrt{L}`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-131
+.. GENERATED FROM PYTHON SOURCE LINES 97-132
 
 .. code-block:: Python
 
@@ -171,6 +171,7 @@ the median significance grows as :math:`\sqrt{L}`.
 
 
 
+
 .. image-sg:: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_04_higgs_diphoton_discovery_001.png
    :alt: $H\to\gamma\gamma$: a small bump on a large background, Collecting data until the bump is a discovery
    :srcset: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_04_higgs_diphoton_discovery_001.png
@@ -191,10 +192,31 @@ the median significance grows as :math:`\sqrt{L}`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 133-137
+
+Check
+-----
+The peak width is the photon resolution, 1.2% x M_H / sqrt(2); the median
+significance grows as sqrt(L) and passes 5 sigma within the scan.
+
+.. GENERATED FROM PYTHON SOURCE LINES 137-140
+
+.. code-block:: Python
+
+    assert abs(np.std(signal_pool) / (0.012 * M_H / np.sqrt(2)) - 1) < 0.15
+    assert abs(Z_median[-1] / (Z_median[2] * np.sqrt(lumis[-1] / lumis[2])) - 1) < 0.25
+    assert Z_median[0] < 5 < Z_median[-1]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.033 seconds)
+   **Total running time of the script:** (0 minutes 0.993 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_resonance_discovery_plot_04_higgs_diphoton_discovery.py:

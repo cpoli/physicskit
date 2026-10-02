@@ -146,7 +146,7 @@ in the paramagnetic phase and rises sharply as :math:`T` drops below
 :math:`T_{SG}`, the SK analogue of the Edwards-Anderson order parameter
 curve, but built from the same pooled-disorder machinery used above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-95
+.. GENERATED FROM PYTHON SOURCE LINES 79-96
 
 .. code-block:: Python
 
@@ -169,6 +169,7 @@ curve, but built from the same pooled-disorder machinery used above.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/spin_glass/images/sphx_glr_plot_sk_overlap_distribution_002.png
    :alt: Sherrington-Kirkpatrick freezing transition
    :srcset: /api/gallery/statphys/spin_glass/images/sphx_glr_plot_sk_overlap_distribution_002.png
@@ -178,10 +179,30 @@ curve, but built from the same pooled-disorder machinery used above.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 97-101
+
+Check
+-----
+Paramagnet: P(q) is a narrow peak at q = 0 (width ~ 1/sqrt(N)). Spin
+glass: the overlap spreads out to |q| ~ 0.5 (Parisi's broad P(q)).
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-103
+
+.. code-block:: Python
+
+    assert abs(samples_hot).mean() < 0.15 and samples_cold.std() > 0.4
+    assert mean_abs_q[0] > 2 * mean_abs_q[-1]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.390 seconds)
+   **Total running time of the script:** (0 minutes 0.380 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_spin_glass_plot_sk_overlap_distribution.py:

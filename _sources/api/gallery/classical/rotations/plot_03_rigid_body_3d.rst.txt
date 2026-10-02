@@ -41,11 +41,12 @@ built from the integrated orientation quaternion. Spin it about the
 intermediate axis and it periodically flips end over end; spin it
 about either other principal axis and it just spins.
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-37
+.. GENERATED FROM PYTHON SOURCE LINES 27-38
 
 .. code-block:: Python
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.classical.systems.rotations import EulerTop
     from physicskit.classical.visualizers.animations import animate_rigid_body_tumble
@@ -62,12 +63,12 @@ about either other principal axis and it just spins.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-40
+.. GENERATED FROM PYTHON SOURCE LINES 39-41
 
 Spin about the intermediate axis: it periodically flips end over end
 --------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-48
+.. GENERATED FROM PYTHON SOURCE LINES 41-49
 
 .. code-block:: Python
 
@@ -6986,17 +6987,38 @@ Spin about the intermediate axis: it periodically flips end over end
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-53
+.. GENERATED FROM PYTHON SOURCE LINES 50-54
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("rigid_body_tumble_animation.gif", writer="pillow", fps=30)
 
+.. GENERATED FROM PYTHON SOURCE LINES 56-60
+
+Check
+-----
+Spun near the intermediate axis, the body flips within the animated 30 s
+while keeping its energy and |L|^2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 60-63
+
+.. code-block:: Python
+
+    assert np.sum(np.diff(np.sign(result.y[:, 1])) != 0) >= 1
+    assert abs(top.energy(result.y[-1]) - top.energy()) < 1e-12 * top.energy()
+    assert abs(top.angular_momentum_squared(result.y[-1]) - top.angular_momentum_squared()) < 1e-12 * top.angular_momentum_squared()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.125 seconds)
+   **Total running time of the script:** (0 minutes 9.331 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_rotations_plot_03_rigid_body_3d.py:

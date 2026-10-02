@@ -116,3 +116,12 @@ plt.show()
 anim = pk.plasma.animate_weibel_filamentation(x, t, wpe, aniso, n_modes=10, seed=0)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Weibel modes grow only below the cutoff k_max = (omega_pe / c) sqrt(T_perp/T_par - 1),
+# and the seeded current grows into filaments by orders of magnitude.
+k_max = wpe * np.sqrt(aniso - 1)
+assert np.all(gamma_vals[k_vals < 0.95 * k_max] > 0) and np.all(gamma_vals[k_vals > k_max] == 0)
+assert np.abs(J[-1]).max() > 1e3 * np.abs(J[0]).max()

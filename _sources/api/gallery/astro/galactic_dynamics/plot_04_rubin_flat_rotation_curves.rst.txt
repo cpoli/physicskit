@@ -142,7 +142,7 @@ Inverting :math:`v_c^2=GM/r` turns each observed speed into a dynamical
 mass. A flat curve means :math:`M(<r)\propto r`: the enclosed mass keeps
 growing long after the visible mass has stopped.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-101
+.. GENERATED FROM PYTHON SOURCE LINES 84-102
 
 .. code-block:: Python
 
@@ -166,6 +166,7 @@ growing long after the visible mass has stopped.
 
 
 
+
 .. image-sg:: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_04_rubin_flat_rotation_curves_002.png
    :alt: Mass keeps rising where light stops
    :srcset: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_04_rubin_flat_rotation_curves_002.png
@@ -186,10 +187,31 @@ growing long after the visible mass has stopped.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 103-107
+
+Check
+-----
+Beyond the optical disk the curve stays flat (slope ~0, not Keplerian
+-1/2), so the dynamical mass keeps growing past the visible mass.
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-110
+
+.. code-block:: Python
+
+    outer_slope = np.polyfit(np.log(r_obs[outer]), np.log(v_obs[outer]), 1)[0]
+    assert abs(outer_slope) < 0.1
+    assert ratio[-1] > 5 and ratio[-1] > 3 * ratio[0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.072 seconds)
+   **Total running time of the script:** (0 minutes 0.065 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_galactic_dynamics_plot_04_rubin_flat_rotation_curves.py:

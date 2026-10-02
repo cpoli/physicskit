@@ -163,7 +163,7 @@ energy and a range in the chamber gas of a few millimetres (roughly
 air). An electron-mass particle at 23 MeV/c is relativistic and ionizes
 at the minimum rate, crossing the whole chamber.
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-99
+.. GENERATED FROM PYTHON SOURCE LINES 91-100
 
 .. code-block:: Python
 
@@ -179,6 +179,7 @@ at the minimum rate, crossing the whole chamber.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -189,10 +190,31 @@ at the minimum rate, crossing the whole chamber.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-106
+
+Check
+-----
+r = p / (0.3 B): the track curves less below the plate, so the particle came
+from below and lost 40 MeV in the lead; the curvature then says positive
+charge, and a proton of that momentum would stop within millimetres.
+
+.. GENERATED FROM PYTHON SOURCE LINES 106-108
+
+.. code-block:: Python
+
+    assert abs(p_below / B_eff - 0.14) < 1e-3 and abs(p_above / B_eff - 0.0511) < 1e-3
+    assert range_proton_cm * 10 < 5 < 50 and p_above / np.hypot(p_above, m_e) > 0.999
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.033 seconds)
+   **Total running time of the script:** (0 minutes 0.034 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_detector_signatures_plot_01_anderson_positron.py:

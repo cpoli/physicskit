@@ -156,7 +156,7 @@ Integrating :math:`4\pi r^2\rho` reproduces the closed-form
 :math:`M(<r)`; the potential's gradient reproduces :math:`GM/r^2`. The
 circular speed peaks at :math:`r_{\max}\approx2.163\,r_s`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-99
+.. GENERATED FROM PYTHON SOURCE LINES 85-100
 
 .. code-block:: Python
 
@@ -178,6 +178,7 @@ circular speed peaks at :math:`r_{\max}\approx2.163\,r_s`.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -190,10 +191,33 @@ circular speed peaks at :math:`r_{\max}\approx2.163\,r_s`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-106
+
+Check
+-----
+NFW: log slope -1 (cusp), -2 at r_s, -3 far out; the closed-form mass and
+potential match direct integration and differentiation; v_c peaks at
+2.163 r_s.
+
+.. GENERATED FROM PYTHON SOURCE LINES 106-110
+
+.. code-block:: Python
+
+    assert abs(slope[0] + 1) < 0.01 and abs(np.interp(0.0, np.log(x), slope) + 2) < 1e-3 and abs(slope[-1] + 3) < 0.01
+    assert np.max(np.abs(M_numeric - M_closed)[r > 0.1] / M_closed[r > 0.1]) < 1e-5
+    assert np.max(np.abs(g_from_phi - M_closed / r**2)[r > 0.1] / (M_closed / r**2)[r > 0.1]) < 5e-3
+    assert abs(r[np.argmax(v_c)] - 2.163) < 0.01
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.268 seconds)
+   **Total running time of the script:** (0 minutes 0.235 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_galactic_dynamics_plot_05_nfw_universal_halo_profile.py:

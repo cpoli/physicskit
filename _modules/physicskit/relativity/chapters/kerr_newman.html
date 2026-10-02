@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.relativity.chapters.kerr_newman &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/relativity/chapters/kerr_newman';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.relativity.chapters.kerr_newman</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.relativity.chapters.kerr_newman</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""The Kerr-Newman black hole: geodesics and the shadow of a charged, rotating hole.</span>
+
+<span class="sd">Newman and collaborators (1965) found the charged generalization of Kerr's</span>
+<span class="sd">solution, the most general stationary black hole of Einstein-Maxwell theory.</span>
+<span class="sd">In Boyer-Lindquist coordinates it is the Kerr metric with</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\Delta = r^2 - 2Mr + a^2 + Q^2,</span>
+
+<span class="sd">so its horizons sit at :math:`r_\\pm = M \\pm \\sqrt{M^2 - a^2 - Q^2}`, and it</span>
+<span class="sd">contains Schwarzschild (:math:`a = Q = 0`), Reissner-Nordström (:math:`a =</span>
+<span class="sd">0`) and Kerr (:math:`Q = 0`) as special cases. Carter (1968) showed that the</span>
+<span class="sd">motion of a test particle of mass :math:`\\mu` and charge :math:`e` still</span>
+<span class="sd">separates. In Mino time :math:`d\\lambda = d\\tau/\\Sigma`, with</span>
+<span class="sd">:math:`\\Sigma = r^2 + a^2\\cos^2\\theta`,</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\left(\\frac{dr}{d\\lambda}\\right)^2 = R(r) = P(r)^2 - \\Delta\\left[\\mu^2r^2 + (L - aE)^2 + \\mathcal{C}\\right],</span>
+<span class="sd">    \\qquad P = E(r^2 + a^2) - aL - eQr,</span>
+
+<span class="sd">    \\left(\\frac{d\\theta}{d\\lambda}\\right)^2 = \\Theta(\\theta) = \\mathcal{C}</span>
+<span class="sd">    - \\cos^2\\theta\\left[a^2(\\mu^2 - E^2) + \\frac{L^2}{\\sin^2\\theta}\\right],</span>
+
+<span class="sd">where :math:`\\mathcal C` is Carter's constant. Photons (:math:`\\mu = e = 0`)</span>
+<span class="sd">on spherical orbits satisfy :math:`R = R' = 0`; their critical impact</span>
+<span class="sd">parameters trace the edge of the shadow seen by a distant observer (Bardeen</span>
+<span class="sd">1973; de Vries, Class. Quantum Grav. 17, 123 (2000)).</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">brentq</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"KerrNewmanBlackHole"</span><span class="p">,</span> <span class="s2">"trace_kerr_newman_geodesic"</span><span class="p">]</span>
+
+<span class="n">OUTCOME_ESCAPED</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">OUTCOME_CAPTURED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">OUTCOME_UNRESOLVED</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_R_and_dR</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="n">Delta</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">Qc</span> <span class="o">*</span> <span class="n">Qc</span>
+    <span class="n">dDelta</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">L</span> <span class="o">-</span> <span class="n">e</span> <span class="o">*</span> <span class="n">Qc</span> <span class="o">*</span> <span class="n">r</span>
+    <span class="n">dP</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="n">e</span> <span class="o">*</span> <span class="n">Qc</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">mu2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">E</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">C</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">P</span> <span class="o">*</span> <span class="n">P</span> <span class="o">-</span> <span class="n">Delta</span> <span class="o">*</span> <span class="n">K</span>
+    <span class="n">dR</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">dP</span> <span class="o">-</span> <span class="n">dDelta</span> <span class="o">*</span> <span class="n">K</span> <span class="o">-</span> <span class="n">Delta</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">mu2</span> <span class="o">*</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">R</span><span class="p">,</span> <span class="n">dR</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Delta</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_Theta_and_dTheta</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mu2</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span>
+    <span class="n">Theta</span> <span class="o">=</span> <span class="n">C</span> <span class="o">-</span> <span class="n">c</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu2</span> <span class="o">-</span> <span class="n">E</span> <span class="o">*</span> <span class="n">E</span><span class="p">)</span> <span class="o">+</span> <span class="n">L</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="n">s2</span><span class="p">)</span>
+    <span class="c1"># d/dtheta of -cos^2 a^2(mu^2 - E^2) - L^2 cot^2</span>
+    <span class="n">dTheta</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu2</span> <span class="o">-</span> <span class="n">E</span> <span class="o">*</span> <span class="n">E</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">s2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Theta</span><span class="p">,</span> <span class="n">dTheta</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_rhs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">ptheta</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">dR</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Delta</span> <span class="o">=</span> <span class="n">_R_and_dR</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">Theta</span><span class="p">,</span> <span class="n">dTheta</span> <span class="o">=</span> <span class="n">_Theta_and_dTheta</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mu2</span><span class="p">)</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pr</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dR</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ptheta</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dTheta</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">s2</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="n">s2</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">P</span> <span class="o">/</span> <span class="n">Delta</span>  <span class="c1"># dphi/dlambda</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">s2</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">P</span> <span class="o">/</span> <span class="n">Delta</span>  <span class="c1"># dt/dlambda</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trace_kerr_newman_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">r_stop</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">record_every</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Integrate a Kerr-Newman geodesic in Mino time with RK4.</span>
+
+<span class="sd">    The state is ``(r, dr/dlambda, theta, dtheta/dlambda, phi, t)``. The</span>
+<span class="sd">    second-order forms :math:`r'' = R'/2`, :math:`\\theta'' = \\Theta'/2` pass</span>
+<span class="sd">    through turning points smoothly; after every step the momenta are</span>
+<span class="sd">    projected back onto :math:`r'^2 = R`, :math:`\\theta'^2 = \\Theta`, and the</span>
+<span class="sd">    Mino-time step is scaled so that :math:`r`, :math:`\\theta` and</span>
+<span class="sd">    :math:`\\phi` change by at most a fraction ``step`` (of :math:`r`, or in</span>
+<span class="sd">    radians) per step.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y0 : ndarray of float, shape (6,)</span>
+<span class="sd">        Initial state.</span>
+<span class="sd">    E, L, C : float</span>
+<span class="sd">        Energy, axial angular momentum and Carter constant.</span>
+<span class="sd">    a, M, Qc : float</span>
+<span class="sd">        Spin, mass and charge of the hole.</span>
+<span class="sd">    mu2 : float</span>
+<span class="sd">        Squared rest mass of the particle (0 for light).</span>
+<span class="sd">    e : float</span>
+<span class="sd">        Particle charge.</span>
+<span class="sd">    n_steps : int</span>
+<span class="sd">        Maximum number of steps.</span>
+<span class="sd">    step : float</span>
+<span class="sd">        Fractional step size.</span>
+<span class="sd">    r_stop, r_max : float</span>
+<span class="sd">        Stop when :math:`r &lt; r_\\text{stop}` (captured) or :math:`r &gt; r_\\text{max}` (escaped).</span>
+<span class="sd">    record_every : int</span>
+<span class="sd">        Store the state every this many steps.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    outcome : int</span>
+<span class="sd">        0 escaped, 1 captured, 2 still bound after ``n_steps``.</span>
+<span class="sd">    path : ndarray of float, shape (k, 7)</span>
+<span class="sd">        Recorded ``(lambda, r, dr, theta, dtheta, phi, t)``.</span>
+<span class="sd">    """</span>
+    <span class="n">n_rec</span> <span class="o">=</span> <span class="n">n_steps</span> <span class="o">//</span> <span class="n">record_every</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rec</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lam</span>
+    <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="n">outcome</span> <span class="o">=</span> <span class="n">OUTCOME_UNRESOLVED</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">r_stop</span><span class="p">:</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="n">OUTCOME_CAPTURED</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="n">r_max</span><span class="p">:</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="n">OUTCOME_ESCAPED</span>
+            <span class="k">break</span>
+        <span class="c1"># fractional rate of change of r, theta and phi; at a radial turning</span>
+        <span class="c1"># point dr/dlambda = 0 and the radial acceleration R'/2 sets the scale</span>
+        <span class="n">k1</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">rr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">speed</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">rr</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">k1</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">rr</span><span class="p">),</span> <span class="mf">1e-6</span><span class="p">)</span>
+        <span class="n">dlam</span> <span class="o">=</span> <span class="n">step</span> <span class="o">/</span> <span class="n">speed</span>
+        <span class="n">k2</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dlam</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">k3</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dlam</span> <span class="o">*</span> <span class="n">k2</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">k4</span> <span class="o">=</span> <span class="n">_rhs</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">dlam</span> <span class="o">*</span> <span class="n">k3</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dlam</span> <span class="o">/</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">_R_and_dR</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Th</span> <span class="o">=</span> <span class="n">_Theta_and_dTheta</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mu2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">Th</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="n">lam</span> <span class="o">+=</span> <span class="n">dlam</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">record_every</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n_rec</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">path</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lam</span>
+            <span class="n">path</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n_rec</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">path</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lam</span>
+        <span class="n">path</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">path</span><span class="p">[:</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+
+<span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_shadow_image</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">r_o</span><span class="p">,</span> <span class="n">theta_o</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="n">r_stop</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">betas</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">alphas</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">s_o</span><span class="p">,</span> <span class="n">c_o</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_o</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_o</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">betas</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">alphas</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">al</span><span class="p">,</span> <span class="n">be</span> <span class="o">=</span> <span class="n">alphas</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">betas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">L</span> <span class="o">=</span> <span class="o">-</span><span class="n">al</span> <span class="o">*</span> <span class="n">s_o</span>
+            <span class="n">C</span> <span class="o">=</span> <span class="n">be</span> <span class="o">*</span> <span class="n">be</span> <span class="o">+</span> <span class="p">(</span><span class="n">al</span> <span class="o">*</span> <span class="n">al</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">c_o</span> <span class="o">*</span> <span class="n">c_o</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">_R_and_dR</span><span class="p">(</span><span class="n">r_o</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r_o</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span> <span class="n">theta_o</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+            <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">trace_kerr_newman_geodesic</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">Qc</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">r_stop</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">r_o</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KerrNewmanBlackHole</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A black hole of mass ``M``, spin ``a`` and charge ``Q``, in geometrized units.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : float, default 1.0</span>
+<span class="sd">    a : float, default 0.0</span>
+<span class="sd">        Spin parameter :math:`J/M`.</span>
+<span class="sd">    Q : float, default 0.0</span>
+<span class="sd">        Electric charge (Gaussian geometrized units).</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If :math:`a^2 + Q^2 \\ge M^2`, a naked singularity.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; bh = KerrNewmanBlackHole(M=1.0, a=0.0, Q=0.0)</span>
+<span class="sd">    &gt;&gt;&gt; round(float(bh.shadow_radius_nonrotating()), 6)  # Schwarzschild: sqrt(27) M</span>
+<span class="sd">    5.196152</span>
+<span class="sd">    &gt;&gt;&gt; round(KerrNewmanBlackHole(a=0.6, Q=0.8 - 1e-9).outer_horizon_radius, 4)  # extremal: r+ = M</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">Q</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">M</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"need M &gt; 0 and a &gt;= 0"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">&gt;=</span> <span class="n">M</span> <span class="o">*</span> <span class="n">M</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"a^2 + Q^2 must be below M^2 for a black hole"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.delta">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.delta">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">""":math:`\\Delta(r) = r^2 - 2Mr + a^2 + Q^2`."""</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">outer_horizon_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">""":math:`r_+ = M + \\sqrt{M^2 - a^2 - Q^2}`."""</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner_horizon_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">""":math:`r_- = M - \\sqrt{M^2 - a^2 - Q^2}`."""</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">horizon_angular_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">""":math:`\\Omega_H = a/(r_+^2 + a^2)`."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">electric_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Horizon electric potential :math:`\\Phi_H = Q r_+/(r_+^2 + a^2)`."""</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">*</span> <span class="n">rp</span> <span class="o">/</span> <span class="p">(</span><span class="n">rp</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.photon_orbit_constants">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.photon_orbit_constants">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">photon_orbit_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Critical impact parameters of the spherical photon orbit at radius ``r``.</span>
+
+<span class="sd">        Solving :math:`R = R' = 0` with :math:`E = 1` gives :math:`A = r^2 + a^2 -</span>
+<span class="sd">        a\\xi = 4r\\Delta/\\Delta'`, hence</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\xi = \\frac{L}{E} = \\frac{1}{a}\\left(r^2 + a^2 - \\frac{4r\\Delta}{\\Delta'}\\right),</span>
+<span class="sd">            \\qquad</span>
+<span class="sd">            \\eta = \\frac{\\mathcal C}{E^2} = \\frac{16r^2\\Delta}{\\Delta'^2} - (\\xi - a)^2.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r : array_like</span>
+<span class="sd">            Orbit radius; requires ``a &gt; 0``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        xi, eta : ndarray</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"photon_orbit_constants needs a &gt; 0; use photon_sphere_radius_nonrotating"</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">dD</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">D</span> <span class="o">/</span> <span class="n">dD</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">D</span> <span class="o">/</span> <span class="n">dD</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">xi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">xi</span><span class="p">,</span> <span class="n">eta</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.photon_sphere_radius_nonrotating">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.photon_sphere_radius_nonrotating">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">photon_sphere_radius_nonrotating</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Photon sphere of the non-rotating (Reissner-Nordström) case, :math:`r = \\tfrac12(3M + \\sqrt{9M^2 - 8Q^2})`."""</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">9</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.shadow_radius_nonrotating">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.shadow_radius_nonrotating">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shadow_radius_nonrotating</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Shadow radius :math:`b_c = r_p^2/\\sqrt{\\Delta(r_p)}` for ``a = 0`` (any charge)."""</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">photon_sphere_radius_nonrotating</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rp</span> <span class="o">*</span> <span class="n">rp</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rp</span> <span class="o">*</span> <span class="n">rp</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="n">rp</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.equatorial_photon_orbits">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.equatorial_photon_orbits">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equatorial_photon_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Radii of the prograde and retrograde circular photon orbits.</span>
+
+<span class="sd">        They solve :math:`r^2 - 3Mr + 2Q^2 \\pm 2a\\sqrt{Mr - Q^2} = 0` (upper sign</span>
+<span class="sd">        prograde), the :math:`\\eta = 0` limit of :meth:`photon_orbit_constants`;</span>
+<span class="sd">        for :math:`Q = 0` this is Bardeen, Press and Teukolsky's (1972)</span>
+<span class="sd">        :math:`r = 2M\\{1 + \\cos[\\tfrac23\\arccos(\\mp a/M)]\\}`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        r_prograde, r_retrograde : float</span>
+<span class="sd">        """</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span><span class="p">,</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">M</span> <span class="o">+</span> <span class="mf">1.0</span>
+        <span class="n">radii</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sign</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">):</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="n">sign</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+
+            <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">vals</span><span class="p">)))[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">radii</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">brentq</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-14</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">radii</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">radii</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.shadow_boundary">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.shadow_boundary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shadow_boundary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inclination</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Edge of the shadow on a distant observer's sky, in Bardeen's celestial coordinates.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\alpha = -\\frac{\\xi}{\\sin\\theta_o}, \\qquad</span>
+<span class="sd">            \\beta = \\pm\\sqrt{\\eta + a^2\\cos^2\\theta_o - \\xi^2\\cot^2\\theta_o}.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        inclination : float, default ``pi/2``</span>
+<span class="sd">            Observer inclination :math:`\\theta_o` from the spin axis.</span>
+<span class="sd">        n : int, default 400</span>
+<span class="sd">            Points per half of the curve.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        alpha, beta : ndarray</span>
+<span class="sd">            A closed curve, in units of :math:`M`.</span>
+<span class="sd">        """</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">inclination</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mf">1e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shadow_radius_nonrotating</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">equatorial_photon_orbits</span><span class="p">()</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">xi</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">photon_orbit_constants</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">b2</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">xi</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="n">b2</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">ok</span><span class="p">]</span>
+        <span class="c1"># refine on the visible range</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">r</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">xi</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">photon_orbit_constants</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">eta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">xi</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">th</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="o">-</span><span class="n">xi</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alpha</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">beta</span><span class="p">,</span> <span class="o">-</span><span class="n">beta</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.shadow_area">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.shadow_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shadow_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inclination</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Area enclosed by :meth:`shadow_boundary` (shoelace formula)."""</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shadow_boundary</span><span class="p">(</span><span class="n">inclination</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4000</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))))</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.geodesic">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.geodesic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">geodesic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">mu2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">outward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">poleward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">record_every</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Integrate a geodesic (or charged orbit) from ``(r0, theta0)``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r0, theta0 : float</span>
+<span class="sd">            Starting point.</span>
+<span class="sd">        E, L, C : float</span>
+<span class="sd">            Energy, angular momentum and Carter constant.</span>
+<span class="sd">        mu2 : float, default 0.0</span>
+<span class="sd">            Squared rest mass (0 for light, 1 for a massive particle).</span>
+<span class="sd">        e : float, default 0.0</span>
+<span class="sd">            Particle charge (per unit mass when ``mu2 = 1``).</span>
+<span class="sd">        outward, poleward : bool, default False</span>
+<span class="sd">            Initial signs of :math:`dr/d\\lambda` and of :math:`d\\theta/d\\lambda` (toward :math:`\\theta = 0`).</span>
+<span class="sd">        n_steps, step, record_every, r_max</span>
+<span class="sd">            Integration controls, see :func:`trace_kerr_newman_geodesic`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            ``"outcome"`` and arrays ``"lambda"``, ``"r"``, ``"theta"``,</span>
+<span class="sd">            ``"phi"``, ``"t"`` and the Cartesian ``"x"``, ``"y"``, ``"z"``.</span>
+<span class="sd">        """</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">_R_and_dR</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Th</span> <span class="o">=</span> <span class="n">_Theta_and_dTheta</span><span class="p">(</span><span class="n">theta0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">mu2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1e-10</span> <span class="ow">or</span> <span class="n">Th</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1e-10</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"initial point is in a forbidden region (R &lt; 0 or Theta &lt; 0)"</span><span class="p">)</span>
+        <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">outward</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">theta0</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">poleward</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">Th</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+        <span class="n">outcome</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">trace_kerr_newman_geodesic</span><span class="p">(</span>
+            <span class="n">y0</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="mf">1.001</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">record_every</span>
+        <span class="p">)</span>
+        <span class="n">lam</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">path</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">path</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">path</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">path</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="c1"># Boyer-Lindquist to Kerr-Schild-like Cartesian coordinates for plotting</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"outcome"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">outcome</span><span class="p">),</span>
+            <span class="s2">"lambda"</span><span class="p">:</span> <span class="n">lam</span><span class="p">,</span>
+            <span class="s2">"r"</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+            <span class="s2">"theta"</span><span class="p">:</span> <span class="n">theta</span><span class="p">,</span>
+            <span class="s2">"phi"</span><span class="p">:</span> <span class="n">phi</span><span class="p">,</span>
+            <span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+            <span class="s2">"x"</span><span class="p">:</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
+            <span class="s2">"y"</span><span class="p">:</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
+            <span class="s2">"z"</span><span class="p">:</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="KerrNewmanBlackHole.ray_traced_shadow">
+<a class="viewcode-back" href="../../../../api/relativity.html#physicskit.relativity.KerrNewmanBlackHole.ray_traced_shadow">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ray_traced_shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">inclination</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">r_observer</span><span class="o">=</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">20000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Backward-trace photons from a distant observer and mark the captured ones.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        alphas, betas : ndarray of float</span>
+<span class="sd">            Celestial coordinates of the image pixels.</span>
+<span class="sd">        inclination : float, default ``pi/2``</span>
+<span class="sd">        r_observer : float, default 500.0</span>
+<span class="sd">        n_steps : int, default 20000</span>
+<span class="sd">            Step limit per ray; rays still bound at the end (near the photon</span>
+<span class="sd">            ring) are reported as 2.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray of int, shape (len(betas), len(alphas))</span>
+<span class="sd">            0 escaped, 1 captured, 2 unresolved.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">_shadow_image</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+            <span class="n">r_observer</span><span class="p">,</span>
+            <span class="n">inclination</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span>
+            <span class="mf">1.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_horizon_radius</span><span class="p">,</span>
+            <span class="n">n_steps</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

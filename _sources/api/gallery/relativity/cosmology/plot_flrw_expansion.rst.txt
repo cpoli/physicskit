@@ -164,7 +164,7 @@ universe is younger than one with a substantial :math:`\Omega_\Lambda`,
 because more of its history was spent in the faster-decelerating,
 matter-dominated regime.
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-111
+.. GENERATED FROM PYTHON SOURCE LINES 92-112
 
 .. code-block:: Python
 
@@ -190,6 +190,7 @@ matter-dominated regime.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/cosmology/images/sphx_glr_plot_flrw_expansion_003.png
    :alt: Cosmic age across the density-parameter plane
    :srcset: /api/gallery/relativity/cosmology/images/sphx_glr_plot_flrw_expansion_003.png
@@ -199,10 +200,32 @@ matter-dominated regime.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 113-117
+
+Check
+-----
+Flat Lambda-CDM (radiation negligible today): t0 = 2 asinh(sqrt(OL/Om)) / (3 H0 sqrt(OL));
+Einstein-de Sitter: t0 = 2 / 3H0; and d_L = (1 + z) d_C.
+
+.. GENERATED FROM PYTHON SOURCE LINES 117-121
+
+.. code-block:: Python
+
+    hubble_time_gyr = 977.8 / 70.0
+    assert abs(age_today - 2 * np.arcsinh(np.sqrt(0.7 / 0.3)) / (3 * np.sqrt(0.7)) * hubble_time_gyr) < 0.03
+    assert abs(age_map[0, -1] - 2 / 3 * hubble_time_gyr) < 0.03
+    np.testing.assert_allclose(d_luminosity, (1 + z) * d_comoving, rtol=1e-4)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.817 seconds)
+   **Total running time of the script:** (0 minutes 0.787 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_cosmology_plot_flrw_expansion.py:

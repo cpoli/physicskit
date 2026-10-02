@@ -104,3 +104,12 @@ ax3.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Z is a dilepton peak at M_Z; the W shows a Jacobian edge in m_T at
+# M_W and a Jacobian peak in the electron p_T near M_W / 2.
+assert abs(np.median(m_ee) - M_Z) < 0.5
+assert M_W - 4 < centres[np.argmax(smooth)] < M_W and np.mean(m_T > M_W) < 0.2
+assert abs(0.5 * (pt_edges[np.argmax(pt_counts)] + pt_edges[np.argmax(pt_counts) + 1]) - M_W / 2) < 3

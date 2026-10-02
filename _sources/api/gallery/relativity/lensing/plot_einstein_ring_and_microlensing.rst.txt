@@ -184,10 +184,10 @@ well beyond this linear estimate.
 
  .. code-block:: none
 
-    b= 200.0M: exact=0.0188 rad, weak-field 4M/b=0.0200 rad
-    b=  50.0M: exact=0.0847 rad, weak-field 4M/b=0.0800 rad
-    b=  20.0M: exact=0.2360 rad, weak-field 4M/b=0.2000 rad
-    b=  15.0M: exact=0.3363 rad, weak-field 4M/b=0.2667 rad
+    b= 200.0M: exact=0.0203 rad, weak-field 4M/b=0.0200 rad
+    b=  50.0M: exact=0.0851 rad, weak-field 4M/b=0.0800 rad
+    b=  20.0M: exact=0.2361 rad, weak-field 4M/b=0.2000 rad
+    b=  15.0M: exact=0.3364 rad, weak-field 4M/b=0.2667 rad
 
 
 
@@ -204,7 +204,7 @@ single 1D track -- traces out the full magnification map any real
 microlensing survey scans across as source and lens drift past each other,
 with the Einstein ring (:math:`u=\beta/\theta_E=1`) as its natural scale.
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-133
+.. GENERATED FROM PYTHON SOURCE LINES 111-134
 
 .. code-block:: Python
 
@@ -233,6 +233,7 @@ with the Einstein ring (:math:`u=\beta/\theta_E=1`) as its natural scale.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/lensing/images/sphx_glr_plot_einstein_ring_and_microlensing_003.png
    :alt: 2D microlensing magnification map
    :srcset: /api/gallery/relativity/lensing/images/sphx_glr_plot_einstein_ring_and_microlensing_003.png
@@ -242,10 +243,38 @@ with the Einstein ring (:math:`u=\beta/\theta_E=1`) as its natural scale.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 135-140
+
+Check
+-----
+theta_E = sqrt(4 M D_LS / (D_L D_S)); images at (beta +- sqrt(beta^2 + 4 theta_E^2)) / 2;
+total magnification (u^2 + 2) / (u sqrt(u^2 + 4)); the exact deflection
+follows 4M/b + 15 pi M^2 / 4 b^2 + ... (above 4M/b at every b).
+
+.. GENERATED FROM PYTHON SOURCE LINES 140-149
+
+.. code-block:: Python
+
+    assert abs(theta_E - np.sqrt(4 * 1000.0 / (1000.0 * 2000.0))) < 1e-12
+    np.testing.assert_allclose(theta_plus, (beta_values + np.sqrt(beta_values**2 + 4 * theta_E**2)) / 2, rtol=1e-10)
+    np.testing.assert_allclose(totals, (u_values**2 + 2) / (u_values * np.sqrt(u_values**2 + 4)), rtol=1e-10)
+    for b in impact_params:
+        series = 4 / b + 15 * np.pi / (4 * b**2) + 128 / (3 * b**3) + 3465 * np.pi / (64 * b**4)
+        exact = exact_deflection_angle(bh, b, n_steps=600000)
+        assert exact > bh.light_deflection_angle(b)
+        if b >= 50:
+            assert abs(exact / series - 1) < 1e-4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.820 seconds)
+   **Total running time of the script:** (0 minutes 1.525 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_lensing_plot_einstein_ring_and_microlensing.py:

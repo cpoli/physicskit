@@ -36,12 +36,13 @@ chaos: the underlying classical map is uniformly hyperbolic everywhere (see
 :doc:`/api/gallery/chaos/maps/plot_bakers_map`), with none of the mixed
 regular/chaotic phase space the kicked rotor has.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-28
+.. GENERATED FROM PYTHON SOURCE LINES 20-29
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.quantum import QuantumBakersMap
     from physicskit.chaos.visualizers import animate_husimi_evolution, plot_husimi, plot_quantum_spectrum
@@ -55,14 +56,14 @@ regular/chaotic phase space the kicked rotor has.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-33
+.. GENERATED FROM PYTHON SOURCE LINES 30-34
 
 The Floquet spectrum
 ------------------------
 As for the kicked rotor, one map iteration is a unitary Floquet operator
 whose eigenvalues live on the unit circle.
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-38
+.. GENERATED FROM PYTHON SOURCE LINES 34-39
 
 .. code-block:: Python
 
@@ -83,7 +84,7 @@ whose eigenvalues live on the unit circle.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-47
+.. GENERATED FROM PYTHON SOURCE LINES 40-48
 
 Animation: a wavepacket mixing across the unit square
 ------------------------------------------------------------
@@ -94,7 +95,7 @@ mixes the wavepacket's Husimi distribution, which spreads across the whole
 unit square within just a few iterations -- there is no room for it to
 settle onto a regular island, because the classical map has none.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-53
+.. GENERATED FROM PYTHON SOURCE LINES 48-54
 
 .. code-block:: Python
 
@@ -702,14 +703,14 @@ settle onto a regular island, because the classical map has none.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-58
+.. GENERATED FROM PYTHON SOURCE LINES 55-59
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("quantum_bakers_map_animation.gif", writer="pillow", fps=3)
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-66
+.. GENERATED FROM PYTHON SOURCE LINES 61-67
 
 A single iteration, up close
 ---------------------------------
@@ -718,7 +719,7 @@ signature move: the coherent state's phase-space cell -- initially a small
 round blob -- gets stretched along ``q`` and squeezed along ``p``, then cut
 and stacked, in exact correspondence with the classical map's action.
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-75
+.. GENERATED FROM PYTHON SOURCE LINES 67-77
 
 .. code-block:: Python
 
@@ -734,6 +735,7 @@ and stacked, in exact correspondence with the classical map's action.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/quantum_chaos/images/sphx_glr_plot_quantum_bakers_map_003.png
    :alt: Quantum baker's map: one iteration's stretch-cut-stack, in Husimi phase space, Before (iteration 0), After (iteration 1)
    :srcset: /api/gallery/chaos/quantum_chaos/images/sphx_glr_plot_quantum_bakers_map_003.png
@@ -743,10 +745,31 @@ and stacked, in exact correspondence with the classical map's action.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 78-82
+
+Check
+-----
+The quantum baker's map is unitary, and a coherent state follows the
+classical map: (q, p) = (0.15, 0.15) -> (2q, p/2) = (0.3, 0.075).
+
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
+
+.. code-block:: Python
+
+    assert len(qbm.eigenphases()) == qbm.dim and abs(np.sum(np.abs(states[-1]) ** 2) - 1) < 1e-10
+    i, j = np.unravel_index(np.argmax(husimi1), husimi1.shape)
+    assert abs(q_grid[i, j] - 0.3) < 0.02 and abs(p_grid[i, j] - 0.075) < 0.02
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.459 seconds)
+   **Total running time of the script:** (0 minutes 3.367 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_quantum_chaos_plot_quantum_bakers_map.py:

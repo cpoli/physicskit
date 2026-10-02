@@ -76,3 +76,12 @@ fig, ax = plot_billiard_trajectory(billiard, pos=pos, vel=np.array([0.3, 1.0]), 
 fig, ax = plot_poincare_section(billiard, n_rays=25, n_bounces=150, pos=pos)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The circle is integrable: angular momentum, hence the angle of incidence
+# sin(phi), is the same at every bounce, and speed is conserved.
+run = billiard.simulate(pos, (0.3, 1.0), n_bounces=60)
+assert np.ptp(run["sin_phi"]) < 1e-9
+assert np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12

@@ -159,7 +159,7 @@ transition, found by Monte Carlo, is lower (:math:`\approx0.893\,J`):
 bound pairs screen the vortex interaction and soften the stiffness,
 which Kosterlitz's 1974 renormalization-group treatment accounts for.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-117
+.. GENERATED FROM PYTHON SOURCE LINES 89-118
 
 .. code-block:: Python
 
@@ -194,6 +194,7 @@ which Kosterlitz's 1974 renormalization-group treatment accounts for.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/xy_model/images/sphx_glr_plot_kt_vortex_energy_entropy_001.png
    :alt: One free vortex: grows as ln L, Bound pair: depends on r, not L, Free vortices win above $\pi J/2$
    :srcset: /api/gallery/statphys/xy_model/images/sphx_glr_plot_kt_vortex_energy_entropy_001.png
@@ -211,10 +212,32 @@ which Kosterlitz's 1974 renormalization-group treatment accounts for.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 119-123
+
+Check
+-----
+A free vortex costs pi J ln L, a bound pair 2 pi J ln r independent of L;
+the energy-entropy balance gives k_B T = pi J / 2 as the unbinding estimate.
+
+.. GENERATED FROM PYTHON SOURCE LINES 123-127
+
+.. code-block:: Python
+
+    assert abs(slope - np.pi * J) < 0.05
+    assert abs(pair_slope - 2 * np.pi * J) < 0.15
+    assert np.max(np.abs(E_pair[256][:3] - E_pair[128][:3])) < 0.05
+    assert sorted(np.rint(charges[np.abs(charges) > 0.5]).astype(int).tolist()) == [-1, 1]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.143 seconds)
+   **Total running time of the script:** (0 minutes 0.132 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_xy_model_plot_kt_vortex_energy_entropy.py:

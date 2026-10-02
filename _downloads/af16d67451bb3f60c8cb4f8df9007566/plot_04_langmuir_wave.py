@@ -115,3 +115,13 @@ plt.show()
 anim = pk.plasma.animate_langmuir_wave(x0, v0, L=L, ng=ng, dt=0.05, steps_per_frame=4, n_frames=60)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A Langmuir wave oscillates at the Bohm-Gross frequency
+# omega^2 = omega_p^2 + 3 k^2 v_th^2 (the field energy at twice that).
+fe = result["field_energy"]
+peaks = [i for i in range(1, len(fe) - 1) if fe[i] > fe[i - 1] and fe[i] > fe[i + 1]]
+omega = np.pi / np.mean(np.diff(result["t"][peaks]))
+assert abs(omega / np.sqrt(1 + 3 * k_mode**2 * v_th**2) - 1) < 0.02

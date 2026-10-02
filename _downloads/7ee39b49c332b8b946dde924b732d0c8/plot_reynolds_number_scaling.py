@@ -91,3 +91,14 @@ print("correspondingly different radius -- the ratio, not either quantity")
 print("alone, is what is physically meaningful.")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Stokes settling: Re = (4/9) drho g rho_f R^3 / mu^2, so Re = 1 at
+# R = (9 mu^2 / (4 drho g rho_f))^(1/3) -- about 54 microns in water.
+R_star = (9 * mu_water**2 / (4 * (rho_sphere - rho_fluid) * g * rho_fluid)) ** (1 / 3)
+step = radii[1] / radii[0]
+assert R_star / step < crossing < R_star * step
+R_grid, MU_grid = np.meshgrid(radii, mu_sweep)
+np.testing.assert_allclose(Re_grid, 4 / 9 * (rho_sphere - rho_fluid) * g * rho_fluid * R_grid**3 / MU_grid**2, rtol=1e-10)

@@ -150,7 +150,7 @@ increasing slope (the taller, faster solitons pulling ahead of the
 shorter, slower ones) plus a trailing wake of dispersive radiation --
 the "fission" Zabusky and Kruskal watched happen, frame by frame.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-82
+.. GENERATED FROM PYTHON SOURCE LINES 70-83
 
 .. code-block:: Python
 
@@ -169,6 +169,7 @@ the "fission" Zabusky and Kruskal watched happen, frame by frame.
 
 
 
+
 .. image-sg:: /api/gallery/fields/solitons/images/sphx_glr_plot_kdv_soliton_fission_002.png
    :alt: Space-time diagram: one generic bump fissioning into a rank-ordered soliton train
    :srcset: /api/gallery/fields/solitons/images/sphx_glr_plot_kdv_soliton_fission_002.png
@@ -178,10 +179,35 @@ the "fission" Zabusky and Kruskal watched happen, frame by frame.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 84-89
+
+Check
+-----
+Inverse scattering: the solitons born from u0 are the bound states of
+-psi'' - u0 psi = -kappa^2 psi, with amplitudes 2 kappa^2 (one more, 0.39,
+falls below the peak-detection threshold).
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-95
+
+.. code-block:: Python
+
+    h = x[1] - x[0]
+    schrodinger = np.diag(2 / h**2 - u0) - np.diag(np.ones(N - 1) / h**2, 1) - np.diag(np.ones(N - 1) / h**2, -1)
+    eigenvalues = np.linalg.eigvalsh(schrodinger)
+    amplitudes = np.sort(-2 * eigenvalues[eigenvalues < 0])[::-1]
+    np.testing.assert_allclose(sorted(u[peaks], reverse=True), amplitudes[:3], rtol=0.01)
+    assert len(peaks) == np.sum(amplitudes > 1.0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.257 seconds)
+   **Total running time of the script:** (0 minutes 2.268 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_solitons_plot_kdv_soliton_fission.py:

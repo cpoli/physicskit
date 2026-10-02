@@ -47,11 +47,12 @@ oscillation periodically leaks into, and back out of, swinging.
 ``ElasticPendulum``'s default parameters (:math:`k = 4mg/L_0`) are set
 to this 1:2 resonance condition exactly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-38
+.. GENERATED FROM PYTHON SOURCE LINES 33-39
 
 .. code-block:: Python
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.classical.systems.lagrangian import ElasticPendulum
     from physicskit.classical.visualizers.animations import animate_elastic_pendulum
@@ -63,14 +64,14 @@ to this 1:2 resonance condition exactly.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-43
+.. GENERATED FROM PYTHON SOURCE LINES 40-44
 
 Energy exchange between stretching and swinging
 ------------------------------------------------------
 Start mostly stretched, with only a small swing seed, and integrate
 long enough to see the swing amplitude visibly beat.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-56
+.. GENERATED FROM PYTHON SOURCE LINES 44-57
 
 .. code-block:: Python
 
@@ -99,12 +100,12 @@ long enough to see the swing amplitude visibly beat.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-59
+.. GENERATED FROM PYTHON SOURCE LINES 58-60
 
 Animation: the coil stretching and swinging together
 -------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-63
+.. GENERATED FROM PYTHON SOURCE LINES 60-64
 
 .. code-block:: Python
 
@@ -3349,17 +3350,37 @@ Animation: the coil stretching and swinging together
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-68
+.. GENERATED FROM PYTHON SOURCE LINES 65-69
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("elastic_pendulum_animation.gif", writer="pillow", fps=30)
 
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
+
+Check
+-----
+The implicit midpoint rule keeps the energy fixed (to 1e-4 at this large
+dt) while stretch and swing exchange it, the swing growing past its start.
+
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
+
+.. code-block:: Python
+
+    assert np.ptp(result.energy) < 1e-4 * abs(result.energy[0])
+    assert np.abs(result.q[:, 1]).max() > 0.05
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 22.144 seconds)
+   **Total running time of the script:** (0 minutes 22.446 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_lagrangian_plot_05_elastic_pendulum.py:

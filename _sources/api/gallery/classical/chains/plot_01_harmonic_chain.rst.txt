@@ -106,7 +106,7 @@ the spacetime picture of the *displacement* q_i(t) is what makes the
 underlying two-frequency beating (mode 2 + mode 5, superposed)
 visible directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-87
+.. GENERATED FROM PYTHON SOURCE LINES 71-88
 
 .. code-block:: Python
 
@@ -126,6 +126,7 @@ visible directly.
     ax2.set_title(f"Modal energy at t={t_sampled[-1]:.2f}: only modes 2 and 5 -- exactly as at t=0")
 
     plt.show()
+
 
 
 
@@ -150,10 +151,33 @@ visible directly.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+Check
+-----
+Normal modes of a fixed-end chain: omega_k = 2 sqrt(k/m) sin(k pi / 2(n+1)),
+and each mode's energy is separately conserved.
+
+.. GENERATED FROM PYTHON SOURCE LINES 93-98
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(omegas, 2 * np.sin(np.arange(1, n + 1) * np.pi / (2 * (n + 1))), rtol=1e-10)
+    assert drift < 1e-8
+    assert np.ptp(modal_history[:, 1]) < 1e-6 and np.ptp(modal_history[:, 4]) < 1e-6
+    others = np.delete(modal_history, [1, 4], axis=1)
+    assert np.max(np.abs(others)) < 1e-8
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.583 seconds)
+   **Total running time of the script:** (0 minutes 0.610 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_chains_plot_01_harmonic_chain.py:

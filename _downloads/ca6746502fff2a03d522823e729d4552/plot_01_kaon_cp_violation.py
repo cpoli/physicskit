@@ -71,3 +71,13 @@ fig.tight_layout()
 anim = animate_cp_asymmetry(t, delta_m, gamma_s, gamma_l, epsilon)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# With epsilon = 0 the K0 and K0-bar rates coincide; with the measured
+# epsilon the asymmetry starts at 2 Re(epsilon) and peaks where the K_S and
+# K_L amplitudes interfere, around 12-15 K_S lifetimes.
+assert np.max(np.abs(gamma_meson_0 - gamma_mesonbar_0)) == 0
+assert abs(abs(A[0]) - 2 * epsilon.real) < 1e-6
+assert 10 < t[np.argmax(np.abs(A))] < 16

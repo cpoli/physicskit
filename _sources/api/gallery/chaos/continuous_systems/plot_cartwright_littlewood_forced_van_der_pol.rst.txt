@@ -321,10 +321,49 @@ holds infinitely many periodic and uncountably many non-periodic orbits.
 Levinson's 1949 piecewise-linear model showed the same structure more
 explicitly, and it was that example that led Smale to the horseshoe.
 
+.. GENERATED FROM PYTHON SOURCE LINES 219-221
+
+.. code-block:: Python
+   :dedent: 1
+
+
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 223-229
+
+Check
+-----
+Cartwright and Littlewood: at the same parameters two stable subharmonics
+(3T and 5T) coexist, each with a large basin, and the boundary between
+them carries orbits whose relaxation cycles have irregular lengths
+(the 'bad set') before settling.
+
+.. GENERATED FROM PYTHON SOURCE LINES 229-234
+
+.. code-block:: Python
+
+    assert sorted(periods) == [3, 5]
+    values, counts = np.unique(labels, return_counts=True)
+    assert set(values.tolist()) == {3, 5} and counts.min() > 0.2 * labels.size
+    bad = lengths[t_cyc < n_track]
+    assert np.any(np.abs(bad - 3) > 0.2) and np.any(np.abs(bad - 5) > 0.2) and final_period in (3, 5)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.591 seconds)
+   **Total running time of the script:** (0 minutes 3.222 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_cartwright_littlewood_forced_van_der_pol.py:

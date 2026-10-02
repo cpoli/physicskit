@@ -144,7 +144,7 @@ perfectly, but its :math:`1/\sqrt p` amplitude blows up at
 turning point. The Airy function joins the two smoothly; matching both
 WKB forms to it is what fixes the :math:`\pi/4`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-106
+.. GENERATED FROM PYTHON SOURCE LINES 74-107
 
 .. code-block:: Python
 
@@ -183,6 +183,7 @@ WKB forms to it is what fixes the :math:`\pi/4`.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_wkb_quantum_bouncer_001.png
    :alt: Level n = 4: WKB fails only at the turning point, The connection phases fix the spectrum
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_wkb_quantum_bouncer_001.png
@@ -192,10 +193,33 @@ WKB forms to it is what fixes the :math:`\pi/4`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 108-113
+
+Check
+-----
+With the Maslov phases (1/4 at the soft turning point, 1/2 at the hard
+floor) WKB is within 1% even for the ground state, the error falls with n,
+and it is ten times smaller than the uncorrected rule's.
+
+.. GENERATED FROM PYTHON SOURCE LINES 113-117
+
+.. code-block:: Python
+
+    assert abs(check - 3.75) < 1e-6
+    rel_err = np.abs(E_wkb / E_exact - 1)
+    assert rel_err[0] < 1e-2 and np.all(np.diff(rel_err) < 0) and rel_err[-1] < 1e-4
+    assert np.all(np.abs(E_naive / E_exact - 1) > 10 * np.abs(E_wkb / E_exact - 1))
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.311 seconds)
+   **Total running time of the script:** (0 minutes 0.305 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_potentials_plot_wkb_quantum_bouncer.py:

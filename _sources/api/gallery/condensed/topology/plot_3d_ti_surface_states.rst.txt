@@ -88,7 +88,7 @@ Tracking only the pair of mid-gap slab bands across a 2D grid of
 Brillouin zone center -- the single cone ARPES resolved directly on
 Bi2Se3 and Bi2Te3.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-85
+.. GENERATED FROM PYTHON SOURCE LINES 46-86
 
 .. code-block:: Python
 
@@ -134,6 +134,7 @@ Bi2Se3 and Bi2Te3.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_3d_ti_surface_states_001.png
    :alt: Bulk bands (fully gapped), Slab bands (30 layers): surface Dirac cone, Surface Dirac cone
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_3d_ti_surface_states_001.png
@@ -149,10 +150,33 @@ Bi2Se3 and Bi2Te3.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 87-91
+
+Check
+-----
+The bulk stays gapped along the whole line, the slab's surface Dirac
+point is gapless, and the surface band disperses linearly away from it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 91-96
+
+.. code-block:: Python
+
+    assert np.min(np.abs(bulk_bands)) > 0.5
+    assert gap_at_gamma < 1e-10
+    c = len(k_line) // 2
+    E_half, E_full = cone[c + 10, c], cone[-1, c]
+    assert abs(E_full / E_half - 2) < 0.1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.421 seconds)
+   **Total running time of the script:** (0 minutes 1.490 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_3d_ti_surface_states.py:

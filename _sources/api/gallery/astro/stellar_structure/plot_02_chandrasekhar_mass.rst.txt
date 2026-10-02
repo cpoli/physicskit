@@ -113,7 +113,7 @@ for which it does not. Building two n=3 stars with the *same*
 polytropic constant K but very different central densities
 demonstrates this directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-90
+.. GENERATED FROM PYTHON SOURCE LINES 62-91
 
 .. code-block:: Python
 
@@ -148,6 +148,7 @@ demonstrates this directly.
 
 
 
+
 .. image-sg:: /api/gallery/astro/stellar_structure/images/sphx_glr_plot_02_chandrasekhar_mass_002.png
    :alt: Only n=3 gives a density-independent mass
    :srcset: /api/gallery/astro/stellar_structure/images/sphx_glr_plot_02_chandrasekhar_mass_002.png
@@ -171,10 +172,32 @@ demonstrates this directly.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 92-96
+
+Check
+-----
+M_Ch = 1.457 Msun (2 / mu_e)^2; an n = 3 polytrope's mass is independent
+of rho_c, while an n = 1.5 one scales as rho_c^((3 - n) / 2n) = rho_c^(1/2).
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+.. code-block:: Python
+
+    assert abs(chandrasekhar_mass(2.0) - 1.457) < 0.005
+    np.testing.assert_allclose(M_ch, chandrasekhar_mass(2.0) * (2.0 / mu_e_values) ** 2, rtol=1e-10)
+    np.testing.assert_allclose(masses_n3, star_low.mass, rtol=1e-10)
+    assert abs(star15_high.mass / star15_low.mass - 1000**0.5) < 1e-6 * 1000**0.5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.208 seconds)
+   **Total running time of the script:** (0 minutes 0.206 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_stellar_structure_plot_02_chandrasekhar_mass.py:

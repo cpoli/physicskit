@@ -99,3 +99,9 @@ print(f"lift from pressure integral: {lift_numeric:.4f}")
 print(f"lift from Kutta-Joukowski theorem (-rho * U_inf * Gamma): {lift_theory:.4f}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Kutta-Joukowski: L = -rho U Gamma, from the surface pressure integral.
+assert abs(lift_numeric - lift_theory) < 1e-9 and abs(lift_theory - 3.0) < 1e-12

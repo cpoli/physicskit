@@ -112,7 +112,7 @@ configuration.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-69
+.. GENERATED FROM PYTHON SOURCE LINES 62-77
 
 The Edwards-Anderson order parameter versus temperature
 --------------------------------------------------------------
@@ -122,28 +122,45 @@ smoothly toward 0 as :math:`T` increases rather than showing a sharp
 transition -- in contrast to the sharp Ising ferromagnetic transition,
 and a useful point of comparison with the Ising examples.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-82
+Glassy dynamics make this measurement expensive: at low temperature,
+Metropolis replicas started from random configurations freeze into
+different metastable valleys long before they equilibrate, and
+:math:`\langle q^2 \rangle` then reads near zero for the wrong reason.
+Small lattices, long equilibration, temperatures down to :math:`T = 0.6`
+only, and an average over 16 bond realizations (the quenched average
+:math:`[\langle q^2 \rangle]`) keep the estimate honest.
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-99
 
 .. code-block:: Python
 
-    temperatures = np.linspace(0.3, 3.0, 10)
-    q2_values = []
-    for T in temperatures:
-        q2 = model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150)
-        q2_values.append(q2)
+    temperatures = np.linspace(0.6, 3.0, 9)
+
+
+    def disorder_averaged_q2(L, n_disorder=16):
+        return np.mean(
+            [
+                [EdwardsAndersonSpinGlass2D(L=L, J=1.0, seed=s).edwards_anderson_order_parameter(beta=1.0 / T, n_equil=5000, n_measure=1000) for T in temperatures]
+                for s in range(n_disorder)
+            ],
+            axis=0,
+        )
+
+
+    q2_by_L = {8: disorder_averaged_q2(8)}
 
     plt.figure(figsize=(6, 4))
-    plt.plot(temperatures, q2_values, marker="o")
+    plt.plot(temperatures, q2_by_L[8], marker="o")
     plt.xlabel("Temperature")
-    plt.ylabel(r"$\langle q^2 \rangle$")
-    plt.title("Edwards-Anderson replica overlap")
+    plt.ylabel(r"$[\langle q^2 \rangle]$")
+    plt.title("Edwards-Anderson replica overlap, L = 8")
     plt.tight_layout()
 
 
 
 
 .. image-sg:: /api/gallery/statphys/spin_glass/images/sphx_glr_plot_edwards_anderson_frustration_002.png
-   :alt: Edwards-Anderson replica overlap
+   :alt: Edwards-Anderson replica overlap, L = 8
    :srcset: /api/gallery/statphys/spin_glass/images/sphx_glr_plot_edwards_anderson_frustration_002.png
    :class: sphx-glr-single-img
 
@@ -151,7 +168,7 @@ and a useful point of comparison with the Ising examples.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-93
+.. GENERATED FROM PYTHON SOURCE LINES 100-111
 
 No sharp finite-size onset: repeating the sweep at several L
 ------------------------------------------------------------------
@@ -160,26 +177,27 @@ more abrupt onset as L grows, the way the Ising ferromagnetic transition
 does elsewhere in this gallery. The 2D +/-J Edwards-Anderson glass is
 believed to order only at :math:`T_{\text{SG}}=0`, so repeating the same
 overlap measurement at several lattice sizes should instead show curves
-that stay close together and smoothly decaying at every L, with no
-growing sharpness -- itself the qualitative signature that distinguishes
-a T=0 transition from a conventional finite-T one.
+that decay smoothly at every L and drop as L grows (the spin-glass
+correlation length stays finite at every T > 0), with no growing
+sharpness -- the qualitative signature that distinguishes a T=0
+transition from a conventional finite-T one.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-105
+.. GENERATED FROM PYTHON SOURCE LINES 111-123
 
 .. code-block:: Python
 
-    L_values = [16, 24, 32]
+    for L in (12, 16):
+        q2_by_L[L] = disorder_averaged_q2(L)
     plt.figure(figsize=(6.5, 4.5))
-    for L in L_values:
-        size_model = EdwardsAndersonSpinGlass2D(L=L, J=1.0, seed=0)
-        q2_L = [size_model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150) for T in temperatures]
+    for L, q2_L in q2_by_L.items():
         plt.plot(temperatures, q2_L, marker="o", ms=4, label=f"L={L}")
     plt.xlabel("Temperature")
-    plt.ylabel(r"$\langle q^2 \rangle$")
+    plt.ylabel(r"$[\langle q^2 \rangle]$")
     plt.title("Edwards-Anderson overlap: no sharpening onset with L\n(consistent with $T_{SG}=0$)")
     plt.legend()
     plt.tight_layout()
     plt.show()
+
 
 
 
@@ -192,10 +210,34 @@ a T=0 transition from a conventional finite-T one.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 124-129
+
+Check
+-----
+Random +-J bonds frustrate half the plaquettes. The overlap is large at
+low T and decays smoothly with T at every size; at fixed T it falls as L
+grows, as it must without a finite-temperature transition.
+
+.. GENERATED FROM PYTHON SOURCE LINES 129-134
+
+.. code-block:: Python
+
+    assert abs(model.frustration_density() - 0.5) < 0.05
+    for q2_L in q2_by_L.values():
+        assert q2_L[0] > 0.1 and q2_L[-1] < 0.05
+        assert np.all(np.diff(q2_L) < 0.02)
+    assert q2_by_L[16][0] < q2_by_L[12][0] < q2_by_L[8][0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.497 seconds)
+   **Total running time of the script:** (0 minutes 21.086 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_spin_glass_plot_edwards_anderson_frustration.py:

@@ -187,7 +187,7 @@ from it; overlaying contours of the streamfunction :math:`\psi`
 the harmonic conjugate baked into the same complex potential :math:`W(z)`)
 shows those same circular streamlines as level sets of a single scalar field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-122
+.. GENERATED FROM PYTHON SOURCE LINES 104-123
 
 .. code-block:: Python
 
@@ -212,6 +212,7 @@ shows those same circular streamlines as level sets of a single scalar field.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/potential_flow/images/sphx_glr_plot_source_sink_doublet_004.png
    :alt: Doublet: speed (color) vs. streamfunction (contours)
    :srcset: /api/gallery/fluids/potential_flow/images/sphx_glr_plot_source_sink_doublet_004.png
@@ -221,10 +222,35 @@ shows those same circular streamlines as level sets of a single scalar field.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 124-128
+
+Check
+-----
+A source of strength m has outward flux m (radial speed m / 2 pi r); the
+streamfunction generates the velocity, u = dpsi/dy, v = -dpsi/dx.
+
+.. GENERATED FROM PYTHON SOURCE LINES 128-135
+
+.. code-block:: Python
+
+    th = np.linspace(0, 2 * np.pi, 720, endpoint=False)
+    us, vs = source_flow.velocity(np.cos(th), np.sin(th))
+    assert abs(np.mean(us * np.cos(th) + vs * np.sin(th)) * 2 * np.pi - 1.0) < 1e-9
+    h_grid = x[1] - x[0]
+    dpsi_dx, dpsi_dy = np.gradient(psi, h_grid, h_grid)
+    far = X**2 + Y**2 > 1.0
+    assert np.max(np.abs(dpsi_dy - u)[far]) < 1e-2 * np.max(speed[far]) and np.max(np.abs(-dpsi_dx - v)[far]) < 1e-2 * np.max(speed[far])
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.595 seconds)
+   **Total running time of the script:** (0 minutes 0.584 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_potential_flow_plot_source_sink_doublet.py:

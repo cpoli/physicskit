@@ -481,9 +481,116 @@ dynamics with a symplectic leapfrog integrator.</p></li>
 state-vector conversion, and Hohmann transfers.</p></li>
 <li><p><a class="reference internal" href="#module-physicskit.astro.galactic_dynamics" title="physicskit.astro.galactic_dynamics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.astro.galactic_dynamics</span></code></a> – the NFW dark matter halo
 profile and the rotation curves it produces.</p></li>
+<li><p><a class="reference internal" href="#module-physicskit.astro.sph" title="physicskit.astro.sph"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.astro.sph</span></code></a> – smoothed-particle hydrodynamics in one
+dimension, checked on Sod’s shock tube.</p></li>
+<li><p><a class="reference internal" href="#module-physicskit.astro.radiative_transfer" title="physicskit.astro.radiative_transfer"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.astro.radiative_transfer</span></code></a> – the grey plane-parallel
+atmosphere: the Eddington approximation, the exact Hopf function and
+limb darkening.</p></li>
 <li><p><a class="reference internal" href="#module-physicskit.astro.visualizers" title="physicskit.astro.visualizers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.astro.visualizers</span></code></a> – N-body, Lane-Emden, and
 rotation-curve plots.</p></li>
 </ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.astro.GreyAtmosphere">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">GreyAtmosphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_streams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.GreyAtmosphere" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Exact grey atmosphere in Chandrasekhar’s <span class="math notranslate nohighlight">\(n\)</span>-stream discrete-ordinates approximation.</p>
+<p>With Gauss-Legendre nodes <span class="math notranslate nohighlight">\(\pm\mu_i\)</span> and weights <span class="math notranslate nohighlight">\(a_i\)</span>
+(<span class="math notranslate nohighlight">\(i = 1..n\)</span>), the intensities are</p>
+<div class="math notranslate nohighlight">
+\[I(\tau, \mu_i) = \tfrac34 F\left[\tau + \mu_i + Q + \sum_{\alpha=1}^{n-1}
+                  \frac{L_\alpha e^{-k_\alpha\tau}}{1 + k_\alpha\mu_i}\right],\]</div>
+<p>where the <span class="math notranslate nohighlight">\(k_\alpha\)</span> are the positive roots of
+<span class="math notranslate nohighlight">\(\sum_i a_i/(1 - k^2\mu_i^2) = 1\)</span> and <span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(L_\alpha\)</span>
+follow from no incoming radiation at <span class="math notranslate nohighlight">\(\tau = 0\)</span>. The Hopf function
+is <span class="math notranslate nohighlight">\(q(\tau) = Q + \sum_\alpha L_\alpha e^{-k_\alpha\tau}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_streams</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number <span class="math notranslate nohighlight">\(n\)</span> of directions per hemisphere.</p>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Q</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <span class="math notranslate nohighlight">\(q(\infty)\)</span>, which tends to Hopf’s 0.710446 as <span class="math notranslate nohighlight">\(n\)</span> grows.</p></li>
+<li><p><strong>L</strong> (<a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.k" title="physicskit.quantum.CircularEigenstate.k"><em>k</em></a><em>,</em>) – Decay constants and amplitudes of the transient terms.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">atm</span> <span class="o">=</span> <span class="n">GreyAtmosphere</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">atm</span><span class="o">.</span><span class="n">hopf</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># 1/sqrt(3) in every approximation</span>
+<span class="go">0.57735</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">atm</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.7104</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.GreyAtmosphere.emergent_intensity">
+<span class="sig-name descname"><span class="pre">emergent_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.emergent_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.GreyAtmosphere.emergent_intensity" title="Link to this definition">#</a></dt>
+<dd><p>Emergent intensity in units of <span class="math notranslate nohighlight">\(F/\pi = \sigma T_{\text{eff}}^4/\pi\)</span>.</p>
+<p>The Laplace transform of <span class="math notranslate nohighlight">\(S = \tfrac34 F(\tau + q)/\pi\)</span> gives
+<span class="math notranslate nohighlight">\(I(0, \mu) = \tfrac34\left[\mu + Q + \sum_\alpha L_\alpha/(1 + k_\alpha\mu)\right]\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.GreyAtmosphere.hopf">
+<span class="sig-name descname"><span class="pre">hopf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.hopf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.GreyAtmosphere.hopf" title="Link to this definition">#</a></dt>
+<dd><p>Hopf function <span class="math notranslate nohighlight">\(q(\tau)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.GreyAtmosphere.limb_darkening">
+<span class="sig-name descname"><span class="pre">limb_darkening</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.limb_darkening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.GreyAtmosphere.limb_darkening" title="Link to this definition">#</a></dt>
+<dd><p>Normalized limb darkening <span class="math notranslate nohighlight">\(I(0, \mu)/I(0, 1)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mu</strong> (<em>ArrayLike</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.GreyAtmosphere.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_eff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.GreyAtmosphere.temperature" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(T(\tau) = T_{\text{eff}}\,[\tfrac34(\tau + q(\tau))]^{1/4}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>tau</strong> (<em>ArrayLike</em>)</p></li>
+<li><p><strong>T_eff</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="physicskit.astro.NBodySystem">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">NBodySystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">masses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">softening</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/nbody.html#NBodySystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.NBodySystem" title="Link to this definition">#</a></dt>
@@ -582,6 +689,97 @@ rotation-curve plots.</p></li>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.astro.SPH1D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">SPH1D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.SPH1D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One-dimensional SPH gas with the cubic-spline kernel and Monaghan artificial viscosity.</p>
+<p>Smoothing lengths follow the density, <span class="math notranslate nohighlight">\(h_i = \eta\, m_i/\rho_i\)</span>,
+and the equations are advanced with a kick-drift-kick leapfrog at a
+Courant-limited time step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Particle positions and velocities.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Particle positions and velocities.</p></li>
+<li><p><strong>m</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Particle masses.</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Specific internal energies.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.4</em>) – Adiabatic index.</p></li>
+<li><p><strong>eta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.2</em>) – Smoothing-length factor, in units of the local particle spacing.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em><em>, </em><em>2.0</em>) – Artificial-viscosity coefficients.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em><em>, </em><em>2.0</em>) – Artificial-viscosity coefficients.</p></li>
+<li><p><strong>fixed</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Particles held at rest (boundaries).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gas</span> <span class="o">=</span> <span class="n">SPH1D</span><span class="o">.</span><span class="n">sod_shock_tube</span><span class="p">(</span><span class="n">n_left</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gas</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span> <span class="o">-</span> <span class="n">gas</span><span class="o">.</span><span class="n">energy_history</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">gas</span><span class="o">.</span><span class="n">energy_history</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.astro.SPH1D.pressure">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pressure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#physicskit.astro.SPH1D.pressure" title="Link to this definition">#</a></dt>
+<dd><p>Pressure <span class="math notranslate nohighlight">\(P = (\gamma - 1)\rho u\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.SPH1D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.SPH1D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance to <code class="docutils literal notranslate"><span class="pre">self.t</span> <span class="pre">+</span> <span class="pre">t_end</span></code> with kick-drift-kick leapfrog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_end</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time to advance by.</p></li>
+<li><p><strong>cfl</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Courant factor in <span class="math notranslate nohighlight">\(\Delta t = C\min_i h_i/(c_i + |v_i|)\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.SPH1D.sod_shock_tube">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sod_shock_tube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.125,</span> <span class="pre">0.1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.sod_shock_tube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.SPH1D.sod_shock_tube" title="Link to this definition">#</a></dt>
+<dd><p>Equal-mass particles for Sod’s shock tube, with the diaphragm at <span class="math notranslate nohighlight">\(x = 0\)</span>.</p>
+<p>The left half <span class="math notranslate nohighlight">\(-L &lt; x &lt; 0\)</span> has density and pressure <code class="docutils literal notranslate"><span class="pre">left</span></code>,
+the right half <code class="docutils literal notranslate"><span class="pre">right</span></code>; both are at rest. Particle spacing scales
+inversely with density, and the outermost few particles on each
+side are held fixed as walls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_left</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default 400</em>) – Particles in the left half.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.4</em>)</p></li>
+<li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">P)</span></code> of each side.</p></li>
+<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">P)</span></code> of each side.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em>) – Half-length <span class="math notranslate nohighlight">\(L\)</span> of the tube.</p></li>
+<li><p><strong>**kwargs</strong> – Passed to the constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>SPH1D</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.SPH1D.total_energy">
+<span class="sig-name descname"><span class="pre">total_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.total_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.SPH1D.total_energy" title="Link to this definition">#</a></dt>
+<dd><p>Total kinetic plus internal energy <span class="math notranslate nohighlight">\(\sum_i m_i(v_i^2/2 + u_i)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="physicskit.astro.chandrasekhar_mass">
 <span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">chandrasekhar_mass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu_e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/stellar_structure.html#chandrasekhar_mass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.chandrasekhar_mass" title="Link to this definition">#</a></dt>
@@ -629,6 +827,107 @@ dwarfs).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M0</span> <span class="o">=</span> <span class="mf">5.0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">circular_velocity</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">M0</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
 <span class="go">1.581139</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.cubic_spline_kernel">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">cubic_spline_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#cubic_spline_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.cubic_spline_kernel" title="Link to this definition">#</a></dt>
+<dd><p>The 1D cubic-spline (M4) kernel <span class="math notranslate nohighlight">\(W(r, h)\)</span>, normalized to <span class="math notranslate nohighlight">\(\int W\,dr = 1\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}W = \frac{2}{3h}\begin{cases} 1 - \tfrac32 q^2 + \tfrac34 q^3, &amp; 0 \le q &lt; 1, \\
+    \tfrac14(2 - q)^3, &amp; 1 \le q &lt; 2, \\ 0, &amp; q \ge 2, \end{cases}
+\qquad q = |r|/h.\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Separations.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Smoothing length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">cubic_spline_kernel</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">r</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.eddington_limb_darkening">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">eddington_limb_darkening</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#eddington_limb_darkening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.eddington_limb_darkening" title="Link to this definition">#</a></dt>
+<dd><p>Eddington limb darkening <span class="math notranslate nohighlight">\(I(0,\mu)/I(0,1) = (2 + 3\mu)/5\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Cosine of the angle from the disc normal (1 at disc centre, 0 at the limb).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.eddington_temperature">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">eddington_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_eff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#eddington_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.eddington_temperature" title="Link to this definition">#</a></dt>
+<dd><p>Eddington’s grey temperature law <span class="math notranslate nohighlight">\(T^4 = \tfrac34 T_{\text{eff}}^4(\tau + 2/3)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Optical depth.</p></li>
+<li><p><strong>T_eff</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">eddington_temperature</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">T_eff</span><span class="o">=</span><span class="mf">5772.0</span><span class="p">))</span>  <span class="c1"># T = T_eff at tau = 2/3</span>
+<span class="go">5772.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.emergent_intensity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.</span></span><span class="sig-name descname"><span class="pre">emergent_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#emergent_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.emergent_intensity" title="Link to this definition">#</a></dt>
+<dd><p>Formal solution <span class="math notranslate nohighlight">\(I(0, \mu) = \int_0^\infty S(\tau)e^{-\tau/\mu}\,d\tau/\mu\)</span>.</p>
+<p>Evaluated by <span class="math notranslate nohighlight">\(n\)</span>-point Gauss-Laguerre quadrature in <span class="math notranslate nohighlight">\(t = \tau/\mu\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>callable</em>) – Vectorized source function <span class="math notranslate nohighlight">\(S(\tau)\)</span>.</p></li>
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Direction cosines in <span class="math notranslate nohighlight">\((0, 1]\)</span>.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Quadrature points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A linear source function <span class="math notranslate nohighlight">\(S = a + b\tau\)</span> emerges as <span class="math notranslate nohighlight">\(a + b\mu\)</span>
+(the Eddington-Barbier relation):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">emergent_intensity</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">2.0</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1604,6 +1903,342 @@ module but is not used by this formula.</p>
 </dl>
 </dd></dl>
 
+<p id="module-physicskit.astro.sph">Smoothed-particle hydrodynamics (SPH) in one dimension.</p>
+<p>SPH represents a gas by particles of fixed mass <span class="math notranslate nohighlight">\(m\)</span> that move with the
+flow (Lucy, Astron. J. 82, 1013 (1977); Gingold and Monaghan, MNRAS 181, 375
+(1977)). Every field is a kernel-weighted sum over neighbours; the density
+is</p>
+<div class="math notranslate nohighlight">
+\[\rho_i = \sum_j m_j W(x_i - x_j, h_i),\]</div>
+<p>and the Euler equations become ordinary differential equations for the
+particles (Monaghan, Annu. Rev. Astron. Astrophys. 30, 543 (1992)),</p>
+<div class="math notranslate nohighlight">
+\[\frac{dv_i}{dt} = -\sum_j m_j\left(\frac{P_i}{\rho_i^2} + \frac{P_j}{\rho_j^2}
+                   + \Pi_{ij}\right)\partial_i W_{ij},
+\qquad
+\frac{du_i}{dt} = \frac12\sum_j m_j\left(\frac{P_i}{\rho_i^2} + \frac{P_j}{\rho_j^2}
+                   + \Pi_{ij}\right) v_{ij}\,\partial_i W_{ij},\]</div>
+<p>with <span class="math notranslate nohighlight">\(P = (\gamma - 1)\rho u\)</span>, the cubic-spline kernel, and Monaghan’s
+artificial viscosity <span class="math notranslate nohighlight">\(\Pi_{ij}\)</span> to capture shocks. Because the
+particles follow the mass, resolution concentrates where the gas is dense,
+which is why SPH became the standard method for star formation, galaxy
+mergers and cosmological gas. <a class="reference internal" href="#physicskit.astro.sph.SPH1D" title="physicskit.astro.sph.SPH1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPH1D</span></code></a> evolves these equations, and
+<a class="reference internal" href="#physicskit.astro.sph.SPH1D.sod_shock_tube" title="physicskit.astro.sph.SPH1D.sod_shock_tube"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SPH1D.sod_shock_tube()</span></code></a> sets up Sod’s test problem.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.astro.sph.SPH1D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.astro.sph.</span></span><span class="sig-name descname"><span class="pre">SPH1D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.sph.SPH1D" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One-dimensional SPH gas with the cubic-spline kernel and Monaghan artificial viscosity.</p>
+<p>Smoothing lengths follow the density, <span class="math notranslate nohighlight">\(h_i = \eta\, m_i/\rho_i\)</span>,
+and the equations are advanced with a kick-drift-kick leapfrog at a
+Courant-limited time step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Particle positions and velocities.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Particle positions and velocities.</p></li>
+<li><p><strong>m</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Particle masses.</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>shape</em><em> (</em><a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.n" title="physicskit.quantum.CircularEigenstate.n"><em>n</em></a><em>,</em><em>)</em>) – Specific internal energies.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.4</em>) – Adiabatic index.</p></li>
+<li><p><strong>eta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.2</em>) – Smoothing-length factor, in units of the local particle spacing.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em><em>, </em><em>2.0</em>) – Artificial-viscosity coefficients.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em><em>, </em><em>2.0</em>) – Artificial-viscosity coefficients.</p></li>
+<li><p><strong>fixed</strong> (<em>ndarray</em><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Particles held at rest (boundaries).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gas</span> <span class="o">=</span> <span class="n">SPH1D</span><span class="o">.</span><span class="n">sod_shock_tube</span><span class="p">(</span><span class="n">n_left</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gas</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">total_energy</span><span class="p">()</span> <span class="o">-</span> <span class="n">gas</span><span class="o">.</span><span class="n">energy_history</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">gas</span><span class="o">.</span><span class="n">energy_history</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="physicskit.astro.sph.SPH1D.pressure">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pressure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#physicskit.astro.sph.SPH1D.pressure" title="Link to this definition">#</a></dt>
+<dd><p>Pressure <span class="math notranslate nohighlight">\(P = (\gamma - 1)\rho u\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.sph.SPH1D.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.sph.SPH1D.run" title="Link to this definition">#</a></dt>
+<dd><p>Advance to <code class="docutils literal notranslate"><span class="pre">self.t</span> <span class="pre">+</span> <span class="pre">t_end</span></code> with kick-drift-kick leapfrog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_end</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Time to advance by.</p></li>
+<li><p><strong>cfl</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Courant factor in <span class="math notranslate nohighlight">\(\Delta t = C\min_i h_i/(c_i + |v_i|)\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.sph.SPH1D.sod_shock_tube">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sod_shock_tube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.125,</span> <span class="pre">0.1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.sod_shock_tube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.sph.SPH1D.sod_shock_tube" title="Link to this definition">#</a></dt>
+<dd><p>Equal-mass particles for Sod’s shock tube, with the diaphragm at <span class="math notranslate nohighlight">\(x = 0\)</span>.</p>
+<p>The left half <span class="math notranslate nohighlight">\(-L &lt; x &lt; 0\)</span> has density and pressure <code class="docutils literal notranslate"><span class="pre">left</span></code>,
+the right half <code class="docutils literal notranslate"><span class="pre">right</span></code>; both are at rest. Particle spacing scales
+inversely with density, and the outermost few particles on each
+side are held fixed as walls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_left</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default 400</em>) – Particles in the left half.</p></li>
+<li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.4</em>)</p></li>
+<li><p><strong>left</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">P)</span></code> of each side.</p></li>
+<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <code class="docutils literal notranslate"><span class="pre">(rho,</span> <span class="pre">P)</span></code> of each side.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default 1.0</em>) – Half-length <span class="math notranslate nohighlight">\(L\)</span> of the tube.</p></li>
+<li><p><strong>**kwargs</strong> – Passed to the constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>SPH1D</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.sph.SPH1D.total_energy">
+<span class="sig-name descname"><span class="pre">total_energy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#SPH1D.total_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.sph.SPH1D.total_energy" title="Link to this definition">#</a></dt>
+<dd><p>Total kinetic plus internal energy <span class="math notranslate nohighlight">\(\sum_i m_i(v_i^2/2 + u_i)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.sph.cubic_spline_kernel">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.sph.</span></span><span class="sig-name descname"><span class="pre">cubic_spline_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/sph.html#cubic_spline_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.sph.cubic_spline_kernel" title="Link to this definition">#</a></dt>
+<dd><p>The 1D cubic-spline (M4) kernel <span class="math notranslate nohighlight">\(W(r, h)\)</span>, normalized to <span class="math notranslate nohighlight">\(\int W\,dr = 1\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}W = \frac{2}{3h}\begin{cases} 1 - \tfrac32 q^2 + \tfrac34 q^3, &amp; 0 \le q &lt; 1, \\
+    \tfrac14(2 - q)^3, &amp; 1 \le q &lt; 2, \\ 0, &amp; q \ge 2, \end{cases}
+\qquad q = |r|/h.\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span>) – Separations.</p></li>
+<li><p><strong>h</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Smoothing length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray of float</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">cubic_spline_kernel</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">r</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p id="module-physicskit.astro.radiative_transfer">Grey radiative transfer in a plane-parallel stellar atmosphere.</p>
+<p>Radiation crossing a stellar atmosphere obeys, at optical depth <span class="math notranslate nohighlight">\(\tau\)</span>
+and direction cosine <span class="math notranslate nohighlight">\(\mu\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mu\frac{dI}{d\tau} = I - S.\]</div>
+<p>For a <em>grey</em> opacity (independent of frequency) in radiative equilibrium the
+source function equals the mean intensity, <span class="math notranslate nohighlight">\(S = J\)</span>, and the flux
+<span class="math notranslate nohighlight">\(F = \sigma T_{\text{eff}}^4\)</span> is constant with depth. The solution
+is (Milne 1921; Hopf 1930)</p>
+<div class="math notranslate nohighlight">
+\[T^4(\tau) = \tfrac34 T_{\text{eff}}^4\,[\tau + q(\tau)],\]</div>
+<p>where the Hopf function <span class="math notranslate nohighlight">\(q\)</span> rises from <span class="math notranslate nohighlight">\(1/\sqrt3\)</span> at the
+surface to <span class="math notranslate nohighlight">\(0.7104\)</span> deep inside. Eddington’s (1926) approximation,
+closing the moment equations with <span class="math notranslate nohighlight">\(K = J/3\)</span>, gives the constant
+<span class="math notranslate nohighlight">\(q = 2/3\)</span>, and with it the limb darkening <span class="math notranslate nohighlight">\(I(0, \mu)/I(0, 1) =
+(2 + 3\mu)/5\)</span>.</p>
+<p><a class="reference internal" href="#physicskit.astro.radiative_transfer.GreyAtmosphere" title="physicskit.astro.radiative_transfer.GreyAtmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">GreyAtmosphere</span></code></a> solves the problem exactly in Chandrasekhar’s
+discrete-ordinates method (Astrophys. J. 100, 76 (1944); <em>Radiative
+Transfer</em>, 1950, ch. III), which converges to the exact solution as the
+number of streams grows and keeps <span class="math notranslate nohighlight">\(q(0) = 1/\sqrt3\)</span> exactly in every
+order.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.GreyAtmosphere">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physicskit.astro.radiative_transfer.</span></span><span class="sig-name descname"><span class="pre">GreyAtmosphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_streams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.GreyAtmosphere" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Exact grey atmosphere in Chandrasekhar’s <span class="math notranslate nohighlight">\(n\)</span>-stream discrete-ordinates approximation.</p>
+<p>With Gauss-Legendre nodes <span class="math notranslate nohighlight">\(\pm\mu_i\)</span> and weights <span class="math notranslate nohighlight">\(a_i\)</span>
+(<span class="math notranslate nohighlight">\(i = 1..n\)</span>), the intensities are</p>
+<div class="math notranslate nohighlight">
+\[I(\tau, \mu_i) = \tfrac34 F\left[\tau + \mu_i + Q + \sum_{\alpha=1}^{n-1}
+                  \frac{L_\alpha e^{-k_\alpha\tau}}{1 + k_\alpha\mu_i}\right],\]</div>
+<p>where the <span class="math notranslate nohighlight">\(k_\alpha\)</span> are the positive roots of
+<span class="math notranslate nohighlight">\(\sum_i a_i/(1 - k^2\mu_i^2) = 1\)</span> and <span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(L_\alpha\)</span>
+follow from no incoming radiation at <span class="math notranslate nohighlight">\(\tau = 0\)</span>. The Hopf function
+is <span class="math notranslate nohighlight">\(q(\tau) = Q + \sum_\alpha L_\alpha e^{-k_\alpha\tau}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_streams</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number <span class="math notranslate nohighlight">\(n\)</span> of directions per hemisphere.</p>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Q</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – <span class="math notranslate nohighlight">\(q(\infty)\)</span>, which tends to Hopf’s 0.710446 as <span class="math notranslate nohighlight">\(n\)</span> grows.</p></li>
+<li><p><strong>L</strong> (<a class="reference internal" href="quantum.html#physicskit.quantum.CircularEigenstate.k" title="physicskit.quantum.CircularEigenstate.k"><em>k</em></a><em>,</em>) – Decay constants and amplitudes of the transient terms.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">atm</span> <span class="o">=</span> <span class="n">GreyAtmosphere</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">atm</span><span class="o">.</span><span class="n">hopf</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>  <span class="c1"># 1/sqrt(3) in every approximation</span>
+<span class="go">0.57735</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">atm</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">0.7104</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.GreyAtmosphere.emergent_intensity">
+<span class="sig-name descname"><span class="pre">emergent_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.emergent_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.emergent_intensity" title="Link to this definition">#</a></dt>
+<dd><p>Emergent intensity in units of <span class="math notranslate nohighlight">\(F/\pi = \sigma T_{\text{eff}}^4/\pi\)</span>.</p>
+<p>The Laplace transform of <span class="math notranslate nohighlight">\(S = \tfrac34 F(\tau + q)/\pi\)</span> gives
+<span class="math notranslate nohighlight">\(I(0, \mu) = \tfrac34\left[\mu + Q + \sum_\alpha L_\alpha/(1 + k_\alpha\mu)\right]\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.GreyAtmosphere.hopf">
+<span class="sig-name descname"><span class="pre">hopf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.hopf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.hopf" title="Link to this definition">#</a></dt>
+<dd><p>Hopf function <span class="math notranslate nohighlight">\(q(\tau)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.GreyAtmosphere.limb_darkening">
+<span class="sig-name descname"><span class="pre">limb_darkening</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.limb_darkening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.limb_darkening" title="Link to this definition">#</a></dt>
+<dd><p>Normalized limb darkening <span class="math notranslate nohighlight">\(I(0, \mu)/I(0, 1)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mu</strong> (<em>ArrayLike</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.GreyAtmosphere.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_eff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#GreyAtmosphere.temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.temperature" title="Link to this definition">#</a></dt>
+<dd><p><span class="math notranslate nohighlight">\(T(\tau) = T_{\text{eff}}\,[\tfrac34(\tau + q(\tau))]^{1/4}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>tau</strong> (<em>ArrayLike</em>)</p></li>
+<li><p><strong>T_eff</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.eddington_limb_darkening">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.radiative_transfer.</span></span><span class="sig-name descname"><span class="pre">eddington_limb_darkening</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#eddington_limb_darkening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.eddington_limb_darkening" title="Link to this definition">#</a></dt>
+<dd><p>Eddington limb darkening <span class="math notranslate nohighlight">\(I(0,\mu)/I(0,1) = (2 + 3\mu)/5\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Cosine of the angle from the disc normal (1 at disc centre, 0 at the limb).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.eddington_temperature">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.radiative_transfer.</span></span><span class="sig-name descname"><span class="pre">eddington_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_eff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#eddington_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.eddington_temperature" title="Link to this definition">#</a></dt>
+<dd><p>Eddington’s grey temperature law <span class="math notranslate nohighlight">\(T^4 = \tfrac34 T_{\text{eff}}^4(\tau + 2/3)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Optical depth.</p></li>
+<li><p><strong>T_eff</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">eddington_temperature</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">T_eff</span><span class="o">=</span><span class="mf">5772.0</span><span class="p">))</span>  <span class="c1"># T = T_eff at tau = 2/3</span>
+<span class="go">5772.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="physicskit.astro.radiative_transfer.emergent_intensity">
+<span class="sig-prename descclassname"><span class="pre">physicskit.astro.radiative_transfer.</span></span><span class="sig-name descname"><span class="pre">emergent_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/physicskit/astro/radiative_transfer.html#emergent_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#physicskit.astro.radiative_transfer.emergent_intensity" title="Link to this definition">#</a></dt>
+<dd><p>Formal solution <span class="math notranslate nohighlight">\(I(0, \mu) = \int_0^\infty S(\tau)e^{-\tau/\mu}\,d\tau/\mu\)</span>.</p>
+<p>Evaluated by <span class="math notranslate nohighlight">\(n\)</span>-point Gauss-Laguerre quadrature in <span class="math notranslate nohighlight">\(t = \tau/\mu\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>callable</em>) – Vectorized source function <span class="math notranslate nohighlight">\(S(\tau)\)</span>.</p></li>
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.ArrayLike" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayLike</span></code></a></span>) – Direction cosines in <span class="math notranslate nohighlight">\((0, 1]\)</span>.</p></li>
+<li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Quadrature points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/typing.html#numpy.typing.NDArray" title="(in NumPy v2.5)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDArray</span></code></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.double" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">double</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A linear source function <span class="math notranslate nohighlight">\(S = a + b\tau\)</span> emerges as <span class="math notranslate nohighlight">\(a + b\mu\)</span>
+(the Eddington-Barbier relation):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">emergent_intensity</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <p id="module-physicskit.astro.visualizers">Plotting helpers: N-body trajectories, Lane-Emden profiles, and rotation curves.</p>
 <p>Matplotlib is used throughout. Every function returns its figure object
 rather than calling <code class="docutils literal notranslate"><span class="pre">show()</span></code>, so it composes cleanly into larger
@@ -2028,6 +2663,13 @@ using the same 2D-histogram local-density coloring.</p>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.GreyAtmosphere"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.GreyAtmosphere.emergent_intensity"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.emergent_intensity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.GreyAtmosphere.hopf"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.hopf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.GreyAtmosphere.limb_darkening"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.limb_darkening()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.GreyAtmosphere.temperature"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.temperature()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.NBodySystem"><code class="docutils literal notranslate"><span class="pre">NBodySystem</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.NBodySystem.simulate"><code class="docutils literal notranslate"><span class="pre">NBodySystem.simulate()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.NBodySystem.step"><code class="docutils literal notranslate"><span class="pre">NBodySystem.step()</span></code></a></li>
@@ -2042,8 +2684,19 @@ using the same 2D-histogram local-density coloring.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.PolytropicStar.xi1"><code class="docutils literal notranslate"><span class="pre">PolytropicStar.xi1</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.SPH1D"><code class="docutils literal notranslate"><span class="pre">SPH1D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.SPH1D.pressure"><code class="docutils literal notranslate"><span class="pre">SPH1D.pressure</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.SPH1D.run"><code class="docutils literal notranslate"><span class="pre">SPH1D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.SPH1D.sod_shock_tube"><code class="docutils literal notranslate"><span class="pre">SPH1D.sod_shock_tube()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.SPH1D.total_energy"><code class="docutils literal notranslate"><span class="pre">SPH1D.total_energy()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.chandrasekhar_mass"><code class="docutils literal notranslate"><span class="pre">chandrasekhar_mass()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.circular_velocity"><code class="docutils literal notranslate"><span class="pre">circular_velocity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.cubic_spline_kernel"><code class="docutils literal notranslate"><span class="pre">cubic_spline_kernel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.eddington_limb_darkening"><code class="docutils literal notranslate"><span class="pre">eddington_limb_darkening()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.eddington_temperature"><code class="docutils literal notranslate"><span class="pre">eddington_temperature()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.emergent_intensity"><code class="docutils literal notranslate"><span class="pre">emergent_intensity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.gravitational_acceleration"><code class="docutils literal notranslate"><span class="pre">gravitational_acceleration()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.hohmann_transfer"><code class="docutils literal notranslate"><span class="pre">hohmann_transfer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.lane_emden"><code class="docutils literal notranslate"><span class="pre">lane_emden()</span></code></a></li>
@@ -2088,6 +2741,24 @@ using the same 2D-histogram local-density coloring.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.galactic_dynamics.nfw_density"><code class="docutils literal notranslate"><span class="pre">nfw_density()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.galactic_dynamics.nfw_enclosed_mass"><code class="docutils literal notranslate"><span class="pre">nfw_enclosed_mass()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.galactic_dynamics.nfw_potential"><code class="docutils literal notranslate"><span class="pre">nfw_potential()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.SPH1D"><code class="docutils literal notranslate"><span class="pre">SPH1D</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.SPH1D.pressure"><code class="docutils literal notranslate"><span class="pre">SPH1D.pressure</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.SPH1D.run"><code class="docutils literal notranslate"><span class="pre">SPH1D.run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.SPH1D.sod_shock_tube"><code class="docutils literal notranslate"><span class="pre">SPH1D.sod_shock_tube()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.SPH1D.total_energy"><code class="docutils literal notranslate"><span class="pre">SPH1D.total_energy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.sph.cubic_spline_kernel"><code class="docutils literal notranslate"><span class="pre">cubic_spline_kernel()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.GreyAtmosphere"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.emergent_intensity"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.emergent_intensity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.hopf"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.hopf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.limb_darkening"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.limb_darkening()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.GreyAtmosphere.temperature"><code class="docutils literal notranslate"><span class="pre">GreyAtmosphere.temperature()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.eddington_limb_darkening"><code class="docutils literal notranslate"><span class="pre">eddington_limb_darkening()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.eddington_temperature"><code class="docutils literal notranslate"><span class="pre">eddington_temperature()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.radiative_transfer.emergent_intensity"><code class="docutils literal notranslate"><span class="pre">emergent_intensity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.visualizers.animate_dynamo_wave"><code class="docutils literal notranslate"><span class="pre">animate_dynamo_wave()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.visualizers.animate_nbody_trajectories"><code class="docutils literal notranslate"><span class="pre">animate_nbody_trajectories()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physicskit.astro.visualizers.animate_stellar_convection"><code class="docutils literal notranslate"><span class="pre">animate_stellar_convection()</span></code></a></li>

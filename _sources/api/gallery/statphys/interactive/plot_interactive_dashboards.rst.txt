@@ -117,7 +117,7 @@ Lennard-Jones potential :math:`V(r) = 4\epsilon[(\sigma/r)^{12} -
 interactive scatter plot colors each particle by its instantaneous
 speed, hoverable per-particle.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-68
+.. GENERATED FROM PYTHON SOURCE LINES 62-69
 
 .. code-block:: Python
 
@@ -131,6 +131,7 @@ speed, hoverable per-particle.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -140,10 +141,30 @@ speed, hoverable per-particle.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 70-73
+
+Check
+-----
+The Wolff sweep is ordered below T_C and disordered above it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 73-76
+
+.. code-block:: Python
+
+    m = np.asarray(result["M"])
+    assert m[result["T"] < model.T_C - 0.5].min() > 0.8
+    assert m[result["T"] > model.T_C + 0.5].max() < 0.35
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.108 seconds)
+   **Total running time of the script:** (0 minutes 0.103 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_interactive_plot_interactive_dashboards.py:

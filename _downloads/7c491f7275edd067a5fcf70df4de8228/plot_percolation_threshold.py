@@ -40,9 +40,22 @@ plt.tight_layout()
 # %%
 # The spanning cluster at criticality is a fractal
 # -----------------------------------------------------
+# At p_c the largest cluster's mass grows as M ~ L^{d_f} with d_f < 2: it
+# fills a vanishing fraction of an ever larger lattice. The slope of
+# log M against log L over several sizes gives d_f.
+L_mass = np.array([32, 64, 128, 256])
+M_largest = []
+for L in L_mass:
+    perc = Percolation2D(L=int(L), mode="site", seed=2)
+    masses = []
+    for _trial in range(30):
+        perc.generate(Percolation2D.P_C_SITE)
+        masses.append(perc.cluster_size_distribution().max())
+    M_largest.append(np.mean(masses))
+d_f = np.polyfit(np.log(L_mass), np.log(M_largest), 1)[0]
+print(f"Fractal dimension from M ~ L^d_f at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f})")
+
 perc = Percolation2D(L=128, p=Percolation2D.P_C_SITE, mode="site", seed=1)
-d_f = perc.fractal_dimension(n_trials=10)
-print(f"Estimated fractal dimension at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f}; finite-size bias is significant at L=128)")
 
 fig, ax = plt.subplots(figsize=(6, 6))
 plot_percolation_clusters(perc, ax=ax)
@@ -67,3 +80,10 @@ plot_cluster_size_distribution(all_sizes, ax=ax)
 ax.set_title("Percolation cluster size distribution at $p_c$")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# No spanning far below p_c, certain spanning far above; d_f = 91/48.
+assert P_span[0] < 0.05 and P_span[-1] > 0.95
+assert abs(d_f - 91 / 48) < 0.1

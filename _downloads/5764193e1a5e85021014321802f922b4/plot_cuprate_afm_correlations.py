@@ -74,3 +74,14 @@ fig.tight_layout()
 # correlations sharpen toward the classical Neel value of :math:`-1/4`.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# <Sz_0 Sz_0> = 1/4 - <n_up n_dn>/2 tends to 1/4 as double occupancy is
+# suppressed; nearest neighbours anticorrelate more strongly as U grows and
+# the sign alternates with separation.
+nn = np.array(nn_correlation)
+assert np.all(np.diff(nn) < 0) and nn[-1] < -0.15
+assert correlations[-1][0] > 0.24
+assert correlations[-1][1] < 0 < correlations[-1][2]

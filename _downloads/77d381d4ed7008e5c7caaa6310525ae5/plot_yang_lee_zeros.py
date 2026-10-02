@@ -91,3 +91,11 @@ plt.show()
 g_check = ising_partition_polynomial(18, beta=0.4, J=1.0, periodic=True)
 z_check = yang_lee_zeros(g_check)
 print(f"Ferromagnetic N=18: max deviation from |z|=1 is {np.max(np.abs(np.abs(z_check) - 1)):.2e}")
+
+# %%
+# Check
+# -----
+# Lee-Yang circle theorem: ferromagnetic zeros lie on |z| = 1; the
+# antiferromagnet's do not.
+assert np.max(np.abs(np.abs(z_check) - 1)) < 1e-9
+assert np.min(np.abs(np.abs(zeros_af) - 1)) > 1e-3

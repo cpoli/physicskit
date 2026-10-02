@@ -125,3 +125,12 @@ ax3.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Curvature (momentum) plus ionization (beta gamma) give the mass: ~207
+# electron masses; and a muon, unlike an electron, does not shower in lead.
+assert abs(np.median(m_fit) / masses["muon"] - 1) < 0.05
+assert E_mu > 0.9 * E0 and E_e < 0.2 * E0
+assert 3.0 < bg_min < 4.0

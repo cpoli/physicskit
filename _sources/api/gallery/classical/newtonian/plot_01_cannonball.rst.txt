@@ -179,7 +179,7 @@ See also :class:`~physicskit.classical.systems.newtonian.KeplerSystem`, which is
 same "central conservative force, integrated symplectically" idea,
 generalized from uniform gravity down to an inverse-square field.
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-104
+.. GENERATED FROM PYTHON SOURCE LINES 102-105
 
 .. code-block:: Python
 
@@ -193,9 +193,32 @@ generalized from uniform gravity down to an inverse-square field.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-110
+
+Check
+-----
+Range v^2 sin(2 theta) / g, peak height v^2 sin^2(theta) / 2g; Yoshida4 is
+exact for this quadratic Hamiltonian; drag only removes energy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-114
+
+.. code-block:: Python
+
+    assert abs(rng - 20.0**2 / 9.81) < 1e-9 and abs(h_max - 20.0**2 * 0.5 / (2 * 9.81)) < 1e-9
+    assert np.max(np.abs(result.q[:, 1] - y_an)) < 1e-9
+    assert abs(res_vac.energy[-1] - res_vac.energy[0]) < 1e-9 * res_vac.energy[0]
+    assert np.all(np.diff(res_drag.energy) <= 1e-12)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.857 seconds)
+   **Total running time of the script:** (0 minutes 0.829 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_newtonian_plot_01_cannonball.py:

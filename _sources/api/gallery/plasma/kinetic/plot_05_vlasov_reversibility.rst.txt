@@ -131,7 +131,7 @@ again: each particle retraces its orbit, and the filaments fold back
 into the original ripple. The field energy climbs back to where it
 started.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-109
+.. GENERATED FROM PYTHON SOURCE LINES 86-110
 
 .. code-block:: Python
 
@@ -161,6 +161,7 @@ started.
 
 
 
+
 .. image-sg:: /api/gallery/plasma/kinetic/images/sphx_glr_plot_05_vlasov_reversibility_002.png
    :alt: Collisionless 'damping' undone by time reversal
    :srcset: /api/gallery/plasma/kinetic/images/sphx_glr_plot_05_vlasov_reversibility_002.png
@@ -177,10 +178,31 @@ started.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
+
+Check
+-----
+Collisionless damping is reversible: reversing every velocity retraces the
+particle orbits to round-off and the field energy, which had fallen over
+1000-fold, comes back.
+
+.. GENERATED FROM PYTHON SOURCE LINES 116-118
+
+.. code-block:: Python
+
+    assert err < 1e-9
+    assert energy_fwd[-1] < 1e-3 * energy_fwd[0] and energy_back[-1] > 0.9 * energy_fwd[0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.132 seconds)
+   **Total running time of the script:** (0 minutes 0.963 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_kinetic_plot_05_vlasov_reversibility.py:

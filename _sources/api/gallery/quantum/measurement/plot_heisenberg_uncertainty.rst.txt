@@ -98,7 +98,7 @@ above the Heisenberg bound (equality only at :math:`n=0`)
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x33f727680>
+    <matplotlib.legend.Legend object at 0x34fb9ca10>
 
 
 
@@ -161,7 +161,7 @@ both depend on :math:`r` and :math:`\phi`, and their product exceeds
 :math:`\hbar/2` away from the two axes even though the state is still
 a minimum-uncertainty state for its own rotated quadratures.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-114
+.. GENERATED FROM PYTHON SOURCE LINES 89-115
 
 .. code-block:: Python
 
@@ -193,6 +193,7 @@ a minimum-uncertainty state for its own rotated quadratures.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/measurement/images/sphx_glr_plot_heisenberg_uncertainty_002.png
    :alt: Squeezed vacuum: $\Delta p(r,\phi)$ (anti-squeezed at phi=0, squeezed at phi=pi/2)
    :srcset: /api/gallery/quantum/measurement/images/sphx_glr_plot_heisenberg_uncertainty_002.png
@@ -210,10 +211,33 @@ a minimum-uncertainty state for its own rotated quadratures.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 116-120
+
+Check
+-----
+Fock states: dx dp = (n + 1/2) hbar. [x, p] = i hbar below the truncation.
+Squeezed vacuum: dp = e^(+-r) / sqrt(2), with dx dp = hbar/2 for the vacuum.
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-125
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(prod_vals, (n_values + 0.5) * ho.hbar, rtol=1e-6)
+    assert max_err_bulk < 1e-12
+    assert abs(dp_map[-1, 0] - np.exp(r_values[-1]) / np.sqrt(2)) < 1e-3
+    assert abs(dp_map[-1, -1] - np.exp(-r_values[-1]) / np.sqrt(2)) < 1e-3
+    np.testing.assert_allclose(prod_ratio, 0.5, atol=1e-6)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.251 seconds)
+   **Total running time of the script:** (0 minutes 0.246 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_measurement_plot_heisenberg_uncertainty.py:

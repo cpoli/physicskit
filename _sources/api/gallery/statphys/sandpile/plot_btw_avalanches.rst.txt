@@ -115,21 +115,24 @@ self-organized criticality.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-76
+.. GENERATED FROM PYTHON SOURCE LINES 65-79
 
 Finite-size scaling: the cutoff grows with L
 ------------------------------------------------------------
-The straight-line power law above cannot extend forever: a finite grid
-caps the largest possible avalanche near its own area, so the
-distribution actually has a size-dependent cutoff around :math:`s_{\max}
-\sim L^{D}`. Running the same self-organizing dynamics at several grid
-sizes and overlaying their avalanche-size distributions shows the
-straight-line region growing systematically further to the right (and the
-largest observed avalanche growing correspondingly) as L increases -- the
-same finite-size-scaling logic used throughout this gallery for thermal
-critical points, applied here to a self-organized one.
+The straight-line power law above cannot extend forever: grains leave
+through the open edges, so a finite grid caps the largest avalanche and
+the distribution has a size-dependent cutoff :math:`s_{\max} \sim
+L^{D}`. The size counts topplings, and a site can topple many times in
+one avalanche, so :math:`D \approx 2.75` (Lubeck and Usadel 1997)
+exceeds the dimension 2 of the avalanche's area. Running the same
+self-organizing dynamics at several grid sizes and overlaying their
+avalanche-size distributions shows the straight-line region growing
+systematically further to the right (and the largest observed avalanche
+growing correspondingly) as L increases -- the same finite-size-scaling
+logic used throughout this gallery for thermal critical points, applied
+here to a self-organized one.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-96
+.. GENERATED FROM PYTHON SOURCE LINES 79-100
 
 .. code-block:: Python
 
@@ -152,7 +155,8 @@ critical points, applied here to a self-organized one.
 
     cutoff_exponent, _ = power_law_exponent(L_values, max_sizes)
     print(f"Largest avalanche by L: {dict(zip(L_values, max_sizes))}")
-    print(f"Fitted cutoff-growth exponent (max size ~ L^D): D = {cutoff_exponent:.2f} (open-boundary BTW theory: D=2)")
+    print(f"Fitted cutoff-growth exponent (max size ~ L^D): D = {cutoff_exponent:.2f} (BTW toppling-size cutoff: D = 2.75)")
+
 
 
 
@@ -167,7 +171,26 @@ critical points, applied here to a self-organized one.
  .. code-block:: none
 
     Largest avalanche by L: {20: np.int64(713), 40: np.int64(4213), 60: np.int64(8485), 90: np.int64(50773)}
-    Fitted cutoff-growth exponent (max size ~ L^D): D = 2.71 (open-boundary BTW theory: D=2)
+    Fitted cutoff-growth exponent (max size ~ L^D): D = 2.71 (BTW toppling-size cutoff: D = 2.75)
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-104
+
+Check
+-----
+The toppling-size cutoff grows as L^D with D = 2.75, faster than the area.
+
+.. GENERATED FROM PYTHON SOURCE LINES 104-106
+
+.. code-block:: Python
+
+    assert abs(cutoff_exponent - 2.75) < 0.3
+    assert max_sizes[-1] > L_values[-1] ** 2
+
+
+
 
 
 
@@ -175,7 +198,7 @@ critical points, applied here to a self-organized one.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.098 seconds)
+   **Total running time of the script:** (0 minutes 2.114 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_sandpile_plot_btw_avalanches.py:

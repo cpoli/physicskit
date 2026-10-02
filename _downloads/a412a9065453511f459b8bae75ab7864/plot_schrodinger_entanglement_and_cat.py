@@ -111,3 +111,14 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A Bell state is pure, yet each qubit is maximally mixed (one bit of
+# entropy); the atom-cat entanglement peaks at one bit when p = 1/2, i.e.
+# at t = tau ln 2.
+assert abs(np.trace(rho_full @ rho_full).real - 1) < 1e-12 and entropy(rho_full) < 1e-9
+assert np.allclose(rho_1, np.eye(2) / 2) and abs(entropy(rho_1) - 1) < 1e-12
+assert min(fidelities) > 1 - 1e-12
+assert abs(S_cat.max() - 1) < 1e-4 and abs(t[np.argmax(S_cat)] - np.log(2)) < t[1] - t[0]

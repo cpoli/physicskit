@@ -117,3 +117,13 @@ err = np.hypot(conv_x + dpdx, conv_y + dpdy)[far] / np.hypot(conv_x, conv_y)[far
 print(f"max |rho (u.grad)u + grad p| / max|rho (u.grad)u| (r > 1): {np.nanmax(err):.1e}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Venturi meter recovers Q from the pressure drop; Cp = 1 at the
+# stagnation point x = -m / 2 pi U; and Bernoulli pressure satisfies
+# steady Euler, rho (u.grad)u = -grad p, to finite-difference accuracy.
+assert abs(Q_back / Q - 1) < 1e-3
+assert abs(float(flow.pressure_coefficient(x_stag, 0.0)) - 1) < 1e-9
+assert np.nanmax(err) < 5e-3

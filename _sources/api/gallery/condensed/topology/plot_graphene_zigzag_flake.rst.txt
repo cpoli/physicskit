@@ -122,7 +122,7 @@ below -- are exactly where the zigzag cut creates the local sublattice
 imbalance the zero modes live on, so the boundary-density weight computed
 next is a direct check of that mechanism.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-104
+.. GENERATED FROM PYTHON SOURCE LINES 74-105
 
 .. code-block:: Python
 
@@ -159,6 +159,7 @@ next is a direct check of that mechanism.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_graphene_zigzag_flake_001.png
    :alt: Graphene zigzag flake: boundary-localized zero-energy states, Finite-flake spectrum, Zero-energy band density
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_graphene_zigzag_flake_001.png
@@ -175,10 +176,32 @@ next is a direct check of that mechanism.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-111
+
+Check
+-----
+Chiral symmetry makes the spectrum symmetric about zero, and the
+near-zero band lives on the boundary: under-coordinated sites carry far
+more weight than their share of the sites.
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-114
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(eigenvalues, -eigenvalues[::-1], atol=1e-10)
+    assert len(edge_idx) >= 6
+    assert boundary_fraction > 3 * boundary.mean()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.117 seconds)
+   **Total running time of the script:** (0 minutes 0.108 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_graphene_zigzag_flake.py:

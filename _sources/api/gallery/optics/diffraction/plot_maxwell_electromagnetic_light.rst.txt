@@ -161,7 +161,7 @@ For one monochromatic field component, Maxwell's wave equation becomes
 spectrum method, spreads a Gaussian beam of waist :math:`w_0` over the
 Rayleigh range :math:`z_R=\pi w_0^2/\lambda`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-109
+.. GENERATED FROM PYTHON SOURCE LINES 86-110
 
 .. code-block:: Python
 
@@ -191,6 +191,7 @@ Rayleigh range :math:`z_R=\pi w_0^2/\lambda`.
 
 
 
+
 .. image-sg:: /api/gallery/optics/diffraction/images/sphx_glr_plot_maxwell_electromagnetic_light_002.png
    :alt: Scalar diffraction from Maxwell's wave equation
    :srcset: /api/gallery/optics/diffraction/images/sphx_glr_plot_maxwell_electromagnetic_light_002.png
@@ -207,10 +208,34 @@ Rayleigh range :math:`z_R=\pi w_0^2/\lambda`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
+
+Check
+-----
+c = 1/sqrt(mu0 eps0); the Yee pulse moves at c in vacuum and c/n in glass,
+with Fresnel amplitudes (1 - n)/(1 + n) and 2/(1 + n); the Gaussian beam
+spreads as w0 sqrt(1 + (z/zR)^2).
+
+.. GENERATED FROM PYTHON SOURCE LINES 116-121
+
+.. code-block:: Python
+
+    assert abs(c_maxwell / C - 1) < 1e-9
+    assert peak_400 - 300 == 400 and i_trans - 800 == 200
+    assert abs(E_final[i_refl] - (1 - n_glass) / (1 + n_glass)) < 0.005
+    assert abs(E_final[i_trans] - 2 / (1 + n_glass)) < 0.005
+    assert np.max(np.abs(w_numeric / w_theory - 1)) < 1e-4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.110 seconds)
+   **Total running time of the script:** (0 minutes 0.106 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_diffraction_plot_maxwell_electromagnetic_light.py:

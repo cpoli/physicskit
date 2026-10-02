@@ -40,12 +40,13 @@ the spiral. This example integrates a trajectory with
 in 3D, using the classic chaotic parameters :math:`a=0.2`, :math:`b=0.2`,
 :math:`c=5.7`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-32
+.. GENERATED FROM PYTHON SOURCE LINES 24-33
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Rossler
     from physicskit.chaos.visualizers.section import plot_poincare_map
@@ -59,12 +60,12 @@ in 3D, using the classic chaotic parameters :math:`a=0.2`, :math:`b=0.2`,
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 34-36
 
 Integrate
 ---------
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-38
+.. GENERATED FROM PYTHON SOURCE LINES 36-39
 
 .. code-block:: Python
 
@@ -78,12 +79,12 @@ Integrate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-42
 
 Plot
 ----
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-51
+.. GENERATED FROM PYTHON SOURCE LINES 42-52
 
 .. code-block:: Python
 
@@ -109,7 +110,7 @@ Plot
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-63
+.. GENERATED FROM PYTHON SOURCE LINES 53-64
 
 Poincare section: the stretch-and-fold mechanism, laid bare
 ------------------------------------------------------------------
@@ -123,7 +124,7 @@ single stretch-and-fold mechanism described above: each pass around the
 spiral maps an interval of :math:`x` values into a slightly different,
 folded-over interval, iteration after iteration.
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-79
+.. GENERATED FROM PYTHON SOURCE LINES 64-81
 
 .. code-block:: Python
 
@@ -146,6 +147,7 @@ folded-over interval, iteration after iteration.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_rossler_attractor_002.png
    :alt: Rossler Poincare section at y = 0 (ascending)
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_rossler_attractor_002.png
@@ -155,10 +157,29 @@ folded-over interval, iteration after iteration.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
+
+Check
+-----
+Rossler's band: bounded spiralling in x, y with rare large spikes in z.
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-87
+
+.. code-block:: Python
+
+    assert np.all(np.abs(states[:, :2]) < 15) and states[:, 2].min() > 0
+    assert states[:, 2].max() > 10 and np.median(states[:, 2]) < 1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.082 seconds)
+   **Total running time of the script:** (0 minutes 0.083 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_rossler_attractor.py:

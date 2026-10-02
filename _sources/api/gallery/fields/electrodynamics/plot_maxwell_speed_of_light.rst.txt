@@ -149,7 +149,7 @@ leapfrog integrator) and stacking every intermediate ``Ez`` snapshot into
 an image shows *how*: a rigid ridge of constant slope :math:`dx/dt = c_0`
 the whole way across the grid, with no dispersive smearing or spreading.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-91
+.. GENERATED FROM PYTHON SOURCE LINES 70-92
 
 .. code-block:: Python
 
@@ -177,10 +177,30 @@ the whole way across the grid, with no dispersive smearing or spreading.
 
 
 
+
 .. image-sg:: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_maxwell_speed_of_light_002.png
    :alt: space-time diagram: a single straight ridge of slope c0
    :srcset: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_maxwell_speed_of_light_002.png
    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 93-96
+
+Check
+-----
+Maxwell's equations propagate the pulse at c0 = 1/sqrt(mu0 eps0).
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-98
+
+.. code-block:: Python
+
+    assert abs(C0 - 1 / np.sqrt(MU0 * EPS0)) < 1e-6 * C0
+    assert abs(measured_speed / C0 - 1) < 0.005
+
+
 
 
 

@@ -151,3 +151,14 @@ ax2.legend()
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# RK4's energy error grows ~linearly with time (10x per decade of horizon);
+# the symplectic schemes' stays bounded; and the energy error shows up as the
+# RK4 orbit shrinking, while Yoshida's aphelion stays at the exact 1.6.
+np.testing.assert_allclose(np.diff(np.log10(drift_rk4)), 1.0, atol=0.15)
+assert np.ptp(np.log10(drift_lf)) < 0.01 and np.ptp(np.log10(drift_y4)) < 0.01
+assert drift_rk4[0] < drift_y4[0] and drift_rk4[1] > drift_y4[1]
+assert np.max(np.abs(aphelion_y4 - 1.6)) < 1e-5 and aphelion_rk4[-1] < aphelion_rk4[0] - 1e-5

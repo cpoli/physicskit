@@ -46,11 +46,12 @@ finite-time collapse. Ignoring the regularizing floor near
 vanishing at the finite collapse time
 :math:`t_f = \theta_0^2 / (2\,\text{decay\_rate})`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-46
+.. GENERATED FROM PYTHON SOURCE LINES 32-47
 
 .. code-block:: Python
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.classical.systems.rotations import EulersDisk, eulers_disk_theta_analytic
     from physicskit.classical.visualizers.animations import animate_eulers_disk
@@ -71,14 +72,14 @@ vanishing at the finite collapse time
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-51
+.. GENERATED FROM PYTHON SOURCE LINES 48-52
 
 Animation: the contact point spiraling inward
 ---------------------------------------------------
 Watch the contact point spiral toward the center and precess faster and
 faster as theta collapses toward zero.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-55
+.. GENERATED FROM PYTHON SOURCE LINES 52-56
 
 .. code-block:: Python
 
@@ -342,14 +343,14 @@ faster as theta collapses toward zero.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-60
+.. GENERATED FROM PYTHON SOURCE LINES 57-61
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("eulers_disk_animation.gif", writer="pillow", fps=30)
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-67
+.. GENERATED FROM PYTHON SOURCE LINES 63-68
 
 Numerical vs. analytic collapse
 ------------------------------------
@@ -357,7 +358,7 @@ The regularized numerical theta(t) tracks the exact, unregularized
 closed-form solution ``theta(t) = sqrt(theta0^2 - 2*decay_rate*t)``
 almost all the way to the finite collapse time t_f.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-80
+.. GENERATED FROM PYTHON SOURCE LINES 68-82
 
 .. code-block:: Python
 
@@ -377,6 +378,7 @@ almost all the way to the finite collapse time t_f.
 
 
 
+
 .. image-sg:: /api/gallery/classical/rotations/images/sphx_glr_plot_04_eulers_disk_002.png
    :alt: Euler's disk: finite-time collapse of theta(t)
    :srcset: /api/gallery/classical/rotations/images/sphx_glr_plot_04_eulers_disk_002.png
@@ -386,10 +388,30 @@ almost all the way to the finite collapse time t_f.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
+
+Check
+-----
+Euler's disk: theta(t) = theta0 sqrt(1 - t/t_f) collapses in the finite time
+t_f = theta0^2 / 2 c; the integration follows it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-89
+
+.. code-block:: Python
+
+    assert np.max(np.abs(result.y[:, 0] - theta_exact)) < 1e-10
+    np.testing.assert_allclose(theta_exact, theta0 * np.sqrt(1 - result.t / t_f), rtol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.552 seconds)
+   **Total running time of the script:** (0 minutes 1.539 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_rotations_plot_04_eulers_disk.py:

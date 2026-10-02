@@ -845,6 +845,48 @@ and J. Phys. A 13, L115-L121 (1980); F. Guerra, Commun. Math. Phys.
 
 .. minigallery:: ../../examples/statphys/spin_glass/plot_sk_overlap_distribution.py
 
+1979-1981 -- Path-Integral Monte Carlo
+--------------------------------------
+
+Feynman had shown in 1953 that the partition function of quantum
+particles is a path integral in imaginary time, and that each quantum
+particle then behaves like a classical closed polymer. Barker (1979)
+turned this into an algorithm: slice the imaginary-time interval
+:math:`\beta\hbar` into :math:`P` steps of width :math:`\tau = \beta/P`,
+and in the primitive (Trotter) approximation
+
+.. math::
+
+   Z \approx \left(\frac{mP}{2\pi\beta\hbar^2}\right)^{P/2} \int dx_1 \cdots dx_P\,
+   \exp\left[-\sum_{j=1}^{P}\left(\frac{mP}{2\beta\hbar^2}(x_{j+1}-x_j)^2
+   + \frac{\beta}{P}V(x_j)\right)\right], \qquad x_{P+1} = x_1,
+
+a classical ring polymer of :math:`P` beads joined by harmonic springs,
+which ordinary Metropolis moves can sample. The error is
+:math:`O(\tau^2)`, so the result becomes exact as :math:`P \to \infty`.
+Chandler and Wolynes (1981) made the quantum-classical isomorphism
+explicit, including the cross-linking of polymers by exchange for
+bosons. Ceperley's later work on liquid helium-4, where the polymers
+wind around the periodic box to give a superfluid fraction, made
+path-integral Monte Carlo the standard exact method for bosons at finite
+temperature.
+
+*Implementation:* :class:`physicskit.statphys.chapters.path_integral.PathIntegralParticle`
+samples the ring polymer of one particle in the well
+:math:`V = \tfrac12\omega^2 x^2 + \lambda x^4` with bead and centroid
+moves, measuring :math:`\langle x^2 \rangle` and the virial energy;
+:func:`~physicskit.statphys.chapters.path_integral.harmonic_x2_primitive`
+gives the exact :math:`P`-bead target for the harmonic case, and
+:func:`~physicskit.statphys.chapters.path_integral.harmonic_x2_exact` its
+:math:`P \to \infty` limit.
+
+*References:* R. P. Feynman, Phys. Rev. 91, 1291-1301 (1953); J. A.
+Barker, J. Chem. Phys. 70, 2914-2918 (1979); D. Chandler and P. G.
+Wolynes, J. Chem. Phys. 74, 4078-4095 (1981); D. M. Ceperley, Rev. Mod.
+Phys. 67, 279-355 (1995).
+
+.. minigallery:: ../../examples/statphys/path_integral/plot_path_integral_monte_carlo.py
+
 1981 -- The Binder Cumulant and Finite-Size Scaling
 ---------------------------------------------------
 
@@ -959,23 +1001,56 @@ recovers the finite-size cutoff's own scaling with :math:`L`.
 
 .. minigallery:: ../../examples/statphys/sandpile/plot_btw_avalanches.py
 
-1989 -- The Wolff Cluster Algorithm
------------------------------------
+1987 -- The Swendsen-Wang Cluster Algorithm
+-------------------------------------------
 
 Even Metropolis dynamics suffers from *critical slowing down*: single-spin
 flips decorrelate a configuration only diffusively, so the autocorrelation
-time diverges as a power of the correlation length exactly where accurate
-statistics matter most, right at :math:`T_C`. Robert Swendsen and Jian-Sheng
-Wang's 1987 cluster algorithm broke this bottleneck by growing and flipping
-whole clusters of bond-activated, same-sign spins in a single move; Ulli
-Wolff's 1989 refinement grows and flips just one such cluster per update,
-seeded at a random site, with each bond added independently with
-probability :math:`p_{\text{add}} = 1 - e^{-2\beta J}`. Because a Wolff
-cluster is, on average, exactly a correlated domain, flipping it is a
-genuinely global Monte Carlo move rather than a local one; the algorithm's
-dynamical critical exponent is dramatically smaller than Metropolis's,
-turning simulations right at :math:`T_C` -- previously the hardest regime to
-sample -- into one of the easiest.
+time diverges as a power of the lattice size, :math:`\tau \sim L^z` with
+:math:`z \approx 2.17`, exactly where accurate statistics matter most, at
+:math:`T_C`. Robert Swendsen and Jian-Sheng Wang broke this bottleneck
+with the first cluster algorithm. They used the Fortuin-Kasteleyn
+representation (1972), which writes the Ising partition function as a sum
+over bond configurations: every bond between two aligned neighbors is
+activated with probability
+
+.. math::
+
+   p = 1 - e^{-2\beta J},
+
+and, given the activated bonds, the spins of each connected cluster are
+free to take either sign. One Swendsen-Wang update therefore draws the
+bonds, labels the clusters, and flips each cluster independently with
+probability 1/2, resampling the whole lattice at once. Because the
+clusters are the physical correlated domains, the update is a global move
+and the dynamical exponent drops to :math:`z \approx 0.2`. The same idea
+carries over to the Potts model and, through embedding, to continuous
+spins.
+
+*Implementation:* :func:`physicskit.statphys.core.monte_carlo.swendsen_wang_step_ising`
+activates the bonds, labels the clusters with union-find and flips each
+with probability 1/2; it backs
+:meth:`physicskit.statphys.chapters.ising_lattice.Ising2D.sweep`
+(``algorithm="swendsen-wang"``).
+
+*References:* C. M. Fortuin and P. W. Kasteleyn, Physica 57, 536-564
+(1972); R. H. Swendsen and J.-S. Wang, Phys. Rev. Lett. 58, 86-88 (1987).
+
+.. minigallery:: ../../examples/statphys/ising/plot_swendsen_wang_cluster_algorithm.py
+
+1989 -- The Wolff Cluster Algorithm
+-----------------------------------
+
+Swendsen and Wang's update partitions the whole lattice into clusters,
+including many small ones whose flips barely change anything. Ulli Wolff's
+1989 refinement grows and flips just one cluster per update, seeded at a
+random site, with each bond added independently with probability
+:math:`p_{\text{add}} = 1 - e^{-2\beta J}`. A random site is more likely to
+lie in a large cluster, so the moves Wolff makes are, on average, the large
+correlated domains that matter; the algorithm's dynamical critical exponent
+is dramatically smaller than Metropolis's, turning simulations right at
+:math:`T_C` -- previously the hardest regime to sample -- into one of the
+easiest.
 
 .. math::
 
@@ -1034,6 +1109,43 @@ above zero.
 E. Crooks, Phys. Rev. E 60, 2721-2726 (1999).
 
 .. minigallery:: ../../examples/statphys/nonequilibrium_work/plot_jarzynski_equality.py
+
+2001 -- Wang-Landau Flat-Histogram Sampling
+-------------------------------------------
+
+Metropolis sampling, cluster or not, works at one temperature, and a
+first-order transition or a rugged energy landscape traps it in one basin.
+Fugao Wang and David Landau proposed estimating the density of states
+:math:`g(E)` directly instead, by a random walk in energy space. A move
+from :math:`E_1` to :math:`E_2` is accepted with probability
+
+.. math::
+
+   P(E_1 \to E_2) = \min\left(1, \frac{g(E_1)}{g(E_2)}\right),
+
+and after every step the estimate of the current level is raised,
+:math:`\ln g(E) \to \ln g(E) + \ln f`. The walk is thus driven away from
+levels it has already visited until its histogram is flat; then
+:math:`\ln f` is halved and the walk restarts, and the estimate converges
+as :math:`\ln f \to 0`. With :math:`g(E)` in hand, the partition function
+:math:`Z(\beta) = \sum_E g(E) e^{-\beta E}`, the free energy and the
+entropy, quantities that canonical sampling cannot give directly, follow
+at every temperature from one run. The method spread quickly to protein
+folding, liquids and quantum systems.
+
+*Implementation:* :class:`physicskit.statphys.chapters.wang_landau.WangLandauIsing`
+runs the walk on the 2D Ising lattice (kernel
+:func:`physicskit.statphys.core.monte_carlo.wang_landau_sweeps_ising`);
+:func:`~physicskit.statphys.chapters.wang_landau.ising_density_of_states_exact`
+enumerates the exact :math:`g(E)` of a :math:`4\times4` lattice to check
+it against, and
+:func:`~physicskit.statphys.chapters.wang_landau.canonical_from_density_of_states`
+turns either into canonical averages.
+
+*References:* F. Wang and D. P. Landau, Phys. Rev. Lett. 86, 2050-2053
+(2001); Phys. Rev. E 64, 056101 (2001).
+
+.. minigallery:: ../../examples/statphys/wang_landau/plot_wang_landau_density_of_states.py
 
 See Also
 --------

@@ -79,3 +79,16 @@ ax2.set_xlabel("x")
 ax2.set_ylabel("t")
 ax2.set_title("Space-time diagram: one generic bump fissioning into a rank-ordered soliton train")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Inverse scattering: the solitons born from u0 are the bound states of
+# -psi'' - u0 psi = -kappa^2 psi, with amplitudes 2 kappa^2 (one more, 0.39,
+# falls below the peak-detection threshold).
+h = x[1] - x[0]
+schrodinger = np.diag(2 / h**2 - u0) - np.diag(np.ones(N - 1) / h**2, 1) - np.diag(np.ones(N - 1) / h**2, -1)
+eigenvalues = np.linalg.eigvalsh(schrodinger)
+amplitudes = np.sort(-2 * eigenvalues[eigenvalues < 0])[::-1]
+np.testing.assert_allclose(sorted(u[peaks], reverse=True), amplitudes[:3], rtol=0.01)
+assert len(peaks) == np.sum(amplitudes > 1.0)

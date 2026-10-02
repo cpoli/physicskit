@@ -20,7 +20,9 @@ each frame's disk inner edge set to exactly this spin-dependent ISCO.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
+from physicskit.relativity.chapters.kerr import KerrBlackHole
 from physicskit.relativity.visualizers.shadow_render import animate_shadow_spin_sweep
 
 # %%
@@ -46,3 +48,21 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("kerr_shadow_spin_sweep.gif", writer="pillow", fps=5)
+
+
+# %%
+# Check
+# -----
+def isco_bpt(a, prograde=True):
+    # Bardeen, Press and Teukolsky (1972), M = 1.
+    z1 = 1 + (1 - a**2) ** (1 / 3) * ((1 + a) ** (1 / 3) + (1 - a) ** (1 / 3))
+    z2 = np.sqrt(3 * a**2 + z1**2)
+    return 3 + z2 - np.sqrt((3 - z1) * (3 + z1 + 2 * z2)) * (1 if prograde else -1)
+
+
+# Each frame's disk starts at the spin's ISCO, contracting from 6M toward
+# M as the spin grows (Bardeen-Press-Teukolsky).
+spins = np.linspace(0.0, 0.98, 50)
+isco = np.array([6.0] + [KerrBlackHole(M=1.0, a=a).isco_radius(prograde=True) for a in spins[1:]])
+np.testing.assert_allclose(isco, isco_bpt(spins), rtol=1e-6)
+assert np.all(np.diff(isco) < 0) and isco[-1] < 1.7

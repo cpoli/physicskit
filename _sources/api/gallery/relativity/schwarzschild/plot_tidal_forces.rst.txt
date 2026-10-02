@@ -139,7 +139,7 @@ scales as :math:`1/M^2` at fixed :math:`r/r_{\text{horizon}}` (since
 exactly which black holes spaghettify an infalling astronaut well outside
 the horizon, and which -- like Sgr A* -- let one cross completely unharmed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-94
+.. GENERATED FROM PYTHON SOURCE LINES 72-95
 
 .. code-block:: Python
 
@@ -168,6 +168,7 @@ the horizon, and which -- like Sgr A* -- let one cross completely unharmed.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/schwarzschild/images/sphx_glr_plot_tidal_forces_002.png
    :alt: Where spaghettification happens: tidal stretch vs. mass and radius
    :srcset: /api/gallery/relativity/schwarzschild/images/sphx_glr_plot_tidal_forces_002.png
@@ -177,10 +178,33 @@ the horizon, and which -- like Sgr A* -- let one cross completely unharmed.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-101
+
+Check
+-----
+Radial stretch 2M/r^3 and transverse squeeze -M/r^3 per unit length; at
+the horizon the stretch scales as 1/M^2, so a 1e5 times heavier hole is
+1e10 times gentler.
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
+
+.. code-block:: Python
+
+    radial_1, transverse_1 = bh.tidal_acceleration(r, proper_separation=1.0)
+    np.testing.assert_allclose(radial_1, 2 / r**3, rtol=1e-12)
+    np.testing.assert_allclose(transverse_1, -1 / r**3, rtol=1e-12)
+    assert abs(tidal_g_map[0, 0] / tidal_g_map[-1, 0] - (masses_solar[-1] / masses_solar[0]) ** 2) < 1e-6 * (masses_solar[-1] / masses_solar[0]) ** 2
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.262 seconds)
+   **Total running time of the script:** (0 minutes 0.244 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_schwarzschild_plot_tidal_forces.py:

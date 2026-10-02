@@ -246,7 +246,7 @@ relative to them.
     observed = 0.830, surrogate mean = 0.105
     significance = 242.42 standard deviations (>~2-3 indicates real structure)
 
-    <matplotlib.legend.Legend object at 0x115055250>
+    <matplotlib.legend.Legend object at 0x12f5e5850>
 
 
 
@@ -258,7 +258,7 @@ Chaos gives a broadband, continuous power spectrum -- unlike a periodic or
 quasiperiodic signal's sharp lines -- and an autocorrelation function that
 decays (rather than staying periodic forever).
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-147
+.. GENERATED FROM PYTHON SOURCE LINES 130-148
 
 .. code-block:: Python
 
@@ -282,6 +282,7 @@ decays (rather than staying periodic forever).
 
 
 
+
 .. image-sg:: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_timeseries_analysis_005.png
    :alt: Broadband power spectrum (no sharp periodic lines), Autocorrelation decays -- no long-term periodicity
    :srcset: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_timeseries_analysis_005.png
@@ -291,10 +292,31 @@ decays (rather than staying periodic forever).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 149-154
+
+Check
+-----
+From a single coordinate, delay embedding recovers lambda_max ~ 0.905 for
+Lorenz, and phase-randomized surrogates (same spectrum, no determinism)
+fall far below it.
+
+.. GENERATED FROM PYTHON SOURCE LINES 154-156
+
+.. code-block:: Python
+
+    assert abs(lam - 0.905) < 0.15
+    assert significance > 3 and observed > surrogate_values.max()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 27.122 seconds)
+   **Total running time of the script:** (0 minutes 24.289 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_chaos_metrics_plot_timeseries_analysis.py:

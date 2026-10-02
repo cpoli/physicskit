@@ -155,7 +155,7 @@ high plateau or mountaintop sits measurably higher in Earth's potential
 well too, running its own clock very slightly faster and so trimming the
 net satellite-minus-ground offset by a small but real amount.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-109
+.. GENERATED FROM PYTHON SOURCE LINES 86-110
 
 .. code-block:: Python
 
@@ -185,6 +185,7 @@ net satellite-minus-ground offset by a small but real amount.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/schwarzschild/images/sphx_glr_plot_gps_relativistic_correction_002.png
    :alt: GPS correction vs. satellite and ground-station altitude
    :srcset: /api/gallery/relativity/schwarzschild/images/sphx_glr_plot_gps_relativistic_correction_002.png
@@ -194,10 +195,30 @@ net satellite-minus-ground offset by a small but real amount.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 111-115
+
+Check
+-----
+GPS clocks gain ~45.7 us/day from gravity and lose ~7.1 us/day from
+their orbital speed: +38.6 us/day net, ~11 km/day of ranging error.
+
+.. GENERATED FROM PYTHON SOURCE LINES 115-117
+
+.. code-block:: Python
+
+    assert abs(gravitational_offset - 45.7) < 0.2 and abs(velocity_offset + 7.1) < 0.2
+    assert abs(net_offset - 38.6) < 0.2
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.185 seconds)
+   **Total running time of the script:** (0 minutes 0.100 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_schwarzschild_plot_gps_relativistic_correction.py:

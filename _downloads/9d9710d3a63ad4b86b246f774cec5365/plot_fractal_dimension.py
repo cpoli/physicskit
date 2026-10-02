@@ -91,3 +91,11 @@ ax2.scatter(traj[:, 0], traj[:, 1], s=0.3, color="darkgreen", alpha=0.5)
 ax2.set_title(f"Henon attractor (D0 = {d0_henon:.2f}, D2 = {d2_henon:.2f})")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Cantor set: D = ln 2 / ln 3; Henon attractor: D2 ~ 1.21 (Grassberger and
+# Procaccia), D0 ~ 1.26.
+assert abs(d0_cantor - cantor_dimension) < 0.04 and abs(d2_cantor - cantor_dimension) < 0.05
+assert abs(d2_henon - 1.21) < 0.05 and abs(d0_henon - 1.26) < 0.05

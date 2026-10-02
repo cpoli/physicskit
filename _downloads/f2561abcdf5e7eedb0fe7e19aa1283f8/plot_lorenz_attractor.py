@@ -21,6 +21,7 @@ Numba-accelerated RK4 integrator) and plots it in 3D.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Lorenz
 from physicskit.chaos.visualizers.section import plot_poincare_map
@@ -75,3 +76,13 @@ ax2.set_ylabel("y")
 ax2.set_title(rf"Lorenz Poincare section at $z = \rho - 1 = {system.rho - 1.0:g}$")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The orbit winds around both unstable fixed points C+- = (+-sqrt(beta (rho - 1)), ., rho - 1),
+# switching lobes; it is bounded, with the long-time mean <z> ~ 23.6.
+c_plus = np.sqrt(system.beta * (system.rho - 1))
+assert states[:, 0].min() < -c_plus and states[:, 0].max() > c_plus
+assert np.all(np.abs(states[:, :2]) < 30) and 0 < states[:, 2].min() and states[:, 2].max() < 50
+assert abs(states[:, 2].mean() - 23.6) < 0.5

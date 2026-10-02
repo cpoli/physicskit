@@ -84,3 +84,11 @@ fig.tight_layout(rect=[0, 0, 1, 0.90])
 # directly in :doc:`plot_02_kepler_precession`.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Energy and L are conserved in both orbits; the Laplace-Runge-Lenz vector,
+# the conserved quantity of the 1/r potential's hidden symmetry, only in the pure one.
+assert E_pure.max() < 1e-10 and E_pert.max() < 1e-10 and L_pure.max() < 1e-12 and L_pert.max() < 1e-12
+assert A_pure.max() < 1e-10 and A_pert.max() > 1e-2

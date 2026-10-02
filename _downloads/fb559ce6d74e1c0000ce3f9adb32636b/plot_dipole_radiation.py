@@ -102,3 +102,13 @@ fig2.tight_layout()
 
 print(f"radiation pattern at fixed radius: min={pattern.min():.4f}, max={pattern.max():.4f}")
 print("(the fourfold spread reflects FDTD grid anisotropy at this resolution, not true antenna directionality)")
+
+# %%
+# Check
+# -----
+# The oscillating source radiates outward: by the final frame the wave has
+# reached the grid edge, and its time-RMS amplitude around a circle is
+# isotropic up to the Yee grid's numerical anisotropy.
+assert outer_ring_energy > 0.1
+rms = np.sqrt(np.mean(frames[-20:, i_theta, j_theta] ** 2, axis=0))
+assert rms.min() > 0.5 * rms.max()

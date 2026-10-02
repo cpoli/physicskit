@@ -86,3 +86,18 @@ axes[3].set_xlabel("screen position")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Fringes spaced by lambda L / d, and a free packet's width grows as
+# sigma(t) = sigma0 sqrt(1 + (t / 2 sigma0^2)^2) (hbar = m = 1).
+spacing = np.diff(y[peaks]).mean()
+assert abs(spacing / (2 * np.pi / 10.0 * 50 / 4.0) - 1) < 0.02
+x_wide = np.linspace(-30, 60, 6000)
+rho = gd.density(x_wide, 5.0)
+rho /= np.trapezoid(rho, x_wide)
+mean = np.trapezoid(x_wide * rho, x_wide)
+width = np.sqrt(np.trapezoid((x_wide - mean) ** 2 * rho, x_wide))
+assert abs(mean - 3.0 * 5.0) < 1e-3
+assert abs(width - np.sqrt(1 + (5.0 / 2) ** 2)) < 1e-3

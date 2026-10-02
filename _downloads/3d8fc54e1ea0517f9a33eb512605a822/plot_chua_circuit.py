@@ -30,6 +30,7 @@ nearby trajectories separate.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Chua
 from physicskit.chaos.visualizers.divergence import plot_lyapunov_divergence
@@ -65,3 +66,11 @@ ax_div.set_title(f"Trajectory divergence: $\\lambda_{{max}} \\approx {lam:.3f} >
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The double scroll is a bounded, chaotic attractor: positive lambda_max,
+# and the orbit visits both scrolls (x changes sign).
+assert lam > 0.2
+assert np.all(np.abs(states) < 5) and states[:, 0].min() < -1 < 1 < states[:, 0].max()

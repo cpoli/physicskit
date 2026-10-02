@@ -192,7 +192,7 @@ oscillatory part that the Berry-Tabor sum describes. It fluctuates about
 zero with no trend, and its size grows slowly with :math:`k`, as the
 :math:`L^{-1/2}` family amplitudes predict.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-102
+.. GENERATED FROM PYTHON SOURCE LINES 94-103
 
 .. code-block:: Python
 
@@ -212,9 +212,36 @@ zero with no trend, and its size grows slowly with :math:`k`, as the
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 104-110
+
+Check
+-----
+Weyl's law with the Dirichlet boundary term counts the levels, and each
+periodic-orbit family (M, N) of length 2 sqrt((Ma)^2 + (Nb)^2) gives a peak
+in the length spectrum; the Gutzwiller amplitude 1/sqrt|tr M - 2| diverges
+for the marginally stable (tr M = 2) orbits of an integrable billiard.
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-116
+
+.. code-block:: Python
+
+    assert abs(k.size - (a * b * K_max**2 / (4 * np.pi) - 2 * (a + b) * K_max / (4 * np.pi))) < 50
+    for _M, _N, LMN, Lpk in found:
+        assert abs(Lpk - LMN) < 0.01
+    for eps in (1e-1, 1e-3, 1e-6):
+        M_near = np.array([[1.0 + eps, L01], [0.0, 1.0 / (1.0 + eps)]])
+        assert np.isclose(gutzwiller_amplitude_from_monodromy(M_near), 1 / np.sqrt(abs(np.trace(M_near) - 2)), rtol=1e-6)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.376 seconds)
+   **Total running time of the script:** (0 minutes 0.400 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_gutzwiller_plot_berry_tabor_rectangle.py:

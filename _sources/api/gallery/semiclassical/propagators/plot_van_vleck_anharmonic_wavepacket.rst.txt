@@ -143,7 +143,7 @@ keeping the branch where exactly one trajectory reaches each final point. The fi
 :math:`\hbar` shrinks, because the quartic term's corrections come in
 at higher order in :math:`\hbar`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-138
+.. GENERATED FROM PYTHON SOURCE LINES 116-139
 
 .. code-block:: Python
 
@@ -172,6 +172,7 @@ at higher order in :math:`\hbar`.
 
 
 
+
 .. image-sg:: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_van_vleck_anharmonic_wavepacket_001.png
    :alt: Wavepacket in $V = x^2/2 + 0.15\,x^4$ from classical trajectories, $\hbar$ = 1.0: fidelity 0.9810, $\hbar$ = 0.3: fidelity 0.9962, $\hbar$ = 0.1: fidelity 0.9985
    :srcset: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_van_vleck_anharmonic_wavepacket_001.png
@@ -189,10 +190,30 @@ at higher order in :math:`\hbar`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 140-144
+
+Check
+-----
+In an anharmonic well the Van Vleck-Morette packet converges to the exact
+one as hbar -> 0.
+
+.. GENERATED FROM PYTHON SOURCE LINES 144-146
+
+.. code-block:: Python
+
+    infidelity = [1 - fidelity[h] for h in (1.0, 0.3, 0.1)]
+    assert np.all(np.diff(infidelity) < 0) and infidelity[-1] < 5e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.872 seconds)
+   **Total running time of the script:** (0 minutes 2.847 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_propagators_plot_van_vleck_anharmonic_wavepacket.py:

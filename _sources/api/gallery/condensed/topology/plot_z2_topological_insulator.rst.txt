@@ -173,7 +173,7 @@ parameter plane, not a single crossing point on a line. Gridding
 :func:`z2_invariant` over both parameters at once traces that whole
 boundary directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-135
+.. GENERATED FROM PYTHON SOURCE LINES 91-136
 
 .. code-block:: Python
 
@@ -224,6 +224,7 @@ boundary directly.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_z2_topological_insulator_001.png
    :alt: $\mathbb{Z}_2$ topological insulators: spin-Chern number parity, Kane-Mele (1D cut, $\lambda_v=0$), BHZ (1D cut, B=1), Kane-Mele: $\mathbb{Z}_2$ phase diagram, BHZ: $\mathbb{Z}_2$ phase diagram
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_z2_topological_insulator_001.png
@@ -233,10 +234,39 @@ boundary directly.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 137-141
+
+Check
+-----
+Kane-Mele is a QSH insulator for |lambda_v| < 3 sqrt(3) lambda_so, BHZ for
+0 < M/B < 8; the spin-up Chern number is odd exactly there.
+
+.. GENERATED FROM PYTHON SOURCE LINES 141-152
+
+.. code-block:: Python
+
+    assert (z2_km_trivial, z2_km_topological, z2_bhz_trivial, z2_bhz_topological) == (0, 1, 0, 1)
+    assert all(abs(c) == 1 for c in km_chern[1:])
+    bhz_chern = np.array(bhz_chern)
+    assert np.all(bhz_chern[M_values < -0.1] == 0) and np.all(np.abs(bhz_chern[M_values > 0.1]) == 1)
+    LS, LV = np.meshgrid(lambda_so_grid, lambda_v_grid)
+    margin = np.abs(np.abs(LV) - 3 * np.sqrt(3) * LS) > 0.08
+    assert np.all(km_phase[margin] == (np.abs(LV) < 3 * np.sqrt(3) * LS)[margin])
+    MM, BB = np.meshgrid(M_grid, B_grid)
+    ratio = MM / BB
+    clear = (np.abs(ratio) > 0.3) & (np.abs(ratio - 4) > 0.5) & (np.abs(ratio - 8) > 0.5)
+    assert np.all(bhz_phase[clear] == ((ratio > 0) & (ratio < 8))[clear])
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.618 seconds)
+   **Total running time of the script:** (0 minutes 3.683 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_z2_topological_insulator.py:

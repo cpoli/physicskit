@@ -153,7 +153,7 @@ genuinely reshapes at the Bohr frequency :math:`\omega_{ab}=E_a-E_b`.
 renders this as a Plotly ``frames``-based isosurface animation with a Play
 button, stepping through one full beat period.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-91
+.. GENERATED FROM PYTHON SOURCE LINES 84-92
 
 .. code-block:: Python
 
@@ -172,9 +172,36 @@ button, stepping through one full beat period.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 93-97
+
+Check
+-----
+E_n = -1/(2n^2) hartree; every orbital is normalized; the most probable
+radius of the nodeless l = n - 1 orbitals is n^2 Bohr radii.
+
+.. GENERATED FROM PYTHON SOURCE LINES 97-105
+
+.. code-block:: Python
+
+    for n, l, m in [(1, 0, 0), (2, 0, 0), (2, 1, 0), (3, 2, 1)]:
+        orb = HydrogenOrbital(n, l, m)
+        assert abs(orb.energy + 1 / (2 * n**2)) < 1e-12
+        assert abs(orb.check_normalization() - 1) < 1e-4
+        if l == n - 1:
+            assert abs(orb.most_probable_radius() - n**2) < 0.02
+    # the 2s maximum: r = 3 + sqrt(5)
+    assert abs(HydrogenOrbital(2, 0, 0).most_probable_radius() - (3 + np.sqrt(5))) < 0.02
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.226 seconds)
+   **Total running time of the script:** (0 minutes 0.215 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_hydrogen_plot_hydrogen_orbitals.py:

@@ -84,3 +84,13 @@ fig2.tight_layout()
 
 anim = animate_density_2d(X, Y, frames, times=times)
 # anim.save("double_slit.gif", writer="pillow", fps=15)
+
+# %%
+# Check
+# -----
+# Unitary evolution keeps the norm, and the transmitted wave shows fringes:
+# several separated maxima on the screen, not the two shadows of the slits.
+assert abs(norm_end - norm0) < 1e-6
+inner = screen_density[1:-1]
+peaks = np.where((inner > screen_density[:-2]) & (inner > screen_density[2:]) & (inner > 0.1 * screen_density.max()))[0]
+assert len(peaks) >= 3

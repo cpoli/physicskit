@@ -120,7 +120,7 @@ Delta F=0 than the slower, near-reversible one, since a larger spread of
 work values means the rare low-work trajectories that dominate the
 average are rarer still.
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-79
+.. GENERATED FROM PYTHON SOURCE LINES 66-80
 
 .. code-block:: Python
 
@@ -140,6 +140,7 @@ average are rarer still.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/nonequilibrium_work/images/sphx_glr_plot_jarzynski_equality_002.png
    :alt: Estimator convergence: the fast protocol needs more samples
    :srcset: /api/gallery/statphys/nonequilibrium_work/images/sphx_glr_plot_jarzynski_equality_002.png
@@ -149,10 +150,34 @@ average are rarer still.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 81-86
+
+Check
+-----
+Dragging a harmonic trap leaves Delta F = 0, so <W> is pure dissipation:
+<W> = (gamma dL^2 / tau) [1 - (gamma / k tau)(1 - e^(-k tau / gamma))] >= 0,
+while the Jarzynski average <exp(-W/kT)> recovers Delta F = 0.
+
+.. GENERATED FROM PYTHON SOURCE LINES 86-91
+
+.. code-block:: Python
+
+    for label, tau in (("fast (tau=0.3)", 0.3), ("slow (tau=8.0)", 8.0)):
+        model, work = work_by_protocol[label]
+        W_mean = (4.0 / tau) * (1 - (1 / tau) * (1 - np.exp(-tau)))
+        assert abs(work.mean() / W_mean - 1) < 0.05
+        assert abs(model.jarzynski_free_energy_estimate(work)) < 0.1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.167 seconds)
+   **Total running time of the script:** (0 minutes 0.162 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_nonequilibrium_work_plot_jarzynski_equality.py:

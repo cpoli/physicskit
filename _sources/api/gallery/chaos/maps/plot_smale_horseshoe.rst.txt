@@ -8905,7 +8905,7 @@ The count of periodic points grows as :math:`2^n`, so the topological
 entropy is :math:`\ln 2`. Iterating each computed point :math:`n` times
 brings it back to itself, a check on the closed form.
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-187
+.. GENERATED FROM PYTHON SOURCE LINES 166-188
 
 .. code-block:: Python
 
@@ -8933,6 +8933,7 @@ brings it back to itself, a check on the closed form.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/maps/images/sphx_glr_plot_smale_horseshoe_005.png
    :alt: Periodic orbits grow at entropy $\ln 2$
    :srcset: /api/gallery/chaos/maps/images/sphx_glr_plot_smale_horseshoe_005.png
@@ -8942,10 +8943,31 @@ brings it back to itself, a check on the closed form.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 189-193
+
+Check
+-----
+f^n has exactly 2^n fixed points (one per binary itinerary), so the
+topological entropy is ln 2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 193-196
+
+.. code-block:: Python
+
+    assert abs(system.topological_entropy() - np.log(2)) < 1e-12
+    np.testing.assert_array_equal(counts, 2**periods)
+    assert len(points) == 2**period
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.213 seconds)
+   **Total running time of the script:** (0 minutes 12.011 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_maps_plot_smale_horseshoe.py:

@@ -84,3 +84,9 @@ ax_phase.set_title(f"phase: net winding = {net_winding}")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Two cores of opposite circulation: zero net winding.
+assert total_cores == 2 and net_winding == 0

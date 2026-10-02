@@ -97,3 +97,10 @@ ax_sigma.set_ylabel("sigma(t)")
 ax_sigma.set_title("Spreading law, tracked continuously")
 ax_sigma.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Without nonlinearity a Gaussian spreads as sigma0 sqrt(1 + (t / 2 sigma0^2)^2).
+assert abs(sigma_num - sigma_theory) < 1e-3
+np.testing.assert_allclose(sigma_num_t, sigma_theory_t, rtol=1e-3)

@@ -171,7 +171,7 @@ velocity field over the plate, showing directly how the boundary layer
 (bounded above by :math:`\delta_{99}(x)`) thickens downstream while every
 vertical slice through it is secretly the same universal profile.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-111
+.. GENERATED FROM PYTHON SOURCE LINES 94-112
 
 .. code-block:: Python
 
@@ -195,6 +195,7 @@ vertical slice through it is secretly the same universal profile.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_blasius_boundary_layer_003.png
    :alt: Blasius boundary layer: full streamwise velocity field
    :srcset: /api/gallery/fluids/viscous_flow/images/sphx_glr_plot_blasius_boundary_layer_003.png
@@ -204,10 +205,30 @@ vertical slice through it is secretly the same universal profile.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 113-116
+
+Check
+-----
+Blasius: f''(0) = 0.33206, delta_99 = 4.91 sqrt(nu x / U), c_f = 0.664 / sqrt(Re_x).
+
+.. GENERATED FROM PYTHON SOURCE LINES 116-119
+
+.. code-block:: Python
+
+    assert abs(result["fpp"][0] - 0.33206) < 1e-5
+    np.testing.assert_allclose(delta_99, 4.91 * np.sqrt(nu * x / U_inf), rtol=0.01)
+    np.testing.assert_allclose(cf, 0.664 / np.sqrt(Re_x), rtol=1e-3)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.206 seconds)
+   **Total running time of the script:** (0 minutes 0.203 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_viscous_flow_plot_blasius_boundary_layer.py:

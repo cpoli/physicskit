@@ -130,7 +130,7 @@ as the flat (parity-conserving) sample was above.
 Side by side: flat vs. Wu's asymmetric distribution
 ----------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-98
+.. GENERATED FROM PYTHON SOURCE LINES 71-99
 
 .. code-block:: Python
 
@@ -164,6 +164,7 @@ Side by side: flat vs. Wu's asymmetric distribution
 
 
 
+
 .. image-sg:: /api/gallery/particle/weak_interaction/images/sphx_glr_plot_03_parity_violation_001.png
    :alt: If parity held: no preferred direction, Wu's actual result: a genuine asymmetry
    :srcset: /api/gallery/particle/weak_interaction/images/sphx_glr_plot_03_parity_violation_001.png
@@ -182,10 +183,30 @@ Side by side: flat vs. Wu's asymmetric distribution
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 100-104
+
+Check
+-----
+A 1 + A cos(theta) distribution has <cos theta> = A/3, so A = -0.6 is
+recovered within its statistical error; parity would require A = 0.
+
+.. GENERATED FROM PYTHON SOURCE LINES 104-106
+
+.. code-block:: Python
+
+    assert abs(measured_A - A_asymmetry) < 3 * 3 * np.std(cos_theta_asym) / np.sqrt(n_events)
+    assert abs(np.mean(cos_theta_flat)) < 3 * np.std(cos_theta_flat) / np.sqrt(n_events)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.088 seconds)
+   **Total running time of the script:** (0 minutes 0.087 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_weak_interaction_plot_03_parity_violation.py:

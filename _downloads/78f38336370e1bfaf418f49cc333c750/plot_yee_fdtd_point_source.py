@@ -93,3 +93,14 @@ ax2.set_ylabel("wavefront radius")
 ax2.set_title("Isotropic wavefront speed on the Yee grid: measured vs. c0")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# A point source's wavefront expands at (numerically just below) c0, and the
+# energy flux (Poynting vector) points away from the source.
+assert 0.85 < np.polyfit(times[5:], front_radius[5:], 1)[0] / C0 <= 1.0
+r_vec = np.stack([X - Nx // 2, Y - Ny // 2], axis=-1)
+radial_flux = Sx * r_vec[..., 0] + Sy * r_vec[..., 1]
+assert np.all(radial_flux[flux_mag > 0.5 * flux_mag.max()] > 0)
+assert np.sum(radial_flux) > 0.7 * np.sum(np.abs(radial_flux))  # the 2D wake carries a little back

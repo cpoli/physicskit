@@ -90,7 +90,7 @@ At a fixed frequency, the same species build S, D, P, and solving the
 quartic gives the two cold-plasma wave branches at every propagation
 angle to B0.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-70
+.. GENERATED FROM PYTHON SOURCE LINES 50-71
 
 .. code-block:: Python
 
@@ -117,6 +117,7 @@ angle to B0.
 
 
 
+
 .. image-sg:: /api/gallery/plasma/waves/images/sphx_glr_plot_02_cma_diagram_001.png
    :alt: CMA trajectory vs. wave frequency, Cold-plasma dispersion branches
    :srcset: /api/gallery/plasma/waves/images/sphx_glr_plot_02_cma_diagram_001.png
@@ -126,10 +127,33 @@ angle to B0.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 72-77
+
+Check
+-----
+X = omega_pe^2 / omega^2, Y = omega_ce / omega. Parallel propagation gives
+n^2 = R = S + D and L = S - D; perpendicular, the O mode n^2 = P and the
+X mode n^2 = R L / S.
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-81
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(X, (wpe / omega_scan) ** 2, rtol=1e-12)
+    np.testing.assert_allclose(Y, wce / omega_scan, rtol=1e-12)
+    np.testing.assert_allclose(sorted(n2[0]), sorted([S + D, S - D]), rtol=1e-9)
+    np.testing.assert_allclose(sorted(n2[-1]), sorted([P, (S + D) * (S - D) / S]), rtol=1e-6)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.093 seconds)
+   **Total running time of the script:** (0 minutes 0.092 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_waves_plot_02_cma_diagram.py:

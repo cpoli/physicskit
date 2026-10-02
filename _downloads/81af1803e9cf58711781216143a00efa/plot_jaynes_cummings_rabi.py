@@ -125,3 +125,12 @@ ax2.set_ylabel("photon number n")
 ax2.legend(fontsize=8)
 ax2.set_title("Cavity photon-number distribution P(n,t): the Poissonian spread that drives collapse & revival")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Vacuum Rabi oscillation cos^2(g t); a coherent field's Rabi oscillations
+# collapse to P_e ~ 1/2 and revive at t_r = 2 pi sqrt(nbar) / g.
+assert max_err < 1e-12
+assert np.ptp(Pe_coherent[collapse_region]) < 0.1
+assert np.ptp(Pe_coherent[revival_region]) > 0.4

@@ -51,7 +51,7 @@ all three at once with a Lax-Friedrichs finite-volume scheme.
     import matplotlib.pyplot as plt
     import numpy as np
 
-    from physicskit.fluids.systems.compressible_flow import sod_shock_tube
+    from physicskit.fluids.systems.compressible_flow import exact_riemann_solution, sod_shock_tube
     from physicskit.fluids.visualizers import theme
     from physicskit.fluids.visualizers.compressible import plot_shock_tube_profiles
 
@@ -122,7 +122,7 @@ traces out how the three waves fan out from `x0` over time: the rarefaction
 fan spreading left as a broadening pale wedge, and the contact discontinuity
 and shock both running right, at their own distinct, constant speeds.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-77
+.. GENERATED FROM PYTHON SOURCE LINES 62-78
 
 .. code-block:: Python
 
@@ -144,6 +144,7 @@ and shock both running right, at their own distinct, constant speeds.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/compressible_flow/images/sphx_glr_plot_sod_shock_tube_002.png
    :alt: Sod shock tube: density space-time diagram
    :srcset: /api/gallery/fluids/compressible_flow/images/sphx_glr_plot_sod_shock_tube_002.png
@@ -153,10 +154,31 @@ and shock both running right, at their own distinct, constant speeds.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+Check
+-----
+The finite-volume solution matches the exact Riemann solution (rarefaction,
+contact, shock) to discretization error.
+
+.. GENERATED FROM PYTHON SOURCE LINES 83-86
+
+.. code-block:: Python
+
+    exact = exact_riemann_solution(result["x"], 0.2, x0=0.5)
+    assert np.mean(np.abs(result["rho"] - exact["rho"])) < 0.03
+    assert np.mean(np.abs(result["p"] - exact["p"])) < 0.03
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.241 seconds)
+   **Total running time of the script:** (0 minutes 0.226 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_compressible_flow_plot_sod_shock_tube.py:

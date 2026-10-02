@@ -187,7 +187,7 @@ the convective acceleration :math:`(\mathbf u\cdot\nabla)\mathbf u` from
 the velocity field, and :math:`-\nabla p/\rho` from Bernoulli's
 pressure. Away from the source they agree to discretization error.
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-120
+.. GENERATED FROM PYTHON SOURCE LINES 109-121
 
 .. code-block:: Python
 
@@ -206,11 +206,34 @@ pressure. Away from the source they agree to discretization error.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
 
     max |rho (u.grad)u + grad p| / max|rho (u.grad)u| (r > 1): 1.2e-03
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 122-127
+
+Check
+-----
+The Venturi meter recovers Q from the pressure drop; Cp = 1 at the
+stagnation point x = -m / 2 pi U; and Bernoulli pressure satisfies
+steady Euler, rho (u.grad)u = -grad p, to finite-difference accuracy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 127-130
+
+.. code-block:: Python
+
+    assert abs(Q_back / Q - 1) < 1e-3
+    assert abs(float(flow.pressure_coefficient(x_stag, 0.0)) - 1) < 1e-9
+    assert np.nanmax(err) < 5e-3
+
+
+
 
 
 

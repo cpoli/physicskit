@@ -73,3 +73,10 @@ print(f"intensity at the center of the disk's geometric shadow: {center:.4f}")
 print(f"intensity with no disk at all (unobstructed reference): {I_open_center:.4f}")
 print("a bright spot at the center of the shadow, comparable to the")
 print("unobstructed beam, is exactly the 'absurd' prediction Arago confirmed.")
+
+# %%
+# Check
+# -----
+# Fresnel's theory, as Poisson pointed out: the centre of an opaque disk's
+# shadow is bright -- as bright as the unobstructed beam, up to the finite window.
+assert center / I_open_center > 0.6

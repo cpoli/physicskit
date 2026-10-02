@@ -49,7 +49,7 @@ the way the point-source and dipole-antenna demos do.
     import matplotlib.pyplot as plt
     import numpy as np
 
-    from physicskit.fields import animate_field_2d, courant_limit_2d, fdtd_2d_tmz_evolve, tmz_cavity_mode
+    from physicskit.fields import C0, animate_field_2d, courant_limit_2d, fdtd_2d_tmz_evolve, tmz_cavity_mode
 
 
 
@@ -1690,7 +1690,7 @@ analytic :math:`\cos(\omega_{mn}t)` prediction directly, over the whole
 run, shows that oscillation tracking the exact frequency the cavity's
 boundary conditions predict.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-93
+.. GENERATED FROM PYTHON SOURCE LINES 84-94
 
 .. code-block:: Python
 
@@ -1706,6 +1706,7 @@ boundary conditions predict.
 
 
 
+
 .. image-sg:: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_em_cavity_modes_002.png
    :alt: TM_11 standing wave: FDTD probe vs. analytic frequency
    :srcset: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_em_cavity_modes_002.png
@@ -1715,10 +1716,31 @@ boundary conditions predict.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 95-99
+
+Check
+-----
+TM_mn of a rectangular PEC cavity: omega = c pi sqrt((m/a)^2 + (n/b)^2),
+and the FDTD standing wave follows cos(omega t).
+
+.. GENERATED FROM PYTHON SOURCE LINES 99-102
+
+.. code-block:: Python
+
+    a_cav, b_cav = (Nx - 1) * dx, (Ny - 1) * dy
+    assert abs(omega_mn - C0 * np.pi * np.hypot(m / a_cav, n / b_cav)) < 1e-6 * omega_mn
+    assert np.max(np.abs(probe_series - predicted)) < 0.02
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.021 seconds)
+   **Total running time of the script:** (0 minutes 5.046 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_electrodynamics_plot_em_cavity_modes.py:

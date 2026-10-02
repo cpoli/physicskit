@@ -101,3 +101,10 @@ ax2.set_ylabel("t")
 ax2.set_title("Space-time diagram: kink and antikink colliding and passing through")
 ax2.legend(loc="upper right")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Kink and antikink pass through each other, following Perring and Skyrme's
+# exact solution.
+assert max_dev < 0.02

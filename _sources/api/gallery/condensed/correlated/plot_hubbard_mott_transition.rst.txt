@@ -102,7 +102,7 @@ opens as :math:`U` turns on, well beyond that finite-size baseline --
 exactly the charge-transfer gap seen in real correlated
 insulators.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-86
+.. GENERATED FROM PYTHON SOURCE LINES 59-87
 
 .. code-block:: Python
 
@@ -136,6 +136,7 @@ insulators.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/correlated/images/sphx_glr_plot_hubbard_mott_transition_001.png
    :alt: The Hubbard model at half filling: energy flattens, charge gap opens, Mott suppression: itinerant metal -> localized moments, Charge gap grows well past its finite-size baseline
    :srcset: /api/gallery/condensed/correlated/images/sphx_glr_plot_hubbard_mott_transition_001.png
@@ -152,10 +153,31 @@ insulators.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 88-92
+
+Check
+-----
+E0 is concave in U (Hellmann-Feynman: dE0/dU = <double occupancy>, which
+falls as U grows), and the charge gap opens well past its U = 0 value.
+
+.. GENERATED FROM PYTHON SOURCE LINES 92-95
+
+.. code-block:: Python
+
+    assert slope_end < 0.2 * slope_start
+    assert np.all(np.diff(E0, 2) <= 1e-9)
+    assert ratio > 3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.305 seconds)
+   **Total running time of the script:** (0 minutes 0.299 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_correlated_plot_hubbard_mott_transition.py:

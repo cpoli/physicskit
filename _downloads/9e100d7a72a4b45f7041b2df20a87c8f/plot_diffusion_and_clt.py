@@ -18,6 +18,7 @@ the distribution of the walkers' displacement after many steps is Gaussian.
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import kurtosis
 
 from physicskit.statphys.chapters.random_walk import RandomWalk
 from physicskit.statphys.visualizers.random_walk_render import (
@@ -70,3 +71,13 @@ axes[0].set_ylabel("density")
 plt.suptitle("Lattice-walk displacement distribution converging to a Gaussian")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# A unit-step lattice walk diffuses with <r^2> = t, and by the central
+# limit theorem each final coordinate is Gaussian with variance t/2.
+final = walk.trajectories[-1]
+assert abs(np.mean(np.sum(final**2, axis=1)) / walk.n_steps - 1) < 0.1
+assert abs(np.var(final[:, 0]) / (walk.n_steps / 2) - 1) < 0.15
+assert abs(kurtosis(final[:, 0])) < 0.5

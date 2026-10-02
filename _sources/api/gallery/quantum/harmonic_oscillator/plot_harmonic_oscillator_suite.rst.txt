@@ -1059,7 +1059,7 @@ isotropic in :math:`x` and :math:`p`. The squeezed vacuum's is an
 ellipse: squeezed in :math:`x` and stretched in :math:`p` by the same
 :math:`e^{\mp2r}` factors plotted above, with its total area preserved.
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-155
+.. GENERATED FROM PYTHON SOURCE LINES 125-156
 
 .. code-block:: Python
 
@@ -1096,6 +1096,7 @@ ellipse: squeezed in :math:`x` and stretched in :math:`p` by the same
 
 
 
+
 .. image-sg:: /api/gallery/quantum/harmonic_oscillator/images/sphx_glr_plot_harmonic_oscillator_suite_003.png
    :alt: Coherent state $|\alpha=3.0\rangle$ (circular blob, displaced from the origin), Squeezed vacuum (r=1.0) (ellipse: squeezed in x, stretched in p)
    :srcset: /api/gallery/quantum/harmonic_oscillator/images/sphx_glr_plot_harmonic_oscillator_suite_003.png
@@ -1112,10 +1113,35 @@ ellipse: squeezed in :math:`x` and stretched in :math:`p` by the same
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 157-161
+
+Check
+-----
+Squeezed vacua saturate dx dp = hbar/2 with dx = e^(-r)/sqrt(2); Gaussian
+states have non-negative Wigner functions (Hudson's theorem).
+
+.. GENERATED FROM PYTHON SOURCE LINES 161-168
+
+.. code-block:: Python
+
+    for r in (0.0, 0.5, 1.0):
+        dx, dp = ho.squeezed_uncertainties(r)
+        assert abs(dx * dp - ho.hbar / 2) < 1e-12 and abs(dx - np.exp(-r) / np.sqrt(2)) < 1e-12
+    assert W_coh.min() > -1e-10 and W_sq.min() > -1e-10
+    # a coherent state's density keeps its shape: back at the start after one period
+    density_0 = np.abs(ho.coherent_wavefunction(alpha, x, t=0.0)) ** 2
+    np.testing.assert_allclose(np.abs(ho.coherent_wavefunction(alpha, x, t=2 * np.pi / ho.omega)) ** 2, density_0, atol=1e-8)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.365 seconds)
+   **Total running time of the script:** (0 minutes 7.792 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_harmonic_oscillator_plot_harmonic_oscillator_suite.py:

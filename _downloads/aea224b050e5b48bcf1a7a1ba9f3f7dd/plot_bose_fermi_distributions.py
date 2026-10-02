@@ -141,3 +141,15 @@ axes[1].set_title(r"Bose-Einstein occupation $n_{\mathrm{BE}}(\varepsilon, T)$ (
 plt.colorbar(im1, ax=axes[1], label="occupation (clipped at 5)")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# n_FD(mu) = 1/2; 1/n_FD - 1/n_BE = 2 at equal (epsilon - mu)/T; the
+# condensate fraction is 1 - (T/T_c)^(3/2) below T_c and zero above.
+assert np.isclose(fermi_dirac_occupation(np.array([2.5]), mu=2.5, temperature=0.1)[0], 0.5)
+x = np.linspace(0.1, 3, 20)
+np.testing.assert_allclose(1 / fermi_dirac_occupation(x, 0.0, 1.0) - 1 / bose_einstein_occupation(x, 0.0, 1.0), 2, rtol=1e-12)
+T_bec = np.linspace(0.0, 2.0, 200)
+np.testing.assert_allclose(fraction[T_bec < 1], 1 - T_bec[T_bec < 1] ** 1.5, atol=1e-12)
+assert np.all(fraction[T_bec > 1] == 0)

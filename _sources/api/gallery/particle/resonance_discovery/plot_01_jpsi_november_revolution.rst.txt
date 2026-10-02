@@ -122,7 +122,7 @@ Brookhaven: an invariant-mass peak
 invariant mass, measured with 1% momentum resolution, piles up at
 3.1 GeV above a falling background of unrelated pairs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-104
+.. GENERATED FROM PYTHON SOURCE LINES 74-105
 
 .. code-block:: Python
 
@@ -159,6 +159,7 @@ invariant mass, measured with 1% momentum resolution, piles up at
 
 
 
+
 .. image-sg:: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_01_jpsi_november_revolution_001.png
    :alt: SPEAR: a more than hundredfold jump, Brookhaven: a narrow peak at 3.1 GeV
    :srcset: /api/gallery/particle/resonance_discovery/images/sphx_glr_plot_01_jpsi_november_revolution_001.png
@@ -175,10 +176,31 @@ invariant mass, measured with 1% momentum resolution, piles up at
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-110
+
+Check
+-----
+Beam spread hides the 93 keV width but not the peak's area, which gives
+Gamma_ee (Breit-Wigner); the dilepton mass peaks at 3.097 GeV.
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-113
+
+.. code-block:: Python
+
+    assert abs(Gamma_ee_fit / Gamma_ee - 1) < 0.01
+    assert abs(np.median(masses) / M - 1) < 0.005
+    assert sigma_bw.max() > 10 * sigma_obs.max()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.147 seconds)
+   **Total running time of the script:** (0 minutes 0.141 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_resonance_discovery_plot_01_jpsi_november_revolution.py:

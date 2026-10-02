@@ -17,6 +17,7 @@ silhouette by ray-tracing an entire camera image.
 import matplotlib.pyplot as plt
 import numpy as np
 
+from physicskit.relativity.chapters.lensing import exact_deflection_angle
 from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
 from physicskit.relativity.visualizers.shadow_render import plot_black_hole_shadow, render_black_hole_image
 
@@ -47,11 +48,7 @@ plt.tight_layout()
 # Light deflection versus the weak-field 4M/b formula
 # ------------------------------------------------------------
 impact_params = np.linspace(10.0, 100.0, 12)
-measured = []
-for b in impact_params:
-    y0 = bh.null_geodesic_initial_state(r0=2.0e5, impact_parameter=b, ingoing=True)
-    traj = bh.integrate_geodesic(y0, dtau=2.0, n_steps=300000)
-    measured.append((traj["phi"][-1] - traj["phi"][0]) - np.pi)
+measured = np.array([exact_deflection_angle(bh, b) for b in impact_params])
 
 fig, ax = plt.subplots(figsize=(6, 4.5))
 ax.plot(impact_params, measured, "o", label="exact (geodesic integration)")
@@ -70,3 +67,23 @@ fig, ax = plt.subplots(figsize=(7, 7))
 plot_black_hole_shadow(result, ax=ax)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Far out the exact deflection follows 4M/b + 15 pi M^2 / 4b^2 + ..., above
+# the weak-field value everywhere; rays with b < 3 sqrt(3) M are captured,
+# so every captured pixel lies inside that radius and every pixel well
+# inside it is dark (captured, or the disk in front of the hole).
+far_b = impact_params >= 40
+series = 4 / impact_params + 15 * np.pi / (4 * impact_params**2) + 128 / (3 * impact_params**3) + 3465 * np.pi / (64 * impact_params**4)
+assert np.all(np.abs(measured[far_b] / series[far_b] - 1) < 2e-4)
+assert np.all(measured > bh.light_deflection_angle(impact_params))
+b_c = bh.critical_impact_parameter
+assert abs(b_c - 3 * np.sqrt(3)) < 1e-12
+half_width, n_pix = 15.0, 250
+centres = -half_width + (np.arange(n_pix) + 0.5) * 2 * half_width / n_pix
+radius = np.hypot(*np.meshgrid(centres, centres))
+pixel = 2 * half_width / n_pix
+assert not np.any(np.isin(result["outcomes"], (1, 2)) & (radius > b_c + 2 * pixel))
+assert not np.any((result["outcomes"] == 0) & (radius < b_c - 2 * pixel))

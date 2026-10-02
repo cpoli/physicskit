@@ -84,3 +84,11 @@ for ax, W, title in zip(axes2, [W_fock, W_coh], ["Fock |3>: rotationally symmetr
     ax.set_ylabel("p")
     ax.set_aspect("equal")
 fig2.colorbar(im, ax=axes2, label="W(x, p)", shrink=0.8)
+
+# %%
+# Check
+# -----
+# Fano factor 0 for a Fock state, 1 for a coherent state; only the Fock
+# state's Wigner function goes negative, down to W_3(0, 0) = -1/pi.
+assert abs(F_fock) < 1e-12 and abs(F_coh - 1) < 1e-4
+assert abs(W_fock.min() + 1 / np.pi) < 1e-9 and W_coh.min() > -1e-5

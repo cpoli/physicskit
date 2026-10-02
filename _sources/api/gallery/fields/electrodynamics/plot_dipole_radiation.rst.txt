@@ -1050,7 +1050,7 @@ pattern instead comes out visibly fourfold-symmetric, a direct picture
 of that well-known low-order FDTD grid anisotropy rather than of any
 antenna directionality.
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-105
+.. GENERATED FROM PYTHON SOURCE LINES 91-106
 
 .. code-block:: Python
 
@@ -1071,6 +1071,7 @@ antenna directionality.
 
 
 
+
 .. image-sg:: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_dipole_radiation_002.png
    :alt: |Ez| at r = 45 cells, final frame (fourfold pattern: Yee-grid numerical anisotropy, not a directional antenna)
    :srcset: /api/gallery/fields/electrodynamics/images/sphx_glr_plot_dipole_radiation_002.png
@@ -1087,10 +1088,32 @@ antenna directionality.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 107-112
+
+Check
+-----
+The oscillating source radiates outward: by the final frame the wave has
+reached the grid edge, and its time-RMS amplitude around a circle is
+isotropic up to the Yee grid's numerical anisotropy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 112-115
+
+.. code-block:: Python
+
+    assert outer_ring_energy > 0.1
+    rms = np.sqrt(np.mean(frames[-20:, i_theta, j_theta] ** 2, axis=0))
+    assert rms.min() > 0.5 * rms.max()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.110 seconds)
+   **Total running time of the script:** (0 minutes 3.971 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_electrodynamics_plot_dipole_radiation.py:

@@ -146,7 +146,7 @@ escape to infinity.
 Field lines and induced charge
 ------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-113
+.. GENERATED FROM PYTHON SOURCE LINES 76-114
 
 .. code-block:: Python
 
@@ -190,6 +190,7 @@ Field lines and induced charge
 
 
 
+
 .. image-sg:: /api/gallery/fields/statics/images/sphx_glr_plot_green_method_of_images_001.png
    :alt: charge above a grounded plane, induced charge: $\sigma = \varepsilon_0 E_z$, grounded sphere: image -0.50 q at R²/a
    :srcset: /api/gallery/fields/statics/images/sphx_glr_plot_green_method_of_images_001.png
@@ -199,10 +200,32 @@ Field lines and induced charge
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 115-120
+
+Check
+-----
+Images: the plane carries induced charge -q and pulls with k q^2 / (2d)^2;
+the grounded sphere carries -qR/a, pulls with k q^2 R a / (a^2 - R^2)^2, and
+stays at zero potential.
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-123
+
+.. code-block:: Python
+
+    assert abs(total / -q - 1) < 1e-6 and abs(F / (-k * q**2 / (2 * d) ** 2) - 1) < 1e-9
+    assert abs(total_s / (-q * R / a) - 1) < 1e-6 and abs(F_s / (-k * q**2 * R * a / (a**2 - R**2) ** 2) - 1) < 1e-9
+    assert np.max(np.abs(rim_phi)) < 1e-9
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.414 seconds)
+   **Total running time of the script:** (0 minutes 0.400 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_statics_plot_green_method_of_images.py:

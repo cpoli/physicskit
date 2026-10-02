@@ -186,7 +186,7 @@ absorbed quantum is a separate detector click at a random moment, so
 counts in equal time bins scatter with Poisson statistics, and the
 clicks don't smear out into a smooth classical intensity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-109
+.. GENERATED FROM PYTHON SOURCE LINES 88-110
 
 .. code-block:: Python
 
@@ -214,6 +214,7 @@ clicks don't smear out into a smooth classical intensity.
 
 
 
+
 .. image-sg:: /api/gallery/optics/quantum_optics/images/sphx_glr_plot_einstein_photoelectric_effect_002.png
    :alt: Millikan: Planck's constant from a straight line, 1 fW of green light: individual quanta
    :srcset: /api/gallery/optics/quantum_optics/images/sphx_glr_plot_einstein_photoelectric_effect_002.png
@@ -230,10 +231,32 @@ clicks don't smear out into a smooth classical intensity.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
+
+Check
+-----
+K_max = h nu - W: the stopping-voltage slope gives h and the intercept W;
+no photocurrent below threshold at any intensity; photon counts are
+Poissonian (variance ~ mean).
+
+.. GENERATED FROM PYTHON SOURCE LINES 116-119
+
+.. code-block:: Python
+
+    assert abs(slope * EV / H - 1) < 0.01 and abs(-intercept - metals["sodium"]) < 0.03
+    assert H * C / 600e-9 / EV < metals["sodium"] < H * C / 400e-9 / EV
+    assert abs(counts.var() / counts.mean() - 1) < 0.3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.095 seconds)
+   **Total running time of the script:** (0 minutes 0.087 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_quantum_optics_plot_einstein_photoelectric_effect.py:

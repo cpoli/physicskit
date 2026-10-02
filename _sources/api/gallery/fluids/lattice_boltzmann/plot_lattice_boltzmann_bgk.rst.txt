@@ -124,7 +124,7 @@ velocity, and its frequency gives the Strouhal number
 quarter of the channel), which raises :math:`St` above the value of about
 0.14 for an unbounded cylinder at this Reynolds number.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-130
+.. GENERATED FROM PYTHON SOURCE LINES 72-131
 
 .. code-block:: Python
 
@@ -189,6 +189,7 @@ quarter of the channel), which raises :math:`St` above the value of about
 
 
 
+
 .. image-sg:: /api/gallery/fluids/lattice_boltzmann/images/sphx_glr_plot_lattice_boltzmann_bgk_001.png
    :alt: Poiseuille flow, scaled by the predicted peak, viscosity is set by the relaxation time, vorticity at t = 16000 (Re = 55, St = 0.29); + marks the probe
    :srcset: /api/gallery/fluids/lattice_boltzmann/images/sphx_glr_plot_lattice_boltzmann_bgk_001.png
@@ -205,10 +206,32 @@ quarter of the channel), which raises :math:`St` above the value of about
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 132-137
+
+Check
+-----
+BGK viscosity nu = (tau - 1/2)/3 recovered from Poiseuille profiles, and
+periodic vortex shedding behind the cylinder (Strouhal number of order
+0.1-0.3 at this Re and blockage).
+
+.. GENERATED FROM PYTHON SOURCE LINES 137-140
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(nu_fit, [lbm_viscosity(tau_i) for tau_i in taus], rtol=0.01)
+    assert 0.1 < f_shed * D / U < 0.35
+    assert spec.max() > 10 * np.median(spec)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 11.589 seconds)
+   **Total running time of the script:** (0 minutes 11.342 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_lattice_boltzmann_plot_lattice_boltzmann_bgk.py:

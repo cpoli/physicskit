@@ -105,3 +105,13 @@ for b, ex in zip(b_vals, exact):
 print(f"the Sun's limb: b = {R_sun / M_sun:.3e} M, so the next-order correction is of relative size ~ M/b = {M_sun / R_sun:.1e}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# 4 G M_sun / c^2 R_sun = 1.75 arcsec (Newton: half); the exact deflection
+# approaches 4M/b from above as b grows.
+assert abs(delta_gr - 1.751) < 0.002
+assert np.all(exact / (4 / b_vals) > 1) and np.all(np.diff(exact / (4 / b_vals)) < 0)
+series = 4 / b_vals + 15 * np.pi / (4 * b_vals**2) + 128 / (3 * b_vals**3) + 3465 * np.pi / (64 * b_vals**4)
+assert abs(exact[-1] / series[-1] - 1) < 1e-4

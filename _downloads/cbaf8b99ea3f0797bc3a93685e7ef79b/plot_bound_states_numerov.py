@@ -49,7 +49,7 @@ axes[0].legend(fontsize=7, ncol=2)
 
 # Finite square well: bound states plus evanescent tails outside the well.
 fsw = FiniteSquareWell(V0=20.0, width=2.0)
-bound = fsw.bound_states(n_states=6)
+bound = fsw.bound_states(x_extent=10.0, n_points=2000, n_states=6)
 V_fsw = np.where(np.abs(bound.x) <= fsw.width / 2, -fsw.V0, 0.0)
 plot_well(
     axes[1], bound.x, V_fsw, bound.energies, bound.wavefunctions, scale=3, title=f"Finite square well\n({len(bound.energies)} bound states, evanescent tails)"
@@ -115,3 +115,18 @@ fig2.colorbar(im, ax=ax_map, label="# bound states", ticks=np.arange(0, n_bound_
 fig2.tight_layout()
 
 print(f"bound states at the well used above (V0={fsw.V0}, width={fsw.width}): {len(bound.energies)}")
+
+# %%
+# Check
+# -----
+# Numerov reproduces the Airy-zero bouncer levels. A square well of depth V0
+# and width w holds floor(2 z0 / pi) + 1 bound states, z0 = (w/2) sqrt(2 V0):
+# 5 for the well above (the fifth only just bound, at E = -0.03), and the
+# map agrees away from the thresholds, where a coarse grid can lose a
+# barely bound state.
+np.testing.assert_allclose(bouncer.energies, analytic, rtol=1e-4)
+z0 = width_grid[:, None] / 2 * np.sqrt(2 * V0_grid[None, :])
+n_expected = np.floor(2 * z0 / np.pi) + 1
+frac = (2 * z0 / np.pi) % 1
+assert len(bound.energies) == 5
+assert np.all(n_bound_map[(frac > 0.15) & (frac < 0.95)] == n_expected[(frac > 0.15) & (frac < 0.95)])

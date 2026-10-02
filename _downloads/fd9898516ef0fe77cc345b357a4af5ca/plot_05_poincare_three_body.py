@@ -108,3 +108,17 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Jacobi constant is conserved; a regular orbit's neighbour stays close
+# while a chaotic one's separates by orders of magnitude.
+assert drift < 1e-4
+seps = {}
+for x0 in (0.50, 0.20):
+    s0 = launch(x0, C)
+    _, a = rk4_integrate(r3bp_rhs, s0, 0.0, dt, 100_000, params)
+    _, b = rk4_integrate(r3bp_rhs, s0 + np.array([1e-9, 0, 0, 0]), 0.0, dt, 100_000, params)
+    seps[x0] = np.linalg.norm(a[-1, :2] - b[-1, :2])
+assert seps[0.50] < 1e-4 and seps[0.20] > 1e-2

@@ -57,3 +57,15 @@ for ax, T in zip(axes, [model.T_C - 1.0, model.T_C, model.T_C + 1.0]):
 plt.tight_layout()
 plt.subplots_adjust(top=0.88)  # tight_layout alone leaves the titles clipped by the figure edge
 plt.show()
+
+# %%
+# Check
+# -----
+# Onsager's magnetization below T_C, disorder above it, and the specific
+# heat peaking at T_C (within the temperature grid and finite-size shift).
+T_sweep, m_sweep = np.asarray(result["T"]), np.asarray(result["M"])
+below = T_sweep < model.T_C - 0.3
+onsager = (1 - np.sinh(2 / T_sweep[below]) ** -4) ** 0.125
+assert np.max(np.abs(m_sweep[below] - onsager)) < 0.03
+assert m_sweep[T_sweep > model.T_C + 0.5].max() < 0.3
+assert abs(T_sweep[np.argmax(result["C_v"])] - model.T_C) < 0.2

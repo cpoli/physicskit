@@ -121,3 +121,18 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The quantized radial action gives Bohr's -1/(2 n^2) for every elliptical
+# orbit; Sommerfeld's relativistic formula is exactly Dirac's with k = j + 1/2;
+# the n = 2 fine-structure splitting is 10.95 GHz.
+for n_total, k in [(2, 1), (3, 1), (3, 2)]:
+    E = brentq(lambda E: radial_action(E, k) - 2 * np.pi * (n_total - k), -1 / (2 * k**2) * (1 - 1e-2), -0.01)
+    assert abs(E + 1 / (2 * n_total**2)) < 1e-4
+for n_total in (2, 3):
+    for k in range(1, n_total + 1):
+        assert abs(sommerfeld(n_total - k, k) - dirac(n_total, k - 0.5)) < 1e-12
+split_n2 = (sommerfeld(0, 2) - sommerfeld(1, 1)) / 4.135667696e-15 / 1e9
+assert abs(split_n2 - 10.95) < 0.01

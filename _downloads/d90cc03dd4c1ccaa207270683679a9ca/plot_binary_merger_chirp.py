@@ -153,3 +153,14 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("gw150914_ripple.gif", writer="pillow", fps=15)
+
+# %%
+# Check
+# -----
+# Chirp mass (m1 m2)^(3/5) / M^(1/5) = 28.1 Msun; the remnant (62 Msun,
+# spin 0.67 measured for GW150914) and its ~250-280 Hz ringdown.
+m1_s, m2_s = 36.0, 29.0
+assert abs(const.geometrized_to_solar_masses(merger.chirp_mass) - (m1_s * m2_s) ** 0.6 / (m1_s + m2_s) ** 0.2) < 1e-6
+assert abs(const.geometrized_to_solar_masses(M_f) - 62) < 1.5 and abs(a_f / M_f - 0.67) < 0.03
+assert 250 < f_qnm * const.C_SI < 290
+assert np.all(np.diff(f_Hz) > 0)

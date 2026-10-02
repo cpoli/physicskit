@@ -101,7 +101,7 @@ Entanglement profile :math:`S(\ell)`
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x123c30f80>
+    <matplotlib.legend.Legend object at 0x33b782600>
 
 
 
@@ -143,7 +143,7 @@ is a straight line of slope :math:`c/3`; the gapped one is flat.
 Half-chain entropy vs. system size
 -----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-88
+.. GENERATED FROM PYTHON SOURCE LINES 77-89
 
 .. code-block:: Python
 
@@ -161,6 +161,7 @@ Half-chain entropy vs. system size
 
 
 
+
 .. image-sg:: /api/gallery/condensed/spin_chains/images/sphx_glr_plot_calabrese_cardy_entanglement_002.png
    :alt: Critical: $S(N/2) \simeq \frac{1}{6}\ln N$; gapped: constant
    :srcset: /api/gallery/condensed/spin_chains/images/sphx_glr_plot_calabrese_cardy_entanglement_002.png
@@ -170,10 +171,32 @@ Half-chain entropy vs. system size
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 90-94
+
+Check
+-----
+At the critical point the fitted central charge is the Ising value 1/2;
+deep in the gapped phase the half-chain entropy saturates.
+
+.. GENERATED FROM PYTHON SOURCE LINES 94-98
+
+.. code-block:: Python
+
+    c_crit, _ = fit_central_charge(ground_state_profile(N, 1.0), N, trim=2)
+    assert abs(c_crit - 0.5) < 0.03
+    S_gapped = [ground_state_profile(n, 3.0)[n // 2 - 1] for n in (12, 18)]
+    assert abs(S_gapped[1] - S_gapped[0]) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.510 seconds)
+   **Total running time of the script:** (0 minutes 2.959 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_spin_chains_plot_calabrese_cardy_entanglement.py:

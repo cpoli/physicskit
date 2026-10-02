@@ -139,7 +139,7 @@ critical chain.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x123acc560>
+    <matplotlib.legend.Legend object at 0x176997da0>
 
 
 
@@ -151,7 +151,7 @@ A gapless spectrum
 Unlike the integer-spin chain, the spin-1/2 Heisenberg chain has no gap:
 the singlet-triplet splitting closes as :math:`1/N`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-81
+.. GENERATED FROM PYTHON SOURCE LINES 72-82
 
 .. code-block:: Python
 
@@ -172,9 +172,31 @@ the singlet-triplet splitting closes as :math:`1/N`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
+
+Check
+-----
+Exact diagonalization and the Bethe equations agree to machine precision,
+and E0/N -> 1/4 - ln 2 with the CFT correction -pi^2 / 12 N^2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(E_ed, E_bethe, atol=1e-8)
+    assert abs(e_bethe[-1] - (e_inf - np.pi**2 / (12 * N_bethe[-1] ** 2))) < 1e-6
+    assert np.all(np.diff(gap_ed) < 0)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.198 seconds)
+   **Total running time of the script:** (0 minutes 0.218 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_spin_chains_plot_bethe_ansatz_heisenberg_chain.py:

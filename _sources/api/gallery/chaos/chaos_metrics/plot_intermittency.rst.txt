@@ -62,7 +62,7 @@ reinjects it, before the next laminar episode begins.
 
 .. code-block:: Python
 
-    r_c = 3.8284  # the period-3 window's tangent-bifurcation threshold
+    r_c = 1 + np.sqrt(8)  # the period-3 window's tangent-bifurcation threshold, 3.828427...
     r = r_c - 1e-4
 
     m = LogisticMap(r=r)
@@ -73,14 +73,14 @@ reinjects it, before the next laminar episode begins.
     ax1.plot(traj, color="steelblue", lw=0.9)
     ax1.set_xlabel("iteration n")
     ax1.set_ylabel(r"$x_n$")
-    ax1.set_title(f"Type-I intermittency at r={r} (r_c={r_c}): laminar plateaus, chaotic bursts")
+    ax1.set_title(f"Type-I intermittency at r={r:.6f} (r_c={r_c:.6f}): laminar plateaus, chaotic bursts")
     fig1.tight_layout()
 
 
 
 
 .. image-sg:: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_intermittency_001.png
-   :alt: Type-I intermittency at r=3.8282999999999996 (r_c=3.8284): laminar plateaus, chaotic bursts
+   :alt: Type-I intermittency at r=3.828327 (r_c=3.828427): laminar plateaus, chaotic bursts
    :srcset: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_intermittency_001.png
    :class: sphx-glr-single-img
 
@@ -132,9 +132,9 @@ near-periodic stretches from the chaotic bursts between them.
 
  .. code-block:: none
 
-    at r=3.8282999999999996 (r_c - r = 1.0e-04): 926 laminar episodes found
-    laminar run lengths (first 15): [90  1  6  1 17  1 24  1 24  1  1  2  1  1  2]
-    mean laminar length: 19.91
+    at r=3.82832712474619 (r_c - r = 1.0e-04): 824 laminar episodes found
+    laminar run lengths (first 15): [102   1   1   3   1   1  17   1  53   1   3   1 101   1   1]
+    mean laminar length: 24.44
 
 
 
@@ -144,7 +144,7 @@ near-periodic stretches from the chaotic bursts between them.
 Mean laminar length diverges as the tangency is approached
 -------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-94
+.. GENERATED FROM PYTHON SOURCE LINES 78-95
 
 .. code-block:: Python
 
@@ -167,6 +167,7 @@ Mean laminar length diverges as the tangency is approached
 
 
 
+
 .. image-sg:: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_intermittency_002.png
    :alt: Mean laminar length grows as the tangency is approached
    :srcset: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_intermittency_002.png
@@ -179,11 +180,31 @@ Mean laminar length diverges as the tangency is approached
 
 
     r_c - r        mean laminar length
-      1.0e-03            6.36
-      3.0e-04           11.90
-      1.0e-04           19.91
-      3.0e-05           28.19
-      1.0e-05           36.40
+      1.0e-03            6.22
+      3.0e-04           12.63
+      1.0e-04           24.44
+      3.0e-05           44.39
+      1.0e-05           65.38
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+Check
+-----
+Pomeau-Manneville type-I intermittency: the mean laminar length grows as
+(r_c - r)^(-1/2) at the period-3 tangent bifurcation r_c = 1 + sqrt(8).
+
+.. GENERATED FROM PYTHON SOURCE LINES 100-102
+
+.. code-block:: Python
+
+    exponent = np.polyfit(np.log(distances), np.log(mean_lengths), 1)[0]
+    assert abs(exponent + 0.5) < 0.05
+
+
+
 
 
 
@@ -191,7 +212,7 @@ Mean laminar length diverges as the tangency is approached
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.119 seconds)
+   **Total running time of the script:** (0 minutes 0.115 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_chaos_metrics_plot_intermittency.py:

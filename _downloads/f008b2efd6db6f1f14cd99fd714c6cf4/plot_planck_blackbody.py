@@ -108,3 +108,15 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Wien's displacement law: h nu_max = 2.8214 k_B T; integrating Planck's law
+# recovers the Stefan-Boltzmann constant; the oscillator sum gives Planck's
+# mean energy x / (e^x - 1).
+assert abs(H * nu_peak / (K_B * 5800) - 2.821439) < 1e-3
+assert abs(sigma_from_planck / STEFAN_BOLTZMANN - 1) < 1e-4
+for x in x_values:
+    w = np.exp(-x * level_spacing)
+    assert abs(np.sum(level_spacing * x * w) / np.sum(w) - x / np.expm1(x)) < 1e-6

@@ -98,3 +98,13 @@ ax3.set_title("Proper-motion streaming")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A = (v/R - dv/dR) / 2 and B = -(v/R + dv/dR) / 2 from the rotation curve
+# itself; a curve falling more slowly than Keplerian gives A > 0 > B.
+dv_dR = (v_c(R0 + 1e-3) - v_c(R0 - 1e-3)) / 2e-3
+assert abs(A - 0.5 * (v_c(R0) / R0 - dv_dR)) < 1e-6
+assert abs(B + 0.5 * (v_c(R0) / R0 + dv_dR)) < 1e-6
+assert A > 0 > B

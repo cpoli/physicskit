@@ -172,7 +172,7 @@ per spin state, so subshell :math:`l` holds :math:`2(2l+1)`. Filling
 in the Madelung order (increasing :math:`n+l`, then :math:`n`) and
 stopping at each completed *p* subshell gives the noble gases.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-110
+.. GENERATED FROM PYTHON SOURCE LINES 84-111
 
 .. code-block:: Python
 
@@ -205,6 +205,7 @@ stopping at each completed *p* subshell gives the noble gases.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/hydrogen/images/sphx_glr_plot_pauli_exclusion_and_spin_001.png
    :alt: Spinors: $-1$ after $2\pi$, $+1$ after $4\pi$, spin singlet (symmetric space): $|\psi(x_1,x_2)|^2$, spin triplet (antisymmetric space): $|\psi(x_1,x_2)|^2$
    :srcset: /api/gallery/quantum/hydrogen/images/sphx_glr_plot_pauli_exclusion_and_spin_001.png
@@ -221,10 +222,33 @@ stopping at each completed *p* subshell gives the noble gases.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 112-117
+
+Check
+-----
+The Pauli algebra, the spinor sign flip under a 2 pi rotation, the
+vanishing of an antisymmetric state with both electrons in one orbital,
+and the noble-gas closed shells from the Madelung (n + l) filling order.
+
+.. GENERATED FROM PYTHON SOURCE LINES 117-121
+
+.. code-block:: Python
+
+    assert ok
+    assert np.allclose(expm(-1j * 2 * np.pi * sig["z"] / 2), -I2) and np.allclose(expm(-1j * 4 * np.pi * sig["z"] / 2), I2)
+    assert np.abs(same).max() == 0 and np.max(np.abs(np.diag(triplet))) < 1e-12
+    assert noble[:6] == [2, 10, 18, 36, 54, 86]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.118 seconds)
+   **Total running time of the script:** (0 minutes 0.110 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_hydrogen_plot_pauli_exclusion_and_spin.py:

@@ -85,3 +85,13 @@ ax2.set_ylabel(r"$S(N/2)$")
 ax2.set_title(r"Critical: $S(N/2) \simeq \frac{1}{6}\ln N$; gapped: constant")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# At the critical point the fitted central charge is the Ising value 1/2;
+# deep in the gapped phase the half-chain entropy saturates.
+c_crit, _ = fit_central_charge(ground_state_profile(N, 1.0), N, trim=2)
+assert abs(c_crit - 0.5) < 0.03
+S_gapped = [ground_state_profile(n, 3.0)[n // 2 - 1] for n in (12, 18)]
+assert abs(S_gapped[1] - S_gapped[0]) < 1e-3

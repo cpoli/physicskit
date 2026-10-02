@@ -176,3 +176,14 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("feynman_phasor_spiral.gif", writer="pillow", fps=20)
+
+# %%
+# Check
+# -----
+# Classical actions: m (xf - x0)^2 / 2T for the free particle and
+# m omega [(x0^2 + xf^2) cos(omega T) - 2 x0 xf] / (2 sin(omega T)) for the
+# oscillator; as hbar shrinks the paths near the classical one dominate.
+assert abs(S_cl - m * (xf - x0) ** 2 / (2 * T)) < 1e-3
+S_ho = m * omega * ((x0**2 + xf**2) * np.cos(omega * T) - 2 * x0 * xf) / (2 * np.sin(omega * T))
+assert abs(S_cl_h - S_ho) < 1e-2
+assert frac_small > 3 * frac_large and frac_h_small > 3 * frac_h_large

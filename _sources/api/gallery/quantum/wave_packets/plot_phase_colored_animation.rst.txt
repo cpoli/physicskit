@@ -1629,7 +1629,7 @@ produced by the FFT propagation; imaging :math:`|\psi(x,t)|^2` over the
 full (x,t) grid at once shows the tunneling back and forth as continuous
 diagonal-ish bands, rather than six isolated instants.
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-74
+.. GENERATED FROM PYTHON SOURCE LINES 64-75
 
 .. code-block:: Python
 
@@ -1646,6 +1646,7 @@ diagonal-ish bands, rather than six isolated instants.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_phase_colored_animation_003.png
    :alt: Space-time $|\psi(x,t)|^2$: tunneling back and forth between wells
    :srcset: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_phase_colored_animation_003.png
@@ -1655,10 +1656,33 @@ diagonal-ish bands, rather than six isolated instants.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 76-80
+
+Check
+-----
+The packet starts in the left well, is in the right one half a tunneling
+period later, and is back after a full period.
+
+.. GENERATED FROM PYTHON SOURCE LINES 80-85
+
+.. code-block:: Python
+
+    dx = dw.x[1] - dw.x[0]
+    P_left = np.array([np.sum(np.abs(f[dw.x < 0]) ** 2) * dx for f in frames])
+    P_at = lambda t: P_left[np.argmin(np.abs(times - t))]  # noqa: E731
+    assert P_at(0) > 0.95 and P_at(result.tunneling_period / 2) < 0.05 and P_at(result.tunneling_period) > 0.95
+    assert abs(solver.norm(frames[-1]) - 1) < 1e-8
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 6.078 seconds)
+   **Total running time of the script:** (2 minutes 1.212 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_wave_packets_plot_phase_colored_animation.py:

@@ -99,7 +99,7 @@ The vortex's doughnut intensity (dark core on-axis, since the LG
 amplitude carries a factor r^|l| that vanishes at r=0) and its helical
 phase (a 2*pi phase winding around the axis, absent for l=0).
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-85
+.. GENERATED FROM PYTHON SOURCE LINES 57-86
 
 .. code-block:: Python
 
@@ -134,6 +134,7 @@ phase (a 2*pi phase winding around the axis, absent for l=0).
 
 
 
+
 .. image-sg:: /api/gallery/optics/gaussian_beams/images/sphx_glr_plot_orbital_angular_momentum_001.png
    :alt: l=0 intensity, l=0 phase, l=1 intensity (donut, dark core), l=1 phase (helical, 2*pi winding)
    :srcset: /api/gallery/optics/gaussian_beams/images/sphx_glr_plot_orbital_angular_momentum_001.png
@@ -152,10 +153,33 @@ phase (a 2*pi phase winding around the axis, absent for l=0).
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 87-91
+
+Check
+-----
+An l = 1 Laguerre-Gaussian mode has a dark core and a phase winding of
+exactly 2 pi around it (closing the loop); l = 0 is bright on axis.
+
+.. GENERATED FROM PYTHON SOURCE LINES 91-96
+
+.. code-block:: Python
+
+    loop = np.append(u_ring_vortex, u_ring_vortex[0])
+    total_winding = np.sum(np.angle(loop[1:] / loop[:-1])) / (2 * np.pi)
+    assert abs(total_winding - 1) < 1e-9
+    assert I_vortex_axis < 0.01 * np.max(np.abs(u_vortex) ** 2)
+    assert I_gaussian_axis > 0.99 * np.max(np.abs(u_gaussian) ** 2)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.132 seconds)
+   **Total running time of the script:** (0 minutes 0.128 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_gaussian_beams_plot_orbital_angular_momentum.py:

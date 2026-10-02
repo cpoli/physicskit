@@ -107,3 +107,14 @@ for ax, psi, title in [(ax2, singlet, "spin singlet (symmetric space)"), (ax3, t
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Pauli algebra, the spinor sign flip under a 2 pi rotation, the
+# vanishing of an antisymmetric state with both electrons in one orbital,
+# and the noble-gas closed shells from the Madelung (n + l) filling order.
+assert ok
+assert np.allclose(expm(-1j * 2 * np.pi * sig["z"] / 2), -I2) and np.allclose(expm(-1j * 4 * np.pi * sig["z"] / 2), I2)
+assert np.abs(same).max() == 0 and np.max(np.abs(np.diag(triplet))) < 1e-12
+assert noble[:6] == [2, 10, 18, 36, 54, 86]

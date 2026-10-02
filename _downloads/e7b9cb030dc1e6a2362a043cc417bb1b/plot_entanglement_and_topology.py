@@ -74,3 +74,12 @@ fig2.colorbar(im, ax=ax3, label="|S(b,b')|")
 fig2.tight_layout()
 
 print(f"max |S| over the (b,b') grid: {S_grid.max():.6f}  (Tsirelson bound {2 * np.sqrt(2):.6f})")
+
+# %%
+# Check
+# -----
+# E(a, b) = -cos(theta_a - theta_b); the CHSH value reaches Tsirelson's bound
+# 2 sqrt(2) and never exceeds it.
+np.testing.assert_allclose(E, -np.cos(dtheta), atol=1e-12)
+assert abs(bc.chsh_optimal() - 2 * np.sqrt(2)) < 1e-12
+assert 2 < S_grid.max() <= 2 * np.sqrt(2) + 1e-12

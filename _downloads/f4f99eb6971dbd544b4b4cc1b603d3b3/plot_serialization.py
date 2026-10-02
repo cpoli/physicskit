@@ -30,6 +30,7 @@ import tempfile
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Lorenz
 from physicskit.chaos.utils.io import load_arrays, load_system_config, save_arrays, save_system_config
@@ -69,3 +70,10 @@ ax.set_ylabel("z")
 ax.set_title("Trajectory reloaded from disk, unchanged")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Round trip: parameters and trajectories come back unchanged.
+assert restored.beta == system.beta
+assert np.array_equal(loaded["states"], states) and np.array_equal(loaded["t"], t)

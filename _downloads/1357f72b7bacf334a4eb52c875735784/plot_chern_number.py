@@ -50,3 +50,9 @@ ax.set_title("Berry curvature of the lower Haldane band")
 C = compute_chern_number(H, grid_size=30)
 print("Chern numbers (per band):", C)
 print(f"raw curvature sum / 2*pi for the lower band: {F.sum() / (2 * np.pi):.10f}")
+
+# %%
+# Check
+# -----
+assert list(C) == [1, -1]
+assert abs(F.sum() / (2 * np.pi) - 1) < 1e-10

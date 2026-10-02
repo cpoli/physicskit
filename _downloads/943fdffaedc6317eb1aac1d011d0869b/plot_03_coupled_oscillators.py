@@ -78,3 +78,14 @@ ax2.set_title("Phase portrait of mass 1:\na clean ellipse (single-frequency moti
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A pure normal mode: every mass moves at omega_k = 2 sqrt(k/m) sin(k pi / 2(n+1)),
+# keeping the mode shape, so the state repeats after one period.
+assert drift < 1e-10
+i_period = np.argmin(np.abs(result.t - period))
+np.testing.assert_allclose(result.q[i_period], q0, atol=1e-4)
+ratios = result.q[:, 1:][np.abs(result.q[:, 0]) > 0.05] / result.q[:, :1][np.abs(result.q[:, 0]) > 0.05]
+np.testing.assert_allclose(ratios, np.broadcast_to(q0[1:] / q0[0], ratios.shape), atol=1e-6)

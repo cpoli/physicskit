@@ -149,13 +149,14 @@ An animation of the full time propagation
 renders the complex wavefunction frame by frame, phase-colored, as it
 passes through the wall and the two emerging wavelets interfere.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-87
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
 
 .. code-block:: Python
 
 
     anim = animate_density_2d(X, Y, frames, times=times)
     # anim.save("double_slit.gif", writer="pillow", fps=15)
+
 
 
 
@@ -989,10 +990,32 @@ passes through the wall and the two emerging wavelets interfere.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+Check
+-----
+Unitary evolution keeps the norm, and the transmitted wave shows fringes:
+several separated maxima on the screen, not the two shadows of the slits.
+
+.. GENERATED FROM PYTHON SOURCE LINES 93-97
+
+.. code-block:: Python
+
+    assert abs(norm_end - norm0) < 1e-6
+    inner = screen_density[1:-1]
+    peaks = np.where((inner > screen_density[:-2]) & (inner > screen_density[2:]) & (inner > 0.1 * screen_density.max()))[0]
+    assert len(peaks) >= 3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.488 seconds)
+   **Total running time of the script:** (0 minutes 9.218 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_measurement_plot_double_slit_propagation.py:

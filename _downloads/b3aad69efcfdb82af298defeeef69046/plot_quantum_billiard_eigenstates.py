@@ -22,6 +22,8 @@ shape-specific code needed.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.special import jn_zeros
 
 from physicskit.chaos.quantum import QuantumBilliard
 from physicskit.chaos.systems.billiards import BunimovichStadium, CircleBilliard
@@ -82,3 +84,13 @@ plt.show()
 fig3, ax3 = plot_weyl_law(stadium, n_states=25)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Circle: k^2 = j_{m,n}^2 (zeros of Bessel functions), with the m != 0 levels
+# doubly degenerate; the finite-difference grid is accurate to ~1%.
+exact = np.array([jn_zeros(0, 1)[0], jn_zeros(1, 1)[0], jn_zeros(1, 1)[0], jn_zeros(2, 1)[0], jn_zeros(2, 1)[0], jn_zeros(0, 2)[1]]) ** 2
+np.testing.assert_allclose(eigenvalues, exact, rtol=0.015)
+assert abs(eigenvalues[2] - eigenvalues[1]) < 1e-3 * eigenvalues[1]
+assert np.all(np.diff(eigenvalues_s) > 0)

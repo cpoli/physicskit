@@ -132,3 +132,14 @@ ax3.legend(fontsize=8)
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Inverse-square force, action = reaction, and the conserved Kepler
+# elements, areal velocity and period of the resulting two-body orbit.
+assert abs(slope + 2) < 1e-9
+assert np.allclose(masses_pair[0] * acc_pair[0] + masses_pair[1] * acc_pair[1], 0, atol=1e-12)
+assert np.ptp(elements[:, 0]) < 1e-5 and np.ptp(elements[:, 1]) < 1e-5
+assert np.ptp(areal) / areal.mean() < 1e-10
+assert abs(T_measured / orbital_period(a_fit, mu) - 1) < 1e-4

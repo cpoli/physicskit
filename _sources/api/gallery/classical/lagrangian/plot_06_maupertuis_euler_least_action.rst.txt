@@ -139,7 +139,7 @@ still stationary (the slope at :math:`\epsilon=0` vanishes) but it is a
 saddle. Euler's condition is stationarity; "least" was Maupertuis's
 hopeful reading.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-104
+.. GENERATED FROM PYTHON SOURCE LINES 85-105
 
 .. code-block:: Python
 
@@ -165,6 +165,7 @@ hopeful reading.
 
 
 
+
 .. image-sg:: /api/gallery/classical/lagrangian/images/sphx_glr_plot_06_maupertuis_euler_least_action_002.png
    :alt: Stationary, but not always least
    :srcset: /api/gallery/classical/lagrangian/images/sphx_glr_plot_06_maupertuis_euler_least_action_002.png
@@ -181,10 +182,37 @@ hopeful reading.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-111
+
+Check
+-----
+Minimizing the discretized action recovers x(t) = sin(wt)/sin(wT); along
+eta = sin(pi t / T) the second variation is (pi^2 / 4T - w^2 T / 4) eps^2:
+a minimum for T < pi/w, a saddle beyond.
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-119
+
+.. code-block:: Python
+
+    assert abs(result.fun - action(exact_path(t, T)[1:-1], T)) < 1e-6
+    assert np.max(np.abs(x_best - exact_path(t, T))) < 2e-3
+    for T_i in (2.0, 4.0):
+        t_i = np.linspace(0.0, T_i, N + 1)
+        eta = np.sin(np.pi * t_i / T_i)
+        S0 = action(exact_path(t_i, T_i)[1:-1], T_i)
+        dS = np.array([action((exact_path(t_i, T_i) + e * eta)[1:-1], T_i) - S0 for e in eps])
+        assert abs(np.polyfit(eps, dS, 2)[0] - (np.pi**2 / (4 * T_i) - omega**2 * T_i / 4)) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.692 seconds)
+   **Total running time of the script:** (0 minutes 0.684 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_lagrangian_plot_06_maupertuis_euler_least_action.py:

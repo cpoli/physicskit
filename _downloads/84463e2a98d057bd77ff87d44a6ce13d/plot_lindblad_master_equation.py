@@ -93,3 +93,12 @@ rho0 = np.array([[0.3, 0.2 - 0.1j], [0.2 + 0.1j, 0.7]])
 rho_lindblad = solve_lindblad(rho0, np.zeros((2, 2)), [np.sqrt(Gamma) * sigma_minus()], np.array([0.0, t_c]))[-1]
 rho_kraus = apply_kraus(rho0, amplitude_damping_kraus(1 - np.exp(-Gamma * t_c)))
 print("max |Lindblad - Kraus| =", np.abs(rho_lindblad - rho_kraus).max())
+
+# %%
+# Check
+# -----
+# Populations relax as e^(-t/T1), coherences as e^(-t/T2); the Lindblad
+# solution of amplitude damping equals the Kraus map with gamma = 1 - e^(-Gamma t).
+np.testing.assert_allclose(rho_e[:, 1, 1].real, np.exp(-t / T1), atol=1e-6)
+np.testing.assert_allclose(2 * np.abs(rho_p[:, 0, 1]), np.exp(-t / T2), atol=1e-6)
+assert np.abs(rho_lindblad - rho_kraus).max() < 1e-8

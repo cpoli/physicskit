@@ -62,11 +62,16 @@ diverge.
 Chaotic case: Lorenz
 ---------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 33-40
 
 .. code-block:: Python
 
     lorenz = Lorenz()
+    # Start on the attractor: from the default (1, 1, 1) the pair first spends
+    # several time units relaxing onto it, and that transient pulls the fitted
+    # slope far below the attractor's exponent.
+    _, transient = lorenz.trajectory(n_steps=2000, dt=0.01)
+    on_attractor = transient[-1]
 
 
 
@@ -75,7 +80,7 @@ Chaotic case: Lorenz
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-42
+.. GENERATED FROM PYTHON SOURCE LINES 41-47
 
 Non-chaotic case: an undriven, damped (linear) oscillator
 ------------------------------------------------------------
@@ -84,14 +89,14 @@ term to zero leaves a plain damped harmonic oscillator: every trajectory
 relaxes to the same fixed point, so nearby trajectories converge rather
 than diverge.
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-52
+.. GENERATED FROM PYTHON SOURCE LINES 47-58
 
 .. code-block:: Python
 
     damped = Duffing(delta=0.3, alpha=1.0, beta=0.0, gamma=0.0, omega=1.0)
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
-    _, _, lam_lorenz = plot_lyapunov_divergence(lorenz, t_max=20.0, n_points=1000, ax=ax1, seed=0)
+    _, _, lam_lorenz = plot_lyapunov_divergence(lorenz, t_max=40.0, n_points=1000, state0=on_attractor, ax=ax1, seed=0)
     _, _, lam_damped = plot_lyapunov_divergence(damped, t_max=20.0, n_points=1000, ax=ax2, seed=0)
     ax1.set_title(f"Lorenz (chaotic): $\\lambda_{{max}} \\approx {lam_lorenz:.3f} > 0$")
     ax2.set_title(f"Damped oscillator: $\\lambda_{{max}} \\approx {lam_damped:.3f} < 0$")
@@ -101,10 +106,31 @@ than diverge.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_lyapunov_divergence_001.png
-   :alt: Lorenz (chaotic): $\lambda_{max} \approx 0.260 > 0$, Damped oscillator: $\lambda_{max} \approx -0.148 < 0$
+   :alt: Lorenz (chaotic): $\lambda_{max} \approx 0.943 > 0$, Damped oscillator: $\lambda_{max} \approx -0.148 < 0$
    :srcset: /api/gallery/chaos/chaos_metrics/images/sphx_glr_plot_lyapunov_divergence_001.png
    :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 59-63
+
+Check
+-----
+Lorenz: lambda_max ~ 0.906 (a finite-time estimate from one pair of
+trajectories); the damped oscillator: nearby states converge at delta / 2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-65
+
+.. code-block:: Python
+
+    assert abs(lam_lorenz - 0.906) < 0.1
+    assert abs(lam_damped + 0.15) < 0.01
+
+
 
 
 
@@ -113,7 +139,7 @@ than diverge.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.236 seconds)
+   **Total running time of the script:** (0 minutes 0.374 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_chaos_metrics_plot_lyapunov_divergence.py:

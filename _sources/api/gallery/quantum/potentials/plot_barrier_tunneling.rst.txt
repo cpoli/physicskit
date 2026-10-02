@@ -586,7 +586,7 @@ transmission -- exactly the interference structure a single 1D scan (as
 in :doc:`/api/gallery/quantum/potentials/plot_ramsauer_townsend_resonance`)
 cannot show at once.
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-156
+.. GENERATED FROM PYTHON SOURCE LINES 138-157
 
 .. code-block:: Python
 
@@ -611,6 +611,7 @@ cannot show at once.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/potentials/images/sphx_glr_plot_barrier_tunneling_003.png
    :alt: Transmission T(E, width) for a V0=6.0 barrier
    :srcset: /api/gallery/quantum/potentials/images/sphx_glr_plot_barrier_tunneling_003.png
@@ -620,10 +621,33 @@ cannot show at once.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 158-162
+
+Check
+-----
+The simulated transmission matches the packet-averaged analytic T(E)
+(not T at the mean energy), probability is conserved, and T + R = 1.
+
+.. GENERATED FROM PYTHON SOURCE LINES 162-167
+
+.. code-block:: Python
+
+    assert abs(transmitted[-1] - analytic_T_avg) < 0.01
+    assert abs(solver.norm(frames[-1]) - 1) < 1e-6
+    assert abs(transmitted[-1] + reflected[-1] - 1) < 0.01
+    # opaque limit: T falls off exponentially with the barrier width below the top
+    assert T_map[-1, 0] < 1e-3 * T_map[0, 0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.302 seconds)
+   **Total running time of the script:** (0 minutes 6.049 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_potentials_plot_barrier_tunneling.py:

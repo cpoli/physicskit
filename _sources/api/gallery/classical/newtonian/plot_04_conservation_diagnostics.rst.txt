@@ -44,11 +44,12 @@ break other symmetries. This contrasts two systems:
   force from the origin at all: gravity exerts a real torque there, so
   L changes -- growing steadily as the projectile falls.
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-35
+.. GENERATED FROM PYTHON SOURCE LINES 30-36
 
 .. code-block:: Python
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.classical.systems.newtonian import KeplerSystem, ProjectileMotion
     from physicskit.classical.utils.conservation import angular_momentum_2d, angular_momentum_drift, relative_energy_drift
@@ -60,12 +61,12 @@ break other symmetries. This contrasts two systems:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-38
+.. GENERATED FROM PYTHON SOURCE LINES 37-39
 
 Kepler, with a precession-causing perturbation: L still conserved
 ------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-45
+.. GENERATED FROM PYTHON SOURCE LINES 39-46
 
 .. code-block:: Python
 
@@ -89,12 +90,12 @@ Kepler, with a precession-causing perturbation: L still conserved
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-48
+.. GENERATED FROM PYTHON SOURCE LINES 47-49
 
 Projectile motion: uniform gravity is not a central force, L drifts
 --------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-67
+.. GENERATED FROM PYTHON SOURCE LINES 49-68
 
 .. code-block:: Python
 
@@ -135,14 +136,14 @@ Projectile motion: uniform gravity is not a central force, L drifts
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-72
+.. GENERATED FROM PYTHON SOURCE LINES 69-73
 
 This is the practical content of Noether's theorem: energy
 conservation comes from time-translation symmetry, angular momentum
 conservation from rotational symmetry, and the two can be switched on
 or off independently, as shown here.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-74
+.. GENERATED FROM PYTHON SOURCE LINES 73-76
 
 .. code-block:: Python
 
@@ -156,9 +157,31 @@ or off independently, as shown here.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 77-81
+
+Check
+-----
+A central force conserves L even when perturbed; gravity on a projectile
+torques it: L_z(t) = -m v_x g t^2 / 2 about the launch point.
+
+.. GENERATED FROM PYTHON SOURCE LINES 81-84
+
+.. code-block:: Python
+
+    assert L_drift_k.max() < 1e-12 and E_drift_k.max() < 1e-9
+    v_x = 20.0 * np.cos(np.radians(45.0))
+    np.testing.assert_allclose(L_p, -v_x * 9.81 * result_p.t**2 / 2, atol=1e-8)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.665 seconds)
+   **Total running time of the script:** (0 minutes 0.657 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_newtonian_plot_04_conservation_diagnostics.py:

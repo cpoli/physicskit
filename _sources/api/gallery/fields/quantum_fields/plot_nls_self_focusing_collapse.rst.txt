@@ -50,7 +50,7 @@ not carried through the unresolvable blow-up itself.
     import matplotlib.pyplot as plt
     import numpy as np
 
-    from physicskit.fields import animate_density_2d, gpe_evolve, harmonic_trap_grid
+    from physicskit.fields import animate_density_2d, gpe_energy, gpe_evolve, harmonic_trap_grid
 
 
 
@@ -326,7 +326,7 @@ the collapse *accelerating* -- an ever-steepening curve, not the flat
 line a stable soliton (or the saturating curve of a process approaching
 some finite peak) would trace out.
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-83
+.. GENERATED FROM PYTHON SOURCE LINES 76-84
 
 .. code-block:: Python
 
@@ -340,6 +340,7 @@ some finite peak) would trace out.
 
 
 
+
 .. image-sg:: /api/gallery/fields/quantum_fields/images/sphx_glr_plot_nls_self_focusing_collapse_002.png
    :alt: Self-focusing collapse: peak density accelerating, not saturating
    :srcset: /api/gallery/fields/quantum_fields/images/sphx_glr_plot_nls_self_focusing_collapse_002.png
@@ -349,10 +350,32 @@ some finite peak) would trace out.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 85-89
+
+Check
+-----
+Norm is conserved while the peak keeps rising: with negative Hamiltonian
+the 2D attractive NLS must collapse (Vlasov-Petrishchev-Talanov virial identity).
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+.. code-block:: Python
+
+    norms = np.sum(np.abs(frames) ** 2, axis=(1, 2))
+    assert np.ptp(norms) < 1e-9 * norms[0]
+    assert gpe_energy(psi0, V, -2.0, X, Y, K2)["total"] < 0
+    assert np.all(np.diff(peak_density) > 0) and peak_density[-1] > 2 * peak_density[0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.779 seconds)
+   **Total running time of the script:** (0 minutes 0.745 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_quantum_fields_plot_nls_self_focusing_collapse.py:

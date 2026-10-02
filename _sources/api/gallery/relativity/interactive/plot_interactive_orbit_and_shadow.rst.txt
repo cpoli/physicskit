@@ -39,10 +39,12 @@ and a backward ray-traced silhouette (shadow) of a rotating Kerr black hole
 with spin parameter :math:`a = 0.9M`, then saves each as a standalone
 HTML file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-28
+.. GENERATED FROM PYTHON SOURCE LINES 23-30
 
 .. code-block:: Python
 
+
+    import numpy as np
 
     from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
     from physicskit.relativity.visualizers.interactive import interactive_orbit_3d, interactive_shadow_image
@@ -55,22 +57,22 @@ HTML file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-35
+.. GENERATED FROM PYTHON SOURCE LINES 31-37
 
 An interactive 3D precessing orbit
 ------------------------------------
 A bound, eccentric equatorial orbit starting at apoapsis :math:`r_0=15M`
-with tangential velocity reduced 20% below circular, integrated exactly
+with tangential velocity reduced 12% below circular, integrated exactly
 (no post-Newtonian approximation) so its relativistic apsidal precession
 is directly visible in the resulting rosette.
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-41
+.. GENERATED FROM PYTHON SOURCE LINES 37-43
 
 .. code-block:: Python
 
     bh = SchwarzschildBlackHole(M=1.0)
-    y0 = bh.eccentric_orbit_initial_state(r0=15.0, eccentricity_boost=0.2)
-    trajectory = bh.integrate_geodesic(y0, dtau=0.02, n_steps=8000)
+    y0 = bh.eccentric_orbit_initial_state(r0=15.0, eccentricity_boost=0.12)
+    trajectory = bh.integrate_geodesic(y0, dtau=0.1, n_steps=12000)
     fig = interactive_orbit_3d(trajectory, M=1.0)
     fig.write_html("orbit_interactive.html")
 
@@ -81,7 +83,7 @@ is directly visible in the resulting rosette.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-48
+.. GENERATED FROM PYTHON SOURCE LINES 44-50
 
 An interactive ray-traced shadow image
 ------------------------------------------
@@ -90,7 +92,7 @@ hole (:math:`a=0.9M`) using the Carter-separated null geodesic equations
 produces the shadow and lensed accretion disk seen below, now pannable
 and zoomable.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-53
+.. GENERATED FROM PYTHON SOURCE LINES 50-56
 
 .. code-block:: Python
 
@@ -99,6 +101,7 @@ and zoomable.
     fig.write_html("shadow_interactive.html")
 
     print("Wrote 2 standalone interactive HTML files.")
+
 
 
 
@@ -112,10 +115,36 @@ and zoomable.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 57-62
+
+Check
+-----
+The orbit stays bound (between r_p and r0 = 15M, conserving E and L) and
+precesses by Darwin's exact amount per radial period; the a = 0.9 image
+shows captured photons at its centre.
+
+.. GENERATED FROM PYTHON SOURCE LINES 62-69
+
+.. code-block:: Python
+
+    r_a, r_p = trajectory["r"].max(), trajectory["r"].min()
+    assert r_p > 6 and np.ptp(trajectory["energy"]) < 1e-10 and np.ptp(trajectory["angular_momentum"]) < 1e-9
+    p_semi, e_orb = 2 * r_a * r_p / (r_a + r_p), (r_a - r_p) / (r_a + r_p)
+    chi = np.linspace(0, 2 * np.pi, 4001)
+    darwin = np.trapezoid(np.sqrt(p_semi / (p_semi - 6 - 2 * e_orb * np.cos(chi))), chi) - 2 * np.pi
+    assert np.all(np.abs(bh.perihelion_precession(trajectory) - darwin) < np.radians(0.5))
+    assert np.isin(result["outcomes"], (1, 2))[60, 60]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.293 seconds)
+   **Total running time of the script:** (0 minutes 1.256 seconds)
 
 
 .. _sphx_glr_download_api_gallery_relativity_interactive_plot_interactive_orbit_and_shadow.py:

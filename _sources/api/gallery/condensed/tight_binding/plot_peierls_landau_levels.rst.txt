@@ -31,7 +31,7 @@ implements exactly this, turning a uniform flux into a Hofstadter-like
 spectrum whose low-energy states bunch into near-degenerate groups -- the
 lattice remnant of the continuum Landau tower.
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-21
+.. GENERATED FROM PYTHON SOURCE LINES 15-22
 
 .. code-block:: Python
 
@@ -39,6 +39,7 @@ lattice remnant of the continuum Landau tower.
     import matplotlib.pyplot as plt
     import numpy as np
 
+    from physicskit.condensed.models import harper_hofstadter_hamiltonian
     from physicskit.condensed.tight_binding import apply_peierls_phase
 
 
@@ -48,14 +49,14 @@ lattice remnant of the continuum Landau tower.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-26
+.. GENERATED FROM PYTHON SOURCE LINES 23-27
 
 A finite square patch threaded by uniform flux
 ---------------------------------------------------
 One orbital per site on an ``L x L`` patch, nearest-neighbor hopping
 ``t=1`` along both bonds of the square lattice.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-38
+.. GENERATED FROM PYTHON SOURCE LINES 27-39
 
 .. code-block:: Python
 
@@ -78,7 +79,7 @@ One orbital per site on an ``L x L`` patch, nearest-neighbor hopping
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-44
+.. GENERATED FROM PYTHON SOURCE LINES 40-45
 
 Peierls substitution and diagonalization
 ---------------------------------------------
@@ -86,7 +87,7 @@ Peierls substitution and diagonalization
 set by the flux per plaquette; the resulting Hermitian hopping matrix is
 then diagonalized directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-58
+.. GENERATED FROM PYTHON SOURCE LINES 45-59
 
 .. code-block:: Python
 
@@ -111,7 +112,7 @@ then diagonalized directly.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-65
+.. GENERATED FROM PYTHON SOURCE LINES 60-66
 
 The lattice remnant of the Landau tower
 ---------------------------------------------
@@ -120,7 +121,7 @@ near-degenerate groups separated by gaps -- the finite-lattice,
 Peierls-substituted analogue of Landau's equally spaced :math:`E_n`
 levels.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-80
+.. GENERATED FROM PYTHON SOURCE LINES 68-81
 
 The Hofstadter butterfly: every flux value at once
 ---------------------------------------------------------------------
@@ -136,7 +137,7 @@ same Peierls-substituted finite-lattice diagonalization used for one
 flux value above, repeated across the full flux range, already traces
 out its characteristic large-scale wings and gaps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-103
+.. GENERATED FROM PYTHON SOURCE LINES 81-105
 
 .. code-block:: Python
 
@@ -166,6 +167,7 @@ out its characteristic large-scale wings and gaps.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/tight_binding/images/sphx_glr_plot_peierls_landau_levels_001.png
    :alt: Peierls substitution: from one Landau-like spectrum to the full Hofstadter butterfly, One flux value: 0.125 per plaquette, Hofstadter butterfly (16x16 patch, 241 flux values)
    :srcset: /api/gallery/condensed/tight_binding/images/sphx_glr_plot_peierls_landau_levels_001.png
@@ -181,10 +183,36 @@ out its characteristic large-scale wings and gaps.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-112
+
+Check
+-----
+The patch's lowest states sit in the lowest Hofstadter (Harper) band of
+the infinite lattice at the same flux (a flat band at -3.29, the lattice
+Landau level -4 + omega_c/2 - omega_c^2/32 with omega_c = 4 pi phi),
+and the spectrum is symmetric under phi -> 1 - phi.
+
+.. GENERATED FROM PYTHON SOURCE LINES 112-118
+
+.. code-block:: Python
+
+    ks = np.linspace(0, 2 * np.pi, 13)
+    harper = np.array([np.linalg.eigvalsh(harper_hofstadter_hamiltonian(k1, k2, 1, 8)) for k1 in ks for k2 in ks])
+    assert np.all((energies[:9] > harper[:, 0].min() - 1e-3) & (energies[:9] < harper[:, 0].max() + 1e-3))
+    omega_c = 4 * np.pi * flux
+    assert abs(energies[0] - (-4 + omega_c / 2 - omega_c**2 / 32)) < 0.01
+    np.testing.assert_allclose(butterfly, butterfly[::-1], atol=1e-9)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.143 seconds)
+   **Total running time of the script:** (0 minutes 1.154 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_tight_binding_plot_peierls_landau_levels.py:

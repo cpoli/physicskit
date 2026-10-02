@@ -193,3 +193,12 @@ plt.show()
 
 fig_bf, ax_bf = plot_dynamo_butterfly_diagram(times_dynamo, B_snaps, x)
 plt.show()
+
+# %%
+# Check
+# -----
+# Convective instability amplifies the noise by many orders of magnitude;
+# the alpha-omega dynamo grows at the analytic dispersion-relation rate.
+assert KE_final / KE_initial > 1e6
+assert abs(sigma_observed / sigma_predicted - 1) < 1e-3
+assert sigma_predicted > 0 and alpha_omega_growth_rate(alpha, shear, k0, 10 * eta) < sigma_predicted

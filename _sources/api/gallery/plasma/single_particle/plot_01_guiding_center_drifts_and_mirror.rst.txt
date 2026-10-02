@@ -164,7 +164,7 @@ helical orbit a proton follows -- tightening into a fast, small-radius
 corkscrew near the throats where B is largest, and loosening near the
 midplane -- instead of only its guiding center's 2D projection.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-110
+.. GENERATED FROM PYTHON SOURCE LINES 93-111
 
 .. code-block:: Python
 
@@ -188,6 +188,7 @@ midplane -- instead of only its guiding center's 2D projection.
 
 
 
+
 .. image-sg:: /api/gallery/plasma/single_particle/images/sphx_glr_plot_01_guiding_center_drifts_and_mirror_002.png
    :alt: Full guiding-center orbit: gyration + mirror bounce
    :srcset: /api/gallery/plasma/single_particle/images/sphx_glr_plot_01_guiding_center_drifts_and_mirror_002.png
@@ -197,10 +198,32 @@ midplane -- instead of only its guiding center's 2D projection.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 112-116
+
+Check
+-----
+The magnetic moment is conserved, so the ion reflects where
+B / B0 = v^2 / v_perp0^2 (here 1.0625, at z = 6.25 mm) and v_par reverses.
+
+.. GENERATED FROM PYTHON SOURCE LINES 116-120
+
+.. code-block:: Python
+
+    v2 = 2e4**2 + 8e4**2
+    z_mirror = 0.05 * np.sqrt((v2 / 8e4**2 - 1) / 4.0)
+    assert abs(z_hist.max() / z_mirror - 1) < 0.01
+    assert v_par_hist.max() > 0 > v_par_hist.min()
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.243 seconds)
+   **Total running time of the script:** (0 minutes 0.092 seconds)
 
 
 .. _sphx_glr_download_api_gallery_plasma_single_particle_plot_01_guiding_center_drifts_and_mirror.py:

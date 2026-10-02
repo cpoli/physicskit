@@ -134,7 +134,7 @@ only a rough estimate of z with visible finite-size bias -- exactly the
 same caveat as the exponent fits in the finite-size-scaling example --
 but the qualitative gap between the two algorithms is already unmistakable.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-99
+.. GENERATED FROM PYTHON SOURCE LINES 80-100
 
 .. code-block:: Python
 
@@ -160,6 +160,7 @@ but the qualitative gap between the two algorithms is already unmistakable.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ising/images/sphx_glr_plot_critical_slowing_down_002.png
    :alt: plot critical slowing down
    :srcset: /api/gallery/statphys/ising/images/sphx_glr_plot_critical_slowing_down_002.png
@@ -176,10 +177,31 @@ but the qualitative gap between the two algorithms is already unmistakable.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-106
+
+Check
+-----
+At T_C Wolff decorrelates |m| far faster than Metropolis, and its
+dynamical exponent is far smaller (z ~ 2.17 vs ~0.35 asymptotically; these
+small lattices give rough estimates of both).
+
+.. GENERATED FROM PYTHON SOURCE LINES 106-108
+
+.. code-block:: Python
+
+    assert taus["metropolis"] > 10 * taus["wolff"]
+    assert z_fit["metropolis"] > 1.2 and z_fit["wolff"] < z_fit["metropolis"] - 0.5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.613 seconds)
+   **Total running time of the script:** (0 minutes 0.597 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ising_plot_critical_slowing_down.py:

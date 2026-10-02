@@ -475,25 +475,90 @@ which one lets Planck’s constant go to zero.”
 limit <span class="math notranslate nohighlight">\(\hbar\to0\)</span> without simply discarding quantum effects –
 instead, it reorganizes them entirely around classical trajectories,
 actions, and periodic orbits. This chronology traces that program behind
-<a class="reference internal" href="../api/semiclassical.html#module-physicskit.semiclassical" title="physicskit.semiclassical"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.semiclassical</span></code></a>, from the 1920s WKB
-approximation to Heller’s 1984 discovery that individual chaotic
-eigenstates still remember the classical orbits a naive random-matrix
-picture says they should have forgotten, with a pointer to the
-corresponding implementation in this package at each stop.</p>
+<a class="reference internal" href="../api/semiclassical.html#module-physicskit.semiclassical" title="physicskit.semiclassical"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.semiclassical</span></code></a>, from Weyl’s 1911 count of eigenvalues by
+phase-space volume, through the WKB approximation, Feynman’s path
+integral and Gutzwiller’s periodic orbits, to Bogomolny’s 1992 transfer
+operator, with a pointer to the corresponding implementation in this
+package at each stop.</p>
 <nav class="contents local" id="timeline">
 <p class="topic-title">Timeline</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#the-wkb-approximation" id="id1">1926 – The WKB Approximation</a></p></li>
-<li><p><a class="reference internal" href="#van-vleck-s-semiclassical-propagator" id="id2">1928 – Van Vleck’s Semiclassical Propagator</a></p></li>
-<li><p><a class="reference internal" href="#keller-s-quantization-condition-and-maslov-s-topological-index" id="id3">1958 – Keller’s Quantization Condition and Maslov’s Topological Index</a></p></li>
-<li><p><a class="reference internal" href="#the-gutzwiller-trace-formula" id="id4">1971 – The Gutzwiller Trace Formula</a></p></li>
-<li><p><a class="reference internal" href="#the-berry-tabor-formula-for-integrable-systems" id="id5">1976 – The Berry-Tabor Formula for Integrable Systems</a></p></li>
-<li><p><a class="reference internal" href="#herman-and-kluk-s-frozen-gaussians" id="id6">1984 – Herman and Kluk’s Frozen Gaussians</a></p></li>
-<li><p><a class="reference internal" href="#heller-s-discovery-of-quantum-scars" id="id7">1984 – Heller’s Discovery of Quantum Scars</a></p></li>
+<li><p><a class="reference internal" href="#weyl-s-law" id="id1">1911 – Weyl’s Law</a></p></li>
+<li><p><a class="reference internal" href="#einstein-s-torus-quantization" id="id2">1917 – Einstein’s Torus Quantization</a></p></li>
+<li><p><a class="reference internal" href="#the-wkb-approximation" id="id3">1926 – The WKB Approximation</a></p></li>
+<li><p><a class="reference internal" href="#van-vleck-s-semiclassical-propagator" id="id4">1928 – Van Vleck’s Semiclassical Propagator</a></p></li>
+<li><p><a class="reference internal" href="#the-langer-correction" id="id5">1937 – The Langer Correction</a></p></li>
+<li><p><a class="reference internal" href="#feynman-s-path-integral-and-the-classical-limit" id="id6">1948 – Feynman’s Path Integral and the Classical Limit</a></p></li>
+<li><p><a class="reference internal" href="#keller-s-quantization-condition-and-maslov-s-topological-index" id="id7">1958 – Keller’s Quantization Condition and Maslov’s Topological Index</a></p></li>
+<li><p><a class="reference internal" href="#the-gutzwiller-trace-formula" id="id8">1971 – The Gutzwiller Trace Formula</a></p></li>
+<li><p><a class="reference internal" href="#balian-and-bloch-s-level-density-expansion" id="id9">1972 – Balian and Bloch’s Level-Density Expansion</a></p></li>
+<li><p><a class="reference internal" href="#heller-s-thawed-gaussian-wavepackets" id="id10">1975 – Heller’s Thawed Gaussian Wavepackets</a></p></li>
+<li><p><a class="reference internal" href="#the-berry-tabor-formula-for-integrable-systems" id="id11">1976 – The Berry-Tabor Formula for Integrable Systems</a></p></li>
+<li><p><a class="reference internal" href="#berry-s-random-wave-conjecture" id="id12">1977 – Berry’s Random-Wave Conjecture</a></p></li>
+<li><p><a class="reference internal" href="#the-ehrenfest-time" id="id13">1978 – The Ehrenfest Time</a></p></li>
+<li><p><a class="reference internal" href="#heller-s-time-dependent-semiclassical-spectroscopy" id="id14">1981 – Heller’s Time-Dependent Semiclassical Spectroscopy</a></p></li>
+<li><p><a class="reference internal" href="#herman-and-kluk-s-frozen-gaussians" id="id15">1984 – Herman and Kluk’s Frozen Gaussians</a></p></li>
+<li><p><a class="reference internal" href="#heller-s-discovery-of-quantum-scars" id="id16">1984 – Heller’s Discovery of Quantum Scars</a></p></li>
+<li><p><a class="reference internal" href="#bogomolny-s-transfer-operator" id="id17">1992 – Bogomolny’s Transfer Operator</a></p></li>
 </ul>
 </nav>
+<section id="weyl-s-law">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">1911 – Weyl’s Law</a><a class="headerlink" href="#weyl-s-law" title="Link to this heading">#</a></h2>
+<p>Hermann Weyl proved, in answer to a question Lorentz had raised in 1910,
+that the number of eigenvalues below <span class="math notranslate nohighlight">\(k^2\)</span> of the Laplacian on a
+two-dimensional membrane of area <span class="math notranslate nohighlight">\(A\)</span> grows as
+<span class="math notranslate nohighlight">\(N(k)\simeq Ak^2/4\pi\)</span>, independent of the membrane’s shape (with
+<span class="math notranslate nohighlight">\(Vk^3/6\pi^2\)</span> for a three-dimensional cavity). Read semiclassically,
+the law says each quantum state occupies one cell of volume
+<span class="math notranslate nohighlight">\((2\pi\hbar)^d\)</span> in phase space, so the number of states below
+<span class="math notranslate nohighlight">\(E\)</span> is the phase-space volume enclosed by the energy surface divided
+by that cell size. This average level density is the smooth term that
+every later trace formula, from Balian-Bloch to Gutzwiller, adds its
+oscillations to.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.wkb.wkb_action" title="physicskit.semiclassical.core.wkb.wkb_action"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.wkb.wkb_action()</span></code></a>
+gives the phase-space area <span class="math notranslate nohighlight">\(\oint p\,dx=2S(E)\)</span> enclosed by a 1D
+orbit, which counts the levels of a quartic oscillator;
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">physicskit.chaos.quantum.billiards.QuantumBilliard.weyl_counting_function()</span></code>
+applies the area law to billiards.</p>
+<p><em>References:</em> H. Weyl, “Über die asymptotische Verteilung der
+Eigenwerte,” Nachr. Ges. Wiss. Göttingen, Math.-Phys. Kl. 1911,
+110-117 (1911); H. Weyl, “Das asymptotische Verteilungsgesetz der
+Eigenwerte linearer partieller Differentialgleichungen,” Math. Ann.
+<strong>71</strong>, 441-479 (1912).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Weyl (1911) proved that the number of eigenvalues of the Laplacian on a membrane of area A below k^2 grows as"><img alt="" src="../_images/sphx_glr_plot_weyl_law_phase_space_volume_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/wkb/plot_weyl_law_phase_space_volume.html"><span class="doc">Weyl’s law: counting levels by phase-space volume</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Weyl's law: counting levels by phase-space volume</div>
+</div></div></section>
+<section id="einstein-s-torus-quantization">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">1917 – Einstein’s Torus Quantization</a><a class="headerlink" href="#einstein-s-torus-quantization" title="Link to this heading">#</a></h2>
+<p>The old quantum theory quantized each separated coordinate on its own,
+<span class="math notranslate nohighlight">\(\oint p_i\,dq_i=n_ih\)</span> (Sommerfeld, Wilson, Epstein), a rule whose
+result depended on which coordinates happened to separate. Albert
+Einstein replaced it with a coordinate-free condition: a multiply periodic
+motion winds around an invariant torus in phase space, and the
+quantization rule is one condition per independent closed loop on that
+torus, <span class="math notranslate nohighlight">\(\oint_{\gamma_i}\mathbf p\cdot d\mathbf q=n_ih\)</span>. Because the
+loop integrals do not change when the loop is deformed on the torus, the
+rule needs no separable coordinates. Einstein also noted that a motion
+that fills a region of the energy surface, rather than a torus, admits no
+such rule, the first statement of the problem that chaotic systems pose
+for semiclassical quantization. Brillouin (1926) and Keller (1958) added
+the phase corrections that complete it into EBK quantization.</p>
+<p><em>Example:</em> the gallery example quantizes the two loops of the circular
+billiard’s invariant tori, the angular action <span class="math notranslate nohighlight">\(\hbar m\)</span> and the
+radial action between the caustic and the wall (with Keller’s offsets),
+and compares the levels with the exact Bessel zeros. The 1D case of the
+same rule is <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.wkb.bohr_sommerfeld_energies" title="physicskit.semiclassical.core.wkb.bohr_sommerfeld_energies"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.wkb.bohr_sommerfeld_energies()</span></code></a>.</p>
+<p><em>References:</em> A. Einstein, “Zum Quantensatz von Sommerfeld und
+Epstein,” Verh. Dtsch. Phys. Ges. <strong>19</strong>, 82-92 (1917); English
+translation in <em>The Collected Papers of Albert Einstein</em>, Vol. 6
+(Princeton University Press, 1997), Doc. 45.</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Sommerfeld quantized each separated coordinate on its own, \oint p_i\,dq_i = n_i h. Einstein (1917) pointed out that this depends on the choice of coordinates, and gave the invariant form: an integrable motion with f degrees of freedom winds around an f-dimensional torus in phase space, and the quantization rule is one condition per independent closed loop \gamma_i on that torus,"><img alt="" src="../_images/sphx_glr_plot_einstein_torus_quantization_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/wkb/plot_einstein_torus_quantization.html"><span class="doc">Einstein’s torus quantization: the circular billiard</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Einstein's torus quantization: the circular billiard</div>
+</div></div></section>
 <section id="the-wkb-approximation">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">1926 – The WKB Approximation</a><a class="headerlink" href="#the-wkb-approximation" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">1926 – The WKB Approximation</a><a class="headerlink" href="#the-wkb-approximation" title="Link to this heading">#</a></h2>
 <p>Gregor Wentzel, Hendrik Kramers, and Leon Brillouin (building on earlier
 work by Harold Jeffreys) independently found the leading term of an
 asymptotic expansion of the Schrodinger equation in powers of
@@ -527,7 +592,7 @@ Differential Equations of the Second Order,” Proc. London Math. Soc.
   <div class="sphx-glr-thumbnail-title">WKB and Bohr-Sommerfeld quantization</div>
 </div></div></section>
 <section id="van-vleck-s-semiclassical-propagator">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">1928 – Van Vleck’s Semiclassical Propagator</a><a class="headerlink" href="#van-vleck-s-semiclassical-propagator" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">1928 – Van Vleck’s Semiclassical Propagator</a><a class="headerlink" href="#van-vleck-s-semiclassical-propagator" title="Link to this heading">#</a></h2>
 <p>John Van Vleck showed that the WKB idea extends from stationary states to
 the full quantum propagator: the leading <span class="math notranslate nohighlight">\(\hbar\to0\)</span> approximation
 to <span class="math notranslate nohighlight">\(K(x_f,t;x_i,0)\)</span> is built entirely from a single classical
@@ -556,8 +621,61 @@ Approximation of Feynman’s Path Integrals,” Phys. Rev. <strong>81</strong>, 
 <p><a class="reference internal" href="../api/gallery/semiclassical/propagators/plot_semiclassical_propagators.html"><span class="doc">The Van Vleck-Morette semiclassical propagator</span></a></p>
   <div class="sphx-glr-thumbnail-title">The Van Vleck-Morette semiclassical propagator</div>
 </div></div></section>
+<section id="the-langer-correction">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">1937 – The Langer Correction</a><a class="headerlink" href="#the-langer-correction" title="Link to this heading">#</a></h2>
+<p>Applied to the radial equation of a central-force problem, the WKB rule
+gives the wrong energies, even for hydrogen. Rudolph Langer traced the
+error to the origin: near <span class="math notranslate nohighlight">\(r=0\)</span> the centrifugal term changes on the
+scale of the wavelength itself, so the WKB assumptions fail there. The
+substitution <span class="math notranslate nohighlight">\(r=e^x\)</span> maps the half-line onto the whole line, where
+WKB holds, and transforming back is equivalent to replacing
+<span class="math notranslate nohighlight">\(l(l+1)\)</span> by <span class="math notranslate nohighlight">\((l+\tfrac12)^2\)</span> in the centrifugal potential.
+With that change radial WKB gives the hydrogen spectrum
+<span class="math notranslate nohighlight">\(-1/2(n_r+l+1)^2\)</span> and the 3D oscillator spectrum exactly. The
+replacement reappears wherever angular momentum is quantized
+semiclassically, from atomic and nuclear physics to the angular phase of
+the torus quantization above.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.wkb.langer_corrected_wkb" title="physicskit.semiclassical.core.wkb.langer_corrected_wkb"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.wkb.langer_corrected_wkb()</span></code></a>
+solves the radial WKB condition with or without the correction, giving
+the exact hydrogen levels with it and visibly wrong ones without.</p>
+<p><em>References:</em> R. E. Langer, “On the Connection Formulas and the
+Solutions of the Wave Equation,” Phys. Rev. <strong>51</strong>, 669-676 (1937).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="The radial equation of a central-force problem looks like a 1D Schrodinger equation on r&gt;0 with the effective potential V(r)+\hbar^2 l(l+1)/2mr^2. Applying the WKB rule \int p\,dr=(n_r+\tfrac12)\pi\hbar to it gives energies that are wrong even for hydrogen. Langer (1937) traced the problem to the origin: WKB assumes a slowly varying wavelength, which fails near r=0. The substitution r=e^x maps the half-line onto the full line, where the WKB assumptions hold, and the result is the same as replacing"><img alt="" src="../_images/sphx_glr_plot_langer_correction_hydrogen_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/wkb/plot_langer_correction_hydrogen.html"><span class="doc">The Langer correction: exact hydrogen levels from radial WKB</span></a></p>
+  <div class="sphx-glr-thumbnail-title">The Langer correction: exact hydrogen levels from radial WKB</div>
+</div></div></section>
+<section id="feynman-s-path-integral-and-the-classical-limit">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">1948 – Feynman’s Path Integral and the Classical Limit</a><a class="headerlink" href="#feynman-s-path-integral-and-the-classical-limit" title="Link to this heading">#</a></h2>
+<p>Building on Dirac’s 1933 remark that the quantum propagator over a short
+time behaves like <span class="math notranslate nohighlight">\(\exp(iS/\hbar)\)</span>, Richard Feynman reformulated
+quantum mechanics as a sum over every path between two space-time points,
+each weighted by <span class="math notranslate nohighlight">\(\exp(iS[x(t)]/\hbar)\)</span> with <span class="math notranslate nohighlight">\(S\)</span> the classical
+action of that path. The formulation makes the classical limit
+transparent. Near the classical path the action is stationary, so
+neighbouring paths add in phase; far from it the phases vary rapidly and
+cancel. As <span class="math notranslate nohighlight">\(\hbar\to0\)</span> only the stationary path survives, and the
+principle of least action emerges from interference. Evaluating the path
+integral by stationary phase about that path gives back Van Vleck’s
+propagator, which is how Morette derived its determinant in 1951.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#module-physicskit.semiclassical.core.path_integral" title="physicskit.semiclassical.core.path_integral"><code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.path_integral</span></code></a>
+samples random paths between fixed endpoints
+(<a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.path_integral.sample_random_paths" title="physicskit.semiclassical.core.path_integral.sample_random_paths"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_random_paths()</span></code></a>),
+computes their discretized actions, and sums their phasors closest to
+the classical path first
+(<a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.path_integral.build_phasor_diagram" title="physicskit.semiclassical.core.path_integral.build_phasor_diagram"><code class="xref py py-func docutils literal notranslate"><span class="pre">build_phasor_diagram()</span></code></a>),
+for the free particle and the harmonic oscillator, whose classical paths
+and actions are known in closed form.</p>
+<p><em>References:</em> P. A. M. Dirac, “The Lagrangian in Quantum Mechanics,”
+Phys. Z. Sowjetunion <strong>3</strong>, 64-72 (1933); R. P. Feynman, “Space-Time
+Approach to Non-Relativistic Quantum Mechanics,” Rev. Mod. Phys. <strong>20</strong>,
+367-387 (1948); R. P. Feynman and A. R. Hibbs, <em>Quantum Mechanics and
+Path Integrals</em> (McGraw-Hill, New York, 1965).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Feynman&#x27;s path-integral formulation (Feynman &amp; Hibbs 1965, building on Dirac&#x27;s 1933 &quot;The Lagrangian in Quantum Mechanics&quot;) writes the quantum propagator as a sum over every continuous path x(t) connecting fixed endpoints, each weighted by a phase built from its classical action S[x(t)]. The same construction also applies to the harmonic oscillator, whose classical path curves rather than running straight between the fixed endpoints (~physicskit.semiclassical.core.path_integral.harmonic_oscillator_classical_path, harmonic_oscillator_classical_action), showing that the same closest-to-classical-first phasor concentration at small \hbar is not an artifact of the free particle&#x27;s trivially straight classical trajectory:"><img alt="" src="../_images/sphx_glr_plot_feynman_paths_classical_limit_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/path_integral/plot_feynman_paths_classical_limit.html"><span class="doc">Feynman paths and the classical limit</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Feynman paths and the classical limit</div>
+</div></div></section>
 <section id="keller-s-quantization-condition-and-maslov-s-topological-index">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">1958 – Keller’s Quantization Condition and Maslov’s Topological Index</a><a class="headerlink" href="#keller-s-quantization-condition-and-maslov-s-topological-index" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">1958 – Keller’s Quantization Condition and Maslov’s Topological Index</a><a class="headerlink" href="#keller-s-quantization-condition-and-maslov-s-topological-index" title="Link to this heading">#</a></h2>
 <p>Joseph Keller reformulated Bohr-Sommerfeld quantization for classically
 integrable systems with more than one degree of freedom, showing that
 the naive phase-space integral needs a correction term set by the
@@ -585,7 +703,7 @@ in Quantum Mechanics</em> (Reidel, Dordrecht, 1981).</p>
   <div class="sphx-glr-thumbnail-title">The Maslov index: caustics and Keller's quantization condition</div>
 </div></div></section>
 <section id="the-gutzwiller-trace-formula">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">1971 – The Gutzwiller Trace Formula</a><a class="headerlink" href="#the-gutzwiller-trace-formula" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">1971 – The Gutzwiller Trace Formula</a><a class="headerlink" href="#the-gutzwiller-trace-formula" title="Link to this heading">#</a></h2>
 <p>Martin Gutzwiller derived a semiclassical formula for the quantum density
 of states of a general – in particular, classically chaotic – system
 directly from its classical periodic orbits, with no reference to any
@@ -609,8 +727,65 @@ Quantization Conditions,” J. Math. Phys. <strong>12</strong>, 343-358 (1971).<
 <p><a class="reference internal" href="../api/gallery/semiclassical/gutzwiller/plot_gutzwiller_trace_formula.html"><span class="doc">Gutzwiller’s trace formula</span></a></p>
   <div class="sphx-glr-thumbnail-title">Gutzwiller's trace formula</div>
 </div></div></section>
+<section id="balian-and-bloch-s-level-density-expansion">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">1972 – Balian and Bloch’s Level-Density Expansion</a><a class="headerlink" href="#balian-and-bloch-s-level-density-expansion" title="Link to this heading">#</a></h2>
+<p>In a series of papers from 1970 to 1972, Roger Balian and Claude Bloch
+expanded the Green function of the wave equation in a bounded domain as
+a series of multiple reflections off its boundary. The smooth part of the resulting level density is an
+asymptotic series in <span class="math notranslate nohighlight">\(1/k\)</span>: Weyl’s area term, a perimeter
+correction <span class="math notranslate nohighlight">\(\mp Lk/4\pi\)</span> (minus for Dirichlet walls), then a
+constant set by corners and boundary curvature. The oscillating part,
+worked out in their third paper (1972), is a sum over the closed
+classical orbits of the billiard, each contributing a wave
+<span class="math notranslate nohighlight">\(\cos(k\ell)\)</span> at its length <span class="math notranslate nohighlight">\(\ell\)</span>: a trace formula for
+billiards, derived independently of Gutzwiller’s from the wave equation
+rather than from the propagator.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.gutzwiller.balian_bloch_counting_function" title="physicskit.semiclassical.core.gutzwiller.balian_bloch_counting_function"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.gutzwiller.balian_bloch_counting_function()</span></code></a>
+evaluates the smooth series, including the corner and curvature
+constant, and <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.gutzwiller.balian_bloch_level_density" title="physicskit.semiclassical.core.gutzwiller.balian_bloch_level_density"><code class="xref py py-func docutils literal notranslate"><span class="pre">balian_bloch_level_density()</span></code></a>
+its derivative; for the disk and the rectangle the exact staircase
+fluctuates about it with zero mean, and the Fourier transform of the
+levels shows the periodic-orbit lengths.</p>
+<p><em>References:</em> R. Balian and C. Bloch, “Distribution of Eigenfrequencies
+for the Wave Equation in a Finite Domain. I. Three-Dimensional Problem
+with Smooth Boundary Surface,” Ann. Phys. <strong>60</strong>, 401-447 (1970);
+R. Balian and C. Bloch, “Distribution of Eigenfrequencies for the Wave
+Equation in a Finite Domain. III. Eigenfrequency Density Oscillations,”
+Ann. Phys. <strong>69</strong>, 76-160 (1972); H. P. Baltes and E. R. Hilf, <em>Spectra
+of Finite Systems</em> (Bibliographisches Institut, Mannheim, 1976).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Weyl&#x27;s law N(k)\simeq Ak^2/4\pi is only the first term. Balian and Bloch (1970-1972) built the level density of a 2D billiard from a multiple-reflection expansion of its Green function and obtained a full asymptotic series. The smooth part is"><img alt="" src="../_images/sphx_glr_plot_balian_bloch_billiard_level_density_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/gutzwiller/plot_balian_bloch_billiard_level_density.html"><span class="doc">Balian and Bloch’s level-density expansion for billiards</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Balian and Bloch's level-density expansion for billiards</div>
+</div></div></section>
+<section id="heller-s-thawed-gaussian-wavepackets">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">1975 – Heller’s Thawed Gaussian Wavepackets</a><a class="headerlink" href="#heller-s-thawed-gaussian-wavepackets" title="Link to this heading">#</a></h2>
+<p>Eric Heller proposed propagating a wavepacket by keeping it Gaussian and
+expanding the potential to second order about its moving centre. The
+Schrodinger equation then reduces to ordinary differential equations: the
+centre follows Hamilton’s equations, the complex width obeys a Riccati
+equation driven by the local curvature <span class="math notranslate nohighlight">\(V''(q_t)\)</span>, and a phase
+collects the classical action. The width is free to breathe, squeeze and
+shear, in contrast to the fixed-width Gaussians of earlier classical
+trajectory methods. The method is exact for quadratic potentials and
+otherwise holds while the packet is small compared with the scale on which
+the curvature changes; as <span class="math notranslate nohighlight">\(\hbar\to0\)</span> with the classical motion
+fixed it converges to the exact result. It made semiclassical wavepacket
+dynamics a practical tool in chemical physics, and its failure for wide
+packets led to the multi-trajectory methods of Heller (1981) and Herman
+and Kluk (1984).</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.propagators.thawed_gaussian_propagate" title="physicskit.semiclassical.core.propagators.thawed_gaussian_propagate"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.propagators.thawed_gaussian_propagate()</span></code></a>
+integrates the centre, the width (in the equivalent linear tangent-map
+form, which stays regular where the Riccati equation is stiff) and the
+phase; <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.propagators.thawed_gaussian_wavefunction" title="physicskit.semiclassical.core.propagators.thawed_gaussian_wavefunction"><code class="xref py py-func docutils literal notranslate"><span class="pre">thawed_gaussian_wavefunction()</span></code></a>
+evaluates the packet on a grid.</p>
+<p><em>References:</em> E. J. Heller, “Time-Dependent Approach to Semiclassical
+Dynamics,” J. Chem. Phys. <strong>62</strong>, 1544-1555 (1975).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Heller (1975) proposed the simplest semiclassical wavepacket method: keep the packet a Gaussian,"><img alt="" src="../_images/sphx_glr_plot_heller_thawed_gaussian_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/propagators/plot_heller_thawed_gaussian.html"><span class="doc">Heller’s thawed Gaussian wavepacket dynamics</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Heller's thawed Gaussian wavepacket dynamics</div>
+</div></div></section>
 <section id="the-berry-tabor-formula-for-integrable-systems">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">1976 – The Berry-Tabor Formula for Integrable Systems</a><a class="headerlink" href="#the-berry-tabor-formula-for-integrable-systems" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">1976 – The Berry-Tabor Formula for Integrable Systems</a><a class="headerlink" href="#the-berry-tabor-formula-for-integrable-systems" title="Link to this heading">#</a></h2>
 <p>Michael Berry and Michael Tabor showed that the Gutzwiller trace formula’s
 assumption of isolated periodic orbits fails for integrable systems –
 where, since every energy has a whole torus of orbits rather than one
@@ -630,8 +805,90 @@ Bound Spectrum,” Proc. R. Soc. Lond. A <strong>349</strong>, 101-123 (1976).</
 <p><a class="reference internal" href="../api/gallery/semiclassical/gutzwiller/plot_berry_tabor_rectangle.html"><span class="doc">The Berry-Tabor formula: an integrable billiard’s spectrum</span></a></p>
   <div class="sphx-glr-thumbnail-title">The Berry-Tabor formula: an integrable billiard's spectrum</div>
 </div></div></section>
+<section id="berry-s-random-wave-conjecture">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">1977 – Berry’s Random-Wave Conjecture</a><a class="headerlink" href="#berry-s-random-wave-conjecture" title="Link to this heading">#</a></h2>
+<p>Michael Berry asked what a high-lying eigenfunction of a classically
+chaotic system looks like. The Wigner function of an eigenstate
+concentrates, semiclassically, on the part of phase space the classical
+motion at that energy explores. For an integrable system this is a torus,
+and the eigenfunction is ordered, with caustics and regular nodal
+patterns. For an ergodic system it is the whole energy surface, so at
+each point every momentum direction is equally likely, and Berry
+conjectured that the eigenfunction looks locally like a random
+superposition of plane waves of fixed wavenumber. Two predictions follow:
+Gaussian-distributed amplitudes, and a spatial autocorrelation
+<span class="math notranslate nohighlight">\(J_0(k|\Delta\mathbf r|)\)</span> in two dimensions. The conjecture is the
+eigenfunction counterpart of the random-matrix description of chaotic
+spectra; quantum scars (1984, below) are its best-known exceptions.</p>
+<p><em>Example:</em> the gallery example tests both predictions on Bunimovich
+stadium eigenstates from
+<a class="reference internal" href="../api/chaos.html#physicskit.chaos.QuantumBilliard" title="physicskit.chaos.quantum.billiards.QuantumBilliard"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.chaos.quantum.billiards.QuantumBilliard</span></code></a>, and
+contrasts them with a disk eigenstate.</p>
+<p><em>References:</em> M. V. Berry, “Regular and Irregular Semiclassical
+Wavefunctions,” J. Phys. A <strong>10</strong>, 2083-2091 (1977).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Berry (1977) conjectured that a high-lying eigenfunction of a classically chaotic system looks locally like a random superposition of plane waves, all with the same wavenumber k and directions spread uniformly around the circle:"><img alt="" src="../_images/sphx_glr_plot_berry_random_wave_conjecture_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/scarring/plot_berry_random_wave_conjecture.html"><span class="doc">Berry’s random-wave conjecture for chaotic eigenfunctions</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Berry's random-wave conjecture for chaotic eigenfunctions</div>
+</div></div></section>
+<section id="the-ehrenfest-time">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">1978 – The Ehrenfest Time</a><a class="headerlink" href="#the-ehrenfest-time" title="Link to this heading">#</a></h2>
+<p>Ehrenfest’s theorem keeps a narrow wavepacket on a classical trajectory
+only while it stays narrow. Gennady Berman and George Zaslavsky asked how
+long that lasts when the classical motion is chaotic. A minimum-uncertainty
+packet starts with width of order <span class="math notranslate nohighlight">\(\sqrt\hbar\)</span>; chaotic stretching
+grows it as <span class="math notranslate nohighlight">\(e^{\lambda t}\)</span>, with <span class="math notranslate nohighlight">\(\lambda\)</span> the Lyapunov
+exponent, until it reaches the size of the system after a time of order
+<span class="math notranslate nohighlight">\(\lambda^{-1}\ln(1/\hbar)\)</span>. This logarithmic time is very short:
+for a chaotic system, quantum-classical correspondence for individual
+trajectories fails long before the power-law times that apply to
+integrable motion. Berry, Balazs, Tabor and Voros found the same time
+scale in quantized maps in 1979. Beyond it, quantum averages can still
+follow classical ensemble averages, which is why the Ehrenfest time
+reappears in decoherence, weak localization and the growth of
+out-of-time-order correlators.</p>
+<p><em>Example:</em> the gallery example measures the time at which a coherent
+state of <a class="reference internal" href="../api/chaos.html#physicskit.chaos.QuantumKickedRotor" title="physicskit.chaos.quantum.maps.QuantumKickedRotor"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.chaos.quantum.maps.QuantumKickedRotor</span></code></a>
+leaves the classical orbit of
+<a class="reference internal" href="../api/chaos.html#physicskit.chaos.StandardMap" title="physicskit.chaos.systems.maps.StandardMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.chaos.systems.maps.StandardMap</span></code></a>, and finds it growing
+as <span class="math notranslate nohighlight">\(\ln(1/\hbar)/2\lambda\)</span>.</p>
+<p><em>References:</em> G. P. Berman and G. M. Zaslavsky, “Condition of
+Stochasticity in Quantum Nonlinear Systems,” Physica A <strong>91</strong>, 450-460
+(1978); M. V. Berry, N. L. Balazs, M. Tabor, and A. Voros, “Quantum
+Maps,” Ann. Phys. <strong>122</strong>, 26-63 (1979).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Ehrenfest&#x27;s theorem says a narrow wavepacket&#x27;s centre obeys Newton&#x27;s equations as long as the packet stays small compared with the scale on which the force varies. Berman and Zaslavsky (1978) asked how long that lasts when the classical motion is chaotic. A minimum-uncertainty packet starts with width of order \sqrt\hbar, and chaos stretches it by e^{\lambda t}, with \lambda the Lyapunov exponent. The packet reaches the size of the system, and stops following any single trajectory, after"><img alt="" src="../_images/sphx_glr_plot_ehrenfest_time_kicked_rotor_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/ehrenfest/plot_ehrenfest_time_kicked_rotor.html"><span class="doc">The Ehrenfest time: the log(1/ħ) breakdown of correspondence</span></a></p>
+  <div class="sphx-glr-thumbnail-title">The Ehrenfest time: the log(1/ħ) breakdown of correspondence</div>
+</div></div></section>
+<section id="heller-s-time-dependent-semiclassical-spectroscopy">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">1981 – Heller’s Time-Dependent Semiclassical Spectroscopy</a><a class="headerlink" href="#heller-s-time-dependent-semiclassical-spectroscopy" title="Link to this heading">#</a></h2>
+<p>Eric Heller recast spectroscopy in the time domain. An absorption
+spectrum is the Fourier transform of the autocorrelation
+<span class="math notranslate nohighlight">\(\langle\psi_0|\psi(t)\rangle\)</span> of the wavepacket the transition
+creates, so each feature of the spectrum corresponds to an event in the
+packet’s motion at the reciprocal time scale: the initial decay as the
+packet leaves the Franck-Condon region sets the width of the band, the
+first return after a vibrational period splits it into a progression,
+and only long-time recurrences resolve single lines. Since the first two
+events take a period or two, short-time semiclassical dynamics, often a
+single thawed Gaussian, already explains the band shape and the
+progression. The same reasoning, applied to a packet launched along an
+unstable periodic orbit, is what led Heller to scars three years later.</p>
+<p><em>Implementation:</em> the example drops a ground-state packet onto a bound
+(Morse) and a repulsive upper surface, propagates it with a single
+<a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.propagators.thawed_gaussian_propagate" title="physicskit.semiclassical.core.propagators.thawed_gaussian_propagate"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.propagators.thawed_gaussian_propagate()</span></code></a>,
+and compares the Fourier-transformed autocorrelation with exact
+Franck-Condon factors and with split-operator evolution
+(<a class="reference internal" href="../api/quantum.html#physicskit.quantum.SplitOperatorSolver1D" title="physicskit.quantum.core.solvers.SplitOperatorSolver1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.quantum.core.solvers.SplitOperatorSolver1D</span></code></a>).</p>
+<p><em>References:</em> E. J. Heller, “The Semiclassical Way to Molecular
+Spectroscopy,” Acc. Chem. Res. <strong>14</strong>, 368-375 (1981); E. J. Heller,
+“Quantum Corrections to Classical Photodissociation Models,” J. Chem.
+Phys. <strong>68</strong>, 2066-2075 (1978).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Heller (1981) recast molecular absorption spectroscopy in the time domain. A photon lifts the vibrational ground state \psi_0 of the lower electronic surface onto the upper surface, where it is no longer stationary. The absorption spectrum is the Fourier transform of the autocorrelation of the packet that then moves on the upper surface,"><img alt="" src="../_images/sphx_glr_plot_heller_franck_condon_spectroscopy_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/propagators/plot_heller_franck_condon_spectroscopy.html"><span class="doc">Heller’s time-dependent spectroscopy: absorption bands from short-time dynamics</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Heller's time-dependent spectroscopy: absorption bands from short-time dynamics</div>
+</div></div></section>
 <section id="herman-and-kluk-s-frozen-gaussians">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">1984 – Herman and Kluk’s Frozen Gaussians</a><a class="headerlink" href="#herman-and-kluk-s-frozen-gaussians" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">1984 – Herman and Kluk’s Frozen Gaussians</a><a class="headerlink" href="#herman-and-kluk-s-frozen-gaussians" title="Link to this heading">#</a></h2>
 <p>Michael Herman and Edward Kluk proposed replacing the single classical
 trajectory of Van Vleck theory with an entire phase-space family: launch
 one fixed-width (“frozen”) Gaussian wavepacket from every point of a
@@ -654,7 +911,7 @@ Chem. Phys. <strong>91</strong>, 27-34 (1984).</p>
   <div class="sphx-glr-thumbnail-title">Herman-Kluk frozen-Gaussian wavepacket propagation</div>
 </div></div></section>
 <section id="heller-s-discovery-of-quantum-scars">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">1984 – Heller’s Discovery of Quantum Scars</a><a class="headerlink" href="#heller-s-discovery-of-quantum-scars" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">1984 – Heller’s Discovery of Quantum Scars</a><a class="headerlink" href="#heller-s-discovery-of-quantum-scars" title="Link to this heading">#</a></h2>
 <p>Eric Heller, numerically diagonalizing the Bunimovich stadium billiard –
 a paradigm chaotic system – found that a small fraction of its
 eigenstates were <em>not</em> the featureless, ergodically-spread blobs that
@@ -679,6 +936,33 @@ Lett. <strong>53</strong>, 1515-1518 (1984).</p>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Heller (1984) discovered that individual eigenstates of a classically chaotic system are not always the featureless, ergodically-spread blobs random-matrix intuition suggests: a fraction instead show enhanced probability density concentrated in a tube around one particular unstable classical periodic orbit -- a scar."><img alt="" src="../_images/sphx_glr_plot_quantum_scars_thumb.png" />
 <p><a class="reference internal" href="../api/gallery/semiclassical/scarring/plot_quantum_scars.html"><span class="doc">Quantum scars in a chaotic billiard</span></a></p>
   <div class="sphx-glr-thumbnail-title">Quantum scars in a chaotic billiard</div>
+</div></div></section>
+<section id="bogomolny-s-transfer-operator">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">1992 – Bogomolny’s Transfer Operator</a><a class="headerlink" href="#bogomolny-s-transfer-operator" title="Link to this heading">#</a></h2>
+<p>The Gutzwiller trace formula needs every periodic orbit, and in a chaotic
+system their number grows exponentially with length. Eugene Bogomolny
+moved the problem onto a Poincare surface of section. His transfer
+operator <span class="math notranslate nohighlight">\(T(q,q';E)\)</span> is the semiclassical propagator from one
+crossing of the section to the next, built from the action and stability
+of the short orbit segment connecting them; the levels are the zeros of
+<span class="math notranslate nohighlight">\(\det[1-T(E)]\)</span>. Expanding the determinant in traces of powers of
+<span class="math notranslate nohighlight">\(T\)</span> gives back the periodic orbits as products of short segments,
+but the determinant itself needs only a finite matrix whose size is set
+by the number of wavelengths across the section. For a billiard the
+boundary is a natural section and <span class="math notranslate nohighlight">\(T\)</span> is built from chords, which
+makes the operator a semiclassical counterpart of the boundary-integral
+method.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.bogomolny.bogomolny_transfer_operator" title="physicskit.semiclassical.core.bogomolny.bogomolny_transfer_operator"><code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.semiclassical.core.bogomolny.bogomolny_transfer_operator()</span></code></a>
+builds <span class="math notranslate nohighlight">\(T(k)\)</span> on the boundary of a convex billiard, and
+<a class="reference internal" href="../api/semiclassical.html#physicskit.semiclassical.core.bogomolny.bogomolny_quantization_function" title="physicskit.semiclassical.core.bogomolny.bogomolny_quantization_function"><code class="xref py py-func docutils literal notranslate"><span class="pre">bogomolny_quantization_function()</span></code></a>
+locates its levels as the minima of the smallest singular value of
+<span class="math notranslate nohighlight">\(1-T(k)\)</span>; it reproduces the Bessel-zero spectrum of the disk and the
+finite-difference spectrum of the chaotic stadium.</p>
+<p><em>References:</em> E. B. Bogomolny, “Semiclassical Quantization of
+Multidimensional Systems,” Nonlinearity <strong>5</strong>, 805-866 (1992).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="The Gutzwiller trace formula needs every periodic orbit, and for a chaotic system their number grows exponentially with length. Bogomolny (1992) found a way around this. Choose a Poincare surface of section and build the semiclassical propagator from one crossing to the next,"><img alt="" src="../_images/sphx_glr_plot_bogomolny_transfer_operator_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/semiclassical/gutzwiller/plot_bogomolny_transfer_operator.html"><span class="doc">Bogomolny’s transfer operator: quantizing a billiard on its boundary</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Bogomolny's transfer operator: quantizing a billiard on its boundary</div>
 </div></div></section>
 </section>
 
@@ -729,13 +1013,23 @@ Lett. <strong>53</strong>, 1515-1518 (1984).</p>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weyl-s-law">1911 – Weyl’s Law</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#einstein-s-torus-quantization">1917 – Einstein’s Torus Quantization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-wkb-approximation">1926 – The WKB Approximation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#van-vleck-s-semiclassical-propagator">1928 – Van Vleck’s Semiclassical Propagator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-langer-correction">1937 – The Langer Correction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feynman-s-path-integral-and-the-classical-limit">1948 – Feynman’s Path Integral and the Classical Limit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keller-s-quantization-condition-and-maslov-s-topological-index">1958 – Keller’s Quantization Condition and Maslov’s Topological Index</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gutzwiller-trace-formula">1971 – The Gutzwiller Trace Formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#balian-and-bloch-s-level-density-expansion">1972 – Balian and Bloch’s Level-Density Expansion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heller-s-thawed-gaussian-wavepackets">1975 – Heller’s Thawed Gaussian Wavepackets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-berry-tabor-formula-for-integrable-systems">1976 – The Berry-Tabor Formula for Integrable Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#berry-s-random-wave-conjecture">1977 – Berry’s Random-Wave Conjecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ehrenfest-time">1978 – The Ehrenfest Time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heller-s-time-dependent-semiclassical-spectroscopy">1981 – Heller’s Time-Dependent Semiclassical Spectroscopy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herman-and-kluk-s-frozen-gaussians">1984 – Herman and Kluk’s Frozen Gaussians</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heller-s-discovery-of-quantum-scars">1984 – Heller’s Discovery of Quantum Scars</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bogomolny-s-transfer-operator">1992 – Bogomolny’s Transfer Operator</a></li>
 </ul>
   </nav></div>
 

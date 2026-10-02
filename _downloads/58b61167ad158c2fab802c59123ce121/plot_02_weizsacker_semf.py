@@ -91,3 +91,12 @@ for Z, A, label in [(50, 120, "even-even (Z=50,N=70)"), (51, 120, "odd-odd (Z=51
     print(f"{label}: binding energy/nucleon = {bpn:.4f} MeV")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The SEMF valley of stability: Z ~ A / (2 + 0.015 A^(2/3)); pairing favours
+# even-even over odd-odd nuclei.
+expected_Z = A_values / (2 + 0.015 * A_values ** (2 / 3))
+assert np.max(np.abs(Z_optimal - expected_Z)) <= 1.5
+assert binding_energy_per_nucleon(50, 120) > binding_energy_per_nucleon(51, 120)

@@ -139,7 +139,7 @@ One physical star
 physical star, given a polytropic constant ``K`` and central density
 ``rho_c`` (here in arbitrary :math:`G=1` units).
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-81
+.. GENERATED FROM PYTHON SOURCE LINES 72-82
 
 .. code-block:: Python
 
@@ -152,6 +152,7 @@ physical star, given a polytropic constant ``K`` and central density
     fig2.tight_layout()
 
     plt.show()
+
 
 
 
@@ -171,10 +172,31 @@ physical star, given a polytropic constant ``K`` and central density
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 83-87
+
+Check
+-----
+Exact solutions: n = 0 (1 - xi^2/6, xi_1 = sqrt 6), n = 1 (sin xi / xi,
+xi_1 = pi); tabulated surfaces xi_1 = 3.65375 (n = 1.5), 6.89685 (n = 3).
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
+
+.. code-block:: Python
+
+    assert abs(xi0[-1] - np.sqrt(6)) < 1e-6 and abs(xi1[-1] - np.pi) < 1e-6
+    assert np.max(np.abs(theta0 - (1 - xi0**2 / 6))) < 1e-10 and np.max(np.abs(theta1 - exact_n1)) < 1e-8
+    assert abs(star.xi1 - 3.65375) < 1e-4 and abs(lane_emden(3.0)[0][-1] - 6.89685) < 1e-4
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.100 seconds)
+   **Total running time of the script:** (0 minutes 0.103 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_stellar_structure_plot_01_lane_emden_polytropes.py:

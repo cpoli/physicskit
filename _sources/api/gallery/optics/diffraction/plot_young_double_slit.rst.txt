@@ -38,13 +38,14 @@ Rather than jumping straight to that far-field limit,
 animates the near-field wavefronts developing continuously into the
 far-field fringe pattern as the propagation distance grows.
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-29
+.. GENERATED FROM PYTHON SOURCE LINES 22-30
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
     import numpy as np
+    from scipy.signal import find_peaks
 
     from physicskit.optics.visualizers import animate_diffraction_propagation
     from physicskit.optics.wave import double_slit_aperture, fraunhofer_diffraction, intensity
@@ -56,12 +57,12 @@ far-field fringe pattern as the propagation distance grows.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-32
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 Two slits, propagated to the far field
 -------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-44
+.. GENERATED FROM PYTHON SOURCE LINES 33-45
 
 .. code-block:: Python
 
@@ -84,14 +85,14 @@ Two slits, propagated to the far field
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-49
+.. GENERATED FROM PYTHON SOURCE LINES 46-50
 
 Fringe spacing: the interference maxima predicted by
 :math:`d\sin\theta = m\lambda`, at :math:`x_m \approx m\lambda z/d` in the
 paraxial far field, compared against the bright fringes the propagated
 field actually produces.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-65
+.. GENERATED FROM PYTHON SOURCE LINES 50-66
 
 .. code-block:: Python
 
@@ -130,7 +131,7 @@ field actually produces.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-71
+.. GENERATED FROM PYTHON SOURCE LINES 67-72
 
 Watching the near field become the far field
 --------------------------------------------------
@@ -138,7 +139,7 @@ Rather than a single far-field snapshot, sweep the propagation distance
 continuously and watch the two slits' overlapping near-field wavefronts
 develop into Young's far-field interference fringes.
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-78
+.. GENERATED FROM PYTHON SOURCE LINES 72-79
 
 .. code-block:: Python
 
@@ -1383,17 +1384,39 @@ develop into Young's far-field interference fringes.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-83
+.. GENERATED FROM PYTHON SOURCE LINES 80-84
 
 To save the animation to a file instead of (or in addition to)
 displaying it interactively, use e.g.::
 
     anim.save("young_double_slit_propagation.gif", writer="pillow", fps=15)
 
+.. GENERATED FROM PYTHON SOURCE LINES 86-90
+
+Check
+-----
+Bright fringes spaced lambda z / d (to the screen's pixel spacing), with
+the central one at x = 0.
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-94
+
+.. code-block:: Python
+
+    peaks, _ = find_peaks(I[N // 2])
+    central = peaks[np.abs(x[peaks]) < 10]
+    assert abs(np.diff(x[central]).mean() - fringe_spacing) < x[1] - x[0]
+    assert abs(peak_positions) < 1e-12
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.722 seconds)
+   **Total running time of the script:** (0 minutes 3.638 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_diffraction_plot_young_double_slit.py:

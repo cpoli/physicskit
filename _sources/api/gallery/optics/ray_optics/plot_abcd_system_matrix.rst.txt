@@ -165,7 +165,7 @@ lens conjugate relation for ``d1`` and ``f``, every ray of the fan,
 however steep, is bent by the lens so as to reconverge at the same
 height at the image plane.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-105
+.. GENERATED FROM PYTHON SOURCE LINES 85-106
 
 .. code-block:: Python
 
@@ -192,6 +192,7 @@ height at the image plane.
 
 
 
+
 .. image-sg:: /api/gallery/optics/ray_optics/images/sphx_glr_plot_abcd_system_matrix_002.png
    :alt: Ray fan from one object point: all 9 rays reconverge at the image plane
    :srcset: /api/gallery/optics/ray_optics/images/sphx_glr_plot_abcd_system_matrix_002.png
@@ -209,10 +210,31 @@ height at the image plane.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 107-111
+
+Check
+-----
+1/d1 + 1/d2 = 1/f is an imaging condition: B = 0, so every ray from one
+object point meets at the image, with magnification -d2/d1.
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-114
+
+.. code-block:: Python
+
+    assert matrices_agree and abs(1 / d1 + 1 / d2 - 1 / f) < 1e-12
+    assert abs(M_system[0, 1]) < 1e-12
+    np.testing.assert_allclose(image_heights, -d2 / d1 * object_height, atol=1e-15)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.056 seconds)
+   **Total running time of the script:** (0 minutes 0.055 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_ray_optics_plot_abcd_system_matrix.py:

@@ -120,7 +120,7 @@ The exact update has no time-step error. Euler-Maruyama overshoots the
 stationary variance by the factor :math:`1/(1 - \theta\Delta t/2)`,
 which is negligible for :math:`\theta\Delta t \ll 1`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-96
+.. GENERATED FROM PYTHON SOURCE LINES 59-97
 
 .. code-block:: Python
 
@@ -164,6 +164,7 @@ which is negligible for :math:`\theta\Delta t \ll 1`.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_ornstein_uhlenbeck_process_001.png
    :alt: relaxing from X = 3, stationary autocovariance, time-step bias
    :srcset: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_ornstein_uhlenbeck_process_001.png
@@ -183,10 +184,31 @@ which is negligible for :math:`\theta\Delta t \ll 1`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
+
+Check
+-----
+Stationary variance sigma^2 / 2 theta, autocovariance e^(-theta tau), and
+the Euler-Maruyama bias sigma^2 / theta (2 - theta dt).
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-105
+
+.. code-block:: Python
+
+    assert abs(X[-1].var() / ou.stationary_variance - 1) < 0.03
+    assert np.max(np.abs(acov - ou.autocovariance(t_s[lags]))) < 0.02
+    np.testing.assert_allclose(em_var, sigma**2 / (theta * (2 - theta * dts)), rtol=0.03)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.577 seconds)
+   **Total running time of the script:** (0 minutes 0.493 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_stochastic_processes_plot_ornstein_uhlenbeck_process.py:

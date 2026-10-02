@@ -76,3 +76,11 @@ pk.plasma.plot_q_profile(r_minor, q, ax=axes[1])
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The numerical Grad-Shafranov solution matches Solov'ev's analytic one; in
+# the large-aspect-ratio limit q = r B_t / (R0 B_p).
+assert np.max(np.abs(psi - psi_exact)) < 1e-5
+np.testing.assert_allclose(q, r_minor * 2.0 / (1.0 * 0.2), rtol=1e-12)

@@ -111,3 +111,12 @@ ax2.set_title("Drag strengthens as the satellite sinks inward")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Chandrasekhar drag ~ rho / v^2 grows inward, so the orbit decays all the
+# way to the floor in a finite time.
+assert sol.status == 1 and abs(r_plot[-1] - r_floor) < 1e-6
+assert np.all(np.diff(r_plot) <= 1e-12)
+assert np.all(np.diff(drag_deceleration(r_grid)) < 0)

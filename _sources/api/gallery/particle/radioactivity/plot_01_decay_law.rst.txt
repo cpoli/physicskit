@@ -137,7 +137,7 @@ Not just from t=0 -- from *any* starting point. This is what makes a
 half-life a property of the isotope alone, independent of how much of
 the original sample remains, or when it was prepared.
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-82
+.. GENERATED FROM PYTHON SOURCE LINES 71-83
 
 .. code-block:: Python
 
@@ -152,6 +152,7 @@ the original sample remains, or when it was prepared.
     print(f"activity after one half-life:                                            {activity(radioactive_decay_number(N0, lam, t_half), lam):.4e} decays/day")
 
     plt.show()
+
 
 
 
@@ -171,10 +172,30 @@ the original sample remains, or when it was prepared.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
+
+Check
+-----
+N halves every t_1/2 = ln 2 / lambda, and A = lambda N.
+
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
+
+.. code-block:: Python
+
+    assert abs(half_life(lam) - t_half) < 1e-6 and abs(lam - np.log(2) / t_half) < 1e-18
+    np.testing.assert_allclose(radioactive_decay_number(N0, lam, t_half * np.arange(5)), N0 / 2.0 ** np.arange(5), rtol=1e-12)
+    np.testing.assert_allclose(A, lam * N, rtol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.064 seconds)
+   **Total running time of the script:** (0 minutes 0.065 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_radioactivity_plot_01_decay_law.py:

@@ -107,3 +107,9 @@ for ax, snaps, title in ((ax_wall, snaps_wall, "hard wall"), (ax_pml, snaps_pml,
 ax_wall.set_ylabel("t")
 fig2.colorbar(im, ax=(ax_wall, ax_pml), label="Ez")
 fig2.suptitle("space-time diagrams: the hard wall's echo vs. the PML's near-total absorption")
+
+# %%
+# Check
+# -----
+# A hard (PEC) wall reflects the pulse; the graded PML absorbs most of it.
+assert reflected_wall > 0.5 and reflected_wall / reflected_pml > 5

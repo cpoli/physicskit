@@ -156,7 +156,7 @@ actual cloning machine would need to handle -- the fidelity to a
 faithful copy drops well below 1, vanishing entirely at the equator
 where the state is an equal superposition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-108
+.. GENERATED FROM PYTHON SOURCE LINES 84-109
 
 .. code-block:: Python
 
@@ -187,6 +187,7 @@ where the state is an equal superposition.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/entanglement/images/sphx_glr_plot_no_cloning_theorem_001.png
    :alt: CNOT clones only the two states it was built for -- theta=0 and theta=180
    :srcset: /api/gallery/quantum/entanglement/images/sphx_glr_plot_no_cloning_theorem_001.png
@@ -207,10 +208,33 @@ where the state is an equal superposition.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 110-115
+
+Check
+-----
+CNOT copies |0> and |1> but turns |+>|0> into a Bell state. For
+psi = c|0> + s|1> it outputs c|00> + s|11>, whose overlap with the clone
+psi x psi is c^3 + s^3: the fidelity is below 1 for every superposition.
+
+.. GENERATED FROM PYTHON SOURCE LINES 115-119
+
+.. code-block:: Python
+
+    assert np.allclose(out0, np.kron(ket0, ket0)) and np.allclose(out1, np.kron(ket1, ket1))
+    assert np.linalg.norm(actual_output - bell) < 1e-12
+    np.testing.assert_allclose(fidelities, (np.cos(theta_values / 2) ** 3 + np.sin(theta_values / 2) ** 3) ** 2, atol=1e-12)
+    assert np.all(fidelities[1:-1] < 1)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.041 seconds)
+   **Total running time of the script:** (0 minutes 0.040 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_entanglement_plot_no_cloning_theorem.py:

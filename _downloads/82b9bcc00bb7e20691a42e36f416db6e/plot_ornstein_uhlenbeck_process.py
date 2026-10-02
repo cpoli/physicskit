@@ -93,3 +93,12 @@ axes[2].set_title("time-step bias")
 axes[2].legend()
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Stationary variance sigma^2 / 2 theta, autocovariance e^(-theta tau), and
+# the Euler-Maruyama bias sigma^2 / theta (2 - theta dt).
+assert abs(X[-1].var() / ou.stationary_variance - 1) < 0.03
+assert np.max(np.abs(acov - ou.autocovariance(t_s[lags]))) < 0.02
+np.testing.assert_allclose(em_var, sigma**2 / (theta * (2 - theta * dts)), rtol=0.03)

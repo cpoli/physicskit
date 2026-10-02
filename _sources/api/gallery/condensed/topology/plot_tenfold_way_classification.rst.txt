@@ -210,7 +210,7 @@ unbounded integer, the other two producing only a two-valued flag,
 precisely as the tenfold way's classification predicts for their
 respective symmetry classes.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-119
+.. GENERATED FROM PYTHON SOURCE LINES 117-120
 
 .. code-block:: Python
 
@@ -224,9 +224,35 @@ respective symmetry classes.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 121-125
+
+Check
+-----
+Class A: |C| = 1 for |M| < 3 sqrt(3) t2, 0 beyond. Class AII: Z2 = 0, 1.
+Class D: an exact zero mode for |mu| < 2t, a gap for |mu| > 2t.
+
+.. GENERATED FROM PYTHON SOURCE LINES 125-132
+
+.. code-block:: Python
+
+    M_c = 3 * np.sqrt(3) * 0.2
+    chern = np.abs(np.array(chern))
+    assert np.all(chern[np.abs(M_values) < M_c] == 1) and np.all(chern[np.abs(M_values) > M_c] == 0)
+    assert list(z2) == [0, 1]
+    min_gap = np.array(min_gap)
+    assert np.all(min_gap[np.abs(mu_values) < 1.9] < 1e-6)
+    assert np.all(min_gap[np.abs(mu_values) > 2.1] > 0.4)
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.243 seconds)
+   **Total running time of the script:** (0 minutes 0.233 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_tenfold_way_classification.py:

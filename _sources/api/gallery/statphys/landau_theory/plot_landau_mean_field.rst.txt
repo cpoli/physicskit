@@ -101,7 +101,7 @@ symmetry breaking.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x16cc7d700>
+    <matplotlib.legend.Legend object at 0x176a0e3f0>
 
 
 
@@ -173,7 +173,7 @@ a mean-field, equilibrium-tracking cartoon of the discontinuous jump a
 real ferromagnet's magnetization undergoes as an applied field reverses
 sign below its own Curie point.
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-107
+.. GENERATED FROM PYTHON SOURCE LINES 95-108
 
 .. code-block:: Python
 
@@ -192,6 +192,7 @@ sign below its own Curie point.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/landau_theory/images/sphx_glr_plot_landau_mean_field_003.png
    :alt: Field-driven magnetization: symmetry breaking as a jump below $T_C$
    :srcset: /api/gallery/statphys/landau_theory/images/sphx_glr_plot_landau_mean_field_003.png
@@ -201,10 +202,37 @@ sign below its own Curie point.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 109-115
+
+Check
+-----
+Mean-field exponents: m^2 is linear in T_C - T (beta = 1/2), and the
+Curie-Weiss susceptibility is twice as large above T_C as at the same
+distance below it (gamma = 1, amplitude ratio 2). Below T_C the
+magnetization jumps as h changes sign.
+
+.. GENERATED FROM PYTHON SOURCE LINES 115-122
+
+.. code-block:: Python
+
+    m1, m2 = landau_equilibrium_magnetization(np.array([Tc - 0.4, Tc - 0.8]), Tc=Tc)
+    assert abs(m1**2 / m2**2 - 0.5) < 1e-9
+    assert landau_equilibrium_magnetization(Tc + 0.8, Tc) == 0
+    chi_above, chi_below = landau_susceptibility(np.array([Tc + 0.1, Tc - 0.1]), Tc=Tc)
+    assert abs(chi_above / chi_below - 2) < 1e-9
+    m_minus, m_plus = (landau_equilibrium_magnetization(Tc - 0.8, Tc, h=h) for h in (-1e-6, 1e-6))
+    assert m_minus < -0.6 and m_plus > 0.6
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.111 seconds)
+   **Total running time of the script:** (0 minutes 0.105 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_landau_theory_plot_landau_mean_field.py:

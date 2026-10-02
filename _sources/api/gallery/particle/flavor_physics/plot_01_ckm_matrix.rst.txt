@@ -181,7 +181,7 @@ CKM matrix with delta != 0 it is not.
 Visualizing the mixing strengths
 --------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-100
+.. GENERATED FROM PYTHON SOURCE LINES 86-101
 
 .. code-block:: Python
 
@@ -202,6 +202,7 @@ Visualizing the mixing strengths
 
 
 
+
 .. image-sg:: /api/gallery/particle/flavor_physics/images/sphx_glr_plot_01_ckm_matrix_001.png
    :alt: CKM matrix magnitudes: strongly diagonal, small cross-generation mixing
    :srcset: /api/gallery/particle/flavor_physics/images/sphx_glr_plot_01_ckm_matrix_001.png
@@ -211,10 +212,32 @@ Visualizing the mixing strengths
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 102-106
+
+Check
+-----
+The CKM matrix is unitary; the Jarlskog invariant
+J = c12 c23 c13^2 s12 s23 s13 sin(delta) ~ 3e-5 vanishes without the phase.
+
+.. GENERATED FROM PYTHON SOURCE LINES 106-110
+
+.. code-block:: Python
+
+    assert unitarity_error < 1e-14
+    s12, s23, s13 = np.sin([theta12, theta23, theta13])
+    c12, c23, c13 = np.cos([theta12, theta23, theta13])
+    assert abs(J - c12 * c23 * c13**2 * s12 * s23 * s13 * np.sin(delta)) < 1e-12 and abs(J_at_delta0) < 1e-18
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.041 seconds)
+   **Total running time of the script:** (0 minutes 0.038 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_flavor_physics_plot_01_ckm_matrix.py:

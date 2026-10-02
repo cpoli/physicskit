@@ -97,3 +97,13 @@ ax.set_title("CKM matrix magnitudes: strongly diagonal, small cross-generation m
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The CKM matrix is unitary; the Jarlskog invariant
+# J = c12 c23 c13^2 s12 s23 s13 sin(delta) ~ 3e-5 vanishes without the phase.
+assert unitarity_error < 1e-14
+s12, s23, s13 = np.sin([theta12, theta23, theta13])
+c12, c23, c13 = np.cos([theta12, theta23, theta13])
+assert abs(J - c12 * c23 * c13**2 * s12 * s23 * s13 * np.sin(delta)) < 1e-12 and abs(J_at_delta0) < 1e-18

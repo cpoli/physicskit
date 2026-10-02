@@ -168,7 +168,7 @@ The pairing term depends on the parity of *both* Z and N: nuclei with
 even numbers of each are slightly more bound than their odd-odd
 neighbours of the same A.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-94
+.. GENERATED FROM PYTHON SOURCE LINES 89-95
 
 .. code-block:: Python
 
@@ -177,6 +177,7 @@ neighbours of the same A.
         print(f"{label}: binding energy/nucleon = {bpn:.4f} MeV")
 
     plt.show()
+
 
 
 
@@ -191,10 +192,31 @@ neighbours of the same A.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+Check
+-----
+The SEMF valley of stability: Z ~ A / (2 + 0.015 A^(2/3)); pairing favours
+even-even over odd-odd nuclei.
+
+.. GENERATED FROM PYTHON SOURCE LINES 100-103
+
+.. code-block:: Python
+
+    expected_Z = A_values / (2 + 0.015 * A_values ** (2 / 3))
+    assert np.max(np.abs(Z_optimal - expected_Z)) <= 1.5
+    assert binding_energy_per_nucleon(50, 120) > binding_energy_per_nucleon(51, 120)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.120 seconds)
+   **Total running time of the script:** (0 minutes 0.115 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_nuclear_plot_02_weizsacker_semf.py:

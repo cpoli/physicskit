@@ -4341,7 +4341,7 @@ wavepacket's Husimi peak tracks the corresponding classical orbit closely
 for a while, before quantum spreading and interference eventually take
 over -- the correspondence principle in action, and its eventual breakdown.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-94
+.. GENERATED FROM PYTHON SOURCE LINES 78-95
 
 .. code-block:: Python
 
@@ -4364,6 +4364,7 @@ over -- the correspondence principle in action, and its eventual breakdown.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/quantum_chaos/images/sphx_glr_plot_quantum_kicked_rotor_003.png
    :alt: Weak kick (k=0.3): wavepacket Husimi vs. classical orbit, 4 steps
    :srcset: /api/gallery/chaos/quantum_chaos/images/sphx_glr_plot_quantum_kicked_rotor_003.png
@@ -4373,10 +4374,32 @@ over -- the correspondence principle in action, and its eventual breakdown.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
+
+Check
+-----
+Floquet evolution is unitary; for a weak kick the wavepacket's Husimi
+peak follows the classical standard-map orbit.
+
+.. GENERATED FROM PYTHON SOURCE LINES 100-104
+
+.. code-block:: Python
+
+    assert len(qkr.eigenphases()) == qkr.dim and abs(np.sum(np.abs(states[-1]) ** 2) - 1) < 1e-10
+    i, j = np.unravel_index(np.argmax(husimi), husimi.shape)
+    theta_cl, p_cl = classical[-1, 0] % (2 * np.pi), classical[-1, 1] % (2 * np.pi)
+    assert abs(q_grid[i, j] - theta_cl) < 0.15 and abs(p_grid[i, j] - p_cl) < 0.15
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.335 seconds)
+   **Total running time of the script:** (0 minutes 12.376 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_quantum_chaos_plot_quantum_kicked_rotor.py:

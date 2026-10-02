@@ -105,7 +105,7 @@ from the (already close to equilibrium) previous configuration.
 Snapshots below, at, and above :math:`T_C`
 --------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-60
+.. GENERATED FROM PYTHON SOURCE LINES 52-61
 
 .. code-block:: Python
 
@@ -120,6 +120,7 @@ Snapshots below, at, and above :math:`T_C`
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ising/images/sphx_glr_plot_ising_phase_transition_002.png
    :alt: T = 1.27, T = 2.27, T = 3.27
    :srcset: /api/gallery/statphys/ising/images/sphx_glr_plot_ising_phase_transition_002.png
@@ -129,10 +130,34 @@ Snapshots below, at, and above :math:`T_C`
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 62-66
+
+Check
+-----
+Onsager's magnetization below T_C, disorder above it, and the specific
+heat peaking at T_C (within the temperature grid and finite-size shift).
+
+.. GENERATED FROM PYTHON SOURCE LINES 66-72
+
+.. code-block:: Python
+
+    T_sweep, m_sweep = np.asarray(result["T"]), np.asarray(result["M"])
+    below = T_sweep < model.T_C - 0.3
+    onsager = (1 - np.sinh(2 / T_sweep[below]) ** -4) ** 0.125
+    assert np.max(np.abs(m_sweep[below] - onsager)) < 0.03
+    assert m_sweep[T_sweep > model.T_C + 0.5].max() < 0.3
+    assert abs(T_sweep[np.argmax(result["C_v"])] - model.T_C) < 0.2
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.236 seconds)
+   **Total running time of the script:** (0 minutes 0.231 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ising_plot_ising_phase_transition.py:

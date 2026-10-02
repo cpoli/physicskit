@@ -156,7 +156,7 @@ charge that SOR's solution implies on the plates,
 :math:`\rho = -\varepsilon_0\nabla^2\phi`, and handing it to the direct
 solver returns the same potential in one step.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-137
+.. GENERATED FROM PYTHON SOURCE LINES 87-138
 
 .. code-block:: Python
 
@@ -213,6 +213,7 @@ solver returns the same potential in one step.
 
 
 
+
 .. image-sg:: /api/gallery/fields/statics/images/sphx_glr_plot_poisson_equation_relaxation_001.png
    :alt: charged ball: parabola inside, 1/r outside, relaxation cost, capacitor: potential and field lines
    :srcset: /api/gallery/fields/statics/images/sphx_glr_plot_poisson_equation_relaxation_001.png
@@ -223,9 +224,32 @@ solver returns the same potential in one step.
 
  .. code-block:: none
 
-    SOR: 598 sweeps, 53.2 ms; sine transform: 0.34 ms
+    SOR: 598 sweeps, 50.7 ms; sine transform: 0.37 ms
     max difference between the two potentials: 1.1e-14 V
     field at the center: 8.000 V/m, ideal V/d = 8.000 V/m
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 139-144
+
+Check
+-----
+Uniform ball: phi(0) = 3Q / 8 pi R (eps0 = 1). Relaxation cost: Jacobi
+sweeps ~ N^2, optimal SOR ~ N. The sine transform solves the same problem
+directly; the capacitor's central field is V/d.
+
+.. GENERATED FROM PYTHON SOURCE LINES 144-148
+
+.. code-block:: Python
+
+    assert abs(ball.phi[c, c, c] / (3 * Q / (8 * np.pi * R)) - 1) < 0.01
+    assert np.polyfit(np.log(sizes), np.log(sweeps["jacobi"]), 1)[0] > 1.6 and abs(np.polyfit(np.log(sizes), np.log(sweeps["sor"]), 1)[0] - 1) < 0.15
+    assert np.max(np.abs(direct - cap.phi)) < 1e-10
+    assert abs(E[1][N // 2, N // 2] - 1.0 / gap) < 1e-3 / gap
+
+
+
 
 
 
@@ -233,7 +257,7 @@ solver returns the same potential in one step.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.503 seconds)
+   **Total running time of the script:** (0 minutes 0.596 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_statics_plot_poisson_equation_relaxation.py:

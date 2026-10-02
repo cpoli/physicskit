@@ -157,7 +157,7 @@ times the average energy per mode.
     T = 4500 K: spectrum peaks at 265 THz; nu_peak / T = 5.8789e+10 Hz/K
     T = 5800 K: spectrum peaks at 341 THz; nu_peak / T = 5.8789e+10 Hz/K
 
-    <matplotlib.legend.Legend object at 0x33fbae780>
+    <matplotlib.legend.Legend object at 0x177162780>
 
 
 
@@ -170,7 +170,7 @@ Integrating over all frequencies gives :math:`u = aT^4` with
 :math:`a = 8\pi^5k_B^4/(15h^3c^3) = 4\sigma/c`: Planck's constant fixes
 the Stefan-Boltzmann constant.
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-111
+.. GENERATED FROM PYTHON SOURCE LINES 92-112
 
 .. code-block:: Python
 
@@ -197,6 +197,7 @@ the Stefan-Boltzmann constant.
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -209,10 +210,34 @@ the Stefan-Boltzmann constant.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 113-118
+
+Check
+-----
+Wien's displacement law: h nu_max = 2.8214 k_B T; integrating Planck's law
+recovers the Stefan-Boltzmann constant; the oscillator sum gives Planck's
+mean energy x / (e^x - 1).
+
+.. GENERATED FROM PYTHON SOURCE LINES 118-123
+
+.. code-block:: Python
+
+    assert abs(H * nu_peak / (K_B * 5800) - 2.821439) < 1e-3
+    assert abs(sigma_from_planck / STEFAN_BOLTZMANN - 1) < 1e-4
+    for x in x_values:
+        w = np.exp(-x * level_spacing)
+        assert abs(np.sum(level_spacing * x * w) / np.sum(w) - x / np.expm1(x)) < 1e-6
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.133 seconds)
+   **Total running time of the script:** (0 minutes 0.114 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_harmonic_oscillator_plot_planck_blackbody.py:

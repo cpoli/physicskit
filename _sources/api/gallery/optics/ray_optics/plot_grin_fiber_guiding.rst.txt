@@ -145,7 +145,7 @@ while the same construction for a homogeneous medium just produces an
 open, unbounded line, since there ``theta`` never changes at all while
 ``y`` runs away.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-88
+.. GENERATED FROM PYTHON SOURCE LINES 75-89
 
 .. code-block:: Python
 
@@ -165,6 +165,7 @@ open, unbounded line, since there ``theta`` never changes at all while
 
 
 
+
 .. image-sg:: /api/gallery/optics/ray_optics/images/sphx_glr_plot_grin_fiber_guiding_002.png
    :alt: GRIN fiber phase-space portrait: closed elliptical orbits
    :srcset: /api/gallery/optics/ray_optics/images/sphx_glr_plot_grin_fiber_guiding_002.png
@@ -174,10 +175,32 @@ open, unbounded line, since there ``theta`` never changes at all while
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 90-95
+
+Check
+-----
+In a parabolic-index fiber rays oscillate about the axis,
+y(z) = y0 cos(sqrt(n2) z) + theta0 sin(sqrt(n2) z) / (n0 sqrt(n2)), with period
+2 pi / sqrt(n2); in a homogeneous medium they walk off as y0 + theta0 z.
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-98
+
+.. code-block:: Python
+
+    y_analytic = y0 * np.cos(np.sqrt(n2) * z) + theta0 * np.sin(np.sqrt(n2) * z) / (n0 * np.sqrt(n2))
+    np.testing.assert_allclose(y_fiber, y_analytic, atol=1e-12)
+    np.testing.assert_allclose(y_free, y0 + theta0 * z, atol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.081 seconds)
+   **Total running time of the script:** (0 minutes 0.075 seconds)
 
 
 .. _sphx_glr_download_api_gallery_optics_ray_optics_plot_grin_fiber_guiding.py:

@@ -147,7 +147,7 @@ orbital, which is half ionic (:math:`\mathrm{H^+H^-}`), so the energy
 rises far above that of two separate hydrogen atoms. Fixing this needs a
 multi-determinant (correlated) wavefunction.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-100
+.. GENERATED FROM PYTHON SOURCE LINES 81-101
 
 .. code-block:: Python
 
@@ -173,6 +173,7 @@ multi-determinant (correlated) wavefunction.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/atoms_molecules/images/sphx_glr_plot_hartree_fock_self_consistent_field_002.png
    :alt: H$_2$ potential curve: bound near 1.35 bohr, wrong at dissociation
    :srcset: /api/gallery/quantum/atoms_molecules/images/sphx_glr_plot_hartree_fock_self_consistent_field_002.png
@@ -182,10 +183,35 @@ multi-determinant (correlated) wavefunction.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 102-108
+
+Check
+-----
+The largest basis reaches the Clementi-Roetti Hartree-Fock limit; every
+basis stays variational (above it); the remaining gap to Pekeris' exact
+energy is the correlation energy, -0.042 hartree. The STO-3G H2 minimum
+sits near the textbook R = 1.346 bohr, E = -1.117 hartree.
+
+.. GENERATED FROM PYTHON SOURCE LINES 108-113
+
+.. code-block:: Python
+
+    assert abs(E_he[-1] - E_HF_LIMIT) < 1e-4
+    assert np.all(np.array(E_he) > E_HF_LIMIT - 1e-6) and E_sto3g > E_HF_LIMIT
+    assert abs((E_HF_LIMIT - E_EXACT_HE) - 0.042) < 1e-3
+    assert abs(R[np.argmin(E_h2)] - 1.346) < 0.07
+    assert abs(min(E_h2) + 1.117) < 0.002
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.644 seconds)
+   **Total running time of the script:** (0 minutes 0.621 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_atoms_molecules_plot_hartree_fock_self_consistent_field.py:

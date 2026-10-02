@@ -88,3 +88,11 @@ fig3.colorbar(im, ax=ax3, label=r"$|\psi(x,t)|^2$")
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Full revival at t_rev, the mirror image (no overlap) at t_rev/2, and a
+# fractional revival into two copies (fidelity 1/2) at t_rev/4.
+fid = {frac: qr.fidelity_to_initial(x, frac * t_rev, coeffs, psi0) for frac in (0.25, 0.5, 1.0)}
+assert fid[1.0] > 0.999 and fid[0.5] < 1e-3 and abs(fid[0.25] - 0.5) < 1e-3

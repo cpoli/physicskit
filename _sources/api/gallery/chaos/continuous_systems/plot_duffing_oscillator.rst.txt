@@ -38,12 +38,13 @@ or, as the first-order system in :math:`(x, v)` actually integrated,
 the classic chaotic parameter set below, its long-time trajectory settles
 onto a strange attractor in the ``(x, v)`` phase plane.
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-30
+.. GENERATED FROM PYTHON SOURCE LINES 22-31
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.continuous import Duffing
     from physicskit.chaos.utils.dimension import box_counting_dimension, correlation_dimension
@@ -57,14 +58,14 @@ onto a strange attractor in the ``(x, v)`` phase plane.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-35
+.. GENERATED FROM PYTHON SOURCE LINES 32-36
 
 Integrate
 ---------
 Discard an initial transient so the plotted trajectory has already settled
 onto the attractor.
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-38
+.. GENERATED FROM PYTHON SOURCE LINES 36-39
 
 .. code-block:: Python
 
@@ -78,12 +79,12 @@ onto the attractor.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-42
 
 Phase portrait
 ---------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-49
+.. GENERATED FROM PYTHON SOURCE LINES 42-50
 
 .. code-block:: Python
 
@@ -107,7 +108,7 @@ Phase portrait
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-60
+.. GENERATED FROM PYTHON SOURCE LINES 51-61
 
 Quantifying it: a fractal attractor
 ----------------------------------------
@@ -120,7 +121,7 @@ curve (:math:`D=1`) a single trajectory traces out locally and the
 kept for the correlation-dimension estimate, since it computes all
 :math:`O(n^2)` pairwise distances.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-78
+.. GENERATED FROM PYTHON SOURCE LINES 61-80
 
 .. code-block:: Python
 
@@ -145,6 +146,7 @@ kept for the correlation-dimension estimate, since it computes all
 
 
 
+
 .. image-sg:: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_duffing_oscillator_002.png
    :alt: Duffing attractor: fractal dimension between 1 (curve) and 2 (plane), Box counting: D0 = 1.180, Correlation sum: D2 = 1.301
    :srcset: /api/gallery/chaos/continuous_systems/images/sphx_glr_plot_duffing_oscillator_002.png
@@ -160,10 +162,30 @@ kept for the correlation-dimension estimate, since it computes all
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
+
+Check
+-----
+A strange attractor: its projection has a non-integer dimension between a
+curve (1) and an area (2).
+
+.. GENERATED FROM PYTHON SOURCE LINES 85-87
+
+.. code-block:: Python
+
+    assert 1.05 < d0 < 1.95 and 1.05 < d2 < 1.95
+    assert np.all(np.isfinite(states)) and np.abs(states[:, 0]).max() < 2
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.136 seconds)
+   **Total running time of the script:** (0 minutes 1.211 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_continuous_systems_plot_duffing_oscillator.py:

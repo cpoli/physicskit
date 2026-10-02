@@ -96,3 +96,13 @@ fig.colorbar(sc, ax=axes[2], label=r"$k_BT$")
 axes[2].legend()
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# mu = 1/gamma, D = kT/gamma, so D = mu kT for every friction and
+# temperature (Einstein 1905); Stokes-Einstein for a 0.5 um bead in water.
+assert abs(bm.measured_mobility() * gamma - 1) < 0.03
+assert abs(bm.measured_diffusion_coefficient() / (kT / gamma) - 1) < 0.03
+assert abs(ratio.mean() - 1) < 0.03 and ratio.std() < 0.05
+assert abs(D_bead - 1.380649e-23 * 293.15 / (6 * np.pi * 1.0e-3 * 0.5e-6)) < 1e-18

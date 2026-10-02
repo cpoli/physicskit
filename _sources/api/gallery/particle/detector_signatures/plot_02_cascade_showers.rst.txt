@@ -131,7 +131,7 @@ Carlson, and Oppenheimer derived: roughly doubling generation over
 generation while energy remains available, then stopping abruptly
 once every branch has fallen below the energy threshold.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-69
+.. GENERATED FROM PYTHON SOURCE LINES 60-70
 
 .. code-block:: Python
 
@@ -144,6 +144,7 @@ once every branch has fallen below the energy threshold.
     anim = animate_particle_cascade(root)
 
     plt.show()
+
 
 
 
@@ -843,10 +844,30 @@ once every branch has fallen below the energy threshold.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
+
+Check
+-----
+The cascade conserves four-momentum (the leaves' invariant mass is the
+primary's), and the particle count doubles each early generation.
+
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
+
+.. code-block:: Python
+
+    assert abs(reconstructed_mass - root.four_vector.mass) < 1e-9 * max(root.four_vector.mass, 1.0)
+    assert counts_by_generation[:5] == [1, 2, 4, 8, 16]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.004 seconds)
+   **Total running time of the script:** (0 minutes 4.912 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_detector_signatures_plot_02_cascade_showers.py:

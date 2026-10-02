@@ -68,7 +68,7 @@ field :math:`F` (the :math:`m=\pm1` sublevels stay unshifted since only
 the :math:`m=0` pair couples to the field). Right: the Zeeman sublevel
 shifts vs. :math:`B` for :math:`l=0,1,2`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-66
+.. GENERATED FROM PYTHON SOURCE LINES 39-67
 
 .. code-block:: Python
 
@@ -102,6 +102,7 @@ shifts vs. :math:`B` for :math:`l=0,1,2`.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/perturbation/images/sphx_glr_plot_perturbation_and_floquet_001.png
    :alt: Linear Stark effect: hydrogen n=2 quartet, Zeeman sublevel splitting
    :srcset: /api/gallery/quantum/perturbation/images/sphx_glr_plot_perturbation_and_floquet_001.png
@@ -118,10 +119,30 @@ shifts vs. :math:`B` for :math:`l=0,1,2`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 68-72
+
+Check
+-----
+The linear Stark effect of hydrogen's n = 2 level: shifts 0, 0, +-3 F (a.u.);
+Zeeman shifts are linear in B.
+
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(np.sort(np.abs(shifts), axis=1), np.outer(np.abs(F_values), [0, 0, 3, 3]), atol=1e-12)
+    np.testing.assert_allclose(zeeman_spectrum(1, 2.0), 2 * np.asarray(zeeman_spectrum(1, 1.0)), atol=1e-12)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.072 seconds)
+   **Total running time of the script:** (0 minutes 0.070 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_perturbation_plot_perturbation_and_floquet.py:

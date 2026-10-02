@@ -84,3 +84,10 @@ plt.show()
 anim = pk.plasma.animate_ion_acoustic_soliton(u0, x, dt=0.0005, steps_per_frame=200, n_frames=40)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The soliton moves at its speed without changing shape.
+assert abs(shift / (4.0 * steps * dt) - 1) < 0.01
+assert abs(u.max() - u0.max()) < 0.01 * u0.max()

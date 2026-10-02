@@ -28,7 +28,7 @@ all three at once with a Lax-Friedrichs finite-volume scheme.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physicskit.fluids.systems.compressible_flow import sod_shock_tube
+from physicskit.fluids.systems.compressible_flow import exact_riemann_solution, sod_shock_tube
 from physicskit.fluids.visualizers import theme
 from physicskit.fluids.visualizers.compressible import plot_shock_tube_profiles
 
@@ -74,3 +74,12 @@ ax.set_title("Sod shock tube: density space-time diagram")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The finite-volume solution matches the exact Riemann solution (rarefaction,
+# contact, shock) to discretization error.
+exact = exact_riemann_solution(result["x"], 0.2, x0=0.5)
+assert np.mean(np.abs(result["rho"] - exact["rho"])) < 0.03
+assert np.mean(np.abs(result["p"] - exact["p"])) < 0.03

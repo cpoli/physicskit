@@ -151,7 +151,7 @@ Galactic longitude :math:`l` as
 at fixed distance :math:`d` -- exactly the pattern Oort found in
 existing stellar radial velocities, confirming differential rotation.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-101
+.. GENERATED FROM PYTHON SOURCE LINES 83-102
 
 .. code-block:: Python
 
@@ -176,6 +176,7 @@ existing stellar radial velocities, confirming differential rotation.
 
 
 
+
 .. image-sg:: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_01_oort_constants_002.png
    :alt: Radial-velocity streaming, Proper-motion streaming
    :srcset: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_01_oort_constants_002.png
@@ -185,10 +186,32 @@ existing stellar radial velocities, confirming differential rotation.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 103-107
+
+Check
+-----
+A = (v/R - dv/dR) / 2 and B = -(v/R + dv/dR) / 2 from the rotation curve
+itself; a curve falling more slowly than Keplerian gives A > 0 > B.
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-111
+
+.. code-block:: Python
+
+    dv_dR = (v_c(R0 + 1e-3) - v_c(R0 - 1e-3)) / 2e-3
+    assert abs(A - 0.5 * (v_c(R0) / R0 - dv_dR)) < 1e-6
+    assert abs(B + 0.5 * (v_c(R0) / R0 + dv_dR)) < 1e-6
+    assert A > 0 > B
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.095 seconds)
+   **Total running time of the script:** (0 minutes 0.085 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_galactic_dynamics_plot_01_oort_constants.py:

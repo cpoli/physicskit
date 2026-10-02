@@ -82,3 +82,14 @@ print(f"on-axis intensity, l=0 (single bright spot): {I_gaussian_axis:.6f}")
 print(f"on-axis intensity, l=1 (dark core):           {I_vortex_axis:.2e}")
 print(f"phase winding around the l=1 vortex axis: {winding:.3f} x 2*pi (predicted: 1.0)")
 print("orbital angular momentum per photon: L_z = l*hbar -> nonzero only for l != 0")
+
+# %%
+# Check
+# -----
+# An l = 1 Laguerre-Gaussian mode has a dark core and a phase winding of
+# exactly 2 pi around it (closing the loop); l = 0 is bright on axis.
+loop = np.append(u_ring_vortex, u_ring_vortex[0])
+total_winding = np.sum(np.angle(loop[1:] / loop[:-1])) / (2 * np.pi)
+assert abs(total_winding - 1) < 1e-9
+assert I_vortex_axis < 0.01 * np.max(np.abs(u_vortex) ** 2)
+assert I_gaussian_axis > 0.99 * np.max(np.abs(u_gaussian) ** 2)

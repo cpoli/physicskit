@@ -154,7 +154,7 @@ The mean of :math:`\ln X_T` is :math:`(\mu - \sigma^2/2)T`, not
 :math:`\mu T`, while the mean of :math:`X_T` itself grows as
 :math:`e^{\mu T}`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-128
+.. GENERATED FROM PYTHON SOURCE LINES 93-129
 
 .. code-block:: Python
 
@@ -196,6 +196,7 @@ The mean of :math:`\ln X_T` is :math:`(\mu - \sigma^2/2)T`, not
 
 
 
+
 .. image-sg:: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_ito_euler_maruyama_milstein_001.png
    :alt: one geometric Brownian path, strong error, the Itô drift correction
    :srcset: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_ito_euler_maruyama_milstein_001.png
@@ -212,10 +213,31 @@ The mean of :math:`\ln X_T` is :math:`(\mu - \sigma^2/2)T`, not
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 130-134
+
+Check
+-----
+Strong orders 1/2 (Euler-Maruyama) and 1 (Milstein); the Ito drift
+correction: <ln X_T> = (mu - sigma^2/2) T, while <X_T> = e^(mu T).
+
+.. GENERATED FROM PYTHON SOURCE LINES 134-137
+
+.. code-block:: Python
+
+    assert abs(order_em - 0.5) < 0.1 and abs(order_mil - 1.0) < 0.1
+    assert abs(np.mean(np.log(exact_T)) - (mu - 0.5 * sigma**2) * T) < 3 * se_log
+    assert abs(np.mean(exact_T) - np.exp(mu * T)) < 3 * se_x
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.776 seconds)
+   **Total running time of the script:** (0 minutes 0.769 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_stochastic_processes_plot_ito_euler_maruyama_milstein.py:

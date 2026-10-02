@@ -84,3 +84,13 @@ axes[2].set_title("Type I (below) vs Type II (above)")
 axes[2].legend()
 
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# |psi0|^2 = -a/b; the order parameter vanishes at the wall and is back to
+# 99% of its bulk value within four coherence lengths; kappa crosses
+# 1/sqrt(2) inside the sweep.
+assert np.isclose(psi0**2, -a / b)
+assert profile[0] == 0 and profile[np.searchsorted(x, 4 * xi)] > 0.99
+assert min(kappas) < kappa_c < max(kappas)

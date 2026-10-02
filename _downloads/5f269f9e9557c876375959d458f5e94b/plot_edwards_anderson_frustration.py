@@ -66,17 +66,34 @@ plt.tight_layout()
 # smoothly toward 0 as :math:`T` increases rather than showing a sharp
 # transition -- in contrast to the sharp Ising ferromagnetic transition,
 # and a useful point of comparison with the Ising examples.
-temperatures = np.linspace(0.3, 3.0, 10)
-q2_values = []
-for T in temperatures:
-    q2 = model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150)
-    q2_values.append(q2)
+#
+# Glassy dynamics make this measurement expensive: at low temperature,
+# Metropolis replicas started from random configurations freeze into
+# different metastable valleys long before they equilibrate, and
+# :math:`\langle q^2 \rangle` then reads near zero for the wrong reason.
+# Small lattices, long equilibration, temperatures down to :math:`T = 0.6`
+# only, and an average over 16 bond realizations (the quenched average
+# :math:`[\langle q^2 \rangle]`) keep the estimate honest.
+temperatures = np.linspace(0.6, 3.0, 9)
+
+
+def disorder_averaged_q2(L, n_disorder=16):
+    return np.mean(
+        [
+            [EdwardsAndersonSpinGlass2D(L=L, J=1.0, seed=s).edwards_anderson_order_parameter(beta=1.0 / T, n_equil=5000, n_measure=1000) for T in temperatures]
+            for s in range(n_disorder)
+        ],
+        axis=0,
+    )
+
+
+q2_by_L = {8: disorder_averaged_q2(8)}
 
 plt.figure(figsize=(6, 4))
-plt.plot(temperatures, q2_values, marker="o")
+plt.plot(temperatures, q2_by_L[8], marker="o")
 plt.xlabel("Temperature")
-plt.ylabel(r"$\langle q^2 \rangle$")
-plt.title("Edwards-Anderson replica overlap")
+plt.ylabel(r"$[\langle q^2 \rangle]$")
+plt.title("Edwards-Anderson replica overlap, L = 8")
 plt.tight_layout()
 
 # %%
@@ -87,18 +104,30 @@ plt.tight_layout()
 # does elsewhere in this gallery. The 2D +/-J Edwards-Anderson glass is
 # believed to order only at :math:`T_{\text{SG}}=0`, so repeating the same
 # overlap measurement at several lattice sizes should instead show curves
-# that stay close together and smoothly decaying at every L, with no
-# growing sharpness -- itself the qualitative signature that distinguishes
-# a T=0 transition from a conventional finite-T one.
-L_values = [16, 24, 32]
+# that decay smoothly at every L and drop as L grows (the spin-glass
+# correlation length stays finite at every T > 0), with no growing
+# sharpness -- the qualitative signature that distinguishes a T=0
+# transition from a conventional finite-T one.
+for L in (12, 16):
+    q2_by_L[L] = disorder_averaged_q2(L)
 plt.figure(figsize=(6.5, 4.5))
-for L in L_values:
-    size_model = EdwardsAndersonSpinGlass2D(L=L, J=1.0, seed=0)
-    q2_L = [size_model.edwards_anderson_order_parameter(beta=1.0 / T, n_equil=150, n_measure=150) for T in temperatures]
+for L, q2_L in q2_by_L.items():
     plt.plot(temperatures, q2_L, marker="o", ms=4, label=f"L={L}")
 plt.xlabel("Temperature")
-plt.ylabel(r"$\langle q^2 \rangle$")
+plt.ylabel(r"$[\langle q^2 \rangle]$")
 plt.title("Edwards-Anderson overlap: no sharpening onset with L\n(consistent with $T_{SG}=0$)")
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Random +-J bonds frustrate half the plaquettes. The overlap is large at
+# low T and decays smoothly with T at every size; at fixed T it falls as L
+# grows, as it must without a finite-temperature transition.
+assert abs(model.frustration_density() - 0.5) < 0.05
+for q2_L in q2_by_L.values():
+    assert q2_L[0] > 0.1 and q2_L[-1] < 0.05
+    assert np.all(np.diff(q2_L) < 0.02)
+assert q2_by_L[16][0] < q2_by_L[12][0] < q2_by_L[8][0]

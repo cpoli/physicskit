@@ -34,7 +34,7 @@ curvature (unlike a full circle, whose focusing never gets interrupted by a
 flat stretch). This example plots a single trajectory and the resulting
 Poincare section.
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-27
+.. GENERATED FROM PYTHON SOURCE LINES 18-28
 
 .. code-block:: Python
 
@@ -43,6 +43,7 @@ Poincare section.
     import numpy as np
 
     from physicskit.chaos.systems.billiards import BunimovichStadium
+    from physicskit.chaos.visualizers import billiard_trajectory_divergence
     from physicskit.chaos.visualizers.phase_space import plot_billiard_trajectory, plot_poincare_section
 
     billiard = BunimovichStadium(radius=1.0, straight_length=2.0)
@@ -54,12 +55,12 @@ Poincare section.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-30
+.. GENERATED FROM PYTHON SOURCE LINES 29-31
 
 Trajectory
 ----------
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-32
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 .. code-block:: Python
 
@@ -77,20 +78,21 @@ Trajectory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-37
+.. GENERATED FROM PYTHON SOURCE LINES 34-38
 
 Poincare section
 ----------------
 As with the Sinai billiard, the section fills in densely rather than
 tracing out smooth invariant curves.
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-40
+.. GENERATED FROM PYTHON SOURCE LINES 38-42
 
 .. code-block:: Python
 
     fig, ax = plot_poincare_section(billiard, n_rays=40, n_bounces=200)
 
     plt.show()
+
 
 
 
@@ -103,10 +105,29 @@ tracing out smooth invariant curves.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 43-46
+
+Check
+-----
+Bunimovich's stadium is chaotic: neighbouring rays separate exponentially.
+
+.. GENERATED FROM PYTHON SOURCE LINES 46-48
+
+.. code-block:: Python
+
+    _, separation = billiard_trajectory_divergence(billiard, pos=billiard.sample_interior_point(), vel=(0.5, 0.9), delta_0=1e-8, n_bounces=60)
+    assert separation.max() > 1e4 * separation[0]
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.083 seconds)
+   **Total running time of the script:** (0 minutes 0.076 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_billiards_plot_bunimovich_stadium.py:

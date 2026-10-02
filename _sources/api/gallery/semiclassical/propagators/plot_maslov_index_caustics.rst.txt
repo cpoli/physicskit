@@ -107,7 +107,7 @@ The Maslov index counting caustic crossings once per half-period, over
 many periods
 --------------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-87
+.. GENERATED FROM PYTHON SOURCE LINES 78-88
 
 .. code-block:: Python
 
@@ -123,6 +123,7 @@ many periods
 
 
 
+
 .. image-sg:: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_maslov_index_caustics_001.png
    :alt: Caustics: one crossing per half-period
    :srcset: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_maslov_index_caustics_001.png
@@ -132,10 +133,31 @@ many periods
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
+
+Check
+-----
+The harmonic oscillator focuses every half period: the Maslov index counts
+floor(2t / T) caustics (checked away from the focal times themselves).
+
+.. GENERATED FROM PYTHON SOURCE LINES 93-96
+
+.. code-block:: Python
+
+    expected = np.floor(times_full / (T_period / 2))
+    away = np.abs(times_full / (T_period / 2) - np.round(times_full / (T_period / 2))) > 0.02
+    assert np.all(mu_history[away] == expected[away])
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.407 seconds)
+   **Total running time of the script:** (0 minutes 0.406 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_propagators_plot_maslov_index_caustics.py:

@@ -114,3 +114,16 @@ ax2.set_title("barrier crossing")
 ax2.legend()
 fig2.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Trajectories and the Fokker-Planck solution agree; the well populations
+# relax as 1/2 (1 - e^(-2kt)) toward the symmetric Boltzmann state; the
+# hopping rate matches Kramers' estimate
+# sqrt(U''(min) |U''(max)|) / (2 pi gamma) e^(-Delta U / kT) to ~15%.
+for xs, p in zip(samples, densities):
+    assert abs(np.mean(xs < 0) - np.sum(p[x < 0]) * (x[1] - x[0])) < 0.01
+assert np.max(np.abs(left[fit] - 0.5 * (1 - np.exp(-2 * rate * t_long[fit])))) < 0.01
+assert abs(np.sum(boltzmann[x < 0]) / np.sum(boltzmann) - 0.5) < 0.01
+assert abs(rate / kramers - 1) < 0.15

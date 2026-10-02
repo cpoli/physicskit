@@ -103,3 +103,11 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Equal-mass remnant: M_f / M = 0.9516, a_f / M_f = 0.686 (numerical
+# relativity); the ringdown fit recovers the quasinormal mode.
+assert abs(M_f_frac[-1] - 0.9516) < 0.003 and abs(spin[-1] - 0.686) < 0.01
+assert abs(popt[1] / f_Hz - 1) < 0.01 and abs(popt[2] * 1e3 / tau_ms - 1) < 0.01

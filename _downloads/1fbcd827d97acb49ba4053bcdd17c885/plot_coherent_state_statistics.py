@@ -68,3 +68,11 @@ print(f"alpha = {alpha}, |alpha|^2 = {abs(alpha) ** 2:.4f}")
 print(f"measured <n> = {mean_n:.4f}   measured Var(n) = {var_n:.4f}")
 print("Poissonian statistics: <n> = Var(n) = |alpha|^2, confirmed above.")
 print(f"minimum of W(x,p) over the grid: {W.min():.6f} (non-negative: classical state)")
+
+# %%
+# Check
+# -----
+# Poissonian: <n> = Var(n) = |alpha|^2; a coherent state's Wigner function
+# is a non-negative Gaussian.
+assert abs(mean_n - abs(alpha) ** 2) < 1e-6 and abs(var_n - abs(alpha) ** 2) < 1e-5
+assert W.min() > -1e-6

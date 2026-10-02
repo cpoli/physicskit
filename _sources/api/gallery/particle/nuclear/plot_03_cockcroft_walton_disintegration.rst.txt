@@ -102,7 +102,7 @@ Gamow factor :math:`e^{-2\pi\eta}`, with
 energy, which is why the alpha count rose so fast as Cockcroft and Walton
 turned up the voltage.
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-86
+.. GENERATED FROM PYTHON SOURCE LINES 54-87
 
 .. code-block:: Python
 
@@ -141,6 +141,7 @@ turned up the voltage.
 
 
 
+
 .. image-sg:: /api/gallery/particle/nuclear/images/sphx_glr_plot_03_cockcroft_walton_disintegration_001.png
    :alt: The proton must tunnel, Gamow tunnelling sets the yield
    :srcset: /api/gallery/particle/nuclear/images/sphx_glr_plot_03_cockcroft_walton_disintegration_001.png
@@ -160,10 +161,30 @@ turned up the voltage.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 88-92
+
+Check
+-----
+p + Li-7 -> 2 He-4 releases 17.35 MeV, each alpha ~8.8 MeV with a ~8.3 cm
+range in air; at 0.25 MeV the proton crosses the 1.2 MeV barrier only by tunnelling.
+
+.. GENERATED FROM PYTHON SOURCE LINES 92-94
+
+.. code-block:: Python
+
+    assert abs(Q - 17.35) < 0.01 and abs(R_air - 8.4) < 0.3
+    assert V_barrier > 4 * T_p and np.all(np.diff(gamow) > 0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.133 seconds)
+   **Total running time of the script:** (0 minutes 0.108 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_nuclear_plot_03_cockcroft_walton_disintegration.py:

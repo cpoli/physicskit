@@ -136,7 +136,7 @@ combines them into a single :math:`W(x,p)` quasi-probability distribution
 exactly at :math:`(x_0, p_0=\hbar k_0)`, directly showing de Broglie's
 wave simultaneously localized (loosely) in both position and momentum.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-83
+.. GENERATED FROM PYTHON SOURCE LINES 69-84
 
 .. code-block:: Python
 
@@ -157,6 +157,7 @@ wave simultaneously localized (loosely) in both position and momentum.
 
 
 
+
 .. image-sg:: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_de_broglie_wavepacket_002.png
    :alt: Wigner phase-space distribution of the free Gaussian wavepacket
    :srcset: /api/gallery/quantum/wave_packets/images/sphx_glr_plot_de_broglie_wavepacket_002.png
@@ -172,10 +173,30 @@ wave simultaneously localized (loosely) in both position and momentum.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 85-89
+
+Check
+-----
+The momentum distribution peaks at hbar k0 (to the FFT grid spacing), so
+lambda = 2 pi / k0; a Gaussian packet has a non-negative Wigner function.
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-91
+
+.. code-block:: Python
+
+    assert abs(p_peak - k0) <= np.abs(np.diff(p)).max()
+    assert W.min() > -1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 19.996 seconds)
+   **Total running time of the script:** (0 minutes 19.078 seconds)
 
 
 .. _sphx_glr_download_api_gallery_quantum_wave_packets_plot_de_broglie_wavepacket.py:

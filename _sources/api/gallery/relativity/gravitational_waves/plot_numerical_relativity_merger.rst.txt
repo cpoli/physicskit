@@ -142,7 +142,7 @@ and damping time identify the remnant's mass and spin: this is the
 black-hole spectroscopy that numerical-relativity waveforms made
 possible.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-106
+.. GENERATED FROM PYTHON SOURCE LINES 75-107
 
 .. code-block:: Python
 
@@ -180,6 +180,7 @@ possible.
 
 
 
+
 .. image-sg:: /api/gallery/relativity/gravitational_waves/images/sphx_glr_plot_numerical_relativity_merger_001.png
    :alt: Merger outcome vs mass ratio, GW150914-like ringdown
    :srcset: /api/gallery/relativity/gravitational_waves/images/sphx_glr_plot_numerical_relativity_merger_001.png
@@ -193,6 +194,26 @@ possible.
     /Users/cpoli/Code/physicskit/examples/relativity/gravitational_waves/plot_numerical_relativity_merger.py:85: OptimizeWarning: Covariance of the parameters could not be estimated
       popt, _ = curve_fit(damped, t_s[post], hp[post], p0=[A0, 250.0, 0.004, 0.0])
     fitted ringdown: f = 275.8 Hz, tau = 3.71 ms  (input 275.8 Hz, 3.71 ms)
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 108-112
+
+Check
+-----
+Equal-mass remnant: M_f / M = 0.9516, a_f / M_f = 0.686 (numerical
+relativity); the ringdown fit recovers the quasinormal mode.
+
+.. GENERATED FROM PYTHON SOURCE LINES 112-114
+
+.. code-block:: Python
+
+    assert abs(M_f_frac[-1] - 0.9516) < 0.003 and abs(spin[-1] - 0.686) < 0.01
+    assert abs(popt[1] / f_Hz - 1) < 0.01 and abs(popt[2] * 1e3 / tau_ms - 1) < 0.01
+
+
+
 
 
 

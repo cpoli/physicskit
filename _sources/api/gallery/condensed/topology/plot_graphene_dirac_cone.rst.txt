@@ -55,7 +55,7 @@ and :math:`K'` are where the honeycomb lattice's two sublattice bands
 touch. Scanning a line of momenta through :math:`K` shows the gap close
 exactly at the center and the bands disperse linearly on either side.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-43
+.. GENERATED FROM PYTHON SOURCE LINES 26-44
 
 .. code-block:: Python
 
@@ -79,6 +79,7 @@ exactly at the center and the bands disperse linearly on either side.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_graphene_dirac_cone_001.png
    :alt: Massless Dirac cone: $E(q) \sim \pm v_F|q|$
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_graphene_dirac_cone_001.png
@@ -91,6 +92,27 @@ exactly at the center and the bands disperse linearly on either side.
 
     gap exactly at K: 8.01e-16 (closes)
     local slope dE/dq away from K: 0.9963 (linear, not quadratic)
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 45-49
+
+Check
+-----
+The gap closes at K, and the dispersion is linear: doubling the distance
+from K doubles the energy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 49-52
+
+.. code-block:: Python
+
+    assert gap_at_K < 1e-12
+    i0 = len(q) // 2
+    assert abs(bands[-1, 1] / bands[i0 + (len(q) - 1 - i0) // 2, 1] - 2) < 0.02
+
+
+
 
 
 

@@ -43,7 +43,7 @@ chaotic Sinai/Stadium billiards.
     import matplotlib.pyplot as plt
     import numpy as np
 
-    from physicskit.chaos.systems.billiards import TruncatedCircleBilliard
+    from physicskit.chaos.systems.billiards import CircleBilliard, TruncatedCircleBilliard
     from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
     from physicskit.chaos.visualizers.phase_space import plot_billiard_trajectory, plot_poincare_section
 
@@ -2785,7 +2785,7 @@ circle's smooth invariant curves, with only a sliver of chaotic sea near
 and more of the section, squeezing the surviving regular islands into
 thinner bands near the top and bottom.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-82
+.. GENERATED FROM PYTHON SOURCE LINES 73-83
 
 .. code-block:: Python
 
@@ -2801,6 +2801,7 @@ thinner bands near the top and bottom.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/billiards/images/sphx_glr_plot_truncated_circle_billiard_004.png
    :alt: Truncated circle: regular islands give way to chaotic sea as the cut deepens, cut = 0.02, cut = 0.1, cut = 0.3, cut = 0.6
    :srcset: /api/gallery/chaos/billiards/images/sphx_glr_plot_truncated_circle_billiard_004.png
@@ -2810,10 +2811,32 @@ thinner bands near the top and bottom.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 84-89
+
+Check
+-----
+The flat cut destroys the circle's conserved angular momentum: along one
+ray sin(phi) no longer stays fixed (as it does in the full circle), and it
+wanders more as the cut deepens.
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-92
+
+.. code-block:: Python
+
+    full = CircleBilliard(radius=1.0).simulate((0.3, 0.1), (0.2, 1.0), n_bounces=400)["sin_phi"]
+    spread = [np.std(TruncatedCircleBilliard(radius=1.0, cut=cut).simulate((0.3, 0.1), (0.2, 1.0), n_bounces=400)["sin_phi"]) for cut in cut_values]
+    assert np.std(full) < 1e-12 and min(spread) > 0.1 and np.all(np.diff(spread) > 0)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.748 seconds)
+   **Total running time of the script:** (0 minutes 9.551 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_billiards_plot_truncated_circle_billiard.py:

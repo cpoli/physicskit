@@ -84,3 +84,11 @@ ax2.set_title(r"Wavelength shift depends only on $\theta$, not on target materia
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Four-momentum conservation alone gives Compton's formula
+# E' = E / (1 + (E/m)(1 - cos theta)), i.e. a wavelength shift (1 - cos theta) / m.
+assert np.max(np.abs(E_numeric - E_formula)) < 1e-10
+np.testing.assert_allclose(lambda_shift, lambda_shift_formula, atol=1e-8)

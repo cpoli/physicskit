@@ -153,3 +153,14 @@ ax3.set_title(f"Transmission T(E, width) for a V0={V0} barrier")
 ax3.legend(fontsize=7)
 fig3.colorbar(im, ax=ax3, label="T(E)")
 fig3.tight_layout()
+
+# %%
+# Check
+# -----
+# The simulated transmission matches the packet-averaged analytic T(E)
+# (not T at the mean energy), probability is conserved, and T + R = 1.
+assert abs(transmitted[-1] - analytic_T_avg) < 0.01
+assert abs(solver.norm(frames[-1]) - 1) < 1e-6
+assert abs(transmitted[-1] + reflected[-1] - 1) < 0.01
+# opaque limit: T falls off exponentially with the barrier width below the top
+assert T_map[-1, 0] < 1e-3 * T_map[0, 0]

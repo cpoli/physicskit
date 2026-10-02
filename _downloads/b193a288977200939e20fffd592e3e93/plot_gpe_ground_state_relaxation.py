@@ -43,7 +43,7 @@ psi0 = np.exp(-0.5 * (X**2 + Y**2)).astype(complex)
 # Imaginary-time propagation relaxes psi0 to the interacting ground state
 # --------------------------------------------------------------------------
 
-psi = gpe_relax(psi0, V, g, dtau=5e-4, steps=2000, X=X, Y=Y, K2=K2)
+psi = gpe_relax(psi0, V, g, dtau=5e-4, steps=8000, X=X, Y=Y, K2=K2)
 
 # %%
 # Repulsion broadens the cloud past the noninteracting Gaussian -- the
@@ -86,3 +86,11 @@ ax2.set_ylabel(r"$|\psi(x, 0)|^2$")
 ax2.set_title("Radial cross-section: repulsion broadens and flattens the cloud")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The relaxed state obeys the 2D virial theorem, E_kin - E_pot + E_int = 0, and
+# repulsion broadens it beyond the noninteracting Gaussian.
+assert abs(E["kinetic"] - E["potential"] + E["interaction"]) < 1e-3 * E["total"]
+assert E["interaction"] > 0 and r2_interacting > 1.1 * r2_noninteracting

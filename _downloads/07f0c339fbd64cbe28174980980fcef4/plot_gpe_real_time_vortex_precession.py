@@ -94,3 +94,11 @@ ax2.set_xlabel("t")
 ax2.set_ylabel("vortex core angle (deg)")
 ax2.set_title("Vortex core angular position vs. time: steady precession")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# An off-center vortex in a trapped condensate precesses steadily in one
+# direction around the trap center.
+angles = np.asarray(detected_angles)
+assert np.all(np.diff(angles) >= -1e-9) and angles[-1] - angles[0] > np.pi / 2

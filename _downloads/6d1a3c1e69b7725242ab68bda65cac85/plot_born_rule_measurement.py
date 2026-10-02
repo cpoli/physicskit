@@ -85,3 +85,10 @@ ax2.set_ylabel("Fock state n")
 ax2.set_title("log10(mean |histogram - |psi_n|^2|) vs. state and sample size")
 fig2.colorbar(im, ax=ax2, label=r"$\log_{10}$(mean abs. error)")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The histogram converges to |psi|^2, with the error shrinking as N grows.
+assert mean_abs_err < 0.003
+assert np.all(error_map[:, -1] < 0.2 * error_map[:, 0])

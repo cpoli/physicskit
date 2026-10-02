@@ -160,7 +160,7 @@ modern value of about 0.23.
     best fit sin^2 theta_W = 0.43, 1-sigma range 0.36 - 0.50
     with no neutral currents, R_nu would be 0 (excluded by 7 standard deviations)
 
-    <matplotlib.legend.Legend object at 0x36e6011c0>
+    <matplotlib.legend.Legend object at 0x35003b3b0>
 
 
 
@@ -175,7 +175,7 @@ with :math:`g_L=-\tfrac12+\sin^2\theta_W`, :math:`g_R=\sin^2\theta_W`.
 It is not small for any mixing angle, which is why a single clean event
 in the antineutrino film was so telling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-112
+.. GENERATED FROM PYTHON SOURCE LINES 101-113
 
 .. code-block:: Python
 
@@ -198,9 +198,31 @@ in the antineutrino film was so telling.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 114-118
+
+Check
+-----
+The Llewellyn Smith ratio: subtracting missed muons recovers R_nu; the
+data favour sin^2(theta_W) ~ 0.4, and R_nu = 0 (no neutral currents) is far excluded.
+
+.. GENERATED FROM PYTHON SOURCE LINES 118-121
+
+.. code-block:: Python
+
+    assert abs(R_corr - R_nu(s2_true)) < 3 * np.sqrt(R_nu(s2_true) / n_muon)
+    assert 0.3 < best < 0.5 and allowed.min() < 0.38 < allowed.max()
+    assert R_nu_obs / R_nu_err > 5
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.064 seconds)
+   **Total running time of the script:** (0 minutes 0.063 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_electroweak_plot_04_gargamelle_neutral_currents.py:

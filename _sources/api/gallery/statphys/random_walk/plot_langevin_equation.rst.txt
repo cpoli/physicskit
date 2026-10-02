@@ -132,7 +132,7 @@ Particles starting at rest have the exact mean-squared displacement
 \tfrac{\tau}{2}(1-e^{-2t/\tau})\right]` with :math:`\tau=m/\gamma`:
 quadratic in :math:`t` at first, linear with slope :math:`2D` later.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-102
+.. GENERATED FROM PYTHON SOURCE LINES 72-103
 
 .. code-block:: Python
 
@@ -169,6 +169,7 @@ quadratic in :math:`t` at first, linear with slope :math:`2D` later.
 
 
 
+
 .. image-sg:: /api/gallery/statphys/random_walk/images/sphx_glr_plot_langevin_equation_001.png
    :alt: Five Langevin trajectories, Velocity memory, Mean-squared displacement
    :srcset: /api/gallery/statphys/random_walk/images/sphx_glr_plot_langevin_equation_001.png
@@ -185,10 +186,32 @@ quadratic in :math:`t` at first, linear with slope :math:`2D` later.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 104-108
+
+Check
+-----
+Equipartition <v^2> = kT/m, velocity memory e^(-gamma t / m), and the
+Einstein relation D = kT / gamma from both Green-Kubo and the MSD.
+
+.. GENERATED FROM PYTHON SOURCE LINES 108-112
+
+.. code-block:: Python
+
+    assert abs(np.mean(vs[late] ** 2) / (kT / m) - 1) < 0.02
+    assert abs(fit_tau / tau_v - 1) < 0.1
+    assert abs(D_green_kubo / D - 1) < 0.1 and abs(D_fit / D - 1) < 0.1
+    assert np.max(np.abs(msd[t > 1] / msd_exact[t > 1] - 1)) < 0.1
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.519 seconds)
+   **Total running time of the script:** (0 minutes 0.481 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_random_walk_plot_langevin_equation.py:

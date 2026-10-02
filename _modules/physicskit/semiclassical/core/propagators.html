@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>physicskit.semiclassical.core.propagators &#8212; physicskit 0.2.0 documentation</title>
+    <title>physicskit.semiclassical.core.propagators &#8212; physicskit 0.3.0 documentation</title>
   
   
   
@@ -43,7 +43,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../../_static/documentation_options.js?v=95e61db4"></script>
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -54,7 +54,7 @@
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.2.0" />
+  <meta name="docsearch:version" content="0.3.0" />
   
     
     <script src="../../../../_static/searchtools.js"></script>
@@ -150,6 +150,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -281,6 +288,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../../../history/index.html">
     History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
   </a>
 </li>
 
@@ -423,7 +437,10 @@
 <span class="sd">sums the contributions of *many* such trajectories, one launched from</span>
 <span class="sd">each point of a phase-space grid under the initial wavepacket, each one</span>
 <span class="sd">carrying its own rigid (frozen-width) Gaussian, monodromy-built</span>
-<span class="sd">prefactor, and classical action phase.</span>
+<span class="sd">prefactor, and classical action phase. Heller's 1975 thawed Gaussian</span>
+<span class="sd">(:func:`thawed_gaussian_propagate`) sits between the two: a single</span>
+<span class="sd">trajectory carries a single Gaussian whose complex width evolves with the</span>
+<span class="sd">local curvature of the potential.</span>
 
 <span class="sd">Right-hand-side functions passed to the trajectory/monodromy integrator</span>
 <span class="sd">must be module-level ``@njit`` functions with signature</span>
@@ -449,6 +466,8 @@
     <span class="s2">"coherent_state_overlap"</span><span class="p">,</span>
     <span class="s2">"herman_kluk_prefactor"</span><span class="p">,</span>
     <span class="s2">"herman_kluk_propagate_wavepacket"</span><span class="p">,</span>
+    <span class="s2">"thawed_gaussian_propagate"</span><span class="p">,</span>
+    <span class="s2">"thawed_gaussian_wavefunction"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -1017,6 +1036,192 @@
             <span class="n">ov</span> <span class="o">=</span> <span class="n">coherent_state_overlap</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">qc0</span><span class="p">,</span> <span class="n">pc0</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
             <span class="n">psi</span> <span class="o">+=</span> <span class="n">measure</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="n">hbar</span><span class="p">)</span> <span class="o">*</span> <span class="n">ov</span> <span class="o">*</span> <span class="n">frozen_gaussian_1d</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">q_t</span><span class="p">,</span> <span class="n">p_t</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">hbar</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">psi</span></div>
+
+
+
+<span class="nd">@njit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_thawed_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="c1"># state = (q, p, Z, P, S): centre, tangent vector with alpha = P / 2Z, classical action.</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">dVdx</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">d2Vdx2</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="o">*</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">V</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="nd">@njit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_thawed_integrate</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+    <span class="n">hist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">k1</span> <span class="o">=</span> <span class="n">_thawed_rhs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">k2</span> <span class="o">=</span> <span class="n">_thawed_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">k3</span> <span class="o">=</span> <span class="n">_thawed_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k2</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">k4</span> <span class="o">=</span> <span class="n">_thawed_rhs</span><span class="p">(</span><span class="n">state</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">k3</span><span class="p">,</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span> <span class="o">+</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
+        <span class="n">hist</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">hist</span>
+
+
+<div class="viewcode-block" id="thawed_gaussian_propagate">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.thawed_gaussian_propagate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">thawed_gaussian_propagate</span><span class="p">(</span>
+    <span class="n">qc0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">pc0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dVdx</span><span class="p">,</span>
+    <span class="n">d2Vdx2</span><span class="p">,</span>
+    <span class="n">V</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Propagate a Gaussian wavepacket with Heller's thawed Gaussian approximation.</span>
+
+<span class="sd">    Heller (1975) wrote the packet as</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       \psi(x,t) = \exp\!\left\{\frac{i}{\hbar}\left[\alpha_t(x-q_t)^2</span>
+<span class="sd">       + p_t(x-q_t) + s_t\right]\right\}</span>
+
+<span class="sd">    and expanded the potential to second order about the moving centre</span>
+<span class="sd">    :math:`q_t`. The Schrodinger equation is then solved exactly by</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       \dot q = \frac{p}{m},\quad \dot p = -V'(q),\quad</span>
+<span class="sd">       \dot\alpha = -\frac{2\alpha^2}{m} - \frac{V''(q)}{2},\quad</span>
+<span class="sd">       \dot s = \frac{i\hbar\alpha}{m} + \frac{p^2}{2m} - V(q).</span>
+
+<span class="sd">    The centre follows a classical trajectory, the complex width</span>
+<span class="sd">    :math:`\alpha_t` responds to the local curvature :math:`V''(q_t)`</span>
+<span class="sd">    (unlike the fixed width of :func:`frozen_gaussian_1d`), and</span>
+<span class="sd">    :math:`s_t` carries the classical action, the zero-point phase and</span>
+<span class="sd">    the normalization. The result is exact for potentials at most</span>
+<span class="sd">    quadratic, and fails once the packet grows wide enough to feel the</span>
+<span class="sd">    third derivative of the potential.</span>
+
+<span class="sd">    The Riccati equation for :math:`\alpha` becomes stiff where the packet</span>
+<span class="sd">    focuses, so it is integrated in the equivalent linear form</span>
+<span class="sd">    :math:`\alpha=P/2Z` with :math:`\dot Z=P/m`, :math:`\dot P=-V''(q)Z`</span>
+<span class="sd">    (the tangent dynamics of the monodromy matrix), and then</span>
+<span class="sd">    :math:`s_t=s_0+S_t+\tfrac{i\hbar}{2}\ln(Z_t/Z_0)`, with :math:`S_t`</span>
+<span class="sd">    the classical action and the phase of :math:`Z_t` followed continuously.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    qc0, pc0 : float</span>
+<span class="sd">        Initial centre in position and momentum.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Initial width parameter, as in :func:`frozen_gaussian_1d`</span>
+<span class="sd">        (:math:`\alpha_0=i\hbar\gamma`).</span>
+<span class="sd">    dVdx, d2Vdx2, V : callable</span>
+<span class="sd">        Numba-jitted potential derivatives and the potential itself, as</span>
+<span class="sd">        in :func:`propagate_trajectory_monodromy_action`.</span>
+<span class="sd">    m : float</span>
+<span class="sd">        Particle mass.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step.</span>
+<span class="sd">    steps : int</span>
+<span class="sd">        Number of RK4 steps.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+<span class="sd">    params : ndarray, optional</span>
+<span class="sd">        Parameter vector passed through to ``dVdx``/``d2Vdx2``/``V``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    t : ndarray, shape (steps + 1,)</span>
+<span class="sd">        Times.</span>
+<span class="sd">    q, p : ndarray, shape (steps + 1,)</span>
+<span class="sd">        Centre of the packet.</span>
+<span class="sd">    alpha, s : ndarray of complex, shape (steps + 1,)</span>
+<span class="sd">        Complex width and phase-normalization parameters, for</span>
+<span class="sd">        :func:`thawed_gaussian_wavefunction`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    thawed_gaussian_wavefunction : Evaluates the packet on a grid.</span>
+<span class="sd">    herman_kluk_propagate_wavepacket : Many frozen Gaussians instead of one thawed one.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E. J. Heller, "Time-dependent approach to semiclassical dynamics,"</span>
+<span class="sd">    J. Chem. Phys. **62**, 1544-1555 (1975).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The ground state of a harmonic oscillator (:math:`\gamma=m\omega/2\hbar`)</span>
+<span class="sd">    keeps its width, and its phase advances by the zero-point energy:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from numba import njit</span>
+<span class="sd">    &gt;&gt;&gt; dVdx = njit(lambda q, params: q, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; d2Vdx2 = njit(lambda q, params: 1.0, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; V = njit(lambda q, params: 0.5 * q ** 2, cache=False)</span>
+<span class="sd">    &gt;&gt;&gt; t, q, p, alpha, s = thawed_gaussian_propagate(0.0, 0.0, 0.5, dVdx, d2Vdx2, V, m=1.0, dt=0.01, steps=300)</span>
+<span class="sd">    &gt;&gt;&gt; complex(np.round(alpha[-1], 8))</span>
+<span class="sd">    0.5j</span>
+<span class="sd">    &gt;&gt;&gt; round(float(s[-1].real), 6)  # -E_0 t = -0.5 * 3</span>
+<span class="sd">    -1.5</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">s0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">qc0</span><span class="p">,</span> <span class="n">pc0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>  <span class="c1"># alpha_0 = P/2Z = i hbar gamma</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">_thawed_integrate</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">steps</span><span class="p">),</span> <span class="n">dVdx</span><span class="p">,</span> <span class="n">d2Vdx2</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">Z</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">S</span> <span class="o">=</span> <span class="n">hist</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">hist</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">hist</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">P</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="n">log_Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s0</span> <span class="o">+</span> <span class="n">S</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">hbar</span> <span class="o">*</span> <span class="n">log_Z</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">hist</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">hist</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">s</span></div>
+
+
+
+<div class="viewcode-block" id="thawed_gaussian_wavefunction">
+<a class="viewcode-back" href="../../../../api/semiclassical.html#physicskit.semiclassical.thawed_gaussian_wavefunction">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">thawed_gaussian_wavefunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">hbar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Evaluate a thawed Gaussian :math:`\exp\{i[\alpha(x-q)^2+p(x-q)+s]/\hbar\}`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : ndarray</span>
+<span class="sd">        Positions at which to evaluate the packet.</span>
+<span class="sd">    q, p : float</span>
+<span class="sd">        Centre in position and momentum.</span>
+<span class="sd">    alpha, s : complex</span>
+<span class="sd">        Width and phase-normalization parameters, one time slice of the</span>
+<span class="sd">        output of :func:`thawed_gaussian_propagate`.</span>
+<span class="sd">    hbar : float, default=1.0</span>
+<span class="sd">        Value of :math:`\hbar` to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray of complex</span>
+<span class="sd">        :math:`\psi(x)`, same shape as ``x``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    At :math:`t=0` the packet is the frozen Gaussian it started as:</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-5, 5, 201)</span>
+<span class="sd">    &gt;&gt;&gt; gamma, hbar = 0.7, 1.0</span>
+<span class="sd">    &gt;&gt;&gt; s0 = -0.25j * hbar * np.log(2 * gamma / np.pi)</span>
+<span class="sd">    &gt;&gt;&gt; psi = thawed_gaussian_wavefunction(x, 0.5, 1.2, 1j * hbar * gamma, s0, hbar)</span>
+<span class="sd">    &gt;&gt;&gt; bool(np.allclose(psi, frozen_gaussian_1d(x, 0.5, 1.2, gamma, hbar)))</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">q</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span> <span class="o">/</span> <span class="n">hbar</span><span class="p">)</span></div>
 
 </pre></div>
 

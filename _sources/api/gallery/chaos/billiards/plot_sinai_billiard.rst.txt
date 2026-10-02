@@ -34,7 +34,7 @@ neither focus nor defocus). This example plots a single trajectory and the
 resulting Poincare section, which fills densely with points rather than
 tracing out smooth curves.
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-28
+.. GENERATED FROM PYTHON SOURCE LINES 18-29
 
 .. code-block:: Python
 
@@ -43,6 +43,7 @@ tracing out smooth curves.
     import numpy as np
 
     from physicskit.chaos.systems.billiards import SinaiBilliard
+    from physicskit.chaos.visualizers import billiard_trajectory_divergence
     from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
     from physicskit.chaos.visualizers.phase_space import plot_billiard_trajectory, plot_poincare_section
 
@@ -55,7 +56,7 @@ tracing out smooth curves.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-34
+.. GENERATED FROM PYTHON SOURCE LINES 30-35
 
 Animation
 ---------
@@ -63,7 +64,7 @@ Watch the scatterer disperse the ray: notice how quickly it starts
 exploring the whole cell, and how the Poincare section fills in densely
 rather than tracing a smooth curve.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-38
+.. GENERATED FROM PYTHON SOURCE LINES 35-39
 
 .. code-block:: Python
 
@@ -2040,21 +2041,21 @@ rather than tracing a smooth curve.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-43
+.. GENERATED FROM PYTHON SOURCE LINES 40-44
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("sinai_billiard_animation.gif", writer="pillow", fps=25)
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-49
+.. GENERATED FROM PYTHON SOURCE LINES 46-50
 
 Trajectory
 ----------
 Notice how quickly the ray explores the whole cell after just a few bounces
 off the central scatterer.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-51
+.. GENERATED FROM PYTHON SOURCE LINES 50-52
 
 .. code-block:: Python
 
@@ -2072,7 +2073,7 @@ off the central scatterer.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-57
+.. GENERATED FROM PYTHON SOURCE LINES 53-58
 
 Poincare section
 ----------------
@@ -2080,13 +2081,14 @@ A single ray, given enough bounces, would already fill the section densely
 (this is the hallmark of ergodicity); here we pool several shorter rays for
 a quick illustration.
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-60
+.. GENERATED FROM PYTHON SOURCE LINES 58-62
 
 .. code-block:: Python
 
     fig, ax = plot_poincare_section(billiard, n_rays=40, n_bounces=200)
 
     plt.show()
+
 
 
 
@@ -2099,10 +2101,32 @@ a quick illustration.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 63-67
+
+Check
+-----
+Sinai's dispersing billiard is chaotic: neighbouring rays separate
+exponentially, while the speed stays fixed.
+
+.. GENERATED FROM PYTHON SOURCE LINES 67-71
+
+.. code-block:: Python
+
+    _, separation = billiard_trajectory_divergence(billiard, pos=billiard.sample_interior_point(), vel=(0.4, 0.9), delta_0=1e-8, n_bounces=60)
+    assert separation.max() > 1e4 * separation[0]
+    run = billiard.simulate(billiard.sample_interior_point(), (0.4, 0.9), n_bounces=100)
+    assert np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.769 seconds)
+   **Total running time of the script:** (0 minutes 8.982 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_billiards_plot_sinai_billiard.py:

@@ -189,7 +189,7 @@ time steps traces out the full classical orbit over one period, which is
 then overlaid on the exact Wigner distribution of the coherent state at
 each point along it.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-166
+.. GENERATED FROM PYTHON SOURCE LINES 136-167
 
 .. code-block:: Python
 
@@ -226,6 +226,7 @@ each point along it.
 
 
 
+
 .. image-sg:: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_semiclassical_propagators_002.png
    :alt: Classical orbit vs. exact Wigner function of the coherent state, at t=T/2
    :srcset: /api/gallery/semiclassical/propagators/images/sphx_glr_plot_semiclassical_propagators_002.png
@@ -235,10 +236,30 @@ each point along it.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 168-172
+
+Check
+-----
+The Van Vleck propagator is exact for quadratic potentials (before the
+first caustic), and the classical orbit reaches (-q0, -p0) at T/2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 172-174
+
+.. code-block:: Python
+
+    assert np.max(np.abs(K_semiclassical - K_exact)) < 1e-10
+    assert abs(q_orbit[idx_half] + qc0) < 1e-6 and abs(p_orbit[idx_half] + pc0) < 1e-6
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.432 seconds)
+   **Total running time of the script:** (0 minutes 0.412 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_propagators_plot_semiclassical_propagators.py:

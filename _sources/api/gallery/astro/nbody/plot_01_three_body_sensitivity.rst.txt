@@ -158,7 +158,7 @@ deterministic chaos, and exactly what makes long-term three-body
 prediction impossible in practice, regardless of how precisely the
 initial conditions are known.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-104
+.. GENERATED FROM PYTHON SOURCE LINES 88-105
 
 .. code-block:: Python
 
@@ -181,6 +181,7 @@ initial conditions are known.
 
 
 
+
 .. image-sg:: /api/gallery/astro/nbody/images/sphx_glr_plot_01_three_body_sensitivity_002.png
    :alt: Sensitive dependence on initial conditions
    :srcset: /api/gallery/astro/nbody/images/sphx_glr_plot_01_three_body_sensitivity_002.png
@@ -198,10 +199,34 @@ initial conditions are known.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 106-111
+
+Check
+-----
+The Lagrange triangle is unstable when 27 (m1 m2 + m2 m3 + m3 m1) > M^2
+(Routh); perturbations then grow at Re(lambda), from
+lambda^4 + Omega^2 lambda^2 + (27/4) beta Omega^4 = 0, beta = sum m_i m_j / M^2.
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
+
+.. code-block:: Python
+
+    beta_r = (masses[0] * masses[1] + masses[1] * masses[2] + masses[2] * masses[0]) / M_tot**2
+    assert 27 * beta_r > 1
+    lam_sq = Omega**2 * (-1 + np.sqrt(1 - 27 * beta_r + 0j)) / 2
+    assert abs(slope / np.sqrt(lam_sq).real - 1) < 0.05
+    assert abs((E1 - E0) / E0) < 1e-5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.694 seconds)
+   **Total running time of the script:** (0 minutes 0.559 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_nbody_plot_01_three_body_sensitivity.py:

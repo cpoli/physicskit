@@ -143,7 +143,7 @@ The explicit (FTCS) update is stable only for
 :math:`\alpha\Delta t/\Delta x^2 \le 1/2`, so halving :math:`\Delta x`
 quarters the allowed step. Crank-Nicolson has no such limit.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-126
+.. GENERATED FROM PYTHON SOURCE LINES 81-127
 
 .. code-block:: Python
 
@@ -195,6 +195,7 @@ quarters the allowed step. Crank-Nicolson has no such limit.
 
 
 
+
 .. image-sg:: /api/gallery/fluids/continuum_mechanics/images/sphx_glr_plot_fourier_heat_equation_001.png
    :alt: hot slab, cold ends (dotted: Fourier series), high modes die first: $e^{-\alpha n^2\pi^2 t}$, Gaussian hot spot
    :srcset: /api/gallery/fluids/continuum_mechanics/images/sphx_glr_plot_fourier_heat_equation_001.png
@@ -213,10 +214,35 @@ quarters the allowed step. Crank-Nicolson has no such limit.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 128-133
+
+Check
+-----
+Crank-Nicolson reproduces the Fourier-series solution; the explicit scheme
+refuses dt above dx^2 / 2 alpha; a Gaussian hot spot's peak falls as
+(sigma0 / sigma)^d with sigma^2 = sigma0^2 + 2 alpha t.
+
+.. GENERATED FROM PYTHON SOURCE LINES 133-139
+
+.. code-block:: Python
+
+    for t_k in (0.5, 4.0):
+        k = np.argmin(np.abs(times - t_k))
+        assert np.max(np.abs(frames[k] - fourier_series(times[k]))) < 1e-4
+    assert np.max(np.abs(ex[-1] - cn[-1])) < 1e-3
+    np.testing.assert_allclose(peak1, (1 + 2 * t_g) ** -0.5, rtol=1e-6)
+    np.testing.assert_allclose(peak2, (1 + 2 * t_g) ** -1.0, rtol=1e-6)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.241 seconds)
+   **Total running time of the script:** (0 minutes 0.237 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fluids_continuum_mechanics_plot_fourier_heat_equation.py:

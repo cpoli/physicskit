@@ -73,3 +73,12 @@ ax.legend(loc="upper right", fontsize=7.5)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# dv1 = sqrt(mu/r1) (sqrt(2 r2 / (r1 + r2)) - 1), dv2 = sqrt(mu/r2) (1 - sqrt(2 r1 / (r1 + r2))),
+# and the transfer takes half the ellipse's period, pi sqrt(a_t^3 / mu).
+assert abs(dv1 - np.sqrt(mu / r1) * (np.sqrt(2 * r2 / (r1 + r2)) - 1)) < 1e-12
+assert abs(dv2 - np.sqrt(mu / r2) * (1 - np.sqrt(2 * r1 / (r1 + r2)))) < 1e-12
+assert abs(t_transfer - np.pi * np.sqrt(a_t**3 / mu)) < 1e-10

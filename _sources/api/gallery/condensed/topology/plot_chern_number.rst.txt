@@ -115,7 +115,7 @@ Summing the curvature over the whole Brillouin zone and dividing by
 approximately quantized, but exactly, by construction of the FHS link
 variables.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-53
+.. GENERATED FROM PYTHON SOURCE LINES 49-54
 
 .. code-block:: Python
 
@@ -123,6 +123,7 @@ variables.
     C = compute_chern_number(H, grid_size=30)
     print("Chern numbers (per band):", C)
     print(f"raw curvature sum / 2*pi for the lower band: {F.sum() / (2 * np.pi):.10f}")
+
 
 
 
@@ -137,10 +138,28 @@ variables.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 55-57
+
+Check
+-----
+
+.. GENERATED FROM PYTHON SOURCE LINES 57-59
+
+.. code-block:: Python
+
+    assert list(C) == [1, -1]
+    assert abs(F.sum() / (2 * np.pi) - 1) < 1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.077 seconds)
+   **Total running time of the script:** (0 minutes 0.075 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_chern_number.py:

@@ -71,3 +71,11 @@ fig1.tight_layout()
 anim = animate_higgs_rollover(phi_plus, a, b)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The minima sit at v = sqrt(a / 2b), V(v) = -a^2 / 4b; an infinitesimal
+# nudge picks which of the two the damped field rolls into.
+assert abs(v - np.sqrt(a / (2 * b))) < 1e-12 and abs(higgs_potential(v, a, b) + a**2 / (4 * b)) < 1e-12
+assert phi_plus[-1] > 0.9 * v and phi_minus[-1] < -0.9 * v

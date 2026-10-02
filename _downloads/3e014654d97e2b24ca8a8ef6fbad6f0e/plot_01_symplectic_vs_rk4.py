@@ -78,3 +78,15 @@ axes[1].legend(fontsize=9)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# RK4's energy error drifts in one direction; Verlet's and Yoshida4's stay
+# bounded (Yoshida4 two orders of magnitude smaller), however long the run.
+_, d_rk4 = results["rk4"]
+_, d_y4 = results["yoshida4"]
+assert abs(d_rk4[-1]) > 0.04 and abs(d_rk4[-1]) == np.max(np.abs(d_rk4))
+assert np.max(np.abs(d_y4)) < 1e-3
+_, d_v = results["verlet"]
+assert np.max(np.abs(d_v[len(d_v) // 2 :])) < 1.1 * np.max(np.abs(d_v[: len(d_v) // 2]))

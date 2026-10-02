@@ -101,7 +101,7 @@ A helix of 40 turns, 5 cm in radius and 40 cm long. Inside, the field
 plateaus at :math:`\mu_0 n I`. Outside, the field lines close back around
 like those of a bar magnet.
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-94
+.. GENERATED FROM PYTHON SOURCE LINES 52-95
 
 .. code-block:: Python
 
@@ -150,6 +150,7 @@ like those of a bar magnet.
 
 
 
+
 .. image-sg:: /api/gallery/fields/statics/images/sphx_glr_plot_biot_savart_loop_and_solenoid_001.png
    :alt: current loop, on axis, finite solenoid, on axis, solenoid field lines (xz plane)
    :srcset: /api/gallery/fields/statics/images/sphx_glr_plot_biot_savart_loop_and_solenoid_001.png
@@ -165,10 +166,33 @@ like those of a bar magnet.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 96-101
+
+Check
+-----
+Loop: B = mu0 I / 2R at the center. Finite solenoid on axis, in units of
+mu0 n I: (L/2) / sqrt(R^2 + L^2/4) at the center, L / (2 sqrt(R^2 + L^2))
+at either end (just under half the infinite-solenoid value).
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
+
+.. code-block:: Python
+
+    assert abs(B_loop[40] / (MU0 * I / (2 * R)) - 1) < 1e-4
+    assert np.max(np.abs(B_loop / loop_axial_field(I, R, z) - 1)) < 1e-4
+    assert abs(B_sol[40] / B_inf - (Ls / 2) / np.hypot(Rs, Ls / 2)) < 2e-3
+    assert abs(B_sol[60] / B_inf - Ls / (2 * np.hypot(Rs, Ls))) < 2e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.651 seconds)
+   **Total running time of the script:** (0 minutes 0.427 seconds)
 
 
 .. _sphx_glr_download_api_gallery_fields_statics_plot_biot_savart_loop_and_solenoid.py:

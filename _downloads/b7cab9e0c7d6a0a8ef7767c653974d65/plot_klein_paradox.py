@@ -67,3 +67,17 @@ ax2.legend()
 fig2.tight_layout()
 
 print(f"R + T = 1 everywhere: Dirac {np.allclose(R_d + T_d, 1)}, Klein-Gordon {np.allclose(R_kg + T_kg, 1)}")
+
+# %%
+# Check
+# -----
+# Probability flux is conserved; there is total reflection for
+# |E - V0| < m; in the Klein zone the spin-0 particle shows superradiant
+# reflection (R > 1) while the Dirac particle never does; and Dirac
+# transmission tends to 4 kappa / (1 + kappa)^2 for an infinite step.
+assert np.allclose(R_d + T_d, 1) and np.allclose(R_kg + T_kg, 1)
+gap = (V0 > E - m + 0.01) & (V0 < E + m - 0.01)
+assert np.allclose(R_d[gap], 1) and np.allclose(R_kg[gap], 1)
+klein = V0 > E + m + 0.01
+assert np.all(R_kg[klein] > 1) and np.all(R_d[klein] <= 1)
+assert abs(T_big[-1] - 4 * kinf / (1 + kinf) ** 2) < 1e-4

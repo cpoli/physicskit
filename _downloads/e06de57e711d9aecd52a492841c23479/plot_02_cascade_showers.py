@@ -66,3 +66,11 @@ for g, c in enumerate(counts_by_generation):
 anim = animate_particle_cascade(root)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The cascade conserves four-momentum (the leaves' invariant mass is the
+# primary's), and the particle count doubles each early generation.
+assert abs(reconstructed_mass - root.four_vector.mass) < 1e-9 * max(root.four_vector.mass, 1.0)
+assert counts_by_generation[:5] == [1, 2, 4, 8, 16]

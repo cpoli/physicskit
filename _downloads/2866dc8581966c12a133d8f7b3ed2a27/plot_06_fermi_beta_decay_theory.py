@@ -131,3 +131,12 @@ ax4.legend(fontsize=8)
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Neutron endpoint 0.782 MeV; the Kurie plot is straight up to the tritium
+# endpoint 18.59 keV; and the integrated rate approaches Sargent's Q^5.
+assert abs(Q_n - 0.7823) < 1e-3
+assert abs(-b / a - Q_H3) < 0.05e-3
+assert 4.5 < slope_high <= 5.0

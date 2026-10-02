@@ -517,9 +517,13 @@ package at each stop.</p>
 <li><p><a class="reference internal" href="#lindblad-s-master-equation-for-open-quantum-systems" id="id29">1976 – Lindblad’s Master Equation for Open Quantum Systems</a></p></li>
 <li><p><a class="reference internal" href="#the-no-cloning-theorem" id="id30">1982 – The No-Cloning Theorem</a></p></li>
 <li><p><a class="reference internal" href="#heller-s-quantum-scars-and-the-herman-kluk-propagator" id="id31">1984 – Heller’s Quantum Scars and the Herman-Kluk Propagator</a></p></li>
-<li><p><a class="reference internal" href="#wave-packet-revivals" id="id32">1986-1990 – Wave-Packet Revivals</a></p></li>
-<li><p><a class="reference internal" href="#dalibard-castin-and-molmer-quantum-trajectories" id="id33">1992 – Dalibard, Castin, and Molmer: Quantum Trajectories</a></p></li>
-<li><p><a class="reference internal" href="#see-also" id="id34">See Also</a></p></li>
+<li><p><a class="reference internal" href="#deutsch-jozsa-and-the-first-quantum-algorithm" id="id32">1985 – 1992 – Deutsch, Jozsa, and the First Quantum Algorithm</a></p></li>
+<li><p><a class="reference internal" href="#wave-packet-revivals" id="id33">1986-1990 – Wave-Packet Revivals</a></p></li>
+<li><p><a class="reference internal" href="#dalibard-castin-and-molmer-quantum-trajectories" id="id34">1992 – Dalibard, Castin, and Molmer: Quantum Trajectories</a></p></li>
+<li><p><a class="reference internal" href="#dmrg-matrix-product-states-and-vidal-s-tebd" id="id35">1992 – 2004 – DMRG, Matrix Product States, and Vidal’s TEBD</a></p></li>
+<li><p><a class="reference internal" href="#shor-s-algorithm-and-the-quantum-fourier-transform" id="id36">1994 – Shor’s Algorithm and the Quantum Fourier Transform</a></p></li>
+<li><p><a class="reference internal" href="#grover-s-quantum-search" id="id37">1996 – Grover’s Quantum Search</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id38">See Also</a></p></li>
 </ul>
 </nav>
 <section id="planck-s-quantum-hypothesis">
@@ -1614,8 +1618,40 @@ independent discoveries).</p>
 <p><a class="reference internal" href="../api/gallery/semiclassical/scarring/plot_heller_wavepacket_spectroscopy.html"><span class="doc">Heller and Herman-Kluk (1984): spectra from wavepacket recurrences</span></a></p>
   <div class="sphx-glr-thumbnail-title">Heller and Herman-Kluk (1984): spectra from wavepacket recurrences</div>
 </div></div></section>
+<section id="deutsch-jozsa-and-the-first-quantum-algorithm">
+<h2><a class="toc-backref" href="#id32" role="doc-backlink">1985 – 1992 – Deutsch, Jozsa, and the First Quantum Algorithm</a><a class="headerlink" href="#deutsch-jozsa-and-the-first-quantum-algorithm" title="Link to this heading">#</a></h2>
+<p>Richard Feynman (1982) had argued that only a quantum machine could
+simulate quantum physics efficiently. David Deutsch (1985) defined the
+universal quantum computer and gave the first task it does better than any
+classical machine: deciding with one query whether a one-bit function is
+constant or balanced. With Richard Jozsa (1992) he extended this to
+<span class="math notranslate nohighlight">\(n\)</span> bits. Given the promise that <span class="math notranslate nohighlight">\(f:\{0,1\}^n \to \{0,1\}\)</span> is
+either constant or balanced, a deterministic classical algorithm may need
+<span class="math notranslate nohighlight">\(2^{n-1} + 1\)</span> evaluations, while one call to the phase oracle
+<span class="math notranslate nohighlight">\(O_f|x\rangle = (-1)^{f(x)}|x\rangle\)</span>, sandwiched between Hadamard
+layers, suffices:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\langle 0|H^{\otimes n} O_f H^{\otimes n}|0\rangle = \frac{1}{2^n}\sum_x(-1)^{f(x)}
+= \begin{cases}\pm1, &amp; f \text{ constant}, \\ 0, &amp; f \text{ balanced}. \end{cases}\end{split}\]</div>
+<p>The superposition queries every input at once, but only the interference
+between the answers is read out. That pattern of parallel evaluation
+followed by global interference is shared by every later quantum
+algorithm.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/quantum.html#physicskit.quantum.QuantumCircuit" title="physicskit.quantum.chapters.quantum_circuits.QuantumCircuit"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.quantum.chapters.quantum_circuits.QuantumCircuit</span></code></a>
+is a state-vector simulator (gates as tensor contractions on a
+<span class="math notranslate nohighlight">\((2,)^n\)</span> array), and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">deutsch_jozsa_circuit()</span></code>
+builds the algorithm for any truth table.</p>
+<p><em>References:</em> R. P. Feynman, <em>Int. J. Theor. Phys.</em> <strong>21</strong>, 467-488 (1982);
+D. Deutsch, <em>Proc. R. Soc. A</em> <strong>400</strong>, 97-117 (1985); D. Deutsch and R.
+Jozsa, <em>Proc. R. Soc. A</em> <strong>439</strong>, 553-558 (1992); R. Cleve, A. Ekert, C.
+Macchiavello and M. Mosca, <em>Proc. R. Soc. A</em> <strong>454</strong>, 339-354 (1998).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="David Deutsch (1985) asked whether a computer obeying quantum mechanics could do something no classical one can. With Richard Jozsa (1992) he gave the first problem with an exponential gap. A function f:\{0,1\}^n \to \{0,1\} is promised to be either constant or balanced (0 on exactly half the inputs). A deterministic classical algorithm may need 2^{n-1} + 1 evaluations to tell which. The quantum algorithm needs one call to the phase oracle |x\rangle \to (-1)^{f(x)}|x\rangle:"><img alt="" src="../_images/sphx_glr_plot_deutsch_jozsa_algorithm_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/quantum/quantum_computing/plot_deutsch_jozsa_algorithm.html"><span class="doc">The Deutsch-Jozsa algorithm: the first exponential quantum speed-up</span></a></p>
+  <div class="sphx-glr-thumbnail-title">The Deutsch-Jozsa algorithm: the first exponential quantum speed-up</div>
+</div></div></section>
 <section id="wave-packet-revivals">
-<h2><a class="toc-backref" href="#id32" role="doc-backlink">1986-1990 – Wave-Packet Revivals</a><a class="headerlink" href="#wave-packet-revivals" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id33" role="doc-backlink">1986-1990 – Wave-Packet Revivals</a><a class="headerlink" href="#wave-packet-revivals" title="Link to this heading">#</a></h2>
 <p>A wavepacket built from many eigenstates of an <em>anharmonic</em> potential –
 where, unlike the harmonic oscillator, the energy levels are not evenly
 spaced – spreads and appears to lose all resemblance to its initial shape
@@ -1650,7 +1686,7 @@ Perelman, Phys. Lett. A 139, 449-453 (1989).</p>
   <div class="sphx-glr-thumbnail-title">Wave-packet revivals in the infinite square well</div>
 </div></div></section>
 <section id="dalibard-castin-and-molmer-quantum-trajectories">
-<h2><a class="toc-backref" href="#id33" role="doc-backlink">1992 – Dalibard, Castin, and Molmer: Quantum Trajectories</a><a class="headerlink" href="#dalibard-castin-and-molmer-quantum-trajectories" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">1992 – Dalibard, Castin, and Molmer: Quantum Trajectories</a><a class="headerlink" href="#dalibard-castin-and-molmer-quantum-trajectories" title="Link to this heading">#</a></h2>
 <p>By the late 1980s experiments were watching <em>single</em> trapped ions switch
 abruptly between bright and dark states – “quantum jumps” that a density
 matrix, describing only ensemble averages, cannot display. Jean Dalibard,
@@ -1686,8 +1722,110 @@ Mod. Phys. 70, 101-144 (1998).</p>
 <p><a class="reference internal" href="../api/gallery/quantum/open_systems/plot_quantum_trajectories.html"><span class="doc">Quantum trajectories: the Monte Carlo wavefunction method</span></a></p>
   <div class="sphx-glr-thumbnail-title">Quantum trajectories: the Monte Carlo wavefunction method</div>
 </div></div></section>
+<section id="dmrg-matrix-product-states-and-vidal-s-tebd">
+<h2><a class="toc-backref" href="#id35" role="doc-backlink">1992 – 2004 – DMRG, Matrix Product States, and Vidal’s TEBD</a><a class="headerlink" href="#dmrg-matrix-product-states-and-vidal-s-tebd" title="Link to this heading">#</a></h2>
+<p>The Hilbert space of <span class="math notranslate nohighlight">\(N\)</span> spins has <span class="math notranslate nohighlight">\(2^N\)</span> dimensions, which
+limits exact diagonalization to a few dozen sites. Steven White’s density
+matrix renormalization group (1992) found ground states of 1D chains to
+nearly machine precision by keeping, at each cut of the chain, only the
+<span class="math notranslate nohighlight">\(\chi\)</span> most important Schmidt states. Östlund and Rommer (1995)
+recognized that DMRG optimizes a matrix product state,</p>
+<div class="math notranslate nohighlight">
+\[|\psi\rangle = \sum_{s_1 \dots s_N} B_1^{s_1} \cdots B_N^{s_N} |s_1 \dots s_N\rangle,\]</div>
+<p>whose bond dimension <span class="math notranslate nohighlight">\(\chi\)</span> bounds the entanglement entropy across
+each cut by <span class="math notranslate nohighlight">\(\ln\chi\)</span>. Ground states of gapped 1D Hamiltonians obey
+such an area law (Hastings 2007), so they fit. Guifré Vidal (2003, 2004)
+turned this into a time-evolution algorithm, time-evolving block decimation
+(TEBD): a Trotter splitting of <span class="math notranslate nohighlight">\(e^{-iH\delta t}\)</span> into two-site gates on
+even and odd bonds, each followed by an SVD that truncates the bond back to
+<span class="math notranslate nohighlight">\(\chi\)</span>. In imaginary time it projects onto the ground state. TEBD and
+its descendants now simulate quenches, transport and finite temperature in
+chains of hundreds of sites, and the same tensor-network language
+describes topological order and holographic codes.</p>
+<p><em>Implementation:</em> <a class="reference internal" href="../api/quantum.html#physicskit.quantum.MPS" title="physicskit.quantum.chapters.tensor_networks.MPS"><code class="xref py py-class docutils literal notranslate"><span class="pre">physicskit.quantum.chapters.tensor_networks.MPS</span></code></a>
+stores a right-canonical MPS with the Schmidt values of every bond, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">tebd()</span></code> evolves it in real
+or imaginary time under the bond Hamiltonians of
+<code class="xref py py-func docutils literal notranslate"><span class="pre">xxz_bond_hamiltonians()</span></code>
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">tfim_bond_hamiltonians()</span></code>,
+which match the exact diagonalization of
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">physicskit.condensed.spin_chains</span></code> term by term.</p>
+<p><em>References:</em> S. R. White, <em>Phys. Rev. Lett.</em> <strong>69</strong>, 2863-2866 (1992); S.
+Östlund and S. Rommer, <em>Phys. Rev. Lett.</em> <strong>75</strong>, 3537-3540 (1995); G.
+Vidal, <em>Phys. Rev. Lett.</em> <strong>91</strong>, 147902 (2003) and <strong>93</strong>, 040502 (2004);
+U. Schollwöck, <em>Ann. Phys.</em> <strong>326</strong>, 96-192 (2011).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="The Hilbert space of N spins grows as 2^N, but the physically relevant states of 1D chains carry little entanglement and fit in a matrix product state (MPS) of bond dimension \chi. White&#x27;s DMRG (1992) found ground states this way; Vidal&#x27;s time-evolving block decimation (TEBD, 2003-2004) evolves an MPS in time by splitting e^{-iH\delta t} into two-site gates on even and odd bonds and truncating each bond back to \chi with an SVD. In imaginary time the same algorithm finds ground states."><img alt="" src="../_images/sphx_glr_plot_tebd_matrix_product_states_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/quantum/tensor_networks/plot_tebd_matrix_product_states.html"><span class="doc">TEBD on matrix product states: spin chains beyond exact diagonalization</span></a></p>
+  <div class="sphx-glr-thumbnail-title">TEBD on matrix product states: spin chains beyond exact diagonalization</div>
+</div></div></section>
+<section id="shor-s-algorithm-and-the-quantum-fourier-transform">
+<h2><a class="toc-backref" href="#id36" role="doc-backlink">1994 – Shor’s Algorithm and the Quantum Fourier Transform</a><a class="headerlink" href="#shor-s-algorithm-and-the-quantum-fourier-transform" title="Link to this heading">#</a></h2>
+<p>Peter Shor showed that a quantum computer could factor an <span class="math notranslate nohighlight">\(L\)</span>-bit
+integer in time polynomial in <span class="math notranslate nohighlight">\(L\)</span>, while the best known classical
+algorithms take time exponential in <span class="math notranslate nohighlight">\(L^{1/3}\)</span>; the security of RSA
+rests on that gap. Factoring <span class="math notranslate nohighlight">\(N\)</span> reduces to finding the period
+<span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\(a^x \bmod N\)</span>, since then <span class="math notranslate nohighlight">\(\gcd(a^{r/2} \pm 1, N)\)</span> are
+usually factors. A register in the superposition
+<span class="math notranslate nohighlight">\(\sum_x |x\rangle|a^x \bmod N\rangle\)</span> holds the period in its amplitudes,
+and the quantum Fourier transform</p>
+<div class="math notranslate nohighlight">
+\[|x\rangle \to \frac{1}{\sqrt{2^t}}\sum_{y}e^{2\pi ixy/2^t}|y\rangle\]</div>
+<p>concentrates it into peaks at multiples of <span class="math notranslate nohighlight">\(2^t/r\)</span>. Don Coppersmith
+(1994) built the transform from <span class="math notranslate nohighlight">\(t(t+1)/2\)</span> Hadamard and controlled-phase
+gates, exponentially fewer operations than the classical fast Fourier
+transform on the same <span class="math notranslate nohighlight">\(2^t\)</span> amplitudes. A continued-fraction
+expansion of the measured <span class="math notranslate nohighlight">\(y/2^t\)</span> then gives <span class="math notranslate nohighlight">\(r\)</span>. The algorithm
+started the field of quantum computing as a practical enterprise, and
+<span class="math notranslate nohighlight">\(15 = 3 \times 5\)</span> was factored on an NMR quantum computer in 2001.</p>
+<p><em>Implementation:</em> <code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.quantum.chapters.quantum_circuits.qft_circuit()</span></code>
+builds the transform, which equals the DFT matrix to machine precision;
+<code class="xref py py-func docutils literal notranslate"><span class="pre">modular_exponentiation_circuit()</span></code>
+prepares the period-finding state (with the modular arithmetic as one
+reversible permutation gate), and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">shor_period_from_measurement()</span></code>
+recovers <span class="math notranslate nohighlight">\(r\)</span> by continued fractions.</p>
+<p><em>References:</em> P. W. Shor, in <em>Proc. 35th Annual Symposium on Foundations of
+Computer Science</em>, 124-134 (IEEE, 1994), and <em>SIAM J. Comput.</em> <strong>26</strong>,
+1484-1509 (1997); D. Coppersmith, IBM Research Report RC19642 (1994); L. M.
+K. Vandersypen et al., <em>Nature</em> <strong>414</strong>, 883-887 (2001).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Peter Shor (1994) showed that a quantum computer could factor integers in polynomial time, which no known classical algorithm does. Factoring N reduces to finding the period r of f(x) = a^x \bmod N; then \gcd(a^{r/2} \pm 1, N) are factors. The quantum step is the Fourier transform over 2^t amplitudes,"><img alt="" src="../_images/sphx_glr_plot_shor_quantum_fourier_transform_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/quantum/quantum_computing/plot_shor_quantum_fourier_transform.html"><span class="doc">Shor’s period finding and the quantum Fourier transform</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Shor's period finding and the quantum Fourier transform</div>
+</div></div></section>
+<section id="grover-s-quantum-search">
+<h2><a class="toc-backref" href="#id37" role="doc-backlink">1996 – Grover’s Quantum Search</a><a class="headerlink" href="#grover-s-quantum-search" title="Link to this heading">#</a></h2>
+<p>Lov Grover found a quantum algorithm that finds one of <span class="math notranslate nohighlight">\(M\)</span> marked
+items among <span class="math notranslate nohighlight">\(N\)</span> unsorted ones with about
+<span class="math notranslate nohighlight">\(\tfrac{\pi}{4}\sqrt{N/M}\)</span> oracle queries, where a classical search
+needs <span class="math notranslate nohighlight">\(O(N/M)\)</span>. Bennett, Bernstein, Brassard and Vazirani had shown
+that no quantum algorithm can do better, so the square-root speed-up is
+optimal. Starting from the uniform superposition <span class="math notranslate nohighlight">\(|s\rangle\)</span>, each
+iteration applies the oracle, which flips the sign of marked items, and
+the diffusion operator <span class="math notranslate nohighlight">\(2|s\rangle\langle s| - I\)</span>. The two
+reflections compose to a rotation by <span class="math notranslate nohighlight">\(2\theta\)</span> in the plane of
+<span class="math notranslate nohighlight">\(|s\rangle\)</span> and the marked state, with <span class="math notranslate nohighlight">\(\sin\theta =
+\sqrt{M/N}\)</span>, so after <span class="math notranslate nohighlight">\(k\)</span> iterations</p>
+<div class="math notranslate nohighlight">
+\[P_{\text{success}} = \sin^2\bigl((2k + 1)\theta\bigr).\]</div>
+<p>Going past the optimum rotates the state away again. Generalized as
+amplitude amplification, the idea speeds up any classical search
+heuristic quadratically.</p>
+<p><em>Implementation:</em> <code class="xref py py-func docutils literal notranslate"><span class="pre">physicskit.quantum.chapters.quantum_circuits.grover_circuit()</span></code>
+builds the search for any set of marked items, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">grover_success_probability()</span></code>
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">grover_optimal_iterations()</span></code>
+give the rotation formula and the optimal number of iterations.</p>
+<p><em>References:</em> L. K. Grover, in <em>Proc. 28th Annual ACM Symposium on Theory of
+Computing</em>, 212-219 (1996), and <em>Phys. Rev. Lett.</em> <strong>79</strong>, 325-328 (1997); C.
+H. Bennett, E. Bernstein, G. Brassard and U. Vazirani, <em>SIAM J. Comput.</em>
+<strong>26</strong>, 1510-1523 (1997); M. Boyer, G. Brassard, P. Høyer and A. Tapp,
+<em>Fortsch. Phys.</em> <strong>46</strong>, 493-505 (1998).</p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Lov Grover (1996) showed that finding a marked item among N unsorted ones takes about \tfrac{\pi}{4}\sqrt N queries of a quantum oracle, against N/2 on average classically, and Bennett, Bernstein, Brassard and Vazirani had just proved that no quantum algorithm can do better. Each Grover iteration reflects the state about the unmarked subspace (the oracle) and then about the uniform superposition |s\rangle (the diffusion operator 2|s\rangle\langle s| - I). Together they rotate it by 2\theta toward the marked state, where \sin\theta = \sqrt{M/N}, so after k iterations"><img alt="" src="../_images/sphx_glr_plot_grover_search_thumb.png" />
+<p><a class="reference internal" href="../api/gallery/quantum/quantum_computing/plot_grover_search.html"><span class="doc">Grover’s quantum search: a square-root speed-up</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Grover's quantum search: a square-root speed-up</div>
+</div></div></section>
 <section id="see-also">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id38" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="../api/quantum.html"><span class="doc">physicskit.quantum</span></a></p></li>
 <li><p><a class="reference internal" href="../api/gallery/quantum/index.html"><span class="doc">Examples</span></a></p></li>
@@ -1773,8 +1911,12 @@ Mod. Phys. 70, 101-144 (1998).</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lindblad-s-master-equation-for-open-quantum-systems">1976 – Lindblad’s Master Equation for Open Quantum Systems</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-no-cloning-theorem">1982 – The No-Cloning Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heller-s-quantum-scars-and-the-herman-kluk-propagator">1984 – Heller’s Quantum Scars and the Herman-Kluk Propagator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deutsch-jozsa-and-the-first-quantum-algorithm">1985 – 1992 – Deutsch, Jozsa, and the First Quantum Algorithm</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-packet-revivals">1986-1990 – Wave-Packet Revivals</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dalibard-castin-and-molmer-quantum-trajectories">1992 – Dalibard, Castin, and Molmer: Quantum Trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dmrg-matrix-product-states-and-vidal-s-tebd">1992 – 2004 – DMRG, Matrix Product States, and Vidal’s TEBD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shor-s-algorithm-and-the-quantum-fourier-transform">1994 – Shor’s Algorithm and the Quantum Fourier Transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grover-s-quantum-search">1996 – Grover’s Quantum Search</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
 </ul>
   </nav></div>

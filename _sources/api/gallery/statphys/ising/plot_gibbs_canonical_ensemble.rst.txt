@@ -114,7 +114,7 @@ Metropolis sampling visits states with Gibbs's probabilities, so the
 variance of the sampled energy and magnetization gives :math:`C` and
 :math:`\chi` directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-114
+.. GENERATED FROM PYTHON SOURCE LINES 67-115
 
 .. code-block:: Python
 
@@ -168,6 +168,7 @@ variance of the sampled energy and magnetization gives :math:`C` and
 
 
 
+
 .. image-sg:: /api/gallery/statphys/ising/images/sphx_glr_plot_gibbs_canonical_ensemble_001.png
    :alt: 4x4 Ising: response = fluctuation, Energy distribution: $g(E)\,e^{-E/T}/Z$
    :srcset: /api/gallery/statphys/ising/images/sphx_glr_plot_gibbs_canonical_ensemble_001.png
@@ -187,10 +188,37 @@ variance of the sampled energy and magnetization gives :math:`C` and
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 116-120
+
+Check
+-----
+Exact enumeration: 2^16 states, a doubly degenerate ground state, and
+C = (<E^2> - <E>^2)/T^2 = d<E>/dT. Metropolis samples the same ensemble.
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-129
+
+.. code-block:: Python
+
+    assert len(E) == 2**N and g[0] == 2
+    assert np.max(np.abs(C_fluct - C_deriv)[2:-2]) < 1e-3
+    C_exact = np.interp(T_mc, T, C_fluct)
+    assert np.max(np.abs(np.array(C_mc) / C_exact - 1)) < 0.05
+    assert np.max(np.abs(np.array(chi_mc) / np.array(chi_exact) - 1)) < 0.1
+    p_boltzmann = g * np.exp(-(E_levels - E_levels.min()) / 2.5)
+    p_boltzmann /= p_boltzmann.sum()
+    p_sampled = np.array([counts[vals == e].sum() for e in E_levels]) / counts.sum()
+    assert np.max(np.abs(p_sampled - p_boltzmann)) < 0.01
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.575 seconds)
+   **Total running time of the script:** (0 minutes 0.501 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_ising_plot_gibbs_canonical_ensemble.py:

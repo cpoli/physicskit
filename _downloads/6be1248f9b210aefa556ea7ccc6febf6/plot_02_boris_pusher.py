@@ -72,7 +72,8 @@ plt.show()
 # spiraling in or out.
 
 r_L = pk.plasma.larmor_radius(1e5, pk.plasma.QE, pk.plasma.MP, 1.0)
-r_hist = np.linalg.norm(pos_hist[:, :2], axis=1)
+guiding_center = pos_hist[:-1, :2].mean(axis=0)  # the run spans exactly 10 gyro-periods
+r_hist = np.linalg.norm(pos_hist[:, :2] - guiding_center, axis=1)
 
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 axes[0].plot(speeds)
@@ -90,3 +91,12 @@ axes[1].legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Boris rotation conserves speed exactly in a pure magnetic field, and
+# the ion circles its guiding center at the Larmor radius m v / q B.
+assert np.max(np.abs(speeds - 1e5)) < 1e-6 * 1e5
+assert abs(r_L - pk.plasma.MP * 1e5 / pk.plasma.QE) < 1e-12 * r_L
+assert np.max(np.abs(r_hist / r_L - 1)) < 1e-3

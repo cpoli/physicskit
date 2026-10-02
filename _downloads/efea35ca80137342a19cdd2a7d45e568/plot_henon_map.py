@@ -67,3 +67,11 @@ ax2.set_title("Henon map bifurcation diagram (b = 0.3)")
 ax2.legend(fontsize=8)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Henon attractor fills |x| < 1.29, |y| < 0.39; below a = 0.9125 the map
+# sits on a period-2 orbit (here a = 0.8: x = 1.2596, -0.3846).
+assert np.all(np.abs(traj[:, 0]) < 1.29) and np.all(np.abs(traj[:, 1]) < 0.39)
+np.testing.assert_allclose(np.unique(np.round(sampler(0.8), 6)), [-0.384559, 1.259559], atol=1e-6)

@@ -119,7 +119,7 @@ a line-of-sight dispersion of 1000 km/s, as a redshift survey would see
 them. The sample dispersion alone, with a radius of 1 Mpc, fixes the
 virial mass; bootstrapping the sample gives its statistical spread.
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-102
+.. GENERATED FROM PYTHON SOURCE LINES 66-103
 
 .. code-block:: Python
 
@@ -162,6 +162,7 @@ virial mass; bootstrapping the sample gives its statistical spread.
 
 
 
+
 .. image-sg:: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_02_oort_zwicky_missing_mass_002.png
    :alt: Coma-like cluster: redshift velocities, Zwicky: virial mass vs. starlight
    :srcset: /api/gallery/astro/galactic_dynamics/images/sphx_glr_plot_02_oort_zwicky_missing_mass_002.png
@@ -181,10 +182,32 @@ virial mass; bootstrapping the sample gives its statistical spread.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 104-109
+
+Check
+-----
+Oort's sheet needs more mass than is seen; Zwicky's virial mass
+5 sigma^2 R / G (sigma ~ 1000 km/s, R = 1 Mpc) is ~1.2e15 Msun, tens of
+times the starlight.
+
+.. GENERATED FROM PYTHON SOURCE LINES 109-112
+
+.. code-block:: Python
+
+    assert rho0 / rho_visible > 1.2
+    assert abs(M_vir - 5 * (1000 * KM) ** 2 * R / G / SOLAR_MASS_KG) < 3 * M_boot.std() + 0.02 * M_vir
+    assert M_vir / M_luminous > 30
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.146 seconds)
+   **Total running time of the script:** (0 minutes 0.118 seconds)
 
 
 .. _sphx_glr_download_api_gallery_astro_galactic_dynamics_plot_02_oort_zwicky_missing_mass.py:

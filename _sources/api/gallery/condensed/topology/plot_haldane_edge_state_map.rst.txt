@@ -93,7 +93,7 @@ nearest mid-gap should sit at a density-weighted mean radius close to the
 disk's edge; in the trivial phase, the states nearest mid-gap are just
 ordinary near-degenerate bulk states with no boundary preference.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-73
+.. GENERATED FROM PYTHON SOURCE LINES 51-74
 
 .. code-block:: Python
 
@@ -122,6 +122,7 @@ ordinary near-degenerate bulk states with no boundary preference.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_haldane_edge_state_map_001.png
    :alt: Haldane model: a chiral edge state needs a Chern number, not a special edge, topological (M=0) near-gap density, E~[-0.39, 0.39], trivial (M=2.0) near-gap density, E~[-1.15, 1.15]
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_haldane_edge_state_map_001.png
@@ -138,10 +139,35 @@ ordinary near-degenerate bulk states with no boundary preference.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 75-79
+
+Check
+-----
+The last loop iteration is the trivial phase: its near-gap states sit in
+the bulk. Redo the topological one: its in-gap states hug the edge.
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-86
+
+.. code-block:: Python
+
+    assert mean_r_weighted < mean_r_sites
+    H, positions, _ = build_finite_cluster(haldane_lattice_hamiltonian(t=1.0, t2=0.2, phi=np.pi / 2, M=0.0), n_cells=(n_cells, n_cells), keep=in_disk)
+    _, eigenvectors = np.linalg.eigh(H)
+    mid = H.shape[0] // 2
+    density = np.sum(np.abs(eigenvectors[:, mid - 3 : mid + 3]) ** 2, axis=1)
+    r = np.linalg.norm(positions - center, axis=1)
+    assert np.sum(r * density) / density.sum() > 0.85 * radius
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.371 seconds)
+   **Total running time of the script:** (0 minutes 0.367 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_haldane_edge_state_map.py:

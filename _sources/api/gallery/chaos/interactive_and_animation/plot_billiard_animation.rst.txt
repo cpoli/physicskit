@@ -36,12 +36,13 @@ builds a Matplotlib ``FuncAnimation`` showing the ball bouncing inside the
 stadium (left panel) alongside its Poincare section filling in live, point
 by point, as each new bounce occurs (right panel).
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-28
+.. GENERATED FROM PYTHON SOURCE LINES 20-29
 
 .. code-block:: Python
 
 
     import matplotlib.pyplot as plt
+    import numpy as np
 
     from physicskit.chaos.systems.billiards import BunimovichStadium
     from physicskit.chaos.visualizers.dynamic_plots import animate_billiard_trajectory
@@ -55,7 +56,7 @@ by point, as each new bounce occurs (right panel).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-34
+.. GENERATED FROM PYTHON SOURCE LINES 30-35
 
 Build the animation
 ---------------------
@@ -63,7 +64,7 @@ Assign the animation to a variable to keep it alive; a reference must
 survive until it is displayed (``plt.show()``) or saved (``anim.save(...)``)
 or Matplotlib will silently drop it.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-38
+.. GENERATED FROM PYTHON SOURCE LINES 35-39
 
 .. code-block:: Python
 
@@ -2234,17 +2235,38 @@ or Matplotlib will silently drop it.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-43
+.. GENERATED FROM PYTHON SOURCE LINES 40-44
 
 To save the animation to a file instead of (or in addition to) displaying
 it interactively, use e.g.::
 
     anim.save("stadium_animation.gif", writer="pillow", fps=30)
 
+.. GENERATED FROM PYTHON SOURCE LINES 46-50
+
+Check
+-----
+The stadium ray keeps its speed but visits a continuum of incidence angles
+(chaotic), unlike an integrable billiard.
+
+.. GENERATED FROM PYTHON SOURCE LINES 50-53
+
+.. code-block:: Python
+
+    run = billiard.simulate(billiard.sample_interior_point(), (0.5, 0.9), n_bounces=400)
+    assert np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12
+    assert len(np.unique(np.round(np.abs(run["sin_phi"]), 6))) > 100
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.179 seconds)
+   **Total running time of the script:** (0 minutes 8.005 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_interactive_and_animation_plot_billiard_animation.py:

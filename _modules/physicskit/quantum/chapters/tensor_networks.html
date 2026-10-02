@@ -1,0 +1,843 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physicskit.quantum.chapters.tensor_networks &#8212; physicskit 0.3.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=67316f54" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/quantum/chapters/tensor_networks';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.3.0" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="dark">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-dark" alt="physicskit logo"/>
+    <img src="../../../../_static/physicskit_logo_transparent.png" class="logo__image only-light pst-js-only" alt="physicskit logo"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../subpackages/index.html">
+    Subpackages
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../history/index.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials/index.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cpoli/physicskit" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/physicskit/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">physicskit.quantum.chapters.tensor_networks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for physicskit.quantum.chapters.tensor_networks</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">"""Matrix product states and time-evolving block decimation (TEBD) for spin-1/2 chains.</span>
+
+<span class="sd">A state of :math:`N` spins needs :math:`2^N` amplitudes, but the low-energy</span>
+<span class="sd">states of gapped 1D Hamiltonians obey an area law: the entanglement across</span>
+<span class="sd">any cut is bounded. Such states are efficiently written as matrix product</span>
+<span class="sd">states (MPS; Fannes, Nachtergaele and Werner 1992; Östlund and Rommer 1995,</span>
+<span class="sd">explaining White's 1992 DMRG),</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    |\psi\rangle = \sum_{s_1\dots s_N} B^{s_1}_1 B^{s_2}_2 \cdots B^{s_N}_N\,</span>
+<span class="sd">    |s_1 \dots s_N\rangle,</span>
+
+<span class="sd">with matrices of bond dimension :math:`\chi`. Vidal's TEBD (Phys. Rev. Lett.</span>
+<span class="sd">91, 147902 (2003); 93, 040502 (2004)) evolves an MPS under a nearest-neighbour</span>
+<span class="sd">Hamiltonian :math:`H = \sum_j h_{j,j+1}` by a Trotter splitting into even</span>
+<span class="sd">and odd bonds,</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    e^{-iH\delta t} \approx e^{-iH_{\text{even}}\delta t/2}\, e^{-iH_{\text{odd}}\delta t}\,</span>
+<span class="sd">    e^{-iH_{\text{even}}\delta t/2} + O(\delta t^3),</span>
+
+<span class="sd">applying each two-site gate and truncating the bond back to :math:`\chi`</span>
+<span class="sd">by a singular value decomposition. In imaginary time</span>
+<span class="sd">(:math:`\delta t \to -i\delta\tau`) the same algorithm projects onto the</span>
+<span class="sd">ground state.</span>
+
+<span class="sd">This module keeps the MPS in right-canonical form with the singular values</span>
+<span class="sd">on every bond (Hauschild and Pollmann, SciPost Phys. Lect. Notes 5 (2018)).</span>
+<span class="sd">Conventions match :mod:`physicskit.condensed.spin_chains`: physical index 0</span>
+<span class="sd">is spin up (:math:`\sigma^z = +1`), and :meth:`MPS.to_dense` orders basis</span>
+<span class="sd">states with site 0 as the most significant bit and bit 1 meaning up.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">expm</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"MPS"</span><span class="p">,</span> <span class="s2">"tebd"</span><span class="p">,</span> <span class="s2">"tfim_bond_hamiltonians"</span><span class="p">,</span> <span class="s2">"xxz_bond_hamiltonians"</span><span class="p">]</span>
+
+<span class="n">_SX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="n">_SY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="n">_SZ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="n">_I2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="xxz_bond_hamiltonians">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.xxz_bond_hamiltonians">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">xxz_bond_hamiltonians</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">J</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Two-site terms of the open XXZ chain, :math:`H = J\sum(S^xS^x + S^yS^y + \Delta S^zS^z) - h\sum S^z`.</span>
+
+<span class="sd">    Each bond operator is a :math:`4\times4` matrix on (site :math:`j`, site</span>
+<span class="sd">    :math:`j+1`); the field of each site is split between its bonds so that</span>
+<span class="sd">    :math:`\sum_j h_{j,j+1}` is exactly the Hamiltonian of</span>
+<span class="sd">    :func:`physicskit.condensed.spin_chains.xxz_hamiltonian` with</span>
+<span class="sd">    ``periodic=False``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">    J, delta, h : float</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of ndarray, length ``N - 1``</span>
+<span class="sd">    """</span>
+    <span class="n">Sx</span><span class="p">,</span> <span class="n">Sy</span><span class="p">,</span> <span class="n">Sz</span> <span class="o">=</span> <span class="n">_SX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">_SY</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">_SZ</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">coupling</span> <span class="o">=</span> <span class="n">J</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">Sx</span><span class="p">,</span> <span class="n">Sx</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">Sy</span><span class="p">,</span> <span class="n">Sy</span><span class="p">)</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">Sz</span><span class="p">,</span> <span class="n">Sz</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_with_fields</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">coupling</span><span class="p">,</span> <span class="o">-</span><span class="n">h</span> <span class="o">*</span> <span class="n">Sz</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="tfim_bond_hamiltonians">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.tfim_bond_hamiltonians">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tfim_bond_hamiltonians</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">J</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Two-site terms of the open transverse-field Ising chain, :math:`H = -J\sum\sigma^x\sigma^x - h\sum\sigma^z`.</span>
+
+<span class="sd">    Matches :func:`physicskit.condensed.spin_chains.tfim_hamiltonian` with</span>
+<span class="sd">    ``periodic=False``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">    J, h : float</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of ndarray, length ``N - 1``</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_with_fields</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="o">-</span><span class="n">J</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">_SX</span><span class="p">,</span> <span class="n">_SX</span><span class="p">),</span> <span class="o">-</span><span class="n">h</span> <span class="o">*</span> <span class="n">_SZ</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_with_fields</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">coupling</span><span class="p">,</span> <span class="n">onsite</span><span class="p">):</span>
+    <span class="n">bonds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">wl</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.5</span>
+        <span class="n">wr</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">2</span> <span class="k">else</span> <span class="mf">0.5</span>
+        <span class="n">bonds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coupling</span> <span class="o">+</span> <span class="n">wl</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">onsite</span><span class="p">,</span> <span class="n">_I2</span><span class="p">)</span> <span class="o">+</span> <span class="n">wr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">_I2</span><span class="p">,</span> <span class="n">onsite</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">bonds</span>
+
+
+<div class="viewcode-block" id="MPS">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MPS</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""An open-boundary matrix product state in right-canonical form.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    B : list of ndarray</span>
+<span class="sd">        Site tensors of shape ``(chi_left, 2, chi_right)``, each right-canonical.</span>
+<span class="sd">    S : list of ndarray</span>
+<span class="sd">        Singular values on the bond to the left of each site (``S[0] = [1]``).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; psi = MPS.product_state([0, 1, 0, 1])  # up, down, up, down</span>
+<span class="sd">    &gt;&gt;&gt; v = psi.to_dense()</span>
+<span class="sd">    &gt;&gt;&gt; int(np.argmax(np.abs(v))), float(abs(v).max())</span>
+<span class="sd">    (10, 1.0)</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">],</span> <span class="n">S</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">B</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MPS.product_state">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.product_state">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">product_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">spins</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MPS</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Product state with physical index ``spins[j]`` (0 up, 1 down) on site ``j``."""</span>
+        <span class="n">B</span><span class="p">,</span> <span class="n">S</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">spins</span><span class="p">:</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+            <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">S</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MPS.copy">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MPS</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Deep copy."""</span>
+        <span class="k">return</span> <span class="n">MPS</span><span class="p">([</span><span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">])</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Bond dimensions :math:`\\chi` of the ``N - 1`` internal bonds."""</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="MPS.to_dense">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.to_dense">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dense</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""The full :math:`2^N` state vector, in the basis order of :mod:`physicskit.condensed.spin_chains`."""</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># physical index 0 is up, but condensed uses bit 1 for up: flip all bits</span>
+        <span class="k">return</span> <span class="n">psi</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MPS.entanglement_entropy">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.entanglement_entropy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">entanglement_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Von Neumann entropy :math:`-\\sum_\\alpha s_\\alpha^2\\ln s_\\alpha^2` of each internal bond."""</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mf">1e-15</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MPS.expectation_local">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.expectation_local">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expectation_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">""":math:`\\langle O_j \\rangle` of a single-site operator on every site."""</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># (vL, p, vR)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]:</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># (vL, p1, p2, vR)</span>
+
+<div class="viewcode-block" id="MPS.bond_energies">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.bond_energies">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H_bonds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">""":math:`\\langle h_{j,j+1}\\rangle` for every bond."""</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">H_bonds</span><span class="p">):</span>
+            <span class="n">th</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">hth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">th</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>  <span class="c1"># (p1, p2, vL, vR)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">th</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">hth</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MPS.canonicalize">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.canonicalize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">canonicalize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Restore the normalized right-canonical form with exact Schmidt values on every bond.</span>
+
+<span class="sd">        A right-to-left sweep makes every tensor right-orthonormal, then a</span>
+<span class="sd">        left-to-right sweep of SVDs reads off the Schmidt values</span>
+<span class="sd">        :math:`S_{j}` and sets :math:`B_j = S_j^{-1} A_j S_{j+1}` (Vidal's</span>
+<span class="sd">        relation). Non-unitary gates, as in imaginary-time evolution,</span>
+<span class="sd">        break the canonical form that :meth:`bond_energies` and the TEBD</span>
+<span class="sd">        truncation rely on.</span>
+<span class="sd">        """</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">vL</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vR</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vL</span><span class="p">,</span> <span class="n">d</span> <span class="o">*</span> <span class="n">vR</span><span class="p">),</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vR</span><span class="p">)</span>
+            <span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">U</span> <span class="o">*</span> <span class="n">Y</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># left-to-right: the orthogonality centre moves along as theta = Y V B_{j+1}</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">vL</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vR</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vL</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="n">vR</span><span class="p">),</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">keep</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span> <span class="o">&gt;</span> <span class="mf">1e-14</span> <span class="o">*</span> <span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="n">U</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">keep</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:</span><span class="n">keep</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">[:</span><span class="n">keep</span><span class="p">]),</span> <span class="n">V</span><span class="p">[:</span><span class="n">keep</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="n">U</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vL</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">keep</span><span class="p">),</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">Y</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">Y</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">V</span><span class="p">,</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">S</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+        <span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">B</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span></div>
+
+
+<div class="viewcode-block" id="MPS.apply_two_site">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.MPS.apply_two_site">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_two_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">U</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">chi_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Apply a :math:`4\\times4` gate to sites ``j, j+1`` and truncate; returns the discarded weight."""</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">vL</span><span class="p">,</span> <span class="n">vR</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">th</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">th</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>  <span class="c1"># (p1, p2, vL, vR)</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vL</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vR</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">keep</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">chi_max</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span> <span class="o">&gt;</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="n">discarded</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">keep</span><span class="p">:]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">:</span><span class="n">keep</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:</span><span class="n">keep</span><span class="p">],</span> <span class="n">Z</span><span class="p">[:</span><span class="n">keep</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vL</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">keep</span><span class="p">)</span>
+        <span class="c1"># B_j = S_j^{-1} A diag(Y), which is right-canonical</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="n">A</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">Y</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">vR</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">discarded</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="tebd">
+<a class="viewcode-back" href="../../../../api/quantum.html#physicskit.quantum.tebd">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tebd</span><span class="p">(</span>
+    <span class="n">psi</span><span class="p">:</span> <span class="n">MPS</span><span class="p">,</span>
+    <span class="n">H_bonds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NDArray</span><span class="p">],</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">chi_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">imaginary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-12</span><span class="p">,</span>
+    <span class="n">measure_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">observables</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Evolve an MPS with second-order TEBD.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    psi : MPS</span>
+<span class="sd">        Modified in place.</span>
+<span class="sd">    H_bonds : list of ndarray</span>
+<span class="sd">        Two-site Hamiltonian terms, e.g. from :func:`xxz_bond_hamiltonians`.</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Time step (imaginary-time step if ``imaginary``).</span>
+<span class="sd">    n_steps : int</span>
+<span class="sd">    chi_max : int, default 64</span>
+<span class="sd">        Maximum bond dimension.</span>
+<span class="sd">    imaginary : bool, default False</span>
+<span class="sd">        Imaginary-time evolution :math:`e^{-H\\tau}` toward the ground state.</span>
+<span class="sd">    eps : float, default 1e-12</span>
+<span class="sd">        Relative singular-value cutoff.</span>
+<span class="sd">    measure_every : int, default 1</span>
+<span class="sd">    observables : dict of str -&gt; ndarray, optional</span>
+<span class="sd">        Single-site operators whose site-resolved expectation values are recorded.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        ``"t"``, the total ``"energy"``, the half-chain ``"entropy"``, the</span>
+<span class="sd">        accumulated ``"discarded_weight"``, and one array per observable.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Imaginary-time TEBD finds the ground state of an open 8-site Heisenberg chain:</span>
+
+<span class="sd">    &gt;&gt;&gt; from physicskit.condensed.spin_chains import lowest_eigenstates, xxz_hamiltonian</span>
+<span class="sd">    &gt;&gt;&gt; H = xxz_bond_hamiltonians(8)</span>
+<span class="sd">    &gt;&gt;&gt; psi = MPS.product_state([0, 1] * 4)</span>
+<span class="sd">    &gt;&gt;&gt; out = tebd(psi, H, dt=0.05, n_steps=400, chi_max=16, imaginary=True)</span>
+<span class="sd">    &gt;&gt;&gt; E0 = lowest_eigenstates(xxz_hamiltonian(8, periodic=False, n_up=4)[0], k=1)[0][0]</span>
+<span class="sd">    &gt;&gt;&gt; bool(abs(out["energy"][-1] - E0) &lt; 1e-6)</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="n">observables</span> <span class="o">=</span> <span class="n">observables</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">imaginary</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="p">[</span><span class="n">expm</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">H_bonds</span><span class="p">]</span>
+    <span class="n">full</span> <span class="o">=</span> <span class="p">[</span><span class="n">expm</span><span class="p">(</span><span class="n">factor</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">H_bonds</span><span class="p">]</span>
+    <span class="n">even</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psi</span><span class="o">.</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">odd</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">psi</span><span class="o">.</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">t</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">entropy</span><span class="p">,</span> <span class="n">discarded</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="n">psi</span><span class="o">.</span><span class="n">bond_energies</span><span class="p">(</span><span class="n">H_bonds</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()],</span> <span class="p">[</span><span class="n">psi</span><span class="o">.</span><span class="n">entanglement_entropy</span><span class="p">()[</span><span class="n">psi</span><span class="o">.</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[</span><span class="n">psi</span><span class="o">.</span><span class="n">expectation_local</span><span class="p">(</span><span class="n">op</span><span class="p">)]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">observables</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">even</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">psi</span><span class="o">.</span><span class="n">apply_two_site</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">half</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">chi_max</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">odd</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">psi</span><span class="o">.</span><span class="n">apply_two_site</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">full</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">chi_max</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">even</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">psi</span><span class="o">.</span><span class="n">apply_two_site</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">half</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">chi_max</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">imaginary</span><span class="p">:</span>
+            <span class="n">psi</span><span class="o">.</span><span class="n">canonicalize</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="n">measure_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+            <span class="n">energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">bond_energies</span><span class="p">(</span><span class="n">H_bonds</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+            <span class="n">entropy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">entanglement_entropy</span><span class="p">()[</span><span class="n">psi</span><span class="o">.</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">discarded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">observables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">obs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">expectation_local</span><span class="p">(</span><span class="n">op</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s2">"energy"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy</span><span class="p">),</span> <span class="s2">"entropy"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">entropy</span><span class="p">),</span> <span class="s2">"discarded_weight"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">discarded</span><span class="p">)}</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obs</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, physicskit contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -155,7 +155,7 @@ conserved to machine precision even though the swing plane itself
 rotates steadily -- verified here against the closed-form
 small-oscillation solution.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-99
+.. GENERATED FROM PYTHON SOURCE LINES 85-100
 
 .. code-block:: Python
 
@@ -176,6 +176,7 @@ small-oscillation solution.
 
 
 
+
 .. image-sg:: /api/gallery/classical/newtonian/images/sphx_glr_plot_03_foucault_pendulum_003.png
    :alt: Energy conserved despite the precessing swing plane
    :srcset: /api/gallery/classical/newtonian/images/sphx_glr_plot_03_foucault_pendulum_003.png
@@ -192,10 +193,31 @@ small-oscillation solution.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 101-105
+
+Check
+-----
+The swing plane turns once per sidereal day / sin(latitude) (31.8 h in
+Paris); the integration matches the analytic solution and conserves energy.
+
+.. GENERATED FROM PYTHON SOURCE LINES 105-108
+
+.. code-block:: Python
+
+    sidereal_day = 86164.1
+    assert abs(system.precession_period() - sidereal_day / np.sin(np.radians(48.85))) < 1e-3 * system.precession_period()
+    assert np.max(np.abs(x - x_analytic)) < 1e-5 and np.max(drift) < 1e-10
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.680 seconds)
+   **Total running time of the script:** (0 minutes 0.693 seconds)
 
 
 .. _sphx_glr_download_api_gallery_classical_newtonian_plot_03_foucault_pendulum.py:

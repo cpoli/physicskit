@@ -151,13 +151,14 @@ a function of L/E, independent of theta.
 Building up the picture as a function of baseline
 -------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-84
+.. GENERATED FROM PYTHON SOURCE LINES 81-85
 
 .. code-block:: Python
 
     anim = animate_neutrino_oscillation(L, E, theta, delta_m2)
 
     plt.show()
+
 
 
 
@@ -2253,10 +2254,30 @@ Building up the picture as a function of baseline
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 86-90
+
+Check
+-----
+P = sin^2(2 theta) sin^2(1.267 dm^2 L / E) (dm^2 in eV^2, L in km, E in GeV),
+and probability is conserved.
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-92
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(P_mu, np.sin(2 * theta) ** 2 * np.sin(1.267 * delta_m2 * L / E) ** 2, atol=1e-3)
+    assert np.allclose(P_e + P_mu, 1.0) and P_mu[0] == 0
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 44.203 seconds)
+   **Total running time of the script:** (0 minutes 42.079 seconds)
 
 
 .. _sphx_glr_download_api_gallery_particle_weak_interaction_plot_04_neutrino_oscillations.py:

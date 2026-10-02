@@ -122,3 +122,10 @@ ax2.set_title("Liouville's theorem: area is (nearly) constant")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Liouville: the Hamiltonian flow preserves phase-space area, however much
+# the patch shears.
+assert abs(areas[-1] / areas[0] - 1) < 1e-3

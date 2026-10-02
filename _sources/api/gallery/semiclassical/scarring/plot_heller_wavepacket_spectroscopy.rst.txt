@@ -175,7 +175,7 @@ anharmonic well. (This finite-grid quadrature of the Herman-Kluk integral
 is not norm-conserving, and over a full period in this strongly
 anharmonic well it needs far finer sampling than shown here.)
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-142
+.. GENERATED FROM PYTHON SOURCE LINES 105-143
 
 .. code-block:: Python
 
@@ -219,6 +219,7 @@ anharmonic well it needs far finer sampling than shown here.)
 
 
 
+
 .. image-sg:: /api/gallery/semiclassical/scarring/images/sphx_glr_plot_heller_wavepacket_spectroscopy_002.png
    :alt: t = 0.4 (period 3.14): fidelity 1.0000, t = 0.8 (period 3.14): fidelity 0.9999
    :srcset: /api/gallery/semiclassical/scarring/images/sphx_glr_plot_heller_wavepacket_spectroscopy_002.png
@@ -235,10 +236,36 @@ anharmonic well it needs far finer sampling than shown here.)
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 144-150
+
+Check
+-----
+The Fourier transform of C(t) resolves the Morse levels
+E_n = omega (n + 1/2) - [omega (n + 1/2)]^2 / 4 D_e; |C(t)| recurs at the
+classical period at the packet's energy, T(E) = 2 pi / (omega sqrt(1 - E/D_e)),
+longer than the harmonic 2 pi / omega; Herman-Kluk tracks the packet.
+
+.. GENERATED FROM PYTHON SOURCE LINES 150-156
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(peak_E[:3], E_exact[:3], atol=0.01)
+    E_packet = 0.5 * gamma + np.sum(np.abs(psi0) ** 2 * D_e * (1 - np.exp(-a_m * x)) ** 2) * dx
+    window = (times > 0.5 * T_cl) & (times < 1.6 * T_cl)
+    t_recur = times[window][np.argmax(np.abs(C[window]))]
+    assert abs(t_recur / (T_cl / np.sqrt(1 - E_packet / D_e)) - 1) < 0.02
+    assert fid > 0.999
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.405 seconds)
+   **Total running time of the script:** (0 minutes 1.349 seconds)
 
 
 .. _sphx_glr_download_api_gallery_semiclassical_scarring_plot_heller_wavepacket_spectroscopy.py:

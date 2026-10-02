@@ -74,17 +74,19 @@ for many periods and heavy friction makes them creep, yet all settle at
 over :math:`t > 60`, many relaxation times :math:`m/\gamma` even for the
 lightest friction.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-54
+.. GENERATED FROM PYTHON SOURCE LINES 45-56
 
 .. code-block:: Python
 
 
     results = {}
+    equipartition = {}
     for gamma in (0.1, 1.0, 10.0):
         ld = LangevinDynamics(n_particles=4000, mass=m, gamma=gamma, kT=kT, stiffness=k, seed=int(10 * gamma))
         t, x, v = ld.run(t_max=80.0, dt=0.002, n_frames=400, x0=np.full(4000, 1.0))
         results[gamma] = (t, x[:, :, 0], v[:, :, 0])
         late = t > 60
+        equipartition[gamma] = (m * np.mean(v[late] ** 2), k * np.mean(x[late] ** 2))
         print(f"gamma = {gamma:5.1f}: m<v^2> = {m * np.mean(v[late] ** 2):.3f}, k<x^2> = {k * np.mean(x[late] ** 2):.3f}   (kT = {kT})")
 
 
@@ -102,7 +104,7 @@ lightest friction.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-60
+.. GENERATED FROM PYTHON SOURCE LINES 57-62
 
 Breaking the balance
 --------------------
@@ -110,7 +112,7 @@ Keep the friction at :math:`\gamma = 1` but give the kicks only half the
 fluctuation-dissipation variance, :math:`\gamma k_BT` instead of
 :math:`2\gamma k_BT`. The particles cool to half the bath temperature.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-122
+.. GENERATED FROM PYTHON SOURCE LINES 62-125
 
 .. code-block:: Python
 
@@ -179,6 +181,7 @@ fluctuation-dissipation variance, :math:`\gamma k_BT` instead of
 
 
 
+
 .. image-sg:: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_langevin_fluctuation_dissipation_001.png
    :alt: one particle per friction, kinetic temperature, equilibrium in the trap ($\gamma = 1$)
    :srcset: /api/gallery/statphys/stochastic_processes/images/sphx_glr_plot_langevin_fluctuation_dissipation_001.png
@@ -194,10 +197,31 @@ fluctuation-dissipation variance, :math:`\gamma k_BT` instead of
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 126-130
+
+Check
+-----
+With noise strength 2 gamma kT every friction thermalizes to equipartition,
+m<v^2> = k<x^2> = kT; halving the noise halves the temperature.
+
+.. GENERATED FROM PYTHON SOURCE LINES 130-133
+
+.. code-block:: Python
+
+    for kinetic, potential in equipartition.values():
+        assert abs(kinetic / kT - 1) < 0.03 and abs(potential / kT - 1) < 0.03
+    assert abs(T_weak / (kT / 2) - 1) < 0.03
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.397 seconds)
+   **Total running time of the script:** (0 minutes 6.262 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_stochastic_processes_plot_langevin_fluctuation_dissipation.py:

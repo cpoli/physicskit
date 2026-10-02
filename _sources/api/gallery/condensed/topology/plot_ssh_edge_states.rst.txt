@@ -110,7 +110,7 @@ below is drawn proportional to hopping strength, so the weak :math:`v`
 bond exposed at each open end is exactly what leaves those end sites
 undercoordinated and hosting the protected zero mode.
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-86
+.. GENERATED FROM PYTHON SOURCE LINES 61-87
 
 .. code-block:: Python
 
@@ -142,6 +142,7 @@ undercoordinated and hosting the protected zero mode.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/topology/images/sphx_glr_plot_ssh_edge_states_001.png
    :alt: SSH model: Zak phase pi <=> protected zero-energy edge states, Bulk invariant, Zero-mode density, |E| = 2.29e-05
    :srcset: /api/gallery/condensed/topology/images/sphx_glr_plot_ssh_edge_states_001.png
@@ -157,10 +158,31 @@ undercoordinated and hosting the protected zero mode.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
+
+Check
+-----
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-95
+
+.. code-block:: Python
+
+    assert abs(abs(zak_topological) - np.pi) < 1e-8
+    assert abs(zak_trivial) < 1e-8
+    # the zero modes split the weight evenly between the two ends
+    assert abs(left_weight - 1) < 1e-3 and abs(right_weight - 1) < 1e-3
+    assert np.max(np.abs(spectrum[edge_idx])) < 1e-3
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.069 seconds)
+   **Total running time of the script:** (0 minutes 0.067 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_topology_plot_ssh_edge_states.py:

@@ -28,6 +28,7 @@ break other symmetries. This contrasts two systems:
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.classical.systems.newtonian import KeplerSystem, ProjectileMotion
 from physicskit.classical.utils.conservation import angular_momentum_2d, angular_momentum_drift, relative_energy_drift
@@ -71,3 +72,12 @@ fig.tight_layout(rect=[0, 0, 1, 0.90])
 # or off independently, as shown here.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A central force conserves L even when perturbed; gravity on a projectile
+# torques it: L_z(t) = -m v_x g t^2 / 2 about the launch point.
+assert L_drift_k.max() < 1e-12 and E_drift_k.max() < 1e-9
+v_x = 20.0 * np.cos(np.radians(45.0))
+np.testing.assert_allclose(L_p, -v_x * 9.81 * result_p.t**2 / 2, atol=1e-8)

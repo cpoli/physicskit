@@ -163,3 +163,11 @@ ax2.set_ylim(-6, 6)
 ax2.set_title("Classical orbit vs. exact Wigner function\nof the coherent state, at t=T/2")
 ax2.legend(fontsize=8)
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The Van Vleck propagator is exact for quadratic potentials (before the
+# first caustic), and the classical orbit reaches (-q0, -p0) at T/2.
+assert np.max(np.abs(K_semiclassical - K_exact)) < 1e-10
+assert abs(q_orbit[idx_half] + qc0) < 1e-6 and abs(p_orbit[idx_half] + pc0) < 1e-6

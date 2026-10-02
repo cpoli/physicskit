@@ -129,7 +129,7 @@ low-energy physics is a Heisenberg antiferromagnet (the same
 widely used as a minimal cuprate Hamiltonian), and nearest-neighbor
 correlations sharpen toward the classical Neel value of :math:`-1/4`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-77
+.. GENERATED FROM PYTHON SOURCE LINES 75-78
 
 .. code-block:: Python
 
@@ -143,9 +143,33 @@ correlations sharpen toward the classical Neel value of :math:`-1/4`.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 79-84
+
+Check
+-----
+<Sz_0 Sz_0> = 1/4 - <n_up n_dn>/2 tends to 1/4 as double occupancy is
+suppressed; nearest neighbours anticorrelate more strongly as U grows and
+the sign alternates with separation.
+
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
+
+.. code-block:: Python
+
+    nn = np.array(nn_correlation)
+    assert np.all(np.diff(nn) < 0) and nn[-1] < -0.15
+    assert correlations[-1][0] > 0.24
+    assert correlations[-1][1] < 0 < correlations[-1][2]
+
+
+
+
+
+
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.106 seconds)
+   **Total running time of the script:** (0 minutes 0.122 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_correlated_plot_cuprate_afm_correlations.py:

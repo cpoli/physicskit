@@ -183,7 +183,7 @@ Plot
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x114dba600>
+    <matplotlib.legend.Legend object at 0x1429b3d70>
 
 
 
@@ -201,7 +201,7 @@ at the same ``dt`` used above, RK4's aphelion visibly creeps inward as its
 secular energy error accumulates, while Yoshida4's stays flat -- bounded
 noise at the :math:`10^{-6}` level, with no trend at all.
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-154
+.. GENERATED FROM PYTHON SOURCE LINES 122-155
 
 .. code-block:: Python
 
@@ -240,6 +240,7 @@ noise at the :math:`10^{-6}` level, with no trend at all.
 
 
 
+
 .. image-sg:: /api/gallery/chaos/advanced/images/sphx_glr_plot_symplectic_integrators_002.png
    :alt: Same Kepler orbit, same dt: RK4's aphelion creeps inward over 1000 orbits
    :srcset: /api/gallery/chaos/advanced/images/sphx_glr_plot_symplectic_integrators_002.png
@@ -255,10 +256,33 @@ noise at the :math:`10^{-6}` level, with no trend at all.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 156-161
+
+Check
+-----
+RK4's energy error grows ~linearly with time (10x per decade of horizon);
+the symplectic schemes' stays bounded; and the energy error shows up as the
+RK4 orbit shrinking, while Yoshida's aphelion stays at the exact 1.6.
+
+.. GENERATED FROM PYTHON SOURCE LINES 161-165
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(np.diff(np.log10(drift_rk4)), 1.0, atol=0.15)
+    assert np.ptp(np.log10(drift_lf)) < 0.01 and np.ptp(np.log10(drift_y4)) < 0.01
+    assert drift_rk4[0] < drift_y4[0] and drift_rk4[1] > drift_y4[1]
+    assert np.max(np.abs(aphelion_y4 - 1.6)) < 1e-5 and aphelion_rk4[-1] < aphelion_rk4[0] - 1e-5
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.707 seconds)
+   **Total running time of the script:** (0 minutes 6.932 seconds)
 
 
 .. _sphx_glr_download_api_gallery_chaos_advanced_plot_symplectic_integrators.py:

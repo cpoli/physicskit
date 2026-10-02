@@ -126,3 +126,11 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The b + two-jet mass reconstructs M_t, with the W inside it, and stands
+# well above the W + jets background.
+assert abs(np.median(m3_sig) - M_t) < 6 and abs(np.median(mjj_sig) - M_W) < 2
+assert in_window(m3_sig) > 3 * in_window(m3_bkg)

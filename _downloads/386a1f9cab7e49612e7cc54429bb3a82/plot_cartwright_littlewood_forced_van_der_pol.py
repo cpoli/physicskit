@@ -218,3 +218,16 @@ plt.show()
 # explicitly, and it was that example that led Smale to the horseshoe.
 
 # sphinx_gallery_thumbnail_number = 2
+
+# %%
+# Check
+# -----
+# Cartwright and Littlewood: at the same parameters two stable subharmonics
+# (3T and 5T) coexist, each with a large basin, and the boundary between
+# them carries orbits whose relaxation cycles have irregular lengths
+# (the 'bad set') before settling.
+assert sorted(periods) == [3, 5]
+values, counts = np.unique(labels, return_counts=True)
+assert set(values.tolist()) == {3, 5} and counts.min() > 0.2 * labels.size
+bad = lengths[t_cyc < n_track]
+assert np.any(np.abs(bad - 3) > 0.2) and np.any(np.abs(bad - 5) > 0.2) and final_period in (3, 5)

@@ -68,3 +68,11 @@ fig, ax, lam = plot_billiard_divergence(billiard, pos, vel, delta_0=1e-8, n_boun
 ax.set_title(f"{ax.get_title()} (cut = {billiard.cut})")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# In the integrable circle a perturbation does not grow exponentially; a
+# 0.1% flat cut makes the billiard chaotic, with a positive Lyapunov exponent.
+assert separation_circle[-1] < 1e-6
+assert lam > 0

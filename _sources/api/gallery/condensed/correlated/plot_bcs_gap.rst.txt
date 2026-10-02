@@ -122,7 +122,7 @@ value traces out the full :math:`E(k, |\Delta|)` surface. At
 momentum is exact; turning on pairing lifts that V into a hyperbola with
 minimum exactly :math:`|\Delta|`, for every :math:`\Delta` at once.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-86
+.. GENERATED FROM PYTHON SOURCE LINES 60-87
 
 .. code-block:: Python
 
@@ -155,6 +155,7 @@ minimum exactly :math:`|\Delta|`, for every :math:`\Delta` at once.
 
 
 
+
 .. image-sg:: /api/gallery/condensed/correlated/images/sphx_glr_plot_bcs_gap_001.png
    :alt: BCS pairing opens a gap in the excitation spectrum, Two slices: $\Delta=0$ vs $\Delta=0.5$, $E(k,|\Delta|)$: the gap opening continuously
    :srcset: /api/gallery/condensed/correlated/images/sphx_glr_plot_bcs_gap_001.png
@@ -172,10 +173,31 @@ minimum exactly :math:`|\Delta|`, for every :math:`\Delta` at once.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
+
+Check
+-----
+
+.. GENERATED FROM PYTHON SOURCE LINES 90-95
+
+.. code-block:: Python
+
+    np.testing.assert_allclose(np.linalg.eigvalsh(H_kF), [-0.5, 0.5], atol=1e-12)
+    assert E_normal.min() < 0.02
+    assert abs(E_super.min() - 0.5) < 1e-3
+    # min_k E(k) = |Delta| for every pairing amplitude in the sweep
+    np.testing.assert_allclose(E_surface.min(axis=1)[1:], delta_values[1:], atol=1e-3)
+
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.203 seconds)
+   **Total running time of the script:** (0 minutes 0.194 seconds)
 
 
 .. _sphx_glr_download_api_gallery_condensed_correlated_plot_bcs_gap.py:

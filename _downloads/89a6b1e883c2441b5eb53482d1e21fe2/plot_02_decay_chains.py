@@ -59,3 +59,12 @@ print(" a signature no single-species exponential can produce)")
 anim = animate_decay_chain_bars(t, N, labels=labels)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Bateman: atoms are only transformed, never lost; the daughter peaks at
+# t* = ln(l1/l2) / (l1 - l2).
+assert np.max(np.abs(total - N0)) < 1e-9
+l1, l2 = decay_constants[:2]
+assert abs(t[i_peak] - np.log(l1 / l2) / (l1 - l2)) < t[1] - t[0]
