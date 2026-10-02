@@ -133,3 +133,13 @@ plt.show()
 # displaying it interactively, use e.g.::
 #
 #     anim_detector.save("detector_event.gif", writer="pillow", fps=10)
+
+# %%
+# Check
+# -----
+# The quark pair is produced back to back with E = sqrt(s)/2 each, and the
+# shower conserves four-momentum: its final-state partons add up to the
+# (off-shell) parton that started it.
+assert abs(p_quark.E - sqrt_s / 2) < 1e-12 and np.linalg.norm(p_quark.p_vec + p_antiquark.p_vec) < 1e-12
+total = np.sum([[leaf.four_vector.E, *leaf.four_vector.p_vec] for leaf in leaves], axis=0)
+np.testing.assert_allclose(total, [root_q.four_vector.E, *root_q.four_vector.p_vec], atol=1e-9)

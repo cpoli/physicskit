@@ -67,3 +67,14 @@ axes[1].legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# X = omega_pe^2 / omega^2, Y = omega_ce / omega. Parallel propagation gives
+# n^2 = R = S + D and L = S - D; perpendicular, the O mode n^2 = P and the
+# X mode n^2 = R L / S.
+np.testing.assert_allclose(X, (wpe / omega_scan) ** 2, rtol=1e-12)
+np.testing.assert_allclose(Y, wce / omega_scan, rtol=1e-12)
+np.testing.assert_allclose(sorted(n2[0]), sorted([S + D, S - D]), rtol=1e-9)
+np.testing.assert_allclose(sorted(n2[-1]), sorted([P, (S + D) * (S - D) / S]), rtol=1e-6)

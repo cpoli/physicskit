@@ -96,3 +96,12 @@ ax.legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The gyro-averaged motion drifts at v_E = E x B / B^2, and (starting from
+# rest) the velocity circles v_E with radius |v_E|.
+np.testing.assert_allclose(v_exb, np.cross(E, B) / np.dot(B, B), rtol=1e-12)
+assert np.linalg.norm(v_avg - v_exb) < 1e-3 * np.linalg.norm(v_exb)
+assert np.max(np.abs(np.linalg.norm(vel_hist - v_exb, axis=1) / np.linalg.norm(v_exb) - 1)) < 1e-3

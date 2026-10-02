@@ -230,8 +230,8 @@ def animate_nbody_trajectories(history, interval: int = 30, trail: int = 200, sk
                 n_seg = segments.shape[0]
                 seg_colors = np.tile(base_rgba[b], (n_seg, 1))
                 seg_colors[:, 3] = np.linspace(0.05, 1.0, n_seg)
-                trail_collections[b].set_segments(segments)
-                trail_collections[b].set_color(seg_colors)
+                trail_collections[b].set_segments(list(segments))
+                trail_collections[b].set_color(seg_colors)  # type: ignore[arg-type]  # matplotlib stubs: accepts an (N, 4) RGBA array
             else:
                 trail_collections[b].set_segments([])
             markers[b].set_data([xy[end - 1, b, 0]], [xy[end - 1, b, 1]])

@@ -7,6 +7,9 @@
   and the Penrose process.
 - :mod:`physicskit.relativity.chapters.lensing` -- Einstein rings, multiple images, and
   microlensing magnification.
+- :mod:`physicskit.relativity.chapters.kerr_newman` -- the charged, rotating
+  black hole: horizons, spherical photon orbits, charged-particle geodesics
+  and the shadow.
 - :mod:`physicskit.relativity.chapters.gw_merger` -- binary black hole inspiral chirps,
   ringdown, and Hulse-Taylor-style orbital decay.
 - :mod:`physicskit.relativity.chapters.cosmology` -- FLRW cosmic expansion and redshift.
@@ -19,6 +22,7 @@
 from physicskit.relativity.chapters.cosmology import FLRWCosmology
 from physicskit.relativity.chapters.gw_merger import BinaryMerger
 from physicskit.relativity.chapters.kerr import KerrBlackHole
+from physicskit.relativity.chapters.kerr_newman import KerrNewmanBlackHole
 from physicskit.relativity.chapters.lensing import PointMassLens
 from physicskit.relativity.chapters.neutron_star import NeutronStar
 from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
@@ -27,6 +31,7 @@ __all__ = [
     "BinaryMerger",
     "FLRWCosmology",
     "KerrBlackHole",
+    "KerrNewmanBlackHole",
     "NeutronStar",
     "PointMassLens",
     "SchwarzschildBlackHole",

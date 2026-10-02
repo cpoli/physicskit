@@ -92,3 +92,11 @@ ax2.set_title("Spin-up (= spin-down) near-gap density")
 
 fig.suptitle("Kane-Mele model: a Kramers pair of helical edge states")
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Kramers partners have identical densities, and the near-gap states sit
+# at the disk's edge.
+assert np.max(np.abs(density_up - density_dn)) < 1e-10
+assert weighted_radius > 0.85 * radius

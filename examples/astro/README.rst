@@ -34,6 +34,10 @@ Sections
   dynamical friction.
 - **cosmic_web** -- the Zel'dovich approximation: a uniform particle grid
   collapsing into the filaments, sheets, and nodes of the cosmic web.
+- **hydrodynamics** -- smoothed-particle hydrodynamics: Sod's shock tube
+  with particles that follow the mass.
+- **stellar_atmospheres** -- grey radiative transfer: the Eddington
+  approximation, the exact Hopf solution and solar limb darkening.
 - **stellar_dynamo** -- 2D Boussinesq convective rolls, and the linearized
   alpha-omega mean-field dynamo wave that reproduces the solar butterfly
   diagram.

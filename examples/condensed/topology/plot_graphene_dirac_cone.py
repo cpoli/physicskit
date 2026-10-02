@@ -40,3 +40,12 @@ gap_at_K = bands[len(q) // 2, 1] - bands[len(q) // 2, 0]
 slope = (bands[-1, 1] - bands[len(q) // 2, 1]) / (q[-1] - q[len(q) // 2])
 print(f"gap exactly at K: {gap_at_K:.2e} (closes)")
 print(f"local slope dE/dq away from K: {slope:.4f} (linear, not quadratic)")
+
+# %%
+# Check
+# -----
+# The gap closes at K, and the dispersion is linear: doubling the distance
+# from K doubles the energy.
+assert gap_at_K < 1e-12
+i0 = len(q) // 2
+assert abs(bands[-1, 1] / bands[i0 + (len(q) - 1 - i0) // 2, 1] - 2) < 0.02

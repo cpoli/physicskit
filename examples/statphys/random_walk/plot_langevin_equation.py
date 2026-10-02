@@ -99,3 +99,13 @@ ax3.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Equipartition <v^2> = kT/m, velocity memory e^(-gamma t / m), and the
+# Einstein relation D = kT / gamma from both Green-Kubo and the MSD.
+assert abs(np.mean(vs[late] ** 2) / (kT / m) - 1) < 0.02
+assert abs(fit_tau / tau_v - 1) < 0.1
+assert abs(D_green_kubo / D - 1) < 0.1 and abs(D_fit / D - 1) < 0.1
+assert np.max(np.abs(msd[t > 1] / msd_exact[t > 1] - 1)) < 0.1

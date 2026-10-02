@@ -24,6 +24,11 @@ state with two such turning points, the round-trip quantization condition
 :math:`\int_{x_1}^{x_2}p\,dx=(n+\tfrac12)\pi\hbar` -- is the
 one-dimensional Einstein-Brillouin-Keller (EBK) rule implemented by
 :func:`bohr_sommerfeld_energies`.
+
+For the radial motion of a central-force problem the same rule fails
+unless the centrifugal term is changed: :func:`langer_corrected_wkb`
+applies Langer's (1937) replacement :math:`l(l+1)\to(l+\tfrac12)^2`,
+which makes radial WKB give the exact hydrogen spectrum.
 """
 
 from __future__ import annotations
@@ -40,6 +45,7 @@ __all__ = [
     "wkb_action",
     "bohr_sommerfeld_energies",
     "wkb_wavefunction",
+    "langer_corrected_wkb",
 ]
 
 
@@ -306,3 +312,125 @@ def wkb_wavefunction(x: np.ndarray, E: float, V, m: float = 1.0, hbar: float = 1
     if norm > 0:
         psi = psi / norm
     return psi
+
+
+def langer_corrected_wkb(
+    V,
+    l: int,
+    m: float,
+    r_max: float,
+    n_max: int,
+    hbar: float = 1.0,
+    langer: bool = True,
+    E_max: float | None = None,
+    r_min: float = 1e-8,
+    n_search: int = 4000,
+) -> np.ndarray:
+    r"""Radial WKB bound-state energies, with or without the Langer correction.
+
+    The radial Schrodinger equation for :math:`u(r)=rR(r)` is a 1D problem
+    on :math:`r>0` with effective potential
+    :math:`V(r)+\hbar^2 l(l+1)/(2mr^2)`. Applying the WKB rule
+    :math:`\int_{r_1}^{r_2}p\,dr=(n_r+\tfrac12)\pi\hbar` to it directly
+    gives wrong energies, because the WKB phase near :math:`r=0` is not
+    the phase of the true solution :math:`u\sim r^{l+1}`. Langer (1937)
+    showed that the substitution :math:`r=e^x` turns the radial problem
+    into one on the whole line, where WKB applies cleanly, and that the
+    result is the same as using
+
+    .. math::
+
+       V_{\rm eff}(r) = V(r) + \frac{\hbar^2(l+\tfrac12)^2}{2mr^2}
+
+    in the ordinary WKB rule. With this correction WKB gives the exact
+    hydrogen levels :math:`E=-mk^2/(2\hbar^2(n_r+l+1)^2)` for
+    :math:`V=-k/r`, and the exact 3D harmonic-oscillator levels
+    :math:`\hbar\omega(2n_r+l+\tfrac32)`.
+
+    Parameters
+    ----------
+    V : callable
+        Radial potential ``V(r)``, vectorized over a NumPy array.
+    l : int
+        Orbital angular momentum quantum number.
+    m : float
+        Particle mass.
+    r_max : float
+        Outer edge of the radial domain; every outer turning point must
+        lie inside it.
+    n_max : int
+        Number of radial levels to compute (:math:`n_r=0,\dots,n_{max}-1`).
+    hbar : float, default=1.0
+        Value of :math:`\hbar` to use.
+    langer : bool, default=True
+        Use :math:`(l+\tfrac12)^2`; if False, use the uncorrected
+        :math:`l(l+1)`.
+    E_max : float, optional
+        Upper bracket for the root search. Defaults to
+        :math:`V_{\rm eff}(r_{max})`, the highest energy whose outer
+        turning point is still inside the domain.
+    r_min : float, default=1e-8
+        Inner edge of the radial domain. If :math:`V_{\rm eff}` has no
+        inner turning point (:math:`l=0` without the Langer correction,
+        for a Coulomb potential), the action integral starts here.
+    n_search : int, default=4000
+        Number of log-spaced grid points used to bracket turning points.
+
+    Returns
+    -------
+    ndarray, shape (n_max,)
+        Energies for :math:`n_r=0,\dots,n_{max}-1`, ascending.
+
+    Raises
+    ------
+    ValueError
+        If a level lies above ``E_max`` (increase ``r_max``).
+
+    See Also
+    --------
+    bohr_sommerfeld_energies : The same rule for a potential on the whole line.
+
+    References
+    ----------
+    R. E. Langer, "On the Connection Formulas and the Solutions of the
+    Wave Equation," Phys. Rev. **51**, 669-676 (1937).
+
+    Examples
+    --------
+    With the correction, WKB reproduces the hydrogen 2p, 3p, 4p levels
+    :math:`-1/(2n^2)` exactly; without it, it does not:
+
+    >>> import numpy as np
+    >>> V = lambda r: -1.0 / r
+    >>> np.round(langer_corrected_wkb(V, l=1, m=1.0, r_max=200.0, n_max=3), 6)
+    array([-0.125   , -0.055556, -0.03125 ])
+    >>> np.round(langer_corrected_wkb(V, l=1, m=1.0, r_max=200.0, n_max=3, langer=False), 4)
+    array([-0.1365, -0.0589, -0.0326])
+    """
+    centrifugal = (l + 0.5) ** 2 if langer else l * (l + 1.0)
+
+    def V_eff(r):
+        return V(r) + hbar**2 * centrifugal / (2.0 * m * r**2)
+
+    rs = np.geomspace(r_min, r_max, n_search)
+    V_grid = V_eff(rs)
+    E_lo = float(np.min(V_grid))
+    E_hi = float(V_grid[-1]) if E_max is None else float(E_max)
+
+    def action(E):
+        f = E - V_eff(rs)
+        roots = [brentq(lambda r: E - V_eff(r), rs[i], rs[i + 1]) for i in np.nonzero(f[:-1] * f[1:] < 0)[0]]
+        if not roots and f[0] < 0:
+            return 0.0
+        r1 = r_min if f[0] >= 0 else roots[0]
+        r2 = r_max if f[-1] >= 0 else roots[-1]
+        S, _ = quad(lambda r: np.sqrt(max(2.0 * m * (E - V_eff(r)), 0.0)), r1, r2, limit=400)
+        return S
+
+    energies = np.empty(n_max)
+    for n in range(n_max):
+        target = (n + 0.5) * np.pi * hbar
+        if action(E_hi) < target:
+            raise ValueError(f"level n_r={n} lies above E_max={E_hi:.6g}; increase r_max.")
+        energies[n] = brentq(lambda E: action(E) - target, E_lo + 1e-12 * abs(E_lo), E_hi, xtol=1e-13, rtol=1e-12)
+    return energies

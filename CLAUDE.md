@@ -30,8 +30,8 @@ MPLBACKEND=Agg pytest --doctest-modules physicskit \
     --ignore-glob="*/tests/*" \
     --ignore=physicskit/chaos/visualizers/viewer3d.py
 
-# type check (advisory only in CI, not blocking -- see below)
-mypy physicskit
+# type check (blocking in CI -- see below)
+mypy
 
 # docs (re-executes examples/*/plot_*.py via sphinx-gallery -- the only way
 # to catch a broken example; do this if you touch docs/ or examples/)
@@ -39,7 +39,7 @@ pip install -e ".[docs]"
 cd docs && make html
 ```
 
-All of lint, unit tests, doctests, and (advisory) mypy run in CI (`.github/workflows/ci.yml`) across Python 3.10-3.12 on Linux and macOS.
+All of lint, unit tests, doctests, and mypy run in CI (`.github/workflows/ci.yml`); tests and doctests run across Python 3.10-3.14 on Linux and macOS.
 
 ## Architecture
 
@@ -61,7 +61,8 @@ Where subpackages share base classes (`classical`, and similarly-shaped subpacka
 - Every public function/class needs a NumPy-style docstring (`Parameters`, `Returns`, and an `Examples` section with a runnable doctest where it adds real value). Doctests are checked in CI — an example that doesn't actually execute correctly is worse than no example.
 - New physics should cite its source formula (docstring or comment) so it can be independently verified.
 - Tests prefer closed-form/analytically-verifiable assertions (`pytest.approx` against a known formula) over snapshot-testing plot output; a visualizer needs only a smoke test (right return type/shape; for animations, that `anim.save()` to a temp file succeeds).
-- `mypy` is configured but not yet fully clean (mostly matplotlib/numpy stub gaps around animation objects and array-typed arguments) and runs advisory/non-blocking in CI. New code should type-check where practical; fixing unrelated pre-existing errors is not required.
+- `mypy` is clean on the whole package and blocking in CI, with `check_untyped_defs` on for library code (tests are checked at the signature level only). New code must type-check; for a wrong NumPy/matplotlib stub, use a narrow `# type: ignore[code]` with a reason.
+- Every gallery example ends with a `# %%` / `# Check` cell of `assert`s against the closed form or known value it illustrates (see CONTRIBUTING.md); a new or changed example keeps one, and the docs build fails if an assert does.
 - `docs/source/history/` documents each subpackage's foundational physics breakthroughs linked to the corresponding implementation — worth checking when adding a major new model to understand the expected historical framing.
 - Every breakthrough in `docs/source/history/` links to one or more gallery examples via `.. minigallery::`, and no example is linked from two breakthroughs. Each example's title and content must show that breakthrough's subject, so a reader can tell at a glance why it illustrates that entry. Split an example that covers several breakthroughs into focused ones, one per breakthrough, and delete the combined file. When the match is unclear, change the example, not the breakthrough's title or text.
 

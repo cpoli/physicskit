@@ -83,3 +83,12 @@ fig.tight_layout()
 
 left_weight, right_weight = density[: len(density) // 2].sum(), density[len(density) // 2 :].sum()
 print(f"zero-mode weight -- left half: {left_weight:.3f}, right half: {right_weight:.3f}")
+
+# %%
+# Check
+# -----
+assert abs(abs(zak_topological) - np.pi) < 1e-8
+assert abs(zak_trivial) < 1e-8
+# the zero modes split the weight evenly between the two ends
+assert abs(left_weight - 1) < 1e-3 and abs(right_weight - 1) < 1e-3
+assert np.max(np.abs(spectrum[edge_idx])) < 1e-3

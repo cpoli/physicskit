@@ -51,3 +51,9 @@ Sections
 - **open_systems** -- a qubit coupled to its environment: Lindblad
   :math:`T_1`/:math:`T_2` decay and the quantum-trajectory (Monte Carlo
   wavefunction) unravelling of the same dynamics.
+- **quantum_computing** -- a state-vector circuit simulator: the
+  Deutsch-Jozsa algorithm, the quantum Fourier transform and Shor's period
+  finding, and Grover search.
+- **tensor_networks** -- matrix product states and TEBD: a quench checked
+  against exact time evolution, and the ground state of a 60-site
+  Heisenberg chain.

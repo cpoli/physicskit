@@ -18,5 +18,11 @@ physicskit.optics
 .. automodule:: physicskit.optics.quantum_optics
    :members:
 
+.. automodule:: physicskit.optics.thin_films
+   :members:
+
+.. automodule:: physicskit.optics.nonlinear
+   :members:
+
 .. automodule:: physicskit.optics.visualizers
    :members:

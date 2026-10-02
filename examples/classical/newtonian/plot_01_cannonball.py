@@ -101,3 +101,13 @@ ax.set_aspect("equal")
 # generalized from uniform gravity down to an inverse-square field.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Range v^2 sin(2 theta) / g, peak height v^2 sin^2(theta) / 2g; Yoshida4 is
+# exact for this quadratic Hamiltonian; drag only removes energy.
+assert abs(rng - 20.0**2 / 9.81) < 1e-9 and abs(h_max - 20.0**2 * 0.5 / (2 * 9.81)) < 1e-9
+assert np.max(np.abs(result.q[:, 1] - y_an)) < 1e-9
+assert abs(res_vac.energy[-1] - res_vac.energy[0]) < 1e-9 * res_vac.energy[0]
+assert np.all(np.diff(res_drag.energy) <= 1e-12)

@@ -3,7 +3,8 @@
 This module holds the hot inner loops shared by :mod:`physicskit.statphys.chapters.ising_lattice`:
 single-spin-flip Metropolis-Hastings sweeps for the Ising and Potts models, a
 continuous-angle Metropolis sweep for the XY model, and the Wolff single-cluster
-algorithm for the Ising model. Functions are JIT-compiled with :func:`numba.njit`
+algorithm, the Swendsen-Wang multi-cluster algorithm and Wang-Landau
+flat-histogram sampling for the Ising model. Functions are JIT-compiled with :func:`numba.njit`
 so that a full lattice sweep of :math:`L \\times L` sites costs a handful of
 microseconds rather than a Python-loop pass.
 
@@ -27,6 +28,8 @@ __all__ = [
     "seed_numba_random",
     "sk_total_energy",
     "spin_glass_total_energy",
+    "swendsen_wang_step_ising",
+    "wang_landau_sweeps_ising",
     "wolff_step_ising",
     "xy_plaquette_vorticity",
     "xy_total_energy",
@@ -156,6 +159,119 @@ def wolff_step_ising(spins, beta, J):
                 top += 1
                 cluster_size += 1
     return cluster_size
+
+
+@njit(cache=True)
+def _find_root(parent, a):
+    while parent[a] != a:
+        parent[a] = parent[parent[a]]
+        a = parent[a]
+    return a
+
+
+@njit(cache=True)
+def swendsen_wang_step_ising(spins, beta, J):
+    """Perform one Swendsen-Wang multi-cluster update of an Ising lattice, in place.
+
+    Every nearest-neighbor bond between two aligned spins is activated
+    independently with probability :math:`p = 1 - e^{-2\\beta J}`; the
+    connected components of the activated bonds (the Fortuin-Kasteleyn
+    clusters) are then each flipped independently with probability 1/2
+    (Swendsen and Wang, Phys. Rev. Lett. 58, 86 (1987)). Unlike Wolff's
+    single-cluster move, one update partitions and resamples the *whole*
+    lattice.
+
+    Parameters
+    ----------
+    spins : ndarray of shape (L, L), dtype int64
+        Spin configuration with values in ``{-1, +1}``. Modified in place.
+    beta : float
+        Inverse temperature.
+    J : float
+        Ferromagnetic coupling constant (should be positive).
+
+    Returns
+    -------
+    int
+        Number of Fortuin-Kasteleyn clusters the lattice was partitioned into.
+    """
+    L = spins.shape[0]
+    n = L * L
+    p_bond = 1.0 - np.exp(-2.0 * beta * J)
+    parent = np.arange(n)
+    for i in range(L):
+        for j in range(L):
+            a = i * L + j
+            s = spins[i, j]
+            for b_i, b_j in (((i + 1) % L, j), (i, (j + 1) % L)):
+                if spins[b_i, b_j] == s and np.random.random() < p_bond:
+                    ra = _find_root(parent, a)
+                    rb = _find_root(parent, b_i * L + b_j)
+                    if ra != rb:
+                        parent[rb] = ra
+    flip = np.zeros(n, dtype=np.int8)
+    n_clusters = 0
+    for a in range(n):
+        if _find_root(parent, a) == a:
+            n_clusters += 1
+            flip[a] = 1 if np.random.random() < 0.5 else -1
+    for a in range(n):
+        if flip[_find_root(parent, a)] == 1:
+            spins[a // L, a % L] = -spins[a // L, a % L]
+    return n_clusters
+
+
+@njit(cache=True)
+def wang_landau_sweeps_ising(spins, log_g, histogram, log_f, n_sweeps, J):
+    """Run Wang-Landau random-walk sweeps in energy space at a fixed modification factor.
+
+    A single-spin flip from energy :math:`E_1` to :math:`E_2` is accepted
+    with probability :math:`\\min(1, g(E_1)/g(E_2))`, and after every
+    proposal the current level's estimate is updated, :math:`\\ln g(E)
+    \\leftarrow \\ln g(E) + \\ln f`, and its histogram incremented (Wang and
+    Landau, Phys. Rev. Lett. 86, 2050 (2001)). The walk is therefore pushed
+    away from levels already visited, and converges to a flat histogram
+    when :math:`g` approaches the true density of states.
+
+    Parameters
+    ----------
+    spins : ndarray of shape (L, L), dtype int64
+        Spin configuration with values in ``{-1, +1}``. Modified in place.
+    log_g : ndarray of shape (L*L + 1,)
+        Running estimate of :math:`\\ln g(E)`, indexed by :math:`k = (E +
+        2JN)/(4J)`. Modified in place.
+    histogram : ndarray of shape (L*L + 1,), dtype int64
+        Visit histogram over the same energy bins. Modified in place.
+    log_f : float
+        Current modification factor :math:`\\ln f`.
+    n_sweeps : int
+        Number of sweeps (:math:`L^2` proposals each).
+    J : float
+        Ferromagnetic coupling constant.
+
+    Returns
+    -------
+    int
+        Energy-bin index of the final configuration.
+    """
+    L = spins.shape[0]
+    n = L * L
+    E = 0.0
+    for i in range(L):
+        for j in range(L):
+            E -= J * spins[i, j] * (spins[(i + 1) % L, j] + spins[i, (j + 1) % L])
+    k = int(round((E + 2.0 * J * n) / (4.0 * J)))
+    for _ in range(n_sweeps * n):
+        i = np.random.randint(0, L)
+        j = np.random.randint(0, L)
+        dE = 2.0 * J * spins[i, j] * _ising_neighbor_sum(spins, i, j, L)
+        k_new = k + int(round(dE / (4.0 * J)))
+        if np.random.random() < np.exp(log_g[k] - log_g[k_new]):
+            spins[i, j] = -spins[i, j]
+            k = k_new
+        log_g[k] += log_f
+        histogram[k] += 1
+    return k
 
 
 @njit(cache=True)

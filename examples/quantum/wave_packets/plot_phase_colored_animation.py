@@ -71,3 +71,14 @@ ax2.set_ylabel("t")
 ax2.set_title(r"Space-time $|\psi(x,t)|^2$: tunneling back and forth between wells")
 fig2.colorbar(im, ax=ax2, label=r"$|\psi(x,t)|^2$")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The packet starts in the left well, is in the right one half a tunneling
+# period later, and is back after a full period.
+dx = dw.x[1] - dw.x[0]
+P_left = np.array([np.sum(np.abs(f[dw.x < 0]) ** 2) * dx for f in frames])
+P_at = lambda t: P_left[np.argmin(np.abs(times - t))]  # noqa: E731
+assert P_at(0) > 0.95 and P_at(result.tunneling_period / 2) < 0.05 and P_at(result.tunneling_period) > 0.95
+assert abs(solver.norm(frames[-1]) - 1) < 1e-8

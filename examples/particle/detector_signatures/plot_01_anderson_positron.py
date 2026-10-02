@@ -96,3 +96,12 @@ print(f"as a proton:   T = {T_proton * 1e3:.2f} MeV, range about {range_proton_c
 print(f"as an e-mass:  T = {T_light * 1e3:.1f} MeV, beta = {p_above / np.hypot(p_above, m_e):.4f} -- minimum ionizing, long track")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# r = p / (0.3 B): the track curves less below the plate, so the particle came
+# from below and lost 40 MeV in the lead; the curvature then says positive
+# charge, and a proton of that momentum would stop within millimetres.
+assert abs(p_below / B_eff - 0.14) < 1e-3 and abs(p_above / B_eff - 0.0511) < 1e-3
+assert range_proton_cm * 10 < 5 < 50 and p_above / np.hypot(p_above, m_e) > 0.999

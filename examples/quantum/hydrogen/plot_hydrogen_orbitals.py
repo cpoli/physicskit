@@ -88,3 +88,17 @@ beat_period = 2 * np.pi / abs(orb_b.energy - orb_a.energy)
 times_beat = np.linspace(0, beat_period, 24)
 
 fig_beat = animate_orbital_beating(orb_a, orb_b, times_beat, n_points=35)
+
+# %%
+# Check
+# -----
+# E_n = -1/(2n^2) hartree; every orbital is normalized; the most probable
+# radius of the nodeless l = n - 1 orbitals is n^2 Bohr radii.
+for n, l, m in [(1, 0, 0), (2, 0, 0), (2, 1, 0), (3, 2, 1)]:
+    orb = HydrogenOrbital(n, l, m)
+    assert abs(orb.energy + 1 / (2 * n**2)) < 1e-12
+    assert abs(orb.check_normalization() - 1) < 1e-4
+    if l == n - 1:
+        assert abs(orb.most_probable_radius() - n**2) < 0.02
+# the 2s maximum: r = 3 + sqrt(5)
+assert abs(HydrogenOrbital(2, 0, 0).most_probable_radius() - (3 + np.sqrt(5))) < 0.02

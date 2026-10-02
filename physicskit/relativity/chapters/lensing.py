@@ -159,6 +159,14 @@ def exact_deflection_angle(bh, impact_parameter, r_far=2.0e5, dtau=None, n_steps
     photon sphere (where the deflection formally diverges as
     :math:`b \\to b_c = 3\\sqrt{3}M`).
 
+    The ray starts and ends at finite radii :math:`r_0, r_1`, where it has
+    not yet reached its asymptotic direction, so the swept angle
+    :math:`\\Delta\\phi` is corrected by the flat-space angles still to go,
+    :math:`\\delta = \\Delta\\phi - \\pi + \\arcsin(b/r_0) + \\arcsin(b/r_1)`;
+    the remaining error is :math:`O(Mb/r^2)`. Without this correction the
+    result would be low by about :math:`1.5\\,b/r_0`, larger than the
+    :math:`(M/b)^2` term at large :math:`b`.
+
     Parameters
     ----------
     bh : SchwarzschildBlackHole
@@ -193,4 +201,5 @@ def exact_deflection_angle(bh, impact_parameter, r_far=2.0e5, dtau=None, n_steps
         dtau = 3.0 * r_far / n_steps
     y0 = bh.null_geodesic_initial_state(r0=r_far, impact_parameter=impact_parameter, ingoing=True)
     traj = bh.integrate_geodesic(y0, dtau=dtau, n_steps=n_steps)
-    return (traj["phi"][-1] - traj["phi"][0]) - np.pi
+    swept = traj["phi"][-1] - traj["phi"][0]
+    return swept - np.pi + np.arcsin(impact_parameter / traj["r"][0]) + np.arcsin(impact_parameter / traj["r"][-1])

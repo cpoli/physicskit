@@ -124,7 +124,7 @@ class Percolation2D:
         self.p = p
         self.mode = mode
         self._rng = np.random.default_rng(seed)
-        self.labels = None
+        self.labels: np.ndarray
         self.generate()
 
     @property

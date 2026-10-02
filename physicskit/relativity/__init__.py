@@ -6,10 +6,12 @@ interactive, computational Python framework, in geometrized units
 (:math:`G = c = 1`; see :mod:`physicskit.relativity.utils.constants`):
 
 - **Black hole physics** (:mod:`physicskit.relativity.chapters.schwarzschild`,
-  :mod:`physicskit.relativity.chapters.kerr`): timelike orbits, perihelion precession, the
+  :mod:`physicskit.relativity.chapters.kerr`,
+  :mod:`physicskit.relativity.chapters.kerr_newman`): timelike orbits, perihelion precession, the
   innermost stable circular orbit (ISCO), the photon sphere, light
   deflection and the Shapiro delay, disk redshift, tidal forces, frame
-  dragging, the ergosphere, and the Penrose process.
+  dragging, the ergosphere, the Penrose process, and the geodesics and
+  shadow of the charged, rotating Kerr-Newman hole.
 - **Spacetime geometry** (:mod:`physicskit.relativity.core.tensors`): a numerical
   differential geometry engine computing Christoffel symbols and curvature
   tensors for arbitrary metrics (Schwarzschild, Kerr, Reissner-Nordstrom,
@@ -43,6 +45,7 @@ from physicskit.relativity.chapters import (
     BinaryMerger,
     FLRWCosmology,
     KerrBlackHole,
+    KerrNewmanBlackHole,
     NeutronStar,
     PointMassLens,
     SchwarzschildBlackHole,
@@ -54,6 +57,7 @@ __all__ = [
     "BinaryMerger",
     "FLRWCosmology",
     "KerrBlackHole",
+    "KerrNewmanBlackHole",
     "NeutronStar",
     "PointMassLens",
     "SchwarzschildBlackHole",

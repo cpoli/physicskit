@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Optional
 
 import numpy as np
 
@@ -161,7 +161,7 @@ class ODESystem(DynamicalSystem):
     and angular-momentum-squared invariants).
     """
 
-    _deriv_njit = None
+    _deriv_njit: Any = None
 
     def derivatives(self, t: float, state: np.ndarray) -> np.ndarray:
         return self._deriv_njit(t, state)
@@ -226,8 +226,8 @@ class HamiltonianSystem(DynamicalSystem):
     mass_inv = 1.0
     """float or ndarray: 1/m per coordinate; ``dq/dt = mass_inv * p``."""
 
-    _force_njit = None
-    _deriv_njit = None
+    _force_njit: Any = None
+    _deriv_njit: Any = None
 
     def __init__(self, q0, p0):
         q0 = np.asarray(q0, dtype=np.float64)
@@ -357,8 +357,8 @@ class HamiltonianSystem(DynamicalSystem):
         elif method in ("implicit_midpoint", "rk4"):
             y0 = np.concatenate([q0, p0])
             deriv = self._ensure_deriv_njit()
-            integ = intg.implicit_midpoint_integrate if method == "implicit_midpoint" else intg.rk4_integrate
-            ts, ys = integ(deriv, y0, t0, n_steps, dt)
+            ode_integ = intg.implicit_midpoint_integrate if method == "implicit_midpoint" else intg.rk4_integrate
+            ts, ys = ode_integ(deriv, y0, t0, n_steps, dt)
             qs, ps = ys[:, : self.ndof], ys[:, self.ndof :]
         else:
             raise ValueError(f"Unknown method '{method}' for HamiltonianSystem")
@@ -393,11 +393,11 @@ class LagrangianSystem(DynamicalSystem):
     ndof: int = 0
     """int: Number of degrees of freedom, inferred from ``q0``."""
 
-    _accel_njit = None
-    _momentum_njit = None
-    _canonical_deriv_njit = None  # (t, [q,p]) -> [dq, dp] = [dH/dp, -dH/dq]
-    _velocity_njit = None  # (q, p) -> qdot = dH/dp, used to report qdot after integration
-    _deriv_njit = None  # (t, [q,qdot]) -> [qdot, qddot], used only by method='rk4'
+    _accel_njit: Any = None
+    _momentum_njit: Any = None
+    _canonical_deriv_njit: Any = None  # (t, [q,p]) -> [dq, dp] = [dH/dp, -dH/dq]
+    _velocity_njit: Any = None  # (q, p) -> qdot = dH/dp, used to report qdot after integration
+    _deriv_njit: Any = None  # (t, [q,qdot]) -> [qdot, qddot], used only by method='rk4'
 
     def __init__(self, q0, qdot0):
         q0 = np.asarray(q0, dtype=np.float64)

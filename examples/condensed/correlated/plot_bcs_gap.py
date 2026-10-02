@@ -83,3 +83,12 @@ fig.tight_layout()
 print(f"normal-state minimum energy: {E_normal.min():.4f} (gapless)")
 print(f"BCS quasiparticle minimum energy: {E_super.min():.4f} (== |Delta| = 0.5)")
 print(f"min(E) vs Delta matches |Delta| to: {np.max(np.abs(E_surface.min(axis=1) - delta_values)):.2e}")
+
+# %%
+# Check
+# -----
+np.testing.assert_allclose(np.linalg.eigvalsh(H_kF), [-0.5, 0.5], atol=1e-12)
+assert E_normal.min() < 0.02
+assert abs(E_super.min() - 0.5) < 1e-3
+# min_k E(k) = |Delta| for every pairing amplitude in the sweep
+np.testing.assert_allclose(E_surface.min(axis=1)[1:], delta_values[1:], atol=1e-3)

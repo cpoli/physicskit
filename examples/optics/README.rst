@@ -29,6 +29,11 @@ Sections
 - **ray_optics** -- paraxial ABCD matrix optics: Gauss's composite-system
   matrix product, the two-mirror resonator stability behind Maiman's ruby
   laser cavity, and Kao's graded-index (GRIN) fiber guiding.
+- **interference** -- multiple-beam interference in layered media: the
+  Fabry-Pérot interferometer, thin-film antireflection coatings, and the
+  band gap of a 1D photonic crystal.
+- **nonlinear_optics** -- second-harmonic generation: the coherence
+  length, quasi-phase matching and birefringent phase matching.
 - **lasers** -- inside the gain medium: Schawlow and Townes's lasing
   threshold, gain clamping and relaxation oscillations from the rate
   equations, and Haken's Maxwell-Bloch laser with its Lorenz chaos.

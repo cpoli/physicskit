@@ -64,15 +64,18 @@ print(f"Mean avalanche size: {sizes.mean():.2f}, largest avalanche: {sizes.max()
 # %%
 # Finite-size scaling: the cutoff grows with L
 # ------------------------------------------------------------
-# The straight-line power law above cannot extend forever: a finite grid
-# caps the largest possible avalanche near its own area, so the
-# distribution actually has a size-dependent cutoff around :math:`s_{\max}
-# \sim L^{D}`. Running the same self-organizing dynamics at several grid
-# sizes and overlaying their avalanche-size distributions shows the
-# straight-line region growing systematically further to the right (and the
-# largest observed avalanche growing correspondingly) as L increases -- the
-# same finite-size-scaling logic used throughout this gallery for thermal
-# critical points, applied here to a self-organized one.
+# The straight-line power law above cannot extend forever: grains leave
+# through the open edges, so a finite grid caps the largest avalanche and
+# the distribution has a size-dependent cutoff :math:`s_{\max} \sim
+# L^{D}`. The size counts topplings, and a site can topple many times in
+# one avalanche, so :math:`D \approx 2.75` (Lubeck and Usadel 1997)
+# exceeds the dimension 2 of the avalanche's area. Running the same
+# self-organizing dynamics at several grid sizes and overlaying their
+# avalanche-size distributions shows the straight-line region growing
+# systematically further to the right (and the largest observed avalanche
+# growing correspondingly) as L increases -- the same finite-size-scaling
+# logic used throughout this gallery for thermal critical points, applied
+# here to a self-organized one.
 L_values = [20, 40, 60, 90]
 max_sizes = []
 fig, ax = plt.subplots(figsize=(6.5, 5))
@@ -92,4 +95,11 @@ plt.show()
 
 cutoff_exponent, _ = power_law_exponent(L_values, max_sizes)
 print(f"Largest avalanche by L: {dict(zip(L_values, max_sizes))}")
-print(f"Fitted cutoff-growth exponent (max size ~ L^D): D = {cutoff_exponent:.2f} (open-boundary BTW theory: D=2)")
+print(f"Fitted cutoff-growth exponent (max size ~ L^D): D = {cutoff_exponent:.2f} (BTW toppling-size cutoff: D = 2.75)")
+
+# %%
+# Check
+# -----
+# The toppling-size cutoff grows as L^D with D = 2.75, faster than the area.
+assert abs(cutoff_exponent - 2.75) < 0.3
+assert max_sizes[-1] > L_values[-1] ** 2

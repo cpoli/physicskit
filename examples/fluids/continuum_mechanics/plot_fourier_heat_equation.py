@@ -123,3 +123,16 @@ axes[2].legend(fontsize=8)
 fig.tight_layout()
 print(f"1D peak at t = 20: {peak1[-1]:.4f}, closed form {gaussian_heat_solution(np.array([0.0]), 20.0, 1.0, 1.0)[0]:.4f}")
 plt.show()
+
+# %%
+# Check
+# -----
+# Crank-Nicolson reproduces the Fourier-series solution; the explicit scheme
+# refuses dt above dx^2 / 2 alpha; a Gaussian hot spot's peak falls as
+# (sigma0 / sigma)^d with sigma^2 = sigma0^2 + 2 alpha t.
+for t_k in (0.5, 4.0):
+    k = np.argmin(np.abs(times - t_k))
+    assert np.max(np.abs(frames[k] - fourier_series(times[k]))) < 1e-4
+assert np.max(np.abs(ex[-1] - cn[-1])) < 1e-3
+np.testing.assert_allclose(peak1, (1 + 2 * t_g) ** -0.5, rtol=1e-6)
+np.testing.assert_allclose(peak2, (1 + 2 * t_g) ** -1.0, rtol=1e-6)

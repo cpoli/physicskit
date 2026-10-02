@@ -64,3 +64,11 @@ axes[1].set_title("The reconnection-rate gap, made explicit")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Petschek: v_in / v_A = pi / (8 ln S), about 10^4 times Sweet-Parker's rate
+# at solar-flare S ~ 1e12.
+np.testing.assert_allclose(pet_rate, np.pi / (8 * np.log(S_vals)), rtol=1e-12)
+assert 1e4 < ratio[s_flare_idx] < 2e4

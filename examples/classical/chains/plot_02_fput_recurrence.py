@@ -80,3 +80,11 @@ fig2.suptitle("Modal energy distribution: mid-cycle vs. after the recurrence")
 fig2.tight_layout(rect=[0, 0, 1, 0.92])
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Fermi-Pasta-Ulam-Tsingou: instead of thermalizing, the energy leaves mode 1
+# and comes back almost entirely (recurrence), at conserved total energy.
+assert drift < 1e-9
+assert mode1_fraction[midpoint_idx] < 0.7 and mode1_fraction[-1] > 0.95

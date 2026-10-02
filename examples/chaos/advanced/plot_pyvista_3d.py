@@ -27,6 +27,7 @@ the same attractor.
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Rossler
 
@@ -90,3 +91,12 @@ fig.suptitle("Rossler attractor: projected (mplot3d) vs. real (PyVista) 3D depth
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Rossler attractor is a bounded band in x, y with occasional large
+# excursions in z (the fold that makes it chaotic).
+late = states[2000:]
+assert np.all(np.abs(late[:, :2]) < 15) and late[:, 2].min() > 0
+assert late[:, 2].max() > 10 and np.median(late[:, 2]) < 1

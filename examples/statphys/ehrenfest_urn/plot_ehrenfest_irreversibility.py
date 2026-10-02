@@ -92,3 +92,13 @@ print(
     f"(std over last 20% of run, N={N_values[-1]}): "
     f"{np.std(scan_history['n_left'][int(0.8 * n_steps) :] / N):.4f}"
 )
+
+# %%
+# Check
+# -----
+# The urn relaxes to the maximum-entropy state N/2 per box, and the late-time
+# fluctuations of n_left/N are binomial, sqrt(N/4)/N = 1/(2 sqrt(N)).
+S_max = EhrenfestUrn(n_balls=500, n_left_init=250).entropy()
+assert history["entropy"][0] == 0 and history["entropy"][-1] > 0.99 * S_max
+late_std = np.std(scan_history["n_left"][int(0.8 * n_steps) :] / N)
+assert abs(late_std / (1 / (2 * np.sqrt(N))) - 1) < 0.3

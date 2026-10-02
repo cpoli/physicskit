@@ -28,6 +28,7 @@ horizons :math:`r=2M`).
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
 from physicskit.relativity.visualizers.spacetime_3d import plot_flamm_paraboloid
@@ -43,3 +44,16 @@ for i, M in enumerate([0.5, 1.0, 2.0]):
     ax.set_title(f"M={M} (horizon at r={bh.horizon_radius}M)")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Flamm's paraboloid z = sqrt(8M (r - 2M)) embeds the t = const equatorial
+# slice: its arc length from the throat equals the proper radial distance
+# integral of dr / sqrt(1 - 2M/r) = sqrt(r (r - 2M)) + 2M ln(sqrt(r/2M) + sqrt(r/2M - 1)).
+z_flamm = np.linspace(0, np.sqrt(8 * (15.0 - 2)), 20001)
+r_flamm = 2 + z_flamm**2 / 8
+arc = np.sum(np.hypot(np.diff(r_flamm), np.diff(z_flamm)))
+proper = np.sqrt(15.0 * 13.0) + 2 * np.log(np.sqrt(15.0 / 2) + np.sqrt(15.0 / 2 - 1))
+assert abs(arc / proper - 1) < 1e-6
+assert SchwarzschildBlackHole(M=2.0).horizon_radius == 4.0

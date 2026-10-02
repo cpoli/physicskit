@@ -101,3 +101,15 @@ print(f"\nseparation grows from {separation[growth_mask][0]:.2e} to {separation[
 print(f"fitted exponential growth rate (Lyapunov-like exponent): {slope:.3f} per unit time")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Lagrange triangle is unstable when 27 (m1 m2 + m2 m3 + m3 m1) > M^2
+# (Routh); perturbations then grow at Re(lambda), from
+# lambda^4 + Omega^2 lambda^2 + (27/4) beta Omega^4 = 0, beta = sum m_i m_j / M^2.
+beta_r = (masses[0] * masses[1] + masses[1] * masses[2] + masses[2] * masses[0]) / M_tot**2
+assert 27 * beta_r > 1
+lam_sq = Omega**2 * (-1 + np.sqrt(1 - 27 * beta_r + 0j)) / 2
+assert abs(slope / np.sqrt(lam_sq).real - 1) < 0.05
+assert abs((E1 - E0) / E0) < 1e-5

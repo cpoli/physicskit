@@ -76,3 +76,14 @@ ax2.set_title("Logistic map bifurcation diagram")
 ax2.set_ylim(0.0, 1.0)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The period-2 orbit at r = 3.2 is x = (r + 1 +- sqrt((r - 3)(r + 1))) / 2r;
+# at r = 3.9 the orbit is chaotic (no period up to 64).
+r2 = 3.2
+expected = (r2 + 1 + np.array([-1, 1]) * np.sqrt((r2 - 3) * (r2 + 1))) / (2 * r2)
+np.testing.assert_allclose(np.unique(np.round(sampler(r2), 6)), expected, atol=1e-6)
+late = traj[100:, 0]
+assert not any(np.allclose(late[p:], late[:-p], atol=1e-6) for p in range(1, 65))

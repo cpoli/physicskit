@@ -106,3 +106,11 @@ ax2.set_title("Neutron-star inspiral: the last two seconds")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Earth-Sun system radiates ~200 W; the inspiral frequency follows
+# f ~ (t_c - t)^(-3/8).
+assert 150 < P_earth < 250
+assert abs(slope + 3 / 8) < 1e-3

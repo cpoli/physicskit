@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 __all__ = ["interactive_so3_momentum_sphere", "interactive_orbit"]
 
 
-def interactive_so3_momentum_sphere(omega_trajectory: np.ndarray, I1: float, I2: float, I3: float, n_grid: int = 40, title: str = None) -> go.Figure:
+def interactive_so3_momentum_sphere(omega_trajectory: np.ndarray, I1: float, I2: float, I3: float, n_grid: int = 40, title: str | None = None) -> go.Figure:
     """Interactive 3D Plotly view of a rigid body's body-frame angular
     momentum L(t) = (I1*w1, I2*w2, I3*w3) on the Casimir sphere
     ``|L| = |L(0)|``, draggable/zoomable in a way the static Matplotlib
@@ -63,7 +63,7 @@ def interactive_so3_momentum_sphere(omega_trajectory: np.ndarray, I1: float, I2:
     return fig
 
 
-def interactive_orbit(result, system=None, title: str = None) -> go.Figure:
+def interactive_orbit(result, system=None, title: str | None = None) -> go.Figure:
     """Interactive 2D Plotly view of a planar central-force orbit (e.g.
     from :class:`~physicskit.classical.systems.newtonian.KeplerSystem`), with the
     Laplace-Runge-Lenz vector overlaid at start and end if ``system``

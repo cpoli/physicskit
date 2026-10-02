@@ -206,7 +206,7 @@ def heat_equation(
             frames[f + 1] = flat.reshape(u.shape)
     else:
         raise InvalidParameterError(f"method must be 'explicit' or 'crank_nicolson', got {method!r}")
-    return np.arange(n_frames + 1) * stride * dt, frames
+    return np.arange(n_frames + 1, dtype=np.float64) * stride * dt, frames
 
 
 def heat_equation_spectral(u0: ArrayLike, spacing, alpha: float, times: ArrayLike) -> NDArray[np.float64]:

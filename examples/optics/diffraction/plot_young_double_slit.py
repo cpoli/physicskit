@@ -22,6 +22,7 @@ far-field fringe pattern as the propagation distance grows.
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.signal import find_peaks
 
 from physicskit.optics.visualizers import animate_diffraction_propagation
 from physicskit.optics.wave import double_slit_aperture, fraunhofer_diffraction, intensity
@@ -80,3 +81,13 @@ plt.show()
 # displaying it interactively, use e.g.::
 #
 #     anim.save("young_double_slit_propagation.gif", writer="pillow", fps=15)
+
+# %%
+# Check
+# -----
+# Bright fringes spaced lambda z / d (to the screen's pixel spacing), with
+# the central one at x = 0.
+peaks, _ = find_peaks(I[N // 2])
+central = peaks[np.abs(x[peaks]) < 10]
+assert abs(np.diff(x[central]).mean() - fringe_spacing) < x[1] - x[0]
+assert abs(peak_positions) < 1e-12

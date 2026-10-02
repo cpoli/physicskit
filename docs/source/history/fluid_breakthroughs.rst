@@ -249,6 +249,43 @@ solutions and observations," Phil. Mag. Ser. 4, 42(281) (1871), 362-377.
 
 .. minigallery:: ../../examples/fluids/instabilities/plot_kelvin_helmholtz.py
 
+1871 -- The Saint-Venant Shallow-Water Equations
+------------------------------------------------
+
+Adhémar Barré de Saint-Venant derived the equations of unsteady flow in
+rivers and canals by assuming that the depth :math:`h` is small compared
+with the horizontal scale, so that the pressure is hydrostatic and the
+velocity :math:`u` can be averaged over the depth:
+
+.. math::
+
+   \partial_t h + \partial_x(hu) = 0, \qquad
+   \partial_t(hu) + \partial_x\left(hu^2 + \tfrac12 gh^2\right) = 0.
+
+The system is hyperbolic, with long waves travelling at
+:math:`\sqrt{gh}`, and mathematically identical to 1D gas dynamics with
+:math:`\gamma = 2`, so steep waves break into bores just as compression
+waves steepen into shocks. Its Riemann problem is the dam break: August
+Ritter (1892) solved the release of a reservoir onto a dry bed, where a
+rarefaction fan leaves exactly :math:`4h_L/9` of water at the dam site and
+the wet front runs at :math:`2\sqrt{gh_L}`, and J. J. Stoker (1957) added
+the bore that forms over a wet bed. The same equations, with Coriolis and
+bottom-slope terms, model tides, storm surges, tsunamis and the large-scale
+atmosphere.
+
+*Implementation:* :func:`physicskit.fluids.systems.shallow_water.shallow_water_1d`
+solves the equations with a second-order finite-volume HLL scheme that
+handles dry cells, and
+:func:`~physicskit.fluids.systems.shallow_water.dam_break_exact` gives the
+Ritter and Stoker solutions it is checked against.
+
+*References:* A. J. C. Barré de Saint-Venant, *C. R. Acad. Sci. Paris*
+**73**, 147-154 and 237-240 (1871); A. Ritter, *Z. Ver. Dtsch. Ing.*
+**36**, 947-954 (1892); J. J. Stoker, *Water Waves* (Interscience, 1957),
+ch. 10.
+
+.. minigallery:: ../../examples/fluids/shallow_water/plot_saint_venant_dam_break.py
+
 1883 -- Reynolds' Pipe-Flow Experiments
 -------------------------------------------
 
@@ -274,6 +311,52 @@ Circumstances Which Determine Whether the Motion of Water Shall Be Direct
 or Sinuous...," Phil. Trans. R. Soc. Lond. 174 (1883), 935-982.
 
 .. minigallery:: ../../examples/fluids/viscous_flow/plot_reynolds_number_scaling.py
+
+1900 -- 1916 -- Bénard Cells and Rayleigh's Convection Threshold
+----------------------------------------------------------------
+
+Henri Bénard heated thin layers of spermaceti from below in 1900 and saw
+them organize into a regular pattern of hexagonal convection cells. Lord
+Rayleigh (1916) explained when such convection starts. A layer of depth
+:math:`d` with temperature difference :math:`\Delta T` across it stays at
+rest, carrying heat by conduction alone, until buoyancy overcomes viscous
+and thermal diffusion. That happens when the Rayleigh number
+
+.. math::
+
+   Ra = \frac{g\alpha\Delta T d^3}{\nu\kappa}
+
+exceeds a critical value, the minimum over horizontal wavenumbers
+:math:`a` of the marginal-stability curve :math:`Ra(a)`. For stress-free
+walls Rayleigh found :math:`Ra(a) = (\pi^2 + a^2)^3/a^2`, with minimum
+:math:`Ra_c = 27\pi^4/4 \approx 657.5` at :math:`a_c = \pi/\sqrt2`.
+Jeffreys (1928) and Pellew and Southwell (1940) solved the case of rigid
+walls, :math:`Ra_c \approx 1708` at :math:`a_c \approx 3.117`, which
+experiments by Schmidt and Milverton (1935) and later Silveston confirmed.
+Bénard's hexagons, it later turned out, were driven mostly by surface
+tension (Pearson 1958), but Rayleigh-Bénard convection became the
+standard example of a pattern-forming instability and of the transition
+to turbulence in a closed system.
+
+*Implementation:* :func:`physicskit.fluids.systems.convection.rayleigh_benard_critical`
+gives the onset for both boundary conditions, the rigid one from
+Chandrasekhar's exact characteristic determinant;
+:class:`~physicskit.fluids.systems.convection.RayleighBenard2D` integrates
+the nonlinear Boussinesq equations between stress-free walls on the
+pseudo-spectral grid, where its linear growth rates match
+:func:`~physicskit.fluids.systems.convection.rayleigh_benard_growth_rate_free`,
+and :class:`~physicskit.fluids.systems.convection.RayleighBenardWalls2D`
+solves them between rigid walls with a Chebyshev expansion in depth, where
+the simulated growth rate changes sign at :math:`Ra \approx 1708`.
+
+*References:* H. Bénard, *Rev. Gén. Sci. Pures Appl.* **11**, 1261-1271
+and 1309-1328 (1900); Lord Rayleigh, *Phil. Mag.* **32**, 529-546 (1916);
+H. Jeffreys, *Proc. R. Soc. A* **118**, 195-208 (1928); A. Pellew and R.
+V. Southwell, *Proc. R. Soc. A* **176**, 312-343 (1940); S.
+Chandrasekhar, *Hydrodynamic and Hydromagnetic Stability* (Oxford, 1961),
+ch. II.
+
+.. minigallery:: ../../examples/fluids/convection/plot_rayleigh_benard_onset.py
 
 1902 -- 1906 -- The Kutta-Joukowski Lift Theorem
 ------------------------------------------------------
@@ -527,16 +610,52 @@ specific, universal energy spectrum -- had to wait nineteen years for
 Kolmogorov's theory below.
 
 *Implementation:* Richardson's cascade has no closed-form law of its own to
-implement; its first quantitative realization is exactly the spectral
-tooling in the Kolmogorov entry below, where
-:func:`~physicskit.fluids.utils.spectral_analysis.energy_spectrum` measures
-the energy actually flowing from Richardson's "big whorls" down to his
-"lesser whorls" in a simulated flow.
+implement; its first quantitative realization is the Kolmogorov entry
+below. Here :func:`~physicskit.fluids.utils.spectral_analysis.energy_spectrum`
+measures the energy actually flowing from Richardson's "big whorls" down
+to his "lesser whorls" in a simulated flow.
 
 *References:* L. F. Richardson, *Weather Prediction by Numerical Process*
 (Cambridge University Press, Cambridge, 1922).
 
 .. minigallery:: ../../examples/fluids/navier_stokes/plot_richardson_cascade.py
+
+1938 -- Rossby's Geostrophic Adjustment
+---------------------------------------
+
+On a rotating planet, large-scale winds and currents blow along
+isobars rather than down pressure gradients: the Coriolis force balances
+the pressure gradient, :math:`fv = g\,\partial_x\eta`. Carl-Gustaf Rossby
+asked in 1937-1938 how a flow reaches this geostrophic balance from an
+unbalanced start, such as a sudden step in the height of a fluid layer.
+Without rotation the step would collapse completely into gravity waves.
+With rotation, the linear shallow-water equations conserve the potential
+vorticity :math:`\partial_x v - f\eta/H` at each point, so the step cannot
+disappear. Part of its energy radiates away as inertia-gravity waves, and
+the rest stays as a balanced front with a jet along it,
+
+.. math::
+
+   \eta = \eta_0\,\mathrm{sgn}(x)\left(1 - e^{-|x|/L_d}\right),
+   \qquad L_d = \frac{\sqrt{gH}}{f},
+
+whose width is the Rossby radius of deformation, :math:`L_d`. For an
+infinite step exactly one third of the released potential energy ends up
+in the balanced jet. :math:`L_d` (about 1000 km in the atmosphere, tens of
+km in the ocean) sets the size of cyclones, fronts and ocean eddies, and
+geostrophic adjustment is why the large-scale flow is close to balance at
+all times.
+
+*Implementation:* :func:`physicskit.fluids.systems.shallow_water.rotating_shallow_water_1d`
+evolves the linear rotating shallow-water equations exactly, mode by mode,
+and :func:`~physicskit.fluids.systems.shallow_water.geostrophic_adjustment_steady`
+inverts the conserved potential vorticity for the balanced end state.
+
+*References:* C.-G. Rossby, *J. Mar. Res.* **1**, 15-28 (1937) and 239-263
+(1938); A. E. Gill, *Atmosphere-Ocean Dynamics* (Academic Press, 1982),
+sec. 7.2-7.3.
+
+.. minigallery:: ../../examples/fluids/shallow_water/plot_rossby_geostrophic_adjustment.py
 
 1941 -- Kolmogorov's Theory of the Turbulent Cascade
 ----------------------------------------------------------
@@ -556,18 +675,19 @@ turbulent flows ranging from laboratory wind tunnels to the solar wind.
 
    E(k) = C\,\varepsilon^{2/3} k^{-5/3}
 
-*Implementation:* :func:`physicskit.fluids.utils.spectral_analysis.energy_spectrum`
-measures exactly this quantity, the azimuthally averaged kinetic energy
-spectrum of a 2D velocity field, and
-:func:`~physicskit.fluids.utils.spectral_analysis.kolmogorov_reference_slope`
-draws the :math:`k^{-5/3}` reference line the measured spectrum is checked
-against -- reproduced, in this package's gallery, from nothing but a
-randomly seeded vorticity field evolved under
-:class:`~physicskit.fluids.systems.navier_stokes.NavierStokes2D`.
+*Implementation:* :class:`physicskit.fluids.systems.turbulence.ForcedTurbulence2D`
+drives a 2D flow to a statistically steady state by injecting energy at a
+fixed rate :math:`\varepsilon` around a forcing wavenumber :math:`k_f`, and
+time-averages its energy spectrum. In two dimensions the energy cascades
+to larger scales (Kraichnan 1967), so the Kolmogorov range is
+:math:`k < k_f`, where the measured spectrum follows :math:`k^{-5/3}`;
+:func:`~physicskit.fluids.systems.turbulence.kolmogorov_kraichnan_spectrum`
+gives the reference law.
 
 *References:* A. N. Kolmogorov, Doklady Akademii Nauk SSSR 30 (1941),
 301-305, and 32 (1941), 16-18 (reprinted Proc. R. Soc. A 434 (1991), 9-13
-and 15-17); A. M. Obukhov, Doklady Akademii Nauk SSSR 32 (1941), 22-24.
+and 15-17); A. M. Obukhov, Doklady Akademii Nauk SSSR 32 (1941), 22-24; R. H. Kraichnan, Phys. Fluids
+10, 1417-1423 (1967).
 
 .. minigallery:: ../../examples/fluids/navier_stokes/plot_turbulent_cascade.py
 

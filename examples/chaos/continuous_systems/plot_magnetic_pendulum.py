@@ -69,3 +69,10 @@ fig2, ax2 = plot_basin_of_attraction(
 ax2.set_title("Magnetic pendulum: basin of attraction")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# With friction the bob comes to rest above one of the three magnets.
+distance = np.min(np.linalg.norm(system.magnet_positions - states[-1, :2], axis=1))
+assert distance < 0.05 and np.hypot(*states[-1, 2:]) < 1e-3

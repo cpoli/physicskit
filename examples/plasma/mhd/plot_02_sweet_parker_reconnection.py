@@ -84,3 +84,10 @@ psi0 = pk.plasma.reconnection_harris_ic(96, 96, Lx=20.0, Ly=20.0, sheet_width=1.
 anim = pk.plasma.animate_reconnection(psi0, eta=0.15, v0=0.15, dt=0.05, steps_per_frame=8, n_frames=50, Lx=20.0, Ly=20.0, interval=100)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Sweet-Parker: v_in / v_A = S^(-1/2), and the sheet thins as delta = L S^(-1/2).
+np.testing.assert_allclose(rate, S_vals**-0.5, rtol=1e-12)
+np.testing.assert_allclose(width, 1e7 * S_vals**-0.5, rtol=1e-12)

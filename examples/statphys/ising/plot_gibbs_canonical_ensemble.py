@@ -111,3 +111,18 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Exact enumeration: 2^16 states, a doubly degenerate ground state, and
+# C = (<E^2> - <E>^2)/T^2 = d<E>/dT. Metropolis samples the same ensemble.
+assert len(E) == 2**N and g[0] == 2
+assert np.max(np.abs(C_fluct - C_deriv)[2:-2]) < 1e-3
+C_exact = np.interp(T_mc, T, C_fluct)
+assert np.max(np.abs(np.array(C_mc) / C_exact - 1)) < 0.05
+assert np.max(np.abs(np.array(chi_mc) / np.array(chi_exact) - 1)) < 0.1
+p_boltzmann = g * np.exp(-(E_levels - E_levels.min()) / 2.5)
+p_boltzmann /= p_boltzmann.sum()
+p_sampled = np.array([counts[vals == e].sum() for e in E_levels]) / counts.sum()
+assert np.max(np.abs(p_sampled - p_boltzmann)) < 0.01

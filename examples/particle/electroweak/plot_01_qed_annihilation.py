@@ -77,3 +77,12 @@ fig2.tight_layout()
 anim = animate_qed_angular_distribution(np.linspace(5.0, 30.0, 20))
 
 plt.show()
+
+# %%
+# Check
+# -----
+# e+e- -> mu+mu- through a photon: d sigma / d Omega ~ 1 + cos^2(theta), so
+# forward / transverse = 2, and sigma = 4 pi alpha^2 / 3s.
+assert abs(ratio_fwd_transverse - 2) < 1e-12
+assert abs(sigma_numeric / sigma_formula - 1) < 1e-8
+np.testing.assert_allclose(sigma_values * sqrt_s_values**2, sigma_values[0] * sqrt_s_values[0] ** 2, rtol=1e-12)

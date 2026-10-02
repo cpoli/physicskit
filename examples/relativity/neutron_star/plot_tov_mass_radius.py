@@ -77,3 +77,12 @@ axes[1].set_ylabel("pressure P(r)")
 axes[1].set_title("Interior pressure profile")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# The Gamma = 2, K = 100 polytrope's maximum mass is the textbook 1.637 M
+# (radius 7.7 M); beyond it dM/drho_c < 0, the unstable branch.
+assert abs(masses[idx_max] - 1.637) < 0.005 and abs(radii[idx_max] - 7.7) < 0.1
+assert np.all(np.diff(masses[: idx_max - 1]) > 0) and np.all(np.diff(masses[idx_max + 1 :]) < 0)
+assert abs(m_profile[-1] - M) < 1e-6 and P_profile[0] > P_profile[-1] >= 0

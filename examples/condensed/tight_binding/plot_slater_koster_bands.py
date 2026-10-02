@@ -89,3 +89,12 @@ gap = bands[:, 1].min() - bands[:, 0].max()
 print(f"minimum direct gap between the two hybridized bands: {gap:.4f}")
 print(f"s-character at k=0 (lower, upper band): {s_character[0, 0]:.3f}, {s_character[0, 1]:.3f}")
 print(f"s-character at k=pi (lower, upper band): {s_character[len(k_grid) // 2, 0]:.3f}, {s_character[len(k_grid) // 2, 1]:.3f}")
+
+# %%
+# Check
+# -----
+# The s-p hopping opens a gap everywhere, and the bands are almost pure s
+# or p at k = 0 but strongly mixed near the zone edge.
+assert gap > 0.5
+assert s_character[0, 0] > 0.95 and s_character[0, 1] < 0.05
+assert 0.2 < s_character[len(k_grid) // 2, 1] < 0.8

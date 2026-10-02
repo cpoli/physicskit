@@ -89,3 +89,14 @@ ax.set_title("Shock density compression across Mach number and gas gamma")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Rankine-Hugoniot (gamma = 1.4): p2/p1 = 1 + 2 gamma (M1^2 - 1)/(gamma + 1),
+# rho2/rho1 = (gamma + 1) M1^2 / ((gamma - 1) M1^2 + 2) -> 6, and M2 < 1.
+g = 1.4
+np.testing.assert_allclose(p2_p1, 1 + 2 * g * (M1**2 - 1) / (g + 1), rtol=1e-12)
+np.testing.assert_allclose(rho2_rho1, (g + 1) * M1**2 / ((g - 1) * M1**2 + 2), rtol=1e-12)
+np.testing.assert_allclose(M2**2, (1 + (g - 1) / 2 * M1**2) / (g * M1**2 - (g - 1) / 2), rtol=1e-12)
+assert np.all(M2[M1 > 1] < 1) and rho2_rho1[-1] < (g + 1) / (g - 1)

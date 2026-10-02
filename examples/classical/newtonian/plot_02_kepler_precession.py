@@ -98,3 +98,38 @@ fig2.tight_layout()
 # gravity to an inverse-square field with a relativistic correction.
 
 plt.show()
+
+
+# %%
+# Check
+# -----
+def apsidal_shift(system):
+    """Exact periapsis advance per radial period: 2 * integral of L/r^2 dr / p_r - 2 pi."""
+    from scipy.integrate import quad
+    from scipy.optimize import brentq
+
+    E, L = system.energy(), system.angular_momentum()
+    f = lambda r: 2 * (E - system.potential_energy(np.array([r, 0.0]))) - L**2 / r**2  # noqa: E731
+    grid = np.linspace(0.05, 10, 20000)
+    sign_changes = np.nonzero(np.diff(np.sign([f(r) for r in grid])))[0]
+    r_p, r_a = (brentq(f, grid[i], grid[i + 1]) for i in sign_changes[-2:])
+
+    def integrand(u):
+        r = r_p + (r_a - r_p) * (1 - np.cos(u)) / 2
+        return L / r**2 * (r_a - r_p) * np.sin(u) / 2 / np.sqrt(max(f(r), 1e-300))
+
+    return 2 * quad(integrand, 0, np.pi, limit=200)[0] - 2 * np.pi
+
+
+def measured_shift(q):
+    r = np.hypot(q[:, 0], q[:, 1])
+    i = np.nonzero((r[1:-1] < r[:-2]) & (r[1:-1] < r[2:]))[0] + 1
+    return np.mean(np.diff(np.unwrap(np.arctan2(q[i, 1], q[i, 0]))))
+
+
+# The pure 1/r orbit closes; with c_pn / r^3 the periapsis advances per orbit
+# by exactly the apsidal integral of the perturbed potential.
+lrl_pure = np.array([pure.lrl_vector(q, p) for q, p in zip(res_pure.q[::100], res_pure.p[::100])])
+assert np.ptp(np.arctan2(lrl_pure[:, 1], lrl_pure[:, 0])) < 1e-6
+assert abs(measured_shift(result.q) / apsidal_shift(system) - 1) < 0.01
+assert np.max(drift) < 1e-9

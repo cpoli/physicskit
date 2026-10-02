@@ -184,3 +184,12 @@ ax_n.legend()
 fig4.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# f^n has exactly 2^n fixed points (one per binary itinerary), so the
+# topological entropy is ln 2.
+assert abs(system.topological_entropy() - np.log(2)) < 1e-12
+np.testing.assert_array_equal(counts, 2**periods)
+assert len(points) == 2**period

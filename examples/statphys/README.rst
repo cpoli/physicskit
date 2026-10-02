@@ -21,7 +21,10 @@ Sections
 
 - **ising** -- the 2D Ising model: Onsager's exact phase transition,
   finite-size scaling to extract critical exponents, and critical slowing
-  down (Metropolis versus the Wolff cluster algorithm).
+  down (Metropolis versus the Swendsen-Wang and Wolff cluster algorithms).
+- **wang_landau** -- flat-histogram sampling of the density of states.
+- **path_integral** -- path-integral Monte Carlo of a quantum particle in
+  a well.
 - **xy_model** -- the Kosterlitz-Thouless transition via vortex-antivortex
   unbinding.
 - **potts_model** -- first- versus second-order transitions in the q-state

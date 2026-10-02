@@ -105,3 +105,14 @@ print(f"fidelity at theta=180 (|1>): {fidelities[-1]:.6f}")
 print("\nno fixed unitary reaches fidelity 1 across the whole range: exactly the no-cloning theorem's content.")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# CNOT copies |0> and |1> but turns |+>|0> into a Bell state. For
+# psi = c|0> + s|1> it outputs c|00> + s|11>, whose overlap with the clone
+# psi x psi is c^3 + s^3: the fidelity is below 1 for every superposition.
+assert np.allclose(out0, np.kron(ket0, ket0)) and np.allclose(out1, np.kron(ket1, ket1))
+assert np.linalg.norm(actual_output - bell) < 1e-12
+np.testing.assert_allclose(fidelities, (np.cos(theta_values / 2) ** 3 + np.sin(theta_values / 2) ** 3) ** 2, atol=1e-12)
+assert np.all(fidelities[1:-1] < 1)

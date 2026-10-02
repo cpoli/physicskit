@@ -91,3 +91,14 @@ ax.set_title("Where spaghettification happens: tidal stretch vs. mass and radius
 ax.legend(fontsize=8)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Radial stretch 2M/r^3 and transverse squeeze -M/r^3 per unit length; at
+# the horizon the stretch scales as 1/M^2, so a 1e5 times heavier hole is
+# 1e10 times gentler.
+radial_1, transverse_1 = bh.tidal_acceleration(r, proper_separation=1.0)
+np.testing.assert_allclose(radial_1, 2 / r**3, rtol=1e-12)
+np.testing.assert_allclose(transverse_1, -1 / r**3, rtol=1e-12)
+assert abs(tidal_g_map[0, 0] / tidal_g_map[-1, 0] - (masses_solar[-1] / masses_solar[0]) ** 2) < 1e-6 * (masses_solar[-1] / masses_solar[0]) ** 2

@@ -1253,6 +1253,43 @@ independent discoveries).
 
 .. minigallery:: ../../examples/semiclassical/scarring/plot_heller_wavepacket_spectroscopy.py
 
+1985 -- 1992 -- Deutsch, Jozsa, and the First Quantum Algorithm
+---------------------------------------------------------------
+
+Richard Feynman (1982) had argued that only a quantum machine could
+simulate quantum physics efficiently. David Deutsch (1985) defined the
+universal quantum computer and gave the first task it does better than any
+classical machine: deciding with one query whether a one-bit function is
+constant or balanced. With Richard Jozsa (1992) he extended this to
+:math:`n` bits. Given the promise that :math:`f:\{0,1\}^n \to \{0,1\}` is
+either constant or balanced, a deterministic classical algorithm may need
+:math:`2^{n-1} + 1` evaluations, while one call to the phase oracle
+:math:`O_f|x\rangle = (-1)^{f(x)}|x\rangle`, sandwiched between Hadamard
+layers, suffices:
+
+.. math::
+
+   \langle 0|H^{\otimes n} O_f H^{\otimes n}|0\rangle = \frac{1}{2^n}\sum_x(-1)^{f(x)}
+   = \begin{cases}\pm1, & f \text{ constant}, \\ 0, & f \text{ balanced}. \end{cases}
+
+The superposition queries every input at once, but only the interference
+between the answers is read out. That pattern of parallel evaluation
+followed by global interference is shared by every later quantum
+algorithm.
+
+*Implementation:* :class:`physicskit.quantum.chapters.quantum_circuits.QuantumCircuit`
+is a state-vector simulator (gates as tensor contractions on a
+:math:`(2,)^n` array), and
+:func:`~physicskit.quantum.chapters.quantum_circuits.deutsch_jozsa_circuit`
+builds the algorithm for any truth table.
+
+*References:* R. P. Feynman, *Int. J. Theor. Phys.* **21**, 467-488 (1982);
+D. Deutsch, *Proc. R. Soc. A* **400**, 97-117 (1985); D. Deutsch and R.
+Jozsa, *Proc. R. Soc. A* **439**, 553-558 (1992); R. Cleve, A. Ekert, C.
+Macchiavello and M. Mosca, *Proc. R. Soc. A* **454**, 339-354 (1998).
+
+.. minigallery:: ../../examples/quantum/quantum_computing/plot_deutsch_jozsa_algorithm.py
+
 1986-1990 -- Wave-Packet Revivals
 ----------------------------------
 
@@ -1334,6 +1371,123 @@ Optics* (Springer, 1993); review: M. B. Plenio and P. L. Knight, Rev.
 Mod. Phys. 70, 101-144 (1998).
 
 .. minigallery:: ../../examples/quantum/open_systems/plot_quantum_trajectories.py
+
+1992 -- 2004 -- DMRG, Matrix Product States, and Vidal's TEBD
+-------------------------------------------------------------
+
+The Hilbert space of :math:`N` spins has :math:`2^N` dimensions, which
+limits exact diagonalization to a few dozen sites. Steven White's density
+matrix renormalization group (1992) found ground states of 1D chains to
+nearly machine precision by keeping, at each cut of the chain, only the
+:math:`\chi` most important Schmidt states. Östlund and Rommer (1995)
+recognized that DMRG optimizes a matrix product state,
+
+.. math::
+
+   |\psi\rangle = \sum_{s_1 \dots s_N} B_1^{s_1} \cdots B_N^{s_N} |s_1 \dots s_N\rangle,
+
+whose bond dimension :math:`\chi` bounds the entanglement entropy across
+each cut by :math:`\ln\chi`. Ground states of gapped 1D Hamiltonians obey
+such an area law (Hastings 2007), so they fit. Guifré Vidal (2003, 2004)
+turned this into a time-evolution algorithm, time-evolving block decimation
+(TEBD): a Trotter splitting of :math:`e^{-iH\delta t}` into two-site gates on
+even and odd bonds, each followed by an SVD that truncates the bond back to
+:math:`\chi`. In imaginary time it projects onto the ground state. TEBD and
+its descendants now simulate quenches, transport and finite temperature in
+chains of hundreds of sites, and the same tensor-network language
+describes topological order and holographic codes.
+
+*Implementation:* :class:`physicskit.quantum.chapters.tensor_networks.MPS`
+stores a right-canonical MPS with the Schmidt values of every bond, and
+:func:`~physicskit.quantum.chapters.tensor_networks.tebd` evolves it in real
+or imaginary time under the bond Hamiltonians of
+:func:`~physicskit.quantum.chapters.tensor_networks.xxz_bond_hamiltonians`
+and :func:`~physicskit.quantum.chapters.tensor_networks.tfim_bond_hamiltonians`,
+which match the exact diagonalization of
+:mod:`physicskit.condensed.spin_chains` term by term.
+
+*References:* S. R. White, *Phys. Rev. Lett.* **69**, 2863-2866 (1992); S.
+Östlund and S. Rommer, *Phys. Rev. Lett.* **75**, 3537-3540 (1995); G.
+Vidal, *Phys. Rev. Lett.* **91**, 147902 (2003) and **93**, 040502 (2004);
+U. Schollwöck, *Ann. Phys.* **326**, 96-192 (2011).
+
+.. minigallery:: ../../examples/quantum/tensor_networks/plot_tebd_matrix_product_states.py
+
+1994 -- Shor's Algorithm and the Quantum Fourier Transform
+----------------------------------------------------------
+
+Peter Shor showed that a quantum computer could factor an :math:`L`-bit
+integer in time polynomial in :math:`L`, while the best known classical
+algorithms take time exponential in :math:`L^{1/3}`; the security of RSA
+rests on that gap. Factoring :math:`N` reduces to finding the period
+:math:`r` of :math:`a^x \bmod N`, since then :math:`\gcd(a^{r/2} \pm 1, N)` are
+usually factors. A register in the superposition
+:math:`\sum_x |x\rangle|a^x \bmod N\rangle` holds the period in its amplitudes,
+and the quantum Fourier transform
+
+.. math::
+
+   |x\rangle \to \frac{1}{\sqrt{2^t}}\sum_{y}e^{2\pi ixy/2^t}|y\rangle
+
+concentrates it into peaks at multiples of :math:`2^t/r`. Don Coppersmith
+(1994) built the transform from :math:`t(t+1)/2` Hadamard and controlled-phase
+gates, exponentially fewer operations than the classical fast Fourier
+transform on the same :math:`2^t` amplitudes. A continued-fraction
+expansion of the measured :math:`y/2^t` then gives :math:`r`. The algorithm
+started the field of quantum computing as a practical enterprise, and
+:math:`15 = 3 \times 5` was factored on an NMR quantum computer in 2001.
+
+*Implementation:* :func:`physicskit.quantum.chapters.quantum_circuits.qft_circuit`
+builds the transform, which equals the DFT matrix to machine precision;
+:func:`~physicskit.quantum.chapters.quantum_circuits.modular_exponentiation_circuit`
+prepares the period-finding state (with the modular arithmetic as one
+reversible permutation gate), and
+:func:`~physicskit.quantum.chapters.quantum_circuits.shor_period_from_measurement`
+recovers :math:`r` by continued fractions.
+
+*References:* P. W. Shor, in *Proc. 35th Annual Symposium on Foundations of
+Computer Science*, 124-134 (IEEE, 1994), and *SIAM J. Comput.* **26**,
+1484-1509 (1997); D. Coppersmith, IBM Research Report RC19642 (1994); L. M.
+K. Vandersypen et al., *Nature* **414**, 883-887 (2001).
+
+.. minigallery:: ../../examples/quantum/quantum_computing/plot_shor_quantum_fourier_transform.py
+
+1996 -- Grover's Quantum Search
+-------------------------------
+
+Lov Grover found a quantum algorithm that finds one of :math:`M` marked
+items among :math:`N` unsorted ones with about
+:math:`\tfrac{\pi}{4}\sqrt{N/M}` oracle queries, where a classical search
+needs :math:`O(N/M)`. Bennett, Bernstein, Brassard and Vazirani had shown
+that no quantum algorithm can do better, so the square-root speed-up is
+optimal. Starting from the uniform superposition :math:`|s\rangle`, each
+iteration applies the oracle, which flips the sign of marked items, and
+the diffusion operator :math:`2|s\rangle\langle s| - I`. The two
+reflections compose to a rotation by :math:`2\theta` in the plane of
+:math:`|s\rangle` and the marked state, with :math:`\sin\theta =
+\sqrt{M/N}`, so after :math:`k` iterations
+
+.. math::
+
+   P_{\text{success}} = \sin^2\bigl((2k + 1)\theta\bigr).
+
+Going past the optimum rotates the state away again. Generalized as
+amplitude amplification, the idea speeds up any classical search
+heuristic quadratically.
+
+*Implementation:* :func:`physicskit.quantum.chapters.quantum_circuits.grover_circuit`
+builds the search for any set of marked items, and
+:func:`~physicskit.quantum.chapters.quantum_circuits.grover_success_probability`
+and :func:`~physicskit.quantum.chapters.quantum_circuits.grover_optimal_iterations`
+give the rotation formula and the optimal number of iterations.
+
+*References:* L. K. Grover, in *Proc. 28th Annual ACM Symposium on Theory of
+Computing*, 212-219 (1996), and *Phys. Rev. Lett.* **79**, 325-328 (1997); C.
+H. Bennett, E. Bernstein, G. Brassard and U. Vazirani, *SIAM J. Comput.*
+**26**, 1510-1523 (1997); M. Boyer, G. Brassard, P. Høyer and A. Tapp,
+*Fortsch. Phys.* **46**, 493-505 (1998).
+
+.. minigallery:: ../../examples/quantum/quantum_computing/plot_grover_search.py
 
 See Also
 --------

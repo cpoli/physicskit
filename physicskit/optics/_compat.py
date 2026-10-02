@@ -2,4 +2,4 @@
 
 import numpy as np
 
-trapz = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+trapz = np.trapezoid if hasattr(np, "trapezoid") else np.trapz  # type: ignore[attr-defined,unused-ignore]

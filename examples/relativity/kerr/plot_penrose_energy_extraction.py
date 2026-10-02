@@ -58,3 +58,12 @@ e_out = bh.penrose_energy_gain(initial_energy=1.0, fragment_energy_infalling=-0.
 print("Particle falls in with E=1.0, splits inside the ergosphere;")
 print("one fragment falls in with E=-0.1 (negative energy, only possible there);")
 print(f"the escaping fragment carries away E={e_out:.3f} -- more than it started with.")
+
+# %%
+# Check
+# -----
+# Maximum efficiency 1 - M_irr / M = 1 - sqrt((1 + sqrt(1 - a^2)) / 2), 29.3% at a = M;
+# a negative-energy fragment lets the escaping one leave with E > E_in.
+expected = 1 - np.sqrt((1 + np.sqrt(1 - a_values**2)) / 2)
+np.testing.assert_allclose(efficiency, expected, atol=1e-12)
+assert abs(e_out - 1.1) < 1e-12

@@ -95,3 +95,12 @@ axes[2].set_title("finite-element error")
 axes[2].legend(fontsize=8)
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Finite elements converge to Lame's solution (hoop stress p (b^2 + a^2)/(b^2 - a^2)
+# at the bore): displacement at ~h^2, piecewise-constant stress at ~h.
+assert abs(ex_tt[0] - p * (b**2 + a**2) / (b**2 - a**2)) < 1e-12
+assert abs(u_r[r == a].mean() / ex_u[0] - 1) < 0.005
+assert np.polyfit(np.log(h), np.log(u_err), 1)[0] > 1.5 and np.polyfit(np.log(h), np.log(s_err), 1)[0] > 0.8

@@ -7,13 +7,153 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `physicskit.semiclassical.langer_corrected_wkb`, radial WKB energies with
+  Langer's `l(l+1) -> (l+1/2)^2` replacement (exact for hydrogen and the 3D
+  oscillator), or without it for comparison.
+- `physicskit.semiclassical.thawed_gaussian_propagate` and
+  `thawed_gaussian_wavefunction`, Heller's 1975 thawed Gaussian wavepacket
+  propagator. The width is integrated in its linear tangent-map form, so it
+  stays regular over many periods of an anharmonic well.
+- `physicskit.semiclassical.balian_bloch_counting_function` and
+  `balian_bloch_level_density`, the smoothed level density of a 2D billiard
+  with perimeter, corner and curvature terms.
+- `physicskit.semiclassical.core.bogomolny`, with
+  `bogomolny_transfer_operator` (Bogomolny's 1992 operator on the boundary
+  of a convex billiard) and `bogomolny_quantization_function`.
+- Ten semiclassical history entries, bringing the page to 17: Weyl's law
+  (1911), Einstein's torus quantization (1917), the Langer correction
+  (1937), Feynman's path integral (1948), Balian-Bloch (1972), Heller's
+  thawed Gaussians (1975), Berry's random-wave conjecture (1977), the
+  Ehrenfest time (1978), Heller's time-dependent spectroscopy (1981) and
+  Bogomolny's transfer operator (1992), each with its own gallery example
+  (the Feynman entry uses the existing
+  `plot_feynman_paths_classical_limit.py`). The new examples are in
+  `wkb/`, `gutzwiller/`, `propagators/`, `scarring/` and a new `ehrenfest/`
+  section.
+- Canonical topics from roadmap item 4, each with a history entry and its
+  own gallery example that asserts the physics it shows:
+  - `statphys`: Swendsen-Wang cluster updates
+    (`Ising2D.sweep(algorithm="swendsen-wang")`), `WangLandauIsing` with
+    `ising_density_of_states_exact` and `canonical_from_density_of_states`,
+    and path-integral Monte Carlo (`PathIntegralParticle`,
+    `harmonic_x2_exact`, `harmonic_x2_primitive`).
+  - `chaos`: `Kuramoto` with `kuramoto_order_parameter_lorentzian`, and the
+    Hopf bifurcation (`HopfNormalForm`, `Brusselator`).
+  - `fluids`: forced 2D turbulence (`ForcedTurbulence2D`,
+    `kolmogorov_kraichnan_spectrum`), Rayleigh-Bénard convection
+    (`RayleighBenard2D`, `rayleigh_benard_critical` with the exact rigid-wall
+    1707.76, `rayleigh_benard_growth_rate_free`), the shallow-water equations
+    (`shallow_water_1d`, `dam_break_exact`, `rotating_shallow_water_1d`,
+    `geostrophic_adjustment_steady`), and `exact_riemann_solution` for the
+    1D Euler equations.
+  - `optics`: `optics.thin_films` (characteristic-matrix
+    `multilayer_response`, `quarter_wave_stack`, the Airy function and
+    finesse, `bloch_wavenumber`, `quarter_wave_band_gap`) and
+    `optics.nonlinear` (second-harmonic generation with quasi- and
+    birefringent phase matching).
+  - `astro`: 1D smoothed-particle hydrodynamics (`SPH1D`) on Sod's tube,
+    and grey radiative transfer (`GreyAtmosphere`, `eddington_temperature`,
+    `eddington_limb_darkening`, `emergent_intensity`).
+  - `relativity`: `KerrNewmanBlackHole`, with photon orbits, the analytic
+    and ray-traced shadow, and charged-particle geodesics.
+  - `quantum`: `QuantumCircuit` (Deutsch-Jozsa, the quantum Fourier
+    transform and Shor period finding, Grover search) and TEBD on matrix
+    product states (`MPS`, `tebd`), checked against
+    `condensed.spin_chains`.
+- 19 history entries for these topics: statphys (Swendsen-Wang, path-integral
+  Monte Carlo, Wang-Landau), chaos (Andronov-Hopf, Kuramoto), fluids
+  (Saint-Venant, Rayleigh-Bénard, Rossby adjustment), optics (Fabry-Pérot,
+  antireflection coatings, Franken's SHG, photonic band gaps), astro (grey
+  radiative transfer, SPH), relativity (Kerr-Newman), and quantum
+  (Deutsch-Jozsa, TEBD, Shor, Grover).
+- Every gallery example (all 392) now ends with a `Check` cell that asserts
+  the physics it shows against a closed form or known value, so the docs
+  build fails when an example stops showing it. CONTRIBUTING.md now asks
+  the same of new examples.
+
 ### Changed
 
+- Releases are automated: pushing a `vX.Y.Z` tag runs
+  `.github/workflows/release.yml`, which checks the tag against
+  `physicskit.__version__` and `CITATION.cff`, builds the wheel and sdist,
+  publishes to PyPI with trusted publishing, creates the GitHub Release
+  from the CHANGELOG section and rebuilds `gh-pages`. `docs.yml` also
+  deploys `gh-pages` on every push to `main`, so the hosted docs follow
+  `main` between releases. CONTRIBUTING.md has a "Releasing" section.
+- The 20 `physicskit.rmt` gallery examples follow the same convention as
+  every other subpackage: `examples/rmt/paper_replications/*_demo.py` are
+  now `plot_*.py` scripts, titled after their breakthroughs, in
+  `gaussian_ensembles/`, `spacings/`, `edge_statistics/`, `non_hermitian/`
+  and `wishart/`. They no longer write `*_replication.png` to the working
+  directory, and those committed images (and their unused copies in
+  `docs/source/_static/images/`) are removed.
+- The Kolmogorov 1941 gallery example (`plot_turbulent_cascade.py`) now
+  forces the flow to a statistically steady state, where the inverse
+  cascade has a measured `k^(-5/3)` range; it previously used decaying
+  turbulence, which has no steady flux. The Wolff history entry no longer
+  re-describes Swendsen-Wang, which has its own entry.
 - The wheel no longer ships the `tests/` packages (215 files). The sdist
   still includes the full test suite, via a new `MANIFEST.in`, minus the
   RMT test caches (`physicskit/rmt/tests/.physicskit.rmt_test_cache` and
   `.rmtkit_test_cache`), which the tests regenerate on a cache miss; this
   shrinks the sdist from about 43 MB to under 1 MB.
+- `mypy` now checks the whole package and is blocking in CI, with
+  `check_untyped_defs`, `strict_equality` and `warn_unreachable` on for all
+  library code (tests are checked at the signature level). The advisory
+  whole-package job is merged into the blocking one. Parameters that
+  defaulted to `None` without `Optional` are now annotated as optional, and
+  `invariant_mass`/`boost_to_com` raise `ValueError` on an empty input
+  instead of `AttributeError`.
+
+### Fixed
+
+- `relativity.exact_deflection_angle` now adds the flat-space angles the
+  ray still has to turn at its finite start and end radii. It was low by
+  about `1.5 b / r_far`, 7% at `b = 200 M`, which put it below even the
+  weak-field `4M/b`.
+- `plasma.two_stream_ic` interleaves the two beams. It gave one beam the
+  left half of the box and the other the right half, so they collided
+  head-on instead of streaming through each other. The growth rate now
+  matches cold-beam theory.
+- Gallery examples that, once checked, did not show the physics they
+  describe:
+  - `plot_dielectric_slab_propagation.py` launched its pulse away from the
+    slab and stopped before it crossed; the pulse now goes toward the slab
+    and the reflected and transmitted amplitudes match Fresnel's.
+  - `plot_01_landau_damping.py` used 4000 particles, too few for the field
+    energy to rise above the particle noise; with 500,000 it decays at
+    Landau's rate. `plot_02_two_stream_instability.py` now runs to
+    saturation.
+  - `plot_edwards_anderson_frustration.py` measured an overlap near zero at
+    every temperature (frozen replicas); it now averages over disorder on
+    smaller, equilibrated lattices.
+  - `plot_potts_order_of_transition.py` stayed in one phase at `T_C`; it
+    now shows both coexisting q = 8 phases at Baxter's energies.
+  - `plot_percolation_threshold.py` estimates `d_f` from `M ~ L^{d_f}`
+    (1.87, against 91/48). `Percolation2D.fractal_dimension`, which it used
+    before, gives 2.26, more than the dimension of the plane.
+  - `plot_btw_avalanches.py` compared the toppling-size cutoff with `D = 2`;
+    it is `D ~ 2.75`.
+  - `plot_intermittency.py` truncated the tangent bifurcation to 3.8284,
+    which flattened the laminar-length exponent to 0.38; with
+    `1 + sqrt(8)` it is the expected -1/2.
+  - `plot_lyapunov_divergence.py` started the Lorenz pair off the
+    attractor and fitted 0.26; it now starts on it and gets about 0.9.
+  - `plot_ellipse_billiard.py` labelled a hyperbolic-caustic orbit as
+    elliptical.
+  - `plot_interactive_orbit_and_shadow.py` showed a plunging orbit as a
+    bound rosette; it now uses a bound one.
+  - `plot_gaussian_beam_through_lens.py` printed the beam width at the
+    grid point nearest the focus (0.005) as the new waist (3.2e-5).
+  - `plot_bound_states_numerov.py` missed the well's barely bound fifth
+    state; `plot_gpe_ground_state_relaxation.py` stopped before the ground
+    state had converged.
+  - `plot_02_boris_pusher.py` plotted the distance from the start point as
+    the distance from the guiding center.
+  - The double-pendulum animation in `plot_01_side_by_side_animation.py`
+    used `dt = 0.1`, where the implicit midpoint solve diverged to NaN.
 
 ## [0.3.0] - 2026-09-30
 

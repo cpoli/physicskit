@@ -78,3 +78,12 @@ ax2.set_title(f"n=1.5 star (radius={star.radius:.3f}, mass={star.mass:.3f} in co
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Exact solutions: n = 0 (1 - xi^2/6, xi_1 = sqrt 6), n = 1 (sin xi / xi,
+# xi_1 = pi); tabulated surfaces xi_1 = 3.65375 (n = 1.5), 6.89685 (n = 3).
+assert abs(xi0[-1] - np.sqrt(6)) < 1e-6 and abs(xi1[-1] - np.pi) < 1e-6
+assert np.max(np.abs(theta0 - (1 - xi0**2 / 6))) < 1e-10 and np.max(np.abs(theta1 - exact_n1)) < 1e-8
+assert abs(star.xi1 - 3.65375) < 1e-4 and abs(lane_emden(3.0)[0][-1] - 6.89685) < 1e-4

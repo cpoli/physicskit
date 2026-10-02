@@ -95,3 +95,18 @@ axes[2].legend(fontsize=7, loc="lower right")
 fig.colorbar(im, ax=axes[2], label=r"$\mathbb{Z}_2$")
 
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# The inverted ribbon has an edge pair inside the bulk gap, the uninverted
+# one does not; the edge pair sits on one edge; and the bulk Z2 invariant
+# is 1 exactly where 0 < M/B < 8 (away from the gap closings at M/B = 0,
+# 4 and 8).
+assert np.min(np.abs(bands_topological)) < 0.05 < 0.5 < np.min(np.abs(bands_trivial))
+assert density_1[:3].sum() > 0.9 and density_2[:3].sum() > 0.9
+MM, BB = np.meshgrid(M_grid, B_grid)
+ratio = MM / BB
+expected = (ratio > 0) & (ratio < 8)
+clear = (np.abs(ratio) > 0.3) & (np.abs(ratio - 4) > 0.5) & (np.abs(ratio - 8) > 0.5)
+assert np.all(z2_phase[clear] == expected[clear])

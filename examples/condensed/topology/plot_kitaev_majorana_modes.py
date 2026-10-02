@@ -76,3 +76,13 @@ left_a, right_a = density_a[: N // 4].sum(), density_a[-N // 4 :].sum()
 left_b, right_b = density_b[: N // 4].sum(), density_b[-N // 4 :].sum()
 print(f"mode a weight -- left quarter: {left_a:.3f}, right quarter: {right_a:.3f}")
 print(f"mode b weight -- left quarter: {left_b:.3f}, right quarter: {right_b:.3f}")
+
+# %%
+# Check
+# -----
+# At mu = 0, t = Delta the bulk band is flat at |E| = 2t; the open chain has
+# two exact zero modes, each localized on one end.
+assert abs(np.min(np.abs(bulk_bands)) - 2 * t) < 1e-12
+assert np.max(np.abs(energies[zero_idx])) < 1e-10
+assert min(max(left_a, right_a), max(left_b, right_b)) > 0.99
+assert abs((left_a + left_b) - 1) < 0.01

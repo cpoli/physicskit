@@ -99,3 +99,16 @@ ax3.set_xlabel(r"$\sqrt{2mV_0}\,a/\pi$")
 ax3.set_ylabel(r"$\delta_0/\pi$ at $ka = 0.2$")
 ax3.set_title("s-wave phase shift steps by π as each bound state appears")
 fig3.tight_layout()
+
+# %%
+# Check
+# -----
+# Hard sphere: delta_0 = -ka (mod pi); sigma -> 4 pi a^2 at low energy (four
+# times the geometric cross section) and -> 2 pi a^2 at high energy (the
+# shadow doubles it). Square well: Levinson's theorem, delta_0 -> N pi with
+# N = 3 bound s-states for sqrt(2 V0) a / pi = 3.02.
+wrapped = deltas[:, 0] + ka
+assert np.max(np.abs(wrapped - np.pi * np.round(wrapped / np.pi))) < 1e-10
+assert abs(sigma[0] / (np.pi * a**2) - 4) < 1e-3
+assert abs(sigma[-1] / (np.pi * a**2) - 2) < 0.15
+assert round(d0[-1] / np.pi) == 3

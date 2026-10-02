@@ -63,3 +63,11 @@ fig.tight_layout()
 
 print(f"Stark n=2 shifts at F={F_values[-1]:.3f}: {shifts[-1]}")
 print(f"Zeeman l=1 shifts at B={B_values[-1]:.3f}: {zeeman_spectrum(1, B_values[-1])}")
+
+# %%
+# Check
+# -----
+# The linear Stark effect of hydrogen's n = 2 level: shifts 0, 0, +-3 F (a.u.);
+# Zeeman shifts are linear in B.
+np.testing.assert_allclose(np.sort(np.abs(shifts), axis=1), np.outer(np.abs(F_values), [0, 0, 3, 3]), atol=1e-12)
+np.testing.assert_allclose(zeeman_spectrum(1, 2.0), 2 * np.asarray(zeeman_spectrum(1, 1.0)), atol=1e-12)

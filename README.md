@@ -176,8 +176,7 @@ MPLBACKEND=Agg pytest --doctest-modules physicskit \
 
 Both commands, plus `ruff check`/`ruff format --check`, run in CI on
 every PR (`.github/workflows/ci.yml`) across Python 3.10-3.14 on Linux and
-macOS, as does `mypy` on the typed core (`constants`, `integrators`,
-`units`, `results`, `io`). See [CONTRIBUTING.md](CONTRIBUTING.md) before
+macOS, as does `mypy` on the whole package. See [CONTRIBUTING.md](CONTRIBUTING.md) before
 opening a PR.
 
 Performance benchmarks for the shared integrators and three representative
@@ -209,7 +208,8 @@ trace into numba-compiled native code.
 ## Docs
 
 Built docs are hosted at <https://cpoli.github.io/physicskit/>, served from
-the `gh-pages` branch. To build locally:
+the `gh-pages` branch, which CI redeploys on every push to `main` and on
+each release. To build locally:
 
 ```bash
 pip install -e ".[docs]"

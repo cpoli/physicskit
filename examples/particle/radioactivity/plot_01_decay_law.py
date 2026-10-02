@@ -79,3 +79,11 @@ print(f"\nactivity (Becquerel's actual observable, the plate-blackening rate) at
 print(f"activity after one half-life:                                            {activity(radioactive_decay_number(N0, lam, t_half), lam):.4e} decays/day")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# N halves every t_1/2 = ln 2 / lambda, and A = lambda N.
+assert abs(half_life(lam) - t_half) < 1e-6 and abs(lam - np.log(2) / t_half) < 1e-18
+np.testing.assert_allclose(radioactive_decay_number(N0, lam, t_half * np.arange(5)), N0 / 2.0 ** np.arange(5), rtol=1e-12)
+np.testing.assert_allclose(A, lam * N, rtol=1e-12)

@@ -343,9 +343,9 @@ def solve_poisson(
     jacobi = method == "jacobi"
     coeffs = tuple(1.0 / hk**2 for hk in h)
     if ndim == 2:
-        n_iter, converged = _relax_2d(phi, src, mask, *coeffs, float(omega), jacobi, float(tol), int(max_iter))
+        n_iter, converged = _relax_2d(phi, src, mask, coeffs[0], coeffs[1], float(omega), jacobi, float(tol), int(max_iter))
     else:
-        n_iter, converged = _relax_3d(phi, src, mask, *coeffs, float(omega), jacobi, float(tol), int(max_iter))
+        n_iter, converged = _relax_3d(phi, src, mask, coeffs[0], coeffs[1], coeffs[2], float(omega), jacobi, float(tol), int(max_iter))
     return PoissonSolution(phi, int(n_iter), bool(converged))
 
 

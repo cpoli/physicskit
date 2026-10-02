@@ -87,7 +87,7 @@ class DoublePendulum(LagrangianSystem):
 
         super().__init__(theta0, thetadot0)
 
-    def positions(self, q: np.ndarray = None):
+    def positions(self, q: np.ndarray | None = None):
         """Cartesian (x1, y1, x2, y2) bob positions for a given (theta1, theta2).
 
         Parameters
@@ -108,7 +108,7 @@ class DoublePendulum(LagrangianSystem):
         y2 = y1 - self.l2 * np.cos(th2)
         return np.array([x1, y1, x2, y2])
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         q, qdot = self.split(state, self.ndof)
         p = self._momentum_njit(q, qdot)
@@ -160,7 +160,7 @@ class BeadOnRotatingHoop(LagrangianSystem):
 
         super().__init__(np.atleast_1d(theta0), np.atleast_1d(thetadot0))
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         q, qdot = self.split(state, self.ndof)
         p = self._momentum_njit(q, qdot)
@@ -230,7 +230,7 @@ class ElasticPendulum(LagrangianSystem):
 
         super().__init__(q0, qdot0)
 
-    def positions(self, q: np.ndarray = None):
+    def positions(self, q: np.ndarray | None = None):
         """Cartesian (x, y) mass position for a given (s, theta).
 
         Parameters
@@ -248,7 +248,7 @@ class ElasticPendulum(LagrangianSystem):
         r = self.L0 + s
         return np.array([r * np.sin(th), -r * np.cos(th)])
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         q, qdot = self.split(state, self.ndof)
         p = self._momentum_njit(q, qdot)
@@ -301,7 +301,7 @@ class CoupledOscillators(LagrangianSystem):
 
         super().__init__(q0, qdot0)
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         q, qdot = self.split(state, self.ndof)
         p = self._momentum_njit(q, qdot)

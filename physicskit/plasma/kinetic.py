@@ -196,10 +196,10 @@ def langmuir_wave_ic(n_particles: int, L: float, k_mode: float, alpha: float, v_
 def two_stream_ic(n_particles: int, L: float, v_drift: float, v_th: float, seed: int = 0) -> tuple:
     """Initial condition for the two-stream instability: two counter-streaming Maxwellian beams.
 
-    Splits the particles into two equal populations drifting at
-    :math:`\\pm v_{drift}`, each with thermal spread :math:`v_{th}`, and
-    seeds the fastest-growing long-wavelength mode with a small
-    density ripple. When :math:`v_{drift}` exceeds the thermal spread by
+    Splits the particles into two equal, interpenetrating populations
+    drifting at :math:`\\pm v_{drift}`, each spread uniformly over the whole
+    domain with thermal spread :math:`v_{th}`, and seeds the fastest-growing
+    long-wavelength mode with a small density ripple. When :math:`v_{drift}` exceeds the thermal spread by
     enough to make the combined velocity distribution doubly-peaked, the
     positive-slope region between the two peaks violates the (kinetic)
     Penrose stability criterion and the ripple grows exponentially,
@@ -237,13 +237,15 @@ def two_stream_ic(n_particles: int, L: float, v_drift: float, v_th: float, seed:
     True
     """
     rng = np.random.default_rng(seed)
-    half = n_particles // 2
     x0 = np.linspace(0.0, L, n_particles, endpoint=False)
     k_seed = 2.0 * np.pi / L
     x = np.mod(x0 + 0.01 * np.sin(k_seed * x0), L)
+    # Alternate the beams along the (ordered) positions so both fill the
+    # whole box; giving one beam the left half and the other the right half
+    # would make them collide head-on instead of streaming through each other.
     v = np.empty(n_particles)
-    v[:half] = rng.normal(v_drift, v_th, half)
-    v[half:] = rng.normal(-v_drift, v_th, n_particles - half)
+    v[0::2] = rng.normal(v_drift, v_th, v[0::2].size)
+    v[1::2] = rng.normal(-v_drift, v_th, v[1::2].size)
     return x, v
 
 

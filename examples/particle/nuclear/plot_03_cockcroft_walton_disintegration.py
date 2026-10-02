@@ -83,3 +83,11 @@ ax2.set_title("Gamow tunnelling sets the yield")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# p + Li-7 -> 2 He-4 releases 17.35 MeV, each alpha ~8.8 MeV with a ~8.3 cm
+# range in air; at 0.25 MeV the proton crosses the 1.2 MeV barrier only by tunnelling.
+assert abs(Q - 17.35) < 0.01 and abs(R_air - 8.4) < 0.3
+assert V_barrier > 4 * T_p and np.all(np.diff(gamow) > 0)

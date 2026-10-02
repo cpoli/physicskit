@@ -93,3 +93,15 @@ print("this single nonzero vacuum matrix element is the seed of spontaneous emis
 print("from first principles, rather than inserting Einstein's 1917 'A coefficient' by hand.")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# [a, a^dagger] = 1 below the truncation; a|n> = sqrt(n)|n-1>,
+# a^dagger|n> = sqrt(n+1)|n+1>; N = a^dagger a has spectrum 0, 1, 2, ...;
+# and <0| a a^dagger |0> = 1 is the vacuum fluctuation behind spontaneous emission.
+assert np.max(np.abs(comm[:-1, :-1] - np.eye(n_max - 1))) < 1e-12
+assert (lowered_idx, raised_idx) == (n_test - 1, n_test + 1)
+assert abs(lowered_amp - np.sqrt(n_test)) < 1e-12 and abs(raised_amp - np.sqrt(n_test + 1)) < 1e-12
+np.testing.assert_allclose(eigenvalues, np.arange(n_max), atol=1e-12)
+assert abs(n_expectation_vacuum) < 1e-12 and abs(a_adag_expectation - 1) < 1e-12

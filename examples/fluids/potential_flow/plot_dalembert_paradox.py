@@ -93,3 +93,11 @@ print(f"net drag from the pressure integral:  {drag_numeric:.2e} (theory: exactl
 print(f"net lift from the pressure integral:  {lift_numeric:.2e} (theory: exactly 0, no circulation)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# d'Alembert: zero drag (and, without circulation, zero lift) in potential flow,
+# with the symmetric surface pressure Cp = 1 - 4 sin^2(theta).
+assert abs(drag_numeric) < 1e-9 and abs(lift_numeric) < 1e-9
+np.testing.assert_allclose(Cp, 1 - 4 * np.sin(theta) ** 2, atol=1e-12)

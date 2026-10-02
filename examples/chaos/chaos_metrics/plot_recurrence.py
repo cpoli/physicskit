@@ -68,3 +68,9 @@ print(f"measure of the epsilon-ball: {measure:.5f}")
 print(f"Kac's lemma product (should be close to 1): {kac_product:.4f}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Kac's lemma: the mean recurrence time to a set is the inverse of its measure.
+assert abs(kac_product - 1) < 0.05

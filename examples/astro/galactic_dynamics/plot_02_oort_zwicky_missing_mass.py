@@ -99,3 +99,13 @@ ax3.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Oort's sheet needs more mass than is seen; Zwicky's virial mass
+# 5 sigma^2 R / G (sigma ~ 1000 km/s, R = 1 Mpc) is ~1.2e15 Msun, tens of
+# times the starlight.
+assert rho0 / rho_visible > 1.2
+assert abs(M_vir - 5 * (1000 * KM) ** 2 * R / G / SOLAR_MASS_KG) < 3 * M_boot.std() + 0.02 * M_vir
+assert M_vir / M_luminous > 30

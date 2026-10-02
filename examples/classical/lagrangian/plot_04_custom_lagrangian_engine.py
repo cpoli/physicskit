@@ -117,3 +117,11 @@ fig1.tight_layout()
 # required.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The sympy-derived Hamiltonian is conserved, and at the 2:1 resonance the
+# radial (spring) motion pumps the swing: the angle grows well past its start.
+assert drift < 1e-6
+assert np.abs(theta_t).max() > 2 * 0.15

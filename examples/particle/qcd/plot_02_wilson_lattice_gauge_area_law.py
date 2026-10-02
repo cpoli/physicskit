@@ -15,6 +15,7 @@ the measured area law and string tension can be checked exactly.
 
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.special import iv
 
 from physicskit.particle.lattice_gauge import (
     U1LatticeGauge,
@@ -95,3 +96,12 @@ ax2.set_xlabel("x")
 ax2.set_ylabel("t")
 ax2.set_title(r"Flux through each plaquette, $\beta = 2$")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# 2D U(1) lattice gauge theory confines at every coupling: the Creutz ratio
+# gives the exact string tension -ln(I_1(beta) / I_0(beta)).
+for beta, s in sigma_mc.items():
+    assert abs(u1_2d_string_tension(beta) + np.log(iv(1, beta) / iv(0, beta))) < 1e-12
+    assert abs(s / u1_2d_string_tension(beta) - 1) < 0.05

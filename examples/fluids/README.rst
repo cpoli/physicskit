@@ -41,9 +41,13 @@ Sections
   across a range of Mach numbers, and the classic Sod shock tube resolving
   a rarefaction fan, contact discontinuity, and shock in one Riemann problem.
 - **navier_stokes** -- the 2D incompressible vorticity-streamfunction
-  solver: viscous decay of a periodic vortex patch, and a decaying
-  turbulence simulation whose energy spectrum is checked against
-  Kolmogorov's -5/3 law.
+  solver: viscous decay of a periodic vortex patch, Richardson's cascade,
+  and forced, statistically steady turbulence whose energy spectrum is
+  checked against Kolmogorov's -5/3 law.
+- **convection** -- Rayleigh-Bénard convection: the onset for rigid and
+  stress-free walls, growth rates, and the heat flux of convection rolls.
+- **shallow_water** -- the Saint-Venant equations: the dam break against
+  its exact solution, and Rossby's geostrophic adjustment.
 - **continuum_mechanics** -- linear continuum mechanics beyond flow:
   Fourier's heat equation (explicit, Crank-Nicolson, and spectral),
   standing sound waves in pipes and rooms, and Lamé's pressurized

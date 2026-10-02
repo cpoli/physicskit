@@ -86,3 +86,15 @@ ax2.set_title("Lyapunov spectra: Henon (dissipative) vs. Standard map (conservat
 ax2.legend()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Lorenz: (0.906, 0, -14.57), summing to the divergence -(sigma + 1 + beta);
+# Rossler: lambda_1 ~ 0.071; Henon: exponents sum to ln|b|, lambda_1 ~ 0.42;
+# the area-preserving standard map: lambda_1 + lambda_2 = 0.
+lorenz_sum = -(systems["Lorenz"].sigma + 1 + systems["Lorenz"].beta)
+assert abs(spectra["Lorenz"].sum() - lorenz_sum) < 1e-2 and abs(spectra["Lorenz"][0] - 0.906) < 0.05 and abs(spectra["Lorenz"][1]) < 0.05
+assert abs(spectra["Rossler"][0] - 0.071) < 0.01 and abs(spectra["Rossler"][1]) < 0.02
+assert abs(henon_spectrum.sum() - np.log(0.3)) < 1e-9 and abs(henon_spectrum[0] - 0.42) < 0.02
+assert abs(standard_spectrum.sum()) < 1e-9 and standard_spectrum[0] > 0

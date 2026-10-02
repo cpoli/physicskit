@@ -98,3 +98,12 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Beyond the optical disk the curve stays flat (slope ~0, not Keplerian
+# -1/2), so the dynamical mass keeps growing past the visible mass.
+outer_slope = np.polyfit(np.log(r_obs[outer]), np.log(v_obs[outer]), 1)[0]
+assert abs(outer_slope) < 0.1
+assert ratio[-1] > 5 and ratio[-1] > 3 * ratio[0]

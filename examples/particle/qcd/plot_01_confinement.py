@@ -79,3 +79,12 @@ fig2.tight_layout()
 anim = animate_string_breaking(sim)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The string snaps whenever its energy kappa r reaches a new quark pair's
+# 2 m_q: equally spaced breaks every (2 m_q / kappa) / v.
+assert abs(sim["r_break_unit"] - 2 * m_q / kappa) < 1e-12
+np.testing.assert_allclose(sim["break_times"], sim["r_break_unit"] / v * np.arange(1, 5), rtol=1e-9)
+np.testing.assert_allclose(energy, kappa * r_values, rtol=1e-12)

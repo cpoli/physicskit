@@ -102,3 +102,13 @@ ax2.legend()
 # ``implicit_midpoint``.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Below Omega_c = sqrt(g/R) the bead oscillates about the bottom; above it
+# the bottom is unstable and the bead oscillates about theta_eq = arccos(g / R Omega^2)
+# on one side only (spontaneously broken symmetry).
+assert abs(omega_c - np.sqrt(g / R)) < 1e-12
+assert res_below.q[:, 0].min() < 0 < res_below.q[:, 0].max()
+assert np.all(theta_above > -1e-6) and theta_above.min() < theta_eq_above < theta_above.max()

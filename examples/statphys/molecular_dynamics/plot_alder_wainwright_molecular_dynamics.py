@@ -124,3 +124,13 @@ ax3.set_title("Dense system: a crystal")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Velocity Verlet conserves energy to < 2%; forward Euler explodes. The
+# dilute gas keeps its temperature; the dense system crystallizes with
+# its first neighbour at the triangular-lattice spacing sqrt(2 / (sqrt(3) rho)).
+assert abs(E_verlet[-1] - E_verlet[0]) / abs(E_verlet[0]) < 0.02
+assert abs(E_euler[-1] - E_euler[0]) / abs(E_euler[0]) > 1
+assert abs(r1 - np.sqrt(2 / (np.sqrt(3) * 0.9))) < 0.07

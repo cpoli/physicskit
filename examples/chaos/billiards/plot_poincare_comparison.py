@@ -21,6 +21,7 @@ chaotic (Sinai, Bunimovich Stadium).
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.billiards import (
     BunimovichStadium,
@@ -52,3 +53,17 @@ axes.flat[-1].axis("off")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Along one ray, an integrable billiard keeps |sin(phi)| on one or two
+# values (one per wall orientation); a chaotic one visits hundreds.
+n_values = {}
+for name, billiard in billiards.items():
+    run = billiard.simulate(billiard.sample_interior_point(), (0.37, 0.93), n_bounces=400)
+    n_values[name] = len(np.unique(np.round(np.abs(run["sin_phi"]), 6)))
+integrable = [name for name in billiards if isinstance(billiards[name], (CircleBilliard, RectangleBilliard))]
+chaotic = [name for name in billiards if isinstance(billiards[name], (BunimovichStadium, SinaiBilliard))]
+assert max(n_values[name] for name in integrable) <= 2
+assert min(n_values[name] for name in chaotic) > 100

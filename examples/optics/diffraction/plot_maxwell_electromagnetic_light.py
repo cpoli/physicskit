@@ -106,3 +106,15 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# c = 1/sqrt(mu0 eps0); the Yee pulse moves at c in vacuum and c/n in glass,
+# with Fresnel amplitudes (1 - n)/(1 + n) and 2/(1 + n); the Gaussian beam
+# spreads as w0 sqrt(1 + (z/zR)^2).
+assert abs(c_maxwell / C - 1) < 1e-9
+assert peak_400 - 300 == 400 and i_trans - 800 == 200
+assert abs(E_final[i_refl] - (1 - n_glass) / (1 + n_glass)) < 0.005
+assert abs(E_final[i_trans] - 2 / (1 + n_glass)) < 0.005
+assert np.max(np.abs(w_numeric / w_theory - 1)) < 1e-4

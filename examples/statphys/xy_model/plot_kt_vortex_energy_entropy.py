@@ -114,3 +114,13 @@ ax3.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A free vortex costs pi J ln L, a bound pair 2 pi J ln r independent of L;
+# the energy-entropy balance gives k_B T = pi J / 2 as the unbinding estimate.
+assert abs(slope - np.pi * J) < 0.05
+assert abs(pair_slope - 2 * np.pi * J) < 0.15
+assert np.max(np.abs(E_pair[256][:3] - E_pair[128][:3])) < 0.05
+assert sorted(np.rint(charges[np.abs(charges) > 0.5]).astype(int).tolist()) == [-1, 1]

@@ -69,7 +69,7 @@ class _ChainBase(HamiltonianSystem):
         modes = np.arange(1, n + 1)
         return 2.0 * np.sqrt(self.k / self.m) * np.sin(modes * np.pi / (2.0 * (n + 1)))
 
-    def normal_mode_coords(self, q: np.ndarray = None, p: np.ndarray = None):
+    def normal_mode_coords(self, q: np.ndarray | None = None, p: np.ndarray | None = None):
         """Transform (q, p) to normal-mode coordinates (Q_k, P_k).
 
         Via the discrete sine transform appropriate for fixed-fixed
@@ -95,7 +95,7 @@ class _ChainBase(HamiltonianSystem):
         P = S.T @ p
         return Q, P
 
-    def modal_energies(self, q: np.ndarray = None, p: np.ndarray = None) -> np.ndarray:
+    def modal_energies(self, q: np.ndarray | None = None, p: np.ndarray | None = None) -> np.ndarray:
         """Energy stored in each normal mode.
 
         ``E_k = 0.5*(P_k^2/m + m*omega_k^2*Q_k^2)`` -- the diagnostic

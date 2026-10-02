@@ -111,3 +111,12 @@ axes[2].set_title(f"Every eigenstate, W={8.0:.0f}: all independently localized")
 fig.colorbar(im, ax=axes[2], label=r"$|\psi_n(x)|^2$ (log scale)", shrink=0.85)
 
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# The clean mid-band state is a standing wave with IPR = 3/(2(N+1)); at
+# W = 8 the state collapses onto a few sites and the mean IPR keeps rising.
+assert abs(ipr_clean - 3 / (2 * (n_sites + 1))) < 1e-3
+assert ipr_disordered > 0.1 and xi < 5
+assert mean_ipr[-1] > 50 * mean_ipr[0]

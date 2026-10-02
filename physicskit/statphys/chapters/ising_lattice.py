@@ -4,7 +4,8 @@ Three user-facing classes wrap the Numba kernels in
 :mod:`physicskit.statphys.core.monte_carlo`:
 
 - :class:`Ising2D` -- the archetypal discrete ferromagnet, with an exactly
-  known critical temperature and both Metropolis and Wolff dynamics.
+  known critical temperature and Metropolis, Wolff and Swendsen-Wang
+  dynamics.
 - :class:`PottsModel2D` -- its :math:`q`-state generalization, whose
   transition sharpens from second order (:math:`q \\le 4`) to first order
   (:math:`q > 4`) on the square lattice.
@@ -25,6 +26,7 @@ from physicskit.statphys.core.monte_carlo import (
     metropolis_sweep_xy,
     potts_total_energy,
     seed_numba_random,
+    swendsen_wang_step_ising,
     wolff_step_ising,
     xy_plaquette_vorticity,
     xy_total_energy,
@@ -101,18 +103,21 @@ class Ising2D:
         ----------
         beta : float
             Inverse temperature :math:`1/(k_B T)`.
-        algorithm : {"metropolis", "wolff"}, default="metropolis"
+        algorithm : {"metropolis", "wolff", "swendsen-wang"}, default="metropolis"
             Update rule. Metropolis flips single spins; Wolff grows and flips
-            whole clusters, which decorrelates much faster near :math:`T_c`.
+            one cluster, and Swendsen-Wang partitions the whole lattice into
+            clusters and flips each with probability 1/2. Both cluster
+            rules decorrelate much faster near :math:`T_c`.
         n_sweeps : int, default=1
-            Number of sweeps (Metropolis) or cluster updates (Wolff) to
-            perform.
+            Number of sweeps (Metropolis) or cluster updates (Wolff,
+            Swendsen-Wang) to perform.
 
         Returns
         -------
         int or None
-            For ``"wolff"``, the size of the last cluster flipped; ``None``
-            for ``"metropolis"``.
+            For ``"wolff"``, the size of the last cluster flipped; for
+            ``"swendsen-wang"``, the number of clusters in the last update;
+            ``None`` for ``"metropolis"``.
         """
         last_cluster = None
         for _ in range(n_sweeps):
@@ -120,8 +125,10 @@ class Ising2D:
                 metropolis_sweep_ising(self.spins, beta, self.J)
             elif algorithm == "wolff":
                 last_cluster = wolff_step_ising(self.spins, beta, self.J)
+            elif algorithm == "swendsen-wang":
+                last_cluster = swendsen_wang_step_ising(self.spins, beta, self.J)
             else:
-                raise ValueError("algorithm must be 'metropolis' or 'wolff'")
+                raise ValueError("algorithm must be 'metropolis', 'wolff' or 'swendsen-wang'")
         return last_cluster
 
     def energy(self):
@@ -153,7 +160,7 @@ class Ising2D:
             temperature.
         n_measure : int, default=500
             Number of measurements collected at each temperature.
-        algorithm : {"metropolis", "wolff"}, default="metropolis"
+        algorithm : {"metropolis", "wolff", "swendsen-wang"}, default="metropolis"
             Update rule, see :meth:`sweep`.
         measure_every : int, default=1
             Number of sweeps between successive measurements.

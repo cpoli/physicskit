@@ -77,3 +77,12 @@ fig1.tight_layout()
 anim = animate_nbody_trajectories(history[: n_steps_one_period + 1], trail=n_steps_one_period, title="Figure-eight choreography")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Chenciner-Montgomery figure eight: period 6.32591, energy -1.28714,
+# zero angular momentum, closed after one period.
+assert abs(T_period - 6.32591) < 2 * dt
+assert abs(E0 + 1.28714) < 1e-4 and abs(L0[2]) < 1e-12
+assert dist_to_start[i_period] < 1e-3

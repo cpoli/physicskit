@@ -30,6 +30,8 @@ speed, in a random direction -- and watches it relax.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import kurtosis
 
 from physicskit.statphys.chapters.molecular_dynamics import LennardJonesGas
 from physicskit.statphys.visualizers.particle_render import plot_velocity_histogram
@@ -70,3 +72,15 @@ plot_velocity_histogram(gas, ax=ax)
 ax.set_title(f"Final speed distribution (t = {gas.time:.1f})")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# From equal speeds the gas relaxes to Maxwell-Boltzmann: H falls to the 2D
+# equilibrium value -1 - ln(2 pi k_B T / m), each velocity component becomes
+# Gaussian (zero excess kurtosis), and the total energy stays conserved.
+T_final = np.mean(history["temperature"][-20:])
+assert history["H"][-1] < history["H"][0] - 1
+assert abs(history["H"][-1] - (-1 - np.log(2 * np.pi * T_final))) < 0.1
+assert abs(kurtosis(gas.velocities.ravel())) < 0.5
+assert np.ptp(history["total_energy"]) < 0.03 * abs(history["total_energy"][0])

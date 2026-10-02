@@ -269,7 +269,7 @@ class KeplerSystem(HamiltonianSystem):
         r = np.sqrt(q[0] ** 2 + q[1] ** 2 + self.softening**2)
         return -self.k / r + self.c_eps * r ** (-(1.0 + self.eps)) + self.c_pn * r ** (-3.0)
 
-    def angular_momentum(self, q: np.ndarray = None, p: np.ndarray = None) -> float:
+    def angular_momentum(self, q: np.ndarray | None = None, p: np.ndarray | None = None) -> float:
         """Out-of-plane angular momentum ``L = x*py - y*px``.
 
         Parameters
@@ -285,7 +285,7 @@ class KeplerSystem(HamiltonianSystem):
         p = self.p if p is None else p
         return float(q[0] * p[1] - q[1] * p[0])
 
-    def lrl_vector(self, q: np.ndarray = None, p: np.ndarray = None) -> np.ndarray:
+    def lrl_vector(self, q: np.ndarray | None = None, p: np.ndarray | None = None) -> np.ndarray:
         """Laplace-Runge-Lenz vector ``A = p x L - mu*k*r_hat`` (planar form).
 
         Exactly conserved (a fixed vector pointing at perihelion) for the
@@ -420,7 +420,7 @@ class FoucaultPendulum(ODESystem):
         """ndarray, shape (2,): Current horizontal velocity (vx, vy)."""
         return self.state[2:]
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         x, y, vx, vy = state[0], state[1], state[2], state[3]
         return 0.5 * (vx * vx + vy * vy) + 0.5 * self.omega0**2 * (x * x + y * y)

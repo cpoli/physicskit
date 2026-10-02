@@ -174,10 +174,7 @@ _GALLERY_SUBPACKAGES = [s["name"] for s in SUBPACKAGES]
 sphinx_gallery_conf = {
     "examples_dirs": [f"../../examples/{name}" for name in _GALLERY_SUBPACKAGES],
     "gallery_dirs": [f"api/gallery/{name}" for name in _GALLERY_SUBPACKAGES],
-    # Most scripts follow the "plot_*.py" sphinx-gallery convention; the
-    # physicskit.rmt paper-replication scripts predate that convention and
-    # are named "*_demo.py" instead.
-    "filename_pattern": r"(/plot_|_demo\.py$)",
+    "filename_pattern": r"/plot_",
     "download_all_examples": False,
     "within_subsection_order": "FileNameSortKey",
     "remove_config_comments": True,

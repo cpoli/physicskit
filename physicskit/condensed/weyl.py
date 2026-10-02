@@ -89,7 +89,7 @@ def weyl_semimetal_hamiltonian(kx: float, ky: float, kz: float, m: float, t: flo
     return np.sin(kx) * _SIGMA_X + np.sin(ky) * _SIGMA_Y + mass * _SIGMA_Z
 
 
-def weyl_node_locations(m: float, t: float = 1.0) -> tuple:
+def weyl_node_locations(m: float, t: float = 1.0) -> np.ndarray | None:
     r"""Exact :math:`k_z` positions of the two Weyl nodes on the :math:`k_z` axis.
 
     Solves :math:`m - t(2 + \cos k_z) = 0` -- the mass term of

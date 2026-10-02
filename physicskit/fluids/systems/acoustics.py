@@ -115,7 +115,7 @@ def pipe_mode_frequencies(length: float, c: float, n_modes: int = 5, ends=("open
     left, right = _check_ends(ends)
     if length <= 0 or c <= 0:
         raise InvalidParameterError("length and c must be positive")
-    n = np.arange(1, n_modes + 1)
+    n = np.arange(1, n_modes + 1, dtype=np.float64)
     if left == right:
         return n * c / (2.0 * length)
     return (2 * n - 1) * c / (4.0 * length)

@@ -28,7 +28,7 @@ from physicskit.chaos.systems.maps import LogisticMap
 # trajectory spends long stretches shadowing an (almost) period-3 orbit
 # -- laminar phases -- each abruptly ended by a short chaotic burst that
 # reinjects it, before the next laminar episode begins.
-r_c = 3.8284  # the period-3 window's tangent-bifurcation threshold
+r_c = 1 + np.sqrt(8)  # the period-3 window's tangent-bifurcation threshold, 3.828427...
 r = r_c - 1e-4
 
 m = LogisticMap(r=r)
@@ -39,7 +39,7 @@ fig1, ax1 = plt.subplots(figsize=(9, 4))
 ax1.plot(traj, color="steelblue", lw=0.9)
 ax1.set_xlabel("iteration n")
 ax1.set_ylabel(r"$x_n$")
-ax1.set_title(f"Type-I intermittency at r={r} (r_c={r_c}): laminar plateaus, chaotic bursts")
+ax1.set_title(f"Type-I intermittency at r={r:.6f} (r_c={r_c:.6f}): laminar plateaus, chaotic bursts")
 fig1.tight_layout()
 
 # %%
@@ -91,3 +91,11 @@ ax2.invert_xaxis()
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Pomeau-Manneville type-I intermittency: the mean laminar length grows as
+# (r_c - r)^(-1/2) at the period-3 tangent bifurcation r_c = 1 + sqrt(8).
+exponent = np.polyfit(np.log(distances), np.log(mean_lengths), 1)[0]
+assert abs(exponent + 0.5) < 0.05

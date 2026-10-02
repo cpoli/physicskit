@@ -114,3 +114,11 @@ ax3.set_title("Whorls shrink, then viscosity wins")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Whorls break into smaller whorls (the mean enstrophy wavenumber doubles)
+# while total enstrophy can only decrease in 2D viscous flow.
+assert k_mean[i_peak] > 1.8 * k_mean[0]
+assert np.all(np.diff(Z_total) <= 1e-9)

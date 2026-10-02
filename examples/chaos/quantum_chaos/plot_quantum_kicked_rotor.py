@@ -91,3 +91,13 @@ ax2.set_title(f"Weak kick (k={k_weak}): wavepacket Husimi vs. classical orbit, {
 ax2.legend(loc="upper right")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Floquet evolution is unitary; for a weak kick the wavepacket's Husimi
+# peak follows the classical standard-map orbit.
+assert len(qkr.eigenphases()) == qkr.dim and abs(np.sum(np.abs(states[-1]) ** 2) - 1) < 1e-10
+i, j = np.unravel_index(np.argmax(husimi), husimi.shape)
+theta_cl, p_cl = classical[-1, 0] % (2 * np.pi), classical[-1, 1] % (2 * np.pi)
+assert abs(q_grid[i, j] - theta_cl) < 0.15 and abs(p_grid[i, j] - p_cl) < 0.15

@@ -1,6 +1,6 @@
 """physicskit.fluids: fluid dynamics from inviscid potential flow to compressible shocks, plus heat, sound, and elasticity.
 
-Six physical regimes, each a module of :mod:`physicskit.fluids.systems`,
+Physical regimes, each a module of :mod:`physicskit.fluids.systems`,
 sharing the doubly-periodic pseudo-spectral grid and RK4 time-stepping core
 in :mod:`physicskit.fluids.core` wherever a grid-based simulation is needed:
 
@@ -21,6 +21,15 @@ in :mod:`physicskit.fluids.core` wherever a grid-based simulation is needed:
 - :mod:`~physicskit.fluids.systems.navier_stokes` -- the 2D incompressible
   vorticity-streamfunction solver underlying the instability and
   turbulence-spectrum tools.
+- :mod:`~physicskit.fluids.systems.turbulence` -- statistically stationary,
+  forced 2D turbulence and its Kolmogorov-Kraichnan :math:`k^{-5/3}`
+  inverse energy cascade.
+- :mod:`~physicskit.fluids.systems.convection` -- Rayleigh-Bénard
+  convection: the onset of convection for rigid and stress-free walls, and
+  nonlinear convection rolls.
+- :mod:`~physicskit.fluids.systems.shallow_water` -- the Saint-Venant
+  shallow-water equations: the exact and simulated dam break, and Rossby's
+  geostrophic adjustment on a rotating planet.
 - :mod:`~physicskit.fluids.systems.lattice_boltzmann` -- the D2Q9 BGK
   lattice Boltzmann method, a kinetic route to the same Navier-Stokes
   dynamics with walls and obstacles by bounce-back.
@@ -55,9 +64,17 @@ from physicskit.fluids.systems.acoustics import (
     rectangular_room_mode_frequencies,
 )
 from physicskit.fluids.systems.compressible_flow import (
+    exact_riemann_solution,
     normal_shock_relations,
     rankine_hugoniot_jump_conditions,
     sod_shock_tube,
+)
+from physicskit.fluids.systems.convection import (
+    RayleighBenard2D,
+    RayleighBenardWalls2D,
+    rayleigh_benard_critical,
+    rayleigh_benard_growth_rate_free,
+    rayleigh_benard_marginal_rayleigh,
 )
 from physicskit.fluids.systems.elasticity import (
     PlaneElasticityResult,
@@ -103,6 +120,13 @@ from physicskit.fluids.systems.potential_flow import (
     source_potential,
     uniform_flow_potential,
 )
+from physicskit.fluids.systems.shallow_water import (
+    dam_break_exact,
+    geostrophic_adjustment_steady,
+    rotating_shallow_water_1d,
+    shallow_water_1d,
+)
+from physicskit.fluids.systems.turbulence import ForcedTurbulence2D, ForcedTurbulence3D, kolmogorov_kraichnan_spectrum
 from physicskit.fluids.systems.viscous_flow import (
     blasius_boundary_layer_thickness,
     blasius_skin_friction_coefficient,
@@ -204,4 +228,17 @@ __all__ = [
     "lbm_equilibrium",
     "lbm_relaxation_time",
     "lbm_viscosity",
+    "ForcedTurbulence2D",
+    "RayleighBenard2D",
+    "dam_break_exact",
+    "geostrophic_adjustment_steady",
+    "kolmogorov_kraichnan_spectrum",
+    "rayleigh_benard_critical",
+    "rayleigh_benard_growth_rate_free",
+    "rayleigh_benard_marginal_rayleigh",
+    "rotating_shallow_water_1d",
+    "shallow_water_1d",
+    "exact_riemann_solution",
+    "RayleighBenardWalls2D",
+    "ForcedTurbulence3D",
 ]

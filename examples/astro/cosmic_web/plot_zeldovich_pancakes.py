@@ -177,3 +177,12 @@ if D_numeric_onset is not None:
     )
 else:
     print("No significant clumping detected in the scanned range.")
+
+# %%
+# Check
+# -----
+# Shell crossing first happens where the largest Hessian eigenvalue peaks,
+# at D = 1 / lambda_max; a finite-count clumping threshold fires somewhat
+# before the continuum density diverges.
+assert abs(D_local[i_min] - D_collapse) < 1e-12
+assert D_numeric_onset is not None and 0.5 < D_numeric_onset / D_collapse <= 1.05

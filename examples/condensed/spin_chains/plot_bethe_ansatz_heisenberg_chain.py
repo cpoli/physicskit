@@ -78,3 +78,12 @@ ax.set_title("Singlet-triplet gap closes linearly in 1/N")
 ax.set_xlim(0, None)
 ax.set_ylim(0, None)
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Exact diagonalization and the Bethe equations agree to machine precision,
+# and E0/N -> 1/4 - ln 2 with the CFT correction -pi^2 / 12 N^2.
+np.testing.assert_allclose(E_ed, E_bethe, atol=1e-8)
+assert abs(e_bethe[-1] - (e_inf - np.pi**2 / (12 * N_bethe[-1] ** 2))) < 1e-6
+assert np.all(np.diff(gap_ed) < 0)

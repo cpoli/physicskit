@@ -15,6 +15,10 @@
   Restricted Solid-On-Solid interface growth.
 - :mod:`physicskit.statphys.chapters.nonequilibrium_work` -- Jarzynski's equality for a dragged
   harmonic trap.
+- :mod:`physicskit.statphys.chapters.wang_landau` -- Wang-Landau flat-histogram sampling of the
+  Ising density of states.
+- :mod:`physicskit.statphys.chapters.path_integral` -- path-integral Monte Carlo for a quantum
+  particle in a well.
 """
 
 from physicskit.statphys.chapters.ehrenfest_urn import EhrenfestUrn
@@ -23,11 +27,13 @@ from physicskit.statphys.chapters.kpz_growth import KPZInterface
 from physicskit.statphys.chapters.langevin import BrownianMotion, LangevinDynamics, OrnsteinUhlenbeck
 from physicskit.statphys.chapters.molecular_dynamics import LennardJonesGas
 from physicskit.statphys.chapters.nonequilibrium_work import JarzynskiHarmonicTrap
+from physicskit.statphys.chapters.path_integral import PathIntegralParticle
 from physicskit.statphys.chapters.percolation import Percolation2D
 from physicskit.statphys.chapters.random_walk import RandomWalk
 from physicskit.statphys.chapters.renormalization import BlockSpinRG
 from physicskit.statphys.chapters.sandpile import BTWSandpile
 from physicskit.statphys.chapters.spin_glass import EdwardsAndersonSpinGlass2D, SherringtonKirkpatrick
+from physicskit.statphys.chapters.wang_landau import WangLandauIsing
 
 __all__ = [
     "BTWSandpile",
@@ -41,9 +47,11 @@ __all__ = [
     "LangevinDynamics",
     "LennardJonesGas",
     "OrnsteinUhlenbeck",
+    "PathIntegralParticle",
     "Percolation2D",
     "PottsModel2D",
     "RandomWalk",
     "SherringtonKirkpatrick",
+    "WangLandauIsing",
     "XYModel2D",
 ]

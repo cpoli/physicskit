@@ -4,6 +4,7 @@ from physicskit.chaos.core.base_system import BilliardSystem, DiscreteMap, Dynam
 from physicskit.chaos.exceptions import ChaoskitError, InvalidParameterError
 from physicskit.chaos.quantum.billiards import QuantumBilliard
 from physicskit.chaos.quantum.maps import QuantumBakersMap, QuantumKickedRotor
+from physicskit.chaos.systems.bifurcations import Brusselator, HopfNormalForm
 from physicskit.chaos.systems.billiards import (
     BunimovichStadium,
     CircleBilliard,
@@ -23,11 +24,13 @@ from physicskit.chaos.systems.continuous import (
     Rossler,
 )
 from physicskit.chaos.systems.maps import BakersMap, HenonMap, LogisticMap, SmaleHorseshoe, StandardMap
+from physicskit.chaos.systems.synchronization import Kuramoto, kuramoto_order_parameter_lorentzian
 
 __version__ = "0.1.0"
 
 __all__ = [
     "BakersMap",
+    "Brusselator",
     "BilliardSystem",
     "BunimovichStadium",
     "ChaoskitError",
@@ -40,6 +43,8 @@ __all__ = [
     "EllipseBilliard",
     "ForcedVanDerPol",
     "HenonMap",
+    "HopfNormalForm",
+    "Kuramoto",
     "InvalidParameterError",
     "LogisticMap",
     "Lorenz",
@@ -54,5 +59,6 @@ __all__ = [
     "SmaleHorseshoe",
     "StandardMap",
     "TruncatedCircleBilliard",
+    "kuramoto_order_parameter_lorentzian",
     "__version__",
 ]

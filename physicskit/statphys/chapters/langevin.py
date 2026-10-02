@@ -281,9 +281,10 @@ class BrownianMotion:
         self.positions = states.reshape(n_frames + 1, self.n_particles, self.dim)
         return self.times, self.positions
 
-    def _require_run(self):
-        if self.positions is None:
+    def _require_run(self) -> tuple[np.ndarray, np.ndarray]:
+        if self.positions is None or self.times is None:
             raise RuntimeError("call run() first")
+        return self.times, self.positions
 
     def mean_squared_displacement(self):
         """Ensemble mean-squared displacement from the initial positions, summed over dimensions.
@@ -295,9 +296,9 @@ class BrownianMotion:
             :math:`\\langle |\\mathbf x(t) - \\mathbf x(0)|^2\\rangle`; for free
             particles, :math:`2\\,d\\,D t`.
         """
-        self._require_run()
-        disp = self.positions - self.positions[0]
-        return self.times, np.mean(np.sum(disp**2, axis=-1), axis=1)
+        times, positions = self._require_run()
+        disp = positions - positions[0]
+        return times, np.mean(np.sum(disp**2, axis=-1), axis=1)
 
     def measured_diffusion_coefficient(self) -> float:
         """Diffusion coefficient from the growth of the displacement variance.
@@ -309,10 +310,9 @@ class BrownianMotion:
         -------
         float
         """
-        self._require_run()
-        disp = self.positions - self.positions[0]
+        t, positions = self._require_run()
+        disp = positions - positions[0]
         var = np.mean(np.var(disp, axis=1), axis=-1)
-        t = self.times
         return float(np.sum(var * t) / (2.0 * np.sum(t * t)))
 
     def measured_mobility(self) -> float:
@@ -324,12 +324,12 @@ class BrownianMotion:
             :math:`\\langle \\Delta\\mathbf x\\rangle\\cdot\\hat{\\mathbf F} /
             (|\\mathbf F|\\, t)` at the last frame; ``nan`` without a force.
         """
-        self._require_run()
+        times, positions = self._require_run()
         fnorm = np.linalg.norm(self.force)
         if fnorm == 0:
             return float("nan")
-        drift = np.mean(self.positions[-1] - self.positions[0], axis=0) @ (self.force / fnorm)
-        return float(drift / (fnorm * self.times[-1]))
+        drift = np.mean(positions[-1] - positions[0], axis=0) @ (self.force / fnorm)
+        return float(drift / (fnorm * times[-1]))
 
 
 class LangevinDynamics:

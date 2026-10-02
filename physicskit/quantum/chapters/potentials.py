@@ -974,8 +974,8 @@ class StadiumBilliard2D:
         inside = self.mask(X, Y)
         idx = -np.ones(X.shape, dtype=int)
         interior_points = np.argwhere(inside)
-        for order, (i, j) in enumerate(interior_points):
-            idx[i, j] = order
+        for row, (i, j) in enumerate(interior_points):
+            idx[i, j] = row
         n_interior = interior_points.shape[0]
 
         hx = x[1] - x[0]
@@ -985,12 +985,12 @@ class StadiumBilliard2D:
 
         H = lil_matrix((n_interior, n_interior))
         coeff = self.hbar**2 / (2 * self.m)
-        for order, (i, j) in enumerate(interior_points):
-            H[order, order] = coeff * (2 / hx**2 + 2 / hy**2)
+        for row, (i, j) in enumerate(interior_points):
+            H[row, row] = coeff * (2 / hx**2 + 2 / hy**2)
             for di, dj, h in ((1, 0, hx), (-1, 0, hx), (0, 1, hy), (0, -1, hy)):
                 ni, nj = i + di, j + dj
                 if 0 <= ni < X.shape[0] and 0 <= nj < X.shape[1] and idx[ni, nj] >= 0:
-                    H[order, idx[ni, nj]] = -coeff / h**2
+                    H[row, idx[ni, nj]] = -coeff / h**2
 
         energies, vecs = eigsh(H.tocsr(), k=n_states, which="SM")
         order = np.argsort(energies)

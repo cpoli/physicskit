@@ -30,6 +30,7 @@ vanishing at the finite collapse time
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.classical.systems.rotations import EulersDisk, eulers_disk_theta_analytic
 from physicskit.classical.visualizers.animations import animate_eulers_disk
@@ -77,3 +78,11 @@ ax.legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Euler's disk: theta(t) = theta0 sqrt(1 - t/t_f) collapses in the finite time
+# t_f = theta0^2 / 2 c; the integration follows it.
+assert np.max(np.abs(result.y[:, 0] - theta_exact)) < 1e-10
+np.testing.assert_allclose(theta_exact, theta0 * np.sqrt(1 - result.t / t_f), rtol=1e-12)

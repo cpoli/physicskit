@@ -152,7 +152,7 @@ class SideBySideAnimator:
         self.anim = FuncAnimation(self.fig, self._frame, frames=len(self.frame_indices), interval=interval, blit=blit)
         return self.anim
 
-    def save(self, filename: str, fps: int = None, **kwargs):
+    def save(self, filename: str, fps: Optional[int] = None, **kwargs):
         """Save the animation, building it first if needed.
 
         ``fps`` defaults to 30 for the common case of a string/None
@@ -171,13 +171,12 @@ class SideBySideAnimator:
         **kwargs
             Forwarded to ``FuncAnimation.save`` (e.g. ``writer=...``).
         """
-        if self.anim is None:
-            self.build()
+        anim = self.build() if self.anim is None else self.anim
         if fps is None and "writer" not in kwargs:
             fps = 30
         if fps is not None:
             kwargs["fps"] = fps
-        self.anim.save(filename, **kwargs)
+        anim.save(filename, **kwargs)
 
 
 def pendulum_animation(result, positions_func: Callable[[np.ndarray], np.ndarray], **kwargs) -> SideBySideAnimator:

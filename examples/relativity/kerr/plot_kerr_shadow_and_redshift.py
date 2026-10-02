@@ -27,6 +27,7 @@ isotropic emitter.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.relativity.visualizers.shadow_render import plot_black_hole_shadow, render_black_hole_image
 
@@ -34,8 +35,10 @@ from physicskit.relativity.visualizers.shadow_render import plot_black_hole_shad
 # The shadow shrinks and shifts as spin increases
 # ------------------------------------------------------
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+shadow_area = {}
 for ax, a in zip(axes, [0.0, 0.7, 0.998]):
     result = render_black_hole_image(M=1.0, a=a, ny=180, nx=180, inclination=1.3, r_disk_inner=1.0, r_disk_outer=0.0)
+    shadow_area[a] = np.isin(result["outcomes"], (1, 2)).sum() * (30.0 / 180) ** 2
     plot_black_hole_shadow(result, ax=ax)
     ax.set_title(f"a/M = {a}")
 plt.tight_layout()
@@ -51,3 +54,11 @@ plot_black_hole_shadow(result, ax=axes[1], redshift=True)
 axes[1].set_title("Doppler-shaded: approaching side brighter")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# The Schwarzschild shadow is a disk of radius 3 sqrt(3) M; spin shrinks and
+# flattens it.
+assert abs(shadow_area[0.0] / (27 * np.pi) - 1) < 0.03
+assert shadow_area[0.998] < shadow_area[0.7] < shadow_area[0.0]

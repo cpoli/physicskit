@@ -21,6 +21,9 @@ Sections
   relativistic correction you carry in your pocket.
 - **kerr** -- the rotating black hole: frame dragging, the ergosphere, the
   Penrose process, and the Kerr shadow and redshift.
+- **kerr_newman** -- the charged, rotating black hole: its horizons,
+  spherical photon orbits, charged-particle geodesics and ray-traced
+  shadow.
 - **spacetime_geometry** -- curvature itself: validating the curvature engine
   against Einstein's vacuum field equations, Flamm's paraboloid (gravity as
   curved geometry rather than a force), and Kruskal-Szekeres/Penrose-Carter

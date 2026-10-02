@@ -86,3 +86,14 @@ axes[2].set_title(f"Stadium billiard state {scar_idx}\n(E={energies[scar_idx]:.2
 axes[2].set_aspect("equal")
 
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Square box: E = pi^2 (nx^2 + ny^2) / 2, so (1, 2) and (2, 1) are degenerate.
+# Circular box: the eigenstate vanishes on the wall.
+E12, pairs12 = list(degeneracies.items())[0]
+assert abs(E12 - 5 * np.pi**2 / 2) < 1e-9 and sorted(pairs12) == [(1, 2), (2, 1)]
+phi_wall = np.linspace(0, 2 * np.pi, 50)
+assert np.max(np.abs(cb.eigenstate(m=2, n=2).psi(np.full_like(phi_wall, cb.R), phi_wall, cb.R))) < 1e-10
+assert np.all(np.diff(energies) >= 0) and energies[0] > 0

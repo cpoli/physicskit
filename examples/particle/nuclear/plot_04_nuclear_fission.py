@@ -100,3 +100,12 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# U-235 + n -> Ba-141 + Kr-92 + 3n releases ~173 MeV (7e10 J per gram,
+# ~3e7 times a chemical bond); fissility grows with Z^2 / A.
+assert 170 < Q_masses < 177 and abs(energy_per_gram / 7.1e10 - 1) < 0.02
+fissility = np.array(list(x.values()))
+assert np.all(np.diff(fissility) > 0) and 0.7 < x["U-236"] < 0.75

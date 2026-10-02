@@ -39,7 +39,7 @@ _I2 = np.eye(2, dtype=complex)
 _Z2 = np.zeros((2, 2), dtype=complex)
 
 
-def klein_gordon_dispersion(p: np.ndarray, m: float = 1.0) -> np.ndarray:
+def klein_gordon_dispersion(p: np.ndarray | float, m: float = 1.0) -> np.ndarray:
     r"""Positive-energy branch :math:`E = \sqrt{p^2 + m^2}` of the Klein-Gordon equation.
 
     Substituting :math:`\phi = e^{i(\mathbf p\cdot\mathbf x - Et)}` into

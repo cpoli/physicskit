@@ -100,3 +100,9 @@ ax.set_title("Orbital period decay rate vs. separation and eccentricity")
 ax.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Peters-Mathews period decay for PSR B1913+16 within 0.5% of the timing data.
+assert abs(predicted_dPdt / observed_dPdt - 1) < 0.005

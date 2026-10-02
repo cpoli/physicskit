@@ -96,3 +96,14 @@ h_over_l_final = np.std(final[interior, 1]) / 1.0
 print(f"interior row-spacing spread: t=0 -> {h_over_l_initial:.4f}, t={n_steps * dt:.1f} -> {h_over_l_final:.4f}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Karman's street starts at his ratio h/l = arccosh(sqrt 2) / pi = 0.281 and
+# drifts at U = (Gamma / 2l) tanh(pi h / l) (this finite street's interior
+# moves within ~15% of the infinite-street speed).
+assert abs(2 * h_over_l_initial - np.arccosh(np.sqrt(2)) / np.pi) < 1e-3
+U_street = 1 / 2 * np.tanh(np.pi * 2 * h_over_l_initial)
+U_interior = np.mean(trajectory[50, interior, 0] - positions0[interior, 0]) / (50 * dt)
+assert 0.85 < abs(U_interior) / U_street < 1.05

@@ -87,3 +87,12 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# KAM tori confine p until the last (golden-mean) torus breaks at Greene's
+# K_c = 0.9716; above it orbits from p ~ 0 reach p = pi (just above K_c only
+# slowly, through the leaky cantori the torus leaves behind).
+assert np.all(reach[K_values < 0.95] < 0.9 * np.pi)
+assert np.all(reach[K_values > 1.06] > 0.99 * np.pi)

@@ -3,8 +3,8 @@ Examples
 
 Runnable, self-contained scripts demonstrating every module of
 ``physicskit.semiclassical`` -- WKB/Bohr-Sommerfeld quantization,
-semiclassical propagators, the Gutzwiller trace formula, and quantum
-scars.
+semiclassical propagators, Feynman paths, the Gutzwiller trace formula and
+its relatives, the Ehrenfest time, and quantum scars.
 
 See also the narrative tutorials:
 
@@ -23,13 +23,21 @@ Sections
 
 - **wkb** -- classical momentum, turning points, WKB wavefunctions, and
   Bohr-Sommerfeld (EBK) quantization, checked against the exact harmonic
-  oscillator spectrum and eigenstates.
+  oscillator spectrum and eigenstates; Weyl's law, Einstein's torus
+  quantization, and the Langer correction.
 - **propagators** -- the Van Vleck-Morette single-trajectory propagator
-  (with its Maslov-index caustic count) and the Herman-Kluk
-  multi-trajectory frozen-Gaussian propagator, both checked against exact
-  quantum evolution.
+  (with its Maslov-index caustic count), Heller's thawed Gaussian and its
+  time-dependent spectroscopy, and the Herman-Kluk multi-trajectory
+  frozen-Gaussian propagator, all checked against exact quantum evolution.
 - **gutzwiller** -- the exact 1D Gutzwiller trace formula, reconstructing
   a spectrum from a single classical periodic orbit's action and period,
-  and the general isolated-orbit stability amplitude.
+  and the general isolated-orbit stability amplitude; the Berry-Tabor and
+  Balian-Bloch level densities of billiards; and Bogomolny's transfer
+  operator.
+- **path_integral** -- Feynman's sum over paths and the emergence of the
+  classical path as :math:`\hbar\to0`.
+- **ehrenfest** -- the logarithmic Ehrenfest time of a chaotic wavepacket.
 - **scarring** -- quantum scars on the stadium billiard's bouncing-ball
-  orbit family, and a Husimi phase-space view of a scarred eigenstate.
+  orbit family, a Husimi phase-space view of a scarred eigenstate, and
+  Berry's random-wave conjecture for the eigenstates that are not
+  scarred.

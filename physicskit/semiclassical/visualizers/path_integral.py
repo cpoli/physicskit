@@ -95,7 +95,7 @@ def animate_feynman_phasor_spiral(
     ax_paths.set_ylabel("x(t)")
     ax_paths.set_title("Sampled paths (closest to classical first)")
     ax_paths.legend(loc="upper left", fontsize=8)
-    path_lines = []
+    path_lines: list = []
 
     radius = np.max(np.abs(partial_sums)) * 1.15 + 1e-12
     ax_complex.set_xlim(-radius, radius)

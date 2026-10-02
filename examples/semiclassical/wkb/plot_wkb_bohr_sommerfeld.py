@@ -160,3 +160,11 @@ axes2[2].set_title("WKB-exact overlap, per level")
 fig2.tight_layout()
 
 print("WKB-exact overlap per level:", np.round(overlap, 6))
+
+# %%
+# Check
+# -----
+# Bohr-Sommerfeld with the 1/2 Maslov correction is exact for the harmonic
+# oscillator, and WKB wave functions overlap the exact ones well.
+assert np.max(np.abs(energies - exact)) < 1e-10
+assert np.all(overlap > 0.85)

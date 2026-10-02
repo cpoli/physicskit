@@ -102,3 +102,11 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Chirikov: lambda_max ~ ln(k/2) for strong kicks; near k = 0.1 the motion
+# is almost entirely regular.
+assert abs(lambda_max[-1] - np.log(k_values[-1] / 2)) < 0.15
+assert lambda_max[0] < 0.05

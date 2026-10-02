@@ -101,3 +101,13 @@ ax2.set_title("Zero-energy band density")
 
 fig.suptitle("Graphene zigzag flake: boundary-localized zero-energy states")
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Chiral symmetry makes the spectrum symmetric about zero, and the
+# near-zero band lives on the boundary: under-coordinated sites carry far
+# more weight than their share of the sites.
+np.testing.assert_allclose(eigenvalues, -eigenvalues[::-1], atol=1e-10)
+assert len(edge_idx) >= 6
+assert boundary_fraction > 3 * boundary.mean()

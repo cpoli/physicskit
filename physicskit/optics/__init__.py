@@ -28,6 +28,12 @@ Typical usage::
 - :mod:`physicskit.optics.lasers` -- laser rate equations (threshold,
   gain clamping, relaxation oscillations) and the Maxwell-Bloch
   (Haken-Lorenz) single-mode laser with its chaotic second threshold.
+- :mod:`physicskit.optics.thin_films` -- interference in layered media by
+  the characteristic-matrix method: antireflection coatings, Bragg mirrors,
+  Fabry-Pérot cavities and the band gaps of 1D photonic crystals.
+- :mod:`physicskit.optics.nonlinear` -- second-harmonic generation: the
+  coupled-amplitude equations, phase mismatch, quasi-phase matching and
+  birefringent phase matching.
 - :mod:`physicskit.optics.visualizers` -- ray-trace, beam-envelope,
   diffraction-pattern, and interactive Wigner-surface plots.
 """
@@ -41,6 +47,13 @@ from physicskit.optics.gaussian import (
     q_to_beam_params,
 )
 from physicskit.optics.lasers import LaserRateEquations, MaxwellBloch
+from physicskit.optics.nonlinear import (
+    extraordinary_index,
+    shg_coupled_amplitudes,
+    shg_phase_matched_efficiency,
+    shg_undepleted_power,
+    type_i_phase_matching_angle,
+)
 from physicskit.optics.quantum_optics import (
     JaynesCummingsModel,
     coherent_state,
@@ -61,6 +74,16 @@ from physicskit.optics.ray import (
     spherical_mirror,
     thick_lens,
     thin_lens,
+)
+from physicskit.optics.thin_films import (
+    airy_transmission,
+    bloch_wavenumber,
+    coefficient_of_finesse,
+    fabry_perot_free_spectral_range,
+    finesse,
+    multilayer_response,
+    quarter_wave_band_gap,
+    quarter_wave_stack,
 )
 from physicskit.optics.visualizers import (
     animate_diffraction_propagation,
@@ -128,4 +151,19 @@ __all__ = [
     # lasers
     "LaserRateEquations",
     "MaxwellBloch",
+    # thin_films
+    "multilayer_response",
+    "quarter_wave_stack",
+    "airy_transmission",
+    "coefficient_of_finesse",
+    "finesse",
+    "fabry_perot_free_spectral_range",
+    "bloch_wavenumber",
+    "quarter_wave_band_gap",
+    # nonlinear
+    "shg_undepleted_power",
+    "shg_phase_matched_efficiency",
+    "shg_coupled_amplitudes",
+    "extraordinary_index",
+    "type_i_phase_matching_angle",
 ]

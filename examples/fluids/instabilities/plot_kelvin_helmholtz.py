@@ -105,3 +105,12 @@ plt.show()
 anim = animate_kelvin_helmholtz(omega0, nu=0.0005, dt=0.002, steps_per_frame=10, n_frames=40, length=length)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The shear layer is unstable: it grows at least at the fundamental mode's
+# vortex-sheet rate k dU / 2 and rolls up into vortex cores.
+assert abs(sigma_predicted - k0 * 2.0 / 2) < 1e-12
+assert sigma_measured > sigma_predicted
+assert len(peaksf) > len(peaks0)

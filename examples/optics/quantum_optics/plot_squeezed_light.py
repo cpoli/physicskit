@@ -83,3 +83,10 @@ print(f"squeezed-state x-quadrature variance:      {var_x_squeezed:.4f}")
 print(f"predicted e^(-2*xi) reduction: {var_x_vacuum * np.exp(-2 * xi):.4f}")
 print("noise pushed below the vacuum level in one quadrature is exactly the")
 print("effect Slusher and coworkers first observed experimentally in 1985.")
+
+# %%
+# Check
+# -----
+# Squeezing by xi pushes one quadrature's variance to e^(-2 xi) of the vacuum.
+assert abs(var_x_squeezed - var_x_vacuum * np.exp(-2 * xi)) < 1e-3
+assert var_x_squeezed < var_x_vacuum

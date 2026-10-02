@@ -37,6 +37,7 @@ predicts the diffractive spreading seen below as :math:`z` grows from
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.optics.visualizers import plot_diffraction_pattern
 from physicskit.optics.wave import angular_spectrum_propagate, circular_aperture
@@ -69,3 +70,13 @@ print(f"aperture radius: {radius} mm, wavelength: {wavelength} mm")
 print("the far-field pattern has spread well past the aperture's geometric")
 print("shadow -- exactly what Huygens' wavelet construction predicts and")
 print("plain ray optics cannot explain.")
+
+# %%
+# Check
+# -----
+# Near the aperture (Fresnel number a^2 / lambda z = 4) the light stays in the
+# geometric shadow's opening; far away (0.1) most of it has spread outside.
+coords = (np.arange(256) - 128) * dx
+outside = np.hypot(*np.meshgrid(coords, coords)) > radius
+fraction_outside = [np.sum(np.abs(U[outside]) ** 2) / np.sum(np.abs(U) ** 2) for U in (U_near, U_far)]
+assert fraction_outside[0] < 0.2 and fraction_outside[1] > 0.8

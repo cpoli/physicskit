@@ -357,11 +357,11 @@ def _redshift_factor(result, disk_mask):
     if a == 0.0:
         from physicskit.relativity.chapters.schwarzschild import SchwarzschildBlackHole
 
-        bh = SchwarzschildBlackHole(M=M)
-        g[disk_mask] = bh.disk_redshift_factor(hit_radii[disk_mask], L_phi[disk_mask])
+        schwarzschild = SchwarzschildBlackHole(M=M)
+        g[disk_mask] = schwarzschild.disk_redshift_factor(hit_radii[disk_mask], L_phi[disk_mask])
     else:
         from physicskit.relativity.chapters.kerr import KerrBlackHole
 
-        bh = KerrBlackHole(M=M, a=a)
-        g[disk_mask] = bh.disk_redshift_factor(hit_radii[disk_mask], L_phi[disk_mask], prograde=True)
+        kerr = KerrBlackHole(M=M, a=a)
+        g[disk_mask] = kerr.disk_redshift_factor(hit_radii[disk_mask], L_phi[disk_mask], prograde=True)
     return g

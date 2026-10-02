@@ -82,3 +82,14 @@ fig.tight_layout()
 
 gap_at_gamma = np.min(np.abs(np.linalg.eigvalsh(topological_insulator_3d_slab_hamiltonian(0.0, 0.0, n_layers=n_layers, m=m, t=t))))
 print(f"surface-state gap at the Dirac point (Gamma-bar): {gap_at_gamma:.2e}")
+
+# %%
+# Check
+# -----
+# The bulk stays gapped along the whole line, the slab's surface Dirac
+# point is gapless, and the surface band disperses linearly away from it.
+assert np.min(np.abs(bulk_bands)) > 0.5
+assert gap_at_gamma < 1e-10
+c = len(k_line) // 2
+E_half, E_full = cone[c + 10, c], cone[-1, c]
+assert abs(E_full / E_half - 2) < 0.1

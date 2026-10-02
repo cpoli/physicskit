@@ -67,3 +67,11 @@ vac = fock_state(0, cutoff)
 W_vac = compute_wigner_function(vac, x, p)
 N_W_vac = wigner_negativity(W_vac, x, p)
 print(f"for comparison, the vacuum |0> (classical): N_W = {N_W_vac:.6f}")
+
+# %%
+# Check
+# -----
+# W_1(0, 0) = -1/pi; the negative volume of |1>'s Wigner function is
+# 2/sqrt(e) - 1 (Kenfack and Zyczkowski); the vacuum has none.
+assert abs(W[i0, j0] + 1 / np.pi) < 1e-3
+assert abs(N_W - (2 / np.sqrt(np.e) - 1)) < 2e-3 and N_W_vac < 1e-6

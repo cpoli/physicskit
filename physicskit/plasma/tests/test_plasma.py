@@ -193,6 +193,27 @@ class TestKineticPIC:
         assert v.shape == (2000,)
         assert np.mean(v) == pytest.approx(0.0, abs=0.5)
 
+    def test_two_stream_ic_beams_interpenetrate(self):
+        # each half of the box holds as many particles of each beam
+        L = 10.0
+        x, v = two_stream_ic(2000, L=L, v_drift=3.0, v_th=0.5, seed=0)
+        left = x < L / 2
+        assert np.sum(left & (v > 0)) == pytest.approx(np.sum(left & (v < 0)), abs=2)
+        assert np.sum(~left & (v > 0)) == pytest.approx(np.sum(~left & (v < 0)), abs=2)
+
+    def test_two_stream_growth_rate_matches_cold_beam_theory(self):
+        # Two cold beams +-v0, each of density n0/2 (omega_b^2 = omega_p^2 / 2):
+        # omega^2 = k^2 v0^2 + omega_b^2 - omega_b sqrt(4 k^2 v0^2 + omega_b^2) < 0.
+        k, v0 = 0.3, 3.0
+        x0, v0_arr = two_stream_ic(20000, L=2 * np.pi / k, v_drift=v0, v_th=0.5, seed=0)
+        result = pic_simulate(x0, v0_arr, L=2 * np.pi / k, ng=64, dt=0.05, steps=240)
+        t, log_energy = result["t"], np.log(result["field_energy"])
+        window = (t > 5) & (t < 12)
+        gamma = np.polyfit(t[window], log_energy[window], 1)[0] / 2
+        wb2 = 0.5
+        gamma_cold = np.sqrt(np.sqrt(wb2) * np.sqrt(4 * (k * v0) ** 2 + wb2) - (k * v0) ** 2 - wb2)
+        assert gamma == pytest.approx(gamma_cold, rel=0.1)
+
     def test_landau_damping_matches_analytic_decay_rate(self):
         k, v_th = 0.5, 1.0
         L = 2 * np.pi / k

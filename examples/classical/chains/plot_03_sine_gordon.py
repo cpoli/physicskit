@@ -98,3 +98,14 @@ ax2.set_title("Kink + antikink collision forms a breather (bound, oscillating), 
 fig2.colorbar(im, ax=ax2, label=r"$q_i(t)$")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The kink carries one quantum 2 pi of topological charge and travels at
+# conserved energy; on this discrete lattice a slow kink-antikink pair
+# captures into a breather that stays localized at the collision point.
+assert abs(result_solo.q[-1][0]) < 0.05 and abs(result_solo.q[-1][-1] - 2 * np.pi) < 1e-6
+assert drift_solo < 1e-9 and drift < 1e-9 and effective_speed > 0
+excited = np.where(np.abs(result.q[-1]) > 1)[0]
+assert excited.size > 0 and np.ptp(excited) < 20 and abs(excited.mean() - 150) < 10

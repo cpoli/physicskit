@@ -32,6 +32,12 @@ r"""physicskit.quantum: a visual and computational tour of quantum mechanics.
   Gaussian bases, in atomic units.
 - :mod:`physicskit.quantum.chapters.scattering` -- 3D potential scattering:
   the Born approximation and partial-wave phase shifts.
+- :mod:`physicskit.quantum.chapters.tensor_networks` -- matrix product
+  states and TEBD for spin chains, checked against the exact
+  diagonalization in :mod:`physicskit.condensed.spin_chains`.
+- :mod:`physicskit.quantum.chapters.quantum_circuits` -- a state-vector
+  quantum-circuit simulator with the Deutsch-Jozsa algorithm, the quantum
+  Fourier transform and Shor's period finding, and Grover search.
 
 See :mod:`physicskit.semiclassical` for WKB/EBK quantization, Van
 Vleck/Herman-Kluk semiclassical propagators, the Gutzwiller trace
@@ -103,6 +109,16 @@ from physicskit.quantum.chapters.potentials import (
     asymmetric_well_states,
     gravitational_bouncer_states,
 )
+from physicskit.quantum.chapters.quantum_circuits import (
+    QuantumCircuit,
+    deutsch_jozsa_circuit,
+    grover_circuit,
+    grover_optimal_iterations,
+    grover_success_probability,
+    modular_exponentiation_circuit,
+    qft_circuit,
+    shor_period_from_measurement,
+)
 from physicskit.quantum.chapters.relativistic import (
     dirac_hamiltonian,
     dirac_hydrogen_energy,
@@ -125,6 +141,7 @@ from physicskit.quantum.chapters.scattering import (
     yukawa_born_amplitude,
 )
 from physicskit.quantum.chapters.spin import RabiProblem, SternGerlach
+from physicskit.quantum.chapters.tensor_networks import MPS, tebd, tfim_bond_hamiltonians, xxz_bond_hamiltonians
 from physicskit.quantum.chapters.wave_packets import (
     GaussianDispersion,
     QuantumRevival,
@@ -278,4 +295,18 @@ __all__ = [
     "electron_repulsion_tensor",
     "HartreeFockResult",
     "restricted_hartree_fock",
+    # chapters.tensor_networks
+    "MPS",
+    "tebd",
+    "tfim_bond_hamiltonians",
+    "xxz_bond_hamiltonians",
+    # chapters.quantum_circuits
+    "QuantumCircuit",
+    "deutsch_jozsa_circuit",
+    "qft_circuit",
+    "grover_circuit",
+    "grover_optimal_iterations",
+    "grover_success_probability",
+    "modular_exponentiation_circuit",
+    "shor_period_from_measurement",
 ]

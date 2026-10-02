@@ -267,8 +267,8 @@ def animate_detector_event(four_vectors, charges, B, detector_radii=(3.0, 6.0), 
             pts = track[: frame + 2]
             line.set_data(pts[:, 0], pts[:, 1])
             ends.append(pts[-1])
-        ends = np.array(ends)
-        deposits.set_data(ends[:, 0], ends[:, 1])
+        end_pts = np.array(ends)
+        deposits.set_data(end_pts[:, 0], end_pts[:, 1])
         return [*lines, deposits]
 
     return FuncAnimation(fig, update, frames=n_frames, interval=interval, blit=False)

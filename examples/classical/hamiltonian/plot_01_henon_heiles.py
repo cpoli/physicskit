@@ -50,3 +50,21 @@ fig.suptitle("Poincare sections (y=0, py>0): smooth tori give way to chaos as E 
 fig.tight_layout(rect=[0, 0, 1, 0.93])
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Energy is conserved along each orbit; below E = 1/12 nearby orbits stay
+# together (tori), near E = 1/6 they separate exponentially (chaos).
+assert np.ptp(result.energy) < 1e-6 * abs(result.energy[0])
+
+
+def separation(E_val, t_end=200):
+    x0, px0 = 0.0, 0.1
+    py0 = np.sqrt(2 * E_val - px0**2)
+    a = HenonHeilesSystem(np.array([x0, 0.0]), np.array([px0, py0])).integrate((0, t_end), dt=0.01, method="yoshida4")
+    b = HenonHeilesSystem(np.array([x0 + 1e-8, 0.0]), np.array([px0, py0])).integrate((0, t_end), dt=0.01, method="yoshida4")
+    return np.max(np.abs(a.q[-100:] - b.q[-100:]))
+
+
+assert separation(0.05) < 1e-5 and separation(0.16) > 1e-3

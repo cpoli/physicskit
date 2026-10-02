@@ -13,6 +13,8 @@ reflection, :math:`\mathbf{v}' = \mathbf{v} - 2(\mathbf{v}\cdot\mathbf{n})
 \,\mathbf{n}`, whenever it strikes the boundary.
 """
 
+import numpy as np
+
 from physicskit.chaos.systems.billiards import SinaiBilliard
 from physicskit.chaos.visualizers.dynamic_plots import plotly_billiard_trajectory, plotly_poincare_section
 
@@ -29,3 +31,14 @@ fig_traj.show()
 # -----------------
 fig_poincare = plotly_poincare_section(billiard, n_rays=40, n_bounces=200, seed=0)
 fig_poincare.show()
+
+# %%
+# Check
+# -----
+# Every bounce of Sinai's billiard lands on the cell wall or on the
+# scatterer, never inside it, and the speed is conserved.
+run = billiard.simulate(billiard.sample_interior_point(), (0.4, 0.9), n_bounces=150)
+assert np.hypot(run["x"], run["y"]).min() >= 0.5 - 1e-9
+on_wall = np.isclose(np.abs(run["x"]), 1.0) | np.isclose(np.abs(run["y"]), 1.0)
+on_disk = np.isclose(np.hypot(run["x"], run["y"]), 0.5)
+assert np.all(on_wall | on_disk) and np.ptp(np.hypot(run["vx"], run["vy"])) < 1e-12

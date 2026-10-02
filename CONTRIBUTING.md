@@ -24,12 +24,12 @@ MPLBACKEND=Agg pytest -q     # unit tests
 MPLBACKEND=Agg pytest --doctest-modules physicskit \
     --ignore-glob="*/tests/*" \
     --ignore=physicskit/chaos/visualizers/viewer3d.py   # docstring examples
-mypy                         # type check the typed core (blocking)
+mypy                         # type check (blocking)
 ```
 
 All of these run in CI (`.github/workflows/ci.yml`) on every PR, across
-Python 3.10-3.14 on Linux and macOS. `mypy` on the whole package also
-runs, but only as an advisory job — see "Type checking" below.
+Python 3.10-3.14 on Linux and macOS — see "Type checking" below for
+what `mypy` covers.
 
 If your change could affect performance (an integrator, a hot loop, a
 solver), compare the benchmarks before and after on your own machine —
@@ -51,6 +51,18 @@ pip install -e ".[docs]"
 cd docs && make html
 ```
 
+Every gallery example must check the physics it shows. End the script
+with a `Check` cell (`# %%`, then `# Check` / `# -----`) holding one or
+more `assert`s against the closed form or known value the example
+illustrates: an exact invariant, a textbook constant, a scaling exponent,
+a conserved quantity. Set each tolerance from the physics and the run's
+own statistics, not from the last printed number, and say in a comment
+what is being checked. The docs build fails on a failed `assert`, so an
+example that stops showing its physics breaks CI instead of going
+unnoticed. Keep the asserts at the end so they don't interrupt the
+narrative; if a loop overwrites a value the check needs, collect it in
+the loop rather than recomputing it.
+
 ## Code style
 
 - Follow the existing style in the subpackage you're editing — physics
@@ -70,26 +82,22 @@ cd docs && make html
 
 ## Type checking
 
-Type checking is adopted module by module, configured in
+`mypy` with no arguments checks the whole package (`[tool.mypy] files`
+in `pyproject.toml`), and a failure fails CI. The settings, all in
 `pyproject.toml`:
 
-- **Typed core (blocking).** `mypy` with no arguments checks the modules
-  listed under `[tool.mypy] files` — `constants`, `integrators`, `units`,
-  `results` and `io` — with `check_untyped_defs` on, and `units`,
-  `results` and `io` held to near-`--strict` settings. A failure here
-  fails CI. Errors in other modules that the typed core merely imports
-  are silenced by a `follow_imports = "silent"` override.
-- **Whole package (advisory).** `mypy physicskit` checks everything. It
-  is not yet clean (mostly matplotlib/numpy stub gaps around animation
-  objects and array-typed arguments), so CI runs it as a non-blocking
-  job.
+- **Library code** is checked with `check_untyped_defs`,
+  `strict_equality` and `warn_unreachable`, so the bodies of unannotated
+  functions are checked too.
+- **`units`, `results` and `io`** are also held to near-`--strict`
+  settings.
+- **Tests** (`physicskit/**/tests/`) are checked at the signature level
+  only: their bodies use private matplotlib and numba attributes and
+  deliberately loose argument types.
 
-New code should type-check cleanly. To promote a module to the typed
-core, fix its errors, then add it to `files` and to the first
-`[[tool.mypy.overrides]]` block (and remove its subpackage from the
-`follow_imports = "silent"` list if the whole subpackage is now clean).
-Fixing pre-existing errors in code you're not otherwise touching is
-welcome but not required.
+New code must type-check. Where a NumPy or matplotlib stub is wrong,
+prefer a narrow `# type: ignore[code]` with a short reason over loosening
+the annotation.
 
 ## Tests
 
@@ -191,8 +199,26 @@ matrix together.
 ### Before 1.0
 
 1.0 will be tagged once the public API above has been through at least
-one release without a breaking change. The typed-core `mypy` job should
-also cover every subpackage's top-level namespace by then.
+one release without a breaking change.
+
+## Releasing
+
+Releases are cut from `main` by pushing a tag; `.github/workflows/release.yml`
+does the rest.
+
+1. Bump `__version__` in `physicskit/__init__.py`, and `version` and
+   `date-released` in `CITATION.cff`.
+2. Rename `## [Unreleased]` in CHANGELOG.md to `## [X.Y.Z] - YYYY-MM-DD`,
+   open a new empty `[Unreleased]` section above it, and update the
+   compare links at the bottom.
+3. Commit, then `git tag vX.Y.Z && git push origin main vX.Y.Z`.
+
+The workflow fails before publishing anything if the tag, `__version__`
+and `CITATION.cff` disagree. It then publishes to PyPI (trusted
+publishing, no token), creates the GitHub Release with that CHANGELOG
+section as its notes, and rebuilds `gh-pages`. Zenodo archives each
+GitHub Release with its own DOI. Between releases, `docs.yml` redeploys
+`gh-pages` on every push to `main`.
 
 ## Reporting bugs / requesting features
 

@@ -96,3 +96,14 @@ v_c = circular_velocity(r, lambda rr: nfw_enclosed_mass(rr, rho_s, r_s))
 print(f"circular speed peaks at r = {r[np.argmax(v_c)]:.3f} r_s  (theory 2.163)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# NFW: log slope -1 (cusp), -2 at r_s, -3 far out; the closed-form mass and
+# potential match direct integration and differentiation; v_c peaks at
+# 2.163 r_s.
+assert abs(slope[0] + 1) < 0.01 and abs(np.interp(0.0, np.log(x), slope) + 2) < 1e-3 and abs(slope[-1] + 3) < 0.01
+assert np.max(np.abs(M_numeric - M_closed)[r > 0.1] / M_closed[r > 0.1]) < 1e-5
+assert np.max(np.abs(g_from_phi - M_closed / r**2)[r > 0.1] / (M_closed / r**2)[r > 0.1]) < 5e-3
+assert abs(r[np.argmax(v_c)] - 2.163) < 0.01

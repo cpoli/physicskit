@@ -163,6 +163,7 @@ def estimate_dt(
         else:
             raise RuntimeError(f"Could not find a dt meeting tol={tol:.1e} within {max_iter} shrink steps")
 
+    assert dt_good is not None and dt_bad is not None  # both set by the bracket search above
     lo, hi = dt_good, dt_bad
     for _ in range(max_iter):
         if (hi - lo) / lo < rel_precision:

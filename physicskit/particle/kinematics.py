@@ -210,6 +210,8 @@ def invariant_mass(four_vectors):
     total = None
     for p in four_vectors:
         total = p if total is None else total + p
+    if total is None:
+        raise ValueError("four_vectors must not be empty")
     return total.mass
 
 
@@ -268,4 +270,6 @@ def boost_to_com(four_vectors):
     total = None
     for p in four_vectors:
         total = p if total is None else total + p
+    if total is None:
+        raise ValueError("four_vectors must not be empty")
     return total.p_vec / total.E

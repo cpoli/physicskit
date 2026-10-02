@@ -238,3 +238,14 @@ ax3.set_ylabel("relative Jacobi-constant drift")
 ax3.set_title(f"Arenstorf orbit integration fidelity (max |drift| = {np.max(np.abs(drift)):.1e})")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Arenstorf orbit closes after one period with the Jacobi constant held
+# fixed; L4 sits at (1/2 - mu, sqrt(3)/2) and C_L1 > C_L2 > C_L3 > C_L4; the
+# perturbed orbit is chaotic.
+assert np.max(np.abs(states[-1] - states[0])) < 1e-2 and np.max(np.abs(drift)) < 1e-7
+np.testing.assert_allclose(lagrange_pts[3], [0.5 - mu, np.sqrt(3) / 2], atol=1e-9)
+assert c_l1 > c_l2 > c_l3 > c_l4
+assert lam > 0

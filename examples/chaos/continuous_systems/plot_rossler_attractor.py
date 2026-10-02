@@ -23,6 +23,7 @@ in 3D, using the classic chaotic parameters :math:`a=0.2`, :math:`b=0.2`,
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Rossler
 from physicskit.chaos.visualizers.section import plot_poincare_map
@@ -76,3 +77,10 @@ ax2.set_ylabel("z")
 ax2.set_title("Rossler Poincare section at y = 0 (ascending)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Rossler's band: bounded spiralling in x, y with rare large spikes in z.
+assert np.all(np.abs(states[:, :2]) < 15) and states[:, 2].min() > 0
+assert states[:, 2].max() > 10 and np.median(states[:, 2]) < 1

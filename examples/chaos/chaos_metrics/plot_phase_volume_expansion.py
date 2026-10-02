@@ -29,6 +29,7 @@ lower-dimensional (here fractal) object rather than filling space.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.systems.continuous import Lorenz
 from physicskit.chaos.utils.metrics import phase_volume_expansion
@@ -76,3 +77,9 @@ ax.set_title("Lorenz system: phase-space volume contracts at a constant rate")
 ax.legend()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Lorenz flow has constant divergence -(sigma + 1 + beta): ln V(t) = -13.67 t.
+assert np.max(np.abs(log_volume - expected_rate * t)) < 1e-6

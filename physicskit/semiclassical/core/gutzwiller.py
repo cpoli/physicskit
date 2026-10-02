@@ -24,6 +24,11 @@ implements that general ingredient, for use with orbits found in
 higher-dimensional chaotic systems (the stadium billiard scars analyzed
 in :mod:`physicskit.semiclassical.systems.scarring` live on exactly this
 kind of isolated unstable orbit).
+
+The smooth (:math:`r=0`) part of the trace formula is the Weyl term. For
+a two-dimensional billiard, :func:`balian_bloch_counting_function` and
+:func:`balian_bloch_level_density` give it with Balian and Bloch's
+boundary, corner and curvature corrections.
 """
 
 from __future__ import annotations
@@ -36,6 +41,8 @@ __all__ = [
     "classical_period",
     "gutzwiller_density_of_states",
     "gutzwiller_amplitude_from_monodromy",
+    "balian_bloch_counting_function",
+    "balian_bloch_level_density",
 ]
 
 
@@ -213,3 +220,134 @@ def gutzwiller_amplitude_from_monodromy(M: np.ndarray) -> float:
     1.414214
     """
     return float(1.0 / np.sqrt(abs(2.0 - np.trace(M))))
+
+
+def _balian_bloch_constant(corner_angles, total_curvature: float) -> float:
+    angles = np.asarray(corner_angles, dtype=float)
+    corners = float(np.sum((np.pi**2 - angles**2) / (24.0 * np.pi * angles)))
+    return corners + total_curvature / (12.0 * np.pi)
+
+
+def balian_bloch_counting_function(
+    k,
+    area: float,
+    perimeter: float,
+    corner_angles=(),
+    total_curvature: float = 0.0,
+    boundary: str = "dirichlet",
+):
+    r"""Smoothed number of billiard levels below wavenumber :math:`k`, with boundary corrections.
+
+    Balian and Bloch (1970) expanded the smoothed counting function of the
+    Helmholtz equation :math:`(\nabla^2+k^2)\psi=0` in a 2D domain in
+    powers of :math:`1/k`:
+
+    .. math::
+
+       \bar N(k) = \frac{A k^2}{4\pi} \mp \frac{L k}{4\pi} + C,
+       \qquad
+       C = \sum_i \frac{\pi^2-\theta_i^2}{24\pi\theta_i}
+         + \frac{1}{12\pi}\oint\kappa\,ds.
+
+    The first term is Weyl's law, the second is the boundary correction
+    (minus for Dirichlet, plus for Neumann), and the constant comes from
+    corners of interior angle :math:`\theta_i` and from the curvature
+    :math:`\kappa` of the smooth parts of the boundary. Examples: a
+    rectangle has :math:`C=4\times\tfrac1{16}=\tfrac14`, a disk has
+    :math:`C=\tfrac16`.
+
+    Parameters
+    ----------
+    k : float or ndarray
+        Wavenumber(s) (:math:`E=\hbar^2k^2/2m`).
+    area : float
+        Billiard area :math:`A`.
+    perimeter : float
+        Boundary length :math:`L`.
+    corner_angles : sequence of float, default=()
+        Interior angles :math:`\theta_i` of the boundary's corners, in radians.
+    total_curvature : float, default=0.0
+        :math:`\oint\kappa\,ds` over the smooth parts of the boundary
+        (:math:`2\pi` for a disk or a stadium, 0 for a polygon).
+    boundary : {"dirichlet", "neumann"}, default="dirichlet"
+        Boundary condition; sets the sign of the perimeter term.
+
+    Returns
+    -------
+    float or ndarray
+        :math:`\bar N(k)`, same shape as ``k``.
+
+    See Also
+    --------
+    balian_bloch_level_density : Its derivative :math:`d\bar N/dk`.
+
+    References
+    ----------
+    R. Balian and C. Bloch, "Distribution of eigenfrequencies for the wave
+    equation in a finite domain. I," Ann. Phys. **60**, 401-447 (1970);
+    "... III. Eigenfrequency density oscillations," Ann. Phys. **69**,
+    76-160 (1972). H. P. Baltes and E. R. Hilf, *Spectra of Finite
+    Systems* (Bibliographisches Institut, Mannheim, 1976).
+
+    Examples
+    --------
+    The unit square with Dirichlet walls has levels
+    :math:`k^2=\pi^2(n_x^2+n_y^2)`, :math:`n_x,n_y\ge1`. The exact
+    staircase fluctuates about the expansion with zero mean:
+
+    >>> import numpy as np
+    >>> n = np.arange(1, 40)
+    >>> k_exact = np.sort(np.pi * np.hypot(n[:, None], n[None, :]).ravel())
+    >>> ks = np.linspace(10.0, 80.0, 2000)
+    >>> corners = [np.pi / 2] * 4
+    >>> residual = np.searchsorted(k_exact, ks) - balian_bloch_counting_function(ks, area=1.0, perimeter=4.0, corner_angles=corners)
+    >>> bool(abs(residual.mean()) < 0.05)
+    True
+    """
+    if boundary not in ("dirichlet", "neumann"):
+        raise ValueError(f'boundary must be "dirichlet" or "neumann", got {boundary!r}.')
+    sign = -1.0 if boundary == "dirichlet" else 1.0
+    k = np.asarray(k, dtype=float)
+    out = area * k**2 / (4.0 * np.pi) + sign * perimeter * k / (4.0 * np.pi) + _balian_bloch_constant(corner_angles, total_curvature)
+    return out if out.ndim else float(out)
+
+
+def balian_bloch_level_density(k, area: float, perimeter: float, boundary: str = "dirichlet"):
+    r"""Smoothed density of billiard levels per unit wavenumber, :math:`d\bar N/dk`.
+
+    .. math::
+
+       \bar\rho(k) = \frac{A k}{2\pi} \mp \frac{L}{4\pi},
+
+    the derivative of :func:`balian_bloch_counting_function` (the corner
+    and curvature constant drops out). In energy, with
+    :math:`E=k^2` (:math:`\hbar^2/2m=1`),
+    :math:`\bar\rho(E)=A/4\pi\mp L/(8\pi\sqrt E)`.
+
+    Parameters
+    ----------
+    k : float or ndarray
+        Wavenumber(s).
+    area : float
+        Billiard area :math:`A`.
+    perimeter : float
+        Boundary length :math:`L`.
+    boundary : {"dirichlet", "neumann"}, default="dirichlet"
+        Boundary condition; sets the sign of the perimeter term.
+
+    Returns
+    -------
+    float or ndarray
+        :math:`\bar\rho(k)`, same shape as ``k``.
+
+    Examples
+    --------
+    >>> round(balian_bloch_level_density(10.0, area=np.pi, perimeter=2 * np.pi), 6)
+    4.5
+    """
+    if boundary not in ("dirichlet", "neumann"):
+        raise ValueError(f'boundary must be "dirichlet" or "neumann", got {boundary!r}.')
+    sign = -1.0 if boundary == "dirichlet" else 1.0
+    k = np.asarray(k, dtype=float)
+    out = area * k / (2.0 * np.pi) + sign * perimeter / (4.0 * np.pi)
+    return out if out.ndim else float(out)

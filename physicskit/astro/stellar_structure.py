@@ -75,8 +75,8 @@ def lane_emden(n, xi_max=1000.0, n_points=2000):
     def surface_event(xi, y):
         return y[0]
 
-    surface_event.terminal = True
-    surface_event.direction = -1
+    surface_event.terminal = True  # type: ignore[attr-defined]  # solve_ivp event attribute
+    surface_event.direction = -1  # type: ignore[attr-defined]
 
     sol = solve_ivp(
         rhs,

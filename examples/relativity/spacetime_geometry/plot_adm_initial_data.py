@@ -125,3 +125,14 @@ ax3.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Isotropic Schwarzschild: the areal radius has a minimum 2M at the throat
+# r = M/2; Brill-Lindquist data satisfy the Hamiltonian constraint to O(h^2),
+# and the ADM mass is m1 + m2 at every extraction radius.
+assert abs(R_areal.min() - 2 * M) < 1e-3 and abs(r[np.argmin(R_areal)] - M / 2) < 0.01
+assert np.max(np.abs(alpha**2 - (1 - 2 * M / R_areal))) < 1e-12
+assert np.abs(lap[far]).max() < 1e-2
+np.testing.assert_allclose(M_adm, 1.6, rtol=1e-4)

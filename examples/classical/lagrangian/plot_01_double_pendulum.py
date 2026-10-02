@@ -98,3 +98,11 @@ ax.legend()
 # :doc:`plot_03_coupled_oscillators`, built the same symbolic way.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The implicit midpoint rule conserves energy to 1e-6, so the rapid
+# divergence of two pendulums 0.01 rad apart is genuine chaos.
+assert drift1 < 1e-6
+assert np.abs(r1.q[-1, 0] - r2.q[-1, 0]) > 10 * 0.01

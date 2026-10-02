@@ -115,3 +115,11 @@ ax_lyap.set_title(r"$\lambda_{max} > 0$ lines up with the bifurcation diagram's 
 fig_lyap.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The Duffing oscillator has both regular (lambda_max < 0) and chaotic
+# (lambda_max > 0) forcing amplitudes in this range.
+assert lyapunov_exponents.min() < 0 < lyapunov_exponents.max()
+assert lyapunov_exponents.max() > 0.05

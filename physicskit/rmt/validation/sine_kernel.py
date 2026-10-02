@@ -19,6 +19,16 @@ from ..stats.correlations import pair_correlation_estimate, sine_kernel_r2
 
 @dataclass
 class CorrelationValidationResult:
+    """Result of comparing one Spectrum's empirical two-point correlation
+    function against the sine kernel, as returned by
+    :meth:`SineKernel.validate`.
+
+    ``rmse`` is the root-mean-square difference between the binned
+    pair-correlation estimate and the exact :math:`R_2(r)` over
+    ``n_bins`` equal-width bins on the unfolded separation range
+    ``[0, r_max]``.
+    """
+
     rmse: float
     r_max: float
     n_bins: int

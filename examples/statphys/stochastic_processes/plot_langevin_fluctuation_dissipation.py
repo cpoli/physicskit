@@ -44,11 +44,13 @@ m, k, kT = 1.0, 4.0, 0.5
 # lightest friction.
 
 results = {}
+equipartition = {}
 for gamma in (0.1, 1.0, 10.0):
     ld = LangevinDynamics(n_particles=4000, mass=m, gamma=gamma, kT=kT, stiffness=k, seed=int(10 * gamma))
     t, x, v = ld.run(t_max=80.0, dt=0.002, n_frames=400, x0=np.full(4000, 1.0))
     results[gamma] = (t, x[:, :, 0], v[:, :, 0])
     late = t > 60
+    equipartition[gamma] = (m * np.mean(v[late] ** 2), k * np.mean(x[late] ** 2))
     print(f"gamma = {gamma:5.1f}: m<v^2> = {m * np.mean(v[late] ** 2):.3f}, k<x^2> = {k * np.mean(x[late] ** 2):.3f}   (kT = {kT})")
 
 # %%
@@ -119,3 +121,12 @@ axes[2].set_title(r"equilibrium in the trap ($\gamma = 1$)")
 axes[2].legend(fontsize=8)
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# With noise strength 2 gamma kT every friction thermalizes to equipartition,
+# m<v^2> = k<x^2> = kT; halving the noise halves the temperature.
+for kinetic, potential in equipartition.values():
+    assert abs(kinetic / kT - 1) < 0.03 and abs(potential / kT - 1) < 0.03
+assert abs(T_weak / (kT / 2) - 1) < 0.03

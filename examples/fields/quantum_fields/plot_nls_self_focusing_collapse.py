@@ -27,7 +27,7 @@ not carried through the unresolvable blow-up itself.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physicskit.fields import animate_density_2d, gpe_evolve, harmonic_trap_grid
+from physicskit.fields import animate_density_2d, gpe_energy, gpe_evolve, harmonic_trap_grid
 
 # %%
 # A tall, narrow packet with attractive interactions and no trap
@@ -80,3 +80,13 @@ ax2.set_xlabel("t")
 ax2.set_ylabel(r"peak $|\psi|^2$")
 ax2.set_title("Self-focusing collapse: peak density accelerating, not saturating")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Norm is conserved while the peak keeps rising: with negative Hamiltonian
+# the 2D attractive NLS must collapse (Vlasov-Petrishchev-Talanov virial identity).
+norms = np.sum(np.abs(frames) ** 2, axis=(1, 2))
+assert np.ptp(norms) < 1e-9 * norms[0]
+assert gpe_energy(psi0, V, -2.0, X, Y, K2)["total"] < 0
+assert np.all(np.diff(peak_density) > 0) and peak_density[-1] > 2 * peak_density[0]

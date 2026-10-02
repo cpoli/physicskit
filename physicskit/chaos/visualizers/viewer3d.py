@@ -74,9 +74,9 @@ def pyvista_trajectory(
     plotter.add_mesh(
         line,
         scalars="scalars",
-        cmap=cmap,  # type: ignore[arg-type]  # pyvista stubs: cmap accepts any registered name
+        cmap=cmap,  # type: ignore[arg-type,unused-ignore]  # pyvista stubs: cmap accepts any registered name
         line_width=line_width,
         show_scalar_bar=False,
     )
-    plotter.show_grid()  # type: ignore[call-arg]  # pyvista stubs mistype this bound method
+    plotter.show_grid()  # type: ignore[call-arg,unused-ignore]  # pyvista stubs mistype this bound method
     return plotter

@@ -70,3 +70,12 @@ fig.colorbar(im, ax=axes[1], fraction=0.046)
 fig.tight_layout()
 
 print(f"max |E_ladder - E_exact| (excluding the truncated top level): {np.max(np.abs(E_ladder[:-1] - E_exact[:-1])):.2e}")
+
+# %%
+# Check
+# -----
+# [a, a^dagger] = 1 below the truncation, a|0> = 0, and N + 1/2 gives E_n.
+np.testing.assert_allclose(np.diag(comm)[:-1], 1, atol=1e-12)
+np.testing.assert_allclose(comm - np.diag(np.diag(comm)), 0, atol=1e-12)
+assert np.allclose(a @ vacuum, 0.0)
+np.testing.assert_allclose(E_ladder, E_exact, atol=1e-12)

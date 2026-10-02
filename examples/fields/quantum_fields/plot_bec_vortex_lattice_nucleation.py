@@ -92,3 +92,13 @@ ax_density0.set_title("vortex-free ground state (no density hole)")
 plot_bec_phase(X, Y, psi_vortex, ax=ax_phase)
 ax_phase.set_title(f"vortex state phase, winding = {np.sum(np.abs(winding))}")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The relaxed vortex carries one quantum of circulation, L_z = hbar per
+# particle; it costs energy, so it becomes favourable in a frame rotating
+# faster than Omega_c = dE / dL_z, which lies below the trap frequency.
+assert np.sum(np.abs(winding)) == 1
+assert abs(E1["angular_momentum"] - 1) < 0.02 and E1["total"] > E0["total"]
+assert 0 < Omega_c < 1

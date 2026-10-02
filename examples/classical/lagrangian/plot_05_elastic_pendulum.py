@@ -31,6 +31,7 @@ to this 1:2 resonance condition exactly.
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.classical.systems.lagrangian import ElasticPendulum
 from physicskit.classical.visualizers.animations import animate_elastic_pendulum
@@ -65,3 +66,11 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("elastic_pendulum_animation.gif", writer="pillow", fps=30)
+
+# %%
+# Check
+# -----
+# The implicit midpoint rule keeps the energy fixed (to 1e-4 at this large
+# dt) while stretch and swing exchange it, the swing growing past its start.
+assert np.ptp(result.energy) < 1e-4 * abs(result.energy[0])
+assert np.abs(result.q[:, 1]).max() > 0.05

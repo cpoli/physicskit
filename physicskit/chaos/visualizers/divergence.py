@@ -191,7 +191,8 @@ def trajectory_ensemble(
     for i in range(n_members):
         offset = rng.normal(size=system.dim)
         offset *= spread / float(np.linalg.norm(offset))
-        _, states = system.trajectory(state0=state0 + offset, dt=dt, n_steps=n_steps)
+        # Every concrete continuous system defines trajectory(); the ABC doesn't declare it.
+        _, states = cast(Any, system).trajectory(state0=state0 + offset, dt=dt, n_steps=n_steps)
         all_states[i] = states
     return all_states
 

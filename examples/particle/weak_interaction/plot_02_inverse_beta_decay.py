@@ -82,3 +82,10 @@ ax.legend()
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Threshold E = ((m_n + m_e)^2 - m_p^2) / 2 m_p = 1.806 MeV; no final state below it.
+assert abs(E_nu_threshold - 1.8057) < 1e-3
+assert np.all(np.isnan(p_star_values[~allowed])) and np.all(p_star_values[allowed] >= 0)

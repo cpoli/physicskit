@@ -144,3 +144,12 @@ ax6.set_ylabel("autocorrelation")
 ax6.set_title("Autocorrelation decays -- no long-term periodicity")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# From a single coordinate, delay embedding recovers lambda_max ~ 0.905 for
+# Lorenz, and phase-randomized surrogates (same spectrum, no determinism)
+# fall far below it.
+assert abs(lam - 0.905) < 0.15
+assert significance > 3 and observed > surrogate_values.max()

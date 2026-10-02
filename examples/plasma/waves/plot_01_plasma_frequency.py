@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import physicskit as pk
+from physicskit.constants import ELECTRON_MASS, VACUUM_PERMITTIVITY
 
 # %%
 # From the solar wind to a tokamak core
@@ -94,3 +95,12 @@ ax.set_title(r"Overdense ($\omega_{pe}>\omega_{ce}$) vs. underdense plasma")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# omega_p = sqrt(n e^2 / (eps0 m_e)): f_p ~ 8.98 sqrt(n) Hz; omega_pe = omega_ce
+# where n / B^2 = eps0 / m_e.
+np.testing.assert_allclose(omega_p / (2 * np.pi), 8.98 * np.sqrt(n_vals), rtol=1e-3)
+boundary = np.abs(np.log(ratio)) < 0.05
+np.testing.assert_allclose((NN / BB**2)[boundary], VACUUM_PERMITTIVITY / ELECTRON_MASS, rtol=0.11)

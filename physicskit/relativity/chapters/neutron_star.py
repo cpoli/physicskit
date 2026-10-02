@@ -105,8 +105,8 @@ class NeutronStar:
         def surface_event(r, y):
             return y[1] - 1.0e-10 * pressure_central
 
-        surface_event.terminal = True
-        surface_event.direction = -1
+        surface_event.terminal = True  # type: ignore[attr-defined]  # solve_ivp event attribute
+        surface_event.direction = -1  # type: ignore[attr-defined]
 
         solution = solve_ivp(
             self._tov_rhs,

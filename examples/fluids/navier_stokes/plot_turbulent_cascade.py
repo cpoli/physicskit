@@ -1,74 +1,82 @@
 r"""
-The Kolmogorov -5/3 cascade in decaying 2D turbulence
-=========================================================
+The Kolmogorov -5/3 cascade in forced 2D turbulence
+===================================================
 
-:class:`~physicskit.fluids.systems.navier_stokes.NavierStokes2D` integrates
-the 2D incompressible vorticity-transport equation
-:math:`\partial_t \omega + (\mathbf{u}\cdot\nabla)\omega = \nu \nabla^2
-\omega` pseudo-spectrally on a doubly periodic domain, with no external
-forcing: once set going, the flow's kinetic energy only decays, redistributed
-across scales by the nonlinear advection term before viscosity ultimately
-dissipates it. Kolmogorov's 1941 (K41) theory predicts that, in the
-"inertial range" of scales between where the flow was initially seeded and
-where viscosity dissipates it, the kinetic energy spectrum follows a
-universal power law,
+Kolmogorov's 1941 theory concerns turbulence in a statistical steady state:
+energy is injected at some scale at a rate :math:`\varepsilon`, passed
+through an "inertial range" of scales by the nonlinear terms alone, and
+removed elsewhere. If the statistics there depend only on
+:math:`\varepsilon` and the wavenumber :math:`k`, dimensional analysis
+fixes the energy spectrum,
 
 .. math::
 
-    E(k) \propto k^{-5/3},
+    E(k) = C\,\varepsilon^{2/3} k^{-5/3}.
 
-where :math:`E(k)` is defined so that :math:`\int E(k)\,dk` is the total
-kinetic energy per unit mass. This example seeds the solver's initial
-vorticity field with many randomly placed Gaussian vortex blobs of mixed
-sign and random position, lets their nonlinear interactions cascade energy
-across scales, and checks the resulting spectrum -- via
-:func:`~physicskit.fluids.utils.spectral_analysis.energy_spectrum` -- against
-that -5/3 law.
+A cascade needs a steady flux, so this example forces the flow rather than
+letting it decay.
+:class:`~physicskit.fluids.systems.turbulence.ForcedTurbulence2D` injects
+energy at the fixed rate :math:`\varepsilon` on a shell of wavenumbers
+around :math:`k_f = 20` on a :math:`128^2` periodic grid. In two dimensions
+the energy flows to *larger* scales (Kraichnan's inverse cascade), where a
+weak linear drag removes it, so the Kolmogorov range lies at
+:math:`k < k_f`; the enstrophy cascades the other way, to
+:math:`E \propto k^{-3}` above :math:`k_f`. The time-averaged spectrum is
+compared with the :math:`-5/3` law.
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physicskit.fluids.systems.navier_stokes import NavierStokes2D
-from physicskit.fluids.utils.spectral_analysis import energy_spectrum
-from physicskit.fluids.visualizers.flow_fields import plot_vorticity_field
-from physicskit.fluids.visualizers.spectra import plot_energy_spectrum
+from physicskit.fluids.systems.turbulence import ForcedTurbulence2D, kolmogorov_kraichnan_spectrum
+
+flow = ForcedTurbulence2D(n=128, kf=20.0, epsilon=1.0, drag=0.1, seed=0)
+out = flow.run(t_max=20.0, dt=0.004, t_average=10.0)
+k, E = out["k"], out["E"]
 
 # %%
-# Seed many random vortex blobs
-# ---------------------------------
+# Vorticity and energy budget
+# ---------------------------
+fig, axes = plt.subplots(1, 3, figsize=(14, 4.3))
+x = np.linspace(0, 2 * np.pi, flow.n, endpoint=False)
+vmax = np.percentile(np.abs(out["omega"]), 99)
+axes[0].pcolormesh(x, x, out["omega"], cmap="RdBu_r", vmin=-vmax, vmax=vmax, shading="auto")
+axes[0].set_aspect("equal")
+axes[0].set_title(f"Vorticity at t = {out['t'][-1]:.0f}")
+axes[0].set_xticks([])
+axes[0].set_yticks([])
 
-n, length = 128, 2 * np.pi
-solver = NavierStokes2D(n=n, length=length, nu=2e-4)
-
-rng = np.random.default_rng(0)
-n_blobs, core = 40, 0.12
-omega0 = np.zeros_like(solver.X)
-for _ in range(n_blobs):
-    xc, yc = rng.uniform(0, length, size=2)
-    sign = rng.choice([-1.0, 1.0])
-    dx = np.minimum(np.abs(solver.X - xc), length - np.abs(solver.X - xc))
-    dy = np.minimum(np.abs(solver.Y - yc), length - np.abs(solver.Y - yc))
-    omega0 += sign * np.exp(-(dx**2 + dy**2) / (2 * core**2))
-
-# %%
-# Let the nonlinear interactions cascade energy across scales
-# -----------------------------------------------------------------
-
-result = solver.simulate(omega0, dt=0.002, steps=800)
-
-fig, ax = plot_vorticity_field(solver.X, solver.Y, result["omega"], result["u"], result["v"])
-ax.set_title("Decaying 2D turbulence")
-fig.tight_layout()
+axes[1].plot(out["t"], out["energy"], color="navy")
+axes[1].plot(out["t"][:30], flow.epsilon * out["t"][:30], "k--", lw=1, label=r"$\varepsilon t$")
+axes[1].axvspan(out["t"][-1] - 10.0, out["t"][-1], color="gray", alpha=0.15, label="averaging window")
+axes[1].set_xlabel("t")
+axes[1].set_ylabel("kinetic energy")
+axes[1].set_title("Energy grows at the injection rate, then saturates")
+axes[1].legend()
 
 # %%
-# Check the energy spectrum against Kolmogorov's -5/3 law
-# -------------------------------------------------------------
-# A genuine inertial range shows up as a stretch of the measured spectrum
-# running parallel to the reference line on these log-log axes.
-
-k, E = energy_spectrum(result["u"], result["v"], length)
-fig, ax = plot_energy_spectrum(k, E)
-fig.tight_layout()
-
+# The time-averaged spectrum
+# --------------------------
+inertial = (k >= 3) & (k <= 12)
+slope, intercept = np.polyfit(np.log(k[inertial]), np.log(E[inertial]), 1)
+C = np.median(E[inertial] * k[inertial] ** (5 / 3)) / flow.epsilon ** (2 / 3)
+axes[2].loglog(k[1:], E[1:], color="navy", label="measured")
+kk = k[inertial]
+axes[2].loglog(kk, kolmogorov_kraichnan_spectrum(kk, flow.epsilon, C) * 1.6, "k--", label=r"$k^{-5/3}$")
+ks = np.arange(25, 40)
+axes[2].loglog(ks, E[25] * (ks / 25.0) ** -3 * 0.6, "k:", label=r"$k^{-3}$")
+axes[2].axvline(flow.kf, color="crimson", lw=0.8, label=r"forcing $k_f$")
+axes[2].set_ylim(E[1:60].min() / 3, E[1:].max() * 3)
+axes[2].set_xlabel("k")
+axes[2].set_ylabel("E(k)")
+axes[2].set_title(f"Fitted slope {slope:.2f} for 3 <= k <= 12")
+axes[2].legend(fontsize=8)
+plt.tight_layout()
 plt.show()
+print(f"inertial-range slope = {slope:.3f} (K41: {-5 / 3:.3f}), C = {C:.1f}")
+
+# %%
+# Check
+# -----
+# The inverse-cascade range follows the Kolmogorov exponent.
+assert abs(slope + 5 / 3) < 0.15

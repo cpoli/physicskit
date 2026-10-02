@@ -126,7 +126,7 @@ def animate_density(
     ymax = density.max() * 1.1
 
     if phase_colored and np.iscomplexobj(frames):
-        line_collections = []
+        line_collections: list = []
 
         def init():
             ax.set_xlim(x.min(), x.max())

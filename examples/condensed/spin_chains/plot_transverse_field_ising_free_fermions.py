@@ -92,3 +92,14 @@ ax2[1].set_xlabel("h / J")
 ax2[1].set_ylabel(r"$-\partial^2 e_0/\partial h^2$")
 ax2[1].set_title("Non-analyticity at the critical point")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Every level is a free-fermion level; the even-sector gap closes only at
+# h = J, and the exact energy per site at h = J is -4/pi.
+assert err < 1e-10
+gaps16 = np.array([energy_gap(tfim_hamiltonian(16, J=1.0, h=h, parity=+1)[0]) for h in (0.5, 1.0, 1.5)])
+assert gaps16[1] < 0.5 * min(gaps16[0], gaps16[2])
+assert abs(e0[np.argmin(np.abs(h_values - 1))] + 4 / np.pi) < 1e-4
+assert np.argmax(-d2e) == np.argmin(np.abs(h_values - 1))

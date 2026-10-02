@@ -106,3 +106,15 @@ plt.show()
 anim = animate_rayleigh_taylor(omega0, buoyancy0, nu=nu, kappa=kappa, g=g, dt=dt, steps_per_frame=chunk, n_frames=20, length=length)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Linear theory for a sharp, inviscid interface: sigma = sqrt(A g k). Once
+# the start-up transient has passed, the ripple grows exponentially at a
+# steady rate a little below that (the interface here is diffuse and slowly
+# widening, and the fluid viscous), until the plumes go nonlinear.
+assert abs(sigma_predicted - np.sqrt(atwood * g * k0)) < 1e-12
+rates = np.diff(np.log(amps[6:11])) / np.diff(times[6:11])
+assert np.ptp(rates) < 0.05 * rates.mean()
+assert 0.7 * sigma_predicted < rates.mean() < sigma_predicted

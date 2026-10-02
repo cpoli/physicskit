@@ -71,3 +71,9 @@ ax_density.set_title(f"density: core |psi|^2 = {np.abs(psi[n // 2, n // 2]) ** 2
 plot_bec_phase(X, Y, psi, ax=ax_phase)
 ax_phase.set_title(f"phase: winding = {np.sum(np.abs(winding))}")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Circulation is quantized (winding 1) and the density vanishes at the core.
+assert np.sum(np.abs(winding)) == 1 and np.abs(psi[n // 2, n // 2]) < 1e-12

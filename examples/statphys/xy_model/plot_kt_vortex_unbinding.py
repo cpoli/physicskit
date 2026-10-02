@@ -80,3 +80,11 @@ for ax, T_ratio in zip(axes.ravel(), T_ratios_grid):
 plt.suptitle("Vortex proliferation across the Kosterlitz-Thouless transition")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Vortices are rare below T_KT and proliferate above it.
+densities = np.array(densities)
+assert densities[T_ratios < 0.6].max() < 0.01
+assert densities[-1] > 0.05

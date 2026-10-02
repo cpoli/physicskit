@@ -106,3 +106,12 @@ ax.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Collisionless damping is reversible: reversing every velocity retraces the
+# particle orbits to round-off and the field energy, which had fallen over
+# 1000-fold, comes back.
+assert err < 1e-9
+assert energy_fwd[-1] < 1e-3 * energy_fwd[0] and energy_back[-1] > 0.9 * energy_fwd[0]

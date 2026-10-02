@@ -99,3 +99,17 @@ ax2.set_title("Spectral fluctuations")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Weyl's law with the Dirichlet boundary term counts the levels, and each
+# periodic-orbit family (M, N) of length 2 sqrt((Ma)^2 + (Nb)^2) gives a peak
+# in the length spectrum; the Gutzwiller amplitude 1/sqrt|tr M - 2| diverges
+# for the marginally stable (tr M = 2) orbits of an integrable billiard.
+assert abs(k.size - (a * b * K_max**2 / (4 * np.pi) - 2 * (a + b) * K_max / (4 * np.pi))) < 50
+for _M, _N, LMN, Lpk in found:
+    assert abs(Lpk - LMN) < 0.01
+for eps in (1e-1, 1e-3, 1e-6):
+    M_near = np.array([[1.0 + eps, L01], [0.0, 1.0 / (1.0 + eps)]])
+    assert np.isclose(gutzwiller_amplitude_from_monodromy(M_near), 1 / np.sqrt(abs(np.trace(M_near) - 2)), rtol=1e-6)

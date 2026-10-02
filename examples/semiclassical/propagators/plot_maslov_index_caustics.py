@@ -84,3 +84,12 @@ ax.set_xlabel("t / T")
 ax.set_ylabel(r"Maslov index $\mu$")
 ax.set_title("Caustics: one crossing per half-period")
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# The harmonic oscillator focuses every half period: the Maslov index counts
+# floor(2t / T) caustics (checked away from the focal times themselves).
+expected = np.floor(times_full / (T_period / 2))
+away = np.abs(times_full / (T_period / 2) - np.round(times_full / (T_period / 2))) > 0.02
+assert np.all(mu_history[away] == expected[away])

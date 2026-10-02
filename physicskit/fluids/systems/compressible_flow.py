@@ -8,7 +8,8 @@ and contact discontinuities) that no continuous velocity field can produce.
 give the exact algebraic jump a shock must satisfy; :func:`sod_shock_tube`
 resolves that jump -- alongside a contact discontinuity and an expansion
 fan -- dynamically, by integrating the full nonlinear equations through a
-classic Riemann problem.
+classic Riemann problem, and :func:`exact_riemann_solution` gives that
+Riemann problem's exact solution to compare against.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ __all__ = [
     "rankine_hugoniot_jump_conditions",
     "normal_shock_relations",
     "sod_shock_tube",
+    "exact_riemann_solution",
 ]
 
 
@@ -256,7 +258,7 @@ def sod_shock_tube(nx: int = 400, x0: float = 0.5, t_final: float = 0.2, gamma: 
         raise InvalidParameterError(f"cfl must be in (0, 1], got {cfl}")
 
     dx = 1.0 / nx
-    x = (np.arange(nx) + 0.5) * dx
+    x = (np.arange(nx, dtype=np.float64) + 0.5) * dx
     rho = np.where(x < x0, 1.0, 0.125)
     u = np.zeros(nx)
     p = np.where(x < x0, 1.0, 0.1)
@@ -282,3 +284,105 @@ def sod_shock_tube(nx: int = 400, x0: float = 0.5, t_final: float = 0.2, gamma: 
     u = U[:, 1] / rho
     p = (gamma - 1.0) * (U[:, 2] - 0.5 * rho * u**2)
     return {"x": x, "rho": rho, "u": u, "p": p}
+
+
+def exact_riemann_solution(
+    x: NDArray[np.float64],
+    t: float,
+    left: tuple[float, float, float] = (1.0, 0.0, 1.0),
+    right: tuple[float, float, float] = (0.125, 0.0, 0.1),
+    x0: float = 0.0,
+    gamma: float = 1.4,
+) -> dict[str, NDArray[np.float64]]:
+    """Exact solution of the Riemann problem for the 1D Euler equations of an ideal gas.
+
+    The star-region pressure :math:`p_*` is the root of
+    :math:`f_L(p_*) + f_R(p_*) + u_R - u_L = 0`, where :math:`f_K` is the
+    shock (Rankine-Hugoniot) or rarefaction (isentropic) relation for side
+    :math:`K`, found by Newton iteration; the solution is then sampled in
+    the similarity variable :math:`(x - x_0)/t` (Toro, *Riemann Solvers and
+    Numerical Methods for Fluid Dynamics*, 3rd ed., 2009, ch. 4). Vacuum
+    generation is not handled.
+
+    Parameters
+    ----------
+    x : ndarray of float
+        Positions.
+    t : float
+        Time, positive.
+    left, right : tuple of float, default Sod's states
+        ``(rho, u, p)`` on either side of the initial discontinuity.
+    x0 : float, default 0.0
+        Initial position of the discontinuity.
+    gamma : float, default 1.4
+
+    Returns
+    -------
+    dict
+        ``"rho"``, ``"u"``, ``"p"``, the specific internal energy ``"e"``
+        at ``x``, and the star-region ``"p_star"`` and ``"u_star"``.
+
+    Examples
+    --------
+    >>> out = exact_riemann_solution(np.array([0.0]), 0.2)
+    >>> round(float(out["p_star"]), 5), round(float(out["u_star"]), 5)  # Sod: Toro Table 4.3
+    (0.30313, 0.92745)
+    """
+    rL, uL, pL = left
+    rR, uR, pR = right
+    g = gamma
+    cL, cR = np.sqrt(g * pL / rL), np.sqrt(g * pR / rR)
+
+    def f(p, rK, pK, cK):
+        if p > pK:
+            A, B = 2 / ((g + 1) * rK), (g - 1) / (g + 1) * pK
+            return (p - pK) * np.sqrt(A / (p + B)), np.sqrt(A / (B + p)) * (1 - (p - pK) / (2 * (B + p)))
+        ratio = p / pK
+        return 2 * cK / (g - 1) * (ratio ** ((g - 1) / (2 * g)) - 1), ratio ** (-(g + 1) / (2 * g)) / (rK * cK)
+
+    if 2 * (cL + cR) / (g - 1) <= uR - uL:
+        raise InvalidParameterError("the initial states generate a vacuum")
+    p = max(1e-10, 0.5 * (pL + pR))
+    for _ in range(100):
+        fL, dL = f(p, rL, pL, cL)
+        fR, dR = f(p, rR, pR, cR)
+        p_new = max(1e-12, p - (fL + fR + uR - uL) / (dL + dR))
+        if abs(p_new - p) < 1e-14 * (p_new + p):
+            p = p_new
+            break
+        p = p_new
+    p_star = p
+    u_star = 0.5 * (uL + uR) + 0.5 * (f(p_star, rR, pR, cR)[0] - f(p_star, rL, pL, cL)[0])
+
+    xi = (np.asarray(x, dtype=np.float64) - x0) / t
+    rho = np.empty_like(xi)
+    u = np.empty_like(xi)
+    pr = np.empty_like(xi)
+    gm = (g - 1) / (g + 1)
+    for side, (rK, uK, pK, cK), sgn in (("L", (rL, uL, pL, cL), -1.0), ("R", (rR, uR, pR, cR), 1.0)):
+        mask = xi < u_star if side == "L" else xi >= u_star
+        s = xi[mask]
+        r_out, u_out, p_out = np.full_like(s, rK), np.full_like(s, uK), np.full_like(s, pK)
+        if p_star > pK:  # shock
+            r_star = rK * (p_star / pK + gm) / (gm * p_star / pK + 1)
+            S = uK + sgn * cK * np.sqrt((g + 1) / (2 * g) * p_star / pK + (g - 1) / (2 * g))
+            inside = s < S if side == "R" else s > S
+            r_out[inside], u_out[inside], p_out[inside] = r_star, u_star, p_star
+        else:  # rarefaction
+            r_star = rK * (p_star / pK) ** (1 / g)
+            c_star = cK * (p_star / pK) ** ((g - 1) / (2 * g))
+            head, tail = uK + sgn * cK, u_star + sgn * c_star
+            if side == "L":
+                star = s > tail
+                fan = (s > head) & ~star
+            else:
+                star = s < tail
+                fan = (s < head) & ~star
+            r_out[star], u_out[star], p_out[star] = r_star, u_star, p_star
+            sf = s[fan]
+            base = 2 / (g + 1) - sgn * (g - 1) / ((g + 1) * cK) * (uK - sf)
+            r_out[fan] = rK * base ** (2 / (g - 1))
+            u_out[fan] = 2 / (g + 1) * (-sgn * cK + (g - 1) / 2 * uK + sf)
+            p_out[fan] = pK * base ** (2 * g / (g - 1))
+        rho[mask], u[mask], pr[mask] = r_out, u_out, p_out
+    return {"rho": rho, "u": u, "p": pr, "e": pr / ((g - 1) * rho), "p_star": np.array(p_star), "u_star": np.array(u_star)}

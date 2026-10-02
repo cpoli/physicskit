@@ -67,3 +67,9 @@ relative_lifetime_10 = 10.0 / main_sequence_luminosity(10.0)
 print(f"\nrelative lifetime at 10 solar masses: {relative_lifetime_10:.4f} (lives roughly {1 / relative_lifetime_10:.0f}x shorter than the Sun)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+np.testing.assert_allclose(luminosity, mass_values**3.5, rtol=1e-12)
+np.testing.assert_allclose(lifetime_relative, mass_values**-2.5, rtol=1e-12)

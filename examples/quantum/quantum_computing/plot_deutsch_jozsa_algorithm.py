@@ -1,0 +1,96 @@
+r"""
+The Deutsch-Jozsa algorithm: the first exponential quantum speed-up
+===================================================================
+
+David Deutsch (1985) asked whether a computer obeying quantum mechanics
+could do something no classical one can. With Richard Jozsa (1992) he gave
+the first problem with an exponential gap. A function
+:math:`f:\{0,1\}^n \to \{0,1\}` is promised to be either constant or
+balanced (0 on exactly half the inputs). A deterministic classical
+algorithm may need :math:`2^{n-1} + 1` evaluations to tell which. The
+quantum algorithm needs one call to the phase oracle
+:math:`|x\rangle \to (-1)^{f(x)}|x\rangle`:
+
+.. math::
+
+    H^{\otimes n}\,O_f\,H^{\otimes n}|0\rangle^{\otimes n}, \qquad
+    P(0\dots0) = \Bigl|2^{-n}\sum_x(-1)^{f(x)}\Bigr|^2 = \begin{cases}1 & \text{constant} \\
+    0 & \text{balanced.}\end{cases}
+
+The Hadamards query every input at once in superposition, and the
+interference at the output cancels the all-zero outcome exactly when
+:math:`f` is balanced. This example runs the circuit for constant,
+balanced and unpromised functions, and counts the queries a classical
+algorithm needs.
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from physicskit.quantum.chapters.quantum_circuits import QuantumCircuit, deutsch_jozsa_circuit
+
+n = 4
+N = 2**n
+rng = np.random.default_rng(1)
+functions = {
+    "constant 0": np.zeros(N, int),
+    "constant 1": np.ones(N, int),
+    "balanced (parity)": np.array([bin(x).count("1") % 2 for x in range(N)]),
+    "balanced (random)": rng.permutation(np.repeat([0, 1], N // 2)),
+    "neither (3/4 ones)": rng.permutation(np.repeat([0, 1], [N // 4, 3 * N // 4])),
+}
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+# %%
+# One query decides
+# -----------------
+p_zero = {}
+for i, (name, f) in enumerate(functions.items()):
+    p = QuantumCircuit.probabilities(deutsch_jozsa_circuit(f).run(), n)
+    p_zero[name] = p[0]
+    axes[0].bar(np.arange(N) + 0.16 * (i - 2), p, width=0.16, label=name)
+axes[0].set_xlabel("measured outcome x")
+axes[0].set_ylabel("probability")
+axes[0].set_title(f"Deutsch-Jozsa, n = {n}: outcome 0 iff f is constant")
+axes[0].legend(fontsize=7)
+for name, p0 in p_zero.items():
+    print(f"{name:20s}: P(0000) = {p0:.4f}")
+
+# %%
+# Interference: amplitudes after the oracle
+# -----------------------------------------
+# Between the two Hadamard layers every input carries amplitude
+# (-1)^f(x)/sqrt(N); the last layer sums them into the 0 outcome.
+qc = QuantumCircuit(n)
+for q in range(n):
+    qc.h(q)
+qc.diagonal(np.pi * functions["balanced (random)"])
+amps = qc.run().real * np.sqrt(N)
+axes[1].bar(np.arange(N), amps, color=np.where(amps > 0, "steelblue", "crimson"))
+axes[1].set_xlabel("input x")
+axes[1].set_ylabel(r"$\sqrt{N}\,\langle x|O_f H^{\otimes n}|0\rangle$")
+axes[1].set_title(r"Balanced: the $(-1)^{f(x)}$ phases sum to zero")
+
+# %%
+# Classical query counts
+# ----------------------
+# A deterministic algorithm must see more than half the truth table in the
+# worst case, while the quantum circuit always makes one query.
+ns = np.arange(1, 21)
+axes[2].semilogy(ns, 2.0 ** (ns - 1) + 1, "o-", color="gray", label=r"classical worst case, $2^{n-1} + 1$")
+axes[2].semilogy(ns, np.ones_like(ns), "o-", color="crimson", label="quantum, 1")
+axes[2].set_xlabel("number of input bits n")
+axes[2].set_ylabel("oracle queries")
+axes[2].set_title("Exponential separation")
+axes[2].legend()
+plt.tight_layout()
+plt.show()
+
+# %%
+# Check
+# -----
+assert abs(p_zero["constant 0"] - 1) < 1e-12 and abs(p_zero["constant 1"] - 1) < 1e-12
+assert p_zero["balanced (parity)"] < 1e-24 and p_zero["balanced (random)"] < 1e-24
+assert abs(p_zero["neither (3/4 ones)"] - 0.25) < 1e-12  # |(4 - 12)/16|^2
+assert deutsch_jozsa_circuit(functions["constant 0"]).gate_count()["D"] == 1

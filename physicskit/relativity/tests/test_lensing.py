@@ -53,15 +53,19 @@ def test_invalid_distances_raise():
 
 
 def test_exact_deflection_matches_weak_field_for_large_impact_parameter():
-    # A finite r_far leaves a small residual bias (the flat-space "straight
-    # line" total angle swept between two finite radii isn't exactly pi;
-    # see the light-bending example script), so allow a generous tolerance
-    # rather than an unrealistically tight one.
     bh = SchwarzschildBlackHole(M=1.0)
     b = 50.0
     exact = exact_deflection_angle(bh, b)
     weak = bh.light_deflection_angle(b)
     assert exact == pytest.approx(weak, rel=0.1)
+
+
+@pytest.mark.parametrize("b", [50.0, 200.0])
+def test_exact_deflection_matches_post_newtonian_series(b):
+    # Keeler & Virbhadra: 4M/b + 15 pi M^2 / 4b^2 + 128 M^3 / 3b^3 + 3465 pi M^4 / 64b^4 + ...
+    bh = SchwarzschildBlackHole(M=1.0)
+    series = 4 / b + 15 * np.pi / (4 * b**2) + 128 / (3 * b**3) + 3465 * np.pi / (64 * b**4)
+    assert exact_deflection_angle(bh, b) == pytest.approx(series, rel=1e-4)
 
 
 def test_exact_deflection_exceeds_weak_field_closer_to_the_photon_sphere():

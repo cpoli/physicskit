@@ -81,3 +81,13 @@ ax3.set_xlabel("time between jumps")
 ax3.set_ylabel("probability density")
 ax3.set_title("Waiting-time distribution between emitted photons")
 fig3.tight_layout()
+
+# %%
+# Check
+# -----
+# The trajectory average reproduces the master equation within its
+# statistical error, and the driven two-level atom settles at the
+# resonance-fluorescence steady state rho_ee = (Omega^2/4) / (Omega^2/2 + gamma^2/4).
+assert err < 3 / np.sqrt(2000)
+rho_ee_ss = (Omega**2 / 4) / (Omega**2 / 2 + gamma**2 / 4)
+assert abs(rho_exact[-50:, 1, 1].real.mean() - rho_ee_ss) < 0.01

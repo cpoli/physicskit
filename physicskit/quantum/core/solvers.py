@@ -57,7 +57,7 @@ class SplitOperatorSolver1D:
 
         if not self._time_dependent:
             V0 = V(self.x) if callable(V) else np.asarray(V, dtype=float)
-            self._half_pot_phase = np.exp(-1j * V0 * dt / (2 * hbar))
+            self._half_pot_phase: np.ndarray | None = np.exp(-1j * V0 * dt / (2 * hbar))
         else:
             self._half_pot_phase = None
 
@@ -177,7 +177,7 @@ class SplitOperatorSolver2D:
 
         if not self._time_dependent:
             V0 = V(self.X, self.Y) if callable(V) else np.asarray(V, dtype=float)
-            self._half_pot_phase = np.exp(-1j * V0 * dt / (2 * hbar))
+            self._half_pot_phase: np.ndarray | None = np.exp(-1j * V0 * dt / (2 * hbar))
         else:
             self._half_pot_phase = None
 

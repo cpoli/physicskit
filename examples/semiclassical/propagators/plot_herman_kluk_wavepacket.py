@@ -90,3 +90,8 @@ fig.tight_layout()
 
 overlap = np.abs(np.trapezoid(np.conj(psi_exact) * psi_hk, x_eval)) ** 2
 print(f"Herman-Kluk fidelity to the exact coherent state at t=T/2: {overlap:.4f}")
+
+# %%
+# Check
+# -----
+assert overlap > 0.999

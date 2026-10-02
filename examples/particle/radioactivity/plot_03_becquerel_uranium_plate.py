@@ -103,3 +103,11 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# U-238's specific activity is 12.4 kBq per gram of uranium; at a 4.5-Gyr
+# half-life the activity does not change over the exposure.
+assert abs(A_U238 / (12_445 * 238.05 / molar_mass * 0.9927) - 1) < 0.01
+assert abs(fading - lam * exposure) < 1e-15 and fading < 1e-10

@@ -203,6 +203,54 @@ Trans. R. Soc. A 199, 1-53 (1902).
 
 .. minigallery:: ../../examples/astro/cosmic_web/plot_zeldovich_pancakes.py
 
+1906 -- 1930 -- Grey Radiative Transfer and Limb Darkening
+----------------------------------------------------------
+
+The Sun's disc is visibly darker at its edge. Karl Schwarzschild (1906)
+explained this with radiative equilibrium. Energy crosses the solar
+atmosphere as radiation, and a line of sight toward the limb reaches unit
+optical depth higher up, in cooler gas. For a plane-parallel layer with a
+grey opacity the transfer equation
+
+.. math::
+
+   \mu\frac{dI}{d\tau} = I - S, \qquad S = J,
+
+has a constant flux :math:`F = \sigma T_{\text{eff}}^4`. Eddington (1926)
+closed its angular moments with :math:`K = J/3`, which gives
+
+.. math::
+
+   T^4(\tau) = \tfrac34 T_{\text{eff}}^4\left(\tau + \tfrac23\right), \qquad
+   \frac{I(0, \mu)}{I(0, 1)} = \frac{2 + 3\mu}{5}:
+
+the photosphere, where :math:`T = T_{\text{eff}}`, lies at :math:`\tau =
+2/3`, and the limb is 40% as bright as the centre. Milne (1921) reduced the
+exact problem to an integral equation for :math:`q(\tau)` in :math:`T^4 =
+\tfrac34T_{\text{eff}}^4(\tau + q)`, and Hopf (1930) solved it; :math:`q`
+rises from :math:`1/\sqrt3` at the surface to :math:`0.7104`.
+Chandrasekhar's discrete-ordinates method (1944) gave the exact solution
+in closed form at every order, and became the starting point for the
+radiative transfer of stellar and planetary atmospheres.
+
+*Implementation:* :func:`physicskit.astro.radiative_transfer.eddington_temperature`
+and :func:`~physicskit.astro.radiative_transfer.eddington_limb_darkening`
+give the Eddington approximation;
+:class:`~physicskit.astro.radiative_transfer.GreyAtmosphere` solves the
+grey problem in Chandrasekhar's :math:`n`-stream discrete ordinates,
+returning the Hopf function, the temperature and the emergent intensity,
+and :func:`~physicskit.astro.radiative_transfer.emergent_intensity` is the
+formal solution for any source function.
+
+*References:* K. Schwarzschild, *Nachr. Ges. Wiss. Göttingen, Math.-Phys.
+Kl.*, 41-53 (1906); E. A. Milne, *Mon. Not. R. Astron. Soc.* **81**,
+361-375 (1921); A. S. Eddington, *The Internal Constitution of the Stars*
+(Cambridge, 1926), ch. XI; E. Hopf, *Mon. Not. R. Astron. Soc.* **90**,
+287-293 (1930); S. Chandrasekhar, *Astrophys. J.* **100**, 76-86 (1944),
+and *Radiative Transfer* (Oxford, 1950), ch. III.
+
+.. minigallery:: ../../examples/astro/stellar_atmospheres/plot_01_grey_atmosphere_limb_darkening.py
+
 1870-1907 -- Lane, Ritter, and Emden's Polytropic Gas Spheres
 --------------------------------------------------------------------
 
@@ -667,6 +715,47 @@ Curves of High-Luminosity Spiral Galaxies. IV," ApJ 225, L107-L111
 of Luminosities and Radii," ApJ 238, 471-487 (1980).
 
 .. minigallery:: ../../examples/astro/galactic_dynamics/plot_04_rubin_flat_rotation_curves.py
+
+1977 -- Lucy, Gingold, and Monaghan: Smoothed-Particle Hydrodynamics
+---------------------------------------------------------------------
+
+Grid codes of the 1970s struggled with gas that collapses, fragments and
+flies apart, as in star formation or the fission of rotating stars. Leon
+Lucy, and independently Robert Gingold and Joe Monaghan, both in 1977,
+dropped the grid. The gas becomes a set of particles of fixed mass that
+move with the flow, and every field is a kernel-weighted average over
+neighbours,
+
+.. math::
+
+   \rho_i = \sum_j m_j W(\mathbf{r}_i - \mathbf{r}_j, h), \qquad
+   \frac{d\mathbf v_i}{dt} = -\sum_j m_j\left(\frac{P_i}{\rho_i^2} + \frac{P_j}{\rho_j^2}
+   + \Pi_{ij}\right)\nabla_i W_{ij}.
+
+The symmetric pair forces conserve momentum and angular momentum exactly,
+resolution follows the mass automatically, and empty space costs nothing,
+which makes the method natural for self-gravitating systems. Monaghan and
+Gingold (1983) added the artificial viscosity :math:`\Pi_{ij}` that lets
+SPH capture shocks, and SPH went on to model star and planet formation,
+stellar collisions, neutron-star mergers and, combined with tree gravity,
+the gas in cosmological simulations of galaxy formation.
+
+*Implementation:* :class:`physicskit.astro.sph.SPH1D` evolves a 1D SPH gas
+with the cubic-spline kernel
+(:func:`~physicskit.astro.sph.cubic_spline_kernel`), adaptive smoothing
+lengths and Monaghan's artificial viscosity;
+:meth:`~physicskit.astro.sph.SPH1D.sod_shock_tube` sets up Sod's test,
+whose exact solution
+:func:`physicskit.fluids.systems.compressible_flow.exact_riemann_solution`
+provides.
+
+*References:* L. B. Lucy, *Astron. J.* **82**, 1013-1024 (1977); R. A.
+Gingold and J. J. Monaghan, *Mon. Not. R. Astron. Soc.* **181**, 375-389
+(1977); J. J. Monaghan and R. A. Gingold, *J. Comput. Phys.* **52**,
+374-389 (1983); J. J. Monaghan, *Annu. Rev. Astron. Astrophys.* **30**,
+543-574 (1992); G. A. Sod, *J. Comput. Phys.* **27**, 1-31 (1978).
+
+.. minigallery:: ../../examples/astro/hydrodynamics/plot_01_sph_sod_shock_tube.py
 
 1993-2000 -- Moore, Chenciner, Montgomery, and the Figure-Eight Choreography
 -----------------------------------------------------------------------------

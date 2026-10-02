@@ -26,7 +26,7 @@ the way the point-source and dipole-antenna demos do.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physicskit.fields import animate_field_2d, courant_limit_2d, fdtd_2d_tmz_evolve, tmz_cavity_mode
+from physicskit.fields import C0, animate_field_2d, courant_limit_2d, fdtd_2d_tmz_evolve, tmz_cavity_mode
 
 # %%
 # The analytic TM_11 mode of a rectangular PEC cavity
@@ -90,3 +90,12 @@ ax2.set_ylabel("Ez at probe point")
 ax2.set_title(f"TM_{m}{n} standing wave: FDTD probe vs. analytic frequency")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# TM_mn of a rectangular PEC cavity: omega = c pi sqrt((m/a)^2 + (n/b)^2),
+# and the FDTD standing wave follows cos(omega t).
+a_cav, b_cav = (Nx - 1) * dx, (Ny - 1) * dy
+assert abs(omega_mn - C0 * np.pi * np.hypot(m / a_cav, n / b_cav)) < 1e-6 * omega_mn
+assert np.max(np.abs(probe_series - predicted)) < 0.02

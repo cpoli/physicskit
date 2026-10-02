@@ -85,3 +85,13 @@ ax2.legend(fontsize=7)
 ax2.set_title("GRIN fiber phase-space portrait: closed elliptical orbits")
 ax2.set_aspect("auto")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# In a parabolic-index fiber rays oscillate about the axis,
+# y(z) = y0 cos(sqrt(n2) z) + theta0 sin(sqrt(n2) z) / (n0 sqrt(n2)), with period
+# 2 pi / sqrt(n2); in a homogeneous medium they walk off as y0 + theta0 z.
+y_analytic = y0 * np.cos(np.sqrt(n2) * z) + theta0 * np.sin(np.sqrt(n2) * z) / (n0 * np.sqrt(n2))
+np.testing.assert_allclose(y_fiber, y_analytic, atol=1e-12)
+np.testing.assert_allclose(y_free, y0 + theta0 * z, atol=1e-12)

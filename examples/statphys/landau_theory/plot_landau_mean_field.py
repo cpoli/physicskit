@@ -104,3 +104,18 @@ ax.set_title("Field-driven magnetization:\nsymmetry breaking as a jump below $T_
 ax.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Mean-field exponents: m^2 is linear in T_C - T (beta = 1/2), and the
+# Curie-Weiss susceptibility is twice as large above T_C as at the same
+# distance below it (gamma = 1, amplitude ratio 2). Below T_C the
+# magnetization jumps as h changes sign.
+m1, m2 = landau_equilibrium_magnetization(np.array([Tc - 0.4, Tc - 0.8]), Tc=Tc)
+assert abs(m1**2 / m2**2 - 0.5) < 1e-9
+assert landau_equilibrium_magnetization(Tc + 0.8, Tc) == 0
+chi_above, chi_below = landau_susceptibility(np.array([Tc + 0.1, Tc - 0.1]), Tc=Tc)
+assert abs(chi_above / chi_below - 2) < 1e-9
+m_minus, m_plus = (landau_equilibrium_magnetization(Tc - 0.8, Tc, h=h) for h in (-1e-6, 1e-6))
+assert m_minus < -0.6 and m_plus > 0.6

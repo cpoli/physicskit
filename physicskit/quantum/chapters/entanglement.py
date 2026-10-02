@@ -80,7 +80,7 @@ class BellCorrelations:
         :func:`bell_state`\ ``('psi-')``.
     """
 
-    state: np.ndarray = None
+    state: np.ndarray | None = None
 
     def __post_init__(self):
         if self.state is None:

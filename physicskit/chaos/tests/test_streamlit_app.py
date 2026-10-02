@@ -2,15 +2,19 @@
 ``streamlit.testing.v1.AppTest`` (no browser or server needed)."""
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
+
+if TYPE_CHECKING:
+    from streamlit.testing.v1 import AppTest
 
 st_testing = pytest.importorskip("streamlit.testing.v1")
 
 APP_PATH = str(Path(__file__).resolve().parent.parent / "app" / "streamlit_app.py")
 
 
-def _run() -> "st_testing.AppTest":
+def _run() -> "AppTest":
     at = st_testing.AppTest.from_file(APP_PATH)
     at.run(timeout=120)
     return at

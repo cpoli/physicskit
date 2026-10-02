@@ -22,6 +22,8 @@ that drives the perihelion precession (see
 """
 
 # %%
+import numpy as np
+
 from physicskit.classical.core.base_system import SimulationResult
 from physicskit.classical.systems.newtonian import KeplerSystem
 from physicskit.classical.systems.rotations import EulerTop
@@ -58,3 +60,13 @@ fig_sphere = interactive_so3_momentum_sphere(result_top.y[:, :3], I1=1.0, I2=2.0
 kepler = KeplerSystem.from_orbital_elements(a=1.0, e=0.3, c_pn=0.02)
 result_orbit = _stride(kepler.integrate((0, 300), dt=1e-3, method="yoshida4"), stride=300)
 fig_orbit = interactive_orbit(result_orbit, system=kepler, title="Precessing Kepler orbit (c_pn=0.02)")
+
+# %%
+# Check
+# -----
+# The tumbling top keeps its energy and |L|^2; the perturbed orbit keeps its
+# energy while it precesses.
+energies_top = [top.energy(y) for y in result_top.y]
+assert np.ptp(energies_top) < 1e-10 * energies_top[0]
+energies_orbit = np.array([kepler.kinetic_energy(p) + kepler.potential_energy(q) for q, p in zip(result_orbit.q, result_orbit.p)])
+assert np.ptp(energies_orbit) < 1e-9 * abs(energies_orbit[0])

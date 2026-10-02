@@ -106,3 +106,11 @@ ax.set_title("GPS correction vs. satellite and ground-station altitude")
 ax.legend()
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# GPS clocks gain ~45.7 us/day from gravity and lose ~7.1 us/day from
+# their orbital speed: +38.6 us/day net, ~11 km/day of ranging error.
+assert abs(gravitational_offset - 45.7) < 0.2 and abs(velocity_offset + 7.1) < 0.2
+assert abs(net_offset - 38.6) < 0.2

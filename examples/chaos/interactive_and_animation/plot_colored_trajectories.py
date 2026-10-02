@@ -57,3 +57,18 @@ fig3d = plotly_3d_trajectory(states[1:], color_by=speed, colorbar_label="local s
 fig3d.show()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The billiard path stays inside the stadium (|y| <= R; within the caps
+# (|x| - a)^2 + y^2 <= R^2), and the plotted speed is the Lorenz vector
+# field's magnitude (at each step's midpoint).
+x_path, y_path = path[:, 0], path[:, 1]
+a_half = 1.0
+assert np.all(np.abs(y_path) <= 1.0 + 1e-9)
+caps = np.abs(x_path) > a_half
+assert np.all((np.abs(x_path[caps]) - a_half) ** 2 + y_path[caps] ** 2 <= 1.0 + 1e-9)
+midpoints = 0.5 * (states[:-1:50] + states[1::50])
+field_speed = np.linalg.norm([system.rhs(m, 0.0) for m in midpoints], axis=1)
+assert np.max(np.abs(speed[::50] / field_speed - 1)) < 0.01

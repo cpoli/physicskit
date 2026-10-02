@@ -137,3 +137,17 @@ fig_chevron.colorbar(im, ax=ax_chevron, label=r"$P(|1\rangle)$")
 fig_chevron.tight_layout()
 
 print(f"on-resonance (Delta=0) max population: {chevron[np.argmin(np.abs(detunings))].max():.6f}")
+
+# %%
+# Check
+# -----
+# Larmor precession keeps |r| = 1 and z = 0; Rabi flopping follows
+# sin^2(omega_R t / 2); a resonant pi-pulse inverts the population; off
+# resonance the maximum is Omega^2 / (Omega^2 + Delta^2).
+np.testing.assert_allclose(np.linalg.norm(traj_larmor, axis=1), 1, atol=1e-12)
+assert np.max(np.abs(traj_larmor[:, 2])) < 1e-12
+np.testing.assert_allclose(P1, np.sin(omega_R * t / 2) ** 2, atol=1e-12)
+assert abs(rabi.excited_state_population(np.array([t_pi]))[0] - 1) < 1e-9
+i_det = np.argmin(np.abs(detunings - 1.0))
+expected_max = rabi.Omega**2 / (rabi.Omega**2 + detunings[i_det] ** 2)
+assert chevron[i_det].max() <= expected_max + 1e-9 and chevron[i_det].max() > 0.98 * expected_max

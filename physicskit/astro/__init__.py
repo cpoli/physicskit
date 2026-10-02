@@ -14,6 +14,11 @@ geometrized units.
   state-vector conversion, and Hohmann transfers.
 - :mod:`physicskit.astro.galactic_dynamics` -- the NFW dark matter halo
   profile and the rotation curves it produces.
+- :mod:`physicskit.astro.sph` -- smoothed-particle hydrodynamics in one
+  dimension, checked on Sod's shock tube.
+- :mod:`physicskit.astro.radiative_transfer` -- the grey plane-parallel
+  atmosphere: the Eddington approximation, the exact Hopf function and
+  limb darkening.
 - :mod:`physicskit.astro.visualizers` -- N-body, Lane-Emden, and
   rotation-curve plots.
 """
@@ -27,6 +32,13 @@ from physicskit.astro.orbital_mechanics import (
     state_from_orbital_elements,
     vis_viva_speed,
 )
+from physicskit.astro.radiative_transfer import (
+    GreyAtmosphere,
+    eddington_limb_darkening,
+    eddington_temperature,
+    emergent_intensity,
+)
+from physicskit.astro.sph import SPH1D, cubic_spline_kernel
 from physicskit.astro.stellar_structure import (
     PolytropicStar,
     chandrasekhar_mass,
@@ -63,4 +75,12 @@ __all__ = [
     "plot_nbody_trajectories",
     "plot_lane_emden",
     "plot_rotation_curve",
+    # sph
+    "SPH1D",
+    "cubic_spline_kernel",
+    # radiative_transfer
+    "GreyAtmosphere",
+    "eddington_limb_darkening",
+    "eddington_temperature",
+    "emergent_intensity",
 ]

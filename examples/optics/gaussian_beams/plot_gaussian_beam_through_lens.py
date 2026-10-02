@@ -42,7 +42,8 @@ w_after = np.array([q_to_beam_params(propagate_q(q_after_lens, free_space(z)), w
 
 fig, ax = plt.subplots(figsize=(7, 3))
 ax.plot(d1 + z2, w_after)
-new_waist_z = z2[np.argmin(w_after)]
+new_waist_z = -q_after_lens.real  # q is purely imaginary at the waist
+w_new = q_to_beam_params(propagate_q(q_after_lens, free_space(new_waist_z)), wavelength)[0]
 ax.axvline(d1 + new_waist_z, color="r", ls="--", label=f"new waist at z={d1 + new_waist_z:.3f}")
 ax.set_xlabel("z")
 ax.set_ylabel("beam radius w(z)")
@@ -52,7 +53,7 @@ fig.tight_layout()
 
 print(f"source waist w0={beam.w0}, Rayleigh range zR={beam.rayleigh_range:.4f}")
 print(f"lens focal length f={f} at distance d1={d1} from the source waist")
-print(f"new waist radius: {w_after.min():.6f}, located {new_waist_z:.4f} past the lens")
+print(f"new waist radius: {w_new:.3e}, located {new_waist_z:.6f} past the lens")
 
 # %%
 # The full beam caustic: a 2D intensity map through the whole system
@@ -86,3 +87,15 @@ ax2.set_ylabel("x (transverse)")
 ax2.legend(fontsize=8, loc="upper right")
 ax2.set_title("Beam caustic: 2D intensity map through source -> lens -> new waist")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Kogelnik's thin-lens waist transform: w0' = w0 f / sqrt((d1 - f)^2 + zR^2) at
+# z' = f + (d1 - f) f^2 / ((d1 - f)^2 + zR^2) past the lens -- for a source
+# this far inside its Rayleigh range, essentially the focal point.
+zR = beam.rayleigh_range
+denominator = (d1 - f) ** 2 + zR**2
+assert abs(w_new / (beam.w0 * f / np.sqrt(denominator)) - 1) < 1e-9
+assert abs(new_waist_z - (f + (d1 - f) * f**2 / denominator)) < 1e-12
+assert np.all(w_after >= w_new)

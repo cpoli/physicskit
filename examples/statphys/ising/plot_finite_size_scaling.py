@@ -131,3 +131,14 @@ print(
     "much larger L and far more samples per point to converge tightly; a visibly noisy\n"
     "estimate here is expected, not a bug."
 )
+
+# %%
+# Check
+# -----
+# Onsager's exponents gamma/nu = 7/4 and beta/nu = 1/8, and the Binder
+# crossing at T_C = 2 / ln(1 + sqrt 2). (nu itself is too noisy at these
+# sizes to check, as noted above.)
+assert abs(gamma_over_nu - 1.75) < 0.1
+assert abs(beta_over_nu - 0.125) < 0.03
+assert abs(T_c_exact - 2 / np.log(1 + np.sqrt(2))) < 1e-12
+assert abs(T_c_fss / T_c_exact - 1) < 0.02

@@ -84,3 +84,14 @@ ax2.set_ylabel(r"$E_k$")
 ax2.set_title(f"Modal energy at t={t_sampled[-1]:.2f}: only modes 2 and 5 -- exactly as at t=0")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Normal modes of a fixed-end chain: omega_k = 2 sqrt(k/m) sin(k pi / 2(n+1)),
+# and each mode's energy is separately conserved.
+np.testing.assert_allclose(omegas, 2 * np.sin(np.arange(1, n + 1) * np.pi / (2 * (n + 1))), rtol=1e-10)
+assert drift < 1e-8
+assert np.ptp(modal_history[:, 1]) < 1e-6 and np.ptp(modal_history[:, 4]) < 1e-6
+others = np.delete(modal_history, [1, 4], axis=1)
+assert np.max(np.abs(others)) < 1e-8

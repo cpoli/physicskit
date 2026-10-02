@@ -124,7 +124,7 @@ class LagrangianEngine:
         The derived Hamiltonian H(q, p, t).
     """
 
-    def __init__(self, q, qdot, L: sp.Expr, t: sp.Symbol = None, params: dict = None):
+    def __init__(self, q, qdot, L: sp.Expr, t: sp.Symbol = None, params: dict | None = None):
         self.q = list(q)
         self.qdot = list(qdot)
         self.n = len(self.q)

@@ -130,3 +130,19 @@ ax.set_title("2D microlensing magnification map")
 ax.legend(loc="upper right", fontsize=8)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# theta_E = sqrt(4 M D_LS / (D_L D_S)); images at (beta +- sqrt(beta^2 + 4 theta_E^2)) / 2;
+# total magnification (u^2 + 2) / (u sqrt(u^2 + 4)); the exact deflection
+# follows 4M/b + 15 pi M^2 / 4 b^2 + ... (above 4M/b at every b).
+assert abs(theta_E - np.sqrt(4 * 1000.0 / (1000.0 * 2000.0))) < 1e-12
+np.testing.assert_allclose(theta_plus, (beta_values + np.sqrt(beta_values**2 + 4 * theta_E**2)) / 2, rtol=1e-10)
+np.testing.assert_allclose(totals, (u_values**2 + 2) / (u_values * np.sqrt(u_values**2 + 4)), rtol=1e-10)
+for b in impact_params:
+    series = 4 / b + 15 * np.pi / (4 * b**2) + 128 / (3 * b**3) + 3465 * np.pi / (64 * b**4)
+    exact = exact_deflection_angle(bh, b, n_steps=600000)
+    assert exact > bh.light_deflection_angle(b)
+    if b >= 50:
+        assert abs(exact / series - 1) < 1e-4

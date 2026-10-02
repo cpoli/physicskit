@@ -30,6 +30,10 @@ Sections
   oscillator, the double pendulum, the Magnetic Pendulum's fractal basins of
   attraction, and the restricted three-body problem that first led Poincare
   to chaos.
+- **bifurcations** -- the Hopf bifurcation, supercritical and subcritical,
+  in its normal form and in the Brusselator.
+- **synchronization** -- the Kuramoto model and its onset of
+  synchronization at a critical coupling.
 - **quantum_chaos** -- what becomes of these systems under quantization: the
   Quantum Baker's Map, eigenstates of a quantum billiard, and the Quantum
   Kicked Rotor.

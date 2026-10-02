@@ -101,3 +101,18 @@ ax2.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Minimizing the discretized action recovers x(t) = sin(wt)/sin(wT); along
+# eta = sin(pi t / T) the second variation is (pi^2 / 4T - w^2 T / 4) eps^2:
+# a minimum for T < pi/w, a saddle beyond.
+assert abs(result.fun - action(exact_path(t, T)[1:-1], T)) < 1e-6
+assert np.max(np.abs(x_best - exact_path(t, T))) < 2e-3
+for T_i in (2.0, 4.0):
+    t_i = np.linspace(0.0, T_i, N + 1)
+    eta = np.sin(np.pi * t_i / T_i)
+    S0 = action(exact_path(t_i, T_i)[1:-1], T_i)
+    dS = np.array([action((exact_path(t_i, T_i) + e * eta)[1:-1], T_i) - S0 for e in eps])
+    assert abs(np.polyfit(eps, dS, 2)[0] - (np.pi**2 / (4 * T_i) - omega**2 * T_i / 4)) < 1e-3

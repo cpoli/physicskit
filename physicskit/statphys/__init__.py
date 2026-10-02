@@ -5,7 +5,8 @@ physics, critical phenomena, molecular dynamics, and disordered systems into
 a visual, computational Python framework:
 
 - **Lattice models** (:mod:`physicskit.statphys.chapters.ising_lattice`): the 2D Ising
-  model with Metropolis and Wolff-cluster dynamics, the q-state Potts model,
+  model with Metropolis, Wolff and Swendsen-Wang cluster dynamics, the
+  q-state Potts model,
   and the XY model's topological Kosterlitz-Thouless transition.
 - **Disordered systems** (:mod:`physicskit.statphys.chapters.spin_glass`): the
   Edwards-Anderson Ising spin glass, with quenched bond disorder,
@@ -39,6 +40,12 @@ a visual, computational Python framework:
 - **Nonequilibrium work** (:mod:`physicskit.statphys.chapters.nonequilibrium_work`):
   Jarzynski's equality, recovering exact equilibrium free energies from
   irreversible, finite-speed work measurements.
+- **Flat-histogram sampling** (:mod:`physicskit.statphys.chapters.wang_landau`):
+  Wang-Landau estimation of the Ising density of states, giving the
+  thermodynamics at every temperature from one run.
+- **Quantum Monte Carlo** (:mod:`physicskit.statphys.chapters.path_integral`):
+  path-integral Monte Carlo of a particle in a harmonic or anharmonic
+  well, as a classical ring polymer in imaginary time.
 
 Examples
 --------
@@ -61,13 +68,17 @@ from physicskit.statphys.chapters import (
     LangevinDynamics,
     LennardJonesGas,
     OrnsteinUhlenbeck,
+    PathIntegralParticle,
     Percolation2D,
     PottsModel2D,
     RandomWalk,
     SherringtonKirkpatrick,
+    WangLandauIsing,
     XYModel2D,
 )
 from physicskit.statphys.chapters.langevin import einstein_diffusion_coefficient, stokes_einstein_diffusion_coefficient
+from physicskit.statphys.chapters.path_integral import harmonic_x2_exact, harmonic_x2_primitive
+from physicskit.statphys.chapters.wang_landau import canonical_from_density_of_states, ising_density_of_states_exact
 from physicskit.statphys.utils.fokker_planck import fokker_planck_1d, fokker_planck_operator, fokker_planck_stationary
 
 __version__ = "0.2.0"
@@ -84,15 +95,21 @@ __all__ = [
     "LangevinDynamics",
     "LennardJonesGas",
     "OrnsteinUhlenbeck",
+    "PathIntegralParticle",
     "Percolation2D",
     "PottsModel2D",
     "RandomWalk",
     "SherringtonKirkpatrick",
+    "WangLandauIsing",
     "XYModel2D",
+    "canonical_from_density_of_states",
     "einstein_diffusion_coefficient",
     "fokker_planck_1d",
     "fokker_planck_operator",
     "fokker_planck_stationary",
+    "harmonic_x2_exact",
+    "harmonic_x2_primitive",
+    "ising_density_of_states_exact",
     "stokes_einstein_diffusion_coefficient",
     "__version__",
 ]

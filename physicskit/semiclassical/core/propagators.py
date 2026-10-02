@@ -12,7 +12,10 @@ frozen-Gaussian method (:func:`herman_kluk_propagate_wavepacket`) instead
 sums the contributions of *many* such trajectories, one launched from
 each point of a phase-space grid under the initial wavepacket, each one
 carrying its own rigid (frozen-width) Gaussian, monodromy-built
-prefactor, and classical action phase.
+prefactor, and classical action phase. Heller's 1975 thawed Gaussian
+(:func:`thawed_gaussian_propagate`) sits between the two: a single
+trajectory carries a single Gaussian whose complex width evolves with the
+local curvature of the potential.
 
 Right-hand-side functions passed to the trajectory/monodromy integrator
 must be module-level ``@njit`` functions with signature
@@ -38,6 +41,8 @@ __all__ = [
     "coherent_state_overlap",
     "herman_kluk_prefactor",
     "herman_kluk_propagate_wavepacket",
+    "thawed_gaussian_propagate",
+    "thawed_gaussian_wavefunction",
 ]
 
 
@@ -583,3 +588,183 @@ def herman_kluk_propagate_wavepacket(
             ov = coherent_state_overlap(q0, p0, qc0, pc0, gamma, hbar)
             psi += measure * C * np.exp(1j * S / hbar) * ov * frozen_gaussian_1d(x_eval, q_t, p_t, gamma, hbar)
     return psi
+
+
+@njit
+def _thawed_rhs(state, dVdx, d2Vdx2, V, m, params):
+    # state = (q, p, Z, P, S): centre, tangent vector with alpha = P / 2Z, classical action.
+    q = state[0].real
+    p = state[1].real
+    out = np.empty(5, dtype=np.complex128)
+    out[0] = p / m
+    out[1] = -dVdx(q, params)
+    out[2] = state[3] / m
+    out[3] = -d2Vdx2(q, params) * state[2]
+    out[4] = p * p / (2.0 * m) - V(q, params)
+    return out
+
+
+@njit
+def _thawed_integrate(state, dt, steps, dVdx, d2Vdx2, V, m, params):
+    hist = np.empty((steps + 1, 5), dtype=np.complex128)
+    hist[0] = state
+    for i in range(steps):
+        k1 = _thawed_rhs(state, dVdx, d2Vdx2, V, m, params)
+        k2 = _thawed_rhs(state + 0.5 * dt * k1, dVdx, d2Vdx2, V, m, params)
+        k3 = _thawed_rhs(state + 0.5 * dt * k2, dVdx, d2Vdx2, V, m, params)
+        k4 = _thawed_rhs(state + dt * k3, dVdx, d2Vdx2, V, m, params)
+        state = state + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
+        hist[i + 1] = state
+    return hist
+
+
+def thawed_gaussian_propagate(
+    qc0: float,
+    pc0: float,
+    gamma: float,
+    dVdx,
+    d2Vdx2,
+    V,
+    m: float,
+    dt: float,
+    steps: int,
+    hbar: float = 1.0,
+    params: np.ndarray | None = None,
+):
+    r"""Propagate a Gaussian wavepacket with Heller's thawed Gaussian approximation.
+
+    Heller (1975) wrote the packet as
+
+    .. math::
+
+       \psi(x,t) = \exp\!\left\{\frac{i}{\hbar}\left[\alpha_t(x-q_t)^2
+       + p_t(x-q_t) + s_t\right]\right\}
+
+    and expanded the potential to second order about the moving centre
+    :math:`q_t`. The Schrodinger equation is then solved exactly by
+
+    .. math::
+
+       \dot q = \frac{p}{m},\quad \dot p = -V'(q),\quad
+       \dot\alpha = -\frac{2\alpha^2}{m} - \frac{V''(q)}{2},\quad
+       \dot s = \frac{i\hbar\alpha}{m} + \frac{p^2}{2m} - V(q).
+
+    The centre follows a classical trajectory, the complex width
+    :math:`\alpha_t` responds to the local curvature :math:`V''(q_t)`
+    (unlike the fixed width of :func:`frozen_gaussian_1d`), and
+    :math:`s_t` carries the classical action, the zero-point phase and
+    the normalization. The result is exact for potentials at most
+    quadratic, and fails once the packet grows wide enough to feel the
+    third derivative of the potential.
+
+    The Riccati equation for :math:`\alpha` becomes stiff where the packet
+    focuses, so it is integrated in the equivalent linear form
+    :math:`\alpha=P/2Z` with :math:`\dot Z=P/m`, :math:`\dot P=-V''(q)Z`
+    (the tangent dynamics of the monodromy matrix), and then
+    :math:`s_t=s_0+S_t+\tfrac{i\hbar}{2}\ln(Z_t/Z_0)`, with :math:`S_t`
+    the classical action and the phase of :math:`Z_t` followed continuously.
+
+    Parameters
+    ----------
+    qc0, pc0 : float
+        Initial centre in position and momentum.
+    gamma : float
+        Initial width parameter, as in :func:`frozen_gaussian_1d`
+        (:math:`\alpha_0=i\hbar\gamma`).
+    dVdx, d2Vdx2, V : callable
+        Numba-jitted potential derivatives and the potential itself, as
+        in :func:`propagate_trajectory_monodromy_action`.
+    m : float
+        Particle mass.
+    dt : float
+        Time step.
+    steps : int
+        Number of RK4 steps.
+    hbar : float, default=1.0
+        Value of :math:`\hbar` to use.
+    params : ndarray, optional
+        Parameter vector passed through to ``dVdx``/``d2Vdx2``/``V``.
+
+    Returns
+    -------
+    t : ndarray, shape (steps + 1,)
+        Times.
+    q, p : ndarray, shape (steps + 1,)
+        Centre of the packet.
+    alpha, s : ndarray of complex, shape (steps + 1,)
+        Complex width and phase-normalization parameters, for
+        :func:`thawed_gaussian_wavefunction`.
+
+    See Also
+    --------
+    thawed_gaussian_wavefunction : Evaluates the packet on a grid.
+    herman_kluk_propagate_wavepacket : Many frozen Gaussians instead of one thawed one.
+
+    References
+    ----------
+    E. J. Heller, "Time-dependent approach to semiclassical dynamics,"
+    J. Chem. Phys. **62**, 1544-1555 (1975).
+
+    Examples
+    --------
+    The ground state of a harmonic oscillator (:math:`\gamma=m\omega/2\hbar`)
+    keeps its width, and its phase advances by the zero-point energy:
+
+    >>> import numpy as np
+    >>> from numba import njit
+    >>> dVdx = njit(lambda q, params: q, cache=False)
+    >>> d2Vdx2 = njit(lambda q, params: 1.0, cache=False)
+    >>> V = njit(lambda q, params: 0.5 * q ** 2, cache=False)
+    >>> t, q, p, alpha, s = thawed_gaussian_propagate(0.0, 0.0, 0.5, dVdx, d2Vdx2, V, m=1.0, dt=0.01, steps=300)
+    >>> complex(np.round(alpha[-1], 8))
+    0.5j
+    >>> round(float(s[-1].real), 6)  # -E_0 t = -0.5 * 3
+    -1.5
+    """
+    if params is None:
+        params = np.empty(0)
+    s0 = -0.25j * hbar * np.log(2.0 * gamma / np.pi)
+    state = np.array([qc0, pc0, 1.0, 2j * hbar * gamma, 0.0], dtype=np.complex128)  # alpha_0 = P/2Z = i hbar gamma
+    hist = _thawed_integrate(state, float(dt), int(steps), dVdx, d2Vdx2, V, float(m), params)
+    Z, P, S = hist[:, 2], hist[:, 3], hist[:, 4]
+    alpha = P / (2.0 * Z)
+    log_Z = np.log(np.abs(Z)) + 1j * np.unwrap(np.angle(Z))
+    s = s0 + S + 0.5j * hbar * log_Z
+    t = dt * np.arange(steps + 1)
+    return t, hist[:, 0].real.copy(), hist[:, 1].real.copy(), alpha, s
+
+
+def thawed_gaussian_wavefunction(x: np.ndarray, q: float, p: float, alpha: complex, s: complex, hbar: float = 1.0) -> np.ndarray:
+    r"""Evaluate a thawed Gaussian :math:`\exp\{i[\alpha(x-q)^2+p(x-q)+s]/\hbar\}`.
+
+    Parameters
+    ----------
+    x : ndarray
+        Positions at which to evaluate the packet.
+    q, p : float
+        Centre in position and momentum.
+    alpha, s : complex
+        Width and phase-normalization parameters, one time slice of the
+        output of :func:`thawed_gaussian_propagate`.
+    hbar : float, default=1.0
+        Value of :math:`\hbar` to use.
+
+    Returns
+    -------
+    ndarray of complex
+        :math:`\psi(x)`, same shape as ``x``.
+
+    Examples
+    --------
+    At :math:`t=0` the packet is the frozen Gaussian it started as:
+
+    >>> import numpy as np
+    >>> x = np.linspace(-5, 5, 201)
+    >>> gamma, hbar = 0.7, 1.0
+    >>> s0 = -0.25j * hbar * np.log(2 * gamma / np.pi)
+    >>> psi = thawed_gaussian_wavefunction(x, 0.5, 1.2, 1j * hbar * gamma, s0, hbar)
+    >>> bool(np.allclose(psi, frozen_gaussian_1d(x, 0.5, 1.2, gamma, hbar)))
+    True
+    """
+    dx = np.asarray(x, dtype=float) - q
+    return np.exp(1j * (alpha * dx**2 + p * dx + s) / hbar)

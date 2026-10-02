@@ -53,9 +53,13 @@ import physicskit as pk
 # Classic benchmark: k * lambda_D = 0.5, one wavelength in the box
 # ------------------------------------------------------------------------
 
+# Particle noise sets a floor on the field energy that falls only as
+# 1/N: half a million particles and a 10% density ripple keep the damped
+# wave above that floor for the first several oscillations.
+
 k_mode, v_th = 0.5, 1.0
 L = 2 * np.pi / k_mode
-x0, v0 = pk.plasma.landau_damping_ic(4000, L=L, k_mode=k_mode, alpha=0.01, v_th=v_th, seed=0)
+x0, v0 = pk.plasma.landau_damping_ic(500_000, L=L, k_mode=k_mode, alpha=0.1, v_th=v_th, seed=0)
 
 # %%
 # Evolve the Vlasov-Poisson system with particles alone -- no collision
@@ -97,3 +101,14 @@ fig.suptitle("Landau damping: phase-space flattening, not just field decay")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Landau's k lambda_D = 0.5 benchmark: the field-energy peaks fall at
+# 2 gamma = -0.303 while the wave oscillates near the Bohm-Gross frequency
+# sqrt(1 + 3 k^2 lambda_D^2) (1.416 from the full kinetic dispersion).
+log_fe = np.log(fe)
+peaks = [i for i in range(1, len(fe) - 1) if log_fe[i] > log_fe[i - 1] and log_fe[i] > log_fe[i + 1] and t[i] < 14]
+assert abs(np.polyfit(t[peaks], log_fe[peaks], 1)[0] / (2 * gamma) - 1) < 0.1
+assert abs(np.pi / np.mean(np.diff(t[peaks])) - 1.416) < 0.05

@@ -95,3 +95,10 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Clausius: <2T + U> = 0 over a period, though 2T + U itself swings widely.
+assert abs(T_period - 2 * np.pi) < 1e-12
+assert abs(time_avg) < 1e-4 and np.ptp(virial_quantity) > 0.3

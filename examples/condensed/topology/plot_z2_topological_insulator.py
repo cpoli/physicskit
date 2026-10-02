@@ -132,3 +132,20 @@ fig.colorbar(im2, ax=axd["bhz_phase"], label=r"$\mathbb{Z}_2$")
 
 fig.suptitle(r"$\mathbb{Z}_2$ topological insulators: spin-Chern number parity")
 fig.tight_layout()
+
+# %%
+# Check
+# -----
+# Kane-Mele is a QSH insulator for |lambda_v| < 3 sqrt(3) lambda_so, BHZ for
+# 0 < M/B < 8; the spin-up Chern number is odd exactly there.
+assert (z2_km_trivial, z2_km_topological, z2_bhz_trivial, z2_bhz_topological) == (0, 1, 0, 1)
+assert all(abs(c) == 1 for c in km_chern[1:])
+bhz_chern = np.array(bhz_chern)
+assert np.all(bhz_chern[M_values < -0.1] == 0) and np.all(np.abs(bhz_chern[M_values > 0.1]) == 1)
+LS, LV = np.meshgrid(lambda_so_grid, lambda_v_grid)
+margin = np.abs(np.abs(LV) - 3 * np.sqrt(3) * LS) > 0.08
+assert np.all(km_phase[margin] == (np.abs(LV) < 3 * np.sqrt(3) * LS)[margin])
+MM, BB = np.meshgrid(M_grid, B_grid)
+ratio = MM / BB
+clear = (np.abs(ratio) > 0.3) & (np.abs(ratio - 4) > 0.5) & (np.abs(ratio - 8) > 0.5)
+assert np.all(bhz_phase[clear] == ((ratio > 0) & (ratio < 8))[clear])

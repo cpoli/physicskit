@@ -111,7 +111,7 @@ class EulerTop(ODESystem):
     def quaternion(self) -> np.ndarray:
         return self.state[3:]
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         """Rotational kinetic energy.
 
         Parameters
@@ -127,7 +127,7 @@ class EulerTop(ODESystem):
         w1, w2, w3 = state[0], state[1], state[2]
         return 0.5 * (self.I1 * w1**2 + self.I2 * w2**2 + self.I3 * w3**2)
 
-    def angular_momentum_squared(self, state: np.ndarray = None) -> float:
+    def angular_momentum_squared(self, state: np.ndarray | None = None) -> float:
         """``|L|^2`` in the body frame.
 
         Parameters
@@ -143,7 +143,7 @@ class EulerTop(ODESystem):
         w1, w2, w3 = state[0], state[1], state[2]
         return (self.I1 * w1) ** 2 + (self.I2 * w2) ** 2 + (self.I3 * w3) ** 2
 
-    def rotation_matrix(self, state: np.ndarray = None) -> np.ndarray:
+    def rotation_matrix(self, state: np.ndarray | None = None) -> np.ndarray:
         """3x3 body-to-world rotation matrix from the current quaternion.
 
         Parameters
@@ -229,13 +229,13 @@ class HeavySymmetricTop(LagrangianSystem):
 
         super().__init__(angles0, angledots0)
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         state = self.state if state is None else state
         q, qdot = self.split(state, self.ndof)
         p = self._momentum_njit(q, qdot)
         return float(self._hamiltonian_njit(q, p, 0.0))
 
-    def precession_nutation_rate(self, state: np.ndarray = None):
+    def precession_nutation_rate(self, state: np.ndarray | None = None):
         """Instantaneous (phidot, thetadot) -- precession and nutation rates.
 
         Parameters
@@ -310,7 +310,7 @@ def find_theta_equilibrium(p_phi: float, p_psi: float, I1: float, I3: float, Mgl
     return float(result.x)
 
 
-def nutation_frequency(p_phi: float, p_psi: float, I1: float, I3: float, Mgl: float, theta_eq: float = None, dtheta: float = 1e-5) -> float:
+def nutation_frequency(p_phi: float, p_psi: float, I1: float, I3: float, Mgl: float, theta_eq: float | None = None, dtheta: float = 1e-5) -> float:
     """Small-oscillation nutation frequency about ``theta_eq``.
 
     Treating theta as a 1-DOF particle of "mass" I1 moving in the
@@ -436,7 +436,7 @@ class EulersDisk(ODESystem):
     def phi(self) -> float:
         return self.state[1]
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         """Not a true conserved energy -- the whole point of this model is
         dissipation. Returns `theta` itself, a monotonically decreasing
         proxy that (like the disk's actual energy) vanishes at the
@@ -572,7 +572,7 @@ class Rattleback(ODESystem):
         self._deriv_njit = _make_rattleback_deriv(I1, I2, I3, gamma, mu, eta)
         super().__init__(np.asarray(n0, dtype=np.float64))
 
-    def energy(self, state: np.ndarray = None) -> float:
+    def energy(self, state: np.ndarray | None = None) -> float:
         """``0.5*(I1*n1^2 + I2*n2^2 + I3*n3^2)``: not conserved (this
         system is dissipative and, transiently, unstable by construction),
         but the natural quadratic diagnostic for watching the overall

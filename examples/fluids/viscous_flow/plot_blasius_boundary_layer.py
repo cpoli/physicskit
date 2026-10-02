@@ -108,3 +108,11 @@ ax.set_title("Blasius boundary layer: full streamwise velocity field")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Blasius: f''(0) = 0.33206, delta_99 = 4.91 sqrt(nu x / U), c_f = 0.664 / sqrt(Re_x).
+assert abs(result["fpp"][0] - 0.33206) < 1e-5
+np.testing.assert_allclose(delta_99, 4.91 * np.sqrt(nu * x / U_inf), rtol=0.01)
+np.testing.assert_allclose(cf, 0.664 / np.sqrt(Re_x), rtol=1e-3)

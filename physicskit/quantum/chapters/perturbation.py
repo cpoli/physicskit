@@ -70,7 +70,7 @@ def zeeman_spectrum(l: int, B: float, mu_B: float = 1.0, g_s: float = 2.0) -> np
     """
     m_l_values = np.arange(-l, l + 1)
     m_s_values = np.array([-0.5, 0.5])
-    shifts = np.array([zeeman_splitting(ml, ms, B, mu_B, g_s) for ml in m_l_values for ms in m_s_values])
+    shifts = np.array([zeeman_splitting(int(ml), ms, B, mu_B, g_s) for ml in m_l_values for ms in m_s_values])
     return np.sort(shifts)
 
 

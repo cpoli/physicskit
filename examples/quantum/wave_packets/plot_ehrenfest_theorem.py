@@ -123,3 +123,11 @@ for ax, i in zip(axes2, snap_idx):
     ax.legend(fontsize=7, loc="upper right")
 fig2.suptitle("Phase-space Wigner snapshots with the Ehrenfest (<x>,<p>) trajectory overlaid")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Ehrenfest's theorem: d<x>/dt = <p>/m and d<p>/dt = -<V'(x)>, while the
+# split-operator evolution stays unitary.
+assert max_err_1 < 1e-4 and max_err_2 < 1e-3
+assert abs(solver.norm(frames[-1]) - 1) < 1e-8

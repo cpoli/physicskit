@@ -90,9 +90,8 @@ class RandomWalk:
         msd : ndarray of shape (n_steps + 1,)
             Mean squared displacement from the (shared) origin at each time.
         """
-        if self.trajectories is None:
-            self.run()
-        disp2 = np.sum(self.trajectories**2, axis=2)
+        trajectories = self.run() if self.trajectories is None else self.trajectories
+        disp2 = np.sum(trajectories**2, axis=2)
         msd = disp2.mean(axis=1)
         t = np.arange(self.n_steps + 1)
         return t, msd
@@ -134,9 +133,8 @@ class RandomWalk:
         density : ndarray of shape (bins,)
             Probability density in each bin.
         """
-        if self.trajectories is None:
-            self.run()
-        final = self.trajectories[-1, :, axis]
+        trajectories = self.run() if self.trajectories is None else self.trajectories
+        final = trajectories[-1, :, axis]
         density, edges = np.histogram(final, bins=bins, density=True)
         centers = 0.5 * (edges[:-1] + edges[1:])
         return centers, density

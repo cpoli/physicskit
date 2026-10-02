@@ -114,3 +114,11 @@ ax2.set_ylabel("p (momentum along the wall)")
 ax2.set_title(f"Husimi projection of state {scarred_idx}'s wall slice\n(y={y_1d[j_wall]:.2f})")
 fig2.colorbar(im, ax=ax2, fraction=0.046)
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The most scarred state sits next to a bouncing-ball energy
+# (n pi / 2R)^2 / 2, with about twice the ergodic density on the orbit.
+assert abs(energies[scarred_idx] / predicted[np.argmin(np.abs(predicted - energies[scarred_idx]))] - 1) < 0.03
+assert max(etas) > 2

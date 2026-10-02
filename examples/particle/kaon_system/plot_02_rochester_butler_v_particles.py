@@ -126,3 +126,11 @@ ax3.legend(fontsize=8)
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The two-track invariant mass is the K0 mass, and the proper decay lengths
+# give c tau = 2.68 cm: ~1e-10 s, 13 orders of magnitude longer than a strong decay.
+assert abs(np.median(masses) / m_K - 1) < 0.005
+assert abs(c_tau_fit / c_tau - 1) < 0.05

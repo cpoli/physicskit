@@ -106,7 +106,7 @@ def sto3g_1s(zeta: float, center: Sequence[float]) -> GaussianS:
     >>> round(float(overlap_matrix([phi])[0, 0]), 5)
     1.0
     """
-    return GaussianS(_STO3G_ALPHA * zeta**2, _STO3G_D, center)
+    return GaussianS(_STO3G_ALPHA * zeta**2, _STO3G_D, np.asarray(center, dtype=float))
 
 
 def even_tempered_s_basis(center: Sequence[float], n: int, alpha_min: float, ratio: float) -> list[GaussianS]:
@@ -136,7 +136,7 @@ def even_tempered_s_basis(center: Sequence[float], n: int, alpha_min: float, rat
     >>> len(even_tempered_s_basis([0, 0, 0], 8, 0.1, 3.0))
     8
     """
-    return [GaussianS([alpha_min * ratio**k], [1.0], center) for k in range(n)]
+    return [GaussianS(np.array([alpha_min * ratio**k]), np.array([1.0]), np.asarray(center, dtype=float)) for k in range(n)]
 
 
 def _boys0(t: np.ndarray) -> np.ndarray:
@@ -203,7 +203,7 @@ def kinetic_matrix(basis: Sequence[GaussianS]) -> np.ndarray:
     return T
 
 
-def nuclear_attraction_matrix(basis: Sequence[GaussianS], charges: Sequence[float], positions: np.ndarray) -> np.ndarray:
+def nuclear_attraction_matrix(basis: Sequence[GaussianS], charges: Sequence[float] | np.ndarray, positions: np.ndarray) -> np.ndarray:
     r"""Electron-nuclear attraction :math:`V_{\mu\nu} = -\sum_C Z_C\langle\phi_\mu|1/|\mathbf r - \mathbf R_C||\phi_\nu\rangle`.
 
     Per primitive pair :math:`-\frac{2\pi}{p}Z_C\,e^{-ab|A-B|^2/p}F_0(p|P - C|^2)`
@@ -310,7 +310,7 @@ class HartreeFockResult:
 
 def restricted_hartree_fock(
     basis: Sequence[GaussianS],
-    charges: Sequence[float],
+    charges: Sequence[float] | np.ndarray,
     positions: np.ndarray,
     n_electrons: int,
     max_iter: int = 200,

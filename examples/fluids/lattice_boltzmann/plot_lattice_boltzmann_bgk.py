@@ -127,3 +127,13 @@ inset.set_title(r"probe $u_y(t)$", fontsize=8)
 inset.tick_params(labelsize=6)
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# BGK viscosity nu = (tau - 1/2)/3 recovered from Poiseuille profiles, and
+# periodic vortex shedding behind the cylinder (Strouhal number of order
+# 0.1-0.3 at this Re and blockage).
+np.testing.assert_allclose(nu_fit, [lbm_viscosity(tau_i) for tau_i in taus], rtol=0.01)
+assert 0.1 < f_shed * D / U < 0.35
+assert spec.max() > 10 * np.median(spec)

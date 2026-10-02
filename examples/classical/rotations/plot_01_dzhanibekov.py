@@ -28,6 +28,7 @@ tumbling dynamics is.
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.classical.systems.rotations import EulerTop
 from physicskit.classical.visualizers.phase_space import plot_so3_momentum_sphere
@@ -73,3 +74,12 @@ ax2 = fig2.add_subplot(111, projection="3d")
 plot_so3_momentum_sphere(r_unstable.y[:, :3], I1=1.0, I2=2.0, I3=3.0, ax=ax2)
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Rotation about the intermediate axis is unstable (the body flips over and
+# over), about the smallest axis stable; energy and |L|^2 are conserved.
+assert abs(E_final - E0) < 1e-12 * E0 and abs(L_final - L0) < 1e-12 * L0
+assert np.sum(np.diff(np.sign(r_unstable.y[:, 1])) != 0) >= 2
+assert np.abs(r_stable.y[:, 1:3]).max() < 0.05

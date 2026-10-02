@@ -106,3 +106,12 @@ ax3.set_title(f"Transmission T(E, width) for a V0={V0} well")
 ax3.legend(fontsize=8)
 fig2.colorbar(im, ax=ax3, label="T(E)")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# Perfect transmission when k2 w = n pi, i.e. E = (n pi / w)^2 / 2 - V0, and
+# partial reflection in between.
+for E_res in resonance_E:
+    assert abs(well.scattering(E_res).T - 1) < 1e-12
+assert T_values.min() < 0.8

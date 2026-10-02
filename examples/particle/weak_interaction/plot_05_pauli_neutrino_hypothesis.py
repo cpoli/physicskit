@@ -105,3 +105,14 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A two-body decay would give every electron T ~ Q; with Pauli's neutrino the
+# spectrum is continuous, energy and momentum balance in every event, and on
+# average the neutrino carries the missing energy.
+assert abs(T_two - Q) < 1e-5
+assert T_e.min() < 0.05 * Q and T_e.max() > 0.95 * Q
+assert np.max(np.abs(T_e + T_B + E_nu - Q)) < 1e-5
+assert abs(M_A - invariant_mass([B0, e0, nu0])) < 1e-5

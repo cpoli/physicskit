@@ -279,7 +279,7 @@ def lowest_eigenstates(H: sp.spmatrix | np.ndarray, k: int = 2) -> tuple[np.ndar
     dim = H.shape[0]
     k = min(k, dim)
     if dim <= _DENSE_LIMIT or k >= dim - 1:
-        dense = H.toarray() if sp.issparse(H) else np.asarray(H)
+        dense = np.asarray(H) if isinstance(H, np.ndarray) else H.toarray()
         E, V = np.linalg.eigh(dense)
         return E[:k], V[:, :k]
     v0 = np.random.default_rng(0).normal(size=dim)

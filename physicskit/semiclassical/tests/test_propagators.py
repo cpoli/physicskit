@@ -11,6 +11,8 @@ from physicskit.semiclassical.core.propagators import (
     frozen_gaussian_1d,
     herman_kluk_propagate_wavepacket,
     propagate_trajectory_monodromy_action,
+    thawed_gaussian_propagate,
+    thawed_gaussian_wavefunction,
     van_vleck_propagator_1d,
 )
 
@@ -107,3 +109,45 @@ def test_herman_kluk_is_exact_for_the_harmonic_oscillator(gamma):
     density = np.abs(psi) ** 2
     assert np.trapezoid(density, x) == pytest.approx(1.0, abs=2e-3)
     assert np.trapezoid(x * density, x) == pytest.approx(q0 * np.cos(t) + p0 * np.sin(t), abs=2e-3)
+
+
+def test_thawed_gaussian_is_exact_for_squeezed_state_in_harmonic_well():
+    from physicskit.quantum.core.solvers import SplitOperatorSolver1D
+
+    dVdx, d2Vdx2, V, params = _harmonic_potential()
+    x = np.linspace(-10, 10, 1024)
+    dx = x[1] - x[0]
+    _t, q, p, alpha, s = thawed_gaussian_propagate(1.0, 0.5, 2.0, dVdx, d2Vdx2, V, m=1.0, dt=0.002, steps=1000, params=params)
+    psi_tg = thawed_gaussian_wavefunction(x, q[-1], p[-1], alpha[-1], s[-1])
+    solver = SplitOperatorSolver1D(x, lambda xx: 0.5 * xx**2, dt=0.002)
+    psi_exact = solver.propagate(frozen_gaussian_1d(x, 1.0, 0.5, 2.0), 1000, save_every=1000)[0][-1]
+    overlap = np.sum(psi_exact.conj() * psi_tg) * dx
+    assert abs(overlap - 1.0) < 1e-5  # amplitude and global phase both match
+
+
+def test_thawed_gaussian_centre_follows_classical_trajectory_and_keeps_norm():
+    params = np.array([0.1])
+    V = njit(lambda q, params: 0.5 * q**2 + params[0] * q**4, cache=False)
+    dVdx = njit(lambda q, params: q + 4 * params[0] * q**3, cache=False)
+    d2Vdx2 = njit(lambda q, params: 1.0 + 12 * params[0] * q**2, cache=False)
+    t, q, p, alpha, s = thawed_gaussian_propagate(1.5, 0.0, 1.0, dVdx, d2Vdx2, V, m=1.0, dt=0.005, steps=800, params=params)
+    q_cl, p_cl, *_ = propagate_trajectory_monodromy_action(1.5, 0.0, dVdx, d2Vdx2, V, m=1.0, dt=0.005, steps=800, params=params)
+    assert q[-1] == pytest.approx(q_cl, abs=1e-10)
+    assert p[-1] == pytest.approx(p_cl, abs=1e-10)
+    x = np.linspace(-8, 8, 4000)
+    norm = np.trapezoid(np.abs(thawed_gaussian_wavefunction(x, q[-1], p[-1], alpha[-1], s[-1])) ** 2, x)
+    assert norm == pytest.approx(1.0, abs=1e-6)
+    assert np.all(alpha.imag > 0)
+
+
+def test_thawed_gaussian_stays_regular_over_many_periods_of_a_morse_well():
+    # The Riccati form of the width equation blows up here; the linear (Z, P) form must not.
+    params = np.array([8.0, 0.5])
+    V = njit(lambda q, params: params[0] * (1 - np.exp(-params[1] * q)) ** 2, cache=False)
+    dVdx = njit(lambda q, params: 2 * params[0] * params[1] * np.exp(-params[1] * q) * (1 - np.exp(-params[1] * q)), cache=False)
+    d2Vdx2 = njit(lambda q, params: 2 * params[0] * params[1] ** 2 * np.exp(-params[1] * q) * (2 * np.exp(-params[1] * q) - 1), cache=False)
+    _t, _q, _p, alpha, s = thawed_gaussian_propagate(1.5, 0.0, 1.0, dVdx, d2Vdx2, V, m=1.0, dt=0.005, steps=16000, params=params)
+    assert np.all(np.isfinite(alpha)) and np.all(np.isfinite(s))
+    assert np.all(alpha.imag > 0)
+    norm = np.sqrt(np.pi / (2 * alpha.imag)) * np.exp(-2 * s.imag)  # closed-form integral of |psi|^2
+    assert np.allclose(norm, 1.0, atol=1e-6)

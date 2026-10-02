@@ -54,24 +54,9 @@ jobs:
           fail_ci_if_error: false
       - run: MPLBACKEND=Agg pytest --doctest-modules physicskit --ignore-glob="*/tests/*" --ignore=physicskit/chaos/visualizers/viewer3d.py -q
 
-  typecheck-core:
-    name: Type check (mypy, typed core, blocking)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-      - run: pip install -e ".[dev]"
-      # No arguments: checks only the modules listed under [tool.mypy] files
-      # in pyproject.toml (constants, integrators, units, results, io).
-      - run: mypy
-
   typecheck:
-    name: Type check (mypy, whole package, advisory)
+    name: Type check (mypy)
     runs-on: ubuntu-latest
-    continue-on-error: true # mypy adoption is incremental; see CONTRIBUTING.md
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -79,4 +64,6 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -e ".[dev]"
-      - run: mypy physicskit
+      # No arguments: checks the whole package ([tool.mypy] files in
+      # pyproject.toml), function bodies included outside the tests.
+      - run: mypy

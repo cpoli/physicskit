@@ -99,3 +99,12 @@ ax.set_title("Poiseuille velocity profile vs. pressure gradient")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Couette: linear; Poiseuille: parabola u = -(dp/dx) y (h - y) / 2 mu,
+# flow rate Q = -(dp/dx) h^3 / 12 mu.
+np.testing.assert_allclose(u_couette, U_wall * y / h, atol=1e-12)
+np.testing.assert_allclose(u_poiseuille, -dpdx * y * (h - y) / (2 * mu), atol=1e-12)
+assert abs(Q + dpdx * h**3 / (12 * mu)) < 1e-12 and abs(u_poiseuille.max() - U_wall) < 1e-3

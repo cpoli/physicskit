@@ -93,3 +93,11 @@ ax2.legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Detailed balance makes Metropolis sample exp(-beta E) from any start.
+assert np.sum(degeneracy) == 2**N
+assert np.max(np.abs(hist["random start"] - p_exact)) < 0.01
+assert abs(traces["random start"][-1] - E_exact) < 0.15 and abs(traces["ordered start"][-1] - E_exact) < 0.15

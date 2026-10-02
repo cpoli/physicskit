@@ -233,7 +233,8 @@ class U1LatticeGauge:
         dict
             ``{"plaquette": (mean, err), (R, T): (mean, err), ...}``.
         """
-        data = {key: [] for key in ["plaquette", *loops]}
+        keys: list[str | tuple[int, int]] = ["plaquette", *loops]
+        data: dict[str | tuple[int, int], list[float]] = {key: [] for key in keys}
         for _ in range(n_measurements):
             self.sweep(sweeps_between)
             data["plaquette"].append(self.plaquette())

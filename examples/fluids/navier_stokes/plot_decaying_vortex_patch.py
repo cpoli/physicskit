@@ -96,3 +96,10 @@ fig.tight_layout()
 print(f"max relative deviation from e^(-2 nu t): {np.max(np.abs(peaks - analytic_decay) / analytic_decay):.2e}")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# sin x sin y is an exact steady Euler solution, so Navier-Stokes only
+# diffuses it: omega(t) = omega(0) e^(-2 nu t).
+assert np.max(np.abs(peaks - analytic_decay) / analytic_decay) < 1e-10

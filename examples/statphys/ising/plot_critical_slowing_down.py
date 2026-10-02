@@ -96,3 +96,12 @@ axes[1].set_title(r"Dynamical exponent: $\tau_{\mathrm{int}} \sim L^z$")
 axes[1].legend(fontsize=8)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# At T_C Wolff decorrelates |m| far faster than Metropolis, and its
+# dynamical exponent is far smaller (z ~ 2.17 vs ~0.35 asymptotically; these
+# small lattices give rough estimates of both).
+assert taus["metropolis"] > 10 * taus["wolff"]
+assert z_fit["metropolis"] > 1.2 and z_fit["wolff"] < z_fit["metropolis"] - 0.5

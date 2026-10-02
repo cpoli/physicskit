@@ -65,3 +65,12 @@ t_anim = np.linspace(0, 3.0, 60)
 stack_anim = sg.joint_density_stack(x, y, t_anim)
 anim = animate_density_2d(x, y, stack_anim, times=t_anim, phase_colored=False)
 # anim.save("stern_gerlach.gif", writer="pillow", fps=15)
+
+# %%
+# Check
+# -----
+# Each spin component spreads freely, sigma(t)^2 = sigma0^2 + (t / 2 sigma0)^2,
+# while the two are pushed apart by +-mu grad_B t^2 / 2: the joint spread is
+# sqrt(sigma(t)^2 + (mu grad_B t^2 / 2)^2) (m = hbar = 1).
+expected = np.sqrt(1 + (times / 2) ** 2 + (2.0 * 1.0 * times**2 / 2) ** 2)
+np.testing.assert_allclose([y_spread(d) for d in stack], expected, rtol=1e-3)

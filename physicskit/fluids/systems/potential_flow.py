@@ -82,7 +82,7 @@ def source_potential(X: ArrayLike, Y: ArrayLike, strength: float, x0: float = 0.
     """
     z = _complex_z(X, Y) - (x0 + 1j * y0)
     with np.errstate(divide="ignore"):
-        return (strength / (2.0 * np.pi)) * np.log(z)
+        return (strength / (2.0 * np.pi)) * np.log(z)  # type: ignore[return-value]  # numpy stubs: float * complex array typed float64
 
 
 def doublet_potential(X: ArrayLike, Y: ArrayLike, strength: float, x0: float = 0.0, y0: float = 0.0, alpha: float = 0.0) -> NDArray[np.complex128]:

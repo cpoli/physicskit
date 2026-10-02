@@ -152,3 +152,16 @@ fig4.tight_layout()
 
 print(f"min W of the coherent-state Wigner function (should stay >=0): {W_coh.min():.2e}")
 print(f"min W of the squeezed-vacuum Wigner function (should stay >=0): {W_sq.min():.2e}")
+
+# %%
+# Check
+# -----
+# Squeezed vacua saturate dx dp = hbar/2 with dx = e^(-r)/sqrt(2); Gaussian
+# states have non-negative Wigner functions (Hudson's theorem).
+for r in (0.0, 0.5, 1.0):
+    dx, dp = ho.squeezed_uncertainties(r)
+    assert abs(dx * dp - ho.hbar / 2) < 1e-12 and abs(dx - np.exp(-r) / np.sqrt(2)) < 1e-12
+assert W_coh.min() > -1e-10 and W_sq.min() > -1e-10
+# a coherent state's density keeps its shape: back at the start after one period
+density_0 = np.abs(ho.coherent_wavefunction(alpha, x, t=0.0)) ** 2
+np.testing.assert_allclose(np.abs(ho.coherent_wavefunction(alpha, x, t=2 * np.pi / ho.omega)) ** 2, density_0, atol=1e-8)

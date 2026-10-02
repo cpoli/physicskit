@@ -106,3 +106,13 @@ ax3.set_title("1 fW of green light: individual quanta")
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# K_max = h nu - W: the stopping-voltage slope gives h and the intercept W;
+# no photocurrent below threshold at any intensity; photon counts are
+# Poissonian (variance ~ mean).
+assert abs(slope * EV / H - 1) < 0.01 and abs(-intercept - metals["sodium"]) < 0.03
+assert H * C / 600e-9 / EV < metals["sodium"] < H * C / 400e-9 / EV
+assert abs(counts.var() / counts.mean() - 1) < 0.3

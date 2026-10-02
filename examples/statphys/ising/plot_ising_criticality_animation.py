@@ -22,6 +22,7 @@ correlations happen to produce -- as a single event.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import ListedColormap
 
 from physicskit.statphys.chapters.ising_lattice import Ising2D
@@ -39,10 +40,12 @@ SPIN_CMAP = ListedColormap(["black", "lightgrey"])
 # domains, and -- at T_C itself -- structure at every scale in between.
 L = 100
 fig, axes = plt.subplots(1, 3, figsize=(13, 4.5))
+m_abs = {}
 for ax, T_frac, label in zip(axes, [1.5, 1.0, 0.6], ["T = 1.5 T_C", "T = T_C", "T = 0.6 T_C"]):
     model = Ising2D(L=L, seed=0)
     T = T_frac * model.T_C
     model.sweep(1.0 / T, algorithm="wolff", n_sweeps=150)
+    m_abs[T_frac] = abs(model.magnetization()) / model.n_sites
     plot_spin_grid(model.spins, ax=ax, title=label, cmap=SPIN_CMAP)
 plt.tight_layout()
 plt.subplots_adjust(top=0.88)  # tight_layout alone leaves the titles clipped by the figure edge
@@ -66,3 +69,12 @@ plt.show()
 # it interactively, use e.g.::
 #
 #     anim.save("ising_criticality.gif", writer="pillow", fps=10)
+
+# %%
+# Check
+# -----
+# Below T_C the snapshot carries Onsager's spontaneous magnetization
+# (1 - sinh(2J/T)^-4)^(1/8); above it the magnetization is gone.
+T_low = 0.6 * Ising2D().T_C
+assert abs(m_abs[0.6] - (1 - np.sinh(2 / T_low) ** -4) ** 0.125) < 0.02
+assert m_abs[1.5] < 0.1

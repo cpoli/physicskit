@@ -19,6 +19,7 @@ regular/chaotic phase space the kicked rotor has.
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from physicskit.chaos.quantum import QuantumBakersMap
 from physicskit.chaos.visualizers import animate_husimi_evolution, plot_husimi, plot_quantum_spectrum
@@ -72,3 +73,12 @@ fig2.suptitle("Quantum baker's map: one iteration's stretch-cut-stack, in Husimi
 fig2.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# The quantum baker's map is unitary, and a coherent state follows the
+# classical map: (q, p) = (0.15, 0.15) -> (2q, p/2) = (0.3, 0.075).
+assert len(qbm.eigenphases()) == qbm.dim and abs(np.sum(np.abs(states[-1]) ** 2) - 1) < 1e-10
+i, j = np.unravel_index(np.argmax(husimi1), husimi1.shape)
+assert abs(q_grid[i, j] - 0.3) < 0.02 and abs(p_grid[i, j] - 0.075) < 0.02

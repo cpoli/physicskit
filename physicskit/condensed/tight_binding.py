@@ -108,17 +108,17 @@ class Lattice:
     @classmethod
     def chain(cls, a: float = 1.0) -> Lattice:
         """1D monatomic chain with lattice constant ``a``."""
-        return cls(lattice_vectors=[[a]], orbitals=[[0.0]])
+        return cls(lattice_vectors=np.array([[a]]), orbitals=np.array([[0.0]]))
 
     @classmethod
     def square(cls, a: float = 1.0) -> Lattice:
         """2D square lattice, one orbital per cell."""
-        return cls(lattice_vectors=[[a, 0.0], [0.0, a]], orbitals=[[0.0, 0.0]])
+        return cls(lattice_vectors=np.array([[a, 0.0], [0.0, a]]), orbitals=np.array([[0.0, 0.0]]))
 
     @classmethod
     def triangular(cls, a: float = 1.0) -> Lattice:
         """2D triangular lattice, one orbital per cell."""
-        return cls(lattice_vectors=[[a, 0.0], [a / 2, a * np.sqrt(3) / 2]], orbitals=[[0.0, 0.0]])
+        return cls(lattice_vectors=np.array([[a, 0.0], [a / 2, a * np.sqrt(3) / 2]]), orbitals=np.array([[0.0, 0.0]]))
 
     @classmethod
     def honeycomb(cls, a: float = 1.0) -> Lattice:
@@ -127,8 +127,8 @@ class Lattice:
         ``a`` is the lattice constant (nearest-neighbor bond length is ``a/sqrt(3)``).
         """
         return cls(
-            lattice_vectors=[[a, 0.0], [a / 2, a * np.sqrt(3) / 2]],
-            orbitals=[[1 / 3, 1 / 3], [2 / 3, 2 / 3]],
+            lattice_vectors=np.array([[a, 0.0], [a / 2, a * np.sqrt(3) / 2]]),
+            orbitals=np.array([[1 / 3, 1 / 3], [2 / 3, 2 / 3]]),
             labels=["A", "B"],
         )
 
@@ -136,15 +136,15 @@ class Lattice:
     def kagome(cls, a: float = 1.0) -> Lattice:
         """2D kagome lattice, three orbitals per cell (edge midpoints of a triangular lattice)."""
         return cls(
-            lattice_vectors=[[a, 0.0], [a / 2, a * np.sqrt(3) / 2]],
-            orbitals=[[0.5, 0.0], [0.0, 0.5], [0.5, 0.5]],
+            lattice_vectors=np.array([[a, 0.0], [a / 2, a * np.sqrt(3) / 2]]),
+            orbitals=np.array([[0.5, 0.0], [0.0, 0.5], [0.5, 0.5]]),
             labels=["A", "B", "C"],
         )
 
     @classmethod
     def cubic(cls, a: float = 1.0) -> Lattice:
         """3D simple cubic lattice, one orbital per cell."""
-        return cls(lattice_vectors=[[a, 0, 0], [0, a, 0], [0, 0, a]], orbitals=[[0.0, 0.0, 0.0]])
+        return cls(lattice_vectors=np.array([[a, 0, 0], [0, a, 0], [0, 0, a]]), orbitals=np.array([[0.0, 0.0, 0.0]]))
 
 
 class Hamiltonian:
@@ -365,7 +365,7 @@ def build_finite_cluster(hamiltonian: Hamiltonian, n_cells, keep=None):
     cell_ranges = [range(int(n)) for n in n_cells]
 
     index_map: dict[tuple, int] = {}
-    positions_list = []
+    positions_list: list[np.ndarray] = []
     for cell in itertools.product(*cell_ranges):
         for orb in range(norb):
             pos = (np.array(cell, dtype=float) + lat.orbitals[orb]) @ lat.lattice_vectors

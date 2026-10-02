@@ -169,6 +169,7 @@ class EmbeddedGaussianEnsemble(MatrixEnsemble):
             self._p_ops = [multi_create(t) for t in tuples]
             dim = self._p_ops[0].shape[0]
             self._basis = [state for state in range(dim) if bin(state).count("1") == m]
+        assert self._basis is not None  # set together with _p_ops above
         return self._p_ops, self._basis
 
     def _sample_eigenvalues(self, rng: np.random.Generator) -> np.ndarray:

@@ -119,3 +119,16 @@ ax.set_title("Doublet: speed (color) vs. streamfunction (contours)")
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A source of strength m has outward flux m (radial speed m / 2 pi r); the
+# streamfunction generates the velocity, u = dpsi/dy, v = -dpsi/dx.
+th = np.linspace(0, 2 * np.pi, 720, endpoint=False)
+us, vs = source_flow.velocity(np.cos(th), np.sin(th))
+assert abs(np.mean(us * np.cos(th) + vs * np.sin(th)) * 2 * np.pi - 1.0) < 1e-9
+h_grid = x[1] - x[0]
+dpsi_dx, dpsi_dy = np.gradient(psi, h_grid, h_grid)
+far = X**2 + Y**2 > 1.0
+assert np.max(np.abs(dpsi_dy - u)[far]) < 1e-2 * np.max(speed[far]) and np.max(np.abs(-dpsi_dx - v)[far]) < 1e-2 * np.max(speed[far])

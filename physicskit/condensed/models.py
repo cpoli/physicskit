@@ -99,7 +99,7 @@ def ssh_lattice_hamiltonian(v: float = 1.0, w: float = 1.0) -> Hamiltonian:
     >>> np.round(H.bands([0.0]), 8)
     array([-1.5,  1.5])
     """
-    lat = Lattice(lattice_vectors=[[1.0]], orbitals=[[0.0], [0.5]], labels=["A", "B"])
+    lat = Lattice(lattice_vectors=np.array([[1.0]]), orbitals=np.array([[0.0], [0.5]]), labels=["A", "B"])
     H = Hamiltonian(lat)
     H.add_hopping(0, 1, (0,), v)
     H.add_hopping(1, 0, (1,), w)

@@ -120,3 +120,10 @@ axes[1].legend(fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# estimate_dt meets the tolerance; Yoshida4's energy error falls as dt^4.
+assert est_kepler.achieved_drift <= 1e-6 and est_dp.achieved_drift <= 1e-6
+assert abs(np.polyfit(np.log(dts_kepler[:6]), np.log(drift_kepler[:6]), 1)[0] - 4) < 0.2

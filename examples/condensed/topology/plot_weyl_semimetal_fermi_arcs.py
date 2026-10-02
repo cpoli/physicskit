@@ -85,3 +85,14 @@ fig.tight_layout()
 # outside them, exactly the surface signature ARPES resolved in TaAs.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Nodes at cos k0 = (m - 2t)/t (here k0 = pi/2), the bulk gap vanishes only
+# there, and the surface is gapless between the nodes and gapped outside.
+assert abs(k0 - np.pi / 2) < 1e-12
+gap = np.array(gap)
+dk = kz_grid[1] - kz_grid[0]
+assert np.all(gap[np.abs(np.abs(kz_grid) - k0) > 2 * dk] > 0.02)
+assert np.min(np.abs(bands_inside)) < 0.05 and np.min(np.abs(bands_outside)) > 0.5

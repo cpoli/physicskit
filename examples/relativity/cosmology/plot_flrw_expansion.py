@@ -108,3 +108,13 @@ plt.title("Cosmic age across the density-parameter plane")
 plt.legend(loc="lower left", fontsize=8)
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Flat Lambda-CDM (radiation negligible today): t0 = 2 asinh(sqrt(OL/Om)) / (3 H0 sqrt(OL));
+# Einstein-de Sitter: t0 = 2 / 3H0; and d_L = (1 + z) d_C.
+hubble_time_gyr = 977.8 / 70.0
+assert abs(age_today - 2 * np.arcsinh(np.sqrt(0.7 / 0.3)) / (3 * np.sqrt(0.7)) * hubble_time_gyr) < 0.03
+assert abs(age_map[0, -1] - 2 / 3 * hubble_time_gyr) < 0.03
+np.testing.assert_allclose(d_luminosity, (1 + z) * d_comoving, rtol=1e-4)

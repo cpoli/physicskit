@@ -95,3 +95,11 @@ print(f"asymmetry recovered from <cos_theta> = A/3 relation: {measured_A:.4f}")
 print("(a nonzero A is exactly the fingerprint of parity violation; A=0 would mean parity is respected)")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# A 1 + A cos(theta) distribution has <cos theta> = A/3, so A = -0.6 is
+# recovered within its statistical error; parity would require A = 0.
+assert abs(measured_A - A_asymmetry) < 3 * 3 * np.std(cos_theta_asym) / np.sqrt(n_events)
+assert abs(np.mean(cos_theta_flat)) < 3 * np.std(cos_theta_flat) / np.sqrt(n_events)

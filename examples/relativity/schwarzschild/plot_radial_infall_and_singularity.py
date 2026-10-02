@@ -98,3 +98,13 @@ print("must be incomplete, full stop. The finite-tau/divergent-t contrast above 
 print("coordinate-bound precursor puzzle that made a fully coordinate-free proof necessary in the first place.")
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Proper time from rest at R0: tau(r) = sqrt(R0^3 / 8M) (eta + sin eta) with
+# r = R0 (1 + cos eta) / 2 -- finite at the horizon (and at r = 0), while
+# dt/dtau grows without bound as r -> 2M.
+eta = np.arccos(2 * r[-1] / R0 - 1)
+assert abs(tau[-1] - np.sqrt(R0**3 / (8 * M)) * (eta + np.sin(eta))) < 1e-3
+assert tau[-1] < tau_r0 and dt_dtau[-10] > 100 * dt_dtau[10]

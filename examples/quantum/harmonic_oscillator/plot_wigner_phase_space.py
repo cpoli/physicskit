@@ -75,3 +75,14 @@ ax_super.set_title(r"Wigner function of $(|0\rangle+|2\rangle)/\sqrt{2}$" "\n(in
 fig2.tight_layout()
 
 print(f"min W of the superposition (non-classicality): {W_super.min():.4f}")
+
+# %%
+# Check
+# -----
+# The position marginal of W is |psi|^2; the first excited state has
+# W_1 = (2 rho^2 - 1) exp(-rho^2) / pi with rho^2 = x^2 + p^2 (hbar = m =
+# omega = 1), negative near the origin; so is the superposition's.
+assert np.max(np.abs(marginal - psi1**2)) < 1e-8
+rho2 = xg[:, None] ** 2 + p[None, :] ** 2
+assert np.max(np.abs(W1 - (2 * rho2 - 1) * np.exp(-rho2) / np.pi)) < 1e-3
+assert W_super.min() < -0.1

@@ -93,3 +93,11 @@ ax2.set_ylabel("y (mm)")
 ax2.legend(fontsize=8, loc="upper right")
 ax2.set_title("Full 2D Airy pattern: central disk + concentric rings")
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The first dark ring of a circular aperture sits at 1.22 lambda z / D
+# (to the screen's pixel spacing).
+assert abs(x_measured - x_first_zero) <= x[1] - x[0]
+assert profile[N // 2] == 1.0 and profile[N // 2 + first_min_index] < 0.02

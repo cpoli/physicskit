@@ -78,3 +78,16 @@ axes[1].set_xlabel("coordinate time t")
 axes[1].set_ylabel("fractional angular momentum drift")
 plt.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Darwin's exact precession per orbit: integral over chi of
+# sqrt(p / (p - 6 - 2 e cos chi)) d chi - 2 pi (M = 1), well above the
+# leading post-Newtonian 6 pi / p this close to the hole.
+r_a, r_p = traj["r"].max(), traj["r"].min()
+p_semi, e_orb = 2 * r_a * r_p / (r_a + r_p), (r_a - r_p) / (r_a + r_p)
+chi = np.linspace(0, 2 * np.pi, 4001)
+darwin = np.trapezoid(np.sqrt(p_semi / (p_semi - 6 - 2 * e_orb * np.cos(chi))), chi) - 2 * np.pi
+assert abs(np.degrees(np.mean(precession)) - np.degrees(darwin)) < 0.1
+assert np.ptp(traj["energy"]) < 1e-10 * abs(traj["energy"][0])

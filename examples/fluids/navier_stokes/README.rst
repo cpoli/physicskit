@@ -8,10 +8,8 @@ space and 4th-order accurate in time. The first example shows its most basic
 signature -- a vortex patch's peak vorticity bleeding away under viscous
 diffusion, at a rate no inviscid simulation could reproduce. Another follows
 Richardson's qualitative cascade -- a few large eddies folding into ever
-finer filaments until viscosity takes over. The last pushes the same solver into a genuinely turbulent regime: many vortices of
-mixed sign interacting nonlinearly, cascading kinetic energy from the large
-scales they were seeded at down to small scales where viscosity finally
-dissipates it. Watch, in the energy spectrum plot, how a real inertial range
-lines up with Kolmogorov's predicted -5/3 power law over more than a decade
-of wavenumber -- one of the most-tested predictions in classical physics,
-reproduced here from nothing but the bare incompressible equations.
+finer filaments until viscosity takes over. The last adds steady random forcing and a large-scale drag, so that the
+flow reaches a statistically steady state with a constant energy flux
+through the scales. Its time-averaged energy spectrum follows Kolmogorov's
+predicted -5/3 power law over the range between the forcing scale and the
+drag scale.

@@ -344,6 +344,53 @@ Example of Algebraically Special Metrics," Phys. Rev. Lett. 11, 237-238
 
 .. minigallery:: ../../examples/relativity/kerr/plot_ergosphere_and_penrose.py
 
+1965 -- The Kerr-Newman Black Hole and Carter's Fourth Constant
+---------------------------------------------------------------
+
+Two years after Kerr's rotating solution, Ezra Newman and five
+co-authors applied a complex coordinate transformation to the
+Reissner-Nordström metric and obtained a rotating black hole that also
+carries electric charge. In Boyer-Lindquist
+coordinates it is the Kerr metric with
+
+.. math::
+
+   \Delta = r^2 - 2Mr + a^2 + Q^2, \qquad r_\pm = M \pm \sqrt{M^2 - a^2 - Q^2},
+
+so Schwarzschild, Reissner-Nordström and Kerr are its special cases, and
+the no-hair theorems of the following decade showed that it is the most
+general stationary black hole of Einstein-Maxwell theory: mass, spin and
+charge are all an outside observer can measure. Brandon Carter (1968)
+found that the Hamilton-Jacobi equation of a charged test particle still
+separates. This gives a fourth constant of motion beyond energy, angular
+momentum and mass, and the radial and polar motions decouple,
+
+.. math::
+
+   \left(\frac{dr}{d\lambda}\right)^2 = \bigl[E(r^2 + a^2) - aL - eQr\bigr]^2
+   - \Delta\bigl[\mu^2 r^2 + (L - aE)^2 + \mathcal C\bigr].
+
+Photons on spherical orbits, :math:`R = R' = 0`, outline the shadow;
+charge, like spin, shrinks it, and its shape constrains the charge of the
+black holes imaged by the Event Horizon Telescope.
+
+*Implementation:* :class:`physicskit.relativity.chapters.kerr_newman.KerrNewmanBlackHole`
+gives the horizons, the spherical and equatorial photon orbits and the
+analytic shadow edge;
+:meth:`~physicskit.relativity.chapters.kerr_newman.KerrNewmanBlackHole.geodesic`
+integrates Carter's equations for photons and charged massive particles,
+and
+:meth:`~physicskit.relativity.chapters.kerr_newman.KerrNewmanBlackHole.ray_traced_shadow`
+ray-traces the shadow to check the edge.
+
+*References:* E. T. Newman, E. Couch, K. Chinnapared, A. Exton, A. Prakash
+and R. Torrence, *J. Math. Phys.* **6**, 918-919 (1965); B. Carter, *Phys.
+Rev.* **174**, 1559-1571 (1968); J. M. Bardeen, in *Black Holes (Les Houches
+1972)*, 215-239 (1973); A. de Vries, *Class. Quantum Grav.* **17**, 123-144
+(2000).
+
+.. minigallery:: ../../examples/relativity/kerr_newman/plot_kerr_newman_shadow_and_geodesics.py
+
 1965 -- Penrose's Singularity Theorems
 --------------------------------------
 

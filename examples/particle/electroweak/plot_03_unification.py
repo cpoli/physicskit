@@ -101,3 +101,11 @@ ax3.legend(fontsize=8)
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# Tree level: M_W = (pi alpha / sqrt(2) G_F)^(1/2) / sin(theta_W), M_Z = M_W / cos(theta_W).
+assert abs(A0 - 37.28) < 0.01
+np.testing.assert_allclose(M_W / M_Z, np.sqrt(1 - s2), rtol=1e-12)
+assert abs(A0 / np.sqrt(0.23) - 77.7) < 0.1

@@ -8,7 +8,7 @@ argument order and angle convention.
 
 import numpy as np
 
-trapz = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+trapz = np.trapezoid if hasattr(np, "trapezoid") else np.trapz  # type: ignore[attr-defined,unused-ignore]
 
 try:
     from scipy.special import sph_harm_y as sph_harm_y

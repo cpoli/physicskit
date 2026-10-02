@@ -63,7 +63,8 @@ def poincare_crossings(
         between the two bracketing integration steps.
     """
     n_steps = int(round(t_max / dt))
-    _, states = system.trajectory(state0=np.asarray(state0, dtype=np.float64), dt=dt, n_steps=n_steps)
+    # Every concrete continuous system defines trajectory(); the ABC doesn't declare it.
+    _, states = cast(Any, system).trajectory(state0=np.asarray(state0, dtype=np.float64), dt=dt, n_steps=n_steps)
 
     f = states[:, coord] - value
     crosses = (np.sign(f[:-1]) != np.sign(f[1:])) & (f[:-1] != 0.0)

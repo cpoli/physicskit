@@ -110,3 +110,13 @@ axes[2].set_aspect("equal")
 axes[2].set_title(f"grounded sphere: image {qs[0] / q:+.2f} q at R²/a")
 fig.tight_layout()
 plt.show()
+
+# %%
+# Check
+# -----
+# Images: the plane carries induced charge -q and pulls with k q^2 / (2d)^2;
+# the grounded sphere carries -qR/a, pulls with k q^2 R a / (a^2 - R^2)^2, and
+# stays at zero potential.
+assert abs(total / -q - 1) < 1e-6 and abs(F / (-k * q**2 / (2 * d) ** 2) - 1) < 1e-9
+assert abs(total_s / (-q * R / a) - 1) < 1e-6 and abs(F_s / (-k * q**2 * R * a / (a**2 - R**2) ** 2) - 1) < 1e-9
+assert np.max(np.abs(rim_phi)) < 1e-9

@@ -63,3 +63,11 @@ ax2.set_ylabel(r"$|f_B(q)|$")
 ax2.set_title("Born amplitudes of three attractive potentials")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The Yukawa Born amplitude is -2 m g / (q^2 + mu^2); the numerical Born
+# integral reproduces it, and as mu -> 0 |f|^2 becomes Rutherford's formula.
+np.testing.assert_allclose(f_num, yukawa_born_amplitude(momentum_transfer(k, theta_num), g, 0.5, mass), rtol=1e-4)
+np.testing.assert_allclose(yukawa_born_amplitude(q, g, 1e-8, mass) ** 2, rutherford_dsigma_domega(theta, 1, 1, E_kin, alpha=g), rtol=1e-8)

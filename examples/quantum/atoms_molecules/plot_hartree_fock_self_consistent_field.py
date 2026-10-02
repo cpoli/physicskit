@@ -97,3 +97,16 @@ ax2.set_ylabel("total energy (hartree)")
 ax2.set_title(r"H$_2$ potential curve: bound near 1.35 bohr, wrong at dissociation")
 ax2.legend()
 fig2.tight_layout()
+
+# %%
+# Check
+# -----
+# The largest basis reaches the Clementi-Roetti Hartree-Fock limit; every
+# basis stays variational (above it); the remaining gap to Pekeris' exact
+# energy is the correlation energy, -0.042 hartree. The STO-3G H2 minimum
+# sits near the textbook R = 1.346 bohr, E = -1.117 hartree.
+assert abs(E_he[-1] - E_HF_LIMIT) < 1e-4
+assert np.all(np.array(E_he) > E_HF_LIMIT - 1e-6) and E_sto3g > E_HF_LIMIT
+assert abs((E_HF_LIMIT - E_EXACT_HE) - 0.042) < 1e-3
+assert abs(R[np.argmin(E_h2)] - 1.346) < 0.07
+assert abs(min(E_h2) + 1.117) < 0.002

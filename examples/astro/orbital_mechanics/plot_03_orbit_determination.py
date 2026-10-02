@@ -75,3 +75,9 @@ ax.legend(loc="upper left", fontsize=8)
 fig.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# One state vector fixes all six elements.
+np.testing.assert_allclose(recovered, truth, atol=1e-10)

@@ -233,7 +233,7 @@ class PointVortexSystem:
         positions : ndarray of float, shape (n_steps + 1, n, 2)
             Vortex positions at each step, including the current positions.
         """
-        times = np.arange(n_steps + 1) * dt
+        times = np.arange(n_steps + 1, dtype=np.float64) * dt
         trajectory = _point_vortex_rk4_integrate(self.positions, self.circulations, self.core, dt, n_steps)
         return times, trajectory
 

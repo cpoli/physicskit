@@ -64,3 +64,12 @@ fig.tight_layout()
 # that zero splits across the individual gaps.
 
 plt.show()
+
+# %%
+# Check
+# -----
+# TKNN: at flux p/q = 1/3 the Hall conductance in gap r solves the
+# Diophantine equation r = q s_r + p t_r with |t_r| <= q/2, so t = 1, -1
+# (up to the overall sign convention); the band Chern numbers sum to zero.
+assert list(chern_numbers) == [-1, 2, -1]
+assert list(sigma_xy) == [-1, 1, 0]

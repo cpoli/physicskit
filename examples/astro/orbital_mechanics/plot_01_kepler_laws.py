@@ -123,3 +123,12 @@ ax3.legend(loc="upper left")
 fig3.tight_layout()
 
 plt.show()
+
+# %%
+# Check
+# -----
+# First law: r + r' = 2a. Second law: equal areas pi a b / 12 in equal times.
+# Third law: T^2 / a^3 = 1 yr^2 / AU^3 for the planets.
+np.testing.assert_allclose(focal_sum, 2 * a, rtol=1e-9)
+np.testing.assert_allclose(areas, np.pi * a * b / n_sectors, rtol=2e-3)
+np.testing.assert_allclose(T_obs**2 / a_obs**3, 1, rtol=3e-3)

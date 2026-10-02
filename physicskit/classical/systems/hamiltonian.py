@@ -132,7 +132,7 @@ class PendulumSwarm(HamiltonianSystem):
     def potential_energy(self, q: np.ndarray) -> float:
         return -self.g_over_l * float(np.sum(np.cos(q)))
 
-    def per_particle_energy(self, q: np.ndarray = None, p: np.ndarray = None) -> np.ndarray:
+    def per_particle_energy(self, q: np.ndarray | None = None, p: np.ndarray | None = None) -> np.ndarray:
         """Energy of each individual pendulum, used to color/track the swarm.
 
         Conserved per-particle since the ensemble is decoupled.
@@ -150,7 +150,7 @@ class PendulumSwarm(HamiltonianSystem):
         p = self.p if p is None else p
         return 0.5 * p * p - self.g_over_l * np.cos(q)
 
-    def phase_space_area(self, q: np.ndarray = None, p: np.ndarray = None) -> float:
+    def phase_space_area(self, q: np.ndarray | None = None, p: np.ndarray | None = None) -> float:
         """Convex-hull area of the current swarm's (q, p) point cloud.
 
         A practical proxy for the occupied phase-space volume.

@@ -111,3 +111,14 @@ fig2.tight_layout()
 print(f"Delta p(r={r_values[-1]:.2f}, phi=0) = {dp_map[-1, 0]:.4f}   Delta p(r={r_values[-1]:.2f}, phi={phi_values[-1]:.2f}) = {dp_map[-1, -1]:.4f}")
 print("Delta x*Delta p/hbar along the r=0 row (the vacuum, whatever phi):")
 print("  ", np.round(prod_ratio[:: len(prod_ratio) // 4], 4))
+
+# %%
+# Check
+# -----
+# Fock states: dx dp = (n + 1/2) hbar. [x, p] = i hbar below the truncation.
+# Squeezed vacuum: dp = e^(+-r) / sqrt(2), with dx dp = hbar/2 for the vacuum.
+np.testing.assert_allclose(prod_vals, (n_values + 0.5) * ho.hbar, rtol=1e-6)
+assert max_err_bulk < 1e-12
+assert abs(dp_map[-1, 0] - np.exp(r_values[-1]) / np.sqrt(2)) < 1e-3
+assert abs(dp_map[-1, -1] - np.exp(-r_values[-1]) / np.sqrt(2)) < 1e-3
+np.testing.assert_allclose(prod_ratio, 0.5, atol=1e-6)
