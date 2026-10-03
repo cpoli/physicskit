@@ -26,8 +26,8 @@ GitHub Release once the repository is enabled there.
 
 **Approach.** Enable the repository at
 <https://zenodo.org/account/settings/github>, cut the next release, and
-add its concept DOI (the one that always resolves to the latest version)
-to `CITATION.cff` (`doi:`) and as a badge in the README.
+add that release's own DOI to `CITATION.cff` (`doi:`) and as a badge in
+the README.
 
 ## Done
 
