@@ -175,7 +175,7 @@ MPLBACKEND=Agg pytest --doctest-modules physicskit \
 ```
 
 Both commands, plus `ruff check`/`ruff format --check`, run in CI on
-every PR (`.github/workflows/ci.yml`) across Python 3.10-3.14 on Linux and
+every PR (`.github/workflows/ci.yml`) across Python 3.10-3.15 on Linux and
 macOS, as does `mypy` on the whole package. See [CONTRIBUTING.md](CONTRIBUTING.md) before
 opening a PR.
 
