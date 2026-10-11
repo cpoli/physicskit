@@ -11,24 +11,38 @@ ALL_BILLIARDS = [
 ]
 
 
-@pytest.mark.parametrize("make_billiard", ALL_BILLIARDS)
-def test_simulate_many_rays_matches_per_ray_simulate(make_billiard):
-    """The parallel batch kernel must reproduce plain per-ray simulate() exactly."""
+# (billiard factory, bounces per ray to compare). The circle is integrable, so
+# float rounding stays tiny over every bounce; the Sinai and stadium billiards
+# are chaotic and amplify ulp-level differences (e.g. libm cos/sin, FMA on the
+# CI runner) exponentially, so only their first few bounces are comparable.
+BATCH_CASES = [
+    (ALL_BILLIARDS[0], 30),
+    (ALL_BILLIARDS[1], 5),
+    (ALL_BILLIARDS[2], 5),
+]
+
+
+@pytest.mark.parametrize(("make_billiard", "n_compare"), BATCH_CASES)
+def test_simulate_many_rays_matches_per_ray_simulate(make_billiard, n_compare):
+    """The parallel batch kernel must reproduce plain per-ray simulate()."""
     billiard = make_billiard()
     pos = billiard.sample_interior_point()
     angles = np.array([0.3, 1.1, 2.7, 4.0, 5.9])
+    n_bounces = 30
 
-    batch = billiard.simulate_many_rays(pos, angles, n_bounces=30)
+    batch = billiard.simulate_many_rays(pos, angles, n_bounces=n_bounces)
 
     expected_s, expected_sin_phi = [], []
     for angle in angles:
         vel = np.array([np.cos(angle), np.sin(angle)])
-        result = billiard.simulate(pos, vel, n_bounces=30)
+        result = billiard.simulate(pos, vel, n_bounces=n_bounces)
         expected_s.append(result["s"])
         expected_sin_phi.append(result["sin_phi"])
 
-    np.testing.assert_allclose(batch["s"], np.concatenate(expected_s))
-    np.testing.assert_allclose(batch["sin_phi"], np.concatenate(expected_sin_phi))
+    batch_s = batch["s"].reshape(len(angles), n_bounces)[:, :n_compare]
+    batch_sin_phi = batch["sin_phi"].reshape(len(angles), n_bounces)[:, :n_compare]
+    np.testing.assert_allclose(batch_s, np.array(expected_s)[:, :n_compare], rtol=1e-9, atol=1e-9)
+    np.testing.assert_allclose(batch_sin_phi, np.array(expected_sin_phi)[:, :n_compare], rtol=1e-9, atol=1e-9)
 
 
 def test_plot_poincare_section_returns_pooled_scatter_within_bounds():

@@ -429,7 +429,8 @@ def simulate_bounces(
 def simulate_bounces_many(
     px: float,
     py: float,
-    angles: NDArray[np.float64],
+    vx0: NDArray[np.float64],
+    vy0: NDArray[np.float64],
     segments: NDArray[np.float64],
     arcs: NDArray[np.float64],
     arc_full: NDArray[np.bool_],
@@ -444,8 +445,8 @@ def simulate_bounces_many(
 ]:
     """Trace many independent rays from one point, in parallel across rays.
 
-    Same physics as :func:`simulate_bounces`, run once per entry of `angles`
-    (all launched from the same ``(px, py)``) and parallelized across rays
+    Same physics as :func:`simulate_bounces`, run once per initial velocity
+    ``(vx0[r], vy0[r])`` (all launched from the same ``(px, py)``) and parallelized across rays
     with Numba's ``prange`` -- the embarrassingly parallel workload behind a
     Poincare section (:func:`physicskit.chaos.visualizers.phase_space.plot_poincare_section`),
     where each ray is fully independent of every other.
@@ -454,8 +455,12 @@ def simulate_bounces_many(
     ----------
     px, py : float
         Shared initial position for every ray.
-    angles : ndarray of float, shape (n_rays,)
-        Initial launch angle (radians) of each ray.
+    vx0, vy0 : ndarray of float, shape (n_rays,)
+        Initial (unit) velocity components of each ray. Taken as inputs
+        rather than computed from launch angles in-kernel so the batch path
+        starts from bit-identical velocities to :meth:`simulate` (Numba's
+        ``cos``/``sin`` can differ from NumPy's by an ulp, which chaotic
+        billiards amplify exponentially).
     segments : ndarray of float, shape (n_segments, 4)
         Straight walls, each row ``(x1, y1, x2, y2)``.
     arcs : ndarray of float, shape (n_arcs, 5)
@@ -476,7 +481,7 @@ def simulate_bounces_many(
     widxs : ndarray of int64, shape (n_rays, n_bounces)
         Wall row index struck at each bounce.
     """
-    n_rays = angles.shape[0]
+    n_rays = vx0.shape[0]
     xs = np.empty((n_rays, n_bounces))
     ys = np.empty((n_rays, n_bounces))
     vxs = np.empty((n_rays, n_bounces))
@@ -485,7 +490,7 @@ def simulate_bounces_many(
     widxs = np.empty((n_rays, n_bounces), dtype=np.int64)
     for r in prange(n_rays):  # type: ignore[attr-defined, unused-ignore]  # prange is untyped in some numba versions
         x, y = px, py
-        vx, vy = np.cos(angles[r]), np.sin(angles[r])
+        vx, vy = vx0[r], vy0[r]
         for i in range(n_bounces):
             x, y, vx, vy, wt, wi = bounce(x, y, vx, vy, segments, arcs, arc_full)
             xs[r, i] = x
@@ -736,10 +741,17 @@ class _RayTracingBilliard(BilliardSystem, _WallBoundaryMixin):
         """
         pos = np.asarray(pos, dtype=np.float64)
         angles = np.asarray(angles, dtype=np.float64)
+        # Build each starting velocity exactly as simulate() does (scalar
+        # cos/sin, then normalize) so batch and per-ray results agree bitwise.
+        vel0 = np.empty((angles.shape[0], 2))
+        for r, angle in enumerate(angles):
+            vel = np.array([np.cos(angle), np.sin(angle)])
+            vel0[r] = vel / float(np.linalg.norm(vel))
         xs, ys, vxs, vys, wtypes, widxs = simulate_bounces_many(
             pos[0],
             pos[1],
-            angles,
+            np.ascontiguousarray(vel0[:, 0]),
+            np.ascontiguousarray(vel0[:, 1]),
             self._segments,
             self._arcs,
             self._arc_full,
