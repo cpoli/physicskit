@@ -716,7 +716,7 @@ def thawed_gaussian_propagate(
     >>> d2Vdx2 = njit(lambda q, params: 1.0, cache=False)
     >>> V = njit(lambda q, params: 0.5 * q ** 2, cache=False)
     >>> t, q, p, alpha, s = thawed_gaussian_propagate(0.0, 0.0, 0.5, dVdx, d2Vdx2, V, m=1.0, dt=0.01, steps=300)
-    >>> complex(np.round(alpha[-1], 8))
+    >>> complex(np.round(alpha[-1], 8) + 0.0)  # + 0.0 clears a signed zero
     0.5j
     >>> round(float(s[-1].real), 6)  # -E_0 t = -0.5 * 3
     -1.5
