@@ -39,7 +39,7 @@ pip install -e ".[docs]"
 cd docs && make html
 ```
 
-All of lint, unit tests, doctests, and mypy run in CI (`.github/workflows/ci.yml`); tests and doctests run across Python 3.10-3.14 on Linux and macOS.
+All of lint, unit tests, doctests, and mypy run in CI (`.github/workflows/ci.yml`); tests and doctests run across Python 3.10-3.15 on Linux and macOS.
 
 ## Architecture
 

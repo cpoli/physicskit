@@ -483,7 +483,7 @@ def simulate_bounces_many(
     vys = np.empty((n_rays, n_bounces))
     wtypes = np.empty((n_rays, n_bounces), dtype=np.int64)
     widxs = np.empty((n_rays, n_bounces), dtype=np.int64)
-    for r in prange(n_rays):  # type: ignore[attr-defined]  # numba lacks type stubs for prange
+    for r in prange(n_rays):  # type: ignore[attr-defined, unused-ignore]  # prange is untyped in some numba versions
         x, y = px, py
         vx, vy = np.cos(angles[r]), np.sin(angles[r])
         for i in range(n_bounces):

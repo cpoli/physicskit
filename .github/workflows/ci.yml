@@ -34,8 +34,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
           cache: pip
-      # units/hdf5 extras so the pint and HDF5 paths are tested, not skipped
-      - run: pip install -e ".[test,units,hdf5]"
+      # units/hdf5 extras so the pint and HDF5 paths are tested, not skipped.
+      # h5py is installed from wheels only: on Python versions it has no
+      # wheel for yet (e.g. a 3.15 prerelease) the source build fails with no
+      # system HDF5, so the HDF5 tests skip there (pytest.importorskip).
+      - run: pip install -e ".[test,units]"
+      - run: pip install --only-binary=h5py "h5py>=3.8" || echo "::notice::No h5py wheel for Python ${{ matrix.python-version }}; HDF5 tests will be skipped"
       - run: MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=xml --cov-report=term
       # Coverage is measured on one matrix entry and published two ways:
       # the job summary (always, no token needed) and Codecov, which

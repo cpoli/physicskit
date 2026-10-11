@@ -605,7 +605,7 @@ def _forced_van_der_pol_strobe(states0: NDArray[np.float64], n_periods: int, ste
     dt = 2.0 * np.pi / omega / steps_per_period
     h = 0.5 * dt
     out = np.empty((n, n_periods + 1, 2))
-    for i in prange(n):  # type: ignore[attr-defined]  # numba lacks type stubs for prange
+    for i in prange(n):  # type: ignore[attr-defined, unused-ignore]  # prange is untyped in some numba versions
         x, v = states0[i, 0], states0[i, 1]
         out[i, 0, 0], out[i, 0, 1] = x, v
         for p in range(n_periods):

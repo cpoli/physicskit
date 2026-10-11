@@ -39,7 +39,7 @@ def _compute_basin_grid(rhs, xs, ys, vx0, vy0, dt, n_steps, attractors, params) 
     n_x = xs.shape[0]
     n_attractors = attractors.shape[0]
     labels = np.empty((n_y, n_x), dtype=np.int64)
-    for i in prange(n_y):  # type: ignore[attr-defined]  # numba lacks type stubs for prange
+    for i in prange(n_y):  # type: ignore[attr-defined, unused-ignore]  # prange is untyped in some numba versions
         for j in range(n_x):
             state = np.array([xs[j], ys[i], vx0, vy0])
             for _ in range(n_steps):
