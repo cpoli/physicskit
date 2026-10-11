@@ -7,7 +7,7 @@
 | Documentation | [![Docs](https://img.shields.io/badge/docs-cpoli.github.io%2Fphysicskit-blue)](https://cpoli.github.io/physicskit/) |
 | Code style | [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) |
 | Downloads | [![Downloads](https://static.pepy.tech/badge/physicskit)](https://pepy.tech/project/physicskit) [![Downloads/Month](https://static.pepy.tech/badge/physicskit/month)](https://pepy.tech/project/physicskit) |
-| Community | [![GitHub Stars](https://img.shields.io/github/stars/cpoli/physicskit?style=social)](https://github.com/cpoli/physicskit) [![GitHub Forks](https://img.shields.io/github/forks/cpoli/physicskit?style=social)](https://github.com/cpoli/physicskit) [![Contributors](https://badgen.net/github/contributors/cpoli/physicskit)](https://github.com/cpoli/physicskit/graphs/contributors) [![Last Commit](https://badgen.net/github/last-commit/cpoli/physicskit/main)](https://github.com/cpoli/physicskit/commits/main) |
+| Community | [![GitHub Stars](https://badgen.net/github/stars/cpoli/physicskit)](https://github.com/cpoli/physicskit) [![GitHub Forks](https://badgen.net/github/forks/cpoli/physicskit)](https://github.com/cpoli/physicskit) [![Contributors](https://badgen.net/github/contributors/cpoli/physicskit)](https://github.com/cpoli/physicskit/graphs/contributors) [![Last Commit](https://badgen.net/github/last-commit/cpoli/physicskit/main)](https://github.com/cpoli/physicskit/commits/main) |
 
 **Watch the laws of physics play out.**
 physicskit is a Python toolkit for learning and teaching computational
