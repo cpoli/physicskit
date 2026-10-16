@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>physicskit.chaos.systems.billiards &#8212; physicskit 0.3.0 documentation</title>
+    <title>physicskit.chaos.systems.billiards &#8212; physicskit</title>
   
   
   
@@ -43,18 +43,19 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
-    <script src="../../../../_static/documentation_options.js?v=f129cdf0"></script>
+    <script src="../../../../_static/documentation_options.js?v=1437fa6d"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/physicskit/chaos/systems/billiards';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="canonical" href="https://cpoli.github.io/physicskit/_modules/physicskit/chaos/systems/billiards.html" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.3.0" />
+  <meta name="docsearch:version" content="0.4.0" />
   
     
     <script src="../../../../_static/searchtools.js"></script>
@@ -854,7 +855,8 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">simulate_bounces_many</span><span class="p">(</span>
     <span class="n">px</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">py</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">angles</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">vx0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">vy0</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">segments</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">arcs</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">arc_full</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">],</span>
@@ -869,8 +871,8 @@
 <span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""Trace many independent rays from one point, in parallel across rays.</span>
 
-<span class="sd">    Same physics as :func:`simulate_bounces`, run once per entry of `angles`</span>
-<span class="sd">    (all launched from the same ``(px, py)``) and parallelized across rays</span>
+<span class="sd">    Same physics as :func:`simulate_bounces`, run once per initial velocity</span>
+<span class="sd">    ``(vx0[r], vy0[r])`` (all launched from the same ``(px, py)``) and parallelized across rays</span>
 <span class="sd">    with Numba's ``prange`` -- the embarrassingly parallel workload behind a</span>
 <span class="sd">    Poincare section (:func:`physicskit.chaos.visualizers.phase_space.plot_poincare_section`),</span>
 <span class="sd">    where each ray is fully independent of every other.</span>
@@ -879,8 +881,12 @@
 <span class="sd">    ----------</span>
 <span class="sd">    px, py : float</span>
 <span class="sd">        Shared initial position for every ray.</span>
-<span class="sd">    angles : ndarray of float, shape (n_rays,)</span>
-<span class="sd">        Initial launch angle (radians) of each ray.</span>
+<span class="sd">    vx0, vy0 : ndarray of float, shape (n_rays,)</span>
+<span class="sd">        Initial (unit) velocity components of each ray. Taken as inputs</span>
+<span class="sd">        rather than computed from launch angles in-kernel so the batch path</span>
+<span class="sd">        starts from bit-identical velocities to :meth:`simulate` (Numba's</span>
+<span class="sd">        ``cos``/``sin`` can differ from NumPy's by an ulp, which chaotic</span>
+<span class="sd">        billiards amplify exponentially).</span>
 <span class="sd">    segments : ndarray of float, shape (n_segments, 4)</span>
 <span class="sd">        Straight walls, each row ``(x1, y1, x2, y2)``.</span>
 <span class="sd">    arcs : ndarray of float, shape (n_arcs, 5)</span>
@@ -901,16 +907,16 @@
 <span class="sd">    widxs : ndarray of int64, shape (n_rays, n_bounces)</span>
 <span class="sd">        Wall row index struck at each bounce.</span>
 <span class="sd">    """</span>
-    <span class="n">n_rays</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_rays</span> <span class="o">=</span> <span class="n">vx0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">))</span>
     <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">))</span>
     <span class="n">vxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">))</span>
     <span class="n">vys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">))</span>
     <span class="n">wtypes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
     <span class="n">widxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rays</span><span class="p">,</span> <span class="n">n_bounces</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">n_rays</span><span class="p">):</span>  <span class="c1"># type: ignore[attr-defined]  # numba lacks type stubs for prange</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">n_rays</span><span class="p">):</span>  <span class="c1"># type: ignore[attr-defined, unused-ignore]  # prange is untyped in some numba versions</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">px</span><span class="p">,</span> <span class="n">py</span>
-        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">r</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">vx0</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">vy0</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bounces</span><span class="p">):</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">wt</span><span class="p">,</span> <span class="n">wi</span> <span class="o">=</span> <span class="n">bounce</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">segments</span><span class="p">,</span> <span class="n">arcs</span><span class="p">,</span> <span class="n">arc_full</span><span class="p">)</span>
             <span class="n">xs</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
@@ -1161,10 +1167,17 @@
 <span class="sd">        """</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="c1"># Build each starting velocity exactly as simulate() does (scalar</span>
+        <span class="c1"># cos/sin, then normalize) so batch and per-ray results agree bitwise.</span>
+        <span class="n">vel0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">angles</span><span class="p">):</span>
+            <span class="n">vel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)])</span>
+            <span class="n">vel0</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vel</span><span class="p">))</span>
         <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">vxs</span><span class="p">,</span> <span class="n">vys</span><span class="p">,</span> <span class="n">wtypes</span><span class="p">,</span> <span class="n">widxs</span> <span class="o">=</span> <span class="n">simulate_bounces_many</span><span class="p">(</span>
             <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
             <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">angles</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">vel0</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">vel0</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_segments</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_arcs</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_arc_full</span><span class="p">,</span>

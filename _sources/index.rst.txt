@@ -1,5 +1,5 @@
-physicskit
-==========
+physicskit: Computational Physics in Python
+===========================================
 
 .. include:: /_generated/vars.rst
 
@@ -183,3 +183,13 @@ Conventionally imported as ``pk``:
 
    api/index
 
+.. rubric:: Related toolkits
+
+Sibling Python toolkits for learning and teaching, built the same way:
+
+- `blockchainkit <https://cpoli.github.io/blockchainkit/>`__ -- cryptography, consensus and blockchain systems
+- `chemistrykit <https://cpoli.github.io/chemistrykit/>`__ -- computational chemistry
+- `engineeringkit <https://cpoli.github.io/engineeringkit/>`__ -- computational engineering
+- `financialkit <https://cpoli.github.io/financialkit/>`__ -- quantitative finance
+- `mathematicskit <https://cpoli.github.io/mathematicskit/>`__ -- computational mathematics
+- `tbkit <https://cpoli.github.io/tbkit/>`__ -- tight-binding models, band topology and quantum transport
