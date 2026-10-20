@@ -8,6 +8,7 @@ import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
+from matplotlib.collections import PolyCollection
 
 __all__ = ["complex_to_rgb", "plot_complex_wavefunction", "animate_density", "animate_density_2d"]
 
@@ -43,6 +44,16 @@ def complex_to_rgb(psi: np.ndarray, max_abs: Optional[float] = None) -> np.ndarr
     return mcolors.hsv_to_rgb(hsv)
 
 
+def _segment_quads(x: np.ndarray, density: np.ndarray) -> np.ndarray:
+    """Vertices of the filled quad under each grid segment, shape ``(len(x) - 1, 4, 2)``."""
+    quads = np.empty((len(x) - 1, 4, 2))
+    quads[:, :, 0] = np.stack([x[:-1], x[:-1], x[1:], x[1:]], axis=-1)
+    quads[:, 1, 1] = density[:-1]
+    quads[:, 2, 1] = density[1:]
+    quads[:, [0, 3], 1] = 0.0
+    return quads
+
+
 def plot_complex_wavefunction(x: np.ndarray, psi: np.ndarray, ax=None, density_scale: float = 1.0):
     r"""Plot a phase-colored probability density curve.
 
@@ -71,8 +82,11 @@ def plot_complex_wavefunction(x: np.ndarray, psi: np.ndarray, ax=None, density_s
     density = np.abs(psi) ** 2 * density_scale
     colors = complex_to_rgb(psi)
 
-    for i in range(len(x) - 1):
-        ax.fill_between(x[i : i + 2], 0, density[i : i + 2], color=colors[i], linewidth=0)
+    # one PolyCollection of per-segment quads, not one fill_between per segment
+    quads = PolyCollection(_segment_quads(x, density), facecolors=colors[:-1], linewidths=0)  # type: ignore[arg-type]  # matplotlib stubs reject ndarray verts/colors, which work at runtime
+    quads.sticky_edges.y[:] = [0.0, float(density.max())]  # same autoscale as fill_between
+    ax.add_collection(quads)
+    ax.autoscale_view()
 
     ax.set_xlabel("x")
     ax.set_ylabel(r"$|\psi(x)|^2$")
@@ -126,7 +140,9 @@ def animate_density(
     ymax = density.max() * 1.1
 
     if phase_colored and np.iscomplexobj(frames):
-        line_collections: list = []
+        max_abs = np.abs(frames).max()
+        quads = PolyCollection(_segment_quads(x, density[0]), facecolors=complex_to_rgb(frames[0], max_abs=max_abs)[:-1], linewidths=0)  # type: ignore[arg-type]  # matplotlib stubs reject ndarray verts/colors, which work at runtime
+        ax.add_collection(quads)
 
         def init():
             ax.set_xlim(x.min(), x.max())
@@ -136,15 +152,11 @@ def animate_density(
             return []
 
         def update(i):
-            for coll in line_collections:
-                coll.remove()
-            line_collections.clear()
-            colors = complex_to_rgb(frames[i], max_abs=np.abs(frames).max())
-            for j in range(len(x) - 1):
-                line_collections.append(ax.fill_between(x[j : j + 2], 0, density[i, j : j + 2], color=colors[j], linewidth=0))
+            quads.set_verts(_segment_quads(x, density[i]))  # type: ignore[arg-type]  # matplotlib stubs reject ndarray verts/colors, which work at runtime
+            quads.set_facecolor(complex_to_rgb(frames[i], max_abs=max_abs)[:-1])  # type: ignore[arg-type]  # matplotlib stubs reject ndarray verts/colors, which work at runtime
             title = f"t = {times[i]:.3f}" if times is not None else f"frame {i}"
             ax.set_title(title)
-            return line_collections
+            return (quads,)
 
         return FuncAnimation(fig, update, init_func=init, frames=len(frames), interval=interval, blit=False)
 

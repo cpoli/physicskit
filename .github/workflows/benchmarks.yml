@@ -12,13 +12,19 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# A newer push to the same PR supersedes the run in progress; every run on
+# the default branch finishes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   benchmarks:
     name: Benchmarks (${{ github.event_name == 'pull_request' && 'smoke' || 'timed' }})
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -31,7 +37,7 @@ jobs:
         run: MPLBACKEND=Agg pytest benchmarks -q --benchmark-json=benchmark.json
       - name: Upload results
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: benchmarks-${{ github.sha }}
           path: benchmark.json

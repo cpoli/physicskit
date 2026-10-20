@@ -26,7 +26,7 @@ from physicskit.astro.visualizers import (
 def test_animate_nbody_trajectories_figure_eight_saves_gif(tmp_path):
     positions, velocities, masses = figure_eight_initial_conditions()
     system = NBodySystem(positions, velocities, masses)
-    history = system.simulate(dt=0.002, n_steps=300)
+    history = system.simulate(dt=0.002, n_steps=100)
 
     anim = animate_nbody_trajectories(history, skip=5)
     out = tmp_path / "nbody_figure_eight.gif"

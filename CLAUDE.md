@@ -19,8 +19,8 @@ ruff check .
 ruff format .
 
 # unit tests -- everything (parallelized across cores via pytest-xdist,
-# ~75s vs ~250s serial on a 10-core machine), or a single subpackage / file / test
-MPLBACKEND=Agg pytest -q -n auto
+# ~45s vs ~250s serial on a 10-core machine; worksteal rebalances the slow tail), or a single subpackage / file / test
+MPLBACKEND=Agg pytest -q -n auto --dist worksteal
 pytest physicskit/rmt/tests
 pytest physicskit/classical/tests/test_conservation.py::test_energy_conserved -q
 

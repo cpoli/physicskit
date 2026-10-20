@@ -107,7 +107,7 @@ def test_animate_string_breaking_given_ax():
 def test_animate_higgs_rollover_saves_gif(tmp_path):
     # short: animate_higgs_rollover has no stride and renders one frame per
     # sample, so this only needs enough samples for a valid animation
-    t = np.linspace(0, 40, 50)
+    t = np.linspace(0, 40, 15)
     phi, _ = higgs_field_rollover(1e-3, 0.0, a=1.0, b=1.0, t_eval=t, damping=0.06)
     anim = animate_higgs_rollover(phi, a=1.0, b=1.0)
     _save(anim, tmp_path, "higgs_rollover.gif")
@@ -123,7 +123,7 @@ def test_animate_higgs_rollover_given_ax():
 
 @pytest.mark.slow
 def test_animate_decay_chain_bars_saves_gif(tmp_path):
-    t = np.linspace(0, 10, 40)
+    t = np.linspace(0, 10, 15)
     N = bateman_decay_chain(1000.0, [0.5, 0.2], t)
     anim = animate_decay_chain_bars(t, N, labels=["Parent", "Daughter"])
     _save(anim, tmp_path, "decay_chain_bars.gif")
@@ -139,7 +139,7 @@ def test_animate_decay_chain_bars_given_ax():
 
 @pytest.mark.slow
 def test_animate_neutrino_oscillation_saves_gif(tmp_path):
-    L = np.linspace(0, 1000, 60)
+    L = np.linspace(0, 1000, 15)
     anim = animate_neutrino_oscillation(L, E=1.0, theta=0.6, delta_m2=2.5e-3)
     _save(anim, tmp_path, "neutrino_oscillation.gif")
 
@@ -181,7 +181,7 @@ def test_animate_michel_histogram_given_ax():
 
 @pytest.mark.slow
 def test_animate_cp_asymmetry_saves_gif(tmp_path):
-    t = np.linspace(0, 20, 80)
+    t = np.linspace(0, 20, 15)
     anim = animate_cp_asymmetry(t, delta_m=0.5, gamma_s=1.0, gamma_l=0.1, epsilon=0.003 + 0.001j)
     _save(anim, tmp_path, "cp_asymmetry.gif")
 
