@@ -2,7 +2,7 @@
 
 | | |
 |:--|:-:|
-| Package | [![PyPI version](https://badgen.net/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![Python versions](https://badgen.net/pypi/python/physicskit)](https://pypi.org/project/physicskit/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23116492.svg)](https://doi.org/10.5281/zenodo.23116492) |
+| Package | [![PyPI version](https://badgen.net/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![conda-forge](https://badgen.net/badge/conda-forge/physicskit/green)](https://anaconda.org/conda-forge/physicskit) [![Python versions](https://badgen.net/pypi/python/physicskit)](https://pypi.org/project/physicskit/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23116492.svg)](https://doi.org/10.5281/zenodo.23116492) |
 | Quality | [![License](https://badgen.net/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://codecov.io/gh/cpoli/physicskit/branch/main/graph/badge.svg)](https://codecov.io/gh/cpoli/physicskit) |
 | Documentation | [![Docs](https://badgen.net/badge/docs/cpoli.github.io%2Fphysicskit/blue)](https://cpoli.github.io/physicskit/) |
 | Code style | [![Ruff](https://badgen.net/badge/code%20style/ruff/purple)](https://github.com/astral-sh/ruff) |
@@ -45,6 +45,8 @@ see the dedicated package [tbkit](https://github.com/cpoli/tbkit).
 
 ```bash
 pip install physicskit
+# or
+conda install -c conda-forge physicskit
 ```
 
 Then `import physicskit as pk`. Runtime dependencies are numpy, scipy,
@@ -52,7 +54,7 @@ matplotlib, [numba](https://numba.pydata.org/) (which compiles the shared
 integrators and the time-stepping loops of `chaos`, `classical`, `fluids`,
 `plasma`, `relativity`, and `statphys`), plotly, sympy, and tqdm. The
 interactive 3D viewer in `physicskit.chaos.visualizers.viewer3d`
-additionally needs `pip install pyvista`.
+additionally needs `pip install pyvista` (or `conda install -c conda-forge pyvista`).
 
 For development: `pip install -e ".[dev]"` (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
@@ -190,7 +192,7 @@ pytest benchmarks
 ### Coverage
 
 ```bash
-MPLBACKEND=Agg pytest -q -n auto --cov=physicskit --cov-report=term
+MPLBACKEND=Agg pytest -q -n auto --dist worksteal --cov=physicskit --cov-report=term
 ```
 
 CI measures coverage on every push and PR and uploads it to
