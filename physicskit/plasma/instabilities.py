@@ -242,77 +242,106 @@ def simulate_reconnection(psi0: np.ndarray, eta: float, v0: float, dt: float, st
     return {"psi": psi, "Bx": Bx, "By": By}
 
 
-def weibel_growth_rate(k: np.ndarray, wpe: float, temperature_anisotropy: float, c: float = _const.C) -> np.ndarray:
-    """Linear growth rate of the (non-relativistic, cold-parallel-limit) Weibel/filamentation instability.
+def weibel_growth_rate(k: np.ndarray, wpe: float, temperature_anisotropy: float, c: float = _const.C, *, v_th_par: float) -> np.ndarray:
+    """Linear growth rate of the Weibel instability of a bi-Maxwellian plasma, in the small-growth kinetic limit.
 
-    For an electron distribution anisotropic between the direction of
-    wave propagation (temperature :math:`T_\\parallel`, taken cold here)
-    and the transverse direction (temperature :math:`T_\\perp`), the
-    electromagnetic mode with wavevector :math:`\\mathbf{k}` transverse to
-    the anisotropy axis is purely growing (Weibel, 1959) with
+    For electrons with a bi-Maxwellian distribution, cooler along one axis
+    (temperature :math:`T_\\parallel`) than across it (:math:`T_\\perp`),
+    the transverse electromagnetic mode with wavevector :math:`\\mathbf{k}`
+    along the cool axis is purely growing (Weibel, 1959). Its Vlasov-Maxwell
+    dispersion relation, with :math:`\\omega = i\\gamma` and
+    :math:`A = T_\\perp/T_\\parallel`, is
 
     .. math::
 
-       \\gamma(k)^2 = \\omega_{pe}^2\\left(\\frac{T_\\perp}{T_\\parallel}-1\\right) - k^2 c^2,
+       k^2c^2 + \\gamma^2 - \\omega_{pe}^2(A-1) - \\omega_{pe}^2 A\\,\\zeta Z(\\zeta) = 0,
+       \\qquad \\zeta = \\frac{i\\gamma}{\\sqrt{2}\\,k v_{T\\parallel}},
 
-    unstable for :math:`T_\\perp > T_\\parallel` and only up to the cutoff
-    :math:`k_{max} = (\\omega_{pe}/c)\\sqrt{T_\\perp/T_\\parallel - 1}` --
-    beyond which the field's magnetic tension (the :math:`k^2c^2` term)
-    overcomes the free energy the anisotropy supplies. Growing transverse
-    magnetic perturbations pinch counter-streaming electron sub-populations
-    into spatially separated current channels: the filaments this
-    instability is named for.
+    with :math:`Z` the plasma dispersion function and
+    :math:`v_{T\\parallel} = \\sqrt{T_\\parallel/m}`. For slow growth,
+    :math:`\\gamma \\ll k v_{T\\parallel}`, expanding
+    :math:`Z(\\zeta) \\approx i\\sqrt{\\pi}` and dropping :math:`\\gamma^2`
+    gives (Davidson, 1983)
+
+    .. math::
+
+       \\gamma(k) = \\sqrt{\\frac{2}{\\pi}}\\,\\frac{k v_{T\\parallel}}{A}
+       \\left(A - 1 - \\frac{k^2c^2}{\\omega_{pe}^2}\\right).
+
+    The rate vanishes at :math:`k = 0`, where a uniform transverse field
+    cannot bunch particles into currents; peaks at
+    :math:`k c/\\omega_{pe} = \\sqrt{(A-1)/3}`; and cuts off at
+    :math:`k_{max} = (\\omega_{pe}/c)\\sqrt{A-1}`, beyond which the field's
+    magnetic tension (the :math:`k^2c^2` term) overcomes the free energy the
+    anisotropy supplies. The expansion needs :math:`\\gamma \\ll k v_{T\\parallel}`,
+    i.e. modest anisotropy: it is within about 15% of the exact root of the
+    dispersion relation for :math:`A \\lesssim 1.3`, and about a factor 2 low
+    at :math:`A = 4`.
 
     Parameters
     ----------
     k : ndarray or float
-        Wavenumber(s), transverse to the anisotropy axis.
+        Wavenumber(s) along the cool axis. Only :math:`|k|` matters.
     wpe : float
         Electron plasma frequency.
     temperature_anisotropy : float
-        The ratio :math:`T_\\perp/T_\\parallel`; must exceed 1 for any
+        The ratio :math:`A = T_\\perp/T_\\parallel`; must exceed 1 for any
         instability.
     c : float, default=physicskit.constants.C
         Speed of light, in the same units `k` and `wpe` combine to give
         (SI by default).
+    v_th_par : float
+        Thermal speed along the cool axis, :math:`v_{T\\parallel} =
+        \\sqrt{T_\\parallel/m}`, in the units of `c`. Keyword-only.
 
     Returns
     -------
     ndarray or float
-        Growth rate :math:`\\gamma(k)`, clipped to zero for stable (real
-        or imaginary-:math:`\\gamma^2<0`) wavenumbers.
+        Growth rate :math:`\\gamma(k)`, clipped to zero for stable
+        wavenumbers.
 
     See Also
     --------
     weibel_fastest_growing_mode : The wavenumber maximizing this growth rate.
     simulate_weibel_filamentation : Superposes modes growing at this rate.
 
+    References
+    ----------
+    E. S. Weibel, Phys. Rev. Lett. 2, 83 (1959); R. C. Davidson, "Kinetic
+    waves and instabilities in a uniform plasma", in *Handbook of Plasma
+    Physics*, Vol. 1, eds. M. N. Rosenbluth and R. Z. Sagdeev
+    (North-Holland, 1983), Sec. 3.3.
+
     Examples
     --------
     >>> import numpy as np
-    >>> round(float(weibel_growth_rate(k=0.0, wpe=1.0, temperature_anisotropy=4.0)), 6)
-    1.732051
-    >>> bool(weibel_growth_rate(k=1e10, wpe=1.0, temperature_anisotropy=4.0) == 0.0)
+    >>> float(weibel_growth_rate(0.0, wpe=1.0, temperature_anisotropy=4.0, c=1.0, v_th_par=0.1))
+    0.0
+    >>> round(float(weibel_growth_rate(1.0, wpe=1.0, temperature_anisotropy=4.0, c=1.0, v_th_par=0.1)), 6)
+    0.039894
+    >>> bool(weibel_growth_rate(2.0, wpe=1.0, temperature_anisotropy=4.0, c=1.0, v_th_par=0.1) == 0.0)
     True
     """
-    k = np.asarray(k, dtype=float)
-    gamma_sq = wpe**2 * (temperature_anisotropy - 1.0) - (k * c) ** 2
-    return np.sqrt(np.clip(gamma_sq, 0.0, None))
+    k = np.abs(np.asarray(k, dtype=float))
+    A = temperature_anisotropy
+    gamma = np.sqrt(2.0 / np.pi) * k * v_th_par / A * (A - 1.0 - (k * c / wpe) ** 2)
+    return np.clip(gamma, 0.0, None)
 
 
-def weibel_fastest_growing_mode(wpe: float, temperature_anisotropy: float, c: float = _const.C) -> tuple:
+def weibel_fastest_growing_mode(wpe: float, temperature_anisotropy: float, c: float = _const.C, *, v_th_par: float) -> tuple:
     """Wavenumber and growth rate of the fastest-growing Weibel mode.
 
-    For the growth-rate law of :func:`weibel_growth_rate`,
-    :math:`\\gamma(k)^2` is maximized at :math:`k=0` (long wavelength,
-    where the stabilizing field-tension term vanishes), giving
-    :math:`\\gamma_{max}=\\omega_{pe}\\sqrt{T_\\perp/T_\\parallel-1}` -- the
-    growth rate used to set the overall filament-growth timescale in
-    :func:`simulate_weibel_filamentation`, even though the *dominant
-    filament spacing* in a real (finite-seed) simulation is set by which
-    finite-:math:`k` modes happen to be seeded with the largest initial
-    amplitude, since every :math:`k` below cutoff grows, just more slowly
-    farther from :math:`k=0`.
+    Maximizing the growth rate of :func:`weibel_growth_rate`,
+    :math:`\\gamma \\propto k(A-1) - k^3c^2/\\omega_{pe}^2`, gives
+
+    .. math::
+
+       k_* = \\frac{\\omega_{pe}}{c}\\sqrt{\\frac{A-1}{3}}, \\qquad
+       \\gamma_{max} = \\sqrt{\\frac{2}{\\pi}}\\,\\frac{2}{3\\sqrt{3}}\\,
+       \\frac{\\omega_{pe} v_{T\\parallel}}{c}\\,\\frac{(A-1)^{3/2}}{A},
+
+    with :math:`A = T_\\perp/T_\\parallel`. The filament spacing
+    :math:`2\\pi/k_*` is a few electron skin depths :math:`c/\\omega_{pe}`.
 
     Parameters
     ----------
@@ -322,40 +351,52 @@ def weibel_fastest_growing_mode(wpe: float, temperature_anisotropy: float, c: fl
         The ratio :math:`T_\\perp/T_\\parallel`. At or below 1 the plasma
         is Weibel-stable and ``(0.0, 0.0)`` is returned.
     c : float, default=physicskit.constants.C
-        Speed of light. Unused, since the maximum sits at :math:`k=0` where
-        the :math:`k^2c^2` term vanishes; kept for signature symmetry with
-        :func:`weibel_growth_rate`.
+        Speed of light.
+    v_th_par : float
+        Thermal speed along the cool axis, in the units of `c`.
+        Keyword-only.
 
     Returns
     -------
     k_max_growth : float
-        Wavenumber of maximum growth (always 0.0).
+        Wavenumber of maximum growth, :math:`k_*`.
     gamma_max : float
         The corresponding growth rate :math:`\\gamma_{max}`.
 
     Examples
     --------
-    >>> k0, gamma_max = weibel_fastest_growing_mode(wpe=1.0, temperature_anisotropy=4.0)
+    >>> k0, gamma_max = weibel_fastest_growing_mode(wpe=1.0, temperature_anisotropy=4.0, c=1.0, v_th_par=0.1)
     >>> k0
-    0.0
+    1.0
     >>> round(gamma_max, 6)
-    1.732051
+    0.039894
     """
     if temperature_anisotropy <= 1.0:
         return 0.0, 0.0
-    gamma_max = wpe * np.sqrt(temperature_anisotropy - 1.0)
-    return 0.0, float(gamma_max)
+    k_star = (wpe / c) * np.sqrt((temperature_anisotropy - 1.0) / 3.0)
+    gamma_max = weibel_growth_rate(k_star, wpe, temperature_anisotropy, c=c, v_th_par=v_th_par)
+    return float(k_star), float(gamma_max)
 
 
 def simulate_weibel_filamentation(
-    x: np.ndarray, t: np.ndarray, wpe: float, temperature_anisotropy: float, n_modes: int = 12, k_max_factor: float = 0.9, seed: int = 0
+    x: np.ndarray,
+    t: np.ndarray,
+    wpe: float,
+    temperature_anisotropy: float,
+    n_modes: int = 12,
+    k_max_factor: float = 0.9,
+    seed: int = 0,
+    c: float = 1.0,
+    v_th_par: float = 0.1,
 ) -> np.ndarray:
     """Reduced quasi-linear Weibel filamentation model: a spectrum of independently growing current modes.
 
-    Seeds `n_modes` transverse-current Fourier modes with small random
+    Seeds up to `n_modes` transverse-current Fourier modes with small random
     amplitudes and phases, spanning wavenumbers up to
     ``k_max_factor`` times the linear cutoff :math:`k_{max}` of
-    :func:`weibel_growth_rate`, and evolves each mode's amplitude
+    :func:`weibel_growth_rate`. Each wavenumber is snapped to the nearest
+    harmonic :math:`2\\pi n/L` of the periodic domain (duplicates dropped),
+    so every mode is an exact Fourier mode of `x`. The model evolves each mode's amplitude
     independently as :math:`a_k(t) = a_k(0)\\,e^{\\gamma(k)t}` -- exact
     linear theory, valid until the fastest-growing filaments approach
     nonlinear saturation (order-unity current perturbation), at which
@@ -381,6 +422,12 @@ def simulate_weibel_filamentation(
         seeded (kept below 1 so every seeded mode is genuinely unstable).
     seed : int, default=0
         Random seed for the initial mode amplitudes and phases.
+    c : float, default=1.0
+        Speed of light. The default measures `x` in electron skin depths
+        :math:`c/\\omega_{pe}` when ``wpe=1``.
+    v_th_par : float, default=0.1
+        Thermal speed along the cool axis, in the units of `c`; see
+        :func:`weibel_growth_rate`.
 
     Returns
     -------
@@ -397,7 +444,7 @@ def simulate_weibel_filamentation(
     --------
     >>> import numpy as np
     >>> x = np.linspace(0, 20.0, 128, endpoint=False)
-    >>> t = np.linspace(0, 5.0, 10)
+    >>> t = np.linspace(0, 100.0, 10)
     >>> J = simulate_weibel_filamentation(x, t, wpe=1.0, temperature_anisotropy=4.0, n_modes=6, seed=0)
     >>> J.shape
     (10, 128)
@@ -405,15 +452,20 @@ def simulate_weibel_filamentation(
     True
     """
     rng = np.random.default_rng(seed)
-    c = _const.C
-    k_max = (wpe / c) * np.sqrt(max(temperature_anisotropy - 1.0, 1e-12))
-    k_modes = np.linspace(k_max / n_modes, k_max_factor * k_max, n_modes)
-    amplitudes0 = rng.uniform(0.5, 1.0, n_modes)
-    phases = rng.uniform(0.0, 2.0 * np.pi, n_modes)
-    gammas = weibel_growth_rate(k_modes, wpe, temperature_anisotropy, c=c)
-
     t = np.asarray(t, dtype=float)
     x = np.asarray(x, dtype=float)
+    period = x[-1] - x[0] + (x[1] - x[0])
+    dk = 2.0 * np.pi / period
+    k_max = (wpe / c) * np.sqrt(max(temperature_anisotropy - 1.0, 1e-12))
+    harmonics = np.unique(np.rint(np.linspace(k_max / n_modes, k_max_factor * k_max, n_modes) / dk))
+    harmonics = harmonics[(harmonics >= 1) & (harmonics * dk < k_max)]
+    if harmonics.size == 0:
+        raise ValueError(f"domain of length {period:g} has no Fourier mode below the Weibel cutoff k_max = {k_max:g}")
+    k_modes = harmonics * dk
+    amplitudes0 = rng.uniform(0.5, 1.0, k_modes.size)
+    phases = rng.uniform(0.0, 2.0 * np.pi, k_modes.size)
+    gammas = weibel_growth_rate(k_modes, wpe, temperature_anisotropy, c=c, v_th_par=v_th_par)
+
     growth = np.exp(np.outer(t, gammas))
     amplitudes = amplitudes0[None, :] * growth
     phase_arg = k_modes[None, None, :] * x[None, :, None] + phases[None, None, :]

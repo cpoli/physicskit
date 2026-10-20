@@ -469,7 +469,15 @@ def animate_reconnection(
 
 
 def animate_weibel_filamentation(
-    x: np.ndarray, t: np.ndarray, wpe: float, temperature_anisotropy: float, n_modes: int = 12, seed: int = 0, interval: int = 60
+    x: np.ndarray,
+    t: np.ndarray,
+    wpe: float,
+    temperature_anisotropy: float,
+    n_modes: int = 12,
+    seed: int = 0,
+    interval: int = 60,
+    c: float = 1.0,
+    v_th_par: float = 0.1,
 ) -> FuncAnimation:
     """Animate the transverse current filaments growing under the reduced quasi-linear Weibel model.
 
@@ -490,6 +498,11 @@ def animate_weibel_filamentation(
         Random seed.
     interval : int, default=60
         Delay between frames in milliseconds.
+    c : float, default=1.0
+        Speed of light; see
+        :func:`physicskit.plasma.instabilities.simulate_weibel_filamentation`.
+    v_th_par : float, default=0.1
+        Thermal speed along the cool axis, in the units of `c`.
 
     Returns
     -------
@@ -508,7 +521,7 @@ def animate_weibel_filamentation(
     >>> len(list(anim.new_frame_seq()))
     6
     """
-    J = simulate_weibel_filamentation(x, t, wpe, temperature_anisotropy, n_modes=n_modes, seed=seed)
+    J = simulate_weibel_filamentation(x, t, wpe, temperature_anisotropy, n_modes=n_modes, seed=seed, c=c, v_th_par=v_th_par)
     snapshots = [J[i] for i in range(J.shape[0])]
     return _animate_1d_snapshots(
         x, snapshots, xlabel="x", ylabel=r"current density $J_y$ (normalized)", title="Weibel/filamentation instability", interval=interval
