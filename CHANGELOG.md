@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `physicskit.plasma.weibel_growth_rate` and `weibel_fastest_growing_mode`
+  take a new required keyword `v_th_par`, the parallel thermal speed.
+  `simulate_weibel_filamentation` and `animate_weibel_filamentation` take
+  `c` (default 1.0, so `x` is in skin depths) and `v_th_par` (default 0.1),
+  and snap their seeded wavenumbers to Fourier harmonics of the periodic
+  `x` grid.
+
+### Fixed
+
+- `weibel_growth_rate` returned `gamma^2 = omega_pe^2 (A - 1) - k^2 c^2`,
+  which peaks at `k = 0`, where the Weibel rate actually vanishes. It now
+  returns the small-growth kinetic limit for a bi-Maxwellian (Davidson
+  1983), `gamma = sqrt(2/pi) k v_th_par / A * (A - 1 - k^2 c^2 / omega_pe^2)`,
+  which is zero at `k = 0`, peaks at `k c / omega_pe = sqrt((A - 1) / 3)` and
+  keeps the old cutoff. `weibel_fastest_growing_mode` returns that peak
+  instead of `k = 0`. `simulate_weibel_filamentation` used the SI speed of
+  light on a grid of a few units, so the whole domain spanned about 1e-8 of
+  a wavelength of any seeded mode and no filaments formed. The Weibel gallery example now checks the measured
+  growth rate of the dominant mode against `weibel_growth_rate`.
+- `statphys.Percolation2D.fractal_dimension` returned `log M / log R_g` for
+  the largest cluster of each realization. That ratio carries a finite-size
+  offset and gave up to 2.26 at `L = 128`, above the plane's dimension of 2.
+  It now fits the slope of `log M(R)` against `log R` for the spanning
+  cluster at `p_c` (the sandbox method: mass inside discs of growing radius
+  around points on the cluster, for `4 <= R <= max(L/8, 8)`), averaged over
+  the `n_trials` realizations that span. It gives 1.88 at `L = 256`,
+  against the exact `91/48 ≈ 1.896`. The signature is unchanged. The
+  percolation gallery example now checks it.
+
 ## [0.4.0] - 2026-10-03
 
 ### Added
