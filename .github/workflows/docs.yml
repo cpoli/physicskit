@@ -39,6 +39,8 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pyproject.toml
+      # The animation examples save their movies with matplotlib's ffmpeg writer.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       - run: pip install -e ".[docs]"
 
       # Numba checks a cached function against its source file's mtime and
