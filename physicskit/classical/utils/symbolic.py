@@ -35,6 +35,8 @@ def _lambdify_vector_njit(args: Sequence[sp.Symbol], exprs: Sequence[sp.Expr]):
     """Lambdify a list of scalar expressions and JIT-compile it.
 
     Dynamically generated functions cannot use numba's on-disk cache.
+    Common subexpressions are eliminated (``cse=True``) instead of
+    running ``sympy.simplify``, which costs seconds per expression.
 
     Parameters
     ----------
@@ -48,7 +50,7 @@ def _lambdify_vector_njit(args: Sequence[sp.Symbol], exprs: Sequence[sp.Expr]):
     callable
         An ``@njit`` dispatcher returning a Python list of scalars.
     """
-    raw = sp.lambdify(tuple(args), list(exprs), modules="numpy")
+    raw = sp.lambdify(tuple(args), list(exprs), modules="numpy", cse=True)
     return njit(cache=False)(raw)
 
 
@@ -154,7 +156,7 @@ class LagrangianEngine:
 
         M, rhs = sp.linear_eq_to_matrix(eqs, list(qddot))
         self.mass_matrix = sp.simplify(M)
-        self._qddot_expr = sp.simplify(self.mass_matrix.inv() * rhs)
+        self._qddot_expr = self.mass_matrix.inv() * rhs
 
     # -- Legendre transform / Hamiltonian ------------------------------
     def _derive_hamiltonian(self):
@@ -169,9 +171,11 @@ class LagrangianEngine:
         H = sum(p[i] * qdot_of_p[i] for i in range(n)) - self.L.subs(qdot_subs, simultaneous=True)
         self.H_expr = sp.simplify(H)
 
-        self._dHdq = [sp.simplify(sp.diff(self.H_expr, q[i])) for i in range(n)]
-        self._dHdp = [sp.simplify(sp.diff(self.H_expr, p[i])) for i in range(n)]
-        self._velocity_expr = [sp.simplify(qdot_of_p[i]) for i in range(n)]
+        # Only compiled, never shown: skip simplify (seconds per expression)
+        # and rely on cse in lambdify.
+        self._dHdq = [sp.diff(self.H_expr, q[i]) for i in range(n)]
+        self._dHdp = [sp.diff(self.H_expr, p[i]) for i in range(n)]
+        self._velocity_expr = [qdot_of_p[i] for i in range(n)]
         self._p_of_qdot_expr = list(dL_dqdot)
 
     # -- compile everything to njit callables --------------------------
@@ -186,7 +190,7 @@ class LagrangianEngine:
         grad_p_raw = _lambdify_vector_njit(qP_args, self._dHdp)
         vel_raw = _lambdify_vector_njit(qP_args, self._velocity_expr)
         p_raw = _lambdify_vector_njit(qp_args, self._p_of_qdot_expr)
-        H_raw = njit(cache=False)(sp.lambdify(qP_args, self.H_expr, modules="numpy"))
+        H_raw = njit(cache=False)(sp.lambdify(qP_args, self.H_expr, modules="numpy", cse=True))
 
         acceleration_njit = _indexed_wrapper(accel_raw, n)
         momentum_njit_full = _indexed_wrapper(p_raw, n)

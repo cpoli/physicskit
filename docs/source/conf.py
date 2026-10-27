@@ -192,7 +192,25 @@ sphinx_gallery_conf = {
     # back to file-path resolution on every single invocation.
     "backreferences_dir": "gen_modules/backreferences",
     "doc_module": ("physicskit",),
+    # A failed Check-cell assert must fail the build (these are the
+    # defaults, stated so nobody flips them to get a green build).
+    "abort_on_example_error": False,
+    "only_warn_on_example_error": False,
+    # Run the examples in one worker process per core; PHYSICSKIT_GALLERY_JOBS=1
+    # runs them one at a time in the Sphinx process instead.
+    "parallel": int(os.environ.get("PHYSICSKIT_GALLERY_JOBS", os.cpu_count() or 1)),
 }
+
+# On pull requests, docs.yml sets this to the regex from
+# docs/select_examples.py, so only the examples a PR changes, or that
+# import a module it changes, are executed. They are re-run even when
+# their own source is unchanged, which sphinx-gallery's md5 check would
+# otherwise skip. The rest come from the cached gallery of the last main
+# build, or are rendered without output.
+_gallery_pattern = os.environ.get("PHYSICSKIT_GALLERY_PATTERN")
+if _gallery_pattern:
+    sphinx_gallery_conf["filename_pattern"] = _gallery_pattern
+    sphinx_gallery_conf["run_stale_examples"] = True
 
 # Merging seven previously-independent packages into one Sphinx namespace
 # means common attribute names (e.g. "dim", "ndof") are now genuinely
@@ -238,6 +256,12 @@ html_theme_options = {
             "name": "PyPI",
             "url": "https://pypi.org/project/physicskit/",
             "icon": "fa-brands fa-python",
+            "type": "fontawesome",
+        },
+        {
+            "name": "Charles Poli",
+            "url": "https://cpoli.github.io/",
+            "icon": "fa-solid fa-user",
             "type": "fontawesome",
         },
     ],

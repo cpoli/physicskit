@@ -51,6 +51,21 @@ pip install -e ".[docs]"
 cd docs && make html
 ```
 
+To execute only the examples your branch affects, as the `Docs`
+workflow does on a PR:
+
+```bash
+export PHYSICSKIT_GALLERY_PATTERN="$(git diff --name-only main... | python docs/select_examples.py)"
+make -C docs html
+```
+
+`docs/select_examples.py` selects the examples the diff changes, plus
+every example that imports a changed `physicskit` module, directly or
+through other modules. A change to `docs/source/conf.py` or
+`pyproject.toml` selects the whole gallery. On a PR, the examples it does
+not select come from the cached gallery of the last `main` build. Pushes
+to `main` and a nightly run execute all of them.
+
 Every gallery example must check the physics it shows. End the script
 with a `Check` cell (`# %%`, then `# Check` / `# -----`) holding one or
 more `assert`s against the closed form or known value the example
@@ -217,8 +232,15 @@ The workflow fails before publishing anything if the tag, `__version__`
 and `CITATION.cff` disagree. It then publishes to PyPI (trusted
 publishing, no token), creates the GitHub Release with that CHANGELOG
 section as its notes, and rebuilds `gh-pages`. Zenodo archives each
-GitHub Release with its own DOI. Between releases, `docs.yml` redeploys
-`gh-pages` on every push to `main`.
+GitHub Release with its own DOI. The Release and the docs deploy depend
+only on the build, so a failed PyPI upload still leaves a Release and a
+DOI; rerun the failed job once it is fixed.
+
+To test the pipeline before a real tag, run the workflow by hand
+(Actions → Release → Run workflow, or `gh workflow run release.yml`). It
+builds `__version__` as `X.Y.Z.dev<run id>` and publishes that to
+TestPyPI only. Between releases, `docs.yml` redeploys
+`gh-pages` after every push to `main` whose full gallery build passes.
 
 ## Reporting bugs / requesting features
 

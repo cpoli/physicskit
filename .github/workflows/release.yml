@@ -4,16 +4,27 @@ name: Release
 # CITATION.cff and a "## [X.Y.Z] - date" section in CHANGELOG.md) to
 # publish a release.
 #
+# Run the workflow by hand (Actions → Release → Run workflow) for a dry
+# run: it builds `__version__` as X.Y.Z.dev<run id> and publishes that to
+# TestPyPI only, with no GitHub Release and no docs deploy.
+#
+# The GitHub Release and the docs deploy depend only on the build, not on
+# PyPI, so a PyPI failure still leaves a Release (and a Zenodo DOI).
+#
 # One-time setup on the services:
 # - PyPI: add this repository as a trusted publisher of physicskit
-#   (workflow release.yml, environment pypi).
-# - GitHub: create the environment "pypi" in the repository settings.
+#   (owner cpoli, repository physicskit, workflow release.yml,
+#   environment pypi).
+# - TestPyPI: the same on test.pypi.org, with environment testpypi.
+# - GitHub: the environments "pypi" and "testpypi" (created on first use
+#   if missing).
 # - Zenodo: enable the repository at zenodo.org/account/settings/github;
 #   every GitHub Release is then archived with its own DOI.
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,21 +36,41 @@ jobs:
         with:
           python-version: "3.12"
       - name: Check that the tag matches the package and citation versions
+        if: github.event_name == 'push'
         run: |
           version=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' physicskit/__init__.py)
           citation=$(sed -n 's/^version: *//p' CITATION.cff)
           echo "tag $GITHUB_REF_NAME, __version__ $version, CITATION.cff $citation"
           test "v$version" = "$GITHUB_REF_NAME"
           test "$citation" = "$version"
+      - name: Release notes from the CHANGELOG section
+        if: github.event_name == 'push'
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          awk -v v="$version" '
+            /^## / { if (found) exit; if (index($0, "## [" v "] ") == 1) { found = 1; next } }
+            found' CHANGELOG.md > notes.md
+          test -s notes.md
+      - name: Give the dry run a unique dev version
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          sed -i "s/^__version__ = \"\(.*\)\"$/__version__ = \"\1.dev$GITHUB_RUN_ID\"/" physicskit/__init__.py
+          grep '^__version__' physicskit/__init__.py
       - run: pip install build
       - run: python -m build
       - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
+      - uses: actions/upload-artifact@v7
+        if: github.event_name == 'push'
+        with:
+          name: notes
+          path: notes.md
 
   pypi:
     name: Publish to PyPI
+    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment: pypi
@@ -52,32 +83,46 @@ jobs:
           path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
 
-  github-release:
-    name: Create the GitHub Release
-    needs: pypi
+  testpypi:
+    name: Publish to TestPyPI (dry run)
+    if: github.event_name == 'workflow_dispatch'
+    needs: build
     runs-on: ubuntu-latest
+    environment: testpypi
     permissions:
-      contents: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v7
       - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
-      - name: Release notes from the CHANGELOG section
-        run: |
-          version=${GITHUB_REF_NAME#v}
-          awk -v v="$version" '
-            /^## / { if (found) exit; if (index($0, "## [" v "] ") == 1) { found = 1; next } }
-            found' CHANGELOG.md > notes.md
-          test -s notes.md
-      - run: gh release create "$GITHUB_REF_NAME" dist/* --title "physicskit ${GITHUB_REF_NAME#v}" --notes-file notes.md
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  github-release:
+    name: Create the GitHub Release
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: actions/download-artifact@v8
+        with:
+          name: notes
+      - run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --title "physicskit ${GITHUB_REF_NAME#v}" --notes-file notes.md
         env:
           GH_TOKEN: ${{ github.token }}
 
   docs:
     name: Rebuild gh-pages
-    needs: pypi
+    if: github.event_name == 'push'
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write

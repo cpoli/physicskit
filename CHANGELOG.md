@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The `Docs` workflow (`.github/workflows/docs.yml`) runs again. On a
+  pull request it executes only the gallery examples the PR changes, or
+  that import a module it changes (`docs/select_examples.py`, passed to
+  `docs/source/conf.py` as `PHYSICSKIT_GALLERY_PATTERN`), and reuses the
+  cached gallery of the last `main` build for the rest. Pushes to `main`
+  and a nightly run execute the full gallery, and the numba cache is kept
+  between runs.
+- `.github/workflows/release.yml` creates the GitHub Release and
+  rebuilds `gh-pages` as soon as the build passes, instead of only after
+  the PyPI upload, so a PyPI failure no longer leaves a tag with no Release
+  and no Zenodo DOI. Running the workflow by hand is a dry run that
+  publishes a `.dev` build to TestPyPI. The CHANGELOG section for the tag
+  is now checked before anything is published.
 - `physicskit.plasma.weibel_growth_rate` and `weibel_fastest_growing_mode`
   take a new required keyword `v_th_par`, the parallel thermal speed.
   `simulate_weibel_filamentation` and `animate_weibel_filamentation` take
