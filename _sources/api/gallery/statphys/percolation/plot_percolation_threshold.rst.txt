@@ -93,7 +93,7 @@ At p_c the largest cluster's mass grows as M ~ L^{d_f} with d_f < 2: it
 fills a vanishing fraction of an ever larger lattice. The slope of
 log M against log L over several sizes gives d_f.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-64
+.. GENERATED FROM PYTHON SOURCE LINES 46-58
 
 .. code-block:: Python
 
@@ -108,6 +108,33 @@ log M against log L over several sizes gives d_f.
         M_largest.append(np.mean(masses))
     d_f = np.polyfit(np.log(L_mass), np.log(M_largest), 1)[0]
     print(f"Fractal dimension from M ~ L^d_f at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f})")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Fractal dimension from M ~ L^d_f at p_c: 1.872 (theory: 91/48 = 1.896)
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 59-63
+
+The same exponent from a single lattice size: Percolation2D.fractal_dimension
+counts the spanning cluster's mass M(R) inside discs of growing radius R
+around points on the cluster (the sandbox method), and fits the slope of
+log M against log R.
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-72
+
+.. code-block:: Python
+
+    d_f_sandbox = Percolation2D(L=256, mode="site", seed=3).fractal_dimension(n_trials=20)
+    print(f"Fractal dimension from M(R) ~ R^d_f at L = 256: {d_f_sandbox:.3f}")
 
     perc = Percolation2D(L=128, p=Percolation2D.P_C_SITE, mode="site", seed=1)
 
@@ -128,12 +155,12 @@ log M against log L over several sizes gives d_f.
 
  .. code-block:: none
 
-    Fractal dimension from M ~ L^d_f at p_c: 1.872 (theory: 91/48 = 1.896)
+    Fractal dimension from M(R) ~ R^d_f at L = 256: 1.883
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-72
+.. GENERATED FROM PYTHON SOURCE LINES 73-80
 
 Cluster sizes follow a power law at criticality
 -----------------------------------------------------
@@ -143,7 +170,7 @@ scale diverges and n_s ~ s^{-tau} instead, with the Fisher exponent
 tau = 187/91 for 2D percolation -- the geometric analogue of a diverging
 susceptibility at a thermal critical point.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-84
+.. GENERATED FROM PYTHON SOURCE LINES 80-92
 
 .. code-block:: Python
 
@@ -171,18 +198,20 @@ susceptibility at a thermal critical point.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-88
+.. GENERATED FROM PYTHON SOURCE LINES 93-97
 
 Check
 -----
-No spanning far below p_c, certain spanning far above; d_f = 91/48.
+No spanning far below p_c, certain spanning far above; d_f = 91/48 from
+both the mass-versus-L fit and the mass-radius fit.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-90
+.. GENERATED FROM PYTHON SOURCE LINES 97-100
 
 .. code-block:: Python
 
     assert P_span[0] < 0.05 and P_span[-1] > 0.95
     assert abs(d_f - 91 / 48) < 0.1
+    assert abs(d_f_sandbox - 91 / 48) < 0.05
 
 
 
@@ -193,7 +222,7 @@ No spanning far below p_c, certain spanning far above; d_f = 91/48.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.357 seconds)
+   **Total running time of the script:** (0 minutes 17.907 seconds)
 
 
 .. _sphx_glr_download_api_gallery_statphys_percolation_plot_percolation_threshold.py:

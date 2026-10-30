@@ -55,6 +55,14 @@ for L in L_mass:
 d_f = np.polyfit(np.log(L_mass), np.log(M_largest), 1)[0]
 print(f"Fractal dimension from M ~ L^d_f at p_c: {d_f:.3f} (theory: 91/48 = {91 / 48:.3f})")
 
+# %%
+# The same exponent from a single lattice size: Percolation2D.fractal_dimension
+# counts the spanning cluster's mass M(R) inside discs of growing radius R
+# around points on the cluster (the sandbox method), and fits the slope of
+# log M against log R.
+d_f_sandbox = Percolation2D(L=256, mode="site", seed=3).fractal_dimension(n_trials=20)
+print(f"Fractal dimension from M(R) ~ R^d_f at L = 256: {d_f_sandbox:.3f}")
+
 perc = Percolation2D(L=128, p=Percolation2D.P_C_SITE, mode="site", seed=1)
 
 fig, ax = plt.subplots(figsize=(6, 6))
@@ -84,6 +92,8 @@ plt.show()
 # %%
 # Check
 # -----
-# No spanning far below p_c, certain spanning far above; d_f = 91/48.
+# No spanning far below p_c, certain spanning far above; d_f = 91/48 from
+# both the mass-versus-L fit and the mass-radius fit.
 assert P_span[0] < 0.05 and P_span[-1] > 0.95
 assert abs(d_f - 91 / 48) < 0.1
+assert abs(d_f_sandbox - 91 / 48) < 0.05

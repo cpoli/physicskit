@@ -35,17 +35,28 @@ bands_trivial = np.array([np.linalg.eigvalsh(bhz_ribbon_hamiltonian(kx, n_cells,
 # %%
 # Real-space profile of the near-zero edge modes
 # ---------------------------------------------------------------------
-# Exactly at k_x=0 the edge states are degenerate and any linear
-# combination is a valid eigenvector, so a diagonalizer may return them
-# already mixed. A hair away from the crossing lifts that ambiguity: the
-# two spin-locked, counter-propagating branches on the *same* edge --
-# the helical pair -- localize cleanly.
+# Each near-zero energy is doubly degenerate, one state on each edge (the
+# two edges' helical pairs are mirror images), so a diagonalizer may
+# return any mixture of them. Diagonalizing the cell-index operator inside
+# each degenerate pair separates the edges; the state with the smaller
+# mean y is the one on the first edge. The two such states at E = -0.1 and
+# E = +0.1 are the spin-locked, counter-propagating branches on the *same*
+# edge -- the helical pair.
 
 H_k = bhz_ribbon_hamiltonian(kx=0.1, n_cells=n_cells, M=1.0, B=1.0)
 eigs, vecs = np.linalg.eigh(H_k)
 mid = len(eigs) // 2
-edge_state_1 = vecs[:, mid - 1]
-edge_state_2 = vecs[:, mid]
+y_op = np.repeat(np.arange(n_cells), 4)
+
+
+def first_edge_state(pair):
+    """Rotate a degenerate pair to edge-localized states; return the first-edge one."""
+    _, rot = np.linalg.eigh(pair.conj().T @ (y_op[:, None] * pair))
+    return pair @ rot[:, 0]
+
+
+edge_state_1 = first_edge_state(vecs[:, mid - 2 : mid])
+edge_state_2 = first_edge_state(vecs[:, mid : mid + 2])
 density_1 = np.sum(np.abs(edge_state_1.reshape(n_cells, 4)) ** 2, axis=1)
 density_2 = np.sum(np.abs(edge_state_2.reshape(n_cells, 4)) ** 2, axis=1)
 print(f"near-zero energies at kx=0.1: {eigs[mid - 1]:.4f}, {eigs[mid]:.4f}")

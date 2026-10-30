@@ -413,19 +413,25 @@ does the job instead, isotropizing the flow and generating the
 seed fields later amplified into the microgauss-scale fields observed
 in gamma-ray-burst afterglows and supernova-remnant shocks.
 
+For a bi-Maxwellian with :math:`A=T_\perp/T_\parallel`, the small-growth
+kinetic limit of the dispersion relation is (Davidson 1983)
+
 .. math::
 
-   \gamma(k)^2 = \omega_{pe}^2\left(\frac{T_\perp}{T_\parallel}-1\right) - k^2c^2
+   \gamma(k) = \sqrt{\frac{2}{\pi}}\,\frac{k v_{T\parallel}}{A}
+   \left(A - 1 - \frac{k^2c^2}{\omega_{pe}^2}\right),
 
 growing (:math:`\gamma>0`) for every wavenumber below the cutoff
-:math:`k_{max}=(\omega_{pe}/c)\sqrt{T_\perp/T_\parallel-1}`, fastest at
-:math:`k=0` where the stabilizing magnetic tension vanishes entirely.
+:math:`k_{max}=(\omega_{pe}/c)\sqrt{A-1}`. It vanishes at :math:`k=0`,
+where a uniform field cannot bunch particles into separate channels, and
+is fastest at :math:`k_*c/\omega_{pe}=\sqrt{(A-1)/3}`, which makes the
+filaments a few skin depths apart.
 
 *Implementation:* :func:`physicskit.plasma.instabilities.weibel_growth_rate`
 evaluates :math:`\gamma(k)` directly, and
 :func:`~physicskit.plasma.instabilities.weibel_fastest_growing_mode`
-extracts the long-wavelength growth rate that sets the overall
-filamentation timescale;
+gives :math:`k_*` and the peak rate that sets the filamentation
+timescale;
 :func:`~physicskit.plasma.instabilities.simulate_weibel_filamentation`
 superposes a spectrum of independently growing transverse-current
 Fourier modes -- exact linear theory, standing in for a full
@@ -437,7 +443,9 @@ animates the growing current pattern. See it in
 :doc:`/api/gallery/plasma/kinetic/plot_03_weibel_filamentation`.
 
 *References:* E. S. Weibel, Phys. Rev. Lett. 2, 83-84 (1959); B. D.
-Fried, Phys. Fluids 2, 337-337 (1959).
+Fried, Phys. Fluids 2, 337-337 (1959); R. C. Davidson, in *Handbook of
+Plasma Physics*, Vol. 1, eds. M. N. Rosenbluth and R. Z. Sagdeev
+(North-Holland, 1983).
 
 .. minigallery:: ../../examples/plasma/kinetic/plot_03_weibel_filamentation.py
 
