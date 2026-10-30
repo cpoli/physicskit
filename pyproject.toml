@@ -60,7 +60,8 @@ docs = [
 ]
 units = ["pint>=0.23"]
 hdf5 = ["h5py>=3.8"]
-bench = ["pytest-benchmark>=4.0"]
+# pytest 9.2 removed Node._nodeid, which pytest-benchmark <=5.3.0 still reads.
+bench = ["pytest-benchmark>=4.0", "pytest<9.2"]
 dev = ["physicskit[test,docs,units,hdf5,bench]", "ruff>=0.6", "mypy>=1.10", "pre-commit>=3.7"]
 
 [project.urls]
