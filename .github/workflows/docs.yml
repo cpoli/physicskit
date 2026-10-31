@@ -110,6 +110,7 @@ jobs:
         run: |
           git diff --name-only HEAD^1 HEAD > changed.txt
           echo "PHYSICSKIT_GALLERY_PATTERN=$(python docs/select_examples.py < changed.txt)" >> "$GITHUB_ENV"
+          echo "GALLERY_BASE=$(git rev-parse HEAD^1)" >> "$GITHUB_ENV"
       # The cached gallery records the commit it was built from. Without
       # that record, or that commit, nothing says which cached pages are
       # stale, so drop them all and run the full gallery: sphinx-gallery
@@ -122,6 +123,7 @@ jobs:
             git diff --name-only "$built_from" HEAD > changed.txt
             pattern=$(python docs/select_examples.py < changed.txt)
             echo "PHYSICSKIT_GALLERY_PATTERN=$pattern" >> "$GITHUB_ENV"
+            echo "GALLERY_BASE=$built_from" >> "$GITHUB_ENV"
             # conf.py's default pattern: every example is re-executed.
             if [ "$pattern" = "/plot_" ]; then echo "FULL_GALLERY=1" >> "$GITHUB_ENV"; fi
           else
@@ -129,6 +131,20 @@ jobs:
             rm -rf docs/source/api/gallery docs/source/gen_modules
             echo "FULL_GALLERY=1" >> "$GITHUB_ENV"
           fi
+      # sphinx-gallery never removes the pages of an example that no longer
+      # exists, so the cached gallery would keep publishing a deleted or
+      # renamed example's old page.
+      - name: Drop cached pages of deleted examples
+        if: env.GALLERY_BASE != ''
+        run: |
+          git diff --name-only --no-renames --diff-filter=D "$GALLERY_BASE" HEAD -- 'examples/*plot_*.py' |
+            while read -r f; do
+              rel=${f#examples/}
+              d=docs/source/api/gallery/$(dirname "$rel")
+              n=$(basename "$f" .py)
+              echo "dropping $d/$n"
+              rm -f "$d/$n".* "$d"/images/sphx_glr_"$n"_[0-9][0-9][0-9].* "$d"/images/thumb/sphx_glr_"$n"_thumb.*
+            done
 
       - if: steps.done.outputs.cache-hit != 'true'
         run: make -C docs html

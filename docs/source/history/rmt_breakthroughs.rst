@@ -173,7 +173,7 @@ Fyodorov, F.-M. Dittes, J. Quezada, and T. H. Seligman, "Transition from
 localized to extended eigenstates in the ensemble of power-law random
 banded matrices," Phys. Rev. E 54, 3221-3230 (1996).
 
-.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_anderson_localization.py
+.. minigallery:: ../../examples/rmt/gaussian_ensembles/plot_power_law_banded_localization.py
 
 1962 -- Dyson's Threefold Way and the Circular Ensembles
 --------------------------------------------------------
