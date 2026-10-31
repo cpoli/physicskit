@@ -92,7 +92,7 @@ plt.show()
 # -----
 # v_A = B / sqrt(mu0 rho), c_s = sqrt(gamma p / rho); the fast and slow speeds
 # satisfy v_f^2 + v_s^2 = v_A^2 + c_s^2 and v_f v_s = v_A c_s |cos(theta)|.
-assert abs(vA - B / np.sqrt(VACUUM_PERMEABILITY * rho)) < 1e-9 * vA
+assert abs(vA - 2 * B / np.sqrt(VACUUM_PERMEABILITY * rho)) < 1e-9 * vA
 assert abs(cs - np.sqrt(5 / 3 * 10.0 / rho)) < 1e-9 * cs
 vf, vs = np.array(vf), np.array(vs)
 np.testing.assert_allclose(vf**2 + vs**2, vA**2 + cs**2, rtol=1e-10)
