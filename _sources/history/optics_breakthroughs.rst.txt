@@ -388,7 +388,7 @@ uses them to build the field part of the Jaynes-Cummings Hamiltonian.
 *References:* P. A. M. Dirac, "The Quantum Theory of the Emission and
 Absorption of Radiation," Proc. R. Soc. A 114(767), 243-265 (1927).
 
-.. minigallery:: ../../examples/optics/quantum_optics/plot_ladder_operators.py
+.. minigallery:: ../../examples/optics/quantum_optics/plot_field_quantization_ladder_operators.py
 
 1932 -- Wigner's Phase-Space Distribution
 -----------------------------------------
