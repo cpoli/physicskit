@@ -61,10 +61,12 @@ make -C docs html
 
 `docs/select_examples.py` selects the examples the diff changes, plus
 every example that imports a changed `physicskit` module, directly or
-through other modules. A change to `docs/source/conf.py` or
-`pyproject.toml` selects the whole gallery. On a PR, the examples it does
-not select come from the cached gallery of the last `main` build. Pushes
-to `main` and a nightly run execute all of them.
+through other modules. A change to `docs/source/conf.py`,
+`pyproject.toml` or the `Docs` workflow selects the whole gallery. A PR
+diffs against its base and a push to `main` against the commit of the
+last passing `main` build; the examples neither selects come from that
+build's cached gallery. The nightly run, and a run started by hand,
+execute all of them.
 
 Every gallery example must check the physics it shows. End the script
 with a `Check` cell (`# %%`, then `# Check` / `# -----`) holding one or
@@ -240,7 +242,7 @@ To test the pipeline before a real tag, run the workflow by hand
 (Actions → Release → Run workflow, or `gh workflow run release.yml`). It
 builds `__version__` as `X.Y.Z.dev<run id>` and publishes that to
 TestPyPI only. Between releases, `docs.yml` redeploys
-`gh-pages` after every push to `main` whose full gallery build passes.
+`gh-pages` after every push to `main` whose gallery build passes.
 
 ## Reporting bugs / requesting features
 

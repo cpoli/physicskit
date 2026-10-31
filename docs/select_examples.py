@@ -3,9 +3,9 @@
 Reads changed file paths (one per line, relative to the repo root) on
 stdin and prints a regex for sphinx-gallery's ``filename_pattern``, which
 docs/source/conf.py reads from ``PHYSICSKIT_GALLERY_PATTERN``. Used by
-.github/workflows/docs.yml on pull requests::
+.github/workflows/docs.yml on pull requests and pushes to main::
 
-    git diff --name-only origin/main...HEAD | python docs/select_examples.py
+    git diff --name-only main... | python docs/select_examples.py
 
 An example is selected when the change set edits it, or edits a
 physicskit module it imports, directly or through other physicskit
@@ -15,7 +15,8 @@ every subpackage and would otherwise select the whole gallery. An edited
 package ``__init__.py`` selects every example that imports anything
 inside that package, because Python runs it first. A change to the docs
 configuration, this script or the package dependencies selects the full
-gallery; a change set that touches none of the above selects nothing.
+gallery, as does a change to the Docs workflow; a change set that
+touches none of the above selects nothing.
 """
 
 from __future__ import annotations
@@ -34,6 +35,7 @@ NO_EXAMPLES = r"(?!)"  # matches no path
 
 # Files whose change can alter how every example runs.
 FULL_GALLERY_TRIGGERS = {
+    ".github/workflows/docs.yml",
     "docs/source/conf.py",
     "docs/select_examples.py",
     "pyproject.toml",

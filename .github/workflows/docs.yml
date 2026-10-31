@@ -1,11 +1,13 @@
 name: Docs
 
-# Pull requests execute only the gallery examples they change, or that
-# import a module they change (docs/select_examples.py); every other
-# example comes from the cached gallery of the last main build. Pushes to
-# main, the nightly run and manual runs execute the full gallery, and
-# pushes to main then redeploy gh-pages. A failed Check-cell assert fails
-# the build either way.
+# Pull requests and pushes to main execute only the gallery examples a
+# change set edits, or that import a module it edits
+# (docs/select_examples.py); every other example comes from the cached
+# gallery of the last passing main build. A pull request diffs against its
+# base, a push against the commit that cached gallery was built from. The
+# nightly run and manual runs execute the full gallery, which catches
+# anything the selection misses. Pushes to main then redeploy gh-pages. A
+# failed Check-cell assert fails the build either way.
 on:
   push:
     branches: [main]
@@ -65,24 +67,42 @@ jobs:
           key: numba-${{ runner.os }}-${{ hashFiles('physicskit/**/*.py', 'pyproject.toml') }}
           restore-keys: numba-${{ runner.os }}-
 
-      - name: Select examples to execute
-        if: github.event_name == 'pull_request'
-        run: |
-          git diff --name-only HEAD^1 HEAD > changed.txt
-          echo "PHYSICSKIT_GALLERY_PATTERN=$(python docs/select_examples.py < changed.txt)" >> "$GITHUB_ENV"
-      # Only pull requests start from the cached gallery; with
-      # PHYSICSKIT_GALLERY_PATTERN unset, main builds from scratch.
+      # Pull requests and pushes start from the cached gallery; the nightly
+      # and manual runs, with PHYSICSKIT_GALLERY_PATTERN unset, build from
+      # scratch.
       - name: Restore gallery output
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
         uses: actions/cache/restore@v5
         with:
           path: |
             docs/source/api/gallery
             docs/source/gen_modules
-          key: gallery-${{ github.event.pull_request.base.sha }}
+          key: gallery-${{ github.event.pull_request.base.sha || github.sha }}
           restore-keys: gallery-
+      - name: Select examples to execute
+        if: github.event_name == 'pull_request'
+        run: |
+          git diff --name-only HEAD^1 HEAD > changed.txt
+          echo "PHYSICSKIT_GALLERY_PATTERN=$(python docs/select_examples.py < changed.txt)" >> "$GITHUB_ENV"
+      # The cached gallery records the commit it was built from. Without
+      # that record, or that commit, nothing says which cached pages are
+      # stale, so drop them all and run the full gallery: sphinx-gallery
+      # would otherwise skip every example whose own source is unchanged.
+      - name: Select examples to execute
+        if: github.event_name == 'push'
+        run: |
+          built_from=$(cat docs/source/api/gallery/.built_from 2>/dev/null || true)
+          if [ -n "$built_from" ] && git fetch --depth=1 origin "$built_from"; then
+            git diff --name-only "$built_from" HEAD > changed.txt
+            echo "PHYSICSKIT_GALLERY_PATTERN=$(python docs/select_examples.py < changed.txt)" >> "$GITHUB_ENV"
+          else
+            echo "No cached gallery from a passing main build; running the full gallery."
+            rm -rf docs/source/api/gallery docs/source/gen_modules
+          fi
 
       - run: make -C docs html
+      - if: github.event_name != 'pull_request'
+        run: echo "$GITHUB_SHA" > docs/source/api/gallery/.built_from
 
       # Caches are saved only from main, after a passing build, so a pull
       # request never inherits a failed or partial gallery.

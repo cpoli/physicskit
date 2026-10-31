@@ -13,9 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pull request it executes only the gallery examples the PR changes, or
   that import a module it changes (`docs/select_examples.py`, passed to
   `docs/source/conf.py` as `PHYSICSKIT_GALLERY_PATTERN`), and reuses the
-  cached gallery of the last `main` build for the rest. Pushes to `main`
-  and a nightly run execute the full gallery, and the numba cache is kept
-  between runs.
+  cached gallery of the last `main` build for the rest. A push to `main`
+  does the same against the commit of the last passing `main` build. The
+  nightly run and manual runs execute the full gallery, and the numba
+  cache is kept between runs.
 - `.github/workflows/release.yml` creates the GitHub Release and
   rebuilds `gh-pages` as soon as the build passes, instead of only after
   the PyPI upload, so a PyPI failure no longer leaves a tag with no Release

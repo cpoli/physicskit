@@ -201,9 +201,9 @@ sphinx_gallery_conf = {
     "parallel": int(os.environ.get("PHYSICSKIT_GALLERY_JOBS", os.cpu_count() or 1)),
 }
 
-# On pull requests, docs.yml sets this to the regex from
-# docs/select_examples.py, so only the examples a PR changes, or that
-# import a module it changes, are executed. They are re-run even when
+# On pull requests and pushes to main, docs.yml sets this to the regex
+# from docs/select_examples.py, so only the examples a change set edits,
+# or that import a module it edits, are executed. They are re-run even when
 # their own source is unchanged, which sphinx-gallery's md5 check would
 # otherwise skip. The rest come from the cached gallery of the last main
 # build, or are rendered without output.
