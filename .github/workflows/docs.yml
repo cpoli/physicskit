@@ -6,8 +6,10 @@ name: Docs
 # gallery of the last passing main build. A pull request diffs against its
 # base, a push against the commit that cached gallery was built from. The
 # nightly run and manual runs execute the full gallery, which catches
-# anything the selection misses. Pushes to main then redeploy gh-pages. A
-# failed Check-cell assert fails the build either way.
+# anything the selection misses; the nightly run skips the build when a
+# full build already passed on the same sources and installed packages.
+# Pushes to main then redeploy gh-pages. A failed Check-cell assert fails
+# the build either way.
 on:
   push:
     branches: [main]
@@ -47,11 +49,34 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       - run: pip install -e ".[docs]"
 
+      # A full build is fixed by the sources and by the installed packages,
+      # which are unpinned, so the key covers both: a new numpy or
+      # matplotlib release changes it as surely as a commit does. Computed
+      # before the build, which writes into docs/.
+      - name: Key the full build
+        id: key
+        run: |
+          deps=$({ python --version; pip freeze --exclude-editable; ffmpeg -version | head -1; } | sha256sum | cut -c1-16)
+          echo "key=docs-full-${{ hashFiles('physicskit/**', 'examples/**', 'docs/**', 'pyproject.toml', '.github/workflows/docs.yml') }}-$deps" >> "$GITHUB_OUTPUT"
+      # The nightly run has nothing new to check when a full build with this
+      # key already passed (nightly, manual, or a push that selected every
+      # example), so every later step is skipped. A run started by hand
+      # always builds.
+      - name: Look for a passing full build with this key
+        id: done
+        if: github.event_name == 'schedule'
+        uses: actions/cache/restore@v5
+        with:
+          path: .docs-full-build
+          key: ${{ steps.key.outputs.key }}
+          lookup-only: true
+
       # Numba checks a cached function against its source file's mtime and
       # size, and a fresh checkout gives every file the current time, so
       # set each mtime from a hash of the file's contents instead: an
       # unchanged file keeps its cache entry, an edited one invalidates it.
       - name: Make source mtimes depend on content only
+        if: steps.done.outputs.cache-hit != 'true'
         run: |
           python - <<'EOF'
           import hashlib, os, pathlib
@@ -61,6 +86,7 @@ jobs:
               os.utime(p, (t, t))
           EOF
       - name: Restore numba cache
+        if: steps.done.outputs.cache-hit != 'true'
         uses: actions/cache/restore@v5
         with:
           path: .numba_cache
@@ -94,30 +120,42 @@ jobs:
           built_from=$(cat docs/source/api/gallery/.built_from 2>/dev/null || true)
           if [ -n "$built_from" ] && git fetch --depth=1 origin "$built_from"; then
             git diff --name-only "$built_from" HEAD > changed.txt
-            echo "PHYSICSKIT_GALLERY_PATTERN=$(python docs/select_examples.py < changed.txt)" >> "$GITHUB_ENV"
+            pattern=$(python docs/select_examples.py < changed.txt)
+            echo "PHYSICSKIT_GALLERY_PATTERN=$pattern" >> "$GITHUB_ENV"
+            # conf.py's default pattern: every example is re-executed.
+            if [ "$pattern" = "/plot_" ]; then echo "FULL_GALLERY=1" >> "$GITHUB_ENV"; fi
           else
             echo "No cached gallery from a passing main build; running the full gallery."
             rm -rf docs/source/api/gallery docs/source/gen_modules
+            echo "FULL_GALLERY=1" >> "$GITHUB_ENV"
           fi
 
-      - run: make -C docs html
-      - if: github.event_name != 'pull_request'
+      - if: steps.done.outputs.cache-hit != 'true'
+        run: make -C docs html
+      - if: steps.done.outputs.cache-hit != 'true' && github.event_name != 'pull_request'
         run: echo "$GITHUB_SHA" > docs/source/api/gallery/.built_from
 
       # Caches are saved only from main, after a passing build, so a pull
       # request never inherits a failed or partial gallery.
-      - if: github.event_name != 'pull_request'
+      - if: steps.done.outputs.cache-hit != 'true' && github.event_name != 'pull_request'
         uses: actions/cache/save@v5
         with:
           path: .numba_cache
           key: numba-${{ runner.os }}-${{ hashFiles('physicskit/**/*.py', 'pyproject.toml') }}-${{ github.run_id }}
-      - if: github.event_name != 'pull_request'
+      - if: steps.done.outputs.cache-hit != 'true' && github.event_name != 'pull_request'
         uses: actions/cache/save@v5
         with:
           path: |
             docs/source/api/gallery
             docs/source/gen_modules
           key: gallery-${{ github.sha }}-${{ github.run_id }}
+      - if: steps.done.outputs.cache-hit != 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || env.FULL_GALLERY == '1')
+        run: echo "$GITHUB_SHA" > .docs-full-build
+      - if: steps.done.outputs.cache-hit != 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || env.FULL_GALLERY == '1')
+        uses: actions/cache/save@v5
+        with:
+          path: .docs-full-build
+          key: ${{ steps.key.outputs.key }}
 
       - if: github.event_name == 'push'
         run: touch docs/build/html/.nojekyll

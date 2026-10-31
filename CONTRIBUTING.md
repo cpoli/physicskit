@@ -66,7 +66,8 @@ through other modules. A change to `docs/source/conf.py`,
 diffs against its base and a push to `main` against the commit of the
 last passing `main` build; the examples neither selects come from that
 build's cached gallery. The nightly run, and a run started by hand,
-execute all of them.
+execute all of them; the nightly run skips the build when a full build
+already passed on the same sources and installed package versions.
 
 Every gallery example must check the physics it shows. End the script
 with a `Check` cell (`# %%`, then `# Check` / `# -----`) holding one or
