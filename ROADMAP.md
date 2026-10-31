@@ -8,45 +8,18 @@ checks that every example still shows the right physics.
 
 Coverage is already broad: 14 domains, over 300 breakthroughs in
 `docs/source/history/`, 392 gallery examples, and 20 tutorials. Most of
-what is left is not new physics. The checks the project relies on are not
-running yet (item 1), and the release workflow has never published
-(item 2). These come before any new content.
+what is left is not new physics. The release workflow has never
+published (item 2), and that comes before any new content.
 
 Each item lists why it matters, the current state, a sketch of the
 approach, and when it counts as done. Each one can be taken on by itself,
-in its own prompt. Items 1, 2, 4, 5 and 6 all edit `.github/workflows/`,
+in its own prompt. Items 2, 4, 5 and 6 all edit `.github/workflows/`,
 so they should not run in parallel. Items marked **Needs the maintainer**
 include a step in a PyPI, Zenodo or journal account that only the
 maintainer can do. The project conventions apply to all of them:
 NumPy-style docstrings with doctests, a cited source formula, closed-form
 tests, and, for each new breakthrough, a history entry with its own
 gallery example(s), titled after it and linked from no other entry.
-
-## 1. Run the gallery in CI again
-
-**Why.** The `Check` cell at the end of every gallery example only runs
-when the docs are built. The `Docs` workflow has been disabled by hand
-since 2026-09-17, when a build took 75 to 110 minutes. Since then no PR
-and no push to `main` has run the gallery. So the project's main promise,
-that every example still shows the right physics, is not being checked.
-
-**Now.** `docs/source/sg_execution_times.rst` gives 35 minutes for all
-392 examples on a local machine. The faster build is written but not
-committed: `docs.yml` caches the numba cache and the sphinx-gallery
-output, runs the full gallery on pushes to `main` and nightly, and on a PR
-executes only the examples `docs/select_examples.py` selects (passed to
-`docs/source/conf.py` as `PHYSICSKIT_GALLERY_PATTERN`). CONTRIBUTING.md
-and CHANGELOG.md are updated to match. The workflow is still
-`disabled_manually`, so none of this has run in CI yet.
-
-**Approach.** Commit the changes and run `gh workflow enable Docs`. Then
-open a PR that breaks one example's `Check` to time the PR path and make
-sure a failed `assert` fails the job, and watch the first full build on
-`main`.
-
-**Done when.** The `Docs` workflow is enabled. A PR that breaks one
-example's `Check` fails within 15 minutes. The full build on `main`
-passes and redeploys `gh-pages`.
 
 ## 2. A release workflow that publishes
 
@@ -79,7 +52,7 @@ step.
 **Why.** Since 0.4.0, `main` and the working tree hold work that no
 release has shipped: the `weibel_growth_rate` and
 `Percolation2D.fractal_dimension` fixes, the Node 24 CI, the faster
-`Docs` and `Release` workflows (items 1 and 2), the conda-forge install
+`Docs` workflow and the `Release` workflow (item 2), the conda-forge install
 line and badge in the README, sitemap and OpenGraph metadata for the docs
 (`sphinx-sitemap` and `sphinxext-opengraph` in the `docs` extra), and
 links to the sibling toolkits on the docs front page. The `[Unreleased]`
@@ -206,6 +179,17 @@ Finished items move here with the release they shipped in, as in
 CHANGELOG.md.
 
 ### Unreleased
+
+**The gallery runs in CI again** (formerly item 1). The `Docs` workflow
+is enabled. The nightly runs of 2026-10-27 to 2026-10-29 failed because
+they built `349e9fec`: the commit that installs ffmpeg for the animation
+examples was not pushed until 2026-10-30, and every run since has passed.
+The PR path then failed in "Select examples to execute", because
+`git diff origin/main...HEAD` found no `origin/main` ref in the checkout.
+It now diffs the merge commit against its first parent. A test PR that
+broke one example's `Check` (#1, closed) executed only that example, took
+the rest from the cached gallery, and failed on the `AssertionError` in
+3 minutes. The full build on `main` passes and redeploys `gh-pages`.
 
 **A correct `Percolation2D.fractal_dimension`** (formerly item 3). It
 returned `log M / log R_g` for a single cluster, up to 2.26 at `L = 128`.
