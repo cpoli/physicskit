@@ -7,8 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-11-02
+
+### Added
+
+- Python 3.15 is tested in CI on Linux and macOS and listed in the
+  classifiers.
+- `paper/` holds a manuscript describing physicskit, with its validation
+  against QuTiP, Astropy and SciPy (`paper/validation/run_all.py`),
+  benchmarks and figures.
+- The docs publish a `sitemap.xml` and OpenGraph metadata for link
+  previews (`sphinx-sitemap` and `sphinxext-opengraph`, now in the `docs`
+  extra), and count page views with GoatCounter.
+- The docs front page and the README link to the sibling toolkits
+  (blockchainkit, chemistrykit, earthsciencekit, engineeringkit,
+  financialkit, mathematicskit, tbkit).
+- The README gives the conda-forge install line
+  (`conda install -c conda-forge physicskit`) and a conda-forge badge.
+
 ### Changed
 
+- All workflows use the Node 24 majors of `checkout`, `setup-python`,
+  `upload-artifact`/`download-artifact` and `codecov-action`. `ci.yml` and
+  `benchmarks.yml` cancel superseded runs, and pytest runs with
+  `--dist worksteal`, so CI takes about 13 minutes instead of 28.
+- `classical.LagrangianEngine` no longer runs `sympy.simplify` on the
+  expressions it only compiles (the accelerations, Hamilton's equations
+  and the velocities), and lambdifies with `cse=True`, so building a
+  system takes far less time. The displayed `mass_matrix` and `H_expr`
+  are still simplified.
+- `quantum.plot_complex_wavefunction` and `animate_density` draw the
+  phase-coloured density as one `PolyCollection` instead of one
+  `fill_between` per grid segment.
+- The `bench` extra pins `pytest<9.2`: pytest 9.2 removed
+  `Node._nodeid`, which pytest-benchmark 5.3.0 still reads. The `docs`
+  extra needs `sphinx-gallery>=0.17` and `joblib`, and `test` needs
+  `pytest-xdist>=3.2`.
+- The gallery examples `optics/quantum_optics/plot_ladder_operators.py`
+  and `rmt/gaussian_ensembles/plot_anderson_localization.py`, whose file names were also used
+  by examples in `quantum` and `condensed`, are now
+  `plot_field_quantization_ladder_operators.py` and
+  `plot_power_law_banded_localization.py`.
+- All README badges are served from badgen, since GitHub's image proxy
+  timed out on shields.io.
 - The `Docs` workflow (`.github/workflows/docs.yml`) runs again. On a
   pull request it executes only the gallery examples the PR changes, or
   that import a module it changes (`docs/select_examples.py`, passed to
@@ -766,7 +807,8 @@ Extensive Sphinx documentation, including a per-subpackage chronology of
 the field's foundational breakthroughs (`docs/source/history/`) linked to
 the corresponding implementation.
 
-[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/cpoli/physicskit/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/cpoli/physicskit/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/cpoli/physicskit/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/cpoli/physicskit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cpoli/physicskit/compare/v0.1.1...v0.2.0
