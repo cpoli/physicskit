@@ -24,7 +24,7 @@ to runnable code that reproduces it.
 - **For students:** send a wave packet through a double slit, watch edge
   states cross a topological band gap, trace light around a black hole,
   all in a few lines each.
-- **For instructors:** 14 domains, one consistent API, and over 300
+- **For instructors:** 14 domains, one consistent API, and nearly 400
   gallery examples, each downloadable as a Python script or Jupyter
   notebook, ready to hand out as course material.
 - **Built on numpy/scipy:** library routines under the hood, numba-compiled
@@ -32,10 +32,6 @@ to runnable code that reproduces it.
   only where the steps themselves are what you're learning (see
   [Design](#design)).
 
-physicskit is part of a family of packages -- **physicskit**,
-[mathematicskit](https://github.com/cpoli/mathematicskit) and
-[chemistrykit](https://github.com/cpoli/chemistrykit) -- that share the
-same architecture, API conventions, and history-driven documentation.
 For tight-binding models beyond `physicskit.condensed` -- arbitrary
 finite lattices, ribbons and defects, non-Hermitian bands, Landauer
 transport, and the kernel polynomial method for very large samples --
@@ -225,6 +221,19 @@ and `python docs/make_readme_subpackage_figures.py`.
 
 Long-form tutorials, including a "Units and conventions" guide to each
 subpackage's natural units, are in `docs/source/tutorials/`.
+
+## Related toolkits
+
+physicskit belongs to a family of Python toolkits for learning and teaching,
+built the same way:
+
+- [blockchainkit](https://github.com/cpoli/blockchainkit) -- cryptography, consensus and blockchain systems
+- [chemistrykit](https://github.com/cpoli/chemistrykit) -- computational chemistry
+- [earthsciencekit](https://github.com/cpoli/earthsciencekit) -- Earth-system science
+- [engineeringkit](https://github.com/cpoli/engineeringkit) -- computational engineering
+- [financialkit](https://github.com/cpoli/financialkit) -- quantitative finance
+- [mathematicskit](https://github.com/cpoli/mathematicskit) -- computational mathematics
+- [tbkit](https://github.com/cpoli/tbkit) -- tight-binding models, band topology and quantum transport
 
 ## Citation
 

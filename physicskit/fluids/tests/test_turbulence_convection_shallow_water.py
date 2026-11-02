@@ -38,9 +38,11 @@ def test_energy_grows_at_injection_rate_before_dissipation_acts():
 
 
 def test_inverse_cascade_spectrum_has_kolmogorov_slope():
-    out = ForcedTurbulence2D(n=128, kf=20.0, seed=0).run(t_max=16.0, dt=0.004, t_average=8.0)
+    # n=96 still dealiases above the forcing shell (n/3 = 32 > kf + width) and
+    # its lower cutoff allows dt=0.01; by t ~ 5 the cascade has filled k >= 4
+    out = ForcedTurbulence2D(n=96, kf=20.0, seed=0).run(t_max=8.0, dt=0.01, t_average=3.0)
     k, E = out["k"], out["E"]
-    band = (k >= 3) & (k <= 12)
+    band = (k >= 4) & (k <= 12)
     slope = np.polyfit(np.log(k[band]), np.log(E[band]), 1)[0]
     assert slope == pytest.approx(-5.0 / 3.0, abs=0.2)
 
