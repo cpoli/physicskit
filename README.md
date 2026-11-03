@@ -2,7 +2,7 @@
 
 | | |
 |:--|:-:|
-| Package | [![PyPI version](https://badgen.net/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![conda-forge](https://badgen.net/badge/conda-forge/physicskit/green)](https://anaconda.org/conda-forge/physicskit) [![Python versions](https://badgen.net/pypi/python/physicskit)](https://pypi.org/project/physicskit/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23116492.svg)](https://doi.org/10.5281/zenodo.23116492) |
+| Package | [![PyPI version](https://badgen.net/pypi/v/physicskit)](https://pypi.org/project/physicskit/) [![conda-forge](https://badgen.net/badge/conda-forge/physicskit/green)](https://anaconda.org/conda-forge/physicskit) [![Python versions](https://badgen.net/pypi/python/physicskit)](https://pypi.org/project/physicskit/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23909506.svg)](https://doi.org/10.5281/zenodo.23909506) |
 | Quality | [![License](https://badgen.net/github/license/cpoli/physicskit)](https://github.com/cpoli/physicskit/blob/main/LICENSE) [![CI](https://github.com/cpoli/physicskit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cpoli/physicskit/actions/workflows/ci.yml) [![Coverage](https://codecov.io/gh/cpoli/physicskit/branch/main/graph/badge.svg)](https://codecov.io/gh/cpoli/physicskit) |
 | Documentation | [![Docs](https://badgen.net/badge/docs/cpoli.github.io%2Fphysicskit/blue)](https://cpoli.github.io/physicskit/) |
 | Code style | [![Ruff](https://badgen.net/badge/code%20style/ruff/purple)](https://github.com/astral-sh/ruff) |

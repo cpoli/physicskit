@@ -8,12 +8,11 @@ checks that every example still shows the right physics.
 
 Coverage is already broad: 14 domains, over 300 breakthroughs in
 `docs/source/history/`, 392 gallery examples, and 20 tutorials. Most of
-what is left is not new physics. The release workflow has never
-published (item 2), and that comes before any new content.
+what is left is not new physics.
 
 Each item lists why it matters, the current state, a sketch of the
 approach, and when it counts as done. Each one can be taken on by itself,
-in its own prompt. Items 2, 4, 5 and 6 all edit `.github/workflows/`,
+in its own prompt. Items 4, 5 and 6 all edit `.github/workflows/`,
 so they should not run in parallel. Items marked **Needs the maintainer**
 include a step in a PyPI, Zenodo or journal account that only the
 maintainer can do. The project conventions apply to all of them:
@@ -21,51 +20,20 @@ NumPy-style docstrings with doctests, a cited source formula, closed-form
 tests, and, for each new breakthrough, a history entry with its own
 gallery example(s), titled after it and linked from no other entry.
 
-## 2. A release workflow that publishes
+## 3. 0.4.1 on conda-forge
 
-**Why.** The `v0.4.0` run of `release.yml` failed at "Publish to PyPI"
-with `invalid-publisher`: PyPI has no trusted publisher matching
-`cpoli/physicskit`, `release.yml`, environment `pypi`. Because of that,
-the two jobs after it ("Rebuild gh-pages" and "Create the GitHub
-Release") were skipped. 0.4.0 reached PyPI and GitHub by hand, so the
-workflow has never completed a release. 0.2.0 and 0.3.0 have no GitHub
-Release at all, and therefore no Zenodo DOI.
+**Why.** 0.4.1 is on PyPI, has a GitHub Release and its own Zenodo
+version DOI (`10.5281/zenodo.23909506`, in `CITATION.cff` and on the
+README badge), but the conda-forge feedstock is still at 0.4.0. The
+feedstock had no open PR when the tag was pushed (2026-11-03).
 
-**Now.** The workflow side is done (not yet committed). The GitHub
-Release and `gh-pages` jobs need only the build, not PyPI, and running
-the workflow by hand publishes a `X.Y.Z.dev<run id>` build to TestPyPI as
-a dry run.
+**Approach.** **Needs the maintainer:** merge the regro-cf-autotick-bot
+PR on `conda-forge/physicskit-feedstock` that bumps the recipe to 0.4.1
+once it opens and its CI passes. Check the new sdist's dependencies
+against the recipe (the `docs` and `test` extras changed, the runtime
+dependencies did not).
 
-**Approach.** **Needs the maintainer:** add the trusted publisher on
-PyPI (project physicskit → Publishing: owner `cpoli`, repository
-`physicskit`, workflow `release.yml`, environment `pypi`), and the same
-on TestPyPI with environment `testpypi`. Then run
-`gh workflow run release.yml` and check that the dev build reaches
-TestPyPI before the next real tag.
-
-**Done when.** One tag push publishes to PyPI, creates the GitHub
-Release, gets a Zenodo DOI and redeploys `gh-pages`, with no manual
-step.
-
-## 3. Release the unreleased work as 0.4.1
-
-**Why.** Since 0.4.0, `main` and the working tree hold work that no
-release has shipped: the `weibel_growth_rate` and
-`Percolation2D.fractal_dimension` fixes, the Node 24 CI, the faster
-`Docs` workflow and the `Release` workflow (item 2), the conda-forge install
-line and badge in the README, sitemap and OpenGraph metadata for the docs
-(`sphinx-sitemap` and `sphinxext-opengraph` in the `docs` extra), and
-links to the sibling toolkits on the docs front page. The `[Unreleased]`
-section of CHANGELOG.md records the two fixes and the two workflows, but
-not the CI move or the README and docs metadata. All README badges are
-now on badgen.
-
-**Approach.** Write the missing CHANGELOG entries. Check that the
-conda-forge feedstock is at 0.4.0, and merge the bot PR if it is behind.
-Then cut 0.4.1, which also tests item 2 if that is done first.
-
-**Done when.** 0.4.1 is on PyPI and conda-forge with its own Zenodo DOI
-in `CITATION.cff`.
+**Done when.** `conda install -c conda-forge physicskit` installs 0.4.1.
 
 ## 4. The paper
 
@@ -178,7 +146,23 @@ separate prompt, with its own history entry and example.
 Finished items move here with the release they shipped in, as in
 CHANGELOG.md.
 
-### Unreleased
+### 0.4.1
+
+**A release workflow that publishes** (formerly item 2). The `v0.4.1` tag
+push ran `release.yml` end to end with no manual step: it published the
+wheel and sdist to PyPI through the trusted publisher (environment
+`pypi`), created the GitHub Release, which Zenodo archived as
+`10.5281/zenodo.23909506`, and rebuilt `gh-pages`. The GitHub Release
+and `gh-pages` jobs need only the build, so a PyPI failure no longer
+skips them. The manual TestPyPI dry run still fails with
+`invalid-publisher` (four runs on 2026-11-02): TestPyPI has no trusted
+publisher for `cpoli/physicskit`, `release.yml`, environment `testpypi`.
+Add one there (a pending publisher if the project does not exist yet) to
+use the dry run before a release.
+
+**0.4.1 released** (formerly item 3, except conda-forge, now item 3).
+The CHANGELOG records the CI move, the docs metadata, the README changes
+and the faster tests alongside the fixes and workflows below.
 
 **The gallery runs in CI again** (formerly item 1). The `Docs` workflow
 is enabled. The nightly runs of 2026-10-27 to 2026-10-29 failed because
